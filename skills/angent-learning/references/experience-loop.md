@@ -41,3 +41,23 @@ Promote only after evidence is sufficient for the intended scope.
 Keep original experience evidence separately so future contradictions can reopen the mechanism.
 
 Retire narrower guards when a stronger invariant subsumes them.
+
+
+## Activation
+
+A promoted mechanism must identify the decision or failure class it applies to, the owning ANGENT component, its boundary, and an observation that would disconfirm it.
+
+Context should retrieve it because the current decision matches that class, not merely because the wording looks similar.
+
+A stored lesson that is not activated at the relevant decision is not operational learning.
+
+## Recurrence
+
+Repeated failures are evidence about the controlling mechanism:
+
+- FIRST_OBSERVED — repair the task and capture the experience;
+- REPEATED_BEFORE_PROMOTION — investigate a shared systemic cause before adding another local guard;
+- RECURRED_AFTER_PROMOTION — reopen or narrow the promoted mechanism;
+- PERSISTENT_RECURRENCE — stop adding local rules and audit the controlling owner, interface or state model.
+
+Group wording variants when they expose the same mechanism.
