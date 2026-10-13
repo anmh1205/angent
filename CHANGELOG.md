@@ -1,69 +1,46 @@
 # Changelog
 
-## Unreleased — core hardening
+## Unreleased — core hardened, Engineer deferred
 
-The previous ANGENT 1.0.0 “implementation/acceptance complete” state is superseded. Core implementation is active again and 1.0.0 remains unreleased.
+ANGENT 1.0.0 remains unreleased. Core hardening was integrated into `main` through PR #3 as squash commit `68f075b34c2b8948842d6bdf8aaaf14257db9733`.
 
 ### Cognitive core
 
-- Added cumulative constraint evolution so a newer complaint does not silently discard still-active requirements.
+- Added cumulative constraint evolution so a newer correction does not silently discard still-active requirements.
 - Added accepted-baseline repair semantics, protected-property preservation, affected-scope reasoning, dependency invalidation, and oscillation escalation.
+- Added sticky REPAIRING/UNSTABLE state across terse continuation/resume turns.
 - Added long-lived artifact state for reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
 - Changed Quality from a single-position gate into solution, comparative-candidate, and endpoint/render phases.
-- Added trust classes so retrieved external content cannot become instruction authority by imperative wording alone.
-- Added Learning activation and recurrence semantics so stored lessons can be reopened when they fail to transfer.
-- Added Continuity lifecycle and baseline/stale-work semantics.
-- Fixed Continuity discovery so listing active work scans the same coherent immutable revisions used by per-work-item recovery.
+- Added trust classes separating factual/source authority from task/effect authority.
+- Added Learning activation, recurrence, reopen/retire semantics, and dedicated user/project Learning persistence scopes.
+- Added Continuity lifecycle, baseline pointers, stale/recheck state, repair state, and coherent immutable-revision discovery.
+- Fixed Continuity discovery so listing active work and per-item recovery use the same durable revision source.
+- Strengthened Execution around whole-scope enumeration evidence and retry churn.
 - Separated Format representation ownership from Execution external-effect ownership.
-- Strengthened whole-scope coverage semantics around pagination, truncation, filters, stale units, and unseen scope.
+- Strengthened broad-audit coverage semantics for pagination, truncation, filters, stale units, and unseen scope.
+- Suppressed repetitive continuation chatter when no meaningful state delta exists.
 
 ### Repository cleanup
 
-- Removed every file under root `/tests`.
+- Removed every file under root `/tests` as explicitly requested.
 - Removed CI dependence on that suite; CI now performs committed-diff hygiene only.
-- The removed suite was not considered behavioral evidence because it primarily checked static structure, strings, counts, and internally frozen inventories.
+- The removed suite mainly checked static structure, strings, counts, and internally frozen inventories and is not treated as behavioral acceptance evidence.
 
 ### Engineer boundary
 
-Engineer fallback implementation is intentionally unchanged in this phase. Upstream inventory/parity refresh is deferred until the cognitive core is stabilized.
+Engineer implementation was intentionally not changed during core hardening.
 
----
-
-## 1.0.0 — previous candidate history
-
-The notes below describe the earlier candidate state before core hardening reopened implementation. They are historical context, not current release-readiness evidence.
-
-
-The candidate is under active core hardening and is not release-ready.
-
-### Core hardening
-
-- Added explicit constraint evolution so newer corrections do not silently erase still-active requirements.
-- Added active-obligation preservation in Context.
-- Added baseline-preserving repair semantics, protected properties, dependency invalidation and oscillation escalation in Reasoning.
-- Added semantic artifact state for long-form and iterative Authoring.
-- Reworked Quality around solution, comparative-candidate and endpoint concerns, including overcorrection/regression detection.
-- Added trust boundaries between retrieved external content and task authority.
-- Strengthened broad-audit coverage semantics for pagination, truncation and stale/recheck units.
-- Added Continuity lifecycle, accepted-baseline pointers and recovery/discovery coherence.
-- Added Learning activation and recurrence semantics.
-- Clarified that Format defines destination representation while Execution owns external writes.
-- Removed the root `tests/` suite that mainly asserted static structure, keywords and counts.
-- Reduced the GitHub workflow to diff hygiene only; it is not behavioral acceptance evidence.
-
-### Engineer
-
-Engineer integration remains native-first / fallback-second.
-
-Fallback inventory/parity is intentionally deferred until after the core-hardening phase. Historical completeness counts are not considered current upstream-parity evidence.
+The next phase is to refresh native/fallback Engineer inventory/parity against the current upstream while preserving the now-canonical ANGENT core semantics.
 
 ### Release boundary
 
-Previous statements that implementation/acceptance were complete are superseded by this hardening work.
+Core hardening is complete and canonical, but 1.0.0 is **not release-ready**.
 
-Do not publish, tag or describe 1.0.0 as released or implementation-complete until:
+Before any release:
+1. complete the deferred Engineer inventory/parity refresh;
+2. reconcile cross-harness behavior and the private ChatGPT package against the exact canonical source;
+3. resolve the release/plugin identity/version strategy explicitly.
 
-1. the core-hardening branch is reconciled into the intended canonical source;
-2. the core architecture is read back for internal consistency;
-3. the deferred Engineer inventory/parity phase is resolved;
-4. the intended release surface/version strategy is explicitly approved.
+## Previous candidate history
+
+Earlier PRs #1 and #2 established the pre-hardening 1.0.0 candidate and release-readiness documentation. Their “implementation/acceptance complete” status was superseded by the regression-focused core audit and PR #3.
