@@ -15,6 +15,14 @@ A work item has one lifecycle state:
 
 Only ACTIVE, PAUSED and BLOCKED items are candidates for normal resume.
 
+Track repair state separately from lifecycle:
+
+- **NONE** — no active repair loop;
+- **REPAIRING** — a candidate is being revised against an accepted baseline;
+- **UNSTABLE** — recurrence/oscillation shows that local patching is not reliable and Reasoning must re-establish the controlling model before ordinary production resumes.
+
+A terse continuation does not clear REPAIRING/UNSTABLE state.
+
 ## Persist semantics, not transcripts
 
 A frontier should preserve:
