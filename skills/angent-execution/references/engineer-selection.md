@@ -87,6 +87,24 @@ A harness without Agent Plugins support may project the fallback Skills/roles th
 
 This projection is mechanical packaging/runtime work. It must not rewrite the Skill semantics into a harness-specific fork.
 
+## Preview acceptance must not mutate canonical version identity
+
+A cross-harness acceptance run is not itself a release.
+
+For clients whose private-plugin update mechanism automatically advances the semantic version, do **not** reuse the canonical ANGENT 1.0.0 private package as a disposable test target if doing so would turn the candidate into 1.0.1 or otherwise change release identity.
+
+Use one of these paths instead:
+
+- a disposable/private preview identity whose purpose is acceptance testing;
+- a client-supported unpublished preview/staging mechanism that preserves candidate identity;
+- another harness that can load the branch/package directly without mutating the canonical plugin record.
+
+The preview must be built from the exact upgrade source being accepted.
+
+Do not claim ChatGPT/Codex acceptance from an older installed baseline package merely because that package is callable.
+
+After acceptance, the disposable preview is evidence only; it does not become release authority.
+
 ## Agent roles
 
 Agent Plugins v1 standardizes Skills and MCP servers, not an Agent component.
