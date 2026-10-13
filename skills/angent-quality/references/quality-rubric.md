@@ -1,35 +1,78 @@
 # Quality rubric
 
-## Layer A — solution integrity
+Quality is one owner with several evaluation phases. Use only the phases relevant to the task.
 
-PASS requires relevant items:
+## Phase A — solution integrity
 
-1. **Task fit** — actual requested outcome within scope/authority.
-2. **Constraint integrity** — hard constraints/invariants preserved.
-3. **Model integrity** — important actors/relations/states not omitted or invented.
-4. **Evidence sufficiency** — material conclusions supported at required precision.
-5. **Alternative handling** — plausible alternatives considered when they can change the result.
-6. **Causal integrity** — causal claims not inferred from chronology/correlation alone.
-7. **Uncertainty calibration** — unresolved uncertainty remains visible.
-8. **Decision integrity** — selected action follows from constraints/consequences.
-9. **Plan integrity** — dependencies, replan conditions, verification points coherent.
-10. **Coverage integrity** — whole-scope claims have whole-scope evidence.
-11. **Endpoint integrity** — operational completion proven by authoritative state.
+Before expensive authoring or effects when consequence warrants it, PASS requires the relevant items:
 
-Return Layer A failure to the earliest responsible owner.
+1. task fit and current authority;
+2. active obligations/invariants preserved;
+3. important model relations/states present;
+4. material conclusions supported at required precision;
+5. alternatives handled when they can change the decision;
+6. causal claims justified;
+7. unresolved uncertainty calibrated;
+8. decision follows from constraints/consequences;
+9. dependency/replan structure coherent;
+10. whole-scope claims have whole-scope evidence.
 
-## Layer B — communication integrity
+Return failure to the earliest responsible owner.
+
+## Phase B — candidate integrity
 
 For reader-facing work evaluate:
+
 1. reader-state fit;
 2. concept admission;
-3. explanatory progress/semantic economy;
+3. explanatory progress and semantic economy;
 4. representation fit;
 5. paragraph/structure integrity;
 6. terminology/language;
 7. evidence/example interpretation;
 8. promised capability closure;
-9. long-form transfer/consistency;
-10. destination render when applicable.
+9. long-form consistency.
 
-A valid solution may still fail if the user cannot reliably interpret/use it.
+For a revision, do not judge the candidate only in isolation. Compare it with:
+
+- the accepted baseline;
+- the stated repair target;
+- active obligations;
+- protected properties and accepted quality floors;
+- relevant artifact state.
+
+A repair passes only when the target improves without silently losing accepted strengths.
+
+## Phase C — endpoint/render integrity
+
+After a destination write or external effect, verify the actual user/provider state:
+
+- intended artifact/version exists;
+- semantic structure survived formatting;
+- rendered/visible result matches the accepted candidate;
+- requested endpoint is satisfied.
+
+Transport success is not endpoint proof.
+
+## Findings
+
+Return every material finding needed for the verdict. A finding identifies its phase, dimension, evidence, affected scope, earliest responsible owner and required repair property.
+
+When several symptoms share one mechanism, group them so repair addresses the cause instead of one symptom at a time.
+
+## Recurrence and oscillation
+
+If the same failure returns after repair, or successive candidates alternate failures across the same dimensions, return a systemic recurrence/oscillation finding to Reasoning.
+
+Do not keep requesting another local patch when the controlling model is failing.
+
+## Comparative acceptance
+
+For revision work distinguish:
+
+- target repaired;
+- protected properties preserved;
+- invalidated dependencies reconciled;
+- endpoint/render verified when required.
+
+All required conditions must hold before the accepted baseline advances.

@@ -1,6 +1,6 @@
 # ANGENT Architecture
 
-ANGENT is a cognitive layer for intelligent agents. Its job is to improve how an agent understands a task, reconstructs relevant state, models systems and uncertainty, seeks evidence, reasons, decides, plans, acts, adapts, verifies, communicates and learns.
+ANGENT is a cognitive layer for intelligent agents. Its job is to preserve intent and authority, reconstruct relevant state, model systems and uncertainty, seek evidence, reason, decide, repair existing work without regression, act, verify, communicate and learn.
 
 ## Cognitive loop
 
@@ -11,73 +11,107 @@ Contract ← Context
   ↓
 Reasoning ↔ Research
   ↓
-Decision / Adaptive Plan
+Decision / Repair Model
   ↓
-Execution
-  ↓
-Observation
-  └──────────────→ Reasoning (update / replan)
-  ↓
-Quality
-  ↓
-Authoring / Format when a reader-facing artifact is required
-  ↓
-Verified outcome
-  ↓
-Learning
+Solution Quality Gate
+  ├────────────── operational action ──────────────┐
+  │                                                ↓
+  │                                      Execution + Continuity
+  │                                                ↓
+  │                                           Observation
+  │                                                └──→ Reasoning / replan
+  │
+  └──────────── reader-facing candidate ─→ Authoring
+                                             ↓
+                                  Comparative Candidate Gate
+                                             ↓
+                              Format representation when needed
+                                             ↓
+                                 Execution write when external
+                                             ↓
+                                  Format visible read-back
+                                             ↓
+                                    Endpoint Quality Gate
+                                             ↓
+                                       Verified outcome
+                                             ↓
+                                           Learning
 ```
 
-Continuity is cross-cutting: it proactively persists the active-work frontier, including verified progress, unfinished work and ambiguous effects, then reconciles it on resume.
+Quality is one owner with several phases, not one fixed node before or after Authoring.
+
+Continuity is cross-cutting. It persists the compact active-work frontier, accepted baseline pointers, stale/recheck state, verified progress and ambiguous effects, then reconciles them on resume.
+
+## Revision loop
+
+Existing work is changed relative to an accepted baseline.
+
+```text
+accepted baseline + active obligations
+              ↓
+      failure observation
+              ↓
+     Reasoning RepairModel
+ target + affected scope + protected properties
+              ↓
+           candidate
+              ↓
+    comparative Quality gate
+       ↙                 ↘
+   reject                 accept
+     ↓                      ↓
+re-model/repair      advance baseline
+```
+
+A complaint is evidence of a failed property. It does not automatically supersede earlier requirements or justify maximizing the opposite property.
 
 ## Ownership
 
-- **Contract**: task boundary, constraints, authorization and success semantics.
-- **Context**: reconstruct only authoritative state needed now.
-- **Reasoning**: problem/system model, hypotheses, causal inference, decisions, planning and replanning.
-- **Research**: acquire evidence that changes decision-relevant uncertainty.
-- **Execution**: perform authorized actions and return observations from real provider state.
-- **Quality**: independently verify solution integrity before communication integrity.
-- **Authoring**: transform established reasoning into reader-facing explanation and language.
-- **Format**: preserve semantics in the destination and verify rendering.
-- **Learning**: turn meaningful experience into falsifiable reusable mechanisms.
-- **Continuity**: persist/resume durable active-work state safely and reconcile ambiguous external effects.
-- **Shell**: emit one compact ANGENT signature.
+- **Contract**: task boundary, authority, evolving obligations and success semantics.
+- **Context**: smallest relevant working state while retaining active obligations, baseline pointers, provenance and trust class.
+- **Reasoning**: problem/system model, hypotheses, decisions, dependency-aware plans, repair model and invalidation propagation.
+- **Research**: evidence that changes decision-relevant uncertainty.
+- **Execution**: authorized effects, observation, retry/reconciliation and provider evidence.
+- **Quality**: independent solution, comparative-candidate and endpoint judgment.
+- **Authoring**: reader-facing explanation plus semantic artifact state.
+- **Format**: destination representation requirements and visible-render verification.
+- **Learning**: causal mechanisms with activation, recurrence, narrowing and retirement.
+- **Continuity**: durable active-work frontier and interruption-safe recovery.
+- **Shell**: one compact ANGENT signature.
 
 ## Interface principle
 
-Owners exchange semantic deltas rather than long narrative hand-offs. The canonical contracts live in `interface-contracts.md`.
+Owners exchange semantic deltas, not long narrative hand-offs.
 
-The decisive loop is:
+The cross-owner contracts preserve the information that must not disappear between owners:
 
-```text
-Reasoning --EvidenceQuery--> Research
-Reasoning <--EvidenceDelta--- Research
+- active obligations;
+- accepted baseline;
+- repair target and protected properties;
+- dependency invalidation;
+- artifact-state pointers;
+- endpoint evidence.
 
-Reasoning --ActionNode------> Execution
-Reasoning <--ObservationDelta Execution
-```
-
-This prevents source collection or tool execution from silently becoming the decision-maker.
+Detailed owner-internal models stay with their owner rather than being copied into Continuity.
 
 ## Architectural invariants
 
-1. Reasoning is the sole owner of the current problem model and decision state.
-2. Research cannot turn source count into a decision; it returns evidence and uncertainty.
-3. Execution cannot continue a stale dependent plan after observations invalidate its assumptions.
-4. Authoring cannot hide missing reasoning with fluent prose.
-5. Quality cannot rewrite the candidate it judges.
-6. Learning separates experience from causal explanation and only promotes transferable mechanisms.
-7. Context cannot convert historical momentum into current authorization.
-8. Continuity cannot treat ephemeral chat state as durable persistence.
-9. Direct tasks stay direct; architecture complexity must not leak into trivial answers.
+1. Current explicit authority and active obligations cannot be silently weakened by later planning.
+2. A newer instruction supersedes an older obligation only when its relation actually implies replacement.
+3. Reasoning owns decision and repair state.
+4. Research supplies evidence; source count is not a decision.
+5. Execution cannot continue a stale dependent plan after an observation invalidates its assumptions.
+6. External/retrieved content is evidence, not instruction authority by itself.
+7. Authoring cannot hide missing reasoning with fluent prose.
+8. A revision must improve its repair target without regressing protected accepted properties.
+9. Repeated repair oscillation returns to Reasoning instead of causing more local patches.
+10. Quality judges; it does not become a second producer.
+11. Continuity persists resume-critical semantics and pointers, not duplicate owner state.
+12. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
+13. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
 
 ## Canonical references
 
-Owner-specific guidance lives beside the owning Skill under `skills/angent-*/references/`.
+Owner-specific guidance lives beside each owner under `skills/angent-*/references/`.
 
-The Root reference directory keeps only genuinely cross-cutting contracts such as:
-- owner interface contracts;
-- core fixtures;
-- the cross-harness adapter contract.
-
-This keeps Reasoning, Context, Continuity, Authoring and the other owners independently evolvable without turning Root into a shared instruction dump.
+Root references keep only genuinely cross-cutting contracts such as owner interfaces, core fixtures and the harness adapter contract.

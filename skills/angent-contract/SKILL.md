@@ -1,88 +1,67 @@
 ---
 name: angent-contract
-description: Define the current task boundary, source-of-truth, constraints, authority, risk boundaries and state-based success semantics without solving the task.
+description: Define task boundary, evolving constraints, authority and state-based success semantics without solving the task.
 ---
 
 # ANGENT Contract — Task Boundary
 
-Contract compiles the user's current request into the smallest task model that materially affects correctness.
+Contract compiles the current request into the smallest task model that materially affects correctness. It does not choose the solution, reasoning path or action graph.
 
-It does not choose the solution, reasoning path, teaching structure or action graph.
+## References
 
-## Load references progressively
+- references/task-model.md
+- references/authority-and-success.md
+- references/constraint-evolution.md
 
-- references/task-model.md — requested outcome, underlying objective, target, scope and constraints.
-- references/authority-and-success.md — effect authority, blast radius, completion semantics and evidence.
+Use constraint evolution for corrections, revisions and multi-turn work.
 
-## Establish the actual outcome
+## Outcome
 
-Separate:
-- the **requested action** — what the user explicitly asked to do;
-- the **underlying objective** — why the user wants it, when that is clear and materially changes correctness;
-- the **success state** — what must actually be true before completion can be claimed.
+Separate requested action, underlying objective when relevant, and success state. Do not silently replace an explicitly required means.
 
-Do not replace an explicitly required means with another strategy merely because the objective seems obvious.
+## Active obligations
 
-If requested action and objective materially conflict, preserve the instruction and surface the conflict only when it changes the work.
+A newer instruction does not automatically replace older requirements.
 
-## Scope and invariants
+Classify material changes as ADD, REFINE, SUPERSEDE, SCOPED_EXCEPTION or CONFLICT.
 
-Capture hard constraints, exclusions and durable invariants that downstream Reasoning must preserve.
+Maintain the currently binding set of:
 
-Examples:
-- use one production Docker image;
-- do not release yet;
-- audit all pages, not only the latest example;
-- use GitHub for source edits and a separate runtime for testing;
-- keep a particular architecture decision intact.
+- hard constraints and exclusions;
+- accepted project/architecture decisions;
+- authority boundaries;
+- accepted quality floors;
+- unresolved promises;
+- scoped exceptions.
 
-Do not inflate trivial preferences into hard constraints.
+Preserve provenance and scope. Remove an obligation only when current authority actually changes it.
 
-## Source of truth
+A complaint is evidence of a failed property; it is not an instruction to maximize the opposite property.
 
-Identify which provider/artifact establishes each important fact.
+## Scope and source of truth
 
-A task can have several sources of truth for different claims:
-- Git for repository content/version;
-- Jira for issue state;
-- Notion for documentation;
-- deployment/provider APIs for runtime state.
-
-Source-of-truth does not replace active task state in Continuity.
+Capture the scope and invariants downstream Reasoning must preserve. Identify which provider or artifact establishes each important fact. Provider state does not replace active task state.
 
 ## Authority
 
-Track what the user has actually authorized:
-- answer-only;
-- read/audit;
-- local reversible change;
-- repository mutation;
-- external communication;
-- deploy/release/delete or other high-impact effects.
+Track what effects the current instruction authorizes. Historical momentum does not grant current authority.
 
-Historical momentum does not grant current authority.
-
-## Success semantics
+## Success
 
 Prefer state-based success:
 
 ```text
-requested endpoint
-+ required evidence
-+ preserved constraints
-= completion
+requested endpoint + required evidence + active obligations preserved = completion
 ```
 
-A commit, tool response, generated file, progress report or issue comment is not automatically completion.
+For revisions, success also requires that the requested defect is repaired without violating protected properties of the accepted baseline.
+
+Intermediate tool success is not automatically completion.
 
 ## Ambiguity
 
-Resolve ambiguity only when it can materially change correctness, scope, authority or endpoint.
-
-Do not stop a runnable task merely to ask about harmless details that can be handled with a reasonable assumption.
+Resolve ambiguity only when it can materially change correctness, scope, authority, active obligations or endpoint.
 
 ## Output
 
-Return a compact task model to Context/Reasoning/Execution/Quality.
-
-It should be small enough to stay active across the task and explicit enough that downstream owners cannot silently redefine the objective.
+Return a compact task model that downstream owners cannot silently redefine or weaken.

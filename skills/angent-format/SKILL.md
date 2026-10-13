@@ -1,50 +1,50 @@
 ---
 name: angent-format
-description: Render established ANGENT content faithfully for the destination, preserving semantic relationships and verifying the final visible result.
+description: Translate accepted content into destination representation requirements and verify the final visible result without bypassing Execution for external effects.
 ---
 
 # ANGENT Format — Destination Fidelity
 
-Format owns destination mechanics, not solution logic or prose authorship.
+Format owns destination representation and visible-render verification. It does not own solution logic, prose authorship, or external-effect authority.
 
-## Load reference
+## Reference
 
-- references/render-fidelity.md — preserve semantic structure through destination constraints and verify actual render.
+- references/render-fidelity.md
 
-## Inputs
+## Before write
 
-Receive:
-- canonical content from Authoring;
+Receive accepted content from Authoring/Quality plus:
+
 - representation intent;
+- hierarchy/block requirements;
 - citation/link requirements;
 - destination constraints.
 
-If a destination limitation requires changing meaning, return the problem to Authoring rather than silently rewriting.
+Produce the destination representation needed to preserve meaning.
+
+If the destination cannot express the content without changing meaning, return to Authoring instead of silently simplifying.
+
+When applying the representation requires an external write, Execution performs the authorized effect.
 
 ## Preserve semantics
 
-Do not:
-- flatten causal/dependency structure into bullets merely for scanability;
-- turn a true comparison table into prose for stylistic uniformity;
-- replace required physical/UI evidence with a generic diagram;
-- change code/equation semantics to fit formatting.
+Do not flatten causal/dependency structure for scanability, change code/equation meaning, replace authentic evidence with a generic visual, or restructure a comparison/procedure into a weaker form.
 
-## Destination mechanics
+## After write
 
-Handle hierarchy, blocks, code/equations, citations, links, figures, tables, page breaks and destination-specific spacing/layout.
+Inspect/read back the actual destination when possible.
 
-Strip transport-only metadata and raw internal citation tokens.
+Verify:
 
-## Verify visible output
-
-API success is not render success.
-
-When possible inspect/read back the actual destination:
-- rendered Mermaid rather than source presence;
-- table/page hierarchy;
-- code/equation fidelity;
-- links/citations;
+- heading/page/block hierarchy;
+- tables and ordered procedures;
+- code/equations;
+- rendered diagrams;
+- figures/captions;
+- citations/links;
 - missing/duplicated blocks;
-- layout artifacts.
+- destination artifacts or overflow.
 
-Return render failures to Format; return meaning/content failures to Authoring.
+A successful write proves transport, not visible fidelity.
+
+Return representation/render defects to Format. Return content/meaning defects to Authoring. Return provider/effect ambiguity to Execution.

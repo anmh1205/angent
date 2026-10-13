@@ -27,3 +27,12 @@ Do not:
 - put dynamic memory into AGENTS.md merely because it appeared repeatedly.
 
 Context retrieves from these classes according to the current task. Durable does not mean globally relevant.
+
+
+## Persistence classes
+
+When the local ANGENT store is used, promoted mechanisms live in `learning-user` or `learning-project` scope. Ordinary user/project memory uses its own scopes.
+
+A mechanism may be active, reopened or retired without changing user/project memory state.
+
+Do not persist secrets or unrelated sensitive data as Learning evidence; keep only the minimum provenance needed to reconstruct why the mechanism was promoted or reopened.

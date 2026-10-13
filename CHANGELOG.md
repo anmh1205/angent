@@ -1,64 +1,69 @@
 # Changelog
 
-## 1.0.0 — Unreleased candidate
+## Unreleased — core hardening
 
-The 1.0.0 implementation is merged and validated on `main`, but it is **not released yet**.
+The previous ANGENT 1.0.0 “implementation/acceptance complete” state is superseded. Core implementation is active again and 1.0.0 remains unreleased.
 
-### Cognitive architecture
+### Cognitive core
 
-- Established ANGENT as a cognitive layer with first-class Contract, Context, Reasoning, Research, Execution, Quality, Authoring, Format, Learning, Continuity, and Shell ownership.
-- Deepened Reasoning with abstraction control, invariant preservation, decision sensitivity, specialist synthesis, and model-first replanning.
-- Deepened Context with AGENTS.md project instructions, scoped memory, provenance, conflict handling, and progressive retrieval.
-- Expanded Continuity from chat-loss checkpointing into proactive active-work frontier persistence and resume/reconciliation semantics.
-- Expanded Learning from complaint-driven feedback into evidence-backed experience → mechanism → transfer/retirement.
-- Expanded Authoring/Quality for chat, technical exposition, long-form consistency, Vietnamese technical writing, heading/section boundaries, coverage, endpoint evidence, and render fidelity.
+- Added cumulative constraint evolution so a newer complaint does not silently discard still-active requirements.
+- Added accepted-baseline repair semantics, protected-property preservation, affected-scope reasoning, dependency invalidation, and oscillation escalation.
+- Added long-lived artifact state for reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
+- Changed Quality from a single-position gate into solution, comparative-candidate, and endpoint/render phases.
+- Added trust classes so retrieved external content cannot become instruction authority by imperative wording alone.
+- Added Learning activation and recurrence semantics so stored lessons can be reopened when they fail to transfer.
+- Added Continuity lifecycle and baseline/stale-work semantics.
+- Fixed Continuity discovery so listing active work scans the same coherent immutable revisions used by per-work-item recovery.
+- Separated Format representation ownership from Execution external-effect ownership.
+- Strengthened whole-scope coverage semantics around pagination, truncation, filters, stale units, and unseen scope.
 
-### Skill architecture
+### Repository cleanup
 
-- Added canonical repository `AGENTS.md`.
-- Moved ANGENT toward owner-local `references/` and progressive disclosure.
-- Added validation for owner-local reference architecture and project-instruction boundaries.
+- Removed every file under root `/tests`.
+- Removed CI dependence on that suite; CI now performs committed-diff hygiene only.
+- The removed suite was not considered behavioral evidence because it primarily checked static structure, strings, counts, and internally frozen inventories.
 
-### Engineer fallback
+### Engineer boundary
 
-- Adopted native-first / port-fallback semantics for AgentKit Engineer capability.
-- Added `vendor/agentkit-engineer/` with explicit upstream provenance and license boundary.
-- Completed the portable fallback surface for **102/102 Engineer Skills** and **16/16 Agent roles** without vendoring raw upstream source.
-- Added PORTABLE / ADAPTED / DEGRADED semantics so runtime-specific upstream capabilities retain the best portable behavior instead of being dropped.
-- Added native AgentKit guidance pointing to the official AgentKit installation and Engineer Kit documentation.
-- Added validation to prevent native/fallback packaging regressions.
-- Normalized all 102 fallback Skills to Agent Skills v1 frontmatter/name constraints: fallback names now match their `ak-*` directories, and AgentKit-only top-level metadata no longer sits in portable frontmatter.
-- Packaged the fallback as its own Agent Plugins root and ChatGPT/Codex companion package while keeping one canonical 102-Skill tree.
-- Added a read-only native/fallback selector contract: active-harness visibility selects native; absent/unproven native uses fallback.
-- Added a cross-harness adapter contract without introducing a generic capability broker.
+Engineer fallback implementation is intentionally unchanged in this phase. Upstream inventory/parity refresh is deferred until the cognitive core is stabilized.
 
-### Context and Continuity persistence
+---
 
-- Added revisioned local project/user memory storage with provenance and compare-and-swap conflict detection.
-- Added immutable-revision local Continuity frontier persistence with stale-writer detection and resume from the highest coherent revision.
-- Replaced the stale completed-release checkpoint with the active unreleased upgrade frontier.
+## 1.0.0 — previous candidate history
 
-### Validation
+The notes below describe the earlier candidate state before core hardening reopened implementation. They are historical context, not current release-readiness evidence.
 
-- Updated repository behavioral/structural validation for the new architecture.
-- Added source-selection behavior checks and local memory/Continuity conflict/resume checks.
-- The earlier superficial line/reference-count quality gate was removed; fallback quality is reviewed by capability semantics instead.
 
-### Validated on merged candidate
+The candidate is under active core hardening and is not release-ready.
 
-- Live SERVER/local-harness validation passes package/reference architecture, owner boundaries, Reasoning, full Engineer inventory, native/fallback separation and local state-store behavior.
-- The Engineer selector was exercised against native-usable, native-unusable and unknown states; AgentKit offline doctor was healthy on SERVER.
-- Stale release-state claims were scanned and removed.
-- Final branch integration review passed `git diff --check`, JSON manifest parsing, Skill/reference integrity, stale/runtime leakage scans, and Agent Skills conformance for all 114 Skills.
+### Core hardening
+
+- Added explicit constraint evolution so newer corrections do not silently erase still-active requirements.
+- Added active-obligation preservation in Context.
+- Added baseline-preserving repair semantics, protected properties, dependency invalidation and oscillation escalation in Reasoning.
+- Added semantic artifact state for long-form and iterative Authoring.
+- Reworked Quality around solution, comparative-candidate and endpoint concerns, including overcorrection/regression detection.
+- Added trust boundaries between retrieved external content and task authority.
+- Strengthened broad-audit coverage semantics for pagination, truncation and stale/recheck units.
+- Added Continuity lifecycle, accepted-baseline pointers and recovery/discovery coherence.
+- Added Learning activation and recurrence semantics.
+- Clarified that Format defines destination representation while Execution owns external writes.
+- Removed the root `tests/` suite that mainly asserted static structure, keywords and counts.
+- Reduced the GitHub workflow to diff hygiene only; it is not behavioral acceptance evidence.
+
+### Engineer
+
+Engineer integration remains native-first / fallback-second.
+
+Fallback inventory/parity is intentionally deferred until after the core-hardening phase. Historical completeness counts are not considered current upstream-parity evidence.
 
 ### Release boundary
 
-The implementation and acceptance work for this candidate is complete:
+Previous statements that implementation/acceptance were complete are superseded by this hardening work.
 
-- PR #1 was reviewed and merged into `main`;
-- native/fallback selection was exercised on SERVER;
-- the fallback companion was discovered, installed, and enabled by Codex CLI in an isolated environment;
-- representative long-form Authoring/Quality acceptance passed;
-- post-merge validation passed.
+Do not publish, tag or describe 1.0.0 as released or implementation-complete until:
 
-The remaining step is **not more implementation**. Publishing/tagging/updating the private ChatGPT plugin is a separate release action and requires explicit release approval from the exact merged source.
+1. the core-hardening branch is reconciled into the intended canonical source;
+2. the core architecture is read back for internal consistency;
+3. the deferred Engineer inventory/parity phase is resolved;
+4. the intended release surface/version strategy is explicitly approved.

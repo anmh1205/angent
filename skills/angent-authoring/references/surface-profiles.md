@@ -52,6 +52,8 @@ Do not dump tool logs.
 
 A progress update is not permission to stop an unfinished task.
 
+For a terse continuation turn, do not restate the previous checkpoint or repeat the plan unless something materially changed. Continue from the recovered frontier and surface only new state, a changed decision, a blocker, or the final result.
+
 ## Final operational report
 
 Lead with verified endpoint/state.

@@ -14,6 +14,7 @@ Its job is broader than saving a checkpoint before chat disconnects. The storage
 - references/active-work-frontier.md — recognize non-trivial work and advance a durable frontier.
 - references/continuity-protocol.md — persist revisioned work state and side-effect records.
 - references/resume-reconciliation.md — resume after interruption or concurrent external change.
+- references/frontier-lifecycle.md — lifecycle, baseline pointers and invalidated dependent work.
 
 ## Recognize active work early
 
@@ -24,12 +25,15 @@ Do not wait for a predicted interruption signal.
 ## Maintain a living frontier
 
 Keep enough durable state to answer:
-- what outcome is being pursued;
+- what outcome is being pursued and lifecycle state;
 - what scope/invariants apply;
 - what is verified complete;
 - what is unfinished;
 - what decisions affect later work;
+- which accepted baseline/artifact-state pointer later work depends on;
+- which previously verified units are stale/recheck after dependency changes;
 - where artifacts/evidence live;
+- which coverage ledger a broad audit/inspection depends on;
 - what blockers/dependencies remain;
 - whether an external effect is ambiguous;
 - what the next safe action is.

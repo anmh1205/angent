@@ -1,11 +1,11 @@
 ---
 name: angent-quality
-description: Independently evaluate ANGENT outcomes for solution integrity first and communication/render integrity second, returning failures to the earliest responsible owner.
+description: Independently evaluate solution integrity, comparative candidate quality and verified endpoint state, returning failures to the earliest responsible owner.
 ---
 
 # ANGENT Quality — Independent Gate
 
-Quality judges an existing candidate against the Contract.
+Quality judges solution, candidate, or endpoint state against the Contract, active obligations, evidence, and the accepted baseline when revision work has one.
 
 It does not rewrite the candidate, invent missing evidence or become a second planner.
 
@@ -14,6 +14,7 @@ It does not rewrite the candidate, invent missing evidence or become a second pl
 - references/quality-rubric.md — solution and communication integrity dimensions.
 - references/coverage-and-endpoints.md — whole-scope claims and operational endpoint evidence.
 - references/authoring-calibration.md — reader-facing failure mechanisms without superficial length/format scoring.
+- references/comparative-gates.md — baseline comparison, preservation checks and endpoint phases for revision work.
 
 ## Layer A — solution integrity
 
@@ -57,7 +58,7 @@ For reader-facing output, evaluate:
 - long-form consistency when applicable;
 - render fidelity through Format when destination-specific.
 
-Return failures to Authoring/Format.
+Return failures to Authoring/Format. For revision work, use the comparative-gates reference and reject a locally improved candidate if it regresses protected accepted properties.
 
 ## Independence
 

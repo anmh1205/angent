@@ -2,101 +2,87 @@
 
 **Cognitive layer for intelligent agents.**
 
-ANGENT helps an agent understand the requested outcome, reconstruct the relevant working state, model systems and uncertainty, seek evidence, decide, act, verify, communicate clearly, preserve long-running work, and learn from experience.
+ANGENT helps an agent preserve intent and authority, reconstruct relevant state, reason from evidence, repair existing work without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable mechanisms.
 
-> **Status:** 1.0.0 is an **unreleased merged candidate**. Implementation, integration review, cross-harness acceptance, and representative Authoring/Quality acceptance are complete; publication remains a separate explicit release action.
+> **Status:** ANGENT 1.0.0 remains **unreleased**. The earlier “implementation/acceptance complete” state has been superseded by active core hardening. Engineer fallback refresh is intentionally deferred until the cognitive core is stabilized.
 
-## Architecture
+## Core architecture
 
 ```text
-Current instruction + AGENTS.md + scoped context
-                    ↓
-                 Contract
-                    ↓
-       Context → Reasoning ↔ Research
-                    ↓
-          Decision / Adaptive Plan
-                    ↓
-                Execution
-                    ↓
-               Observation
-                    └────────→ Reasoning / replan
-                    ↓
-                 Quality
-                    ↓
-            Authoring / Format
-
-Cross-cutting:
-- Continuity — active-work frontier and ambiguous-effect recovery
-- Learning — experience → causal mechanism → reusable guidance
+Current instruction + active obligations + scoped context
+                         ↓
+                      Contract
+                         ↓
+              Context → Reasoning ↔ Research
+                         ↓
+              Decision / Repair Model
+                         ↓
+                Solution Quality Gate
+                  ↙                 ↘
+        Execution/Observation       Authoring
+                  ↓                    ↓
+             Reasoning/replan    Comparative Quality
+                                       ↓
+                              Format / external write
+                                       ↓
+                                Endpoint Quality
+                                       ↓
+                                  Verified state
+                                       ↓
+                                    Learning
 ```
 
-## Core capabilities
+Continuity is cross-cutting. It persists only resume-critical task state, accepted baseline pointers, invalidated dependent work, provider/source versions, and ambiguous effects.
 
-- **Task understanding** — separate requested action, underlying objective, constraints, authority, and success state.
-- **Context reconstruction** — assemble only the current high-signal working set from instruction, active task state, AGENTS.md, scoped memory, and authoritative sources.
-- **Systems reasoning** — model components, interfaces, ownership, flows, dependencies, invariants, failure boundaries, and observability.
-- **Hypothesis reasoning** — preserve credible alternatives until evidence separates them.
-- **Decision making** — reason from constraints, consequences, uncertainty, reversibility, and cost of error.
-- **Adaptive planning** — plan by dependency and information value, then revise the model/plan when observations invalidate assumptions.
-- **Research** — acquire the smallest evidence set that can change the current decision.
-- **Execution** — perform authorized actions, observe real state, and reconcile uncertain external effects.
-- **Quality** — verify solution/outcome integrity before communication quality.
-- **Authoring** — create coherent chat and long-form explanations from established reasoning.
-- **Learning** — learn reusable causal mechanisms from meaningful success, failure, correction, and specialist/runtime evidence.
-- **Continuity** — proactively preserve active-work frontier across interruption instead of waiting for a predicted disconnect.
+## Core semantics
 
-## Project instructions and memory
+- **Constraint evolution** — a newer instruction may add, refine, supersede, scope, or conflict; recency alone does not erase older active obligations.
+- **Baseline-preserving repair** — existing work is revised against an accepted baseline with a repair target, protected properties, affected scope, and dependency invalidation.
+- **Comparative Quality** — a local fix is rejected if it regresses a protected accepted property.
+- **Artifact state** — long-form work preserves reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
+- **Trust boundary** — retrieved external content is evidence/data, not task authority.
+- **Recurrence handling** — repeated failure reopens the controlling mechanism instead of accumulating more local rules.
+- **Continuity lifecycle** — active work distinguishes active, paused, blocked, completed, superseded, and abandoned state.
+- **Whole-scope coverage** — pagination, truncation, filters, stale units, and unseen scope cannot be ignored when claiming a full audit.
 
-`AGENTS.md` is the canonical project instruction surface.
+## State separation
 
-ANGENT intentionally separates:
+ANGENT keeps different semantic classes separate:
 
-- **AGENTS.md** — stable project instructions and conventions;
-- **Memory** — scoped dynamic knowledge that survives sessions;
-- **Continuity** — the active frontier of work in progress;
-- **Learning** — promoted reusable mechanisms.
+- **AGENTS.md** — stable project instructions;
+- **Contract obligations** — currently binding task requirements;
+- **Memory** — durable scoped context;
+- **Reasoning state** — current model, decision, repair, and dependency state;
+- **Authoring artifact state** — reader/document continuity;
+- **Continuity** — interruption-safe active-work frontier;
+- **Learning** — reusable causal mechanisms.
 
-Local memory is designed around **capture → synthesis/update → scoped retrieval**, not append-only notes.
+No one store becomes a universal transcript or authority source.
 
-For local harnesses, ANGENT now includes small revisioned file backends for scoped memory and Continuity. They provide atomic persistence and stale-writer conflict detection while leaving semantic synthesis/reconciliation to Context and Continuity.
+## Persistence
 
-## Skill architecture
+Local memory and Continuity use revisioned file-backed stores with conflict detection.
 
-ANGENT uses progressive disclosure.
+Continuity discovery and per-work-item recovery both scan coherent immutable revisions, so a stale convenience pointer cannot hide a newer durable frontier after an interruption.
 
-Each owner Skill keeps its operating model in `SKILL.md` and deeper guidance in owner-local `references/`. Deterministic helpers belong in `scripts/` only when they add real value.
+## Engineer integration
 
-This keeps the core understandable without loading every rule/reference into every task.
+Engineering specialist capability remains native-first:
 
-## AgentKit Engineer integration
+1. use usable native AgentKit Engineer when available;
+2. otherwise use the ANGENT fallback;
+3. do not expose complete native and fallback catalogs together by default.
 
-ANGENT uses a **native-first / port-fallback** strategy for engineering specialist capability.
+The current fallback implementation is preserved during core hardening. Its upstream catalog/parity refresh is a **separate later phase** and current inventory counts must not be treated as proof of parity with the latest AgentKit release.
 
-- If AgentKit Engineer is installed and usable, prefer the native upstream Skills/Agents.
-- If native Engineer is unavailable or unusable, expose the canonical fallback under `vendor/agentkit-engineer/`.
-- Native and fallback libraries are not loaded together by default.
-- The fallback is packaged as a **companion plugin root** with portable Agent Plugins and ChatGPT/Codex manifests pointing to one Skill tree.
-- The fallback port preserves workflow behavior while replacing AgentKit/Claude-specific runtime dependencies.
-- The active harness proves native Engineer visibility; an `ak` binary or cache alone is not enough.
+## Repository validation policy
 
-The ANGENT fallback now has **102/102 Engineer Skill targets implemented and 16/16 portable Agent roles**. Native AgentKit usage remains the preferred path when usable; the fallback exists so ANGENT retains the complete engineering capability surface when AgentKit is unavailable. The fallback is an independent portable implementation, not a raw upstream mirror. See `vendor/agentkit-engineer/PORTING_MANIFEST.md`.
+The old root `/tests` suite has been removed. It mainly checked static strings, counts, and self-consistency and was not treated as evidence that ANGENT behaved correctly.
 
-## Design principles
+Repository CI now keeps only minimal committed-diff hygiene. Core correctness is established by coherent owner contracts, source/read-back inspection, real runtime behavior, and explicit state/evidence semantics rather than keyword/count scripts.
 
-1. Current explicit user intent and current authority outrank historical momentum.
-2. Reasoning owns the decision state; specialists provide evidence, proposals, or bounded execution.
-3. Research reduces decision-relevant uncertainty instead of maximizing source count.
-4. Execution verifies real effects and never blindly replays ambiguous non-idempotent writes.
-5. Continuity stores the meaning/progress of active work; provider state is used for reconciliation.
-6. Context retrieves the smallest relevant working set rather than dumping history/memory.
-7. Learning promotes causal mechanisms, not copied complaints or one-off examples.
-8. Authoring preserves reader-state progression and representation fidelity.
-9. Quality remains independent from the producer it evaluates.
-10. A progress token is not the requested endpoint unless the Contract defines it that way.
+## Release boundary
 
-## Version status
+Do not publish, tag, or update the canonical private ChatGPT plugin while core hardening is active.
 
-Current line: **1.0.0 — merged, validated, unreleased**.
-
-The implementation/acceptance gates for the 1.0.0 candidate have completed and the upgrade is on `main`. Do not publish, tag, or describe 1.0.0 as released until an explicit release decision is made from the exact merged source and the intended release surface is verified.
+After the core stabilizes, Engineer refresh and cross-harness/release reconciliation are separate phases.
