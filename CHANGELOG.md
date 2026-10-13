@@ -1,14 +1,15 @@
 # Changelog
 
-## 17.0.0 — ANGENT cognitive-core redesign
+## 1.0.0 — Initial ANGENT release
 
-- Rebranded the canonical system from Cogent to **ANGENT**, with the repository `anmh1205/angent` as source of truth.
-- Added first-class **ANGENT Reasoning** ownership for problem modeling, systems thinking, hypotheses, causal inference, decisions, dependency-aware planning and replanning.
-- Upgraded Contract from a request envelope to an explicit task boundary and success-semantics owner.
-- Reframed Context as authoritative state reconstruction instead of history retrieval.
-- Reframed Research around evidence targeting and information gain for active uncertainties.
-- Reframed Chat Work as **Execution**: act on an explicit plan, observe, reconcile and return evidence to Reasoning.
-- Expanded Quality to judge solution integrity before communication integrity.
-- Consolidated Feedback + Distill into **Learning**, preserving the distinction between observation, causal model and promoted mechanism.
-- Renamed Checkpoint to **Continuity** while preserving durable PREPARED/COMMITTED/ATTEMPTED_UNKNOWN semantics.
-- Retained the integrated Authoring architecture introduced in Cogent 15 rather than re-splitting planning, prose and Vietnamese realization.
+- Established ANGENT as a cognitive layer for intelligent agents.
+- Added first-class **Reasoning** ownership for problem modeling, systems thinking, hypotheses, causal inference, decisions, dependency-aware planning, and replanning.
+- Added **Contract** for outcome, scope, authority, constraints, and success semantics.
+- Added **Context** for minimal authoritative state reconstruction.
+- Added **Research** for evidence targeting, source roles, version boundaries, conflicts, and uncertainty.
+- Added **Execution** as the actuator/observer that performs authorized actions and returns real observations to Reasoning.
+- Added **Quality** with solution-integrity checks before communication-integrity checks.
+- Added integrated **Authoring** for reader state, concept staging, representation, composition, and language realization.
+- Added **Format** for destination fidelity and render verification.
+- Added **Learning** for experience-to-understanding, causal transfer, promotion, and retirement of reusable mechanisms.
+- Added **Continuity** for durable resumable state and ambiguous-effect reconciliation.
