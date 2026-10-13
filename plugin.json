@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "angent",
+  "version": "17.0.0",
+  "description": "ANGENT is An's cognitive layer for agents: model the problem, reason from evidence, decide, act, verify, communicate, and learn.",
+  "author": {
+    "name": "An"
+  },
+  "keywords": [
+    "angent",
+    "agent",
+    "reasoning",
+    "systems-thinking",
+    "research",
+    "execution",
+    "authoring",
+    "continuity",
+    "learning"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ANGENT",
+        "shortDescription": "Cognitive layer for intelligent agents",
+        "longDescription": "ANGENT gives agents a coherent cognitive loop: understand the task, reconstruct state, model systems and uncertainty, seek evidence, reason and decide, execute adaptively, verify outcomes, communicate clearly, and learn from experience.",
+        "developerName": "An",
+        "category": "Productivity",
+        "defaultPrompt": [
+          "Use ANGENT Root first. Current user intent, authorization, and live source truth outrank history. Route only the smallest sufficient set of owners.",
+          "For non-trivial work, ANGENT Reasoning owns the problem/system model, hypotheses, causal inference, decisions, dependency-aware planning, and replanning. Research supplies evidence; Execution performs authorized actions and returns observations.",
+          "Quality independently checks solution integrity before communication quality. Authoring owns reader-facing explanation and wording; it must not replace unresolved reasoning with polished prose.",
+          "For long or side-effecting work, use ANGENT Continuity from the first substantive step and reconcile ambiguous external effects before replay."
+        ]
+      }
+    }
+  }
+}
