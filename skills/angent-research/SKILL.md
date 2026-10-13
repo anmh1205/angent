@@ -1,41 +1,86 @@
 ---
 name: angent-research
-description: Acquire and structure evidence that reduces decision-relevant uncertainty, with source roles, version boundaries, conflicts and provenance explicit.
+description: Acquire and structure the smallest evidence set that reduces decision-relevant uncertainty, with source role, provenance, version boundaries and conflicts explicit.
 ---
 
 # ANGENT Research — Epistemic Evidence Engine
 
-Research answers evidence questions; it does not replace reasoning with source collection.
+Research answers evidence questions. It does not replace reasoning with source collection.
 
-Read `evidence-model.md`.
+## Load references progressively
+
+- references/evidence-model.md — source roles, evidence items and information value.
+- references/source-conflict.md — reconcile version/platform/scope contradictions.
+- references/stopping-rule.md — know when more research no longer changes the decision.
 
 ## Input
 
 Prefer a question from Reasoning:
-- blocked claim/decision;
+- blocked claim or decision;
 - plausible alternatives;
 - discriminating observation;
-- required precision/version/platform boundary.
+- required precision;
+- version/platform/time boundary;
+- evidence that would reverse the current recommendation.
 
-For a simple factual task, Root may route directly to Research without a separate Reasoning pass.
+For a simple factual task, Root may route directly to Research.
 
-## Evidence targeting
+## Search for information value
 
-Seek the smallest evidence set that materially changes confidence, eliminates an alternative or establishes the required fact. Prefer information gain over source count.
+Prefer evidence that:
+- establishes a missing fact;
+- distinguishes live hypotheses;
+- confirms an exact version/boundary;
+- disproves a critical assumption;
+- materially changes the action choice.
 
-Classify sources by role rather than generic prestige: normative, primary implementation, vendor specification, observed runtime evidence, independent analysis, community experience or illustrative only.
+Ten sources repeating a non-decisive fact may add less value than one authoritative observation.
 
-## Conflicts
+## Source roles
 
-Do not average disagreement. Check version, platform/configuration, normative-vs-implementation role, staleness, scope and observation quality.
+Classify a source by what it can establish, not by generic prestige:
+- normative;
+- primary implementation;
+- vendor specification;
+- observed runtime/provider evidence;
+- independent analysis;
+- community experience;
+- illustrative only.
 
-## Output to Reasoning
+Authority is claim-specific.
 
-Return an **evidence delta**:
+## Preserve fact versus interpretation
+
+Keep separate:
+- what the source/observation directly establishes;
+- what ANGENT infers from it;
+- what remains uncertain.
+
+A useful source does not automatically justify every nearby claim.
+
+## Conflict handling
+
+Do not average contradictions.
+
+Check version, platform/configuration, normative-vs-implementation role, freshness, scope and observation quality.
+
+When conflict can change the decision and cannot yet be resolved, return it explicitly to Reasoning.
+
+## Evidence output
+
+Return an evidence delta:
 - established/updated facts;
-- source roles and version boundaries;
+- source roles and provenance;
+- version/platform/time boundaries;
 - hypotheses supported/weakened/rejected;
-- unresolved conflict/uncertainty;
-- any new question exposed by the evidence.
+- unresolved conflicts;
+- residual uncertainty;
+- new question exposed by evidence.
 
-Keep source fact, interpretation, example and verified observation distinct.
+Do not turn research notes into final prose; Authoring owns reader-facing realization.
+
+## Stop
+
+Stop retrieval when the decision/factual question is adequately supported at the required consequence level.
+
+Do not browse/search merely because more information exists.

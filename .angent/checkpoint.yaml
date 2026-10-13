@@ -1,37 +1,39 @@
-schema_version: 1
-work_key: angent/core/1.0.0
-record_type: COMPLETE
-phase: authorized-mutation
+schema_version: 2
+work_key: angent/core/1.0.0-upgrade
+record_type: ACTIVE_FRONTIER
+phase: pre-release-integration-review
 source_of_truth:
   provider: github
   repository: anmh1205/angent
-  branch: main
-scope:
-  outcome: "Establish and publish ANGENT 1.0.0 as an independent cognitive layer for agents with a first-class Reasoning Core."
+  branch: angent-1.0.0-upgrade
 source_verification:
-  canonical_source_head_before_terminal_checkpoint: b736942e321d42ff38372a7a206636e6737a6cb0
-  manifest_name: angent
+  observed_branch_head_before_checkpoint: 4e7fb44e59bfd565097add98983367ac14f07edf
+  main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
-  source_files_validated: 38
-  plugin_source_blobs_matched_before_packaging: 31/31
-plugin:
-  plugin_id: plugins_6ace3b6877a0819193f1481bf46b9f00
-  release_id: pluginrel_6ace3b6cfcb48191b1da97432fe40e13
+release_state:
   version: 1.0.0
-  scope: USER
-  discoverability: PRIVATE
-  files_read_back: 31/31
-  identity_leaks_found: 0
-  reasoning_core_verified: true
-  interface_contracts_verified: true
+  released: false
 frontier:
   verified_units:
-    - "ANGENT is independent in current source identity and begins at version 1.0.0."
-    - "Repository main is the canonical source."
-    - "First-class Reasoning Core owns problem/system modeling, hypotheses, causal inference, decisions, planning and replanning."
-    - "Research and Execution return EvidenceDelta and ObservationDelta rather than taking over decision ownership."
-    - "Quality checks solution integrity before communication integrity."
-    - "Authoring, Learning and Continuity are integrated through explicit owner boundaries."
-    - "New private ChatGPT plugin ANGENT 1.0.0 is published and read back."
-  unresolved: []
-next_action: "None for ANGENT 1.0.0 core release; future changes start from this canonical state."
+    - "AGENTS.md is the canonical project instruction surface."
+    - "ANGENT owner Skills use owner-local progressive disclosure."
+    - "Engineer fallback contains 102/102 Skills and 16/16 portable Agent roles."
+    - "Native AgentKit source is not mirrored in the repository."
+    - "Engineer fallback has portable Agent Plugins and ChatGPT/Codex companion manifests pointing to one Skill tree."
+    - "Native/fallback source selection is implemented; native usability must be proven by the active harness."
+    - "Semantic audit corrected capability drift including ak:tech-graph versus ak:graphify."
+    - "Local project/user memory persistence uses revisioned compare-and-swap writes."
+    - "Local Continuity persistence uses immutable revisions, atomic current pointer updates and stale-writer conflict detection."
+    - "Cross-harness adapter semantics are defined without a generic Capability Broker."
+    - "Authoring/Quality includes technical exposition, long-form consistency, heading boundaries and failure-mode calibration."
+    - "Live SERVER validation passed package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
+    - "Live SERVER selector returned fallback for unknown/unusable native state and native when active-harness usability was supplied; AgentKit doctor was healthy."
+  active_work:
+    - "Complete whole-branch integration/contradiction/package review."
+    - "Run representative Authoring/Quality calibration cases."
+    - "Open and review a draft PR after the branch is internally clean."
+    - "Run broader cross-harness acceptance when another harness path is available."
+  unresolved:
+    - "Agent Plugins v1 does not standardize Agent components; portable Agent role projection remains adapter-owned."
+    - "Broader cross-harness acceptance beyond the current SERVER environment remains open."
+next_action: "Finish integration and Authoring/Quality calibration, reconcile all findings, then open the draft PR without merging or releasing 1.0.0."

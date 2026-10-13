@@ -1,5 +1,5 @@
 from pathlib import Path
-import json, re
+import json
 
 root=Path(__file__).resolve().parents[1]
 main=json.loads((root/"plugin.json").read_text(encoding="utf-8"))
@@ -19,21 +19,27 @@ expected_skills={
 actual={p.parent.name for p in (root/"skills").glob("*/SKILL.md")}
 assert actual==expected_skills,(actual^expected_skills)
 
-refs={p.name for p in (root/"skills/angent/references").glob("*.md")}
-required_refs={
-    "task-model.md","problem-model.md","system-model.md","hypothesis-reasoning.md",
-    "decision-model.md","adaptive-planning.md","evidence-model.md","interface-contracts.md",
-    "reader-state.md","concept-admission.md","explanation-composition.md","representation.md",
-    "language-vi.md","quality-rubric.md","learning-loop.md","continuity-protocol.md",
-    "core-fixtures.md",
+assert (root/"AGENTS.md").exists()
+
+owner_refs={
+    "angent-contract":["task-model.md","authority-and-success.md"],
+    "angent-context":["context-assembly.md","memory-loop.md","instruction-precedence.md"],
+    "angent-reasoning":["core-models.md","abstraction-and-invariants.md","specialist-synthesis.md"],
+    "angent-research":["evidence-model.md","source-conflict.md","stopping-rule.md"],
+    "angent-execution":["action-semantics.md","effect-safety.md","engineer-routing.md","engineer-selection.md"],
+    "angent-authoring":["reader-state.md","composition-and-representation.md","technical-exposition.md","long-form-consistency.md","headings-and-boundaries.md","surface-profiles.md","language-vi.md"],
+    "angent-quality":["quality-rubric.md","coverage-and-endpoints.md","authoring-calibration.md"],
+    "angent-format":["render-fidelity.md"],
+    "angent-learning":["experience-loop.md","memory-boundary.md"],
+    "angent-continuity":["active-work-frontier.md","continuity-protocol.md","resume-reconciliation.md"],
 }
-assert required_refs<=refs,required_refs-refs
+for skill,refs in owner_refs.items():
+    base=root/"skills"/skill/"references"
+    for ref in refs:
+        assert (base/ref).exists(),(skill,ref)
 
-all_md=list(root.rglob("*.md"))
-for p in all_md:
-    text=p.read_text(encoding="utf-8")
-    for name in re.findall(r"`([A-Za-z0-9._-]+\.md)`",text):
-        if name in required_refs:
-            assert (root/"skills/angent/references"/name).exists(),(p,name)
+# Cross-cutting root references remain during migration.
+for ref in ["interface-contracts.md","core-fixtures.md","harness-contract.md"]:
+    assert (root/"skills/angent/references"/ref).exists(),ref
 
-print("PASS ANGENT 1.0.0 package identity and canonical reference graph")
+print("PASS ANGENT 1.0.0 package identity and owner-local reference architecture")

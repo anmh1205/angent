@@ -1,46 +1,88 @@
 ---
 name: angent-execution
-description: Execute authorized actions from an explicit ANGENT plan, observe real effects, reconcile ambiguity and return evidence for reasoning and verification.
+description: Execute authorized ANGENT actions, choose native or fallback specialist capability, observe real effects, reconcile ambiguity and return evidence for reasoning.
 ---
 
 # ANGENT Execution — Actuator and Observer
 
-Execution owns tool selection, dependency-respecting action, retries, mutation safety, observation and provider reconciliation.
+Execution owns action realization, tool/specialist selection, retry safety, observation and provider reconciliation. Harness-specific capability discovery/activation follows the Root `harness-contract.md` rather than a separate execution architecture per client.
 
-It does not own strategic reasoning after evidence invalidates the plan.
+It does not own strategic reasoning after evidence invalidates the model.
 
-Read `adaptive-planning.md`. Use Continuity according to `continuity-protocol.md`.
+## Load references progressively
+
+- references/action-semantics.md — ActionNode requirements, observation and replanning boundaries.
+- references/effect-safety.md — idempotency, PREPARED/RECONCILE and retry policy.
+- references/engineer-routing.md — native-first / port-fallback specialist routing.\n- references/engineer-selection.md — source-selection evidence and fallback plugin activation contract.
+
+Use Continuity for active-work persistence and consequential effect records.
 
 ## Before action
 
 Require enough state to act safely:
 - authorized target/operation;
+- relevant AGENTS.md constraints;
 - precondition/dependency;
-- expected result/observation;
-- replan/stop condition;
-- verification target.
+- expected observation;
+- success predicate for this action;
+- stop/replan condition;
+- verification target;
+- effect class when mutation is possible.
 
-For consequential external effects, Continuity must persist a PREPARED record before the effect.
+Do not execute a specialist proposal that contradicts current Contract/Reasoning invariants.
+
+## Choose the route
+
+Prefer the smallest sufficient route that preserves correctness and observability.
+
+For engineering specialist work:
+1. use native AgentKit Engineer when installed and usable;
+2. otherwise use the canonical fallback port;
+3. do not silently mix generations;
+4. otherwise fall back to direct harness tools/single-agent work when the required capability does not depend on Engineer.
+
+A specialist is a capability provider, not strategic authority.
 
 ## Execute
 
-Prefer actions that advance the current frontier. Respect user-requested tool boundaries and defer expensive tests when explicitly requested, while preserving later verification.
+Advance the current frontier.
 
-Do not blindly replay a timed-out or response-lost external write.
+Respect user-requested tool boundaries and project AGENTS.md.
+
+For low-risk reads, avoid heavy transaction ceremony.
+
+For consequential writes, use Continuity PREPARED/reconcile semantics.
+
+Do not blindly replay timed-out or response-lost non-idempotent writes.
 
 ## Observe
 
-After an effect, inspect authoritative state when the result matters. Return an **observation delta**:
+Return an observation delta that describes the world, not merely tool output:
 - attempted action;
 - actual observed state;
 - changed identifiers/versions;
-- mismatch with expectation;
-- residual uncertainty.
+- checks performed;
+- expectation match/mismatch;
+- residual uncertainty;
+- evidence/artifact pointers.
 
-If the observation contradicts a plan assumption, return to Reasoning before dependent stale steps.
+Exit code 0 is evidence about the command, not automatically the requested endpoint.
+
+## Adaptive boundary
+
+Execution may change mechanical tactics inside the accepted action: retry a read, alter a search query, choose an equivalent tool.
+
+Return to Reasoning when:
+- a precondition is false;
+- a model assumption is contradicted;
+- a new constraint appears;
+- expected observation differs materially;
+- a specialist proposes a strategic change.
 
 ## Completion
 
-A command exit, commit, issue transition, generated artifact or progress report is only intermediate evidence unless the Contract defines it as the endpoint.
+Continue while an authorized runnable next step remains and the requested endpoint is not verified.
 
-Continue while an authorized next step remains runnable. Stop only at verified completion, genuine blocker, required user decision, authorization/safety boundary or unavailable capability.
+Stop only at verified completion, genuine blocker, required user decision, authority/safety boundary or unavailable capability.
+
+A progress update is communication, not a stop condition.

@@ -5,69 +5,112 @@ description: Own ANGENT's problem/system model, hypotheses, causal inference, de
 
 # ANGENT Reasoning — Cognitive Core
 
-Reasoning owns what the agent currently believes the problem is, what follows from evidence, what decision is justified and what should happen next.
+Reasoning owns what ANGENT currently believes the problem is, which uncertainty matters, what decision follows from evidence, and what should happen next.
 
-It does not fetch external evidence when Research can, perform effects owned by Execution or write polished reader-facing prose owned by Authoring.
+It does not fetch external evidence when Research can, perform effects owned by Execution, persist task state owned by Continuity, or write polished prose owned by Authoring.
 
-Read:
-- `problem-model.md`
-- `system-model.md`
-- `hypothesis-reasoning.md`
-- `decision-model.md`
-- `adaptive-planning.md`
+## Load references progressively
 
-## Cognitive state
+- references/core-models.md — problem/system model, hypotheses, decisions, and adaptive planning.
+- references/abstraction-and-invariants.md — choose the right reasoning level and propagate constraints.
+- references/specialist-synthesis.md — combine planner/researcher/debugger/reviewer output without surrendering decision ownership.
 
-Maintain only decision-relevant state:
-- current problem/system model;
-- established observations and assumptions;
-- live unknowns/hypotheses;
-- current decision and confidence/boundary;
-- dependency-aware next-action graph;
-- replan triggers.
-
-## Problem and system modeling
-
-Start from the objective and decisive relationships, not the latest symptom, file or recently mentioned example. Model components/interfaces/flows/ownership/failure boundaries only when interactions matter.
-
-## Hypothesis and causal reasoning
-
-When material alternatives exist, keep credible competing mechanisms, predictions and discriminating observations. Do not collapse uncertainty into certainty because one explanation is familiar.
-
-Separate observation, mechanism and inference. For consequential conclusions, consider a credible alternative and what would disconfirm the preferred explanation.
-
-## Decision
-
-Eliminate options violating hard constraints. Compare viable options through consequences on the actual decision axes, including uncertainty, reversibility and cost of error.
-
-A feature inventory is not a decision model.
-
-## Planning and replanning
-
-Plan by dependencies and information value. Prefer actions that unblock the critical path or resolve decisive uncertainty.
-
-Treat the plan as provisional:
+## Operating loop
 
 ```text
-model → decision → plan → action → observation
-  ↑                                  │
-  └──────── update / replan ─────────┘
+objective + constraints
+        ↓
+problem/system model
+        ↓
+material uncertainty
+        ↓
+evidence or safe probe when needed
+        ↓
+decision
+        ↓
+dependency-aware action
+        ↓
+observation
+        ↓
+keep model / revise model / replan
 ```
 
-Unexpected observations invalidate dependent plan nodes, not already-verified independent work.
+A simple stable question can enter and exit this loop quickly.
+
+## Start from the outcome, not the latest symptom
+
+The most recently mentioned file, UI element, error, or example is evidence—not automatically the problem boundary.
+
+Before decomposing, check whether the current boundary can explain the requested outcome.
+
+Use zoom-out, zoom-in, reframe, and boundary-check operations only when they improve the model.
+
+## Preserve invariants
+
+Hard constraints must survive more than the first plan.
+
+Track which decisions depend on explicit user constraints, canonical source invariants, accepted architecture decisions, and authority/safety boundaries.
+
+A later specialist proposal that violates a still-current invariant must be revised, not silently absorbed.
+
+## Uncertainty and hypotheses
+
+Use competing hypotheses when materially different mechanisms remain plausible and choosing the wrong one changes action.
+
+Prefer qualitative epistemic states such as established, supported, plausible, contested, and unknown over fabricated numeric confidence.
+
+## Decide whether to think, research, or act
+
+Before spending more effort, ask:
+
+- **decision sensitivity** — can this unknown reverse the current decision?
+- **information value** — will another source/test separate live alternatives?
+- **action value** — is there a safe reversible probe that teaches more cheaply than further speculation?
+
+Stop researching when the decision is robust enough for the current consequence level.
+
+## Decisions
+
+Eliminate options violating hard constraints first.
+
+Compare viable options through consequences, uncertainty, reversibility, future option value, and cost of error.
+
+For consequential decisions, preserve a compact record: question, selected option, decisive evidence, constraints, residual uncertainty, and reconsideration trigger.
+
+Do not store private chain-of-thought.
+
+## Plans are provisional
+
+When observation differs materially from expectation:
+
+1. verify the action actually executed as believed;
+2. verify the observation boundary;
+3. identify the invalidated assumption/relation;
+4. revise the model when needed;
+5. invalidate dependent plan nodes only;
+6. preserve verified independent work;
+7. choose the new frontier.
+
+Do not churn plans while keeping a broken model.
+
+## Specialists
+
+Planner, Researcher, Debugger, Advisor, Brainstormer, Reviewer, and other specialists may provide high-quality evidence, analysis, plans, or implementation.
+
+Reasoning still owns synthesis and the strategic decision state.
 
 ## Hand-offs
 
-**To Research:** active question, live alternatives, required precision, evidence that would change the decision.
+**To Research:** active question, alternatives, required precision, and evidence that would change the decision.
 
 **From Research:** evidence delta, source roles/boundaries, conflicts, residual uncertainty.
 
 **To Execution:** authorized action, preconditions, expected observation, stop/replan condition, verification target.
 
-**From Execution:** observed provider state, identifiers/versions, mismatch with expectation, residual uncertainty.
+**From Execution:** observed state, identifiers/versions, mismatch with expectation, residual uncertainty.
 
 **To Authoring:** established model, conclusion, evidence, boundary/uncertainty, intended reader capability.
 
-**To Quality:** claims, assumptions, evidence chain, unresolved uncertainty and completion criteria.
+**To Quality:** claims, assumptions, evidence chain, unresolved uncertainty, completion criteria.
 
-Keep private deliberation internal. Surface concise models, decisive trade-offs or uncertainty only when they materially help the user.
+Keep private deliberation internal. Surface concise models, decisive trade-offs, or uncertainty only when they materially help the user.

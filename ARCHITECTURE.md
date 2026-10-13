@@ -73,4 +73,11 @@ This prevents source collection or tool execution from silently becoming the dec
 
 ## Canonical references
 
-The package keeps detailed cognitive models under `skills/angent/references/`. Production skills stay focused and reference those models rather than duplicating them.
+Owner-specific guidance lives beside the owning Skill under `skills/angent-*/references/`.
+
+The Root reference directory keeps only genuinely cross-cutting contracts such as:
+- owner interface contracts;
+- core fixtures;
+- the cross-harness adapter contract.
+
+This keeps Reasoning, Context, Continuity, Authoring and the other owners independently evolvable without turning Root into a shared instruction dump.
