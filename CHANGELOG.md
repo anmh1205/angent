@@ -49,10 +49,11 @@ The 1.0.0 line is under active development and is **not released yet**.
 - Live SERVER/local-harness validation passes package/reference architecture, owner boundaries, Reasoning, full Engineer inventory, native/fallback separation and local state-store behavior.
 - The Engineer selector was exercised against native-usable, native-unusable and unknown states; AgentKit offline doctor was healthy on SERVER.
 - Stale release-state claims were scanned and removed.
+- Final branch integration review passed `git diff --check`, JSON manifest parsing, Skill/reference integrity, stale/runtime leakage scans, and Agent Skills conformance for all 114 Skills.
 
 ### Still required before release
 
 - Run broader cross-harness acceptance for native/fallback discovery and Continuity/Context semantics when another harness path is available.
-- Complete representative Authoring/Quality calibration on chat, technical explanation and long-form cases.
-- Complete final integration review and draft-PR review.
+- Complete representative long-form Authoring/Quality end-to-end acceptance; failure-mode calibration is already recorded in the handbook.
+- Complete draft-PR review.
 - Keep 1.0.0 unreleased until explicit release approval.
