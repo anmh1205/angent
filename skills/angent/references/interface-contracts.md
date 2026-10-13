@@ -89,6 +89,7 @@ Learning records mechanism, decision/failure class, owner, applicability, bounda
 work_key:
 revision:
 lifecycle:
+repair_state: NONE | REPAIRING | UNSTABLE
 outcome:
 phase:
 active_obligations: []
