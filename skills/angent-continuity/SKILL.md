@@ -33,6 +33,7 @@ Keep enough durable state to answer:
 - which accepted baseline/artifact-state pointer later work depends on;
 - which previously verified units are stale/recheck after dependency changes;
 - where artifacts/evidence live;
+- which coverage ledger a broad audit/inspection depends on;
 - what blockers/dependencies remain;
 - whether an external effect is ambiguous;
 - what the next safe action is.
