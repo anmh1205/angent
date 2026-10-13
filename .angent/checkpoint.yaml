@@ -7,11 +7,12 @@ source_of_truth:
   repository: anmh1205/angent
   branch: angent-1.0.0-upgrade
 source_verification:
-  validated_branch_head_before_checkpoint: 7ae897235fba37ab205c5d65896d4589519dde4e
+  validated_branch_head_before_checkpoint: 42c9f1b510049b972de07b3c23329c25ba4059ef
   merge_base: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
-  branch_history: "upgrade branch rebased onto main baseline while preserving the validated upgrade tree"
+  draft_pr: 1
+  draft_pr_url: https://github.com/anmh1205/angent/pull/1
 release_state:
   version: 1.0.0
   released: false
@@ -23,21 +24,21 @@ frontier:
     - "Native AgentKit source is not mirrored in the repository."
     - "Engineer fallback has portable Agent Plugins and ChatGPT/Codex companion manifests pointing to one Skill tree."
     - "Native/fallback source selection is implemented; native usability must be proven by the active harness."
-    - "Semantic audit corrected capability drift including ak:tech-graph versus ak:graphify."
     - "Local project/user memory persistence uses revisioned compare-and-swap writes."
     - "Local Continuity persistence uses immutable revisions, atomic current pointer updates and stale-writer conflict detection."
     - "Cross-harness adapter semantics are defined without a generic Capability Broker."
     - "Authoring/Quality includes technical exposition, long-form consistency, heading boundaries and failure-mode calibration."
-    - "Upgrade branch has main baseline as its real merge base."
-    - "SERVER validation passed Agent Skills conformance for 114 Skills, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
-    - "git diff --check passed and all four plugin manifests parse as JSON."
-    - "Live selector returned fallback for unproven native state and native when active-harness usability was supplied; AgentKit doctor was healthy."
+    - "SERVER validation previously passed Agent Skills conformance for 114 Skills, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
+    - "Draft PR #1 is open and remains draft."
+    - "Integration review paginated across all 335/335 PR files; no remaining literal escape, stale release-claim, or fallback runtime-leakage finding was detected."
+    - "Integration review repaired Markdown literal-escape artifacts and aligned the Continuity cross-cutting contract with active-frontier semantics."
   active_work:
-    - "Open and review the draft PR without merging."
+    - "Record the integration review on draft PR #1."
     - "Run broader cross-harness acceptance when another harness path is available."
-    - "Run representative long-form Authoring/Quality acceptance before release."
+    - "Run representative end-to-end long-form Authoring/Quality acceptance before release."
   unresolved:
     - "Agent Plugins v1 does not standardize Agent components; portable Agent role projection remains adapter-owned."
     - "Broader cross-harness acceptance beyond the current SERVER environment remains open."
     - "Long-form Authoring/Quality still needs a representative end-to-end acceptance case before release."
-next_action: "Open the draft PR, review the complete main-to-upgrade diff, and keep merge/release blocked until the remaining acceptance work is satisfied."
+    - "GitHub reports no status checks/check-runs on the current PR head; validated tests are external/local evidence rather than GitHub CI."
+next_action: "Record the current integration review on draft PR #1, keep it draft, then continue the remaining cross-harness and long-form acceptance work before any merge/release."
