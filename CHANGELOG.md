@@ -26,7 +26,8 @@ The 1.0.0 line is under active development and is **not released yet**.
 - Completed the portable fallback surface for **102/102 Engineer Skills** and **16/16 Agent roles** without vendoring raw upstream source.
 - Added PORTABLE / ADAPTED / DEGRADED semantics so runtime-specific upstream capabilities retain the best portable behavior instead of being dropped.
 - Added native AgentKit guidance pointing to the official AgentKit installation and Engineer Kit documentation.
-- Added validation to prevent native/fallback packaging regressions.\n- Normalized all 102 fallback Skills to Agent Skills v1 frontmatter/name constraints: fallback names now match their `ak-*` directories, and AgentKit-only top-level metadata no longer sits in portable frontmatter.
+- Added validation to prevent native/fallback packaging regressions.
+- Normalized all 102 fallback Skills to Agent Skills v1 frontmatter/name constraints: fallback names now match their `ak-*` directories, and AgentKit-only top-level metadata no longer sits in portable frontmatter.
 - Packaged the fallback as its own Agent Plugins root and ChatGPT/Codex companion package while keeping one canonical 102-Skill tree.
 - Added a read-only native/fallback selector contract: active-harness visibility selects native; absent/unproven native uses fallback.
 - Added a cross-harness adapter contract without introducing a generic capability broker.
