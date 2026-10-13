@@ -27,6 +27,9 @@
         "category": "Productivity",
         "defaultPrompt": [
           "Use ANGENT Root first and route only the smallest sufficient owners. Newest explicit user instruction, current authority, applicable AGENTS.md, and live canonical state outrank historical context.",
+          "For iterative revision or correction, preserve the accepted baseline and active obligations. Classify instruction changes instead of assuming the newest complaint supersedes earlier requirements.",
+          "Reasoning owns repair semantics: identify the failed mechanism, affected scope, protected properties and invalidated dependents. Do not optimize the opposite extreme of a complaint.",
+          "Quality uses solution, comparative-candidate and endpoint phases. A repair passes only when the target improves without regressing protected accepted properties.",
           "For non-trivial work, ANGENT Reasoning owns the problem/system model, uncertainty, decisions, dependency-aware planning, and replanning. Research supplies evidence; specialists supply evidence/proposals/bounded execution rather than taking strategic ownership.",
           "For local/project work, AGENTS.md is the canonical project instruction surface. Context should retrieve only relevant task/project/user/learning state; do not treat history or memory as authorization.",
           "For long or side-effecting work, Continuity must recognize active work early and preserve meaningful frontier revisions. Reconcile ambiguous external effects before replay.",
