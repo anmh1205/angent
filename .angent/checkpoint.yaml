@@ -1,0 +1,25 @@
+schema_version: 1
+work_key: angent/core/reasoning-redesign
+record_type: BASELINE
+phase: authorized-mutation
+source_of_truth:
+  provider: github
+  repository: anmh1205/angent
+  branch: angent/reasoning-core
+  base_commit: ba2bdba7068966ad5b03febc14941653a12fe067
+scope:
+  outcome: "Make ANGENT the canonical source and redesign Cogent 16 around a first-class Reasoning Core."
+  exclusions:
+    - AgentKit adapter
+    - external CI infrastructure
+    - unrelated project artifacts
+frontier:
+  verified_units:
+    - "Private repository exists and is writable."
+    - "main initialized with ANGENT README."
+    - "working branch angent/reasoning-core created from verified initial commit."
+  unresolved:
+    - "Migrate reusable Cogent 16 capabilities into ANGENT names and ownership."
+    - "Implement first-class Reasoning Core and owner interfaces."
+    - "Validate package structure and publish/sync ChatGPT plugin only after repo source is coherent."
+next_action: "Create ANGENT architecture, manifest, core skills and canonical reasoning references on the working branch."
