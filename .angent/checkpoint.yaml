@@ -1,7 +1,7 @@
 schema_version: 2
 work_key: angent/core/1.0.0
 record_type: MERGED_UNRELEASED
-phase: post-merge-unreleased
+phase: release-ready-unpublished
 source_of_truth:
   provider: github
   repository: anmh1205/angent
@@ -9,20 +9,24 @@ source_of_truth:
 source_verification:
   merged_upgrade_pr: 1
   merged_upgrade_commit: 411bdb0dfc838fd85417824c3794ac971a85c6ee
+  release_readiness_docs_pr: 2
+  verified_candidate_content_head: 0f3197ddc3a7b533de4f6da26b74e8645fee8d7b
   previous_main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
   github_ci:
     workflow: .github/workflows/angent-validation.yml
     check: validate
-    merge_commit_conclusion: success
+    upgrade_merge_conclusion: success
+    release_readiness_head_conclusion: success
+    release_readiness_main_conclusion: success
 release_state:
   version: 1.0.0
   released: false
   private_chatgpt_plugin_updated: false
+  private_chatgpt_plugin_current_release_id: pluginrel_6ace3b6cfcb48191b1da97432fe40e13
 frontier:
   verified_units:
-    - "PR #1 was squash-merged into main after the upgrade head passed GitHub Actions."
-    - "GitHub Actions validate also passed on merge commit 411bdb0."
+    - "PR #1 was reviewed and merged into main after the upgrade head passed GitHub Actions."
     - "AGENTS.md is the canonical project instruction surface."
     - "ANGENT owner Skills use owner-local progressive disclosure."
     - "Engineer fallback contains 102/102 Skills and 16/16 portable Agent roles."
@@ -30,15 +34,17 @@ frontier:
     - "Native AgentKit remains external; native/fallback selection is read-only and harness-evidence based."
     - "Local memory persistence and Continuity persistence use revision/conflict semantics and pass tests."
     - "Cross-harness adapter semantics do not require a generic Capability Broker."
-    - "The actual upgrade fallback companion was discovered, installed and enabled by Codex CLI 0.161.0 in an isolated temporary CODEX_HOME."
-    - "Raw Codex evidence is persisted in PR #1 review 5508193037 and the temporary environment was deleted."
-    - "Representative long-form Authoring/Quality acceptance passed and is recorded in the Notion handbook/A6."
-    - "Integration review has no unresolved review thread or known blocking implementation finding."
+    - "The upgrade fallback companion was discovered, installed and enabled by Codex CLI 0.161.0 in an isolated temporary CODEX_HOME."
+    - "Representative long-form Authoring/Quality acceptance passed."
+    - "Integration review found no blocking implementation finding."
+    - "PR #2 reconciled README/CHANGELOG with the actual merged acceptance state."
+    - "GitHub Actions validate passed on release-readiness PR head and on main@0f3197d."
+    - "The private ChatGPT plugin was inspected and confirmed to remain the older baseline package."
   active_work: []
   unresolved:
-    - "The existing private ChatGPT angent plugin remains the older baseline package; it was intentionally not updated as part of merge acceptance."
+    - "The private ChatGPT angent plugin remains the older baseline package and must not be updated without explicit release approval."
     - "Agent Plugins v1 does not standardize portable Agent components; fallback Agent roles remain adapter-projected."
   non_blocking_boundaries:
-    - "The code is merged but ANGENT 1.0.0 is still unreleased."
-    - "Publishing/releasing or updating the private ChatGPT plugin requires a separate explicit release action."
-next_action: "Do not publish or release 1.0.0 until explicitly requested. For future work, resume from main and treat this merged tree as the current implementation baseline."
+    - "Implementation and acceptance are complete for the current candidate, but ANGENT 1.0.0 is still unreleased."
+    - "Publishing/tagging or updating the private ChatGPT plugin is a separate explicit release action."
+next_action: "Do not publish or release 1.0.0 until explicitly requested. If release is approved, build/verify the release artifact from the exact current main tree and update only the authorized release surfaces."
