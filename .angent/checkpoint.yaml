@@ -1,4 +1,4 @@
-schema_version: 3
+schema_version: 2
 work_key: angent/core-hardening
 record_type: ACTIVE
 phase: core-hardening
@@ -6,34 +6,37 @@ source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: core-hardening
+
 release_state:
   version: 1.0.0
   released: false
-  implementation_complete: false
+  release_ready: false
   private_chatgpt_plugin_updated: false
-active_obligations:
-  - "Fix ANGENT core architecture before revisiting Engineer fallback inventory/parity."
-  - "Remove all files under the root tests/ directory; do not treat unrelated workflow files as part of that deletion request."
-  - "Do not rely on superficial keyword/count/static tests as evidence that agent behavior is correct."
-  - "Preserve accepted behavior while fixing overcorrection, repair regression, context loss, recurrence and long-task state."
-verified_completed:
-  - "Root tests/ files are removed on core-hardening."
-  - "Constraint evolution distinguishes addition/refinement/supersession/scoped exception/conflict."
-  - "Context preserves active obligations and baseline pointers and separates external content from task authority."
-  - "Reasoning has baseline-preserving repair, protected properties, dependency invalidation and oscillation escalation."
-  - "Authoring has semantic artifact state for iterative and long-form work."
-  - "Quality references include comparative gates plus overcorrection/repair-regression detection."
-  - "Coverage semantics account for incomplete inventory, pagination/truncation and stale/recheck units."
-  - "Continuity has lifecycle/baseline-pointer semantics and local discovery scans coherent immutable revisions."
-  - "Learning experience loop includes activation and recurrence semantics."
-  - "Format no longer owns external-effect authority."
-  - "Architecture, AGENTS.md, README and CHANGELOG reflect core-hardening semantics."
-  - "GitHub workflow is hygiene-only and no longer calls root tests/."
-unfinished:
-  - "Complete a final source-level consistency sweep across all core owner Skills/references and entry surfaces."
-  - "Reconcile any remaining stale release/validation language."
-  - "Decide merge/read-back after the core consistency sweep."
-deferred:
-  - "Engineer fallback inventory, upstream parity and fallback capability audit."
-  - "Private ChatGPT plugin release/update and version strategy."
-next_safe_action: "Read back and cross-check all changed core files on core-hardening, repair remaining semantic/interface inconsistencies, then compare the branch with main. Do not start Engineer parity work yet."
+  note: "The prior release-ready checkpoint is superseded while core hardening is active."
+
+frontier:
+  active_work:
+    - "Finish core consistency audit and reconcile all owner/reference interfaces."
+    - "Read back branch state and compare against the pre-hardening base before integration."
+  verified_units:
+    - "Constraint evolution distinguishes ADD, REFINE, SUPERSEDE, SCOPED_EXCEPTION and CONFLICT."
+    - "Context preserves active obligations and accepted baseline pointers independently from ordinary context minimization."
+    - "Reasoning uses accepted-baseline repair, protected properties, affected scope, dependency invalidation and oscillation escalation."
+    - "Authoring owns semantic artifact state for iterative and long-form work."
+    - "Quality references comparative gates and rejects repair regression."
+    - "Format no longer owns external-effect authority."
+    - "Continuity lifecycle/baseline semantics are wired into the owner."
+    - "Continuity discovery now scans coherent immutable revisions rather than trusting only current.json."
+    - "Learning experience loop includes activation and recurrence escalation."
+    - "External retrieved content is explicitly separated from instruction authority."
+    - "All files under root /tests were removed."
+    - "The CI workflow no longer invokes the removed root tests."
+  unresolved:
+    - "Engineer fallback upstream inventory/parity refresh is intentionally deferred until after core stabilization."
+    - "The private ChatGPT ANGENT plugin still runs an older baseline package and is not updated in this phase."
+    - "Release/plugin identity strategy remains a later release decision."
+  non_blocking_boundaries:
+    - "No publishing or release action is authorized by core-hardening work."
+    - "Engineer implementation is out of scope for this phase except where core/Engineer boundaries must remain explicit."
+
+next_action: "Complete the second-pass core audit, resolve any remaining internal contradictions, compare the branch with the pre-hardening base, then integrate core changes. Start Engineer refresh only afterward."
