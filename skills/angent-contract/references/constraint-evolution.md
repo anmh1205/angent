@@ -44,3 +44,20 @@ When a new instruction arrives:
 5. expose a true conflict only when no valid interpretation preserves both.
 
 Recency resolves explicit replacement. It is not a general-purpose merge algorithm.
+
+
+## Obligation lifecycle
+
+The active obligation set must not grow forever.
+
+An obligation can be:
+
+- **ACTIVE** — still constrains current work;
+- **SATISFIED** — its required state has been achieved and no continuing constraint remains;
+- **SUPERSEDED** — explicitly replaced by newer authority;
+- **EXPIRED** — its scope/phase ended;
+- **OUT_OF_SCOPE** — no longer applies after an authorized scope change.
+
+Only ACTIVE obligations are carried as mandatory context.
+
+A scoped exception expires with its scope unless explicitly extended. A promise becomes SATISFIED when its promised state is delivered. Do not keep completed procedural instructions active merely because they were once explicit.
