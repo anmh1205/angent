@@ -11,9 +11,9 @@ Contract ← Context
   ↓
 Reasoning ↔ Research
   ↓
-Solution Quality Gate
-  ↓
 Decision / Repair Model
+  ↓
+Solution Quality Gate
   ├────────────── operational action ──────────────┐
   │                                                ↓
   │                                      Execution + Continuity
