@@ -15,6 +15,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 from typing import Any
@@ -22,6 +23,56 @@ from typing import Any
 
 SCHEMA_VERSION = 1
 KIND = "angent.engineer_selection"
+PLUGIN_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
+PLUGIN_FIELDS = {
+    "$schema", "name", "version", "description", "author", "homepage",
+    "repository", "license", "keywords", "extensions",
+}
+PLUGIN_NAME = re.compile(r"^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$")
+
+
+def _portable_manifest_valid(manifest: Any, expected_name: str) -> bool:
+    if not isinstance(manifest, dict):
+        return False
+    if set(manifest) - PLUGIN_FIELDS:
+        return False
+    if manifest.get("$schema") != PLUGIN_SCHEMA:
+        return False
+
+    name = manifest.get("name")
+    if (
+        not isinstance(name, str)
+        or name != expected_name
+        or not 1 <= len(name) <= 64
+        or not PLUGIN_NAME.fullmatch(name)
+        or "--" in name
+        or ".." in name
+    ):
+        return False
+
+    for key in ("version", "description", "homepage", "repository", "license"):
+        if key in manifest and not isinstance(manifest[key], str):
+            return False
+
+    author = manifest.get("author")
+    if author is not None:
+        if not isinstance(author, dict) or set(author) - {"name", "email", "url"}:
+            return False
+        if any(not isinstance(value, str) for value in author.values()):
+            return False
+
+    keywords = manifest.get("keywords")
+    if keywords is not None and (
+        not isinstance(keywords, list)
+        or any(not isinstance(value, str) for value in keywords)
+    ):
+        return False
+
+    if "extensions" in manifest and not isinstance(manifest["extensions"], dict):
+        return False
+
+    return True
+
 
 
 def _run(command: list[str], timeout: float) -> dict[str, Any]:
@@ -131,10 +182,9 @@ def _fallback_info(plugin_root: Path) -> dict[str, Any]:
         try:
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             plugin_name = manifest.get("name")
-            manifest_valid = (
-                manifest.get("$schema")
-                == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
-                and plugin_name == "angent-engineer-fallback"
+            manifest_valid = _portable_manifest_valid(
+                manifest,
+                "angent-engineer-fallback",
             )
         except (OSError, json.JSONDecodeError):
             pass
