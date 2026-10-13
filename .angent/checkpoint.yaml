@@ -1,28 +1,23 @@
 schema_version: 1
 work_key: angent/core/1.0.0
-record_type: PREPARED
+record_type: PROGRESS
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent/reasoning-core
-  observed_checkpoint_blob: e40342c3e97b4c6c6c9af895f0d95b8ebb0ce022
+  verified_head: 1ca7757b1cee4c8ee584caa8c8d85756282abd7d
 scope:
   outcome: "Establish ANGENT 1.0.0 as an independent cognitive layer for agents with a first-class Reasoning Core."
-pending_operation:
-  operation_id: angent-canonical-models-1.0.0
-  target: "skills/angent/references and owner skill interfaces"
-  intent: "Create the canonical task, problem, system, hypothesis, decision, planning, evidence, authoring, quality, learning and continuity models; wire owners to those references."
-  expected_before: "Core owner skills exist but canonical reference corpus is incomplete."
-  expected_after: "Owners share explicit ANGENT-native models and hand-off contracts without overlapping decision ownership."
-  reconciliation: "Read back all created references and updated skills; verify the reference graph and owner boundaries."
 frontier:
   verified_units:
-    - "ANGENT 1.0.0 identity cleanup verified."
-    - "Core owner scaffold exists."
+    - "ANGENT 1.0.0 identity cleanup."
+    - "15 canonical cognitive references committed at d157b5798cba496c12a59b9b4f931c63f6576c04."
+    - "11 owner skills rewired to canonical models at 1ca7757b1cee4c8ee584caa8c8d85756282abd7d."
   unresolved:
-    - "Canonical reference corpus."
-    - "Owner-to-owner interface alignment."
-    - "Structural and behavioral contract tests."
-    - "Merge to main and ChatGPT plugin packaging."
-next_action: "Create the canonical reference corpus."
+    - "Formalize owner hand-off interface contracts."
+    - "Add repository structural guards and core behavior fixtures."
+    - "Read back and scan complete branch snapshot."
+    - "Merge verified source to main."
+    - "Package/publish ANGENT ChatGPT plugin from repository source."
+next_action: "Add interface contracts and core structural guards."
