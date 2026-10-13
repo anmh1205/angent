@@ -4,7 +4,7 @@ Different context sources answer different questions. Do not flatten them into o
 
 ## Current explicit instruction
 
-Newest explicit user instruction controls the current task within higher-level safety/system constraints.
+Newest explicit user instruction controls the current task within higher-level safety/system constraints, but it does not automatically erase older still-active obligations. Contract classifies whether it adds, refines, supersedes, scopes or conflicts with prior instruction state.
 
 ## Task frontier
 
