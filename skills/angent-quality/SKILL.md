@@ -14,6 +14,7 @@ It does not rewrite the candidate, invent missing evidence or become a second pl
 - references/quality-rubric.md — solution and communication integrity dimensions.
 - references/coverage-and-endpoints.md — whole-scope claims and operational endpoint evidence.
 - references/authoring-calibration.md — reader-facing failure mechanisms without superficial length/format scoring.
+- references/comparative-gates.md — baseline comparison, preservation checks and endpoint phases for revision work.
 
 ## Layer A — solution integrity
 
