@@ -4,7 +4,7 @@
 
 ANGENT helps an agent understand the requested outcome, reconstruct the relevant working state, model systems and uncertainty, seek evidence, decide, act, verify, communicate clearly, preserve long-running work, and learn from experience.
 
-> **Status:** 1.0.0 is an unreleased candidate under active development.
+> **Status:** 1.0.0 is an **unreleased merged candidate**. Implementation, integration review, cross-harness acceptance, and representative Authoring/Quality acceptance are complete; publication remains a separate explicit release action.
 
 ## Architecture
 
@@ -97,6 +97,6 @@ The ANGENT fallback now has **102/102 Engineer Skill targets implemented and 16/
 
 ## Version status
 
-Current development line: **1.0.0 — unreleased candidate**.
+Current line: **1.0.0 — merged, validated, unreleased**.
 
-Do not publish or describe 1.0.0 as released until final integration review, broader cross-harness acceptance, Authoring/Quality calibration, draft-PR review, and explicit release approval are completed.
+The implementation/acceptance gates for the 1.0.0 candidate have completed and the upgrade is on `main`. Do not publish, tag, or describe 1.0.0 as released until an explicit release decision is made from the exact merged source and the intended release surface is verified.
