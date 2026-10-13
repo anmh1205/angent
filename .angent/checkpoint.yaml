@@ -1,30 +1,28 @@
 schema_version: 1
 work_key: angent/core/1.0.0
-record_type: COMMITTED
+record_type: PREPARED
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent/reasoning-core
+  observed_checkpoint_blob: e40342c3e97b4c6c6c9af895f0d95b8ebb0ce022
 scope:
   outcome: "Establish ANGENT 1.0.0 as an independent cognitive layer for agents with a first-class Reasoning Core."
-branding:
-  canonical_name: ANGENT
-  package_name: angent
-  version: 1.0.0
-verification:
-  current_branch_files_scanned: 18
-  predecessor_name_hits: 0
-  migration_document_present: false
-  manifests_version: 1.0.0
+pending_operation:
+  operation_id: angent-canonical-models-1.0.0
+  target: "skills/angent/references and owner skill interfaces"
+  intent: "Create the canonical task, problem, system, hypothesis, decision, planning, evidence, authoring, quality, learning and continuity models; wire owners to those references."
+  expected_before: "Core owner skills exist but canonical reference corpus is incomplete."
+  expected_after: "Owners share explicit ANGENT-native models and hand-off contracts without overlapping decision ownership."
+  reconciliation: "Read back all created references and updated skills; verify the reference graph and owner boundaries."
 frontier:
   verified_units:
-    - "ANGENT identity is independent in the current branch snapshot."
-    - "Both plugin manifests are version 1.0.0."
-    - "Changelog begins at ANGENT 1.0.0."
-    - "Core skills for Contract, Context, Reasoning, Research, Execution, Quality, Authoring, Format, Learning, Continuity and Shell exist."
+    - "ANGENT 1.0.0 identity cleanup verified."
+    - "Core owner scaffold exists."
   unresolved:
-    - "Canonical reference corpus for reasoning, authoring, evidence, learning and continuity is not yet complete."
-    - "Structural and behavioral contract tests are not yet present."
-    - "Branch has not yet been merged to main or packaged as the ChatGPT plugin."
-next_action: "Create ANGENT-native canonical references and tests, then validate the repository source."
+    - "Canonical reference corpus."
+    - "Owner-to-owner interface alignment."
+    - "Structural and behavioral contract tests."
+    - "Merge to main and ChatGPT plugin packaging."
+next_action: "Create the canonical reference corpus."
