@@ -7,7 +7,7 @@ source_of_truth:
   repository: anmh1205/angent
   branch: angent-1.0.0-upgrade
 source_verification:
-  validated_branch_head_before_checkpoint: fb95b57c20c961d20ba1f2fa4e52f01919831354
+  validated_branch_head_before_checkpoint: 24c6cae23e9913845eb564bb70d162f929f34156
   merge_base: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
@@ -28,19 +28,19 @@ frontier:
     - "Local project/user memory persistence uses revisioned compare-and-swap writes."
     - "Local Continuity persistence uses immutable revisions, atomic current pointer updates and stale-writer conflict detection."
     - "Cross-harness adapter semantics are defined without a generic Capability Broker."
-    - "Authoring/Quality includes technical exposition, long-form consistency, heading boundaries and failure-mode calibration."
-    - "SERVER validation previously passed Agent Skills conformance for 114 Skills, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
-    - "Representative long-form Authoring/Quality acceptance PASSes on handbook Page 03 and A6 Case 9."
-    - "Draft PR #1 is open and remains draft."
-    - "Integration review paginated across all 335/335 PR files and recorded a review comment; no remaining literal escape, stale release-claim, or fallback runtime-leakage finding was detected."
-    - "Integration review repaired Markdown literal-escape artifacts and aligned the Continuity cross-cutting contract with active-frontier semantics."
-    - "ChatGPT read-only check confirms the owned private angent 1.0.0 plugin is the older baseline package, not the upgrade source."
+    - "Preview acceptance is explicitly separated from canonical release identity so a client auto-bump cannot silently turn the 1.0.0 candidate into 1.0.1."
+    - "Authoring/Quality representative long-form acceptance PASSes on handbook Page 03 and A6 Case 9."
+    - "SERVER validation previously passed 114-Skill conformance, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
+    - "Draft PR #1 remains open and draft."
+    - "Integration review paginated all 335/335 PR files and found no remaining stale release claim or fallback runtime leakage."
+    - "ChatGPT read-only inspection confirms the owned private angent 1.0.0 plugin is the older baseline package."
     - "No owned private angent-engineer-fallback plugin exists in ChatGPT."
   active_work:
-    - "Complete broader cross-harness acceptance for the actual upgrade source."
+    - "Corroborate the reported Codex companion activation test with raw tool history/artifact, or rerun it when SERVER responds reliably."
   unresolved:
+    - "A prior status update reports successful Codex CLI 0.161.0 companion discover/install/enable in temporary CODEX_HOME, but raw command/output is not persisted in PR/evidence log; classify as REPORTED / NEEDS CORROBORATION."
+    - "The upgraded core/fallback companion has not been activated in ChatGPT; current private angent plugin is baseline and fallback companion is absent."
     - "Agent Plugins v1 does not standardize Agent components; portable Agent role projection remains adapter-owned."
-    - "The upgraded core/fallback companion has not been activated in ChatGPT/Codex; current private angent plugin is baseline and fallback companion is absent."
     - "Creating/updating a private ChatGPT preview changes plugin state and requires a deliberate user-authorized action."
-    - "GitHub reports no status checks/check-runs on the PR; validated tests are external/local evidence rather than GitHub CI."
-next_action: "Keep PR #1 draft. To close the remaining ChatGPT/Codex acceptance path, deliberately create/update a private preview from the upgrade source and activate the fallback companion, or obtain equivalent acceptance on another harness."
+    - "GitHub reports no status checks/check-runs on PR #1; current test evidence is local/SERVER evidence."
+next_action: "Recover raw Codex activation evidence from Desktop Commander history or rerun the isolated temporary CODEX_HOME acceptance test; keep PR #1 draft and do not merge/release until cross-harness evidence is reconciled."
