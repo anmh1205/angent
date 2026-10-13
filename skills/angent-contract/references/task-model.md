@@ -10,7 +10,8 @@ Use only fields that matter:
 - **underlying objective** — purpose behind the requested action when clear and materially relevant;
 - **target** — system, artifact, decision or audience being changed or understood;
 - **source-of-truth map** — provider/artifact/version for important claims;
-- **hard constraints** — conditions that cannot be traded away;
+- **active obligations** — currently binding constraints, accepted decisions, exclusions, quality floors, promises and scoped exceptions;
+- **instruction changes** — ADD / REFINE / SUPERSEDE / SCOPED_EXCEPTION / CONFLICT relations when a new instruction changes prior state;
 - **soft preferences** — preferences that may be balanced;
 - **scope/exclusions** — what is inside/outside the task;
 - **authority** — allowed read/write/external effects;
@@ -36,7 +37,7 @@ Watch for:
 - a tool convenience redefining the endpoint;
 - an intermediate artifact becoming mistaken for the requested result.
 
-When scope changes by explicit user instruction, update dependent decisions/frontier rather than preserving the old task model by inertia.
+When scope changes by explicit user instruction, update only obligations and dependent decisions actually affected by that change. Do not treat recency alone as supersession.
 
 ## Minimality
 
