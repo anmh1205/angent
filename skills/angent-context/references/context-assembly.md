@@ -7,6 +7,8 @@ Context should maximize decision signal, not token occupancy.
 - newest explicit user instruction;
 - current conversation facts;
 - active-work frontier from Continuity;
+- active obligations from Contract/task state;
+- accepted baseline or artifact-state pointer when revision work depends on it;
 - applicable AGENTS.md scope;
 - project knowledge;
 - user/global memory;
@@ -19,7 +21,7 @@ Context should maximize decision signal, not token occupancy.
 
 Ask what the next owner needs to decide or do.
 
-Retrieve only context that can change task interpretation, constraints, available options, execution method, or communication/quality requirements.
+Retrieve only context that can change task interpretation, constraints, available options, execution method, or communication/quality requirements. Active obligations that can constrain the next decision are mandatory context, not optional retrieval candidates.
 
 ## AGENTS.md scope
 
