@@ -1,33 +1,37 @@
 schema_version: 1
 work_key: angent/core/1.0.0
-record_type: PREPARED
+record_type: COMPLETE
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: main
-  canonical_source_head_before_publish_checkpoint: d3896ebe6299f9563b3cfa82defd358c8de1f7df
 scope:
-  outcome: "Publish a new independent ANGENT 1.0.0 ChatGPT plugin from canonical repository source."
-package:
-  archive: angent-1.0.0.zip
-  sha256: 43976ed748f36808bd392843b702f20981afbbaa16060bc26c11013036be3aa5
-  canonical_blob_matches: 31/31
+  outcome: "Establish and publish ANGENT 1.0.0 as an independent cognitive layer for agents with a first-class Reasoning Core."
+source_verification:
+  canonical_source_head_before_terminal_checkpoint: b736942e321d42ff38372a7a206636e6737a6cb0
   manifest_name: angent
+  manifest_version: 1.0.0
+  source_files_validated: 38
+  plugin_source_blobs_matched_before_packaging: 31/31
+plugin:
+  plugin_id: plugins_6ace3b6877a0819193f1481bf46b9f00
+  release_id: pluginrel_6ace3b6cfcb48191b1da97432fe40e13
   version: 1.0.0
-pending_operation:
-  operation_id: create-angent-chatgpt-plugin-1.0.0
-  target: "ChatGPT Plugin Creator"
-  intent: "Create a new private plugin named ANGENT/angent from the canonical package; do not mutate the existing predecessor plugin."
-  expected_before: "No new ANGENT plugin created by this operation."
-  expected_after: "A private ANGENT plugin exists at version 1.0.0 with a new plugin id and release id."
-  reconciliation: "Read back the created plugin metadata and files using the returned plugin id; verify name, version, manifests, Reasoning skill and canonical references."
+  scope: USER
+  discoverability: PRIVATE
+  files_read_back: 31/31
+  identity_leaks_found: 0
+  reasoning_core_verified: true
+  interface_contracts_verified: true
 frontier:
   verified_units:
-    - "Canonical ANGENT 1.0.0 source is on main."
-    - "Plugin package matches 31 canonical source blobs exactly."
-  unresolved:
-    - "Create plugin."
-    - "Read back plugin release and key files."
-    - "Record terminal COMPLETE checkpoint."
-next_action: "Create the new ANGENT plugin from the verified archive."
+    - "ANGENT is independent in current source identity and begins at version 1.0.0."
+    - "Repository main is the canonical source."
+    - "First-class Reasoning Core owns problem/system modeling, hypotheses, causal inference, decisions, planning and replanning."
+    - "Research and Execution return EvidenceDelta and ObservationDelta rather than taking over decision ownership."
+    - "Quality checks solution integrity before communication integrity."
+    - "Authoring, Learning and Continuity are integrated through explicit owner boundaries."
+    - "New private ChatGPT plugin ANGENT 1.0.0 is published and read back."
+  unresolved: []
+next_action: "None for ANGENT 1.0.0 core release; future changes start from this canonical state."
