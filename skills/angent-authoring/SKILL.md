@@ -1,87 +1,64 @@
 ---
 name: angent-authoring
-description: Create reader-facing chat responses and long-form artifacts from established ANGENT reasoning, owning reader state, concept staging, representation and language realization.
+description: Create reader-facing content while preserving reader state, artifact state, accepted quality and revision intent.
 ---
 
 # ANGENT Authoring — Integrated Explanation
 
-Authoring owns reader-facing content. It does not solve unresolved technical reasoning through fluent prose.
+Authoring owns reader-facing content and semantic artifact state. It does not solve unresolved reasoning through fluent prose.
 
-Consume established model/evidence from Reasoning and Research. Return unresolved causal/factual gaps rather than disguising them.
+## References
 
-## Load references progressively
+- references/reader-state.md
+- references/composition-and-representation.md
+- references/technical-exposition.md
+- references/long-form-consistency.md
+- references/artifact-state.md
+- references/headings-and-boundaries.md
+- references/surface-profiles.md
+- references/language-vi.md
 
-- references/reader-state.md — determine what the reader knows and what capability must be created.
-- references/composition-and-representation.md — preserve relations in prose, code, tables, diagrams and examples.
-- references/technical-exposition.md — explain technical mechanisms across concepts, layers, code and evidence.
-- references/long-form-consistency.md — preserve curriculum state and depth across chapters.
-- references/headings-and-boundaries.md — make section structure name the technical subject rather than author commentary.
-- references/surface-profiles.md — calibrate chat, report, long-form and progress/status output.
-- references/language-vi.md — natural technical Vietnamese.
+For long-form or iterative revision, load artifact-state and long-form-consistency.
 
-## Start from reader-state delta
+## Reader and artifact state
 
-For each substantive unit:
-1. identify what the intended reader can legitimately use;
-2. identify the current gap;
-3. define what new understanding/capability must exist afterward.
+For each substantive unit, identify what the reader can already use, the current gap, and the capability the unit must create.
 
-Do not infer mastery from a term having appeared earlier.
+For long-lived work preserve the accepted revision pointer, concept dependencies, terminology, recurring examples, promised depth, quality baseline, prerequisite debt and actual coverage.
 
-## Admit concepts deliberately
+Mention is not mastery.
 
-A new term can be established, introduced now, previewed or deferred.
+## Revision discipline
 
-Mention is not mastery. Acronym expansion alone is not explanation.
+When revising existing material:
 
-Establish enough meaning before using a concept as a premise.
+1. start from the accepted baseline and artifact state;
+2. consume Reasoning's repair target, affected scope and protected properties;
+3. change only the required dependency closure;
+4. preserve unrelated accepted strengths;
+5. emit a candidate against the baseline;
+6. advance the accepted revision only after Quality accepts it and the destination result is verified when applicable.
 
-## Preserve relationships
+A complaint about one property is not permission to rewrite the artifact around that property.
 
-A good explanation makes causal, state, ownership, dependency, contrast and uncertainty relationships inspectable.
+## Depth and novelty
 
-Do not turn connected reasoning into parallel bullets merely for scanability.
+Depth is capability, not word count: recognize, explain, trace, predict, diagnose, implement/configure, or verify/evaluate as appropriate.
 
-## Choose representation by reconstruction cost
+A sentence, example or figure should add a fact, relation, inference, boundary or necessary prerequisite repair. Avoid repetition that does not change the reader model.
 
-Use prose, code, trace, table, list, diagram, screenshot/photo or another form because it makes the decisive relationship easier to inspect.
+## Representation and examples
 
-If removing the representation loses no meaningful structure, it may be decoration.
+Choose prose, code, trace, table, diagram or authentic visual by reconstruction cost. Interpret every representation.
 
-Interpret code, commands, figures and examples; do not expect them to teach themselves.
+Examples should be representative, inspectable, plausible, interpreted and bounded. A recurring example anchors the model but never replaces it.
 
-## Paragraph integrity
+## Language and structure
 
-Each paragraph should perform a real job: establish a mechanism, contrast cases, interpret evidence, bridge cause/effect, stage a concept or close an inference.
+Paragraphs perform real explanatory jobs. Headings name technical scope or boundaries.
 
-Remove editorial commentary that consumes attention without changing the reader's model.
-
-## Surface calibration
-
-Chat, chapter, report and progress update use the same Authoring Core but different pacing/density.
-
-Do not make a short chat answer look like a handbook. Do not make long-form technical writing read like stacked chat fragments.
-
-## Long-form continuity
-
-Preserve curriculum state across units:
-- established concepts;
-- terminology;
-- recurring examples;
-- promised depth;
-- unresolved prerequisite debt;
-- quality baseline.
-
-Do not let later chapters collapse into outlines or repeat generic introductions.
-
-## Vietnamese
-
-Compose from technical meaning, not an English sentence skeleton.
-
-Keep conventional technical terms when they are clearer than artificial translations.
-
-Avoid conversational filler, bureaucratic faux-formality and headings that sound like author commentary.
+For Vietnamese, compose from technical meaning, keep conventional technical terms when clearer, and avoid conversational filler or bureaucratic wording.
 
 ## Handoff
 
-Give the canonical candidate to Quality before claiming reader-facing completion.
+Give candidate content plus relevant baseline/artifact state to Quality before claiming reader-facing completion.
