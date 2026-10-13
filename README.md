@@ -4,7 +4,7 @@
 
 ANGENT helps an agent preserve intent and authority, reconstruct relevant state, reason from evidence, repair existing work without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable mechanisms.
 
-> **Status:** ANGENT 1.0.0 remains **unreleased**. The earlier “implementation/acceptance complete” state has been superseded by active core hardening. Engineer fallback refresh is intentionally deferred until the cognitive core is stabilized.
+> **Status:** ANGENT 1.0.0 remains **unreleased**. Core hardening is integrated into `main` through PR #3. Engineer fallback inventory/parity refresh is the next separate phase; the project is not release-ready yet.
 
 ## Core architecture
 
@@ -73,7 +73,7 @@ Engineering specialist capability remains native-first:
 2. otherwise use the ANGENT fallback;
 3. do not expose complete native and fallback catalogs together by default.
 
-The current fallback implementation is preserved during core hardening. Its upstream catalog/parity refresh is a **separate later phase** and current inventory counts must not be treated as proof of parity with the latest AgentKit release.
+The current fallback implementation was intentionally left unchanged during core hardening. Its upstream catalog/parity refresh is the **next separate phase**, and current inventory counts must not be treated as proof of parity with the latest AgentKit release.
 
 ## Repository validation policy
 
@@ -83,6 +83,6 @@ Repository CI now keeps only minimal committed-diff hygiene. Core correctness is
 
 ## Release boundary
 
-Do not publish, tag, or update the canonical private ChatGPT plugin while core hardening is active.
+Do not publish, tag, or update the canonical private ChatGPT plugin yet.
 
-After the core stabilizes, Engineer refresh and cross-harness/release reconciliation are separate phases.
+Core hardening is now canonical. Complete the deferred Engineer refresh next, then perform cross-harness and release-surface reconciliation before any release decision.
