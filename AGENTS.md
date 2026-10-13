@@ -1,6 +1,6 @@
 # AGENTS.md — ANGENT repository instructions
 
-ANGENT is an unreleased cognitive-layer candidate under active core hardening.
+ANGENT is an unreleased cognitive-layer candidate. Core hardening is integrated; Engineer inventory/parity refresh is the next deferred phase.
 
 ## Authority and ownership
 
@@ -46,7 +46,7 @@ Whole-scope claims require complete-enough inventory and coverage. Pagination, t
 
 Prefer usable native AgentKit Engineer; otherwise use the fallback. Do not expose complete native and fallback catalogs together by default.
 
-Engineer inventory/parity maintenance is separate from the current core-hardening phase.
+Engineer inventory/parity maintenance is the next separate phase after the integrated core hardening.
 
 ## Change discipline
 
