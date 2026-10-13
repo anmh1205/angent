@@ -48,6 +48,8 @@ Do not promote a simple task into ceremony merely because a workflow exists.
 
 Quality is one owner with multiple phases, not one linear node placed permanently before or after Authoring.
 
+If the recovered frontier is in REPAIRING or UNSTABLE repair state, a terse continuation such as “continue” keeps the revision/repair route active. Do not downgrade to ordinary Authoring/Direct mode until comparative Quality accepts a new baseline or current authority explicitly changes the task.
+
 ## Revision invariant
 
 A correction to existing work is a state transition from an accepted baseline.
