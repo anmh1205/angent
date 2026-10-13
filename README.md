@@ -2,38 +2,87 @@
 
 **Cognitive layer for intelligent agents.**
 
-> **Status:** 1.0.0 remains unreleased. Core hardening is active; earlier “implementation complete” claims are superseded by the current repair/regression work.
+ANGENT helps an agent preserve intent and authority, reconstruct relevant state, reason from evidence, repair existing work without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable mechanisms.
 
-ANGENT separates task authority, context, reasoning, evidence, execution, authoring, quality, continuity and learning.
+> **Status:** ANGENT 1.0.0 remains **unreleased**. The earlier “implementation/acceptance complete” state has been superseded by active core hardening. Engineer fallback refresh is intentionally deferred until the cognitive core is stabilized.
 
-## Core revision model
+## Core architecture
 
-Existing work is revised from an accepted baseline.
+```text
+Current instruction + active obligations + scoped context
+                         ↓
+                      Contract
+                         ↓
+              Context → Reasoning ↔ Research
+                         ↓
+                Solution Quality Gate
+                         ↓
+              Decision / Repair Model
+                  ↙                 ↘
+        Execution/Observation       Authoring
+                  ↓                    ↓
+             Reasoning/replan    Comparative Quality
+                                       ↓
+                              Format / external write
+                                       ↓
+                                Endpoint Quality
+                                       ↓
+                                  Verified state
+                                       ↓
+                                    Learning
+```
 
-A correction must preserve still-active obligations and accepted properties outside its repair target. A newer complaint does not automatically replace older requirements and does not imply maximizing the opposite property.
+Continuity is cross-cutting. It persists only resume-critical task state, accepted baseline pointers, invalidated dependent work, provider/source versions, and ambiguous effects.
 
-When a shared premise changes, only dependent work becomes stale. Repeated oscillation or recurrence returns the task to the controlling model/interface instead of producing another local patch.
+## Core semantics
 
-## Core state
+- **Constraint evolution** — a newer instruction may add, refine, supersede, scope, or conflict; recency alone does not erase older active obligations.
+- **Baseline-preserving repair** — existing work is revised against an accepted baseline with a repair target, protected properties, affected scope, and dependency invalidation.
+- **Comparative Quality** — a local fix is rejected if it regresses a protected accepted property.
+- **Artifact state** — long-form work preserves reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
+- **Trust boundary** — retrieved external content is evidence/data, not task authority.
+- **Recurrence handling** — repeated failure reopens the controlling mechanism instead of accumulating more local rules.
+- **Continuity lifecycle** — active work distinguishes active, paused, blocked, completed, superseded, and abandoned state.
+- **Whole-scope coverage** — pagination, truncation, filters, stale units, and unseen scope cannot be ignored when claiming a full audit.
 
-- Contract: current outcome, authority and active obligations.
-- Context: relevant state, provenance and baseline pointers.
-- Reasoning: system/decision model, repair scope and dependency invalidation.
-- Authoring: reader-facing content and semantic artifact state.
-- Quality: solution, comparative revision and endpoint judgment.
-- Continuity: compact durable active-work frontier.
-- Learning: reusable causal mechanisms and activation boundaries.
+## State separation
 
-Retrieved external content is evidence/data, not automatic task authority.
+ANGENT keeps different semantic classes separate:
 
-Whole-scope claims require complete-enough inventory and explicit coverage, including pagination/truncation boundaries where relevant.
+- **AGENTS.md** — stable project instructions;
+- **Contract obligations** — currently binding task requirements;
+- **Memory** — durable scoped context;
+- **Reasoning state** — current model, decision, repair, and dependency state;
+- **Authoring artifact state** — reader/document continuity;
+- **Continuity** — interruption-safe active-work frontier;
+- **Learning** — reusable causal mechanisms.
 
-## Repository state
+No one store becomes a universal transcript or authority source.
 
-The root `tests/` suite has been removed during core hardening. The remaining GitHub workflow is hygiene-only and is not behavioral acceptance evidence.
+## Persistence
 
-Engineer integration remains native-first / fallback-second. Engineer inventory/parity will be reviewed separately after the core is stabilized; historical completeness counts are not current parity evidence.
+Local memory and Continuity use revisioned file-backed stores with conflict detection.
 
-See `ARCHITECTURE.md` and the owner Skills under `skills/` for the current architecture.
+Continuity discovery and per-work-item recovery both scan coherent immutable revisions, so a stale convenience pointer cannot hide a newer durable frontier after an interruption.
 
-Do not publish or describe 1.0.0 as released or implementation-complete while core hardening and the deferred Engineer review remain open.
+## Engineer integration
+
+Engineering specialist capability remains native-first:
+
+1. use usable native AgentKit Engineer when available;
+2. otherwise use the ANGENT fallback;
+3. do not expose complete native and fallback catalogs together by default.
+
+The current fallback implementation is preserved during core hardening. Its upstream catalog/parity refresh is a **separate later phase** and current inventory counts must not be treated as proof of parity with the latest AgentKit release.
+
+## Repository validation policy
+
+The old root `/tests` suite has been removed. It mainly checked static strings, counts, and self-consistency and was not treated as evidence that ANGENT behaved correctly.
+
+Repository CI now keeps only minimal committed-diff hygiene. Core correctness is established by coherent owner contracts, source/read-back inspection, real runtime behavior, and explicit state/evidence semantics rather than keyword/count scripts.
+
+## Release boundary
+
+Do not publish, tag, or update the canonical private ChatGPT plugin while core hardening is active.
+
+After the core stabilizes, Engineer refresh and cross-harness/release reconciliation are separate phases.
