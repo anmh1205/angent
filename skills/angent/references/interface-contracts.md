@@ -132,12 +132,20 @@ Only promoted mechanisms alter production behavior.
 
 ```yaml
 work_key:
-verified_units: []
-saved_artifacts: []
-pending_operation:
-unresolved: []
+revision:
+outcome:
+scope:
+constraints: []
+verified_completed: []
+unfinished:
+decisions: []
+artifact_pointers: []
+pending_or_ambiguous_effects: []
+unresolved_dependencies: []
 source_versions: []
-next_action:
+next_safe_action:
 ```
 
-Recovered state never overrides current authorization or live source truth.
+The exact persisted record may contain additional backend/provenance fields, but these semantics must survive resume.
+
+Recovered state explains what work was in progress. It never overrides current authorization or current external state; Context/Reasoning reconcile those before dependent action.

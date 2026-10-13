@@ -1,25 +1,70 @@
 ---
 name: angent-continuity
-description: Persist interruption-tolerant ANGENT task state through durable verified checkpoints and safely reconcile ambiguous effects on resume.
+description: Proactively persist the frontier of active work, support interruption-safe resume and reconcile ambiguous external effects across chat and local harnesses.
 ---
 
-# ANGENT Continuity — Durable Frontier
+# ANGENT Continuity — Active-Work Frontier
 
-Continuity owns persistence, not task strategy.
+Continuity owns persistence and resume semantics, not task strategy.
 
-Read `continuity-protocol.md`.
+Its job is broader than saving a checkpoint before chat disconnects. The storage backend may differ by harness, but the frontier/revision/reconciliation semantics do not.
 
-For non-trivial tool work or long artifacts, establish a stable work key and authorized cross-session store from the first substantive step.
+## Load references progressively
 
-Before a consequential external effect, persist/read back PREPARED intent with target, expected before/after state and reconciliation query. Afterward inspect the authoritative target and persist COMMITTED/VERIFIED or ATTEMPTED_UNKNOWN.
+- references/active-work-frontier.md — recognize non-trivial work and advance a durable frontier.
+- references/continuity-protocol.md — persist revisioned work state and side-effect records.
+- references/resume-reconciliation.md — resume after interruption or concurrent external change.
 
-For research/read-only/authoring work, persist meaningful completed units and durable artifact pointers rather than waiting for a predicted interruption.
+## Recognize active work early
 
-On resume:
-1. recover the highest coherent verified record;
-2. apply newest instructions and current authorization;
-3. reconcile ambiguous effects before replay;
-4. validate saved artifacts;
-5. return the recovered frontier to Context/Reasoning for current-state reconstruction.
+A task needs continuity when it is costly or unsafe to reconstruct from a prompt alone: multi-step repository/project work, long research, multi-chapter authoring, broad audits, or multi-stage tool effects.
 
-A chat transcript, model memory or unsynced scratch file is not durable persistence. ANGENT cannot run after host Stop or guarantee zero token loss.
+Do not wait for a predicted interruption signal.
+
+## Maintain a living frontier
+
+Keep enough durable state to answer:
+- what outcome is being pursued;
+- what scope/invariants apply;
+- what is verified complete;
+- what is unfinished;
+- what decisions affect later work;
+- where artifacts/evidence live;
+- what blockers/dependencies remain;
+- whether an external effect is ambiguous;
+- what the next safe action is.
+
+Advance at meaningful work boundaries, not after every tool call.
+
+## External sources are reconciliation evidence
+
+GitHub, Jira, Notion, deployment state, and provider APIs establish outside-world facts.
+
+They do not replace the active-work frontier.
+
+On resume, recover the frontier first, then inspect external sources that may have changed and reconcile accordingly.
+
+## Consequential side effects
+
+Before a consequential/non-idempotent effect, persist PREPARED intent with enough information to identify/reconcile the operation.
+
+Afterward inspect authoritative state and mark VERIFIED/COMMITTED or ATTEMPTED_UNKNOWN.
+
+Never blindly replay an uncertain write.
+
+## Read-only / authoring work
+
+Persist meaningful completed units, artifact pointers, curriculum/research frontier, and next unfinished unit even when there is no external write.
+
+## Resume
+
+1. recover the highest coherent frontier;
+2. apply newest instruction/current authority;
+3. inspect unresolved effects before replay;
+4. validate artifact/source pointers;
+5. reconcile external state likely to have changed;
+6. return the current frontier to Context/Reasoning.
+
+A transcript, model context, or unsynced scratch file is not durable continuity by itself.
+
+ANGENT cannot continue after the host stops unless another runtime actually schedules/runs it.

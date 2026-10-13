@@ -1,0 +1,17 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "angent-engineer-fallback",
+  "version": "1.0.0",
+  "description": "Portable ANGENT fallback for the AgentKit Engineer capability surface when native AgentKit Engineer is unavailable or unusable.",
+  "author": {
+    "name": "An"
+  },
+  "keywords": [
+    "angent",
+    "engineer",
+    "agentkit",
+    "fallback",
+    "skills",
+    "software-engineering"
+  ]
+}

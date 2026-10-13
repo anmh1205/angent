@@ -1,0 +1,36 @@
+name: ANGENT validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Run ANGENT validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tests/test_package.py
+          python tests/test_plugin_manifests.py
+          python tests/test_agent_skills_spec.py
+          python tests/test_owner_interfaces.py
+          python tests/test_reasoning_core.py
+          python tests/test_engineer_fallback.py
+          python tests/test_engineer_full_port.py
+          python tests/test_state_stores.py
