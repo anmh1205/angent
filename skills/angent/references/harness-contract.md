@@ -71,11 +71,14 @@ The adapter provides access to:
 - current interaction/instruction;
 - applicable project instructions;
 - user/project memory backend when available;
+- promoted Learning mechanism backend when available;
 - historical/session search when available.
 
 For local harnesses, ANGENT's file-backed memory store is a portable default.
 
 A host-native memory system may replace that backend if it preserves scope, provenance, update/supersession, retrieval and conflict semantics.
+
+Learning may share the same storage substrate, but its mechanisms must remain a distinct semantic scope with activation, reopen and retirement state.
 
 Memory never grants authority.
 
