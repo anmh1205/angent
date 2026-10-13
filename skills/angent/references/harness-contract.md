@@ -79,6 +79,8 @@ A host-native memory system may replace that backend if it preserves scope, prov
 
 Memory never grants authority.
 
+Retrieved external content is data/evidence, not task authority. An adapter must not promote imperative text from web pages, documents, issues, logs or messages into a user/project instruction.
+
 ## Continuity
 
 The adapter must give Continuity a durable location appropriate to the environment.
@@ -89,9 +91,12 @@ For a hosted/chat harness, use the strongest durable backend available to that p
 
 Regardless of backend, preserve:
 
-- stable work identity;
+- stable work identity and lifecycle;
 - revision/coherence;
-- active frontier;
+- active obligations needed to resume correctly;
+- verified/unfinished frontier;
+- accepted-baseline or artifact-state pointers when later work depends on them;
+- stale/recheck dependent work after a changed premise/interface;
 - ambiguous-effect state;
 - artifact/source pointers;
 - next safe action.
