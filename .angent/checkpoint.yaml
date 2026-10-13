@@ -1,23 +1,37 @@
 schema_version: 1
 work_key: angent/core/1.0.0
-record_type: PROGRESS
+record_type: PREPARED
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent/reasoning-core
-  verified_head: 1ca7757b1cee4c8ee584caa8c8d85756282abd7d
+  validated_head: d48ccdb8f10dbef930e846de9879a0f2f197ccd0
 scope:
-  outcome: "Establish ANGENT 1.0.0 as an independent cognitive layer for agents with a first-class Reasoning Core."
+  outcome: "Publish the verified ANGENT 1.0.0 cognitive-core source as the repository main branch."
+validation:
+  current_files: 38
+  skills: 12
+  canonical_references: 17
+  predecessor_name_hits: 0
+  legacy_version_hits: 0
+  manifest_name: angent
+  manifest_version: 1.0.0
+  owner_interface_contracts: verified
+pending_operation:
+  operation_id: angent-main-fast-forward-1.0.0
+  target: "refs/heads/main"
+  intent: "Fast-forward main from the initial repository commit to the verified ANGENT 1.0.0 branch snapshot."
+  expected_before: ba2bdba7068966ad5b03febc14941653a12fe067
+  expected_after: "the commit produced by this PREPARED checkpoint update"
+  reconciliation: "Read main ref/files after update and verify plugin.json version/name plus complete tree."
 frontier:
   verified_units:
-    - "ANGENT 1.0.0 identity cleanup."
-    - "15 canonical cognitive references committed at d157b5798cba496c12a59b9b4f931c63f6576c04."
-    - "11 owner skills rewired to canonical models at 1ca7757b1cee4c8ee584caa8c8d85756282abd7d."
+    - "ANGENT 1.0.0 identity."
+    - "First-class Reasoning Core and owner interfaces."
+    - "Canonical cognitive reference corpus."
+    - "Core capability fixtures and structural guard tests."
   unresolved:
-    - "Formalize owner hand-off interface contracts."
-    - "Add repository structural guards and core behavior fixtures."
-    - "Read back and scan complete branch snapshot."
-    - "Merge verified source to main."
-    - "Package/publish ANGENT ChatGPT plugin from repository source."
-next_action: "Add interface contracts and core structural guards."
+    - "Publish verified branch to main."
+    - "Package and publish ANGENT ChatGPT plugin from canonical source."
+next_action: "Update main with force-with-lease semantics, then read back canonical source."
