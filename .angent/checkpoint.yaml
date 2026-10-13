@@ -1,38 +1,30 @@
 schema_version: 1
 work_key: angent/core/1.0.0
-record_type: PREPARED
+record_type: COMMITTED
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent/reasoning-core
-  observed_checkpoint_blob: 604ebcecf98d8dfd78086a6c36da3bb3a0e338f9
 scope:
   outcome: "Establish ANGENT 1.0.0 as an independent cognitive layer for agents with a first-class Reasoning Core."
-  exclusions:
-    - AgentKit adapter
-    - external CI infrastructure
-    - unrelated project artifacts
 branding:
   canonical_name: ANGENT
   package_name: angent
-  initial_version: 1.0.0
-  independence_rule: "Current repository content must not reference predecessor product names or version lineage."
-pending_operation:
-  operation_id: angent-brand-clean-1.0.0
-  target: "GitHub branch angent/reasoning-core"
-  intent: "Remove predecessor-name references, reset manifests and release history to 1.0.0, delete migration-by-name documentation, preserve only ANGENT-native core capabilities."
-  expected_before: "Scaffold contains predecessor-name references and version 17.0.0."
-  expected_after: "Current branch presents ANGENT as an independent 1.0.0 project with no predecessor-name references."
-  reconciliation: "Read back README, manifests, changelog, checkpoint and repository file set; scan current branch contents for forbidden predecessor-name tokens."
+  version: 1.0.0
+verification:
+  current_branch_files_scanned: 18
+  predecessor_name_hits: 0
+  migration_document_present: false
+  manifests_version: 1.0.0
 frontier:
   verified_units:
-    - "Repository initialized."
-    - "Working branch created."
-    - "ANGENT cognitive-core scaffold created."
+    - "ANGENT identity is independent in the current branch snapshot."
+    - "Both plugin manifests are version 1.0.0."
+    - "Changelog begins at ANGENT 1.0.0."
+    - "Core skills for Contract, Context, Reasoning, Research, Execution, Quality, Authoring, Format, Learning, Continuity and Shell exist."
   unresolved:
-    - "Brand/name independence cleanup."
-    - "Reset release identity to 1.0.0."
-    - "Migrate ANGENT-native reference corpus and structural tests."
-    - "Validate branch before merge/plugin publication."
-next_action: "Apply ANGENT 1.0.0 branding cleanup and verify current branch contents."
+    - "Canonical reference corpus for reasoning, authoring, evidence, learning and continuity is not yet complete."
+    - "Structural and behavioral contract tests are not yet present."
+    - "Branch has not yet been merged to main or packaged as the ChatGPT plugin."
+next_action: "Create ANGENT-native canonical references and tests, then validate the repository source."
