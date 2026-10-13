@@ -136,7 +136,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="ANGENT scoped memory store")
     parser.add_argument("--scope", choices=("user", "project", "learning-user", "learning-project"), required=True)
     parser.add_argument("--project-root", default=".")
-    parser.add_argument("--store", help="Override store path; primarily for adapters/tests.")
+    parser.add_argument("--store", help="Override store path; primarily for adapters or manual tooling.")
 
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -198,6 +198,10 @@ def main() -> int:
         return 0 if entry is not None else 4
 
     if args.command == "put":
+        if not args.scope.startswith("learning-") and args.status in {"reopened", "retired"}:
+            emit({"error": "learning_status_requires_learning_scope", "scope": args.scope})
+            return 2
+
         with store_lock(path):
             data = read_store(path, args.scope)
             current_revision = int(data["revision"])
