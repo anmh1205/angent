@@ -23,6 +23,16 @@ Track repair state separately from lifecycle:
 
 A terse continuation does not clear REPAIRING/UNSTABLE state.
 
+Repair-state transitions:
+
+```text
+NONE → REPAIRING        when revision against an accepted baseline begins
+REPAIRING → NONE        when comparative Quality accepts the new baseline
+REPAIRING → UNSTABLE    when recurrence/oscillation invalidates local repair confidence
+UNSTABLE → REPAIRING    after Reasoning re-establishes the controlling model and bounded repair
+UNSTABLE → NONE         only when the repair task is explicitly superseded/abandoned or a stable accepted baseline is established
+```
+
 ## Persist semantics, not transcripts
 
 A frontier should preserve:
