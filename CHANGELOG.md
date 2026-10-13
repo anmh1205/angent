@@ -2,7 +2,7 @@
 
 ## 1.0.0 — Unreleased candidate
 
-The 1.0.0 line is under active development and is **not released yet**.
+The 1.0.0 implementation is merged and validated on `main`, but it is **not released yet**.
 
 ### Cognitive architecture
 
@@ -44,16 +44,21 @@ The 1.0.0 line is under active development and is **not released yet**.
 - Added source-selection behavior checks and local memory/Continuity conflict/resume checks.
 - The earlier superficial line/reference-count quality gate was removed; fallback quality is reviewed by capability semantics instead.
 
-### Validated on current upgrade line
+### Validated on merged candidate
 
 - Live SERVER/local-harness validation passes package/reference architecture, owner boundaries, Reasoning, full Engineer inventory, native/fallback separation and local state-store behavior.
 - The Engineer selector was exercised against native-usable, native-unusable and unknown states; AgentKit offline doctor was healthy on SERVER.
 - Stale release-state claims were scanned and removed.
 - Final branch integration review passed `git diff --check`, JSON manifest parsing, Skill/reference integrity, stale/runtime leakage scans, and Agent Skills conformance for all 114 Skills.
 
-### Still required before release
+### Release boundary
 
-- Run broader cross-harness acceptance for native/fallback discovery and Continuity/Context semantics when another harness path is available.
-- Complete representative long-form Authoring/Quality end-to-end acceptance; failure-mode calibration is already recorded in the handbook.
-- Complete draft-PR review.
-- Keep 1.0.0 unreleased until explicit release approval.
+The implementation and acceptance work for this candidate is complete:
+
+- PR #1 was reviewed and merged into `main`;
+- native/fallback selection was exercised on SERVER;
+- the fallback companion was discovered, installed, and enabled by Codex CLI in an isolated environment;
+- representative long-form Authoring/Quality acceptance passed;
+- post-merge validation passed.
+
+The remaining step is **not more implementation**. Publishing/tagging/updating the private ChatGPT plugin is a separate release action and requires explicit release approval from the exact merged source.
