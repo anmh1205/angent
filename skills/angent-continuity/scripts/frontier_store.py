@@ -31,6 +31,7 @@ VALID_LIFECYCLES = {
     "SUPERSEDED",
     "ABANDONED",
 }
+VALID_REPAIR_STATES = {"NONE", "REPAIRING", "UNSTABLE"}
 
 
 def now_iso() -> str:
@@ -57,6 +58,10 @@ def atomic_write(path: Path, data: dict[str, Any]) -> None:
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(tmp_name, path)
+        try:
+            os.chmod(path, 0o600)
+        except OSError:
+            pass
     finally:
         try:
             os.unlink(tmp_name)
@@ -172,6 +177,10 @@ def validate_frontier(frontier: Any) -> str | None:
     lifecycle = frontier.get("lifecycle")
     if lifecycle is not None and lifecycle not in VALID_LIFECYCLES:
         return "invalid_lifecycle"
+
+    repair_state = frontier.get("repair_state")
+    if repair_state is not None and repair_state not in VALID_REPAIR_STATES:
+        return "invalid_repair_state"
 
     for field in ("active_obligations", "verified_completed", "stale_or_recheck"):
         if field in frontier and not isinstance(frontier[field], list):
