@@ -1,65 +1,39 @@
-schema_version: 2
-work_key: angent/core/1.0.0
-record_type: MERGED_UNRELEASED
-phase: release-ready-unpublished
+schema_version: 3
+work_key: angent/core-hardening
+record_type: ACTIVE
+phase: core-hardening
 source_of_truth:
   provider: github
   repository: anmh1205/angent
-  branch: main
-source_verification:
-  merged_upgrade_pr: 1
-  merged_upgrade_commit: 411bdb0dfc838fd85417824c3794ac971a85c6ee
-  release_readiness_docs_pr: 2
-  verified_candidate_content_head: 0f3197ddc3a7b533de4f6da26b74e8645fee8d7b
-  previous_main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
-  manifest_version: 1.0.0
-  github_ci:
-    workflow: .github/workflows/angent-validation.yml
-    check: validate
-    upgrade_merge_conclusion: success
-    release_readiness_head_conclusion: success
-    release_readiness_main_conclusion: success
-    checkpoint_commit_conclusion: success
+  branch: core-hardening
 release_state:
   version: 1.0.0
   released: false
+  implementation_complete: false
   private_chatgpt_plugin_updated: false
-  private_chatgpt_plugin_current_release_id: pluginrel_6ace3b6cfcb48191b1da97432fe40e13
-  private_chatgpt_plugin_sync:
-    current_file_count: 31
-    merged_core_file_count: 50
-    add: 34
-    delete: 15
-    replace: 14
-    unchanged: 2
-  plugin_update_constraint:
-    same_version_update_auto_bumps_patch: true
-    current_plugin_version: 1.0.0
-    consequence: "Updating the existing plugin from merged 1.0.0 source through the current update path would become 1.0.1."
-frontier:
-  verified_units:
-    - "PR #1 was reviewed and merged into main after the upgrade head passed GitHub Actions."
-    - "AGENTS.md is the canonical project instruction surface."
-    - "ANGENT owner Skills use owner-local progressive disclosure."
-    - "Engineer fallback contains 102/102 Skills and 16/16 portable Agent roles."
-    - "Portable and ChatGPT/Codex plugin manifests share one fallback Skill tree and pass conformance."
-    - "Native AgentKit remains external; native/fallback selection is read-only and harness-evidence based."
-    - "Local memory persistence and Continuity persistence use revision/conflict semantics and pass tests."
-    - "Cross-harness adapter semantics do not require a generic Capability Broker."
-    - "The upgrade fallback companion was discovered, installed and enabled by Codex CLI 0.161.0 in an isolated temporary CODEX_HOME."
-    - "Representative long-form Authoring/Quality acceptance passed."
-    - "Integration review found no blocking implementation finding."
-    - "PR #2 reconciled README/CHANGELOG with the actual merged acceptance state."
-    - "GitHub Actions validate passed on release-readiness PR head, main@0f3197d, and checkpoint metadata commit main@99025f8."
-    - "The private ChatGPT plugin was inspected and confirmed to remain the older baseline package."
-    - "Exact private-plugin sync delta is add 34 / delete 15 / replace 14 / unchanged 2."
-    - "The current Plugin Creator update path auto-bumps an unchanged 1.0.0 semantic version to 1.0.1."
-  active_work: []
-  unresolved:
-    - "The private ChatGPT angent plugin remains the older baseline package and must not be updated without explicit release approval."
-    - "Keeping the existing ChatGPT plugin identity and keeping semantic version exactly 1.0.0 are incompatible with the current update_plugin path; release owner must choose the release surface/version strategy."
-    - "Agent Plugins v1 does not standardize portable Agent components; fallback Agent roles remain adapter-projected."
-  non_blocking_boundaries:
-    - "Implementation and acceptance are complete for the current candidate, but ANGENT 1.0.0 is still unreleased."
-    - "Publishing/tagging, updating the existing private plugin, or creating a replacement plugin identity are separate explicit release actions."
-next_action: "Do not publish or release 1.0.0 until explicitly requested. If release is approved, first resolve the ChatGPT plugin identity/version strategy, then build/verify artifacts from exact current main and mutate only the explicitly authorized release surfaces."
+active_obligations:
+  - "Fix ANGENT core architecture before revisiting Engineer fallback inventory/parity."
+  - "Remove all files under the root tests/ directory; do not treat unrelated workflow files as part of that deletion request."
+  - "Do not rely on superficial keyword/count/static tests as evidence that agent behavior is correct."
+  - "Preserve accepted behavior while fixing overcorrection, repair regression, context loss, recurrence and long-task state."
+verified_completed:
+  - "Root tests/ files are removed on core-hardening."
+  - "Constraint evolution distinguishes addition/refinement/supersession/scoped exception/conflict."
+  - "Context preserves active obligations and baseline pointers and separates external content from task authority."
+  - "Reasoning has baseline-preserving repair, protected properties, dependency invalidation and oscillation escalation."
+  - "Authoring has semantic artifact state for iterative and long-form work."
+  - "Quality references include comparative gates plus overcorrection/repair-regression detection."
+  - "Coverage semantics account for incomplete inventory, pagination/truncation and stale/recheck units."
+  - "Continuity has lifecycle/baseline-pointer semantics and local discovery scans coherent immutable revisions."
+  - "Learning experience loop includes activation and recurrence semantics."
+  - "Format no longer owns external-effect authority."
+  - "Architecture, AGENTS.md, README and CHANGELOG reflect core-hardening semantics."
+  - "GitHub workflow is hygiene-only and no longer calls root tests/."
+unfinished:
+  - "Complete a final source-level consistency sweep across all core owner Skills/references and entry surfaces."
+  - "Reconcile any remaining stale release/validation language."
+  - "Decide merge/read-back after the core consistency sweep."
+deferred:
+  - "Engineer fallback inventory, upstream parity and fallback capability audit."
+  - "Private ChatGPT plugin release/update and version strategy."
+next_safe_action: "Read back and cross-check all changed core files on core-hardening, repair remaining semantic/interface inconsistencies, then compare the branch with main. Do not start Engineer parity work yet."
