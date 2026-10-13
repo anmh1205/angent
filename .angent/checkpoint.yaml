@@ -7,12 +7,17 @@ source_of_truth:
   repository: anmh1205/angent
   branch: angent-1.0.0-upgrade
 source_verification:
-  validated_branch_head_before_checkpoint: 24c6cae23e9913845eb564bb70d162f929f34156
+  validated_branch_head_before_checkpoint: 8b115b9e48cb8690085c8a1dd18f8791201f3f57
   merge_base: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
   draft_pr: 1
   draft_pr_url: https://github.com/anmh1205/angent/pull/1
+  github_ci:
+    workflow: .github/workflows/angent-validation.yml
+    check: validate
+    observed_commit: 8b115b9e48cb8690085c8a1dd18f8791201f3f57
+    conclusion: success
 release_state:
   version: 1.0.0
   released: false
@@ -28,19 +33,19 @@ frontier:
     - "Local project/user memory persistence uses revisioned compare-and-swap writes."
     - "Local Continuity persistence uses immutable revisions, atomic current pointer updates and stale-writer conflict detection."
     - "Cross-harness adapter semantics are defined without a generic Capability Broker."
-    - "Preview acceptance is explicitly separated from canonical release identity so a client auto-bump cannot silently turn the 1.0.0 candidate into 1.0.1."
+    - "Preview acceptance is separated from canonical release identity so client auto-version-bumps cannot mutate the 1.0.0 candidate during testing."
     - "Authoring/Quality representative long-form acceptance PASSes on handbook Page 03 and A6 Case 9."
-    - "SERVER validation previously passed 114-Skill conformance, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
+    - "SERVER validation passed 114-Skill conformance, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
+    - "GitHub Actions provider-backed validate check passed on 8b115b9."
     - "Draft PR #1 remains open and draft."
     - "Integration review paginated all 335/335 PR files and found no remaining stale release claim or fallback runtime leakage."
     - "ChatGPT read-only inspection confirms the owned private angent 1.0.0 plugin is the older baseline package."
     - "No owned private angent-engineer-fallback plugin exists in ChatGPT."
   active_work:
-    - "Corroborate the reported Codex companion activation test with raw tool history/artifact, or rerun it when SERVER responds reliably."
+    - "Corroborate the reported Codex companion activation test with raw tool history/artifact, or rerun it when SERVER connectivity is reliable."
   unresolved:
     - "A prior status update reports successful Codex CLI 0.161.0 companion discover/install/enable in temporary CODEX_HOME, but raw command/output is not persisted in PR/evidence log; classify as REPORTED / NEEDS CORROBORATION."
     - "The upgraded core/fallback companion has not been activated in ChatGPT; current private angent plugin is baseline and fallback companion is absent."
     - "Agent Plugins v1 does not standardize Agent components; portable Agent role projection remains adapter-owned."
     - "Creating/updating a private ChatGPT preview changes plugin state and requires a deliberate user-authorized action."
-    - "GitHub reports no status checks/check-runs on PR #1; current test evidence is local/SERVER evidence."
-next_action: "Recover raw Codex activation evidence from Desktop Commander history or rerun the isolated temporary CODEX_HOME acceptance test; keep PR #1 draft and do not merge/release until cross-harness evidence is reconciled."
+next_action: "Keep PR #1 draft. Recover or rerun one isolated cross-harness companion activation with persisted evidence; all known implementation, semantic-audit, representative-authoring and GitHub-CI gates are otherwise satisfied."
