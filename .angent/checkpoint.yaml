@@ -1,32 +1,38 @@
 schema_version: 1
-work_key: angent/core/reasoning-redesign
+work_key: angent/core/1.0.0
 record_type: PREPARED
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent/reasoning-core
-  observed_checkpoint_blob: 1b1e7ee9bd597e94288f301631f5a328749acfd6
+  observed_checkpoint_blob: 604ebcecf98d8dfd78086a6c36da3bb3a0e338f9
 scope:
-  outcome: "Make ANGENT the canonical source and redesign Cogent 16 around a first-class Reasoning Core."
+  outcome: "Establish ANGENT 1.0.0 as an independent cognitive layer for agents with a first-class Reasoning Core."
   exclusions:
     - AgentKit adapter
     - external CI infrastructure
     - unrelated project artifacts
+branding:
+  canonical_name: ANGENT
+  package_name: angent
+  initial_version: 1.0.0
+  independence_rule: "Current repository content must not reference predecessor product names or version lineage."
 pending_operation:
-  operation_id: angent-core-scaffold-v17
+  operation_id: angent-brand-clean-1.0.0
   target: "GitHub branch angent/reasoning-core"
-  intent: "Create v17 ANGENT manifests, architecture, core owner skills, reasoning references and initial structural tests."
-  expected_before: "Branch contains only README.md and .angent/checkpoint.yaml."
-  expected_after: "Branch contains coherent ANGENT v17 cognitive architecture with Reasoning as a first-class owner."
-  reconciliation: "Fetch created files from the branch, inspect manifest/skill reference graph, and compare branch head."
+  intent: "Remove predecessor-name references, reset manifests and release history to 1.0.0, delete migration-by-name documentation, preserve only ANGENT-native core capabilities."
+  expected_before: "Scaffold contains predecessor-name references and version 17.0.0."
+  expected_after: "Current branch presents ANGENT as an independent 1.0.0 project with no predecessor-name references."
+  reconciliation: "Read back README, manifests, changelog, checkpoint and repository file set; scan current branch contents for forbidden predecessor-name tokens."
 frontier:
   verified_units:
     - "Repository initialized."
     - "Working branch created."
-    - "Durable baseline checkpoint read back."
+    - "ANGENT cognitive-core scaffold created."
   unresolved:
-    - "Core scaffold not yet written."
-    - "Legacy Cogent evidence and authoring references still need migration."
-    - "Plugin publication remains blocked until repository source is validated."
-next_action: "Write the ANGENT v17 core scaffold and read it back."
+    - "Brand/name independence cleanup."
+    - "Reset release identity to 1.0.0."
+    - "Migrate ANGENT-native reference corpus and structural tests."
+    - "Validate branch before merge/plugin publication."
+next_action: "Apply ANGENT 1.0.0 branding cleanup and verify current branch contents."
