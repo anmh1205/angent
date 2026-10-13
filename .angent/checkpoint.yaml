@@ -1,25 +1,32 @@
 schema_version: 1
 work_key: angent/core/reasoning-redesign
-record_type: BASELINE
+record_type: PREPARED
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent/reasoning-core
-  base_commit: ba2bdba7068966ad5b03febc14941653a12fe067
+  observed_checkpoint_blob: 1b1e7ee9bd597e94288f301631f5a328749acfd6
 scope:
   outcome: "Make ANGENT the canonical source and redesign Cogent 16 around a first-class Reasoning Core."
   exclusions:
     - AgentKit adapter
     - external CI infrastructure
     - unrelated project artifacts
+pending_operation:
+  operation_id: angent-core-scaffold-v17
+  target: "GitHub branch angent/reasoning-core"
+  intent: "Create v17 ANGENT manifests, architecture, core owner skills, reasoning references and initial structural tests."
+  expected_before: "Branch contains only README.md and .angent/checkpoint.yaml."
+  expected_after: "Branch contains coherent ANGENT v17 cognitive architecture with Reasoning as a first-class owner."
+  reconciliation: "Fetch created files from the branch, inspect manifest/skill reference graph, and compare branch head."
 frontier:
   verified_units:
-    - "Private repository exists and is writable."
-    - "main initialized with ANGENT README."
-    - "working branch angent/reasoning-core created from verified initial commit."
+    - "Repository initialized."
+    - "Working branch created."
+    - "Durable baseline checkpoint read back."
   unresolved:
-    - "Migrate reusable Cogent 16 capabilities into ANGENT names and ownership."
-    - "Implement first-class Reasoning Core and owner interfaces."
-    - "Validate package structure and publish/sync ChatGPT plugin only after repo source is coherent."
-next_action: "Create ANGENT architecture, manifest, core skills and canonical reasoning references on the working branch."
+    - "Core scaffold not yet written."
+    - "Legacy Cogent evidence and authoring references still need migration."
+    - "Plugin publication remains blocked until repository source is validated."
+next_action: "Write the ANGENT v17 core scaffold and read it back."
