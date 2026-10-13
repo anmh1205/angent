@@ -27,7 +27,7 @@ Verified outcome
 Learning
 ```
 
-Continuity is cross-cutting: it persists the verified frontier and reconciles ambiguous effects.
+Continuity is cross-cutting: it proactively persists the active-work frontier, including verified progress, unfinished work and ambiguous effects, then reconciles it on resume.
 
 ## Ownership
 
@@ -40,7 +40,7 @@ Continuity is cross-cutting: it persists the verified frontier and reconciles am
 - **Authoring**: transform established reasoning into reader-facing explanation and language.
 - **Format**: preserve semantics in the destination and verify rendering.
 - **Learning**: turn meaningful experience into falsifiable reusable mechanisms.
-- **Continuity**: persist/resume durable task state safely.
+- **Continuity**: persist/resume durable active-work state safely and reconcile ambiguous external effects.
 - **Shell**: emit one compact ANGENT signature.
 
 ## Interface principle
