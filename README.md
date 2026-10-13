@@ -15,9 +15,9 @@ Current instruction + active obligations + scoped context
                          ↓
               Context → Reasoning ↔ Research
                          ↓
-                Solution Quality Gate
-                         ↓
               Decision / Repair Model
+                         ↓
+                Solution Quality Gate
                   ↙                 ↘
         Execution/Observation       Authoring
                   ↓                    ↓
