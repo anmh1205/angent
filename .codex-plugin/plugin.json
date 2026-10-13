@@ -31,8 +31,7 @@
       "For non-trivial work, ANGENT Reasoning owns the problem/system model, uncertainty, decisions, dependency-aware planning, and replanning. Research supplies evidence; specialists supply evidence/proposals/bounded execution rather than taking strategic ownership.",
       "For local/project work, AGENTS.md is the canonical project instruction surface. Context should retrieve only relevant task/project/user/learning state; do not treat history or memory as authorization.",
       "For long or side-effecting work, Continuity must recognize active work early and preserve meaningful frontier revisions. Reconcile ambiguous external effects before replay.",
-      "For engineering specialist capability, prefer usable native AgentKit Engineer; otherwise use the canonical vendor fallback without loading native and fallback libraries together by default.",
-      "Quality independently checks solution integrity before communication quality. Authoring owns reader-facing explanation and wording and must not hide unresolved reasoning with fluent prose."
+      "For engineering specialist capability, prefer usable native AgentKit Engineer; otherwise use the canonical vendor fallback without loading native and fallback libraries together by default."
     ],
     "capabilities": []
   },
