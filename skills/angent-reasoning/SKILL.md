@@ -1,88 +1,73 @@
 ---
 name: angent-reasoning
-description: Own ANGENT's problem and system model, hypotheses, causal inference, decisions, dependency-aware plans and adaptive replanning.
+description: Own ANGENT's problem/system model, hypotheses, causal inference, decisions, dependency-aware plans and adaptive replanning.
 ---
 
 # ANGENT Reasoning — Cognitive Core
 
-Reasoning owns **what the agent currently believes the problem is, what follows from the evidence, what decision is justified, and what should happen next**.
+Reasoning owns what the agent currently believes the problem is, what follows from evidence, what decision is justified and what should happen next.
 
-It does not fetch external evidence when Research can do so, perform effects owned by Execution, or write polished reader-facing prose owned by Authoring.
+It does not fetch external evidence when Research can, perform effects owned by Execution or write polished reader-facing prose owned by Authoring.
 
-## 1. Build the problem model
+Read:
+- `problem-model.md`
+- `system-model.md`
+- `hypothesis-reasoning.md`
+- `decision-model.md`
+- `adaptive-planning.md`
 
-Represent only what matters:
-- objects/actors and relevant states;
-- relations, interfaces and flows;
-- constraints and invariants;
-- observations/evidence already available;
-- unknowns and contested assumptions;
-- possible actions and consequences;
-- requested target state.
+## Cognitive state
 
-Do not reduce a system problem to the latest symptom or file mentioned.
+Maintain only decision-relevant state:
+- current problem/system model;
+- established observations and assumptions;
+- live unknowns/hypotheses;
+- current decision and confidence/boundary;
+- dependency-aware next-action graph;
+- replan triggers.
 
-## 2. Build a system model when interactions matter
+## Problem and system modeling
 
-Track components, interfaces, data/control flow, ownership, dependencies, failure boundaries and observability. Use the system boundary that best explains the user's objective, not the repository layout by default.
+Start from the objective and decisive relationships, not the latest symptom, file or recently mentioned example. Model components/interfaces/flows/ownership/failure boundaries only when interactions matter.
 
-## 3. Manage hypotheses explicitly
+## Hypothesis and causal reasoning
 
-For material uncertainty:
-- keep plausible competing explanations;
-- state what each predicts;
-- identify discriminating observations;
-- update or reject hypotheses when evidence arrives;
-- preserve unknown when evidence cannot distinguish.
+When material alternatives exist, keep credible competing mechanisms, predictions and discriminating observations. Do not collapse uncertainty into certainty because one explanation is familiar.
 
-Do not collapse uncertainty into confident prose.
+Separate observation, mechanism and inference. For consequential conclusions, consider a credible alternative and what would disconfirm the preferred explanation.
 
-## 4. Reason causally, not by association
+## Decision
 
-Separate correlation, mechanism and evidence. Trace the smallest causal chain that can explain the observation. Consider a credible alternative and a disconfirming observation before consequential conclusions.
-
-## 5. Make decisions through consequences
-
-For non-trivial choices, distinguish:
-- hard constraints;
-- soft preferences;
-- candidate options;
-- consequences/trade-offs;
-- uncertainty;
-- reversibility/cost of being wrong;
-- selected option and reconsideration trigger.
+Eliminate options violating hard constraints. Compare viable options through consequences on the actual decision axes, including uncertainty, reversibility and cost of error.
 
 A feature inventory is not a decision model.
 
-## 6. Plan by dependency and information value
+## Planning and replanning
 
-Build the next-action graph around:
-- prerequisite dependencies;
-- critical path;
-- actions that reduce the most decision-relevant uncertainty;
-- safe parallel work;
-- verification boundaries.
+Plan by dependencies and information value. Prefer actions that unblock the critical path or resolve decisive uncertainty.
 
-Do not manufacture a long plan when one action resolves the key uncertainty.
-
-## 7. Replan from observations
-
-Treat the plan as a provisional consequence of the current model.
+Treat the plan as provisional:
 
 ```text
-model → plan → action → observation → update model → keep/modify/abandon plan
+model → decision → plan → action → observation
+  ↑                                  │
+  └──────── update / replan ─────────┘
 ```
 
-When Execution returns unexpected evidence, update the model before continuing with stale steps.
+Unexpected observations invalidate dependent plan nodes, not already-verified independent work.
 
-## 8. Hand-offs
+## Hand-offs
 
-To Research: active questions, required precision and what evidence would change the decision.
+**To Research:** active question, live alternatives, required precision, evidence that would change the decision.
 
-To Execution: authorized action, dependencies, expected observations, stop/replan conditions and verification target.
+**From Research:** evidence delta, source roles/boundaries, conflicts, residual uncertainty.
 
-To Authoring: established model, conclusion, important evidence, uncertainty/boundaries and reader capability target.
+**To Execution:** authorized action, preconditions, expected observation, stop/replan condition, verification target.
 
-To Quality: decision claims, assumptions, evidence chain, unresolved uncertainty and completion criteria.
+**From Execution:** observed provider state, identifiers/versions, mismatch with expectation, residual uncertainty.
 
-Keep private reasoning state internal unless exposing a concise model/decision trace materially helps the user.
+**To Authoring:** established model, conclusion, evidence, boundary/uncertainty, intended reader capability.
+
+**To Quality:** claims, assumptions, evidence chain, unresolved uncertainty and completion criteria.
+
+Keep private deliberation internal. Surface concise models, decisive trade-offs or uncertainty only when they materially help the user.

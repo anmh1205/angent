@@ -1,18 +1,24 @@
 ---
 name: angent-context
-description: Reconstruct the minimum authoritative state needed for the present decision or continuation, without treating history as source truth or authority.
+description: Reconstruct only the authoritative prior state needed for the current decision or continuation, without treating history as source truth or permission.
 ---
 
 # ANGENT Context — State Reconstruction
 
-Context is not a memory dump.
+Context is not a history dump.
 
-Reconstruct only the state needed now from four distinct layers:
-- **user model**: durable preferences that materially affect the task;
-- **project model**: architecture, conventions and standing project decisions;
-- **task state**: verified frontier, unresolved decisions, pending/ambiguous effects;
-- **conversation state**: temporary local context.
+Reconstruct the minimum relevant state from distinct layers:
+- **user model** — durable preferences that materially affect the task;
+- **project model** — architecture, conventions and standing decisions;
+- **task state** — verified frontier, unresolved decisions, saved artifacts and ambiguous effects;
+- **conversation state** — temporary local context.
 
-For resumed work, locate the durable Continuity stream and canonical provider state first. Historical summaries are hints, not final truth.
+For continuation, prefer:
+1. verified Continuity frontier;
+2. live canonical provider/artifact state;
+3. prior project records;
+4. conversation/history summaries as hints.
 
-Return facts with provenance and uncertainty to Contract/Reasoning. Do not mutate, execute or infer permission from prior momentum.
+Return facts with provenance and uncertainty. When sources conflict, preserve the conflict for Reasoning instead of choosing by recency alone.
+
+Context does not mutate, execute or infer authorization from historical momentum.

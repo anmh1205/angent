@@ -5,28 +5,37 @@ description: Acquire and structure evidence that reduces decision-relevant uncer
 
 # ANGENT Research — Epistemic Evidence Engine
 
-Research answers questions posed by the task/Reasoning; it does not replace reasoning with source collection.
+Research answers evidence questions; it does not replace reasoning with source collection.
+
+Read `evidence-model.md`.
+
+## Input
+
+Prefer a question from Reasoning:
+- blocked claim/decision;
+- plausible alternatives;
+- discriminating observation;
+- required precision/version/platform boundary.
+
+For a simple factual task, Root may route directly to Research without a separate Reasoning pass.
 
 ## Evidence targeting
 
-Start from the active uncertainty:
-1. what decision or claim is blocked;
-2. what observation would discriminate the plausible alternatives;
-3. which source type can provide that observation with the required precision.
+Seek the smallest evidence set that materially changes confidence, eliminates an alternative or establishes the required fact. Prefer information gain over source count.
 
-Prefer information gain over source count.
+Classify sources by role rather than generic prestige: normative, primary implementation, vendor specification, observed runtime evidence, independent analysis, community experience or illustrative only.
 
-## Evidence model
+## Conflicts
 
-For material claims record:
-- claim/question;
-- source role: normative, primary implementation, vendor specification, observed runtime evidence, independent analysis, community experience, or illustrative only;
-- version/platform/time boundary;
-- supporting and conflicting evidence;
-- confidence and unresolved question.
+Do not average disagreement. Check version, platform/configuration, normative-vs-implementation role, staleness, scope and observation quality.
 
-Do not average conflicting sources. Explain the version/boundary or return the conflict to Reasoning.
+## Output to Reasoning
 
-Keep source fact, interpretation, illustrative example and verified observation distinct.
+Return an **evidence delta**:
+- established/updated facts;
+- source roles and version boundaries;
+- hypotheses supported/weakened/rejected;
+- unresolved conflict/uncertainty;
+- any new question exposed by the evidence.
 
-For visual evidence, preserve exact identity/version and explanatory purpose; topic similarity is not provenance.
+Keep source fact, interpretation, example and verified observation distinct.

@@ -1,21 +1,24 @@
 ---
 name: angent-contract
-description: Define the current task boundary, success semantics, authoritative sources and authorization without solving the task.
+description: Define the current task boundary, authoritative sources, constraints, authorization and state-based success semantics without solving the task.
 ---
 
 # ANGENT Contract
 
-Define only what materially changes correctness.
+Contract compiles the user's current request into the smallest task model that materially affects correctness.
 
-Capture:
-- requested outcome and underlying objective when distinguishable;
-- target and canonical source(s) of truth;
-- hard constraints, soft preferences and explicit exclusions;
-- current phase: answer-only, read-only/audit, or authorized mutation;
-- permitted external effects and relevant privacy boundaries;
-- success state and evidence needed to claim it;
-- unresolved ambiguity only when it blocks correct work.
+Read `task-model.md`.
 
-Do not turn a literal action into the goal if the user's real objective is clear. Example: reuse of a template is a means; fidelity and user experience may be the outcome.
+Capture when relevant:
+- requested outcome;
+- underlying objective when it is clear and changes the solution;
+- target and source(s) of truth;
+- hard constraints, soft preferences and exclusions;
+- current phase and external-effect authorization;
+- privacy/security boundaries;
+- success state and evidence required to claim it;
+- ambiguity only when it blocks correct work.
 
-Pass the contract to Reasoning. Contract does not choose the solution, teaching path or execution plan.
+Do not silently replace an explicitly required means with another strategy even when the underlying objective is obvious. Preserve the instruction and expose conflicts only when needed.
+
+Output a compact task model to Reasoning/Execution/Quality. Contract does not choose the solution, teaching path or action graph.

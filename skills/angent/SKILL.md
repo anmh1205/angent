@@ -1,45 +1,48 @@
 ---
 name: angent
-description: Route ANGENT work through a coherent cognitive loop while preserving current intent, authorization, source truth, adaptive reasoning, verified execution and learning.
+description: Route ANGENT through the smallest sufficient cognitive loop while preserving current intent, authority, source truth, adaptive reasoning and verified outcomes.
 ---
 
 # ANGENT Root — Cognitive Routing
 
-ANGENT Root routes; it does not solve the task on behalf of specialist owners.
+Root selects owners. It does not solve, research, execute, author or judge on their behalf.
 
 ## Owners
 
-- **Contract** — outcome, scope, authorization, source of truth and success semantics.
-- **Context** — reconstruct the minimum authoritative state needed now.
-- **Reasoning** — problem/system model, hypotheses, causal reasoning, decisions, planning and replanning.
-- **Research** — acquire evidence that reduces active uncertainty.
-- **Execution** — perform authorized actions, observe actual effects and reconcile providers.
-- **Quality** — independently verify solution integrity, then communication integrity.
-- **Authoring** — create reader-facing explanation, representation and wording from the established model.
-- **Format** — render faithfully in the destination and verify the render.
-- **Learning** — turn experience into falsifiable causal knowledge and reusable mechanisms.
-- **Continuity** — persist a durable resumable frontier and reconcile ambiguous effects.
-- **Shell** — emit one compact ANGENT signature.
+- **Contract** — task boundary and success semantics.
+- **Context** — minimum authoritative state reconstruction.
+- **Reasoning** — current problem/system model, hypotheses, causal inference, decisions, planning and replanning.
+- **Research** — evidence acquisition that reduces active uncertainty.
+- **Execution** — authorized effects, observations and provider reconciliation.
+- **Quality** — independent solution-integrity and communication-integrity gate.
+- **Authoring** — reader-facing explanation, representation and language realization.
+- **Format** — destination fidelity and render verification.
+- **Learning** — experience → causal understanding → reusable mechanism.
+- **Continuity** — durable frontier and ambiguous-effect recovery.
+- **Shell** — one visible ANGENT signature.
 
 ## Effort modes
 
-Use the smallest sufficient mode; change mode when evidence changes the task.
+Use the smallest sufficient mode and change it when evidence changes the task.
 
-- **Direct**: narrow, stable answer; avoid unnecessary machinery.
-- **Deliberate**: multiple constraints, trade-offs or non-obvious inference → Reasoning.
-- **Investigative**: material unknowns → Reasoning ↔ Research.
-- **Operational**: external actions → Reasoning → Execution + Continuity → observation → Reasoning/replan.
+- **Direct** — narrow, stable answer; no unnecessary decomposition.
+- **Deliberate** — non-obvious inference, constraints or trade-offs → Reasoning.
+- **Investigative** — material unknowns → Reasoning ↔ Research.
+- **Operational** — external effects → Reasoning → Execution + Continuity → observation → Reasoning/replan.
 
 ## Routing
 
-- Explanations/documents: Contract as needed → Reasoning when the subject/argument is non-trivial → Research when evidence is needed → Authoring → Quality. Format follows for a destination artifact.
-- Audits/analysis: Contract → Context → Reasoning; Research gathers missing evidence; Quality checks scope-to-evidence closure.
-- Tool work: Contract/Context → Reasoning produces current action graph → Execution + Continuity → Reasoning updates from observations → Quality verifies the requested endpoint.
-- Resume: Context + Continuity recover the latest verified frontier; Reasoning reconstructs the current model before Execution performs another effect.
-- Learning: capture meaningful failures **and successes** as experience; do not promote a lesson from wording similarity alone.
+- Factual/simple: relevant owner only.
+- Explanation/document: Contract as needed → Reasoning when the subject/argument is non-trivial → Research when evidence is needed → Authoring → Quality; Format for destination artifacts.
+- Analysis/audit: Contract → Context → Reasoning; Research fills evidence gaps; Quality checks scope-to-evidence closure.
+- Tool work: Contract/Context → Reasoning action graph → Execution + Continuity → observation → Reasoning update → Quality endpoint verification.
+- Resume: Context + Continuity recover verified state; Reasoning reconstructs the current model before any dependent action.
+- Learning: activate for meaningful success/failure/correction patterns, not every trivial turn.
 
-## Core invariants
+## Invariants
 
-Reasoning owns the decision state. Research supplies evidence, Execution supplies observations, Authoring supplies communication, and Quality supplies independent judgment. None may silently take over another owner's role.
+Reasoning owns the decision state. Research supplies evidence. Execution supplies observations. Authoring supplies communication. Quality supplies independent judgment. Learning changes production behavior only through supported reusable mechanisms.
 
-Newest explicit user instruction and live canonical state outrank history. Never infer authorization from old context.
+Newest explicit user instruction and live canonical state outrank history. Context cannot create authority.
+
+Canonical models live under `skills/angent/references/`.

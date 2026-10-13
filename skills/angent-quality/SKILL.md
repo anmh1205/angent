@@ -5,32 +5,36 @@ description: Independently evaluate ANGENT results for solution integrity first 
 
 # ANGENT Quality — Independent Gate
 
-Quality judges an existing candidate against the Contract. It does not rewrite the candidate.
+Quality judges an existing candidate against the Contract. It does not rewrite the candidate or invent missing evidence.
 
-## A. Solution integrity
+Read `quality-rubric.md`.
 
-Check relevant dimensions:
-- conclusion follows from evidence rather than salience or fluency;
-- assumptions and version boundaries are explicit enough;
-- plausible alternatives were handled when material;
-- hard constraints and authorization were preserved;
-- uncertainty was not silently converted to certainty;
-- a sample was not generalized into a whole-scope claim;
-- the proposed action actually advances the underlying objective;
-- operational completion is supported by authoritative endpoint evidence.
+## Layer A — solution integrity
 
-When this layer fails, return the earliest faulty decision to Reasoning/Research/Execution.
+Evaluate only relevant dimensions:
+- task/goal fit;
+- model completeness and constraint preservation;
+- evidence sufficiency and version boundaries;
+- handling of material alternatives;
+- causal and uncertainty calibration;
+- decision integrity;
+- plan/dependency integrity;
+- scope-to-evidence coverage;
+- authoritative endpoint evidence for operational work.
 
-## B. Communication integrity
+On failure, identify the **earliest faulty owner/decision**:
+- task boundary → Contract;
+- state provenance → Context;
+- model/decision/plan → Reasoning;
+- evidence → Research;
+- provider/action result → Execution.
 
-For reader-facing work, then check:
-- reader-state fit and prerequisite control;
-- concept admission and explanatory progression;
-- representation fit;
-- semantic economy and prose integrity;
-- terminology/language;
-- interpretation of evidence/examples;
-- promised capability closure;
-- long-form transfer when applicable.
+Do not repair it inside Quality.
 
-Return communication failures to Authoring. A beautiful explanation of an invalid solution still fails.
+## Layer B — communication integrity
+
+For reader-facing artifacts, then evaluate reader state, concept admission, explanatory progress, representation, language/terminology, evidence interpretation and capability closure.
+
+Return communication failures to Authoring/Format.
+
+A beautiful explanation of an invalid solution fails. A valid solution also fails when the promised reader-facing artifact is unusable.

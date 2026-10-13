@@ -5,35 +5,33 @@ description: Turn meaningful failures and successes into evidence-backed causal 
 
 # ANGENT Learning — Experience to Understanding
 
-Learning is broader than complaint handling.
+Learning is broader than complaint handling and narrower than indiscriminate memory.
 
-## Experience sources
+Read `learning-loop.md`.
 
-Capture when materially useful:
+## Intake
+
+Capture an experience when it can improve future decisions:
 - user correction;
 - observed failure;
-- successful strategy;
+- repeatably successful strategy;
 - rejected hypothesis;
-- unexpected tool/provider behavior;
+- unexpected provider/tool behavior;
 - repeated decision pattern;
-- high-quality output with an identifiable mechanism.
+- unusually strong output with an identifiable mechanism.
 
-Keep observation separate from model-authored explanation.
+Preserve the original observation separately from any explanation.
 
 ## Understanding
 
-For a reusable candidate mechanism, reconstruct:
-- observed deviation or success;
-- generative decision/mechanism;
-- competing explanation;
-- applicability and boundary;
-- transfer prediction;
-- counterexample/disconfirming observation.
+Before generalizing, reconstruct the decision/mechanism, compare a plausible alternative cause, define applicability/boundary and state a transfer prediction plus disconfirming case.
 
 ## Promotion
 
-Promote the smallest causal mechanism to the owner that can prevent or reproduce the behavior. Do not paste complaint wording or project-specific examples into global production rules.
+Promote the smallest reusable mechanism to the owner that controls the relevant decision. Do not paste user wording, project names or one-off examples into global instructions.
 
-A local typo may need a local fix; do not manufacture a universal lesson.
+Retire narrower or conflicting guards when a better invariant subsumes them.
 
-Retire old guards when a better invariant subsumes them. Reopen a lesson when later evidence contradicts it.
+A local defect may remain local. A success is not proof of the chosen strategy unless the causal contribution is credible.
+
+Later contradictory evidence reopens the lesson.
