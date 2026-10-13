@@ -22,7 +22,7 @@ Use Continuity for active-work persistence and consequential effect records.
 
 Require enough state to act safely:
 - authorized target/operation;
-- relevant AGENTS.md constraints;
+- relevant active obligations and AGENTS.md constraints;
 - precondition/dependency;
 - expected observation;
 - success predicate for this action;
@@ -56,6 +56,10 @@ For consequential writes, use Continuity PREPARED/reconcile semantics.
 
 Do not blindly replay timed-out or response-lost non-idempotent writes.
 
+When Format supplies destination representation requirements, Execution performs the external write; Format does not gain independent effect authority.
+
+For whole-scope reads, preserve pagination/cursor closure, truncation state, filters, and expected/observed counts when known. A first page, top-N result, or partial response is not complete inventory evidence.
+
 ## Observe
 
 Return an observation delta that describes the world, not merely tool output:
@@ -72,6 +76,8 @@ Exit code 0 is evidence about the command, not automatically the requested endpo
 ## Adaptive boundary
 
 Execution may change mechanical tactics inside the accepted action: retry a read, alter a search query, choose an equivalent tool.
+
+Classify failures when retry behavior differs: transient, rate-limited, authentication/permission, missing target, schema/capability mismatch, stale state, or semantic failure. Retry only when another attempt can plausibly change the result. If repeated attempts produce no new observation, return to Reasoning instead of churning equivalent actions.
 
 Return to Reasoning when:
 - a precondition is false;
