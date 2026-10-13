@@ -55,14 +55,20 @@ For local harnesses, `scripts/memory_store.py` provides a small optional persist
 
 Default locations:
 
-- project: `<project>/.angent/runtime/memory/project.json`;
-- user: `${ANGENT_HOME:-~/.angent}/memory/user.json`.
+- project memory: `<project>/.angent/runtime/memory/project.json`;
+- user memory: `${ANGENT_HOME:-~/.angent}/memory/user.json`;
+- project Learning: `<project>/.angent/runtime/learning/mechanisms.json`;
+- user/global Learning: `${ANGENT_HOME:-~/.angent}/learning/mechanisms.json`.
+
+Use `learning-project` or `learning-user` only for promoted/reopened/retired Learning mechanisms. Do not mix them into ordinary project/user memory merely because the same backend is used.
 
 The script provides topic-scoped entries, prefix/status discovery, provenance pointers, status, a store revision and compare-and-swap writes.
 
 A writer reads the current revision and passes `--expected-revision` when updating. Concurrent stale writers receive a conflict instead of silently overwriting newer memory.
 
 This backend is storage, not a replacement for Context reasoning.
+
+Do not persist credentials, tokens, cookies, private keys or unrelated sensitive data. The local backend restricts file permissions where the platform allows it, but it is not an encrypted secret store.
 
 ## Maintenance
 
