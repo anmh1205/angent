@@ -1,37 +1,30 @@
 schema_version: 1
 work_key: angent/core/1.0.0
-record_type: PREPARED
+record_type: COMMITTED
 phase: authorized-mutation
 source_of_truth:
   provider: github
   repository: anmh1205/angent
-  branch: angent/reasoning-core
-  validated_head: d48ccdb8f10dbef930e846de9879a0f2f197ccd0
+  branch: main
+  published_head_before_checkpoint: 7796161e644fbf9da3bc96b6d7e42832f303a759
 scope:
-  outcome: "Publish the verified ANGENT 1.0.0 cognitive-core source as the repository main branch."
-validation:
-  current_files: 38
-  skills: 12
-  canonical_references: 17
-  predecessor_name_hits: 0
-  legacy_version_hits: 0
+  outcome: "Publish ANGENT 1.0.0 as the canonical independent cognitive layer source."
+verification:
   manifest_name: angent
   manifest_version: 1.0.0
-  owner_interface_contracts: verified
-pending_operation:
-  operation_id: angent-main-fast-forward-1.0.0
-  target: "refs/heads/main"
-  intent: "Fast-forward main from the initial repository commit to the verified ANGENT 1.0.0 branch snapshot."
-  expected_before: ba2bdba7068966ad5b03febc14941653a12fe067
-  expected_after: "the commit produced by this PREPARED checkpoint update"
-  reconciliation: "Read main ref/files after update and verify plugin.json version/name plus complete tree."
+  display_name: ANGENT
+  current_files: 38
+  reasoning_core_present: true
+  owner_interface_contracts_present: true
+  predecessor_name_hits_in_validated_snapshot: 0
+  legacy_version_hits_in_validated_snapshot: 0
 frontier:
   verified_units:
-    - "ANGENT 1.0.0 identity."
-    - "First-class Reasoning Core and owner interfaces."
-    - "Canonical cognitive reference corpus."
-    - "Core capability fixtures and structural guard tests."
+    - "ANGENT identity is independent and versioned from 1.0.0."
+    - "First-class Reasoning Core is integrated with Contract, Context, Research, Execution, Quality, Authoring, Learning and Continuity."
+    - "Canonical cognitive models and owner hand-off contracts are present."
+    - "Core capability fixtures and structural guard tests are present."
+    - "Verified source snapshot is published on main."
   unresolved:
-    - "Publish verified branch to main."
-    - "Package and publish ANGENT ChatGPT plugin from canonical source."
-next_action: "Update main with force-with-lease semantics, then read back canonical source."
+    - "Package and publish the ChatGPT ANGENT plugin from canonical source."
+next_action: "Build the ANGENT 1.0.0 plugin package, publish it, and read back the release."
