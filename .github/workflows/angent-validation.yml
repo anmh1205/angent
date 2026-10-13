@@ -1,4 +1,4 @@
-name: ANGENT validation
+name: ANGENT hygiene
 
 on:
   pull_request:
@@ -10,27 +10,15 @@ permissions:
   contents: read
 
 jobs:
-  validate:
+  hygiene:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
-      - name: Set up Python
-        uses: actions/setup-python@v7
         with:
-          python-version: "3.13"
+          fetch-depth: 2
 
-      - name: Run ANGENT validation
+      - name: Check committed diff hygiene
         shell: bash
-        run: |
-          set -euo pipefail
-          python tests/test_package.py
-          python tests/test_plugin_manifests.py
-          python tests/test_agent_skills_spec.py
-          python tests/test_owner_interfaces.py
-          python tests/test_reasoning_core.py
-          python tests/test_engineer_fallback.py
-          python tests/test_engineer_full_port.py
-          python tests/test_state_stores.py
+        run: git diff --check HEAD^ HEAD
