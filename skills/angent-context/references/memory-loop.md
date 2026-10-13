@@ -14,6 +14,8 @@ Active task frontier belongs to Continuity.
 
 Capture a candidate when information is likely to matter again: stable user preference, confirmed project fact, accepted durable project decision, or recurring context that would otherwise be rediscovered.
 
+Do not persist confidential or transient content merely because it appeared in context. Prefer a source pointer when copied content is unnecessary.
+
 Do not interrupt the main task just to maintain memory.
 
 ## Synthesis
@@ -43,6 +45,8 @@ Memory cannot grant authorization or override a newer task-specific instruction.
 
 Retrieve only memories relevant to the current task/decision.
 
+Use topic prefixes/status to discover candidate entries before loading the full store. Prefer exact-topic lookup when the topic is known. Ignore superseded entries unless historical conflict matters.
+
 Raw session logs, journals and archived chats may be searched when compact memory is insufficient; they are evidence, not default prompt context.
 
 ## Local file backend
@@ -54,7 +58,7 @@ Default locations:
 - project: `<project>/.angent/runtime/memory/project.json`;
 - user: `${ANGENT_HOME:-~/.angent}/memory/user.json`.
 
-The script provides topic-scoped entries, provenance pointers, status, a store revision and compare-and-swap writes.
+The script provides topic-scoped entries, prefix/status discovery, provenance pointers, status, a store revision and compare-and-swap writes.
 
 A writer reads the current revision and passes `--expected-revision` when updating. Concurrent stale writers receive a conflict instead of silently overwriting newer memory.
 
