@@ -14,6 +14,7 @@ Cross-harness state access follows the Root harness contract.
 - references/context-assembly.md
 - references/memory-loop.md
 - references/instruction-precedence.md
+- references/trust-boundary.md
 
 ## State classes
 
