@@ -1,12 +1,14 @@
 schema_version: 2
-work_key: angent/core-hardening
-record_type: CORE_COMPLETE
-phase: core-complete-engineer-deferred
+work_key: angent/core
+record_type: CORE_INTEGRATED
+phase: core-integrated-engineer-deferred
 source_of_truth:
   provider: github
   repository: anmh1205/angent
-  branch: core-hardening
-  pull_request: 3
+  branch: main
+source_verification:
+  core_hardening_pr: 3
+  core_hardening_commit: 68f075b34c2b8948842d6bdf8aaaf14257db9733
 
 release_state:
   version: 1.0.0
@@ -15,30 +17,30 @@ release_state:
   private_chatgpt_plugin_updated: false
 
 frontier:
+  repair_state: NONE
   active_work: []
   verified_units:
-    - "Constraint evolution distinguishes additive/refining/superseding/scoped/conflicting instruction changes."
+    - "Core hardening PR #3 was squash-merged into main."
+    - "Constraint evolution distinguishes additive/refining/superseding/scoped/conflicting instruction changes and retires satisfied/expired obligations."
     - "Context preserves active obligations, accepted baseline pointers, provenance and external-content trust boundaries."
     - "Reasoning uses accepted-baseline repair, protected properties, affected scope, dependency invalidation and oscillation escalation."
     - "Authoring owns semantic artifact state, depth commitments, concept dependencies and revision baselines."
     - "Quality uses solution/comparative/endpoint semantics and rejects overcorrection and repair regression."
     - "Execution preserves whole-scope enumeration evidence and stops equivalent retry churn."
-    - "Research preserves evidence trust classification instead of turning source text into authority."
+    - "Research separates evidence authority from task/effect authority."
     - "Format does not own external-effect authority."
-    - "Continuity has lifecycle, repair state, baseline pointers, stale-dependency state and coherent immutable-revision discovery."
-    - "Memory has scoped discovery and separate user/project Learning persistence."
+    - "Continuity has lifecycle, sticky repair state, baseline pointers, stale-dependency state and coherent immutable-revision discovery."
+    - "Memory has separate user/project and Learning persistence scopes."
     - "Learning has activation and recurrence semantics."
     - "All files under root tests/ are removed."
     - "The remaining GitHub workflow is hygiene-only and does not claim behavioral acceptance."
-    - "README, CHANGELOG, AGENTS.md, ARCHITECTURE.md and plugin entry prompts reflect the reopened core architecture."
-    - "Final source-level consistency sweep completed across core owner Skills, references, interfaces and local persistence backends."
+    - "Plugin entry prompts project the baseline-preserving repair semantics into ChatGPT/Codex packaging."
   unresolved:
-    - "PR #3 is open and mergeable, but merge action was not executed because the connector blocked the mutation."
-    - "Engineer fallback inventory/parity refresh is intentionally deferred until after core integration."
+    - "Engineer fallback inventory/parity refresh is intentionally deferred to the next phase."
     - "The private ChatGPT ANGENT plugin still runs an older baseline package and is not updated in this phase."
     - "Release/plugin identity strategy remains a later release decision."
   non_blocking_boundaries:
-    - "No publishing or release action is authorized by core-hardening work."
-    - "Engineer implementation is outside this completed core phase."
+    - "No publishing or release action is authorized by the integrated core work."
+    - "Engineer implementation starts only after this core checkpoint."
 
-next_action: "Integrate PR #3 through an authorized merge path. Only after core is canonical, start the separately deferred Engineer inventory/parity refresh."
+next_action: "Start the separately scoped Engineer inventory/parity refresh against current upstream while preserving the integrated ANGENT core. Do not release or update the canonical private ChatGPT plugin until that phase and release reconciliation are complete."
