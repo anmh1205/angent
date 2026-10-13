@@ -167,6 +167,7 @@ def frontier_from_args(args: argparse.Namespace) -> Any:
         value = json.loads(Path(args.frontier_file).read_text(encoding="utf-8"))
     if isinstance(value, dict):
         value.setdefault("lifecycle", "ACTIVE")
+        value.setdefault("repair_state", "NONE")
     return value
 
 
