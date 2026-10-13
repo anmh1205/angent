@@ -1,57 +1,44 @@
 schema_version: 2
-work_key: angent/core/1.0.0-upgrade
-record_type: ACTIVE_FRONTIER
-phase: merge-ready-unreleased
+work_key: angent/core/1.0.0
+record_type: MERGED_UNRELEASED
+phase: post-merge-unreleased
 source_of_truth:
   provider: github
   repository: anmh1205/angent
-  branch: angent-1.0.0-upgrade
-  pull_request: 1
+  branch: main
 source_verification:
-  validated_branch_head_before_checkpoint: 84153ba0a5fd2bc2767254069f973ba3427f2009
-  merge_base: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
-  main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
+  merged_upgrade_pr: 1
+  merged_upgrade_commit: 411bdb0dfc838fd85417824c3794ac971a85c6ee
+  previous_main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
   github_ci:
     workflow: .github/workflows/angent-validation.yml
     check: validate
-    observed_commit: 8b115b9e48cb8690085c8a1dd18f8791201f3f57
-    conclusion: success
-  codex_acceptance:
-    runtime: codex-cli 0.161.0
-    evidence: PR review 5508193037
-    package: angent-engineer-fallback@angent-local-test
-    result: discovered-installed-enabled
-    installed_skills: 102
-    plugin_manifests: 2
-    cleanup: temp CODEX_HOME and marketplace removed; exists=False
+    merge_commit_conclusion: success
 release_state:
   version: 1.0.0
   released: false
+  private_chatgpt_plugin_updated: false
 frontier:
   verified_units:
+    - "PR #1 was squash-merged into main after the upgrade head passed GitHub Actions."
+    - "GitHub Actions validate also passed on merge commit 411bdb0."
     - "AGENTS.md is the canonical project instruction surface."
     - "ANGENT owner Skills use owner-local progressive disclosure."
     - "Engineer fallback contains 102/102 Skills and 16/16 portable Agent roles."
-    - "Native AgentKit source is not mirrored in the repository."
-    - "Portable/ChatGPT-Codex plugin manifest conformance passes."
-    - "Native/fallback source selection is implemented and validated on SERVER."
-    - "Local memory persistence uses revisioned compare-and-swap writes."
-    - "Local Continuity persistence uses immutable revisions, atomic current pointers and stale-writer conflict detection."
-    - "Cross-harness adapter semantics are defined without a generic Capability Broker."
-    - "Authoring/Quality representative long-form acceptance passed on handbook Page 03 and is recorded in A6."
-    - "The actual upgrade fallback companion was discovered, installed and enabled by Codex CLI in an isolated temporary CODEX_HOME."
-    - "Raw Codex activation evidence is persisted in PR #1 review 5508193037."
-    - "SERVER/local validation passes 114-Skill conformance, package, manifest, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
-    - "GitHub Actions validate check passed on 8b115b9."
+    - "Portable and ChatGPT/Codex plugin manifests share one fallback Skill tree and pass conformance."
+    - "Native AgentKit remains external; native/fallback selection is read-only and harness-evidence based."
+    - "Local memory persistence and Continuity persistence use revision/conflict semantics and pass tests."
+    - "Cross-harness adapter semantics do not require a generic Capability Broker."
+    - "The actual upgrade fallback companion was discovered, installed and enabled by Codex CLI 0.161.0 in an isolated temporary CODEX_HOME."
+    - "Raw Codex evidence is persisted in PR #1 review 5508193037 and the temporary environment was deleted."
+    - "Representative long-form Authoring/Quality acceptance passed and is recorded in the Notion handbook/A6."
     - "Integration review has no unresolved review thread or known blocking implementation finding."
-  active_work:
-    - "Let GitHub Actions validate this checkpoint-only commit."
-    - "If CI succeeds and PR head is stable/mergeable, move PR #1 out of draft and squash-merge it into main."
+  active_work: []
   unresolved:
-    - "The existing private ChatGPT angent plugin is still the older baseline package; upgraded companion activation was intentionally not performed in ChatGPT."
+    - "The existing private ChatGPT angent plugin remains the older baseline package; it was intentionally not updated as part of merge acceptance."
     - "Agent Plugins v1 does not standardize portable Agent components; fallback Agent roles remain adapter-projected."
   non_blocking_boundaries:
-    - "ChatGPT live activation is not required for code merge because the actual upgrade package passed Codex activation and manifest conformance."
-    - "Merging does not publish/release ANGENT 1.0.0 or update the private ChatGPT plugin."
-next_action: "Wait for GitHub Actions on this checkpoint commit; if successful, mark PR #1 ready and squash-merge while keeping 1.0.0 unreleased."
+    - "The code is merged but ANGENT 1.0.0 is still unreleased."
+    - "Publishing/releasing or updating the private ChatGPT plugin requires a separate explicit release action."
+next_action: "Do not publish or release 1.0.0 until explicitly requested. For future work, resume from main and treat this merged tree as the current implementation baseline."
