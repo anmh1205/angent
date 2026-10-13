@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Small revisioned store for ANGENT user/project memory.
+"""Small revisioned store for ANGENT memory and promoted Learning mechanisms.
 
 The model/Context owner decides whether a candidate confirms, refines,
 supersedes or conflicts with existing memory. This script only provides
@@ -28,9 +28,13 @@ def now_iso() -> str:
 
 
 def default_store(scope: str, project_root: Path) -> Path:
+    home = Path(os.environ.get("ANGENT_HOME", str(Path.home() / ".angent")))
     if scope == "project":
         return project_root / ".angent" / "runtime" / "memory" / "project.json"
-    home = Path(os.environ.get("ANGENT_HOME", str(Path.home() / ".angent")))
+    if scope == "learning-project":
+        return project_root / ".angent" / "runtime" / "learning" / "mechanisms.json"
+    if scope == "learning-user":
+        return home / "learning" / "mechanisms.json"
     return home / "memory" / "user.json"
 
 
@@ -130,7 +134,7 @@ def emit(payload: dict[str, Any]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="ANGENT scoped memory store")
-    parser.add_argument("--scope", choices=("user", "project"), required=True)
+    parser.add_argument("--scope", choices=("user", "project", "learning-user", "learning-project"), required=True)
     parser.add_argument("--project-root", default=".")
     parser.add_argument("--store", help="Override store path; primarily for adapters/tests.")
 
@@ -140,7 +144,7 @@ def main() -> int:
 
     list_p = sub.add_parser("list")
     list_p.add_argument("--prefix")
-    list_p.add_argument("--status", choices=("active", "contested", "superseded"))
+    list_p.add_argument("--status", choices=("active", "contested", "superseded", "reopened", "retired"))
 
     get_p = sub.add_parser("get")
     get_p.add_argument("--topic", required=True)
@@ -150,7 +154,7 @@ def main() -> int:
     source = put_p.add_mutually_exclusive_group(required=True)
     source.add_argument("--content")
     source.add_argument("--content-file")
-    put_p.add_argument("--status", choices=("active", "contested", "superseded"), default="active")
+    put_p.add_argument("--status", choices=("active", "contested", "superseded", "reopened", "retired"), default="active")
     put_p.add_argument("--provenance", action="append", default=[])
     put_p.add_argument("--expected-revision", type=int, required=True)
 
