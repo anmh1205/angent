@@ -1,151 +1,105 @@
-# Owner interface contracts — preserve cognition across hand-offs
+# Owner interface contracts
 
-ANGENT owners share structured semantic deltas, not long narrative hand-offs. These are conceptual contracts, not mandatory serialized schemas for simple tasks.
+Owners exchange semantic deltas, not narrative hand-offs.
 
-## Contract → Reasoning: TaskModel
+## TaskModel
 
 ```yaml
 outcome:
-underlying_objective:
-target:
 source_of_truth:
-hard_constraints: []
-soft_preferences: []
+active_obligations: []
+instruction_changes: []
 scope:
 authorization:
 success_state:
 completion_evidence:
-open_ambiguity: []
 ```
 
-## Context → Reasoning: StateDelta
+Instruction changes preserve relation: ADD, REFINE, SUPERSEDE, SCOPED_EXCEPTION or CONFLICT.
+
+## StateDelta
 
 ```yaml
 verified_state: []
-project_decisions: []
+active_obligations: []
 task_frontier:
-pending_or_ambiguous_effects: []
-artifact_pointers: []
+accepted_baseline:
+artifact_state_pointer:
+stale_or_recheck: []
 provenance: []
 uncertainty: []
 ```
 
-Only return state that can change the current decision.
+Active obligations needed by the next decision cannot be removed by context minimization.
 
-## Reasoning → Research: EvidenceQuery
+## EvidenceQuery / EvidenceDelta
 
-```yaml
-question:
-decision_blocked:
-live_alternatives: []
-discriminating_observation:
-required_precision:
-version_or_platform_boundary:
-```
+Research receives the blocked question, live alternatives, discriminating observation and required boundary. It returns established facts, source roles/boundaries, hypothesis updates, conflicts and residual uncertainty.
 
-Research should know what evidence would change the model.
+## RepairModel
 
-## Research → Reasoning: EvidenceDelta
+Use when changing previously accepted work.
 
 ```yaml
-established: []
-source_roles: []
-version_boundaries: []
-supported_hypotheses: []
-weakened_hypotheses: []
-rejected_hypotheses: []
-conflicts: []
-residual_uncertainty: []
+accepted_baseline:
+failure_observation:
+failure_mechanism:
+repair_target:
+affected_scope: []
+protected_properties: []
+invalidated_dependents: []
+acceptance_evidence: []
 ```
 
-Do not return a source dump when a smaller evidence delta is sufficient.
+## ActionNode / ObservationDelta
 
-## Reasoning → Execution: ActionNode
+An action carries intent, target, authority, active obligations, preconditions, expected observation, success predicate, replan condition, verification target and effect class.
+
+Observation returns actual state, changed versions/identifiers, checks, expectation match and residual uncertainty.
+
+## SolutionModel / ArtifactCandidate
+
+Reasoning gives Authoring the established model, evidence, boundaries, reader capability and RepairModel when relevant.
+
+Authoring gives Quality the candidate, accepted baseline, artifact state, repair target, protected properties and active obligations.
+
+The baseline advances only after required gates pass.
+
+## QualityVerdict
 
 ```yaml
-intent:
-target:
-authorization:
-preconditions: []
-expected_observation:
-replan_condition:
-verification_target:
+status:
+phase:
+findings: []
+target_repaired:
+protected_properties_preserved:
+dependencies_reconciled:
+endpoint_verified:
 ```
 
-The action describes what evidence should return, not only what command/tool should run.
+Each finding carries dimension, evidence, affected scope, earliest fault owner and required repair property. Several findings may share one causal mechanism.
 
-## Execution → Reasoning: ObservationDelta
+## PromotedMechanism
 
-```yaml
-attempted:
-observed_state:
-changed_identifiers_or_versions: []
-expectation_match:
-new_evidence: []
-residual_uncertainty: []
-provider_evidence: []
-```
+Learning records mechanism, decision/failure class, owner, applicability, boundary, evidence and disconfirming observation so Context can activate it for the right future decision.
 
-An acknowledgement without authoritative state is not automatically an observation of success.
-
-## Reasoning → Authoring: SolutionModel
-
-```yaml
-established_model:
-conclusion:
-decisive_evidence: []
-boundaries: []
-uncertainty: []
-reader_capability_target:
-```
-
-Authoring may choose teaching order and representation but must not alter the established technical conclusion silently.
-
-## Quality → owner: QualityVerdict
-
-```yaml
-status: PASS | FAIL | BLOCKED
-layer: solution | communication
-failed_dimension:
-earliest_fault_owner:
-evidence:
-required_repair:
-```
-
-Quality points to the earliest faulty decision and does not become a repair writer.
-
-## Learning → owner: PromotedMechanism
-
-```yaml
-mechanism:
-applicability:
-boundary:
-supporting_experience: []
-transfer_evidence:
-negative_control:
-superseded_rules: []
-```
-
-Only promoted mechanisms alter production behavior.
-
-## Continuity → Context/Reasoning: Frontier
+## Frontier
 
 ```yaml
 work_key:
 revision:
+lifecycle:
 outcome:
-scope:
-constraints: []
+phase:
+active_obligations: []
 verified_completed: []
 unfinished:
-decisions: []
-artifact_pointers: []
-pending_or_ambiguous_effects: []
+accepted_baseline_pointer:
+artifact_state_pointer:
+stale_or_recheck: []
 unresolved_dependencies: []
 source_versions: []
 next_safe_action:
 ```
 
-The exact persisted record may contain additional backend/provenance fields, but these semantics must survive resume.
-
-Recovered state explains what work was in progress. It never overrides current authorization or current external state; Context/Reasoning reconcile those before dependent action.
+Continuity stores only the compact subset needed to resume safely. Recovered state never overrides current authority or live external state.
