@@ -157,8 +157,12 @@ def load_latest_discoverable(work_dir: Path) -> dict[str, Any] | None:
 
 def frontier_from_args(args: argparse.Namespace) -> Any:
     if args.frontier_json is not None:
-        return json.loads(args.frontier_json)
-    return json.loads(Path(args.frontier_file).read_text(encoding="utf-8"))
+        value = json.loads(args.frontier_json)
+    else:
+        value = json.loads(Path(args.frontier_file).read_text(encoding="utf-8"))
+    if isinstance(value, dict):
+        value.setdefault("lifecycle", "ACTIVE")
+    return value
 
 
 def validate_frontier(frontier: Any) -> str | None:
