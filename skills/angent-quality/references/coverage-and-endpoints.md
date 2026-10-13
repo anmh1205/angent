@@ -6,7 +6,7 @@
 
 A deep sample can reveal a failure class but cannot prove uninspected units are clean.
 
-For broad audits, maintain an explicit coverage ledger: declared scope, inventory source/completeness, inspected units, relevant inspected dimensions, skipped units, stale/recheck units and unresolved findings.
+For broad audits, maintain an explicit coverage ledger: declared scope, inventory source/completeness, inspected units, relevant inspected dimensions, skipped units, stale/recheck units and unresolved findings. When the audit spans turns/sessions, persist a durable coverage-ledger pointer through Continuity.
 
 Before claiming full coverage, account for pagination/cursor exhaustion, top-N limits, truncation, filters and source version when those can hide units.
 
