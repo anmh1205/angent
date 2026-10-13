@@ -1,15 +1,17 @@
 schema_version: 2
 work_key: angent/core/1.0.0-upgrade
 record_type: ACTIVE_FRONTIER
-phase: pre-release-integration-review
+phase: draft-pr-review
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent-1.0.0-upgrade
 source_verification:
-  observed_branch_head_before_checkpoint: 4e7fb44e59bfd565097add98983367ac14f07edf
+  validated_branch_head_before_checkpoint: 7ae897235fba37ab205c5d65896d4589519dde4e
+  merge_base: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
+  branch_history: "upgrade branch rebased onto main baseline while preserving the validated upgrade tree"
 release_state:
   version: 1.0.0
   released: false
@@ -26,14 +28,16 @@ frontier:
     - "Local Continuity persistence uses immutable revisions, atomic current pointer updates and stale-writer conflict detection."
     - "Cross-harness adapter semantics are defined without a generic Capability Broker."
     - "Authoring/Quality includes technical exposition, long-form consistency, heading boundaries and failure-mode calibration."
-    - "Live SERVER validation passed package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
-    - "Live SERVER selector returned fallback for unknown/unusable native state and native when active-harness usability was supplied; AgentKit doctor was healthy."
+    - "Upgrade branch has main baseline as its real merge base."
+    - "SERVER validation passed Agent Skills conformance for 114 Skills, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
+    - "git diff --check passed and all four plugin manifests parse as JSON."
+    - "Live selector returned fallback for unproven native state and native when active-harness usability was supplied; AgentKit doctor was healthy."
   active_work:
-    - "Complete whole-branch integration/contradiction/package review."
-    - "Run representative Authoring/Quality calibration cases."
-    - "Open and review a draft PR after the branch is internally clean."
+    - "Open and review the draft PR without merging."
     - "Run broader cross-harness acceptance when another harness path is available."
+    - "Run representative long-form Authoring/Quality acceptance before release."
   unresolved:
     - "Agent Plugins v1 does not standardize Agent components; portable Agent role projection remains adapter-owned."
     - "Broader cross-harness acceptance beyond the current SERVER environment remains open."
-next_action: "Finish integration and Authoring/Quality calibration, reconcile all findings, then open the draft PR without merging or releasing 1.0.0."
+    - "Long-form Authoring/Quality still needs a representative end-to-end acceptance case before release."
+next_action: "Open the draft PR, review the complete main-to-upgrade diff, and keep merge/release blocked until the remaining acceptance work is satisfied."
