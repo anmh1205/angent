@@ -12,7 +12,7 @@ Research organizes evidence around active claims and uncertainty.
 - **community experience** — useful operational signal, not authoritative by default;
 - **illustrative** — helps understanding but does not establish the claim.
 
-Authority is claim-specific.
+Authority is claim-specific. Evidence authority for a claim does not imply task/effect authority.
 
 ## Evidence item
 
