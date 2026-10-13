@@ -19,11 +19,23 @@ source_verification:
     upgrade_merge_conclusion: success
     release_readiness_head_conclusion: success
     release_readiness_main_conclusion: success
+    checkpoint_commit_conclusion: success
 release_state:
   version: 1.0.0
   released: false
   private_chatgpt_plugin_updated: false
   private_chatgpt_plugin_current_release_id: pluginrel_6ace3b6cfcb48191b1da97432fe40e13
+  private_chatgpt_plugin_sync:
+    current_file_count: 31
+    merged_core_file_count: 50
+    add: 34
+    delete: 15
+    replace: 14
+    unchanged: 2
+  plugin_update_constraint:
+    same_version_update_auto_bumps_patch: true
+    current_plugin_version: 1.0.0
+    consequence: "Updating the existing plugin from merged 1.0.0 source through the current update path would become 1.0.1."
 frontier:
   verified_units:
     - "PR #1 was reviewed and merged into main after the upgrade head passed GitHub Actions."
@@ -38,13 +50,16 @@ frontier:
     - "Representative long-form Authoring/Quality acceptance passed."
     - "Integration review found no blocking implementation finding."
     - "PR #2 reconciled README/CHANGELOG with the actual merged acceptance state."
-    - "GitHub Actions validate passed on release-readiness PR head and on main@0f3197d."
+    - "GitHub Actions validate passed on release-readiness PR head, main@0f3197d, and checkpoint metadata commit main@99025f8."
     - "The private ChatGPT plugin was inspected and confirmed to remain the older baseline package."
+    - "Exact private-plugin sync delta is add 34 / delete 15 / replace 14 / unchanged 2."
+    - "The current Plugin Creator update path auto-bumps an unchanged 1.0.0 semantic version to 1.0.1."
   active_work: []
   unresolved:
     - "The private ChatGPT angent plugin remains the older baseline package and must not be updated without explicit release approval."
+    - "Keeping the existing ChatGPT plugin identity and keeping semantic version exactly 1.0.0 are incompatible with the current update_plugin path; release owner must choose the release surface/version strategy."
     - "Agent Plugins v1 does not standardize portable Agent components; fallback Agent roles remain adapter-projected."
   non_blocking_boundaries:
     - "Implementation and acceptance are complete for the current candidate, but ANGENT 1.0.0 is still unreleased."
-    - "Publishing/tagging or updating the private ChatGPT plugin is a separate explicit release action."
-next_action: "Do not publish or release 1.0.0 until explicitly requested. If release is approved, build/verify the release artifact from the exact current main tree and update only the authorized release surfaces."
+    - "Publishing/tagging, updating the existing private plugin, or creating a replacement plugin identity are separate explicit release actions."
+next_action: "Do not publish or release 1.0.0 until explicitly requested. If release is approved, first resolve the ChatGPT plugin identity/version strategy, then build/verify artifacts from exact current main and mutate only the explicitly authorized release surfaces."
