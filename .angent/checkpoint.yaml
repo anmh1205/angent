@@ -1,13 +1,13 @@
 schema_version: 2
 work_key: angent/core/1.0.0-upgrade
 record_type: ACTIVE_FRONTIER
-phase: draft-pr-review
+phase: cross-harness-acceptance
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: angent-1.0.0-upgrade
 source_verification:
-  validated_branch_head_before_checkpoint: 42c9f1b510049b972de07b3c23329c25ba4059ef
+  validated_branch_head_before_checkpoint: fb95b57c20c961d20ba1f2fa4e52f01919831354
   merge_base: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   main_baseline: 1fcb9108f341eebf23c89283b6c5dd246bba02aa
   manifest_version: 1.0.0
@@ -23,22 +23,24 @@ frontier:
     - "Engineer fallback contains 102/102 Skills and 16/16 portable Agent roles."
     - "Native AgentKit source is not mirrored in the repository."
     - "Engineer fallback has portable Agent Plugins and ChatGPT/Codex companion manifests pointing to one Skill tree."
+    - "Portable/ChatGPT-Codex plugin manifest conformance is covered by tests/test_plugin_manifests.py."
     - "Native/fallback source selection is implemented; native usability must be proven by the active harness."
     - "Local project/user memory persistence uses revisioned compare-and-swap writes."
     - "Local Continuity persistence uses immutable revisions, atomic current pointer updates and stale-writer conflict detection."
     - "Cross-harness adapter semantics are defined without a generic Capability Broker."
     - "Authoring/Quality includes technical exposition, long-form consistency, heading boundaries and failure-mode calibration."
     - "SERVER validation previously passed Agent Skills conformance for 114 Skills, package, owner-interface, Reasoning, Engineer fallback/full-port and state-store tests."
+    - "Representative long-form Authoring/Quality acceptance PASSes on handbook Page 03 and A6 Case 9."
     - "Draft PR #1 is open and remains draft."
-    - "Integration review paginated across all 335/335 PR files; no remaining literal escape, stale release-claim, or fallback runtime-leakage finding was detected."
+    - "Integration review paginated across all 335/335 PR files and recorded a review comment; no remaining literal escape, stale release-claim, or fallback runtime-leakage finding was detected."
     - "Integration review repaired Markdown literal-escape artifacts and aligned the Continuity cross-cutting contract with active-frontier semantics."
+    - "ChatGPT read-only check confirms the owned private angent 1.0.0 plugin is the older baseline package, not the upgrade source."
+    - "No owned private angent-engineer-fallback plugin exists in ChatGPT."
   active_work:
-    - "Record the integration review on draft PR #1."
-    - "Run broader cross-harness acceptance when another harness path is available."
-    - "Run representative end-to-end long-form Authoring/Quality acceptance before release."
+    - "Complete broader cross-harness acceptance for the actual upgrade source."
   unresolved:
     - "Agent Plugins v1 does not standardize Agent components; portable Agent role projection remains adapter-owned."
-    - "Broader cross-harness acceptance beyond the current SERVER environment remains open."
-    - "Long-form Authoring/Quality still needs a representative end-to-end acceptance case before release."
-    - "GitHub reports no status checks/check-runs on the current PR head; validated tests are external/local evidence rather than GitHub CI."
-next_action: "Record the current integration review on draft PR #1, keep it draft, then continue the remaining cross-harness and long-form acceptance work before any merge/release."
+    - "The upgraded core/fallback companion has not been activated in ChatGPT/Codex; current private angent plugin is baseline and fallback companion is absent."
+    - "Creating/updating a private ChatGPT preview changes plugin state and requires a deliberate user-authorized action."
+    - "GitHub reports no status checks/check-runs on the PR; validated tests are external/local evidence rather than GitHub CI."
+next_action: "Keep PR #1 draft. To close the remaining ChatGPT/Codex acceptance path, deliberately create/update a private preview from the upgrade source and activate the fallback companion, or obtain equivalent acceptance on another harness."
