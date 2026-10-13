@@ -12,7 +12,12 @@ Consume established model/evidence from Reasoning and Research. Return unresolve
 ## Load references progressively
 
 - references/reader-state.md — determine what the reader knows and what capability must be created.
-- references/composition-and-representation.md — preserve relations in prose, code, tables, diagrams and examples.\n- references/technical-exposition.md — explain technical mechanisms across concepts, layers, code and evidence.\n- references/long-form-consistency.md — preserve curriculum state and depth across chapters.\n- references/headings-and-boundaries.md — make section structure name the technical subject rather than author commentary.\n- references/surface-profiles.md — calibrate chat, report, long-form and progress/status output.\n- references/language-vi.md — natural technical Vietnamese.
+- references/composition-and-representation.md — preserve relations in prose, code, tables, diagrams and examples.
+- references/technical-exposition.md — explain technical mechanisms across concepts, layers, code and evidence.
+- references/long-form-consistency.md — preserve curriculum state and depth across chapters.
+- references/headings-and-boundaries.md — make section structure name the technical subject rather than author commentary.
+- references/surface-profiles.md — calibrate chat, report, long-form and progress/status output.
+- references/language-vi.md — natural technical Vietnamese.
 
 ## Start from reader-state delta
 

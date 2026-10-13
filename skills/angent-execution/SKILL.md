@@ -13,7 +13,8 @@ It does not own strategic reasoning after evidence invalidates the model.
 
 - references/action-semantics.md — ActionNode requirements, observation and replanning boundaries.
 - references/effect-safety.md — idempotency, PREPARED/RECONCILE and retry policy.
-- references/engineer-routing.md — native-first / port-fallback specialist routing.\n- references/engineer-selection.md — source-selection evidence and fallback plugin activation contract.
+- references/engineer-routing.md — native-first / port-fallback specialist routing.
+- references/engineer-selection.md — source-selection evidence and fallback plugin activation contract.
 
 Use Continuity for active-work persistence and consequential effect records.
 
