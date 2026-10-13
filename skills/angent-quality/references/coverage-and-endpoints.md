@@ -6,7 +6,13 @@
 
 A deep sample can reveal a failure class but cannot prove uninspected units are clean.
 
-For broad audits, maintain enough inventory/coverage state to know what was actually checked.
+For broad audits, maintain an explicit coverage ledger: declared scope, inventory source/completeness, inspected units, relevant inspected dimensions, skipped units, stale/recheck units and unresolved findings.
+
+Before claiming full coverage, account for pagination/cursor exhaustion, top-N limits, truncation, filters and source version when those can hide units.
+
+A first page, partial export or truncated result is not whole-scope evidence.
+
+If a shared dependency changes after inspection, mark only affected units stale/recheck.
 
 ## Endpoint hierarchy
 
@@ -18,9 +24,8 @@ Separate:
 
 Examples:
 - commit created ≠ feature done;
-- tests passed ≠ deployment healthy;
 - page update API succeeded ≠ page rendered correctly;
-- code written ≠ Jira task acceptance satisfied.
+- code written ≠ task acceptance satisfied.
 
 ## Authoritative evidence
 
