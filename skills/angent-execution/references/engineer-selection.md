@@ -23,7 +23,9 @@ angent/
     └── agents/                         # 16 portable role definitions
 ```
 
-Client installation/enablement is outside the portable Agent Plugins v1 manifest. A runtime adapter or installer selects which Engineer source to expose.\n\nFor ChatGPT/Codex, the same fallback root also carries `.codex-plugin/plugin.json` pointing to the same `skills/` directory. This is a packaging projection only; there is still one fallback Skill source tree.
+Client installation/enablement is outside the portable Agent Plugins v1 manifest. A runtime adapter or installer selects which Engineer source to expose.
+
+For ChatGPT/Codex, the same fallback root also carries `.codex-plugin/plugin.json` pointing to the same `skills/` directory. This is a packaging projection only; there is still one fallback Skill source tree.
 
 ## Native usability
 
