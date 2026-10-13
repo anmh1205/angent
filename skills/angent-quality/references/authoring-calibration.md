@@ -20,13 +20,13 @@ Symptoms:
 - code/commands appear without explanation;
 - chapter depth falls below comparable earlier material.
 
-Return to Authoring with the long-form curriculum state. Do not “fix” by padding sentences.
+Return to Authoring with artifact/curriculum state. Do not pad sentences.
 
 ### Generic AI prose
 
 Symptoms:
 - paragraphs announce importance instead of conveying knowledge;
-- repetitive “điểm quan trọng”, “cần lưu ý”, “trong thực tế”;
+- repetitive stock commentary;
 - polished but interchangeable prose;
 - many abstract nouns and weak technical subjects.
 
@@ -37,7 +37,7 @@ Return to Authoring: replace commentary with concrete object, mechanism, evidenc
 Symptoms:
 - unnatural Vietnamese clause order;
 - forced translations of established technical terms;
-- administrative/formal wording with no precision gain.
+- administrative wording with no precision gain.
 
 Return to the language profile and reconstruct from the technical proposition.
 
@@ -53,7 +53,7 @@ Return to Authoring: establish/generalize the model and boundary.
 
 Symptoms:
 - dense abstractions and terms;
-- no concrete trace, operation or observation to make them inspectable.
+- no concrete trace, operation or observation.
 
 Return to Authoring: add the smallest representative case or evidence.
 
@@ -61,8 +61,8 @@ Return to Authoring: add the smallest representative case or evidence.
 
 Symptoms:
 - Mermaid/image/table looks relevant but does not encode a decisive relationship;
-- diagram arrows/groups have weak semantics;
-- image is merely about the same product/category.
+- arrows/groups have weak semantics;
+- an image is merely about the same product/category.
 
 Remove or replace the representation.
 
@@ -70,38 +70,77 @@ Remove or replace the representation.
 
 Symptoms:
 - headings are slogans, coaching or author commentary;
-- chapter navigation does not reveal the technical subject;
-- too many micro-headings fragment one mechanism.
+- navigation does not reveal the technical subject;
+- micro-headings fragment one mechanism.
 
-Return to Authoring: rename/restructure by technical boundary.
+Return to Authoring: restructure by technical boundary.
+
+### Repetition without information gain
+
+Symptoms:
+- later paragraphs restate established facts in new wording;
+- examples repeat the same relation without adding a new consequence;
+- reminders are longer than the inference they support.
+
+Return to Authoring: retain only necessary prerequisite repair or new context-dependent consequence.
+
+### Overcorrection
+
+Symptoms:
+- a complaint about one dimension causes the revision to maximize the opposite property;
+- adding depth becomes adding length;
+- adding visuals becomes diagram saturation;
+- removing conversational prose makes the text bureaucratic;
+- simplifying repetition removes prerequisite explanation.
+
+Return to Reasoning: reconstruct the failed function, repair target and protected properties before another edit.
+
+### Repair regression
+
+Symptoms:
+- the requested defect improved;
+- an accepted strength, constraint or neighboring explanation became worse;
+- the candidate is good in isolation but worse than the accepted baseline on a protected dimension.
+
+Reject the candidate. A repair must pass both target and preservation checks.
+
+### Local patch without conceptual closure
+
+Symptoms:
+- a complaint causes one sentence to be patched;
+- the same failure mechanism remains elsewhere;
+- the revision contradicts neighboring sections.
+
+Return to Reasoning at the earliest systemic cause and repair the affected dependency closure.
+
+### Oscillating revision
+
+Symptoms:
+- successive revisions alternate between previously rejected states;
+- fixing A repeatedly reintroduces B;
+- the user restates the same mechanism-level complaint.
+
+Stop local Authoring repair and return a recurrence/oscillation finding to Reasoning.
 
 ### Chat turned into a document
 
 Symptoms:
 - simple answer gets many headings/stages/frameworks;
-- explanation overhead exceeds the question;
-- user must parse a handbook to get a direct answer.
+- explanation overhead exceeds the question.
 
 Return to the Chat surface profile and compress visible structure, not reasoning quality.
-
-### Local patch without conceptual closure
-
-Symptoms:
-- a user complaint causes one sentence to be patched;
-- the same failure mechanism remains elsewhere;
-- the revision contradicts neighboring sections.
-
-Return to Authoring/Reasoning at the earliest systemic cause and repair the affected scope.
 
 ## Calibration questions
 
 For reader-facing technical output ask:
 
-1. What can the reader now explain/predict/debug/do that they could not before?
+1. What capability did this unit create?
 2. Which sentence/figure/code example carries the decisive mechanism?
-3. Is every new term sufficiently established before it becomes a premise?
-4. Could a shorter representation preserve the same understanding?
-5. Did any fluent passage hide unresolved reasoning/evidence?
-6. For long-form work, is depth comparable with earlier chapters of similar difficulty?
+3. Is every new premise actually established?
+4. Does each repeated passage add information needed here?
+5. For a revision, what improved relative to baseline and what protected property could regress?
+6. Did any fluent passage hide unresolved reasoning/evidence?
+7. For long-form work, is depth comparable with earlier units of similar difficulty?
+8. Did a complaint get translated into a causal repair, or merely an opposite extreme?
 
-A candidate fails communication quality when it is technically correct but still makes the reader reconstruct too much of the important model.
+A candidate fails when it makes the reader reconstruct too much, violates active obligations, or regresses a protected property even if the local complaint was fixed.
