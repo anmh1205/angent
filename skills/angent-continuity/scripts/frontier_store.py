@@ -2,8 +2,8 @@
 """Revisioned local persistence for ANGENT Continuity frontiers.
 
 Each save writes an immutable revision first, then refreshes current.json.
-Resume scans coherent revision records instead of trusting a single pointer.
-Writes use compare-and-swap on revision to surface concurrent-session conflicts.
+Recovery and discovery both scan coherent immutable revisions so a stale
+current.json cannot hide newer durable work after an interruption.
 """
 
 from __future__ import annotations
@@ -23,6 +23,14 @@ from typing import Any
 
 SCHEMA_VERSION = 1
 LOCK_STALE_SECONDS = 120.0
+VALID_LIFECYCLES = {
+    "ACTIVE",
+    "PAUSED",
+    "BLOCKED",
+    "COMPLETED",
+    "SUPERSEDED",
+    "ABANDONED",
+}
 
 
 def now_iso() -> str:
@@ -103,29 +111,69 @@ def revision_files(work_dir: Path) -> list[Path]:
     return sorted(revisions.glob("*.json"))
 
 
+def read_revision(path: Path) -> dict[str, Any] | None:
+    try:
+        record = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if record.get("schema_version") != SCHEMA_VERSION:
+        return None
+    if not isinstance(record.get("work_key"), str) or not record["work_key"]:
+        return None
+    revision = record.get("revision")
+    if not isinstance(revision, int) or revision < 1:
+        return None
+    if not isinstance(record.get("frontier"), dict):
+        return None
+    return record
+
+
 def load_latest(work_dir: Path, work_key: str) -> dict[str, Any] | None:
     latest = None
     for path in revision_files(work_dir):
-        try:
-            record = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+        record = read_revision(path)
+        if record is None or record["work_key"] != work_key:
             continue
-        if record.get("schema_version") != SCHEMA_VERSION:
-            continue
-        if record.get("work_key") != work_key:
-            continue
-        revision = record.get("revision")
-        if not isinstance(revision, int) or revision < 1:
-            continue
-        if latest is None or revision > latest["revision"]:
+        if latest is None or record["revision"] > latest["revision"]:
             latest = record
     return latest
+
+
+def load_latest_discoverable(work_dir: Path) -> dict[str, Any] | None:
+    by_key: dict[str, dict[str, Any]] = {}
+    for path in revision_files(work_dir):
+        record = read_revision(path)
+        if record is None:
+            continue
+        key = record["work_key"]
+        previous = by_key.get(key)
+        if previous is None or record["revision"] > previous["revision"]:
+            by_key[key] = record
+
+    if len(by_key) != 1:
+        return None
+    return next(iter(by_key.values()))
 
 
 def frontier_from_args(args: argparse.Namespace) -> Any:
     if args.frontier_json is not None:
         return json.loads(args.frontier_json)
     return json.loads(Path(args.frontier_file).read_text(encoding="utf-8"))
+
+
+def validate_frontier(frontier: Any) -> str | None:
+    if not isinstance(frontier, dict):
+        return "frontier_must_be_json_object"
+
+    lifecycle = frontier.get("lifecycle")
+    if lifecycle is not None and lifecycle not in VALID_LIFECYCLES:
+        return "invalid_lifecycle"
+
+    for field in ("active_obligations", "verified_completed", "stale_or_recheck"):
+        if field in frontier and not isinstance(frontier[field], list):
+            return f"{field}_must_be_list"
+
+    return None
 
 
 def emit(payload: Any) -> None:
@@ -135,7 +183,7 @@ def emit(payload: Any) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="ANGENT Continuity frontier store")
     parser.add_argument("--project-root", default=".")
-    parser.add_argument("--root", help="Override continuity root; primarily for adapters/tests.")
+    parser.add_argument("--root", help="Override continuity root.")
 
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -159,14 +207,15 @@ def main() -> int:
         items = []
         if root.is_dir():
             for directory in sorted(p for p in root.iterdir() if p.is_dir()):
-                current = directory / "current.json"
-                if not current.is_file():
+                latest = load_latest_discoverable(directory)
+                if latest is None:
                     continue
-                try:
-                    value = json.loads(current.read_text(encoding="utf-8"))
-                except (OSError, json.JSONDecodeError):
-                    continue
-                items.append(value)
+                items.append({
+                    "work_key": latest["work_key"],
+                    "revision": latest["revision"],
+                    "updated_at": latest.get("updated_at"),
+                    "frontier": latest["frontier"],
+                })
         emit({"root": str(root), "items": items})
         return 0
 
@@ -182,8 +231,9 @@ def main() -> int:
 
     if args.command == "save":
         frontier = frontier_from_args(args)
-        if not isinstance(frontier, dict):
-            emit({"error": "frontier_must_be_json_object"})
+        validation_error = validate_frontier(frontier)
+        if validation_error is not None:
+            emit({"error": validation_error})
             return 2
 
         with work_lock(work_dir):
