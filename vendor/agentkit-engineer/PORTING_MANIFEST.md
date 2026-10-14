@@ -247,24 +247,30 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 
 ## Agents — 16 identities
 
-All 16 role identities are present under `vendor/agentkit-engineer/agents/`. Upstream portable export preserves Agent files as inert sidecar reference content rather than a portable runtime component, so ANGENT compares role semantics rather than claiming runtime-agent parity. Agent semantic review is still pending.
+All 16 role identities are present under `vendor/agentkit-engineer/agents/`. In the portable AgentKit export, agents are inert sidecar role references rather than active runtime agents. ANGENT therefore evaluates transferable role behavior, not live teammate scheduling parity.
 
-- advisor
-- brainstormer
-- code-reviewer
-- code-simplifier
-- debugger
-- docs-manager
-- explore
-- fullstack-developer
-- git-manager
-- journal-writer
-- kongming
-- planner
-- project-manager
-- researcher
-- tester
-- ui-ux-designer
+Current role-semantic review: **4/16 VERIFIED_ADAPTED; 12/16 REVIEW_PENDING**. Live team claims, permissions and agent memory remain host-specific.
+
+| Role | Review status | Semantic evidence |
+|---|---|---|
+| `advisor` | REVIEW_PENDING | Review pending |
+| `brainstormer` | REVIEW_PENDING | Review pending |
+| `code-reviewer` | VERIFIED_ADAPTED | scout-first, critical/informational passes, evidence and read-only team boundary |
+| `code-simplifier` | REVIEW_PENDING | Review pending |
+| `debugger` | REVIEW_PENDING | Review pending |
+| `docs-manager` | VERIFIED_ADAPTED | WHY/WHERE ownership, docs deletion gate and source/proof accuracy |
+| `explore` | REVIEW_PENDING | Review pending |
+| `fullstack-developer` | REVIEW_PENDING | Review pending |
+| `git-manager` | REVIEW_PENDING | Review pending |
+| `journal-writer` | REVIEW_PENDING | Review pending |
+| `kongming` | REVIEW_PENDING | Review pending |
+| `planner` | REVIEW_PENDING | Review pending |
+| `project-manager` | REVIEW_PENDING | Review pending |
+| `researcher` | REVIEW_PENDING | Review pending |
+| `tester` | VERIFIED_ADAPTED | diff-aware mapping, targeted/full escalation, observed evidence |
+| `ui-ux-designer` | VERIFIED_ADAPTED | UX, brand/visuals, Vietnamese typography, accessibility and rendered review |
+
+The accepted role batch compared each selected stable 2.19.0 sidecar with its ANGENT fallback and explicitly restored the domain-specific steps while preserving read-only review, source ownership and host/runtime limitations.
 
 ## Upstream evidence boundary
 

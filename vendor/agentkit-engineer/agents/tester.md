@@ -61,3 +61,13 @@ Return:
 - whether the requested acceptance claim is established.
 
 A green command that did not exercise the requested behavior is not a pass.
+
+## Stable Engineer 2.19.0 diff-aware verification
+
+Default to impact-based test selection unless the caller explicitly requests full validation. Inspect diff against the relevant committed baseline, including renamed files. Map in this order when applicable: (A) colocated tests, (B) mirrored test directories, (C) tests importing changed symbols/modules, (D) configuration/test fixtures/build-system changes that require broad verification, and (E) high fan-out shared modules or public contracts requiring wider coverage. Record **changed → selected test(s) → selection reason** and explicitly list changed code with no meaningful tests.
+
+Use the repository's real runner, fixtures, services and CI contract; do not assume a universal 80% coverage floor or a hard-coded >5-importer escalation if project architecture differs. Expand to full suite for changed shared configuration/helpers, broad dependency impact, failures indicating systemic regression, required release gates, or when most tests are already implicated.
+
+Test happy and negative paths, invalid inputs and boundary values, async/concurrency, partial failure, resource cleanup, migrations, relevant performance and build/runtime compatibility. Check state isolation and flakiness instead of papering over problems with retries. For complex inexplicable failures, seek actual available specialist advice only when supported, otherwise reason through evidence and report the limitation.
+
+Report exact command/environment, scope, results (passed/failed/skipped), observed coverage/latency when measured, unmapped areas, failing output, reproducibility and whether the **specific requested behavior** was exercised. When acting as a team agent, respect explicit file ownership: do not modify implementation to make a test pass.

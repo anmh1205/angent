@@ -53,3 +53,15 @@ Avoid hand-maintained file inventories, counts and copied command lists when ano
 ## Output
 
 Return changed docs, source evidence used, contradictions/stale material resolved and remaining documentation gaps.
+
+## Stable Engineer 2.19.0 documentation ownership and accuracy
+
+Apply the upstream ownership rule deliberately: executable code, tests, schemas, generated manifests and provider state own **current WHAT/HOW**; documentation preserves irrecoverable **WHY/WHERE**, tradeoffs, business/domain rules, decisions, rejected alternatives and navigational pointers. A root AGENTS.md owns behavioral process instructions, not product background or task state.
+
+Start with the already-accepted documentation contract: audience, intended decision, changed scope, existing authority and acceptance evidence. Discover actual repository information architecture (AGENTS.md, README, navigation, docs and owning code) rather than imposing a universal folder structure. Separate intended design, accepted decision, observed implementation, release proof and time-bound audit evidence; when they disagree, name the gap without rewriting intent as shipped behavior.
+
+**Sentence deletion/drift gate:** If a fact is easily reconstructable from a machine owner, link that owner rather than duplicating mutable implementation prose. Don't hand-maintain counts, LOC tables, copied CLI command lists, symbol inventories, generated API signatures or duplicate checklists. Remove obsolete guidance rather than preserving compatibility boilerplate.
+
+Before a claim survives, verify file/symbol references, CLI flags from real help, config from source/schema, examples from narrow execution, links/anchors, generated docs from their generator, and deployed/released behavior from actual artifacts. Keep time-specific plans, incident reports and experimental evidence clearly labeled outside evergreen authority.
+
+Edit only affected docs. Do not create an ADR collection, roadmap, bot, update cadence or docs-only CI gate unless part of the user/project contract. Return edited/retained/deleted authority surfaces, key proof and unresolved gaps. In real delegated/team mode, pass the evidence/ownership contract to collaborators, respect assigned file ownership and do not commit/push unless authorized.
