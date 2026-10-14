@@ -249,19 +249,19 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 
 All 16 role identities are present under `vendor/agentkit-engineer/agents/`. In the portable AgentKit export, agents are inert sidecar role references rather than active runtime agents. ANGENT therefore evaluates transferable role behavior, not live teammate scheduling parity.
 
-Current role-semantic review: **8/16 VERIFIED_ADAPTED; 8/16 REVIEW_PENDING**. Live team claims, permissions and agent memory remain host-specific.
+Current role-semantic review: **12/16 VERIFIED_ADAPTED; 4/16 REVIEW_PENDING**. Live team claims, permissions and agent memory remain host-specific.
 
 | Role | Review status | Semantic evidence |
 |---|---|---|
 | `advisor` | VERIFIED_ADAPTED | one-question relay, confirmation gate, verified scouting and advisory-only boundary |
-| `brainstormer` | REVIEW_PENDING | Review pending |
+| `brainstormer` | VERIFIED_ADAPTED | assumption challenge, distinct architectures, feasibility, trade-offs and confirmed direction |
 | `code-reviewer` | VERIFIED_ADAPTED | scout-first, critical/informational passes, evidence and read-only team boundary |
-| `code-simplifier` | REVIEW_PENDING | Review pending |
+| `code-simplifier` | VERIFIED_ADAPTED | behavior-preserving recent-change refactor, ownership and before/after checks |
 | `debugger` | VERIFIED_ADAPTED | incident evidence, causal timelines, hypothesis elimination, bounded diagnostics and repair |
 | `docs-manager` | VERIFIED_ADAPTED | WHY/WHERE ownership, docs deletion gate and source/proof accuracy |
-| `explore` | REVIEW_PENDING | Review pending |
+| `explore` | VERIFIED_ADAPTED | bounded read-only repository/symbol tracing with evidence and secret safeguards |
 | `fullstack-developer` | VERIFIED_ADAPTED | phase/dependency ownership, failure handling, tests and live-team capability boundary |
-| `git-manager` | REVIEW_PENDING | Review pending |
+| `git-manager` | VERIFIED_ADAPTED | exact staging, authorization, branch lease safety and read-back verification |
 | `journal-writer` | REVIEW_PENDING | Review pending |
 | `kongming` | REVIEW_PENDING | Review pending |
 | `planner` | VERIFIED_ADAPTED | file:line/consumer verification, state lifetime, risk/dependency/migration and phase contracts |
@@ -272,7 +272,9 @@ Current role-semantic review: **8/16 VERIFIED_ADAPTED; 8/16 REVIEW_PENDING**. Li
 
 The accepted role batches compared each selected stable 2.19.0 sidecar with its ANGENT fallback and explicitly restored the domain-specific steps while preserving read-only review, source ownership and host/runtime limitations.
 
-The next four roles preserve the upstream advisor's interview/reframing-confirmation and relay safety without assuming Claude model or state hooks; debugger's incident triage, timelines, data/CI/performance diagnostics and evidence-backed root-cause gates; fullstack-developer's strict parallel phase/file ownership with bounded implementation and observed verification; and planner's source revalidation, caller/flow/lifetime tracing, dependency sequencing, migration, risk and rollback contracts. Inert sidecars still do not establish a live team or native agent relay.
+The advisory, diagnostic, implementation and planning batch preserves the upstream advisor's interview/reframing-confirmation and relay safety without assuming Claude model or state hooks; debugger's incident triage, timelines, data/CI/performance diagnostics and evidence-backed root-cause gates; fullstack-developer's strict parallel phase/file ownership with bounded implementation and observed verification; and planner's source revalidation, caller/flow/lifetime tracing, dependency sequencing, migration, risk and rollback contracts.
+
+The next batch restores Brainstormer's architecture/feasibility debate and explicit decision consensus; Code Simplifier's behavior-preserving, recent-change refinement and file ownership; Explore's strictly read-only symbol-first reconnaissance; and Git Manager's narrow staging, conventional history and checked remote-ref updates. Source edits, plan creation, team coordination and native model execution are never inferred from an inert role file. Inert sidecars still do not establish a live team or native agent relay.
 
 ## Upstream evidence boundary
 
