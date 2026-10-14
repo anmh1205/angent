@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **76 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **80 / 102 Skill identities reviewed semantically**.
 
-- **64 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-find-skills`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-loop`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
-- **9 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-team`, `ak-ui-ux-pro-max`.
+- **65 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-find-skills`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-loop`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **12 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-plans-kanban`, `ak-repomix`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
 - **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
-- **26 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **22 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -156,6 +156,10 @@ The stable 2.19.0 Loop preserves its numeric goal/scope/verify/guard contract, s
 
 Direct 2.19.0 package review restored explicit 0–5 coding-level selection with native Claude style-injection/persistence treated as a conditional runtime effect rather than hidden fallback behavior. Common remains internal-only; it does not introduce an independent user-facing skill. Find Skills preserves its two separate paths: choosing among actually installed AgentKit/ANGENT capabilities and using the external Skills CLI with explicit installation/update authority and source inspection. Project Management retains durable files-first plans, optional ephemeral runtime hydration, verified whole-plan phase backfill/sync-back, progress evidence and documentation-impact routing. No update to project or global user configuration is implied by any of these skill Markdown changes.
 
+### Git retrospectives, branch handoff, plans dashboard and repository packaging
+
+Retro restores actual Git period metrics and optional equal-length comparison, source-aware plan/issue evidence, Markdown/HTML outputs and honest missing-data handling; its metrics are descriptive, never an individual productivity score. Watzup retains the native package's scanner semantics for local/remote branches, worktrees, plans/roadmaps and priority ranking, but degrades without its Node scanner and never fetches or switches branches implicitly. Plans Kanban is specifically an integrated AgentKit CLI dashboard launcher with health/feature probes and project/global scope; a portable board is not certified native parity. Repomix preserves format/filter/remote/token/security contracts but cannot claim its CLI, batch Python script or built-in scanner exist; all three optional-runtime skills remain DEGRADED.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -223,7 +227,7 @@ Direct 2.19.0 package review restored explicit 0–5 coding-level selection with
 | `ak-orchestrate` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-payment-integration` | VERIFIED_ADAPTED | stable 2.19.0 SePay/Polar/Stripe and multi-provider payment semantics reviewed; volatile provider APIs are refreshed from current docs and internal/provider state reconciliation is preserved |
 | `ak-plan` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-plans-kanban` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-plans-kanban` | VERIFIED_DEGRADED | stable 2.19.0 integrated CLI plans dashboard feature-probe/launcher contract; fallback cannot run native UI |
 | `ak-predict` | VERIFIED_ADAPTED | stable 2.19.0 five-perspective debate, worst-case GO/CAUTION/STOP verdict and reason/probe follow-on modes |
 | `ak-preview` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-problem-solving` | VERIFIED_PORTABLE | stable 2.19.0 six technique families restored with diagnosis, concrete probes and no runtime dependency |
@@ -231,10 +235,10 @@ Direct 2.19.0 package review restored explicit 0–5 coding-level selection with
 | `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored |
 | `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
 | `ak-remotion` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-repomix` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-repomix` | VERIFIED_DEGRADED | stable 2.19.0 bounded packaging formats, remote/token/security workflow; native CLI/batch helper absent |
 | `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-research-prompt` | VERIFIED_ADAPTED | stable 2.19.0 Research-assignment-only boundary and one-paragraph evidence brief contract restored |
-| `ak-retro` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-retro` | VERIFIED_ADAPTED | stable 2.19.0 period/team comparisons, raw Git metrics, evidence caveats and Markdown/HTML reporting restored |
 | `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-scenario` | VERIFIED_ADAPTED | stable 2.19.0 12-dimension one-shot and bounded/saturation novelty modes with test-oracle output |
 | `ak-scout` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
@@ -256,7 +260,7 @@ Direct 2.19.0 package review restored explicit 0–5 coding-level selection with
 | `ak-ui-ux-pro-max` | VERIFIED_DEGRADED | stable 2.19.0 product UX decision workflow preserved; packaged recommendation dataset/search engine is not reproduced |
 | `ak-use-mcp` | VERIFIED_ADAPTED | stable 2.19.0 runtime-native/direct-client discovery and MCP config/protocol/effect semantics preserved without vendoring upstream scripts |
 | `ak-vibe` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-watzup` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-watzup` | VERIFIED_DEGRADED | stable 2.19.0 branch/worktree/plan/roadmap scanning and priority ranking; native scanner not bundled |
 | `ak-web-design-guidelines` | VERIFIED_ADAPTED | stable 2.19.0 fresh canonical-guideline retrieval and source-evidence review contract preserved |
 | `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved |
 | `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved |
