@@ -54,7 +54,7 @@ class RuntimeStateTests(unittest.TestCase):
                              "s=importlib.util.spec_from_file_location('x',sys.argv[1]);"
                              "m=importlib.util.module_from_spec(s);s.loader.exec_module(m);"
                              f"c=getattr(m,'{fun}');"
-                             "c(Path(sys.argv[2]),timeout=0.2).__enter__()",
+                             "ctx=c(Path(sys.argv[2]),timeout=0.2);ctx.__enter__()",
                              str(src), str(target)],
                             capture_output=True, text=True, timeout=5)
                         self.assertNotEqual(child.returncode, 0, child.stdout)
@@ -76,7 +76,7 @@ class RuntimeStateTests(unittest.TestCase):
                          "s=importlib.util.spec_from_file_location('x',sys.argv[1]);"
                          "m=importlib.util.module_from_spec(s);s.loader.exec_module(m);"
                          f"c=getattr(m,'{fun}');"
-                         "c(Path(sys.argv[2]),timeout=1).__enter__();os._exit(0)",
+                         "ctx=c(Path(sys.argv[2]),timeout=1);ctx.__enter__();os._exit(0)",
                          str(src), str(target)],
                         capture_output=True, text=True, timeout=5)
                     self.assertEqual(child.returncode, 0, child.stderr)
@@ -98,6 +98,36 @@ class RuntimeStateTests(unittest.TestCase):
             code, current = invoke(MEMORY, *command, "get", "--topic", "lesson")
             self.assertEqual(code, 0)
             self.assertEqual(current["entry"]["content"], "mechanism")
+
+    def test_learning_status_scope_and_revision(self):
+        with tempfile.TemporaryDirectory() as d:
+            store = Path(d) / "learning.json"
+            args = ["--scope", "learning-project", "--store", str(store)]
+            code, result = invoke(MEMORY, *args, "put", "--topic", "mechanism",
+                                  "--content", "countercase and applicability",
+                                  "--status", "reopened", "--expected-revision", "0")
+            self.assertEqual(code, 0, result)
+            code, result = invoke(MEMORY, *args, "get", "--topic", "mechanism")
+            self.assertEqual(code, 0, result)
+            self.assertEqual(result["entry"]["status"], "reopened")
+            code, wrong = invoke(MEMORY, "--scope", "project", "--store", str(store),
+                                 "get", "--topic", "mechanism")
+            self.assertNotEqual(code, 0)  # scope mismatch must fail, not import a lesson as a fact.
+
+    def test_memory_concurrent_revision_conflict(self):
+        with tempfile.TemporaryDirectory() as d:
+            store = Path(d) / "memory.json"
+            cmd = [sys.executable, str(MEMORY), "--scope", "project",
+                   "--store", str(store), "put", "--topic", "x",
+                   "--content", "writer", "--expected-revision", "0"]
+            procs = [subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                      stderr=subprocess.PIPE, text=True) for _ in range(2)]
+            results = [p.communicate(timeout=8) for p in procs]
+            self.assertEqual(sorted(p.returncode for p in procs), [0, 3], results)
+            code, result = invoke(MEMORY, "--scope", "project", "--store", str(store),
+                                  "read")
+            self.assertEqual(code, 0)
+            self.assertEqual(result["revision"], 1)
 
     def test_frontier_fast_path_and_crash_recovery(self):
         with tempfile.TemporaryDirectory() as d:
@@ -142,8 +172,6 @@ class RuntimeStateTests(unittest.TestCase):
                    "--expected-revision", "0"]
             procs = [subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                       text=True) for _ in range(2)]
-            results = [(p.returncode, p.stdout) if p.poll() is not None
-                       else (None, None) for p in procs]
             results = [p.communicate(timeout=8) for p in procs]
             codes = sorted(p.returncode for p in procs)
             self.assertEqual(codes, [0, 3], results)
