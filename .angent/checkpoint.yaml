@@ -33,15 +33,16 @@ release_state:
     version_change_requires_explicit_user_instruction: true
   private_chatgpt_plugin:
     updated: true
-    canonical_plugin_id: plugins_6acf6c3597308191b7235938e3bb4fe8
+    canonical_plugin_id: plugins_6acf96d527f48191823a817e4e5bf35f
     version: 1.0.0
-    release_id: pluginrel_6acf6c387f548191a366fd5d67cf3da8
-    source_commit: 32b9d9190d7527d24f1c1cfec6596991bc2d5eda
-    source_archive_sha256: 5ed6080a4fe0e8d42fb80b1457f85749d9611378753aed1375aa006e3cb014d7
+    release_id: pluginrel_6acf96d9eaf88191b361f9a3446c6644
+    source_commit: 59f04f4b177074bd170d82a243488295b7ffc30b
+    source_archive_sha256: 507842faa9bed5f77b1b070e1ce30b7594019a519c52a516f5dda245a115b22e
     read_back_verified: true
     superseded_provider_identities:
       - plugins_6ace3b6877a0819193f1481bf46b9f00
       - plugins_6acf66b0888c81918532ccd5d81cbde1
+      - plugins_6acf6c3597308191b7235938e3bb4fe8
 
 frontier:
   repair_state: NONE
@@ -54,10 +55,11 @@ frontier:
   verified_units:
     - "Core hardening PR #3, cognitive alignment PR #5, correction interpretation PR #12, frontier scheduling PR #15, reliability-boundary PR #17 and canonical-version PR #19 are canonical on main."
     - "Canonical semantic version is 1.0.0 across root manifests, Engineer fallback manifests, checkpoint state and the canonical private ChatGPT plugin."
-    - "Private ChatGPT canonical plugin identity is plugins_6acf6c3597308191b7235938e3bb4fe8 at version 1.0.0; provider release IDs are deployment metadata rather than semantic versions."
-    - "Canonical private plugin replacement was built from exact main@32b9d9190d7527d24f1c1cfec6596991bc2d5eda; normalized package SHA-256 is 5ed6080a4fe0e8d42fb80b1457f85749d9611378753aed1375aa006e3cb014d7."
-    - "Canonical private plugin read-back verified 64 files, both manifests at 1.0.0, correction routing, multi-branch scheduling, invocation-bound authority, observation admission, resume-binding/compatibility, interface contracts and Quality resume-compatibility checks."
+    - "Private ChatGPT canonical plugin identity is plugins_6acf96d527f48191823a817e4e5bf35f at version 1.0.0; provider release IDs are deployment metadata rather than semantic versions."
+    - "Canonical private plugin replacement was built from exact main@59f04f4b177074bd170d82a243488295b7ffc30b; normalized core package SHA-256 is 507842faa9bed5f77b1b070e1ce30b7594019a519c52a516f5dda245a115b22e."
+    - "Canonical private plugin read-back verified 68 files, both manifests at 1.0.0, progressive activation, correction routing, multi-branch scheduling, invocation-bound authority, observation admission, failure-domain separation, mutation freshness, resume-binding/compatibility, interface contracts and Quality checks."
     - "Consequential authority is re-bound at concrete invocation and material provider/tool observations pass an explicit admission boundary before changing established state."
+    - "Authority changes after dispatch stop future dependent effects but do not pretend an already-attempted effect disappeared; cancellation/compensation is modeled as a new bounded effect and ambiguous provider state remains subject to reconciliation."
     - "Branch independence is conditional on current shared-state dependencies and affected branches are revalidated after material effects/observations."
     - "Required Quality FAIL/BLOCKED prevents only the dependent accepted transition; unrelated runnable work may continue."
     - "Reusable behavioral acceptance preserves reconstructable evidence pointers instead of relying on remembered PASS claims."
