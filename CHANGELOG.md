@@ -43,6 +43,15 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Added behavioral calibration cases for plan→invocation drift, observation mismatch/partiality, branch dependency invalidation and low-consequence counter-cases.
 - No permission runtime, transaction engine, event journal, observation database or scheduler service was added.
 
+### Resume compatibility
+
+- Added semantic resume binding for saved work whose safe continuation depends on live target/source/baseline/effect/capability identity.
+- Resume mappings are classified as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE.
+- AMBIGUOUS/INCOMPATIBLE fail closed only for dependent continuation/replay; independently verified disjoint work may remain usable.
+- Resume checks use dependency closure rather than whole-project byte equality, so unrelated changes do not invalidate safe saved work.
+- Concurrent-session reconciliation no longer treats a later timestamp or newer summary as automatic truth.
+- Capability/tool identity is preserved only when semantic drift could change a pending/replayed action; ANGENT still does not implement a durable-execution engine.
+
 ### Reproducible behavioral acceptance
 
 - Behavioral calibration used for later propagation/regression claims now preserves a recoverable evidence pointer/record rather than a bare PASS memory.
