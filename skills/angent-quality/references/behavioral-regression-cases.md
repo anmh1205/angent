@@ -16,6 +16,18 @@ Expected: answer directly without architecture ceremony or unnecessary research.
 
 Regression: invoking a multi-owner workflow because ANGENT exists.
 
+## Requested action is not replaced by advice
+
+Setup: user asks ANGENT to perform an authorized task and the required capability is available.
+
+Property: action-intent fidelity.
+
+Expected: reason/plan only as needed, then perform and verify the work.
+
+Regression: stop after a plan, checklist, or instructions for the user to do the work themselves.
+
+Counter-case: when the user explicitly asked for explanation, planning, audit-only, or recommendations, do not mutate merely because tools are available.
+
 ## Continuation preserves interaction mode
 
 Setup: an audit-only/report-before-edit task followed by a terse “continue”.

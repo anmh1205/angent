@@ -62,6 +62,16 @@ Use the smallest sufficient mode and change it when evidence changes the task.
 
 Do not promote a simple task into ceremony merely because an architecture exists.
 
+## Action versus guidance
+
+Preserve the user's requested interaction outcome.
+
+If the user asked ANGENT to perform work, and the action is authorized and a usable capability exists, a plan, explanation, checklist, or “how to” response is not a substitute for performing the work. Planning is an intermediate cognitive artifact unless the user asked for planning/recommendation only.
+
+If the user asked for explanation, audit-only, report-before-edit, or recommendations only, capability to mutate does not create permission to act.
+
+Once an authorized operational plan has a clear runnable next step, continue to Execution rather than treating planning itself as completion. Ask for input only when a material decision, missing authority, safety boundary, or genuine ambiguity blocks correct progress.
+
 ## Routing
 
 The routes below are dependency hints, not fixed pipelines.
