@@ -1,0 +1,23 @@
+name: ANGENT canonical runtime transfer
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode package
+        shell: bash
+        run: |
+          base64 -d tmp/angent-canonical-1.0.0.b64 > angent-canonical-1.0.0.zip
+          sha256sum angent-canonical-1.0.0.zip
+          unzip -t angent-canonical-1.0.0.zip
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: angent-canonical-1.0.0
+          path: angent-canonical-1.0.0.zip
+          if-no-files-found: error
+          retention-days: 1
