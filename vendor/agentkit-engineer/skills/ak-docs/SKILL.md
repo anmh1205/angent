@@ -1,26 +1,28 @@
 ---
 name: ak-docs
-description: Create, refresh and audit codebase documentation while preserving the project's existing information architecture and canonical AGENTS.md instructions.
+description: Initialize, update, summarize or audit project docs and root agent context from current evidence without imposing a universal file layout.
 metadata: {port: angent-fallback, mode: adapted}
 ---
 
-# Docs — Portable Fallback
+# Documentation Management — Portable Fallback
 
-Use for README, architecture docs, developer guides, runbooks, API/project documentation and AGENTS.md maintenance.
+Code, tests and schemas own current WHAT/HOW. Project docs preserve non-derivable WHY/WHERE: rationale, business constraints, terminology, decisions and navigation. Root AGENTS.md is **behavioral process memory**, not a project overview.
 
-Read `references/docs-audit.md`.
+## Select operation
 
-## Principles
+- `init`: inspect the existing docs route and create only needed ownership surfaces. Read `references/docs-modes.md`.
+- `update`: reconcile changed contracts with impacted documents only. Read `references/docs-modes.md`.
+- `summarize`: provide a sourced answer without creating a file unless explicitly asked or an existing file owns it.
+- `agent-context`: author/audit root AGENTS.md via keep/cut/migrate tests. Read `references/agent-context.md`.
+- If the operation is unclear and changes the deliverable, resolve it; never assume init.
 
-- verify docs against source/config/current behavior;
-- update the smallest authoritative document set;
-- link rather than duplicate;
-- keep AGENTS.md focused on stable agent/project instruction;
-- keep task progress and dynamic memory out of AGENTS.md;
-- preserve existing docs hierarchy unless there is a reason to reorganize it.
+## Opening, authority and evidence gates
 
-## Output
+1. Recover accepted scope, audience, decision purpose and validation bar. Do not restart already settled brainstorming.
+2. Inspect root instructions, README, existing docs navigation and the relevant code, tests, configs, scripts and generated owner before choosing paths.
+3. Separate evergreen rationale from time-bound audits, plans or release records.
+4. Apply `references/docs-audit.md`: remove implementation paraphrases, stale duplicates, copied mutable inventories and counts; link executable owners.
+5. Edit only impacted authority surfaces. Do not invent ADRs, file trees, governance machinery or docs-only gates merely for completeness.
+6. Verify links, paths, configuration keys, commands and current claims against actual owners; report validated changes and uncertainties.
 
-Return changed docs, source evidence used, stale/conflicting guidance resolved and remaining gaps.
-
-Do not invent commands/configuration to make documentation look complete.
+Use host-native documentation delegation only if actually available; otherwise do the same work directly. Never claim an upstream named agent ran when it did not. Do not implement product code in a docs-only operation.

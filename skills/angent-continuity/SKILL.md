@@ -90,7 +90,7 @@ Persist meaningful completed units, artifact pointers, controlling decision basi
 
 ## Resume
 
-1. recover the highest coherent frontier;
+1. identify the user's current workstream, compare candidate live working branches/commits with saved work state, and recover the highest coherent **relevant** frontier (see resume-reconciliation.md);
 2. apply newest instruction/current authority;
 3. establish resume compatibility for the saved dependency/effect bindings as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE;
 4. fail closed for dependent replay/continuation when the binding is AMBIGUOUS or INCOMPATIBLE;

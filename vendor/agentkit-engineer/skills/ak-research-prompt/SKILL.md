@@ -1,27 +1,21 @@
 ---
 name: ak-research-prompt
-description: Produce a self-contained research brief that another human or AI researcher can execute without hidden conversation context.
+description: Author a standalone decision-ready research assignment, not research findings, with source and uncertainty requirements.
 license: MIT
-metadata: {port: angent-fallback, mode: portable}
+metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Research Prompt — Portable Fallback
 
-A good research brief specifies the decision it must inform.
+This skill writes a brief for another researcher. If the user wants actual findings now, route to the research workflow.
 
-## Include
+## Contract
 
-- background needed to understand the question;
-- exact research questions;
-- decision/acceptance criteria;
-- version/platform/time boundaries;
-- preferred source roles;
-- known hypotheses or competing options;
-- required evidence/experiments;
-- exclusions;
-- desired output format;
-- how uncertainty/conflict should be represented.
+1. Recover project context, audience, decision, timeline when supplied, prior facts and constraints; avoid hidden dependence on the originating chat.
+2. Express one controlling question and three to six scoped subquestions, without unrelated missions.
+3. Require primary sources first (official docs, repository code, release notes, standards, papers, filings), and treat forums as weak corroboration.
+4. Distinguish confirmed facts, inference, uncertainty and conflicting sources; include a gap round for contradictions and single-source claims.
+5. Require each finding to include a precise claim, source URL/path, version/date applicability and one-line decision relevance; request one consolidated Markdown result.
+6. When invoked in the upstream-compatible research-prompt mode, return exactly one self-contained paragraph without heading or separate deliverable. Honor a user's explicitly requested alternate brief structure.
 
-Do not include irrelevant transcript history.
-
-A successor should be able to execute the brief without asking what the original task meant.
+Do not invent evidence or embed inaccessible private links, credentials or unnecessary personal data.

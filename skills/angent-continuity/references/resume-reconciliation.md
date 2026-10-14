@@ -22,6 +22,20 @@ Resume is not “read an old summary and continue”.
 
 A saved decision remains usable only while its decisive basis remains valid enough for the next dependent action.
 
+## Resolve the correct active workstream before using a checkpoint
+
+A valid but stale checkpoint can describe an earlier phase or a sibling audit. Neither the last assistant summary nor the latest timestamp is sufficient to select the continuation branch.
+
+1. Identify the exact workstream and expected outcome named by the user's current instruction.
+2. Discover candidate frontiers from revisioned Continuity records, current worktrees/branches and HEADs, recent commits, provider change history, open PRs/issues and the most recent meaningful tool actions.
+3. Distinguish the **canonical base** (often `main`) from the **active working branch**. A checkpoint with `source_of_truth.branch: main` does not imply all unfinished work is on main.
+4. Compare candidates by stable task identity, scope, verified work units and dependency/effect evidence. Select the task-matching live frontier, not an adjacent audit with a newer narrative.
+5. Reconcile saved coverage with actual committed changes and operations. Verified commits after the checkpoint advance that frontier; they do not erase applicable invariants or independently verified work.
+6. A source file read for the next batch is evidence of exploration, not proof that the batch was ported or accepted. Restore the first **unfinished** unit, not the last touched file.
+7. If several plausible workstreams remain, preserve each separately; mark only overlapping dependencies ambiguous. Validate the selected exact branch/HEAD and unfinished scope before a dependent write.
+
+When the chosen branch and checkpoint disagree, report the discrepancy and correct the active frontier record at a meaningful checkpoint rather than silently continuing the stale phase.
+
 ## Recovered-state trust
 
 Coherent revision order establishes storage consistency, not snapshot authenticity.

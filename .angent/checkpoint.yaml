@@ -1,7 +1,7 @@
 schema_version: 2
 work_key: angent/core
 record_type: RELIABILITY_CORE_AHEAD_OF_RUNTIME_ENGINEER_SEMANTIC_AUDIT
-phase: state-eval-integrity-integrated-plugin-sync-version-blocked-engineer-semantic-refresh
+phase: engineer-semantic-parity-2.19.0-in-progress-with-runtime-sync-blocked
 
 source_of_truth:
   provider: github
@@ -55,8 +55,12 @@ frontier:
       state: ACTIVE
       scope: vendor/agentkit-engineer
       objective: "Refresh portable Engineer fallback against the signed stable AgentKit Engineer 2.19.0 package at workflow-semantic/support-surface level without mirroring upstream runtime mechanics."
+      active_working_branch: engineer-semantic-parity-2.19.0
+      baseline_evidence_head: 0cb1c719f9133ac63848dc5252f9e5ce1ef7e76b
+      progress_ledger: vendor/agentkit-engineer/PORTING_MANIFEST.md
 
   verified_units:
+    - "Engineer semantic parity context/docs support batch reviewed on engineer-semantic-parity-2.19.0; use the manifest for verified units, not this historical aggregate."
     - "Reliability/state-evaluation integrity PR #36 is canonical on main."
     - "Persisted-state trust distinguishes coherent serialized state from authenticated/owned resume state; calibration isolation, fixture satisfiability and composite endpoint semantics are integrated."
     - "Canonical semantic version remains 1.0.0; no public release/tag has been made."
@@ -83,4 +87,4 @@ frontier:
     - "Portable export is evidence/source material for audit, not a verified runtime adapter and not permission to vendor a raw upstream mirror."
     - "File-count/text-similarity metrics alone cannot accept or reject a fallback capability."
 
-next_action: "Create a clean Engineer semantic-parity refresh branch from canonical main, correct manifest/provenance claims, then audit and upgrade fallback Skills/Agents in capability groups against stable 2.19.0. Keep semantic version 1.0.0 unless the user explicitly authorizes a version-policy change."
+next_action: "Continue the Engineer 2.19.0 semantic audit on branch engineer-semantic-parity-2.19.0; current first unfinished cluster: ak-document-skills, ak-copywriting, ak-journal and adjacent knowledge skills. Read live HEAD and PORTING_MANIFEST before selecting work; do not resume reliability-boundary-hardening or infer unfinished work from the canonical main branch."

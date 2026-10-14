@@ -24,24 +24,28 @@ No Skill/Agent is removed merely because upstream depends on AgentKit CLI, Claud
 - Signed stable changelog resolves Engineer **2.19.0** as the current stable package.
 - A fresh stable 2.19.0 portable export resolves **102 Skills** and **16 Agent sidecar roles**.
 - Fallback identity diff is exact: no upstream-only or fallback-only Skill directory.
-- The upstream portable Skill tree contains about **1428 support files** versus **236** in the fallback; only **112** same relative paths overlap.
-- Upstream SKILL.md surfaces contain about **20,150 lines / 545 direct support references** versus fallback **3,632 lines / 136 direct support references**.
+- At the initial inventory baseline, the upstream portable Skill tree contained about **1428 support files** versus **236** in the fallback; only **112** same relative paths overlap.
+- At that initial baseline, upstream SKILL.md surfaces contained about **20,150 lines / 545 direct support references** versus fallback **3,632 lines / 136 direct support references**.
 - These size/path figures are triage signals only; they do not prove that an independently adapted shorter workflow is wrong.
 
 The old docs-derived assumption of 103 public Skills with eight missing/new identities is superseded by signed package evidence. The stable “choose a Skill” page is a usage guide, not the packaged-identity inventory.
 
 ## Semantic review progress
 
-Current accepted coverage: **47 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **54 / 102 Skill identities reviewed semantically**.
 
-- **44 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-html-video`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-react-best-practices`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **51 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-context-engineering`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-html-video`, `ak-interview-docs`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
 - **3 VERIFIED_DEGRADED**: `ak-design`, `ak-team`, `ak-ui-ux-pro-max`.
 - **0 VERIFIED_PORTABLE**: none currently.
-- **55 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **48 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
 No status is promoted solely from identity, line count, reference count, or textual similarity.
+
+### Context, documentation and research support batch
+
+Reviewed `ak-context-engineering`, `ak-folder-context`, `ak-docs`, `ak-docs-seeker`, `ak-interview-docs`, `ak-research-prompt` and `ak-project-organization` against the signed stable 2.19.0 export. The adapted fallback retains context quality evaluation, runtime-aware signal limits, subtree instruction authority, four distinct docs operations, versioned official documentation discovery, interview ownership, a standalone research-brief contract and a separated advisory/authorized-move workflow. Upstream-only telemetry hooks and docs-fetch scripts are not represented as available runtime tools.
 
 ### Delivery/runtime batch
 
@@ -152,7 +156,7 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 | `ak-codex-goal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-coding-level` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-common` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-context-engineering` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-context-engineering` | VERIFIED_ADAPTED | stable 2.19.0 Measured context/runtime boundaries, four-bucket lifecycle and decision-quality evaluation retained; no fabricated provider telemetry |
 | `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-copywriting` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-cti-expert` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -162,14 +166,14 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 | `ak-deploy` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-design` | VERIFIED_DEGRADED | stable 2.19.0 design workflow reviewed; bundled generator/search datasets are an explicit portable capability boundary |
 | `ak-devops` | VERIFIED_ADAPTED | stable 2.19.0 infrastructure/CI/CD/GitOps workflow reviewed with plan/apply/delete/replace and readiness/recovery gates |
-| `ak-docs` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-docs-seeker` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-docs` | VERIFIED_ADAPTED | stable 2.19.0 Init/update/summarize/agent-context modes plus drift-resistant ownership and verification restored |
+| `ak-docs-seeker` | VERIFIED_ADAPTED | stable 2.19.0 Versioned canonical docs and llms.txt discovery preserved; unbundled Node scripts explicitly non-operative |
 | `ak-document-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-excalidraw` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-fable-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-find-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-folder-context` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-folder-context` | VERIFIED_ADAPTED | stable 2.19.0 Subtree-only sanity/approval gate and canonical AGENTS.md compatibility restored |
 | `ak-frontend-design` | VERIFIED_ADAPTED | stable 2.19.0 visual-direction/state/render-verification semantics preserved with harness-native implementation/render tools |
 | `ak-frontend-development` | VERIFIED_ADAPTED | stable 2.19.0 frontend implementation semantics preserved while project-specific libraries are derived from the current codebase |
 | `ak-git` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
@@ -183,7 +187,7 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 | `ak-help` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-html-video` | VERIFIED_ADAPTED | stable 2.19.0 html-video template/project/preview/render workflow restored; renderer/toolchain mechanics remain harness-dependent |
 | `ak-hyperframes` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
-| `ak-interview-docs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-interview-docs` | VERIFIED_ADAPTED | stable 2.19.0 Vision versus structured-doc modes, user-owned decisions and per-answer read-back restored |
 | `ak-issue-to-plan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-journal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-llms` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
@@ -202,12 +206,12 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 | `ak-preview` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-problem-solving` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-project-management` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-project-organization` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored |
 | `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
 | `ak-remotion` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-repomix` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-research-prompt` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-research-prompt` | VERIFIED_ADAPTED | stable 2.19.0 Research-assignment-only boundary and one-paragraph evidence brief contract restored |
 | `ak-retro` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-scenario` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
