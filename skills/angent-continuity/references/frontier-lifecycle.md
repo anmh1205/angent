@@ -62,11 +62,14 @@ A frontier should preserve:
 - unresolved dependencies;
 - pending or ambiguous external effects;
 - source/provider versions needed for reconciliation;
+- minimal resume-binding pointer/subset when dependent continuation requires identity compatibility;
 - next safe action or runnable-set pointer.
 
 Large authoring/research models and complete collaboration/history models should remain with their owning context/artifact/store. Continuity persists a compact pointer, digest and the subset needed to resume safely.
 
-Do not persist raw private reasoning. A recovered decision basis or collaboration-state pointer does not override newer authority or live evidence.
+Do not persist raw private reasoning. A recovered decision basis, collaboration-state pointer, or resume binding does not override newer authority or live evidence.
+
+A saved branch state is conditional on the binding that made it meaningful. If the relevant target/baseline/dependency/capability mapping becomes REVALIDATE, AMBIGUOUS or INCOMPATIBLE, do not keep the old RUNNABLE classification by inertia.
 
 ## Discovery must match recovery
 
