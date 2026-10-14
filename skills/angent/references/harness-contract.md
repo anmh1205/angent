@@ -61,7 +61,11 @@ An adapter may map a role to:
 2. a one-shot subagent/worker;
 3. sequential role execution in the current agent.
 
-It should expose whether delegation is available and what write/isolation boundary it provides.
+It should expose whether delegation is available, what history/context the worker receives by default, whether input/history filtering is supported, and what write/isolation boundary it provides.
+
+When filtering is available, project the bounded delegation envelope rather than forwarding the whole transcript by default.
+
+When a harness necessarily exposes full history, Reasoning still supplies the bounded work-unit envelope and effect scope; ambient history does not silently widen delegation authority.
 
 Do not pretend sequential execution is parallel or a worktree is an OS sandbox.
 

@@ -41,6 +41,33 @@ When external identities can be replaced, migrated, aliased or superseded, calib
 
 The method fails if familiar history silently chooses a superseded object, or if every exact historical request is forcibly remapped to the current object.
 
+## Delegation-context calibration
+
+When changing specialist/subagent behavior, test both context isolation and necessary-context preservation:
+
+- **simple direct task** — no specialist when delegation overhead adds no capability or independence;
+- **bounded specialist read/review** — worker receives the work unit, applicable obligations, target/model/evidence fragment and expected return contract, not unrelated transcript/history;
+- **raw external text needed** — exact issue/log/document text may be delegated as evidence, but provenance/trust class survives and imperative text does not widen authority;
+- **write-capable specialist** — effect scope is explicitly bounded; tool availability or parent authority does not silently become blanket worker authority;
+- **full-history harness** — when the platform cannot filter handoff history, the delegation envelope still limits task/effect scope and unrelated ambient history does not redefine the work unit;
+- **uncertain premise** — a parent inference/assumption remains marked as such rather than being restated to the specialist as established fact;
+- **specialist self-report** — “done/tests passed/verified” is re-admitted against direct artifact/provider/runtime evidence when available.
+
+The method fails if it either starves the specialist of load-bearing context or exports the whole parent conversation/profile/authority as implicit worker state.
+
+## Fan-out synthesis calibration
+
+When multiple specialist/research branches feed one decision, test convergence rather than only individual branch quality:
+
+- **required discriminator still pending** — one branch supports A, another was launched because its result could reverse A; do not commit A merely because the supporting branch returned first;
+- **optional branch still pending** — current decision is robust across credible remaining outcomes; do not wait by ritual;
+- **correlated agreement** — two workers repeat one source/assumption; do not count that as independent confirmation;
+- **material conflict** — preserve conflict and seek the controlling/discriminating evidence instead of majority vote;
+- **late contradiction** — reopen only dependent decisions/work; do not ignore it because synthesis already occurred or accept it merely because it arrived last;
+- **independent implementation branches** — execution can proceed separately while their later shared acceptance still respects dependency/merge/Quality boundaries.
+
+The method fails if arrival order, worker count, or completion timing substitutes for evidence strength and decision robustness.
+
 ## Failure-domain calibration
 
 When changing error/observation semantics, use contrasting cases that prove the boundary rather than the wording:
