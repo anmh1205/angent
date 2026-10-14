@@ -30,6 +30,10 @@ A straightforward question may use one skill. Complex work can revisit a skill w
 
 **Acceptance:** Quality is independent judgment when warranted by consequence, recurrence, propagation or accepted baselines. A valid PASS relies on evidence at the right scope; blocked dependent transitions do not prevent independent work.
 
+## Cross-domain needs and change analysis
+
+The same integrated Reasoning model can examine a problem or opportunity from the stakeholder's needs, observed current state, desired change, context, candidate solutions and evidence of value. Contract preserves requested outcomes and binding means; Research grounds current-state and stakeholder claims; Reasoning diagnoses causes, compares options and impact; Quality distinguishes verified deliverables from realized benefits. This is conditional analysis for work that warrants it, not an additional pipeline or an IT-only BA agent. Use the deeper Reasoning reference when process, stakeholder, trade-off or change-impact complexity makes it useful.
+
 ## Storage
 
 Durable task state, memory and Learning are separate semantic classes:

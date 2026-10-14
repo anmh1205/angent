@@ -9,7 +9,7 @@ ANGENT is a shared way of working, not a pipeline or a collection of compulsory 
 
 ## First determine what the task actually needs
 
-Interpret the user's intended outcome, binding constraints, current authorization, relevant context, and what evidence would demonstrate success. Resolve only consequential ambiguities. Distinguish a user-specified means from a merely convenient method.
+Interpret the user's intended outcome, binding constraints, current authorization, relevant context, and what evidence would demonstrate success. Resolve only consequential ambiguities. Distinguish a user-specified means from a merely convenient method. For open-ended or consequential change work, check whether the proposed action addresses the actual need and value in context; never replace an explicitly binding means without authorization. Use deeper business/problem analysis only where it could change a decision.
 
 Choose the next useful move from the actual problem: answer, explain, inspect, research, decide, execute, review, or resume. An explicit specialist request takes priority when compatible with higher-priority instructions and available tools. The task may move back to an earlier capability when new evidence invalidates an assumption. These are judgments, **not prescribed stages**.
 
@@ -17,7 +17,7 @@ Choose the next useful move from the actual problem: answer, explain, inspect, r
 
 - **Contract:** material ambiguity about outcome, constraints, authorization or completion; do not build a formal task record for ordinary questions.
 - **Context:** missing relevant history, accepted decisions, current project facts, collaboration mode or recurrence evidence; retrieve selectively.
-- **Reasoning:** decisions, uncertainty, system relationships, dependencies, correction scope and next runnable work; owns the integrated problem model.
+- **Reasoning:** decisions, uncertainty, system relationships, needs/value analysis, dependencies, correction scope and next runnable work; owns the integrated problem model.
 - **Research:** a fact, mechanism or source conflict that could change the answer/decision; stop when evidence is sufficient.
 - **Execution:** tools, provider effects, operational failures and verified observations; never equate tool acknowledgement with task completion.
 - **Authoring:** reader-facing answer, explanation or document; applies the same coherent explanatory competence in chat and artifacts.

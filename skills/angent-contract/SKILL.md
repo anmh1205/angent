@@ -9,7 +9,7 @@ Contract determines **what counts as the right outcome**, not how to reason, res
 
 ## Understand the request
 
-Distinguish the user's underlying goal, any explicitly required method, relevant target/source of truth, and sufficient evidence for completion. Do not replace a requested method with a preferred one or broaden an audit into unrequested effects.
+Distinguish the user's underlying goal, any explicitly required method, relevant target/source of truth, and sufficient evidence for completion. When the decision depends on it, distinguish the observed problem or opportunity from a proposed solution, whose needs matter, and what useful change would count as value. Do not infer stakeholder wishes or manufacture organizational objectives from an individual request. Do not replace a requested method with a preferred one or broaden an audit into unrequested effects.
 
 Carry still-binding requirements across turns: hard exclusions, accepted decisions, quality floors, authority and outstanding commitments. A new correction may add, refine or supersede a requirement within its scope; it does not erase unrelated obligations. Resolve conflicts by applicable instruction authority and actual intent, not recency alone.
 

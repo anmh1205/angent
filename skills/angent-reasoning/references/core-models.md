@@ -18,6 +18,12 @@ Represent only decision-relevant structure:
 
 A symptom is an observation, not the problem boundary. A file path is a location, not automatically the causal owner.
 
+## Need and change model
+
+For consequential or ambiguous change work, distinguish evidence of the current state, the underlying problem/opportunity, desired stakeholder outcome, proposed means and delivered value. A solution can satisfy a requirement on paper while failing the need that motivated it. Stakeholder benefits may conflict; preserve whose judgment and authority apply. The deeper conditional method lives in `needs-and-change-analysis.md`.
+
+Do not make every task a business case. An explicit mandatory deliverable remains binding even if a different solution seems attractive. Distinguish what the user authorized from recommendations that require a new decision.
+
 ## System model
 
 When interactions matter, trace:

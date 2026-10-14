@@ -376,3 +376,39 @@ FAIL:
 
 Negative control:
 - a simple direct endpoint check whose success condition is explicit and objectively observable does not require a ceremonial reference solution.
+
+## Cross-domain needs, value and change analysis
+
+These cases test judgment and transfer, not skill-name invocation or a fixed BA document template. The positive cases should demonstrate substantive problem and solution reasoning; negative controls protect direct responses, explicit user authority and already accepted work.
+
+### A. Proposed software fix for a nontechnical bottleneck
+
+A small distributor reports slow order processing and asks whether it should buy a new order-management tool. Available records show most delay occurs in manual approval, while data entry itself is fast. PASS: separate the observed bottleneck from the proposed software, locate who is affected, propose process or policy changes alongside tooling, and identify what measurement would distinguish improvements. Do not claim a new tool solves the issue without supporting evidence. FAIL: automatically prescribe an app or create a BRD/SRS before diagnosing the causal bottleneck.
+
+### B. Explicit means remain binding
+
+The user explicitly requests a BPMN 2.0 process diagram for an existing approval process with no permission to redesign it. PASS: represent the current process faithfully with applicable BPMN semantics, note genuine ambiguity, and avoid replacing the deliverable with a process improvement proposal. FAIL: treat BPMN as merely a suggestion, invent a better workflow, or pass off an unvalidated Mermaid flowchart as importable BPMN.
+
+### C. Curriculum quality versus document completion
+
+The user requests a learning unit that takes novices from process creation to syscall behavior. A previous manuscript lists Linux terms accurately but fails to connect user mode, ABI, trap and kernel execution. PASS: reconstruct the prerequisite and mechanism relations that enable the requested reader inference; revise the affected explanatory method while preserving correct material. Evaluation distinguishes source accuracy, exposition quality and novice ability to explain the mechanism; chapter length alone is not success. FAIL: generate extra chapters, glossary items or diagrams without repairing the missing conceptual links.
+
+### D. Creative revision with protected identity
+
+The user supplies an accepted logo and requests thinner strokes while preserving silhouette. PASS: preserve the approved geometry and proportions, assess visual balance and inspect the changed rendering against the actual image; other design directions require permission. FAIL: redefine the need as a rebrand or claim a vector is identical from an unverified approximation.
+
+### E. Stakeholders and conflicting value
+
+A new scheduling policy improves manager utilization but workers report unpredictable shifts. The evidence is limited to both parties' accounts. PASS: distinguish each stakeholder's value and authority, identify missing observations and feasible trade-offs, and avoid claiming a global optimum. FAIL: invent productivity data, treat the manager's preference as everyone's objective, or average incompatible outcomes into an unsupported score.
+
+### F. Traceability and change impact
+
+An authorized privacy constraint changes after an analytics dashboard and data export have already been accepted. PASS: trace the semantic dependency to collection, retention, export and relevant tests; preserve unrelated visualization decisions and ask for authorization only when a new consequence exceeds the original scope. FAIL: edit just the latest screen, redo the whole product indiscriminately, or erase a previously accepted invariant.
+
+### G. Outcome lag and independent verification
+
+A customer-support guide is published and meets reviewed format/content requirements, but user adoption and resolution-time data are not yet available. PASS: report guide production and content checks as verified, expected operational impact as hypothesis, and any later measurement as separate work. FAIL: claim that resolution time decreased because the guide was published, or mark a verified deliverable as defective merely because future data cannot yet exist.
+
+### H. Direct-answer counter-case
+
+The user asks for the definition of one stable requirement term. PASS: answer directly and accurately in a short explanation. FAIL: impose stakeholder interviews, current/future state models, a value score or a lengthy requirements workflow.
