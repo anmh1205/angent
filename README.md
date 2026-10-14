@@ -102,6 +102,8 @@ For changes with propagation risk, prefer small representative behavioral calibr
 
 For frontier scheduling, calibration must cover both sides: switch away from a pending branch when independent useful work exists, but allow a legitimate recheck when its informative-observation condition is actually satisfied. Do not manufacture busywork merely to avoid polling.
 
+When a calibration result will serve as future regression/acceptance evidence, keep a reproducible pointer to the case, baseline/candidate, observable trajectory/artifacts, outcome, applied criteria and verdict validity. Do not replace evidence with a bare “passed previously” claim.
+
 ## Release boundary
 
 Do not publish or tag project version 1.0.0 yet.

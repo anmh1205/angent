@@ -38,6 +38,7 @@ Keep enough durable state to answer:
 - which long-running operations are active, with handle/identity, last observed state, dependents and next informative observation condition when needed;
 - where artifacts/evidence live;
 - which coverage ledger a broad audit/inspection depends on;
+- which behavioral-calibration evidence pointer a later acceptance/regression decision depends on;
 - what blockers/dependencies remain;
 - whether an external effect is ambiguous;
 - what the next safe action or runnable-set pointer is.

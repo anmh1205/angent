@@ -101,6 +101,28 @@ Fail the method if document mode introduces generic teaching narration, detached
 
 Do not solve this with a phrase blacklist.
 
+## Reproducible behavioral evidence
+
+When ANGENT uses calibration as evidence for a broad/recurrent behavior change, preserve enough information to reconstruct **why** the acceptance claim was justified.
+
+A compact record may contain:
+- case/task identity and the relevant input/contract;
+- accepted baseline identity/version;
+- candidate identity/version;
+- model/provider/harness/environment boundary when it can change behavior;
+- observable trajectory pointer or summary: owner/tool/action sequence, external observations and produced artifacts—not hidden private reasoning;
+- final outcome/endpoint state;
+- criteria/checks actually applied and which were decisive;
+- Quality verdict plus evaluator/measurement validity boundary;
+- trial count/variation only when repeatability/reliability is being claimed;
+- human/user judgment used to calibrate a subjective grader when applicable.
+
+Do not require a full transcript when a smaller artifact establishes the behavior. Do not persist private chain-of-thought to make an eval reproducible.
+
+A claim such as “calibration passed” without recoverable case/baseline/candidate/evidence is weak evidence and should become STALE/BLOCKED when later acceptance depends on it.
+
+This record can live in the harness's normal artifacts/logs; ANGENT only defines the semantics and may persist a pointer through Continuity when later work depends on the claim.
+
 ## Compare to baseline
 
 Ask what changed relative to accepted behavior:

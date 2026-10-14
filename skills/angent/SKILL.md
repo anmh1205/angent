@@ -59,6 +59,7 @@ Collaboration state is not a personality profile and cannot grant authority. A c
 - Accepted baselines and prior tests remain conditional on the measurement conditions that made their conclusions valid; changed conditions invalidate only dependent conclusions.
 - For stochastic/open-ended behavior, one success establishes possibility more readily than reliability; repeated evidence is used when the claim and consequence warrant it, never by fixed quota.
 - Representative calibration validates the method, not unseen whole-scope coverage.
+- A behavioral acceptance claim reused across turns/releases should remain reconstructable from case/baseline/candidate, observable trajectory/artifacts, outcome, criteria and verdict-validity evidence; “passed before” is not durable proof by itself.
 
 ## Effort modes
 

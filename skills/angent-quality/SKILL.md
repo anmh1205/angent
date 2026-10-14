@@ -107,6 +107,8 @@ For recurring corrections, include at least one analogous case not literally nam
 
 Calibration is evidence about a method; it is not whole-scope proof and should not become a mandatory platform for trivial changes.
 
+When a material behavioral acceptance claim will be reused later, keep a reproducible evidence pointer/record linking the case, baseline, candidate, observable trajectory/artifacts, outcome, criteria and verdict validity boundary. Do not rely on “passed before” as an ungrounded memory.
+
 ## Effort
 
 Scale verification to consequence and propagation risk.

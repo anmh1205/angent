@@ -212,6 +212,8 @@ Accepted baselines and prior tests are conditional evidence. Changes in model/pr
 
 For stochastic/open-ended behavior, one success establishes possibility more strongly than reliability; one failure can expose a failure mode without establishing its rate. Representative repeated evidence is used only when the claim/consequence warrants it, with no universal trial count.
 
+When a behavioral calibration/PASS will be reused across turns or releases, preserve a reproducible evidence pointer connecting the case, baseline/candidate version, observable trajectory/artifacts, outcome, criteria and verdict-validity boundary. A remembered PASS is not durable evidence.
+
 These are cognitive semantics, not an evaluator platform.
 
 ## Collaboration state

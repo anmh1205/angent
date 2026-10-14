@@ -52,6 +52,8 @@ Accepted baselines and prior tests are conditional on the measurement conditions
 
 For stochastic/open-ended behavior, one success establishes possibility more readily than reliability. Use repeated representative evidence only when the claim and consequence warrant it, never by fixed quota.
 
+When a behavioral calibration/PASS will be reused later, preserve a reproducible evidence pointer linking case, baseline/candidate, observable trajectory/artifacts, outcome, criteria and verdict-validity boundary. “Passed before” without recoverable evidence is not durable acceptance.
+
 For consequential effects, authority must still match the resolved operation, target and material arguments at the invocation boundary. Tool availability, an earlier plan, generic prior approval or possession of an operation ID does not authorize a materially changed effect.
 
 Treat tool/provider output as evidence before treating it as state. A material observation changes established state only at the strength supported by its operation/target identity, scope/version/freshness, completeness and residual uncertainty.

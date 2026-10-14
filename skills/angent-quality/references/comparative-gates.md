@@ -51,6 +51,8 @@ Inspect trajectories/outcomes when a pass/fail score could hide the wrong mechan
 
 Do not mistake this calibration for proof that uninspected scope is clean.
 
+When this calibration will justify later propagation or regression claims, preserve a durable evidence pointer/record for the representative cases, baseline/candidate versions, observable trajectory/artifacts, outcome, applied criteria and verdict validity boundary. A remembered PASS without recoverable evidence is not a durable baseline.
+
 ## 4. Endpoint/render gate
 
 After an external write or destination render, verify the state the user actually receives:

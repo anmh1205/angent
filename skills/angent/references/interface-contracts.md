@@ -279,9 +279,10 @@ protected_properties: []
 active_obligations: []
 coverage_state:
 calibration_state:
+behavioral_evidence_pointer:
 ~~~
 
-The accepted baseline advances only after required Quality/destination gates pass.
+The accepted baseline advances only after required Quality/destination gates pass. When `calibration_state` materially supports later acceptance, `behavioral_evidence_pointer` should resolve to enough case/baseline/candidate/observable-trajectory/outcome/criteria evidence to reconstruct the claim without private chain-of-thought.
 
 ## Quality → owner: QualityVerdict
 

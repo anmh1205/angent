@@ -43,6 +43,13 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Added behavioral calibration cases for plan→invocation drift, observation mismatch/partiality, branch dependency invalidation and low-consequence counter-cases.
 - No permission runtime, transaction engine, event journal, observation database or scheduler service was added.
 
+### Reproducible behavioral acceptance
+
+- Behavioral calibration used for later propagation/regression claims now preserves a recoverable evidence pointer/record rather than a bare PASS memory.
+- The record links case/contract, baseline and candidate identity, material environment boundary, observable trajectory/tool-state evidence, artifacts/outcome, applied criteria and verdict validity.
+- Hidden chain-of-thought is explicitly excluded; a smaller externalizable action/state trace is sufficient when it proves the behavior.
+- Static keyword/count checks remain insufficient for semantic acceptance, while deterministic endpoint checks remain valid when they actually establish the requested property.
+
 ### Systemic correction interpretation
 
 - Added an explicit correction-interpretation step before repair scope/owner selection.
