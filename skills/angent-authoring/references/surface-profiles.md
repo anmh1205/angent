@@ -14,6 +14,8 @@ Use the same core explanatory prose generation for chat and documents:
 
 A good response is a valid prose baseline for a document. Moving to a document surface should not trigger a separate “formal AI document voice”.
 
+**Notion and other publishing destinations are not separate authoring genres.** Produce one coherent explanatory candidate from the subject/reader model, then translate its structure and code/media into destination blocks without rewriting the mechanism from a chapter outline. A published chapter should gain depth where the curriculum needs it, not lose conceptual bridges because the transport accepts headings and lists more easily. A correct overview can legitimately remain short; a promised foundational chapter must make its main mechanisms usable.
+
 Document adaptation may add depth, cross-section continuity, citations, figures, examples, navigation and curriculum structure. It should not replace natural explanatory prose with stock transitions, coaching remarks, importance announcements or ceremonial framing.
 
 ## Chat

@@ -38,7 +38,7 @@ Verify:
 
 - heading/page/block hierarchy;
 - tables and ordered procedures;
-- code/equations, including language tags, literal symbols, intended line breaks and execution semantics;
+- code/equations, including language tags matched to the actual language (e.g. CMake is not JavaScript), literal symbols, intended line breaks and execution semantics;
 - rendered diagrams, including actual arrow/label relationships rather than only block presence;
 - image/diagram compatibility with the target renderer and its supported syntax version; figure clarity at the actual display size;
 - figures/captions;
@@ -46,6 +46,6 @@ Verify:
 - missing/duplicated blocks;
 - destination artifacts or overflow.
 
-A successful write proves transport, not visible fidelity.
+A successful write proves transport, not visible fidelity. For structured pages (including Notion), inspect the actual published heading nesting, readable code/diagram blocks, ordered lists and links. If the destination only displays a Mermaid source fence rather than a figure, report that explicitly rather than claiming a rendered diagram. Never repair absent technical depth by manipulating blocks: return the problem to Authoring.
 
 Return representation/render defects to Format. Return content/meaning defects to Authoring. Return provider/effect ambiguity to Execution.

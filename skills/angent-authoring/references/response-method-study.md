@@ -27,3 +27,11 @@ Changes concentrate on conversation repair, distinction between visualization ty
 ## Evidence limit
 
 These are source-based design improvements. Structure tests, icon validation and textual review cannot establish that a live activated plugin has measurably better answers or Mermaid rendering. Claims of behavioral gain require comparable actual responses and destination-specific rendered figures on suitable positive and negative cases.
+
+## Zephyr publishing regression, 2026-10
+
+Three beginner Zephyr chapters on a structured document surface illustrate a potential **conversion of explanation to outline**. The first carries many technically relevant topics but sometimes crosses prerequisite boundaries too quickly; the second mixes build/runtime arrows and uses a hardware-dependent GPIO example in a simulator-first curriculum; the third is mostly a procedural build walkthrough with a mismatched code fence language for CMake. These observations were checked against the actual published text. They do not establish a causal trace of every preceding drafting step or justify a global verdict for uninspected chapters.
+
+The repair is at the active reader/authoring method and destination conversion boundary: preserve the local reader-state delta, introduce mechanisms before using them, add working traces where they unlock understanding, and read back destination blocks independently. Treat the published artifact as the real outcome, not a successful write acknowledgement. A useful regression comparison needs a *previously understandable chat explanation* of the same subject relation and one actual published chapter; a source-only policy update is not an observed behavioral win.
+
+The destination must also retain code-language identity and separate logical correctness of source from whether Mermaid renders as a figure. The code language mismatch is an observable formatting defect, not a reason to add more Mermaid.

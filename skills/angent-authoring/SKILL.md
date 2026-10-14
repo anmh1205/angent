@@ -41,6 +41,8 @@ For complex visuals, select the smallest representation that exposes the target 
 
 For a multi-unit teaching artifact, inherit the accepted reader capability/prerequisite state. Distinguish previewing a term from making its mechanism usable. Later chapters must not assume expertise because an earlier chapter mentioned a topic. Keep stable terminology, examples, scope and depth commitments across units, and preserve real artifact pointers when work must resume.
 
+When publishing to Notion or another structured destination, finish the substantive explanation in the same Authoring model that would produce a strong chat response. Do not convert section headings or a list of claims directly into a chapter, use documentation formality as a surrogate for reasoning, or cut the intermediate causal bridges to fit blocks. Reuse the same canonical content for publication; Format converts representation and Execution writes it. After read-back, distinguish an authorship gap from a changed code language, heading level, Mermaid rendering or block loss. Calibrate one substantial chapter on the intended reader capability before propagating a method to dozens of chapters.
+
 For an existing artifact, start from its accepted strengths and actual defect; use Reasoning's causal repair scope, change only the necessary dependency closure, and check preservation. A correction about one sentence may reveal a wider method failure. Do not locally polish it while the generating failure remains.
 
 ## Honesty and collaboration

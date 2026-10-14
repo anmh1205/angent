@@ -3,6 +3,8 @@
 ## Unreleased — response and visual explanation
 
 - Refined follow-up explanation guidance for reader confusion, rather than repeated paraphrase or automatic document-style scaffolding; documented the comparative source-study boundary.
+- Added Zephyr chat-to-Notion case diagnostics and a single canonical authoring-to-destination transfer boundary to prevent chapter-outline decay; strengthened Notion code-language/render read-back.
+- Reconciled Root/Shell activation-sign expectations while preserving the host activation limit and keeping signatures out of published artifacts.
 - Added representation-specific Mermaid guidance and rendered-figure acceptance for process, message, state, structural and quantitative diagrams.
 - Added source- and revision-matched visual research, licensing/provenance boundaries and alternatives to Mermaid for physical/UI/measurement evidence.
 - Added a dedicated ChatGPT logo asset reference and OpenAI brand color; kept both portable/Codex manifests consistent, with short starter prompts.
