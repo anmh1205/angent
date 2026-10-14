@@ -54,7 +54,7 @@ class WatzupTests(unittest.TestCase):
         self.assertIn("preserve existing changes", result["next_steps"][0]["recommendation"])
         self.assertEqual(before, p.read_text(encoding="utf-8"))
         self.assertEqual(subprocess.run(["git", "-C", str(self.root), "status", "--porcelain"],
-                                        capture_output=True, text=True).stdout.strip(),
+                                        capture_output=True, text=True).stdout.rstrip("\n"),
                          " M ROADMAP.md")
 
     def test_detached_head_report_not_repaired(self):
