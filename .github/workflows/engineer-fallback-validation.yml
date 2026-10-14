@@ -1,0 +1,33 @@
+name: Engineer fallback parity structure
+
+on:
+  push:
+    branches:
+      - engineer-semantic-parity-2.19.0
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  engineer-structure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v7
+      - name: Prepare Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Check Engineer fallback inventory and references
+        run: python3 vendor/agentkit-engineer/scripts/verify_port.py --json
+      - name: Exercise structural gate counterexamples
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/scripts -p 'test_verify_port.py' -v
+      - name: Smoke native/fallback selection without doctor side effects
+        shell: bash
+        run: |
+          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable no > /tmp/engineer-selection.json
+          python3 -c 'import json; d=json.load(open("/tmp/engineer-selection.json")); assert d["mode"] == "fallback" and d["fallback"]["ready"], d'
+      - name: Check committed whitespace
+        run: git diff --check HEAD^ HEAD

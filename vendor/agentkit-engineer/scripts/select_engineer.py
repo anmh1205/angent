@@ -20,6 +20,8 @@ import shutil
 import subprocess
 from typing import Any
 
+from verify_port import audit_port
+
 
 SCHEMA_VERSION = 1
 KIND = "angent.engineer_selection"
@@ -208,6 +210,8 @@ def _fallback_info(plugin_root: Path) -> dict[str, Any]:
     expected_skills = 102
     expected_agents = 16
 
+    structural_errors = audit_port(plugin_root)
+
     return {
         "plugin_path": str(plugin_root),
         "plugin_name": plugin_name,
@@ -216,10 +220,14 @@ def _fallback_info(plugin_root: Path) -> dict[str, Any]:
         "agent_roles": agents,
         "expected_skills": expected_skills,
         "expected_agent_roles": expected_agents,
+        "structural_check": "pass" if not structural_errors else "fail",
+        "structural_errors": structural_errors[:12],
+        "structural_error_count": len(structural_errors),
         "ready": (
             manifest_valid
             and skills == expected_skills
             and agents == expected_agents
+            and not structural_errors
         ),
     }
 

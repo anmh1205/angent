@@ -196,6 +196,10 @@ Stitch retains its project-aware quota/generate/edit/export and design-to-code n
 
 The complete 102-entrypoint second-pass review found four frontmatter mode declarations inconsistent with the authoritative per-Skill manifest: ak-agent-browser and ak-chrome-profile were declared adapted despite recorded native-browser/runtime degradation; ak-journal was likewise overstated; and ak-copywriting was under-labelled portable despite its adapted contract. These mode declarations have been reconciled. The fallback README formerly duplicated an obsolete 47/102 progress snapshot; it now points to this ledger as the sole changing status authority. This is structural/provenance validation, not a claim that browser, journal or content workflows were run live.
 
+### Executable fallback-structure acceptance gate
+
+The prior native/fallback selector only counted Skill/Agent directories. It could return fallback ready even with invalid frontmatter, mode mismatches or broken reference pointers. It now calls `scripts/verify_port.py` and fails closed when the 102 identity/16 role manifest, declarations, references or summary disagree. A branch-specific GitHub Actions workflow tests the current source and counterexamples. This gate proves **package structure**, not that any browser/provider or generated artifact was run end-to-end.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
