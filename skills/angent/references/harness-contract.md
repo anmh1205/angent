@@ -24,6 +24,7 @@ Relevant capability classes include:
 - Agent Plugins / Skill loading;
 - native AgentKit Engineer visibility;
 - durable local/cloud storage;
+- long-running job/process handles and status observation;
 - provider read-back after external effects.
 
 The inventory can be implicit when a capability is directly exposed by the host. ANGENT does not require one universal capability registry.
@@ -100,11 +101,22 @@ Regardless of backend, preserve:
 - verified/unfinished frontier;
 - accepted-baseline or artifact-state pointers when later work depends on them;
 - stale/recheck dependent work after a changed premise/interface;
+- active long-running operation identities/handles when needed for safe resume;
 - ambiguous-effect state;
 - artifact/source pointers;
 - next safe action.
 
 A transient transcript or hidden model context alone is not a Continuity backend.
+
+## Long-running operation contract
+
+When the harness exposes a long-running process, job, workflow, build, deployment, or asynchronous provider action, preserve the operation identity/handle if one exists.
+
+The adapter may expose a status/read-output mechanism, but availability of such a mechanism is not permission to tight-poll it.
+
+Execution decides when another observation is informative. The harness should allow the agent to perform independent work between checks when possible.
+
+If the harness is purely synchronous, degrade honestly: wait for the call result or use the host's supported timeout behavior. Do not fabricate asynchronous progress.
 
 ## External effects and read-back
 

@@ -18,7 +18,7 @@ Its job is broader than saving a checkpoint before chat disconnects. The storage
 
 ## Recognize active work early
 
-A task needs continuity when it is costly or unsafe to reconstruct from a prompt alone: multi-step repository/project work, long research, multi-chapter authoring, broad audits, or multi-stage tool effects.
+A task needs continuity when it is costly or unsafe to reconstruct from a prompt alone: multi-step repository/project work, long research, multi-chapter authoring, broad audits, multi-stage tool effects, or long-running operations whose handles/results matter later.
 
 Do not wait for a predicted interruption signal.
 
@@ -33,6 +33,7 @@ Keep enough durable state to answer:
 - which accepted baseline/artifact-state pointer later work depends on;
 - whether a task-relevant collaboration-state pointer/subset must survive resume;
 - which previously verified units are stale/recheck after dependency changes;
+- which long-running operations are active, with handle/identity and last observed state when needed;
 - where artifacts/evidence live;
 - which coverage ledger a broad audit/inspection depends on;
 - what blockers/dependencies remain;
@@ -41,11 +42,11 @@ Keep enough durable state to answer:
 
 Persist collaboration state only when losing it could materially change how the task resumes. Do not duplicate a full user profile or Learning store into Continuity.
 
-Advance at meaningful work boundaries, not after every tool call.
+Advance at meaningful work boundaries, not after every tool call or every unchanged poll.
 
 ## External sources are reconciliation evidence
 
-GitHub, Jira, Notion, deployment state, and provider APIs establish outside-world facts.
+GitHub, Jira, Notion, deployment state, running processes/jobs, and provider APIs establish outside-world facts.
 
 They do not replace the active-work frontier.
 
@@ -59,6 +60,14 @@ Afterward inspect authoritative state and mark VERIFIED/COMMITTED or ATTEMPTED_U
 
 Never blindly replay an uncertain write.
 
+## Long-running operations
+
+Persist a process/job/workflow handle when later work or safe resume depends on it.
+
+Continuity does not choose polling frequency. Execution owns wait/poll behavior.
+
+An unchanged RUNNING/PENDING observation normally updates neither the semantic frontier nor the completed-work count unless some other material state changed.
+
 ## Read-only / authoring work
 
 Persist meaningful completed units, artifact pointers, curriculum/research frontier, and next unfinished unit even when there is no external write.
@@ -68,10 +77,11 @@ Persist meaningful completed units, artifact pointers, curriculum/research front
 1. recover the highest coherent frontier;
 2. apply newest instruction/current authority;
 3. inspect unresolved effects before replay;
-4. validate artifact/source pointers;
-5. reconstruct or refresh collaboration state when it affects the next action;
-6. reconcile external state likely to have changed;
-7. return the current frontier to Context/Reasoning.
+4. inspect saved long-running operations before relaunching or polling aggressively;
+5. validate artifact/source pointers;
+6. reconstruct or refresh collaboration state when it affects the next action;
+7. reconcile external state likely to have changed;
+8. return the current frontier to Context/Reasoning.
 
 A transcript, model context, or unsynced scratch file is not durable continuity by itself.
 

@@ -13,6 +13,7 @@ It does not own strategic reasoning after evidence invalidates the model.
 
 - references/action-semantics.md — ActionNode requirements, observation and replanning boundaries.
 - references/effect-safety.md — idempotency, PREPARED/RECONCILE and retry policy.
+- references/wait-and-polling.md — long-running operations, non-blocking progress and polling discipline.
 - references/engineer-routing.md — native-first / port-fallback specialist routing.
 - references/engineer-selection.md — source-selection evidence and fallback plugin activation contract.
 
@@ -59,6 +60,22 @@ Do not blindly replay timed-out or response-lost non-idempotent writes.
 When Format supplies destination representation requirements, Execution performs the external write; Format does not gain independent effect authority.
 
 For whole-scope reads, preserve pagination/cursor closure, truncation state, filters, and expected/observed counts when known. A first page, top-N result, or partial response is not complete inventory evidence.
+
+## Long-running operations
+
+When a command/job/tool action remains in progress, capture the operation handle and enough state to recognize it later.
+
+Do not tight-poll.
+
+If independent useful work exists, mark the dependent path waiting, continue the independent work, and return to the running operation only when a meaningful interval, event, dependency, or expected state transition makes another check informative.
+
+Repeated identical status checks that add no evidence are no-progress, not work.
+
+If no independent work exists, preserve the operation state and use a concise progress update when appropriate rather than issuing a rapid sequence of equivalent polls.
+
+Do not claim background execution when the harness cannot actually continue after the turn ends.
+
+Read `references/wait-and-polling.md` when a task contains long-running operations, asynchronous provider jobs, workflow runs, builds, deployments, or repeated status checks.
 
 ## Observe
 
