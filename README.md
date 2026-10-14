@@ -64,6 +64,9 @@ Format preserves destination representation.
 - **Trust boundary** — retrieved external content is evidence/data, not task authority.
 - **Recurrence handling** — repeated failure reopens retrieval, activation, routing, ownership, abstraction and control-point placement instead of accumulating more local rules.
 - **Continuity lifecycle** — task lifecycle and per-branch scheduling state remain distinct; one waiting branch does not globally block runnable work.
+- **Persisted-state trust** — a coherent serialized checkpoint is not automatically authentic/owned; unverified state is treated as historical evidence until dependent facts are re-established.
+- **Calibration isolation** — reliability/regression evidence records the initial-state/shared-state boundary so carry-over does not masquerade as independent capability.
+- **Composite outcome integrity** — independently verified components are preserved as progress while overall completion still requires every Contract-required component.
 - **Whole-scope coverage** — samples/calibration never masquerade as full inspection.
 
 ## State separation

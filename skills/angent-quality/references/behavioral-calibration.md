@@ -12,6 +12,14 @@ A local example may also make a bad method look good by accident.
 
 Calibrate the **generating method** before propagating it when failure cost and propagation scope justify the effort.
 
+## Validate the case before optimizing against it
+
+A regression/capability case must express a success condition that a compliant agent could actually satisfy in the stated environment.
+
+When a case produces surprising persistent failure, inspect the task wording, available capabilities, hidden assumptions and grader criteria before adding more prompt/routing rules.
+
+For high-impact or ambiguous cases, a known-valid behavior/reference that passes the same checks is useful evidence that the case/grader is not broken. Do not require a reference artifact when the criterion is already direct and objective.
+
 ## Build the smallest useful case set
 
 Prefer real cases from:
@@ -206,6 +214,24 @@ Allow document-only additions only when scale requires them:
 Fail the method if document mode introduces generic teaching narration, detached fact sentences, ceremonial transitions, or a separate “formal AI” persona not required by the subject.
 
 Do not solve this with a phrase blacklist.
+
+## Trial isolation and intentional shared state
+
+A calibration case is evidence about the generating method only if the initial conditions are interpretable.
+
+Before comparing trials/candidates, identify whether the result can be contaminated by:
+- artifacts or files left by a previous trial;
+- conversation/session/context state from another run;
+- cached retrieval/tool/provider results;
+- mutable external provider objects changed by earlier attempts;
+- resource exhaustion, rate limits, or environment drift;
+- prior agent outputs that the current trial can inspect.
+
+Prefer isolation/reset when those states are not part of the intended task.
+
+If persistence/shared state is itself under test—for example resume, memory, collaboration continuity, or concurrent-work behavior—preserve it deliberately and record the exact shared-state boundary instead of calling the trial “clean”.
+
+A contaminated trial may still reveal a failure mode; it should not be used as independent capability/regression evidence without accounting for the confounder.
 
 ## Reproducible behavioral evidence
 

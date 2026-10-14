@@ -41,15 +41,18 @@ Evaluate only relevant dimensions:
 - delegation-context integrity when specialists are used: bounded work context/effect authority is preserved, material trust/epistemic boundaries survive handoff, and specialist self-report is re-admitted rather than promoted automatically;
 - fan-out synthesis integrity when several branches inform one decision: unresolved decision-reversing evidence is not bypassed, correlated agreement is not counted as independent confirmation, and arrival order does not determine truth;
 - scope-to-evidence coverage;
-- authoritative endpoint evidence.
+- authoritative endpoint evidence;
+- component-outcome integrity when the Contract defines a composite endpoint.
 
 A fluent answer cannot compensate for a wrong model, and fixing the user's quoted example cannot compensate for leaving the same generating failure intact.
+
+For composite tasks, Quality may preserve verified component outcomes while the overall verdict remains incomplete/BLOCKED/FAIL as appropriate. Partial progress is evidence, not overall acceptance.
 
 ## Verdict validity
 
 A Quality verdict is itself a measurement claim about the subject.
 
-Before a consequential PASS or FAIL, ask whether the criteria, evidence, evaluator independence, coverage and measurement conditions can support that verdict.
+Before a consequential PASS or FAIL, ask whether the task/fixture is satisfiable and whether the criteria, evidence, evaluator independence, coverage and measurement conditions can support that verdict.
 
 Distinguish:
 - defect in the candidate/solution;

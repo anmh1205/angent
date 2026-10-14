@@ -19,6 +19,7 @@ soft_preferences: []
 scope:
 authorization:
 success_state:
+success_components: []
 completion_evidence:
 open_ambiguity: []
 ~~~
@@ -372,9 +373,11 @@ verdict_validity:
   evidence_support:
   evaluator_independence:
   measurement_context:
+  initial_state_or_isolation_boundary:
   confounders: []
   validity_boundary:
 failure_attribution: SUBJECT_DEFECT | EVALUATOR_DEFECT | ENVIRONMENT_CONFOUND | MIXED | UNRESOLVED
+component_outcomes: []
 residual_uncertainty: []
 target_repaired:
 protected_properties_preserved:
@@ -454,6 +457,8 @@ AMBIGUOUS or INCOMPATIBLE blocks dependent replay/continuation; it does not glob
 ~~~yaml
 work_key:
 revision:
+state_provenance:
+state_integrity_or_ownership:
 lifecycle: ACTIVE | PAUSED | BLOCKED | COMPLETED | SUPERSEDED | ABANDONED
 repair_state: NONE | REPAIRING | UNSTABLE
 outcome:

@@ -6,20 +6,31 @@ Resume is not “read an old summary and continue”.
 
 1. identify the active work item;
 2. read the highest coherent continuity revision;
-3. apply newest explicit instruction/current authority;
-4. reconstruct the resume binding needed by unfinished dependent work;
-5. compare it with live canonical/provider state;
-6. classify the mapping as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE;
-7. inspect pending/ambiguous effects that require reconciliation before safe replay;
-8. recover saved long-running process/job/workflow identities, branch states and next informative observation conditions;
-9. validate artifact/source pointers;
-10. refresh external state that may change the next decision;
-11. revalidate stale or time-sensitive decisive premises in the saved decision basis;
-12. return the reconciled frontier to Context/Reasoning;
-13. let Reasoning recompute RUNNABLE, WAITING_EXTERNAL and BLOCKED branches;
-14. continue only from an unfinished branch whose required binding is compatible or has completed revalidation.
+3. establish whether the persisted state comes from a trusted/verified storage boundary; if integrity or ownership is uncertain, downgrade it to historical evidence and verify dependent facts before use;
+4. apply newest explicit instruction/current authority;
+5. reconstruct the resume binding needed by unfinished dependent work;
+6. compare it with live canonical/provider state;
+7. classify the mapping as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE;
+8. inspect pending/ambiguous effects that require reconciliation before safe replay;
+9. recover saved long-running process/job/workflow identities, branch states and next informative observation conditions;
+10. validate artifact/source pointers;
+11. refresh external state that may change the next decision;
+12. revalidate stale or time-sensitive decisive premises in the saved decision basis;
+13. return the reconciled frontier to Context/Reasoning;
+14. let Reasoning recompute RUNNABLE, WAITING_EXTERNAL and BLOCKED branches;
+15. continue only from an unfinished branch whose required binding is compatible or has completed revalidation.
 
 A saved decision remains usable only while its decisive basis remains valid enough for the next dependent action.
+
+## Recovered-state trust
+
+Coherent revision order establishes storage consistency, not snapshot authenticity.
+
+A checkpoint copied from an untrusted file, client, issue/document, arbitrary project artifact, or other externally writable source must not silently become active Continuity state merely because it matches the schema.
+
+Current explicit authority is always re-established from the live interaction/Contract. Saved effect intent, verification claims, decision basis and artifact pointers are used only to the strength justified by their provenance and current read-back.
+
+When state trust is uncertain but its information may still help, preserve it as a hypothesis/historical hint and verify the load-bearing fields rather than discarding all progress or trusting all of it.
 
 ## Compatibility before continuation
 

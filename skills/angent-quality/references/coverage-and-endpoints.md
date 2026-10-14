@@ -41,6 +41,22 @@ When the distinction matters, report state precisely:
 
 Do not collapse these states into “done”.
 
+## Composite endpoints
+
+When the Contract defines a genuinely composite endpoint, evaluate the required components separately.
+
+A useful internal state is:
+- **SATISFIED** — the component endpoint is verified;
+- **UNSATISFIED** — evidence establishes the component is not yet complete;
+- **BLOCKED** — completion depends on a real unresolved prerequisite/decision/capability;
+- **UNVERIFIED** — work may exist, but the required evidence is missing.
+
+These labels are semantic conveniences, not a mandatory runtime enum.
+
+Overall completion requires every required component to satisfy the Contract. Verified component progress should still be preserved so remaining work is accurate and resumes do not repeat completed units.
+
+Do not average component states into a score unless the Contract explicitly defines a scoring objective.
+
 ## Authoritative evidence
 
 Use the provider/artifact that can establish the requested endpoint.

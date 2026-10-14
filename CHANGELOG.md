@@ -21,6 +21,17 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Clarified that restrictive collaboration modes such as audit-only/report-before-edit also create Contract obligations when they limit actions.
 - Added long-form authoring method calibration before bulk propagation when one bad method could reproduce defects across many chapters.
 
+### Persisted-state and evaluation integrity
+
+- Distinguished revision/schema coherence from persisted-state authenticity/ownership.
+- Unverified imported/client-writable resume state is historical evidence until load-bearing completion/effect/decision claims are re-established.
+- Current authority is never restored from a serialized snapshot merely because that snapshot parsed successfully.
+- Added calibration initial-state/isolation semantics so leftover artifacts, session history, caches, mutated provider state and environment/resource carry-over do not masquerade as independent agent evidence.
+- Intentional shared state remains valid when persistence/memory/resume/concurrency is the property under test and is declared as measurement context.
+- Added task/fixture satisfiability checks so hidden, contradictory or impossible grader requirements are classified as evaluator/criterion defects instead of driving agent overfitting.
+- Added optional component-outcome semantics for genuinely composite endpoints: verified partial progress is retained while overall completion remains false until every required component is satisfied.
+- No signing service, eval harness, sandbox manager, scoring framework or persistence runtime was added.
+
 ### Work-conserving frontier scheduling
 
 - Moved long-running-operation branch selection from Execution-local polling discipline into Reasoning-owned frontier scheduling.
