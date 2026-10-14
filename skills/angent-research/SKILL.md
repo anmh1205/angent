@@ -1,6 +1,6 @@
 ---
 name: angent-research
-description: Acquire and synthesize the smallest evidence set that reduces decision-relevant uncertainty, returning evidence-grounded subject structure with provenance and boundaries explicit.
+description: Acquire and synthesize the smallest evidence set that reduces decision-relevant uncertainty, returning evidence-grounded subject structure with provenance, support and boundaries explicit.
 ---
 
 # ANGENT Research — Epistemic Evidence Engine
@@ -9,9 +9,9 @@ Research answers evidence questions and builds evidence-grounded subject structu
 
 ## Load references progressively
 
-- references/evidence-model.md — source roles, evidence items and information value.
+- references/evidence-model.md — source roles, claim support/entailment, evidence items and information value.
 - references/source-conflict.md — reconcile version/platform/scope contradictions.
-- references/stopping-rule.md — know when more research no longer changes the decision.
+- references/stopping-rule.md — know when more research no longer changes the decision/model.
 
 ## Input
 
@@ -53,7 +53,7 @@ Synthesize the evidence-grounded subset needed by the current decision:
 
 This is a subject-model delta, not the final task decision and not a reader-facing teaching path. Reasoning integrates it into the task model; Authoring later decides how much of it the reader should encounter.
 
-## Source roles
+## Source roles and claim support
 
 Classify a source by what it can establish, not by generic prestige:
 - normative;
@@ -66,12 +66,16 @@ Classify a source by what it can establish, not by generic prestige:
 
 Authority is claim-specific.
 
+A citation/source pointer is not proof by presence alone. Preserve whether support is direct, derived through an explicit inference, merely contextual, or absent when the distinction is material.
+
+Do not let a derived interpretation become a direct fact simply because the source is authoritative.
+
 ## Preserve fact versus interpretation
 
 Keep separate:
 - what the source/observation directly establishes;
 - what ANGENT infers from it;
-- what remains uncertain.
+- what remains uncertain, conflicted, or stale.
 
 A useful source does not automatically justify every nearby claim.
 
@@ -89,6 +93,7 @@ When conflict can change the decision and cannot yet be resolved, return it expl
 
 Return an evidence delta containing only what matters:
 - established/updated facts;
+- claim-support/entailment boundaries for decisive claims;
 - subject-model delta when relationships/mechanisms matter;
 - source roles, provenance, and trust class when instruction/data confusion is possible;
 - version/platform/time boundaries;
@@ -99,8 +104,10 @@ Return an evidence delta containing only what matters:
 
 Do not turn research notes into final prose; Authoring owns reader-facing realization.
 
-## Stop
+## Stop or change strategy
 
 Stop retrieval when the decision or factual question is adequately supported at the required consequence level.
+
+If repeated retrieval changes no epistemic state, subject-model relation, coverage, or decision, change the research strategy or return residual uncertainty to Reasoning instead of searching by inertia.
 
 Do not browse/search merely because more information exists.

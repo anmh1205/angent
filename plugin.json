@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "ANGENT is An's cognitive layer for agents: model the problem, reason from evidence, decide, act, verify, communicate, and learn.",
   "author": {
     "name": "An"
@@ -22,17 +22,18 @@
       "interface": {
         "displayName": "ANGENT",
         "shortDescription": "Cognitive layer for intelligent agents",
-        "longDescription": "ANGENT gives agents a coherent cognitive loop: understand the task, reconstruct state, model systems and uncertainty, seek evidence, reason and decide, execute adaptively, verify outcomes, communicate clearly, and learn from experience.",
+        "longDescription": "ANGENT gives agents a coherent cognitive loop: understand the task and collaboration, reconstruct high-signal state, build evidence-grounded models, reason and decide, act adaptively, verify outcomes, communicate clearly, preserve long-running work, and learn causal working methods.",
         "developerName": "An",
         "category": "Productivity",
         "defaultPrompt": [
           "Use ANGENT Root first and route only the smallest sufficient owners. Newest explicit user instruction, current authority, applicable AGENTS.md, and live canonical state outrank historical context.",
-          "For iterative revision or correction, preserve the accepted baseline and active obligations. Classify instruction changes instead of assuming the newest complaint supersedes earlier requirements.",
-          "Reasoning owns repair semantics: identify the failed mechanism, affected scope, protected properties and invalidated dependents. Do not optimize the opposite extreme of a complaint.",
-          "Quality uses solution, comparative-candidate and endpoint phases. A repair passes only when the target improves without regressing protected accepted properties.",
-          "For non-trivial work, ANGENT Reasoning owns the problem/system model, uncertainty, decisions, dependency-aware planning, and replanning. Research supplies evidence; specialists supply evidence/proposals/bounded execution rather than taking strategic ownership.",
-          "For local/project work, AGENTS.md is the canonical project instruction surface. Context should retrieve only relevant task/project/user/learning state; do not treat history or memory as authorization.",
-          "For long or side-effecting work, Continuity must recognize active work early and preserve meaningful frontier revisions. Reconcile ambiguous external effects before replay.",
+          "Preserve task-relevant Collaboration State without turning it into a user profile or effect authority. Owner boundaries update one shared cognitive workspace; they are not a mandatory pipeline.",
+          "Keep epistemic status honest: observed/established/inferred/assumed/unknown/conflicted/stale must not silently collapse. Preserve a compact decision basis for consequential or resumable decisions rather than raw reasoning history.",
+          "For iterative revision or correction, preserve the accepted baseline and active obligations. Reasoning identifies the failed mechanism, affected scope, protected properties and invalidated dependents; do not optimize the opposite extreme of a complaint.",
+          "Research should build evidence-grounded subject structure when relationships/mechanisms matter, while preserving claim support, provenance, version boundaries and residual uncertainty.",
+          "Quality remains independent. For broad behavior or bulk-method changes, calibrate on representative success/failure/counter-cases and compare against the accepted baseline before propagation when risk warrants it.",
+          "For long or side-effecting work, Continuity must preserve resume-critical frontier state and decision basis. Reconcile stale premises and ambiguous external effects before continuing or retrying.",
+          "Treat progress as task-relevant state change, not activity. If repeated actions add no decisive evidence, unblock no dependency, improve no required capability/artifact, and strengthen no endpoint evidence, re-model instead of churning.",
           "For engineering specialist capability, prefer usable native AgentKit Engineer; otherwise use the canonical vendor fallback without loading native and fallback libraries together by default."
         ]
       }

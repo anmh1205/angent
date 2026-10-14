@@ -1,6 +1,6 @@
 ---
 name: angent-continuity
-description: Proactively persist the frontier of active work, support interruption-safe resume and reconcile ambiguous external effects across chat and local harnesses.
+description: Proactively persist the frontier of active work, preserve resume-critical decision basis and long-running operation identity, support interruption-safe resume and reconcile ambiguous external effects across chat and local harnesses.
 ---
 
 # ANGENT Continuity — Active-Work Frontier
@@ -14,7 +14,7 @@ Its job is broader than saving a checkpoint before chat disconnects. The storage
 - references/active-work-frontier.md — recognize non-trivial work and advance a durable frontier.
 - references/continuity-protocol.md — persist revisioned work state and side-effect records.
 - references/resume-reconciliation.md — resume after interruption or concurrent external change.
-- references/frontier-lifecycle.md — lifecycle, baseline pointers and invalidated dependent work.
+- references/frontier-lifecycle.md — lifecycle, baseline/decision-basis pointers and invalidated dependent work.
 
 ## Recognize active work early
 
@@ -30,15 +30,18 @@ Keep enough durable state to answer:
 - what is verified complete;
 - what is unfinished;
 - what decisions affect later work;
+- which compact decision basis/pointer later work depends on;
 - which accepted baseline/artifact-state pointer later work depends on;
 - whether a task-relevant collaboration-state pointer/subset must survive resume;
-- which previously verified units are stale/recheck after dependency changes;
+- which previously verified units are stale/recheck after dependency or decisive-evidence changes;
 - which long-running operations are active, with handle/identity and last observed state when needed;
 - where artifacts/evidence live;
 - which coverage ledger a broad audit/inspection depends on;
 - what blockers/dependencies remain;
 - whether an external effect is ambiguous;
 - what the next safe action is.
+
+A decision basis contains only the decisive premises/evidence pointers, constraints, decision and reconsideration trigger needed to resume correctly. Do not persist raw private reasoning.
 
 Persist collaboration state only when losing it could materially change how the task resumes. Do not duplicate a full user profile or Learning store into Continuity.
 
@@ -50,7 +53,7 @@ GitHub, Jira, Notion, deployment state, running processes/jobs, and provider API
 
 They do not replace the active-work frontier.
 
-On resume, recover the frontier first, then inspect external sources that may have changed and reconcile accordingly.
+On resume, recover the frontier first, then inspect external sources, saved operations, and decisive premises that may have changed and reconcile accordingly.
 
 ## Consequential side effects
 
@@ -70,7 +73,7 @@ An unchanged RUNNING/PENDING observation normally updates neither the semantic f
 
 ## Read-only / authoring work
 
-Persist meaningful completed units, artifact pointers, curriculum/research frontier, and next unfinished unit even when there is no external write.
+Persist meaningful completed units, artifact pointers, controlling decision basis, curriculum/research frontier, and next unfinished unit even when there is no external write.
 
 ## Resume
 
@@ -80,8 +83,9 @@ Persist meaningful completed units, artifact pointers, curriculum/research front
 4. inspect saved long-running operations before relaunching or polling aggressively;
 5. validate artifact/source pointers;
 6. reconstruct or refresh collaboration state when it affects the next action;
-7. reconcile external state likely to have changed;
-8. return the current frontier to Context/Reasoning.
+7. refresh stale/time-sensitive decisive premises;
+8. reconcile external state likely to have changed;
+9. return the current frontier to Context/Reasoning.
 
 A transcript, model context, or unsynced scratch file is not durable continuity by itself.
 

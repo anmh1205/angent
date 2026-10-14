@@ -1,10 +1,10 @@
 # ANGENT
 
-**Cognitive layer for intelligent agents.**
+**Cognitive collaborator layer for intelligent agents.**
 
-ANGENT helps an agent preserve intent and authority, understand how the current collaboration is meant to work, reconstruct relevant state, reason from evidence, repair existing work without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable mechanisms.
+ANGENT helps an agent preserve intent and authority, understand how the current collaboration is meant to work, reconstruct high-signal state, distinguish evidence from inference, build a usable model, reason and decide, repair without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable working methods.
 
-> **Status:** ANGENT 1.0.0 remains **unreleased**. Core hardening and the cognitive-collaboration alignment are integrated into main through PR #3 and PR #5. Engineer fallback inventory/parity refresh is the next separate phase; the project is not release-ready yet.
+> **Status:** ANGENT 1.0.0 remains an **unreleased project candidate**. The private ChatGPT plugin package is versioned separately. Core hardening and cognitive-collaboration alignment are integrated; reliability hardening is in progress. Engineer fallback inventory/parity refresh remains a separate phase.
 
 ## Core architecture
 
@@ -21,31 +21,35 @@ ANGENT uses focused owners around one shared cognitive workspace rather than a m
        /          |          \
 Reasoning <----> Research    Authoring
     ^             |            |
-    |          evidence         v
-Observation   + subject      Quality
-    ^           model           |
+    |      evidence + model     v
+Observation                  Quality
+    ^                           |
     |                           |
  Execution <------ replan ------+
 
-Continuity persists resume-critical state.
+Continuity preserves resume-critical state + decision basis.
 Learning supplies reusable causal/working-method mechanisms.
 Format preserves destination representation.
 ~~~
 
 ## Core semantics
 
-- **Constraint evolution** — a newer instruction may add, refine, supersede, scope, or conflict; recency alone does not erase older active obligations.
-- **Collaboration state** — Context reconstructs task-relevant interaction mode, initiative, evidence, explanation and checkpoint expectations plus applicable working-method mechanisms. It does not grant authority.
+- **Constraint evolution** — recency alone does not erase older active obligations.
+- **Collaboration state** — task-relevant interaction mode, initiative, evidence, explanation and checkpoint expectations; never a substitute for authority.
 - **Shared cognitive workspace** — owners update different semantic views of one coherent model; they are not a one-way workflow.
-- **Evidence-grounded subject modeling** — Research returns relationships/mechanisms as well as facts when the decision requires a usable domain model.
-- **Baseline-preserving repair** — existing work is revised against an accepted baseline with a repair target, protected properties, affected scope, and dependency invalidation.
-- **Comparative Quality** — a local fix is rejected if it regresses a protected accepted property.
+- **Epistemic integrity** — observed/established/inferred/assumed/unknown/conflicted/stale remain distinguishable when the distinction matters.
+- **Evidence-grounded subject modeling** — Research returns relations/mechanisms as well as facts and preserves source-support boundaries.
+- **Decision basis** — consequential/resumable decisions keep compact premises/evidence/constraints + reconsideration trigger instead of raw reasoning history.
+- **Progress/stall semantics** — progress is relevant state change, not activity; no-progress causes re-modeling instead of churn.
+- **Behavioral calibration** — broad method/prompt changes are checked on representative target, accepted-success and counter-cases before propagation when risk warrants it.
+- **Baseline-preserving repair** — revisions preserve protected accepted properties and invalidate only dependent work.
+- **Comparative Quality** — local improvement cannot hide regression, and producer rationale is not treated as proof.
 - **Cognitive/teaching/presented model separation** — rich internal understanding is narrowed for the active reader/task without confusing staging with compression.
 - **Artifact state** — long-form work preserves reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
 - **Trust boundary** — retrieved external content is evidence/data, not task authority.
 - **Recurrence handling** — repeated failure reopens the controlling mechanism instead of accumulating more local rules.
 - **Continuity lifecycle** — active work distinguishes active, paused, blocked, completed, superseded, and abandoned state.
-- **Whole-scope coverage** — pagination, truncation, filters, stale units, and unseen scope cannot be ignored when claiming a full audit.
+- **Whole-scope coverage** — samples/calibration never masquerade as full inspection.
 
 ## State separation
 
@@ -55,7 +59,7 @@ ANGENT keeps different semantic classes separate:
 - **Contract obligations** — currently binding task requirements;
 - **Collaboration state** — task-relevant way of working together;
 - **Memory** — durable scoped context;
-- **Reasoning state** — current model, decision, repair, and dependency state;
+- **Reasoning/epistemic state** — current model, belief status, decision/basis, progress and repair state;
 - **Authoring artifact state** — reader/document continuity;
 - **Continuity** — interruption-safe active-work frontier;
 - **Learning** — reusable causal and working-method mechanisms.
@@ -64,15 +68,9 @@ No one store becomes a universal transcript or authority source.
 
 ## Semantic core, harness mechanics
 
-ANGENT defines how state and decisions should be understood. It does not implement a workflow engine, event-sourcing platform, distributed lease system, effect database, or policy sandbox merely to represent those semantics.
+ANGENT defines how state and decisions should be understood. It does not implement a workflow engine, event-sourcing platform, distributed lease system, effect database, tracing platform, evaluator platform, or policy sandbox merely to represent those semantics.
 
-Harnesses provide the actual storage, tools, scheduling and execution mechanics.
-
-## Persistence
-
-Local memory and Continuity use revisioned file-backed stores with conflict detection where that fallback is needed.
-
-Continuity discovery and per-work-item recovery both scan coherent immutable revisions, so a stale convenience pointer cannot hide a newer durable frontier after an interruption.
+Harnesses provide actual storage, tools, scheduling, execution and observability mechanics.
 
 ## Engineer integration
 
@@ -82,16 +80,18 @@ Engineering specialist capability remains native-first:
 2. otherwise use the ANGENT fallback;
 3. do not expose complete native and fallback catalogs together by default.
 
-The current fallback implementation remains intentionally unchanged during cognitive-core work. Its upstream catalog/parity refresh is the **next separate phase**, and current inventory counts must not be treated as proof of parity with the latest AgentKit release.
+Engineer inventory/parity refresh is separate from cognitive/reliability semantics.
 
-## Repository validation policy
+## Validation policy
 
-The old root /tests suite has been removed. It mainly checked static strings, counts, and self-consistency and was not treated as evidence that ANGENT behaved correctly.
+The old root /tests suite remains removed because static strings/counts/self-consistency were not behavioral acceptance evidence.
 
-Repository CI keeps only minimal committed-diff hygiene. Core correctness is established by coherent owner contracts, source/read-back inspection, representative behavioral evidence, real runtime behavior, and explicit state/evidence semantics rather than keyword/count scripts.
+For changes with propagation risk, prefer small representative behavioral calibration drawn from real failures and accepted successes, including counter-cases, plus source/read-back inspection and real endpoint evidence. Whole-scope claims still require whole-scope coverage.
 
 ## Release boundary
 
-Do not publish, tag, or update the canonical private ChatGPT plugin yet.
+Do not publish or tag project version 1.0.0 yet.
 
-Complete the deferred Engineer refresh, then perform cross-harness and release-surface reconciliation before any release decision.
+Private plugin package updates may be used to keep the working ChatGPT surface aligned with canonical cognitive source, but they do not make the project release-ready.
+
+Complete reliability hardening and the deferred Engineer refresh, then perform cross-harness/release reconciliation before any project release decision.

@@ -1,20 +1,20 @@
 # AGENTS.md — ANGENT repository instructions
 
-ANGENT is an unreleased cognitive-layer candidate. Core hardening and the cognitive-collaboration alignment are integrated; Engineer inventory/parity refresh is the next separate phase.
+ANGENT is an unreleased cognitive-layer candidate. Core hardening and cognitive-collaboration alignment are integrated; reliability hardening is the current phase. Engineer inventory/parity refresh remains separate.
 
 ## Authority and ownership
 
 This file is the canonical repository instruction surface. Nested AGENTS.md files may refine a subtree without discarding applicable root rules.
 
 - Contract owns outcome, authority, active obligations and success semantics.
-- Context owns relevant working state, collaboration state, provenance and baseline pointers.
-- Reasoning owns strategic decisions, repair semantics, dependency invalidation and integration of the shared cognitive workspace.
-- Research owns evidence acquisition and evidence-grounded subject-model deltas.
+- Context owns relevant working state, collaboration state, provenance and baseline/decision-basis pointers.
+- Reasoning owns strategic decisions, epistemic state, repair semantics, progress/stall, dependency invalidation and integration of the shared cognitive workspace.
+- Research owns evidence acquisition, support boundaries and evidence-grounded subject-model deltas.
 - Execution owns authorized effects and provider observation.
 - Authoring owns reader-facing content and semantic artifact state.
-- Quality independently judges solution, revision regression and endpoint state.
+- Quality independently judges solution, behavioral calibration, revision regression and endpoint state.
 - Format owns destination representation and render fidelity; external writes remain Execution effects.
-- Continuity owns compact interruption-safe task state.
+- Continuity owns compact interruption-safe task state and resumable decision basis.
 - Learning owns reusable causal mechanisms, including working-method mechanisms.
 - Root routes owners.
 
@@ -24,17 +24,33 @@ Engineer/specialist output never replaces Reasoning ownership.
 
 Owner boundaries must not become a rigid workflow.
 
-Treat TaskModel, collaboration state, problem/system model, evidence-grounded subject model, uncertainty, decisions, repair state, observations and relevant artifact pointers as views into one coherent cognitive workspace.
+Treat TaskModel, collaboration state, problem/system model, evidence-grounded subject model, epistemic state, uncertainty, decisions/decision basis, repair state, progress signals, observations and relevant artifact pointers as views into one coherent cognitive workspace.
 
 The workspace is a semantic model, not a new owner, runtime service, database, event journal or orchestrator.
 
 When new evidence invalidates an earlier premise, return to the earliest affected owner. Do not continue a stale phase merely because another owner already ran.
+
+## Reliability
+
+A material proposition remains distinguishable as observed, established, inferred, assumed, unknown, conflicted or stale when that distinction can change a decision.
+
+A citation/source pointer does not establish more than the source actually entails within its boundary.
+
+For consequential/resumable decisions preserve a compact decision basis—decisive premises/evidence pointers, governing constraints, selected decision and reconsideration trigger—not raw private reasoning.
+
+Treat progress as task-relevant state change. Repeated actions that produce no epistemic, dependency, required artifact/capability, or validation progress are a reason to re-model rather than churn.
+
+When a shared method/prompt/architecture change can propagate a defect broadly, calibrate it on representative target, accepted-success and counter-cases before scaling when practical. This does not replace whole-scope evidence.
+
+Quality should judge candidate/evidence independently and avoid being anchored by the producer's persuasive rationale.
 
 ## Collaboration state
 
 Context reconstructs task-relevant collaboration state when it can change correct behavior: interaction mode, expected initiative, evidence/verification bar, explanation job, progress/checkpoint expectation and applicable working-method mechanisms.
 
 Collaboration state is not a personality profile and does not grant authority. Current explicit instruction outranks inferred or historical collaboration patterns.
+
+If an interaction instruction also constrains allowed/required actions—such as audit-only or report-before-edit—Contract owns that binding obligation while Context represents the working mode.
 
 ## Revision invariant
 
@@ -46,7 +62,7 @@ When a premise or interface changes, invalidate only dependent work. If repairs 
 
 ## State separation
 
-AGENTS.md, Contract obligations, collaboration state, Memory, Reasoning state, Authoring artifact state, Continuity frontier and Learning mechanisms are different semantic classes. Do not turn one into a universal transcript/database.
+AGENTS.md, Contract obligations, collaboration state, Memory, Reasoning/epistemic state, Authoring artifact state, Continuity frontier and Learning mechanisms are different semantic classes. Do not turn one into a universal transcript/database.
 
 ## Trust boundary
 
@@ -72,10 +88,12 @@ Whole-scope claims require complete-enough inventory and coverage. Pagination, t
 
 Prefer usable native AgentKit Engineer; otherwise use the fallback. Do not expose complete native and fallback catalogs together by default.
 
-Engineer inventory/parity maintenance is the next separate phase after the integrated cognitive core.
+Engineer inventory/parity maintenance remains separate from reliability hardening.
 
 ## Change discipline
 
-For architecture changes, inspect current source, update affected owner interfaces/entry surfaces, read back changed files, compare with the base branch, and evaluate actual behavior/semantics rather than relying on keyword/count scripts.
+For architecture/prompt changes, inspect current source, update affected owner interfaces/entry surfaces, read back changed files, compare with the accepted baseline, and use representative behavioral calibration when propagation risk warrants it.
+
+Do not claim behavioral acceptance from keyword/count scripts.
 
 Do not release 1.0.0 while it remains a candidate.

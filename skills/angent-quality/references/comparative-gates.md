@@ -1,6 +1,6 @@
 # Comparative quality gates
 
-Quality is one owner with several evaluation phases. The phases exist to prevent invalid solutions, communication regression and false endpoint claims without turning Quality into a second author.
+Quality is one owner with several evaluation phases. The phases exist to prevent invalid solutions, behavioral regression, communication regression and false endpoint claims without turning Quality into a second author.
 
 ## 1. Solution gate
 
@@ -8,8 +8,9 @@ Before expensive authoring or effects, evaluate the established solution model w
 
 - task and authority fit;
 - active constraints and invariants;
-- model/evidence sufficiency;
+- epistemic status and evidence/entailment sufficiency;
 - unresolved alternatives that could reverse the decision;
+- decision basis when traceability matters;
 - plan/dependency integrity.
 
 A failed solution gate returns to the earliest responsible owner.
@@ -28,7 +29,21 @@ Do not ask only whether the candidate is good in isolation.
 
 A valid repair must improve the target without silently dropping accepted strengths or active constraints.
 
-## 3. Endpoint/render gate
+## 3. Behavioral calibration gate
+
+For a change with propagation risk—such as a shared method, root prompt, routing rule, owner interface or bulk transformation strategy—compare candidate behavior with the accepted baseline on a small representative set before scaling when practical.
+
+Include:
+- real failure cases the change intends to repair;
+- accepted-success cases that must stay good;
+- counter-cases where the new behavior should not trigger;
+- difficult/boundary cases when they can change the decision.
+
+Inspect trajectories/outcomes when a pass/fail score could hide the wrong mechanism. Use ablation or narrower comparison when one prompt/rule change may be responsible.
+
+Do not mistake this calibration for proof that uninspected scope is clean.
+
+## 4. Endpoint/render gate
 
 After an external write or destination render, verify the state the user actually receives:
 
@@ -67,11 +82,15 @@ For revisions, distinguish:
 
 A candidate does not pass merely because TARGET_FIXED is true.
 
-## Independence
+## Independence and anchoring
 
 Quality must preserve evaluative independence from production reasoning.
 
-Independence can be achieved through context separation, a reviewer/specialist, a separate model when available, or a deliberate blind comparison against the Contract/baseline. Use stronger independence when consequence is high or the same failure has recurred.
+Independence can be achieved through context separation, a reviewer/specialist, a separate model when available, or a deliberate blind comparison against the Contract/baseline.
+
+When anchoring risk is material, evaluate the candidate and evidence before reading the producer's persuasive rationale. The compact decision basis may be consulted for traceability; it is not itself evidence that the decision is correct.
+
+Use stronger independence when consequence is high or the same failure has recurred.
 
 ## Oscillation signal
 

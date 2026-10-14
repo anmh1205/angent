@@ -42,9 +42,10 @@ A frontier should preserve:
 - verified completed units;
 - current unfinished unit;
 - consequential decisions;
+- compact decision basis/pointer when later work depends on why a decision remains valid;
 - accepted baseline or artifact-state pointer/digest when revisions depend on it;
 - collaboration-state pointer/subset only when losing it would materially change resume behavior;
-- stale/recheck units caused by changed dependencies;
+- stale/recheck units caused by changed dependencies or decisive evidence;
 - unresolved dependencies;
 - pending or ambiguous external effects;
 - source/provider versions needed for reconciliation;
@@ -52,7 +53,7 @@ A frontier should preserve:
 
 Large authoring/research models and complete collaboration/history models should remain with their owning context/artifact/store. Continuity persists a compact pointer, digest and the subset needed to resume safely.
 
-A recovered collaboration-state pointer does not override a newer explicit interaction mode or grant effect authority.
+Do not persist raw private reasoning. A recovered decision basis or collaboration-state pointer does not override newer authority or live evidence.
 
 ## Discovery must match recovery
 
@@ -68,6 +69,7 @@ Create a new frontier revision when meaning changes:
 - scope/obligation changes;
 - accepted baseline changes;
 - collaboration mode materially changes ongoing work;
+- a decisive premise/evidence boundary changes;
 - a dependency invalidates completed work;
 - a consequential decision changes downstream work;
 - an external effect is reconciled;

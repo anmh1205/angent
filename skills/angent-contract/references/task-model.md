@@ -23,11 +23,22 @@ Use only fields that matter:
 
 Use:
 
-```text
+~~~text
 requested action → intended effect → success state
-```
+~~~
 
 Reason about whether the requested action produces the objective, but do not silently substitute another means when the user explicitly constrained the method.
+
+## Collaboration instructions that constrain action
+
+Some collaboration instructions are descriptive method state; others also create binding task constraints.
+
+Examples:
+- “audit only” restricts write authority/scope in Contract and is also represented as the current collaboration mode;
+- “report before edit” creates a sequencing obligation and may be represented in collaboration state;
+- “continue autonomously” describes initiative but does not grant an effect outside the current authority boundary.
+
+Context may reconstruct how to work; Contract remains the owner of anything that changes what actions are allowed or required.
 
 ## Scope drift
 

@@ -1,6 +1,6 @@
 # Continuity protocol
 
-Continuity reduces lost progress and duplicate effects; it does not create background execution after the host stops.
+Continuity reduces lost progress, lost decision basis and duplicate effects; it does not create background execution after the host stops.
 
 ## Store
 
@@ -10,18 +10,24 @@ Backends may differ across ChatGPT/local harnesses. Canonical semantics do not d
 
 ## Frontier record
 
-Use a stable work identity and revisioned records. Preserve the relevant outcome, scope, constraints, verified work, unfinished unit, decisions, artifact/source pointers, dependencies, pending effects and next safe action.
+Use a stable work identity and revisioned records.
+
+Preserve only resume-critical semantics: outcome, scope, constraints, verified work, unfinished unit, consequential decisions, compact decision basis/pointers, artifact/source pointers, dependencies, pending effects and next safe action.
+
+For a consequential decision, persisting only the selected action may be insufficient. Preserve enough basis to know which premise/evidence would invalidate it after resume.
+
+Do not persist raw private chain-of-thought or full transcripts as a substitute for semantic state.
 
 ## Local file backend
 
-For local harnesses, `scripts/frontier_store.py` provides a small revision store under `<project>/.angent/runtime/continuity/`.
+For local harnesses, scripts/frontier_store.py provides a small revision store under <project>/.angent/runtime/continuity/.
 
 Each save:
 
 1. acquires a short writer lock;
-2. checks `--expected-revision`;
+2. checks --expected-revision;
 3. writes an immutable revision record;
-4. atomically refreshes `current.json`.
+4. atomically refreshes current.json.
 
 Resume scans coherent revision files rather than trusting a single current pointer.
 
@@ -41,7 +47,7 @@ Side-effect state may live inside the frontier record; the storage helper does n
 
 ## Read-only / authoring work
 
-Persist meaningful completed units and durable artifact pointers even when there is no external write.
+Persist meaningful completed units, durable artifact pointers and controlling decision basis when later units depend on them, even when there is no external write.
 
 Do not wait for a warning that the session may end.
 
