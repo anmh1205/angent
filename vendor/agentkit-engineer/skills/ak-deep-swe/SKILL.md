@@ -1,54 +1,29 @@
 ---
 name: ak-deep-swe
-description: Run or evaluate DeepSWE coding-agent benchmarks through the current official/compatible runner and model provider with explicit cost, prerequisites and reproducibility.
+description: Evaluate an external coding model on DeepSWE through a verified Pier/OpenRouter benchmark harness with cost and reproducibility gates.
 license: MIT
 metadata: {port: angent-fallback, mode: degraded}
 ---
 
-# DeepSWE Benchmark — Portable Fallback
+# DeepSWE — Portable Fallback
 
-Read `references/benchmark-reproducibility.md`.
+Stable Engineer 2.19.0 uses **DeepSWE + Pier + OpenRouter** to benchmark external coding-agent capability, not to optimize the local repository. The task corpus, runner, container images and paid provider are not bundled with this Markdown; no benchmark score is implied.
 
-This Skill is for external coding-agent benchmarking, not repository-local optimization.
+Read `references/benchmark-reproducibility.md` for version, evaluator and environment requirements.
 
-## Preflight
+## Prerequisite and authorization gate
 
-Before spending model/runtime resources:
+Confirm uv, Git, Docker client **and working daemon**; installed/current Pier CLI; available DeepSWE task corpus and revisions; exact OpenRouter model slug; and presence of `OPENROUTER_API_KEY` without printing or recording its value. Stable source documents a 113-task corpus, but confirm the current run's real task count.
 
-1. identify the current DeepSWE task set/version;
-2. identify the supported runner and its installed/current version;
-3. verify required local prerequisites such as Git/container runtime;
-4. verify provider authentication without printing credentials;
-5. resolve the exact model identifier from the provider;
-6. estimate the requested run size/cost exposure when possible.
+Cloning a repo, installing Pier, pulling images and consuming paid model tokens are external effects requiring appropriate user authority. Never copy keys into logs, commands, prompts or result files. Check `pier --help` and `pier run --help` before using flags; source examples may drift.
 
-Do not hard-code old Pier/OpenRouter flags; inspect current help/docs.
+## Bounded execution and evidence
 
-## Run safely
+1. Run **one identified task first**, validate its agent/model mapping, container, evaluator and artifact output.
+2. If justified and authorized, run a reproducible small subset with fixed task selection/sample seed, recorded environment, concurrency and budget.
+3. Before a full corpus run, present task scope, command, expected cost exposure and stop criteria and require **explicit additional confirmation**.
+4. Read actual Pier results (view/analyze/critique when supported). Report exact runner/evaluator and benchmark revisions, model identifier, completed/failed/skipped tasks, sampling method, scores, observed usage/cost, logs/artifacts and uncertainty.
 
-1. run one representative task first;
-2. verify the runner, model mapping, artifact path and evaluator work;
-3. run a small deterministic subset when broader confidence is needed;
-4. require explicit user authorization before a materially costly full-corpus run;
-5. preserve raw job/evaluator artifacts.
+On auth/model/flag mismatch, stop and inspect current help rather than blindly retrying or silently changing the model. Do not publish to a leaderboard without approval. Without compatible runner/provider, only provide a setup/blocker report or clearly **non-comparable** local checks; never invent benchmark results.
 
-## Report
-
-Record:
-- benchmark/task-set version;
-- runner/evaluator version;
-- model/provider identifier;
-- task count and sampling method;
-- runtime/environment;
-- score/reward;
-- failed/skipped tasks;
-- usage/cost when reliably available;
-- artifact pointers.
-
-## Degraded path
-
-If the official/compatible harness/provider is unavailable, do not invent or estimate a benchmark score.
-
-Provide the missing prerequisite/setup path and optionally define local smoke tasks clearly labeled **non-comparable**.
-
-Do not submit leaderboard results or publish benchmark artifacts unless requested.
+Use ak-loop instead for source-local numeric optimization.
