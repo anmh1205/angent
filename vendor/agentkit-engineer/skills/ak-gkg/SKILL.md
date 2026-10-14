@@ -29,6 +29,19 @@ Stable upstream MCP exposes roles equivalent to **list_projects**, **search_code
 
 The pinned stable package gives stronger cross-file reference support for Ruby, Java and Kotlin; it describes Python, TypeScript and JavaScript cross-file resolution as incomplete. Current installed GKG may differ. Verify supported languages, symbol kinds, dynamic dispatch, generated code and cross-repository edges before claiming complete usages. Absence from a partial index is **not proof** of no callers.
 
+## Executable Python AST fallback
+
+If no native GKG or language-server index is available, the portable package includes a **read-only local Python subset** in `scripts/search_python_ast.py`:
+
+```bash
+python3 scripts/search_python_ast.py --root /path/to/repo --symbol Tracker
+python3 scripts/search_python_ast.py --root /path/to/repo --symbol update --mode both
+```
+
+It scans Git-tracked and non-ignored local Python files, parses Python AST **without executing project code**, returns exact source path/line/column for class/function definitions and candidate name/attribute/import uses. It caps file count/size, refuses symlink escapes, and marks unreadable/unparsable files as collection gaps.
+
+**Do not call these candidate usages a resolved dependency graph or proof of impact.** Python aliases, dynamic dispatch, runtime reflection, dependency/external code and other languages remain uncovered. For C/C++, Java, Kotlin, Ruby or JavaScript, use an available actual language server or the native GKG tool; a raw text search is strictly lower-confidence. The fallback remains `VERIFIED_DEGRADED` because it does not replace upstream multi-language graph/index and HTTP/MCP query paths.
+
 ## Portable fallback
 
 Without native GKG:

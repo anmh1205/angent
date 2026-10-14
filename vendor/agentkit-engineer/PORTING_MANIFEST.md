@@ -222,6 +222,10 @@ Two initially DEGRADED Skills now contain runnable, independently authored local
 
 Security/quality regressions exercised include secret and binary/symlink omission, budget reporting, exclusive output creation, invalid XML control bytes, Markdown escaping, content SHA-256, dirty-state provenance, Git porcelain whitespace, detached HEAD, two worktrees and a nonfetching remote. Current validated run: [38655909604](https://github.com/anmh1205/angent/actions/runs/38655909604) on `2d35dafe90b4f63ce1618b1bacf15779c1b5aa98`. These tests verify the **implemented local subset**, not a native Repomix or Watzup runtime.
 
+### Runnable Python AST definition/reference candidates
+
+GitLab Knowledge Graph remains an external AST/graph server, but its fallback now has a real bounded, read-only Python AST search route, with independent code, source-location evidence, missing-file diagnostics and validation fixtures. This does **not** infer transitive reachability or resolve semantic callers, and must not be represented as native GKG. CI exercises it on an actual Python function in the ANGENT repository.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -266,7 +270,7 @@ Security/quality regressions exercised include secret and binary/symlink omissio
 | `ak-frontend-development` | VERIFIED_ADAPTED | stable 2.19.0 frontend implementation semantics preserved while project-specific libraries are derived from the current codebase |
 | `ak-git` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-github` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-gkg` | VERIFIED_DEGRADED | stable 2.19.0 GKG definition/reference/impact workflow and MCP/search semantics retained; native AST/index server remains optional |
+| `ak-gkg` | VERIFIED_DEGRADED | executable offline Python AST definition/candidate-usage search with tests; upstream multi-language graph/index/MCP absent |
 | `ak-goal-warmup` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-google-adk-python` | VERIFIED_ADAPTED | ADK package entrypoint, workflows, state/memory, MCP/A2A, eval and deployed-runtime gates |
 | `ak-graphify` | VERIFIED_DEGRADED | stable 2.19.0 graph build/query, provenance, media privacy and MCP/native capability boundaries restored; external Graphify runtime not bundled |
