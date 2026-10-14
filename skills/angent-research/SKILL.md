@@ -36,7 +36,7 @@ Prefer evidence that:
 - disproves a critical assumption;
 - materially changes the action choice.
 
-Ten sources repeating a non-decisive fact may add less value than one authoritative observation.
+Ten sources repeating a non-decisive fact may add less value than one authoritative observation. Ten sources or graders sharing the same upstream dependency may also add far less independent support than their count suggests.
 
 ## Build a usable subject model
 
@@ -96,7 +96,8 @@ Return an evidence delta containing only what matters:
 - claim-support/entailment boundaries for decisive claims;
 - subject-model delta when relationships/mechanisms matter;
 - source roles, provenance, and trust class when instruction/data confusion is possible;
-- version/platform/time boundaries;
+- source/evidence lineage when correlation can change confidence or action;
+- version/platform/time and measurement-context boundaries;
 - hypotheses supported/weakened/rejected;
 - unresolved conflicts;
 - residual uncertainty;

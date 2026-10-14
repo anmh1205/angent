@@ -43,6 +43,29 @@ Do not launder a derived inference into a direct fact by citing the underlying s
 
 For consequential claims, preserve the inference boundary downstream so Quality can detect overclaiming.
 
+## Evidence independence and lineage
+
+Source count is not independence.
+
+Several evidence items can share one upstream source, reference answer, model output, dataset, benchmark, runtime environment, or failure mode. When that correlation can change confidence or the next action, preserve the lineage/dependency instead of treating the items as independent confirmation.
+
+Examples:
+- several articles or posts copying one vendor announcement are one weakly independent lineage;
+- several snippets from the same page are one source lineage;
+- multiple graders using the same generated reference can share the same reference error;
+- two model graders using the same rubric/model family may add replication while still sharing important blind spots;
+- authoritative provider read-back and a separately derived semantic comparison may establish complementary properties.
+
+Track lineage only when material. Do not build a citation graph for trivial facts.
+
+## Measurement context
+
+Runtime observations, tests, and evaluator results can depend on model/provider version, harness/tool version, configuration, resources, dataset/input distribution, rubric, and environment.
+
+Preserve only the measurement conditions needed to know what the evidence actually establishes.
+
+A changed measurement condition does not automatically make the artifact wrong; it can make a previous inference stale.
+
 ## Information value
 
 Prefer evidence that discriminates live alternatives.
@@ -51,7 +74,8 @@ A good evidence question is often:
 - “which boundary first diverges?”;
 - “does version X actually expose this behavior?”;
 - “which of these two causes predicts the observed state?”;
-- “what would reverse the decision?”
+- “what would reverse the decision?”;
+- “is this additional evidence actually independent of the support already present?”
 
 ## Visual/runtime evidence
 

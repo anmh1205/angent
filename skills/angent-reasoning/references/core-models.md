@@ -66,6 +66,7 @@ Use explicit hypotheses only when alternative mechanisms would lead to different
 For each live hypothesis keep:
 - claim/mechanism;
 - current support and epistemic status;
+- material evidence lineage or measurement dependency when it can change confidence;
 - predicted observation;
 - best discriminator;
 - status;
@@ -94,6 +95,30 @@ For consequential or resumable decisions also preserve the **decision basis**: d
 The decision basis is a compact reconstructable rationale, not hidden chain-of-thought.
 
 Do not substitute feature inventories or generic pros/cons for a decision model.
+
+### Decision robustness
+
+Prefer a decision that remains justified across the credible residual uncertainty that matters, not one that merely has a confident narrative.
+
+For consequential decisions, ask:
+- which decisive premise or evidence dependency could reverse the choice?
+- is the decisive support observed/established, derived, evaluator-produced, or measurement-sensitive?
+- could a plausible version/environment/context difference change the ranking?
+- would a reversible probe reduce decisive uncertainty more cheaply than pretending it is resolved?
+
+Do not manufacture numeric confidence when the evidence does not support meaningful calibration.
+
+### Reconsideration
+
+Reopen only the dependent decision when a material part of its basis changes, for example:
+- decisive evidence is contradicted, downgraded, or found to share a weaker lineage;
+- a relevant source/model/provider/harness/environment condition changes;
+- Context reveals a previously missing active obligation or decision-relevant fact;
+- Execution observes a state inconsistent with the model;
+- Quality cannot distinguish subject defect from evaluator/environment defect;
+- the validity boundary of an accepted baseline no longer matches the current system.
+
+A changed measurement condition does not invalidate unrelated reasoning.
 
 ## Adaptive plan
 

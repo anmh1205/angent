@@ -106,9 +106,12 @@ claim_support:
     support: DIRECT | DERIVED | CONTEXTUAL | NONE
     boundary:
 source_roles: []
+source_lineages: []
 provenance: []
 instruction_trust_classes: []
 version_boundaries: []
+measurement_context: []
+validity_boundaries: []
 supported_hypotheses: []
 weakened_hypotheses: []
 rejected_hypotheses: []
@@ -139,6 +142,7 @@ Use when changing previously accepted work.
 
 ~~~yaml
 accepted_baseline:
+baseline_validity_boundary:
 failure_observation:
 failure_mechanism:
 repair_target:
@@ -181,6 +185,7 @@ new_evidence: []
 residual_uncertainty: []
 provider_evidence: []
 enumeration_evidence:
+measurement_context:
 progress_dimensions: []
 ~~~
 
@@ -239,6 +244,7 @@ The accepted baseline advances only after required Quality/destination gates pas
 ~~~yaml
 status: PASS | FAIL | BLOCKED
 phase: solution | candidate | behavioral_calibration | endpoint
+criteria_basis: []
 findings:
   - dimension:
     evidence:
@@ -246,6 +252,14 @@ findings:
     earliest_fault_owner:
     required_repair_property:
     regression_risk:
+verdict_validity:
+  evidence_support:
+  evaluator_independence:
+  measurement_context:
+  confounders: []
+  validity_boundary:
+failure_attribution: SUBJECT_DEFECT | EVALUATOR_DEFECT | ENVIRONMENT_CONFOUND | MIXED | UNRESOLVED
+residual_uncertainty: []
 target_repaired:
 protected_properties_preserved:
 dependencies_reconciled:
@@ -253,6 +267,8 @@ endpoint_verified:
 ~~~
 
 Quality may return several findings. Findings sharing one mechanism should be grouped instead of forcing one-at-a-time repair.
+
+A PASS/FAIL is itself an evidence-backed claim. Use BLOCKED when the available evaluation cannot distinguish a material subject defect from evaluator/environment uncertainty.
 
 ## Learning → Context/owner: PromotedMechanism
 

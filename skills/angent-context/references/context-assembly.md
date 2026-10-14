@@ -47,6 +47,20 @@ When collaboration method matters, recover the smallest state that answers quest
 
 Prefer explicit current instructions over historical inference. Do not treat collaboration state as effect authorization.
 
+## Context sufficiency and contamination
+
+For consequential, whole-scope, or state-sensitive decisions, do a small sufficiency check before treating compact context as complete:
+
+- could a missing context class plausibly reverse the decision?
+- is a decisive baseline/source/provider/evaluator result fresh enough for this version and environment?
+- is a high-salience old instruction, memory, project version, example, or evaluator result being given the wrong scope?
+- could a changed model/provider/harness/environment make earlier evidence stale?
+- did compaction hide a provenance conflict that matters?
+
+If yes, retrieve or refresh the minimum missing context. If no, proceed.
+
+Do not turn sufficiency into exhaustive history loading. High-salience stale/wrong-scope context can be more harmful than missing low-value context.
+
 ## AGENTS.md scope
 
 Apply project instructions relevant to the files/subtree being operated on while preserving applicable root instructions.
@@ -55,13 +69,13 @@ Do not copy AGENTS.md into memory merely because it was loaded.
 
 ## Provenance
 
-Know whether material context is current instruction, prior context, project instruction, canonical provider state, active task state, collaboration state, decision basis, inferred memory, Learning guidance, or model inference.
+Know whether material context is current instruction, prior context, project instruction, canonical provider state, active task state, collaboration state, decision basis, inferred memory, Learning guidance, evaluator result, external evidence, or model inference.
 
 Do not promote an inferred proposition to an established fact merely because it was summarized into context.
 
 ## Freshness
 
-Refresh when another session/process may have changed the state, a decisive premise/pointer/version is stale, or the next action depends on exact current state.
+Refresh when another session/process may have changed the state, a decisive premise/pointer/version is stale, a relevant measurement condition changed, or the next action depends on exact current state.
 
 ## Progressive disclosure
 

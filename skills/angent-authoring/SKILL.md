@@ -40,6 +40,20 @@ For long-lived work preserve the accepted revision pointer, concept dependencies
 
 Mention is not mastery. A point being stated is not explanatory closure.
 
+## Epistemic fidelity
+
+The presented model must not sound more certain than the established model warrants.
+
+When material to the reader's decision or understanding, preserve the distinction between direct/established support, inference, unresolved conflict, and uncertainty or validity boundaries.
+
+Do not:
+- turn an evaluator judgment into a directly observed fact;
+- smooth unresolved source conflict into a confident sentence;
+- present one successful stochastic observation as reliable behavior;
+- add repetitive confidence caveats when they do not change the reader's job.
+
+Epistemic calibration should improve accuracy, not make every sentence hesitant.
+
 ## Revision discipline
 
 When revising existing material:
@@ -75,7 +89,7 @@ For Vietnamese, compose from technical meaning, keep conventional technical term
 
 ## Feedback to the cognitive workspace
 
-If Authoring cannot produce an honest explanation because the underlying conclusion, mechanism, prerequisite, or evidence is underspecified, return that gap to Reasoning/Research. Do not hide missing cognition with polished prose.
+If Authoring cannot produce an honest explanation because the underlying conclusion, mechanism, prerequisite, evidence, or uncertainty/validity boundary is underspecified, return that gap to Reasoning/Research. Do not hide missing cognition with polished prose.
 
 ## Handoff
 
