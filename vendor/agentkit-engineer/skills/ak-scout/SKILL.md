@@ -1,83 +1,78 @@
 ---
 name: ak-scout
-description: Fast codebase scouting using native search/inspection and optional delegated Explore workers when the active harness supports safe delegation.
+description: Map the files, symbols, tests, configuration and relationships relevant to a bounded codebase question using read-only local evidence and optional explicitly permitted delegation/external probes.
 license: MIT
 metadata:
   author: agentkit
   port: angent-fallback
-  upstream-generation: "2.12.0"
+  baseline: "AgentKit Engineer 2.19.0"
 ---
 
 # Scout — Portable Fallback
 
-Use this Skill to rapidly understand where relevant code lives and how the requested behavior crosses files/modules.
+Use Scout for bounded reconnaissance: locate where behavior/configuration lives and return a compact relationship map without starting implementation or root-cause repair.
 
-The fallback must work without AgentKit CLI, Claude-specific APIs, or any particular subagent implementation.
+Read:
+- `references/internal-scouting.md` for optional delegated Explore work;
+- `references/external-scouting.md` for separately permitted external/broader probes.
 
-## Choose the smallest scouting mode
+## Choose another workflow when
 
-**Direct scouting** is the default when:
-- the scope is narrow;
-- one agent can search/read the relevant files cheaply;
-- the runtime has no safe delegation surface;
-- the user did not request parallel agents.
+- root-cause diagnosis is the goal → Debug;
+- a concrete failure should be repaired → Fix;
+- solution approaches are open → Brainstorm;
+- an implementation roadmap is needed → Plan;
+- known files should be changed → Cook.
 
-**Delegated scouting** is useful when:
-- the scope spans many independent directories/modules;
-- separate workers can inspect disjoint areas;
-- the active harness exposes a real delegation/subagent capability;
-- parallelism will reduce wall time or protect the main context.
+## Input boundary
 
-Do not spawn workers merely because this Skill supports them.
+Define one bounded search target plus include/exclude directories/file types when material.
 
-Read `references/internal-scouting.md` for delegated work and `references/external-scouting.md` for broader/external discovery.
+Default project-content behavior is read-only.
+
+Delegation requires both:
+- actual runtime capability;
+- permission/interaction mode that allows it.
+
+External provider probing is a separate data-sharing boundary and requires authorization for that scope.
 
 ## Workflow
 
-1. Restate the concrete scouting target: behavior, symbol, error, feature, interface, or file class.
-2. Read applicable `AGENTS.md` before scanning a repository subtree.
-3. Start with cheap structural evidence: filenames, symbols, imports, callsites, configs, tests, ownership boundaries.
-4. Trace at least one relevant path through the code when the task depends on relationships rather than file presence.
-5. Expand the search only when current evidence cannot explain the requested behavior.
-6. If delegation is justified, partition by non-overlapping scope and give each worker an exact question plus expected evidence.
-7. Synthesize findings into a compact map for the next owner.
+1. Parse the concrete target: behavior, symbol, interface, config, error or file class.
+2. Read applicable `AGENTS.md`.
+3. Use cheap local evidence first: paths, symbols, imports/calls, configs, schemas, tests, ownership.
+4. Trace at least one relevant path when relationships matter.
+5. Expand only when current evidence cannot answer the bounded question.
+6. If delegation is useful/allowed, assign non-overlapping directory/questions with explicit evidence output.
+7. If external probing is explicitly allowed and necessary, send only the minimum non-secret scope and preserve provider/source boundaries.
+8. Synthesize one concise map; deduplicate repeated paths/claims.
+9. State excluded/timed-out/unconfirmed scope and unresolved questions.
 
-## Evidence to return
+## Optional stronger verification
+
+When the active stable runtime exposes an "ultra"/multi-pass scout mode, it may run several independent verification passes. This is optional runtime capability, not required portable behavior.
+
+Do not fake multi-agent/ultra execution on a harness that lacks it.
+
+## Output
 
 Return:
-- relevant files/modules;
-- why each matters;
+- relevant files/modules with why they matter;
 - key symbols/interfaces;
-- observed ownership/data/control flow when material;
-- unresolved ambiguity;
-- suggested next read/probe.
+- tests/config/schema associated with the behavior;
+- ownership/data/control relations that were actually observed;
+- important existing patterns the next workflow should preserve;
+- coverage boundaries;
+- unconfirmed points/unresolved questions.
 
-Do not return a directory dump.
+A file list is not a causal diagnosis and is not proof of runtime behavior.
 
-## Quality gates
+## Quality
 
-A scout result is weak if it:
-- lists files without explaining relationships;
-- assumes the most obvious file owns the behavior;
-- misses tests/config/schema that define the same behavior;
-- fans out workers with overlapping scope;
-- reports guesses as confirmed ownership.
-
-## Delegation contract
-
-When the harness supports delegated workers, give each worker only:
-- target question;
-- exact directory/file scope;
-- project constraints from applicable AGENTS.md;
-- expected evidence/artifact;
-- stop condition.
-
-Do not dump the full conversation into every worker.
-
-## Fallback behavior
-
-If delegation is unavailable or blocked, continue with main-agent search/read instead of failing the Skill.
-
-If external search tooling is unavailable, use repository-native search and targeted reads.
-
-The capability is **scouting**, not “spawn Explore”.
+Fail the scouting result if it:
+- reports a directory dump instead of relevance;
+- labels ownership from filename guesswork;
+- omits obvious tests/config/schema in the bounded scope;
+- treats worker summaries as ground truth without synthesis;
+- broadens external data sharing without authority;
+- turns read-only reconnaissance into implementation.
