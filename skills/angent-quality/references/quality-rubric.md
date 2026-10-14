@@ -23,10 +23,11 @@ Before expensive authoring or effects when consequence warrants it, PASS require
 9. unresolved uncertainty calibrated;
 10. decision follows from constraints/consequences and has a reconstructable basis when needed;
 11. dependency/replan structure is coherent and affected branch independence is revalidated after shared-state changes;
-12. consequential effects bind current authority to the resolved target/material arguments at invocation time;
-13. material observations match the identity/scope/version/completeness needed for the model change they support;
-14. whole-scope claims have whole-scope evidence;
-15. evaluator/measurement conditions are valid enough for the verdict.
+12. resumed dependent work has a compatible or completed-revalidation binding; ambiguous/incompatible mappings are not replayed by assumption;
+13. consequential effects bind current authority to the resolved target/material arguments at invocation time;
+14. material observations match the identity/scope/version/completeness needed for the model change they support;
+15. whole-scope claims have whole-scope evidence;
+16. evaluator/measurement conditions are valid enough for the verdict.
 
 Return failure to the earliest responsible owner. Use BLOCKED rather than inventing a producer defect when evaluator/environment attribution is unresolved.
 
