@@ -26,6 +26,16 @@ After attempt:
 - mark VERIFIED/COMMITTED if known;
 - mark ATTEMPTED_UNKNOWN if ambiguous.
 
+## Mutation basis and concurrent drift
+
+When a write is derived from previously inspected canonical state, protect the read→modify→write boundary when stale overwrite is material.
+
+Use a provider-native expected revision/SHA/version/precondition when available. If the live target changed, refresh and reconcile the semantic delta instead of replaying an old full replacement.
+
+Preserve unrelated concurrent changes. Return overlapping or ambiguous drift to Reasoning.
+
+Read `mutation-freshness.md` for the full semantic boundary.
+
 ## Timeout is not failure
 
 A timeout or lost response means outcome is unknown until reconciled.

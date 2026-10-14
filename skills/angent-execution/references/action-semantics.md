@@ -16,7 +16,8 @@ Useful fields:
 - action-level success predicate;
 - replan condition;
 - verification target;
-- effect class.
+- effect class;
+- mutation basis/version precondition when existing-state drift can change correctness.
 
 Do not serialize every trivial action into a formal object; preserve these semantics.
 
@@ -75,6 +76,14 @@ When an action becomes WAITING_EXTERNAL, return control to Reasoning before any 
 Execution does not decide whether the whole task should keep waiting or switch branches; that requires the full active frontier.
 
 Do not convert WAITING_EXTERNAL into repeated equivalent polling. Another check must be made eligible by new timing, event, dependency or explicit-status information.
+
+## Mutation conflict
+
+For read→modify→write actions, a provider version/precondition conflict means the live target no longer matches the candidate basis closely enough to assume safe overwrite.
+
+Return the refreshed target/version and conflict evidence to Reasoning. Rebase only when concurrent changes are demonstrably disjoint and protected properties remain preserved.
+
+A conflict is not permission to force-write the stale candidate.
 
 ## Retry and progress
 

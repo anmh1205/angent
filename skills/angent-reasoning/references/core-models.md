@@ -130,6 +130,7 @@ Represent:
 - parallelizable independent work;
 - dependency assumptions that justify independence;
 - shared-state touch points that can invalidate another branch;
+- mutation basis/version dependency for existing-state writes when stale overwrite is material;
 - uncertainty-reducing probes;
 - side-effect boundaries;
 - verification points;
@@ -138,6 +139,8 @@ Represent:
 Prefer next actions that unblock a dependency, reduce decisive uncertainty, advance the critical path, and remain safe/reversible when uncertainty is high.
 
 After a material effect/observation changes shared state, re-evaluate only branches whose prerequisites or independence assumptions depend on that state. Do not keep a stale RUNNABLE classification merely because the branch was previously independent.
+
+For an existing-state mutation derived from an inspected baseline, treat the relevant target version/revision/digest as a premise of the candidate when concurrent drift could change correctness. If that premise changes, rebase/reconcile the semantic delta or reopen the dependent decision instead of force-applying stale content.
 
 ## Progress dimensions
 

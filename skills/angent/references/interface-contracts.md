@@ -206,9 +206,14 @@ effect_class:
 resolved_target:
 material_arguments:
 authority_refresh_condition:
+mutation_basis:
+  target_version_or_digest:
+  relevant_baseline_pointer:
+  provider_precondition:
+  refresh_condition:
 ~~~
 
-For consequential effects, `resolved_target` and `material_arguments` are populated/checked only when the concrete invocation makes them known. They are conceptual fields, not mandatory ceremony for trivial reads.
+For consequential effects, `resolved_target` and `material_arguments` are populated/checked only when the concrete invocation makes them known. `mutation_basis` is used only for existing-state writes where live drift can make a previously valid candidate stale; it is not mandatory ceremony for trivial reads or inherently safe append/commutative operations.
 
 ## Execution → workspace/Reasoning: ObservationDelta
 
@@ -222,6 +227,7 @@ observed_state:
 changed_identifiers_or_versions: []
 observation_boundary:
 scope_or_completeness:
+mutation_precondition_result:
 artifacts_or_checks: []
 expectation_match:
 new_evidence: []

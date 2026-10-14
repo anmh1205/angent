@@ -44,6 +44,19 @@ When changing error/observation semantics, use contrasting cases that prove the 
 
 The method fails if it treats every error as UNKNOWN or every error string as a negative domain fact. The target is the strongest proposition justified by the actual failure/observation boundary.
 
+## Mutation-freshness calibration
+
+When changing read→modify→write semantics, include both conflict and non-conflict cases:
+
+- **unchanged canonical target** — candidate basis still matches; write proceeds without extra ceremony;
+- **disjoint concurrent change** — preserve the other change, rebase the intended semantic delta, and revalidate affected checks;
+- **overlapping concurrent change** — return to Reasoning rather than force-writing the stale candidate;
+- **requested endpoint already satisfied by another actor** — verify and avoid duplicate/redundant write;
+- **provider version/precondition conflict** — treat as stale-basis evidence, not as permission to blind retry;
+- **append/commutative/new-object operation** — do not require a heavyweight mutation basis when known semantics make stale overwrite irrelevant.
+
+The method fails if it either overwrites concurrent work from a stale snapshot or turns every harmless write into transaction ceremony.
+
 ## Correction-routing calibration
 
 When changing how ANGENT handles corrections, calibrate the abstraction decision itself.

@@ -13,6 +13,7 @@ It does not own strategic reasoning or global frontier selection.
 
 - references/action-semantics.md — ActionNode requirements, observation and replanning boundaries.
 - references/effect-safety.md — idempotency, PREPARED/RECONCILE and retry policy.
+- references/mutation-freshness.md — protect read→modify→write effects from stale canonical target state.
 - references/failure-semantics.md — distinguish tool/harness/transport/access failures from actual domain observations.
 - references/wait-and-polling.md — long-running operations, wait-state reporting and polling discipline.
 - references/engineer-routing.md — native-first / port-fallback specialist routing.
@@ -35,6 +36,8 @@ Require enough state to act safely:
 For an existing repository, document, provider object, deployment, dataset, device, or other live artifact, inspect enough authoritative current state before mutation to understand the actual target, version, dependencies, and relevant surrounding structure.
 
 If the user names a canonical live artifact, operate on that artifact. Do not silently substitute a detached copy, export, replacement object, or newly created parallel artifact unless the task requires it or the limitation is explicit.
+
+When a consequential mutation is derived from existing canonical state, preserve a mutation basis when concurrent/stale overwrite could change correctness. Prefer provider-native expected-version/precondition mechanics when available; otherwise refresh enough current state before write. Read `references/mutation-freshness.md` for read→modify→write work.
 
 Do not execute a specialist proposal that contradicts current Contract/Reasoning invariants.
 
@@ -67,6 +70,8 @@ Respect user-requested tool boundaries and project AGENTS.md.
 For low-risk reads, avoid heavy transaction ceremony.
 
 For consequential writes, use Continuity PREPARED/reconcile semantics.
+
+If a provider reports a version/precondition conflict, treat it as evidence that the mutation basis is stale. Refresh/reconcile the affected target and apply only a still-valid semantic delta; do not force or blindly retry the stale replacement.
 
 Do not blindly replay timed-out or response-lost non-idempotent writes.
 
@@ -141,6 +146,7 @@ Return to Reasoning when:
 - a new constraint appears;
 - expected observation differs materially;
 - the result cannot establish the expected domain proposition because the call failed at an earlier boundary;
+- a canonical target changed in a way that invalidates or makes ambiguous the mutation basis;
 - an operation becomes RUNNING/PENDING;
 - a specialist proposes a strategic change.
 

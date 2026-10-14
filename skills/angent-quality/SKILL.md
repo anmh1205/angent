@@ -35,6 +35,7 @@ Evaluate only relevant dimensions:
 - effect-boundary integrity: current authority matches the resolved consequential target/material arguments;
 - observation-admission integrity: model/decision changes are supported by the actual observed identity/scope/version/completeness;
 - failure-domain integrity: tool/harness/transport/access failures are not laundered into negative domain facts, and authoritative negative observations are not weakened to generic UNKNOWN;
+- mutation-freshness integrity: consequential existing-state writes are based on a compatible live target version/basis and preserve unrelated concurrent changes;
 - scope-to-evidence coverage;
 - authoritative endpoint evidence.
 
