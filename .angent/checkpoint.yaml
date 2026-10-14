@@ -1,7 +1,7 @@
 schema_version: 2
 work_key: angent/core
-record_type: RELIABILITY_RUNTIME_ALIGNED
-phase: reliability-scheduling-integrated-runtime-aligned-engineer-deferred
+record_type: RELIABILITY_RUNTIME_ALIGNED_ENGINEER_REFRESH_ACTIVE
+phase: reliability-boundary-integrated-runtime-aligned-engineer-refresh
 source_of_truth:
   provider: github
   repository: anmh1205/angent
@@ -15,6 +15,8 @@ source_verification:
   correction_interpretation_commit: c9ad580aade085472c26b99522e9fd9db28b7ea4
   frontier_scheduling_pr: 15
   frontier_scheduling_commit: afccb2e95eec4cef3a3167a254bcddcaff45a6d1
+  reliability_boundary_pr: 17
+  reliability_boundary_commit: 601efaa7843029575b5f10a2d4d9a70e471d10f8
 
 release_state:
   project_version: 1.0.0
@@ -22,35 +24,37 @@ release_state:
   release_ready: false
   private_chatgpt_plugin:
     updated: true
-    version: 1.0.4
-    release_id: pluginrel_6acf4e9b32448191ad227395f24a17ac
+    version: 1.0.5
+    release_id: pluginrel_6acf61cfce408191859eec27b68d8553
 
 frontier:
   repair_state: NONE
-  active_work: []
+  active_work:
+    - id: engineer-refresh
+      state: ACTIVE
+      scope: vendor/agentkit-engineer
+      objective: "Refresh portable Engineer fallback against current AgentKit stable package semantics without mirroring upstream runtime mechanics."
   verified_units:
-    - "Core hardening PR #3 is canonical on main."
-    - "Cognitive collaboration alignment PR #5 is canonical on main."
-    - "Systemic correction interpretation PR #12 is canonical on main: user examples are evidence, not automatic repair scope."
-    - "Work-conserving frontier scheduling PR #15 is canonical on main."
-    - "Reasoning owns multi-branch frontier selection across RUNNABLE, WAITING_EXTERNAL, BLOCKED and DONE states."
-    - "Execution reports pending external operations plus next informative observation conditions and yields before an equivalent status action can be selected again."
-    - "Continuity preserves resume-critical branch/wait state without becoming a scheduler runtime."
-    - "Resume and harness contracts no longer assign global polling/independent-work selection to Execution."
-    - "Learning promotes control-point placement: an invariant must be active at the earliest owner that controls the decision."
-    - "Authoring preserves the shared response/document composition baseline and correction interpretation remains integrated."
-    - "Private ChatGPT plugin 1.0.4 was guarded-updated from release pluginrel_6acf385bf8488191a03167b13cea2c2c to pluginrel_6acf4e9b32448191ad227395f24a17ac."
-    - "Private plugin read-back verified 13 bootstrap prompts, WAITING_EXTERNAL/control-point semantics, Reasoning frontier scheduling, Execution yield behavior, corrected resume ownership and harness ownership."
-    - "Runtime delta archive integrity was verified before update; original delta SHA-256 e15d552b9dbe45465c9cf1abf6bef73096bcae24cb87456b3b76574f9f70c603."
-    - "Temporary transport PR #16 was closed without merge and its branch was reset to canonical main."
-    - "No scheduler service, queue, background worker, event journal, fixed poll interval or fixed poll-count mechanism was added."
-    - "Root static behavioral tests remain removed; GitHub hygiene passed for PR #15."
+    - "Core hardening PR #3, cognitive alignment PR #5, correction interpretation PR #12, frontier scheduling PR #15 and reliability-boundary PR #17 are canonical on main."
+    - "Consequential authority is re-bound at concrete invocation and material provider/tool observations pass an explicit admission boundary before changing established state."
+    - "Branch independence is conditional on current shared-state dependencies and affected branches are revalidated after material effects/observations."
+    - "Required Quality FAIL/BLOCKED prevents only the dependent accepted transition; unrelated runnable work may continue."
+    - "Reusable behavioral acceptance preserves reconstructable evidence pointers instead of relying on remembered PASS claims."
+    - "Learning activation evidence distinguishes rule existence/retrieval from actual activation when recurrence diagnosis depends on it."
+    - "Authoring preserves load-bearing relations and a dominant explanatory spine while allowing coupled interactions/comparisons to form one valid spine."
+    - "Private ChatGPT plugin 1.0.5 was guarded-updated from pluginrel_6acf4e9b32448191ad227395f24a17ac to pluginrel_6acf61cfce408191859eec27b68d8553."
+    - "Private plugin read-back verified 7 progressive bootstrap prompts plus invocation-bound authority, observation admission, Quality verdict consumption, Learning activation evidence and Authoring explanatory-spine semantics."
+    - "Plugin 1.0.5 source delta was built from canonical commit 601efaa7843029575b5f10a2d4d9a70e471d10f8; source ZIP SHA-256 was 6fa67d2fd00f59f2d92c6e771ecef25dbffffb52d3032b5a3e62d9a0834210e2."
+    - "Temporary transfer PR #18 was closed without merge and its branch reset to canonical source."
+    - "Engineer current stable catalog audit established 103 packaged Skills + 16 Agents; existing fallback has stale 102 public Skill directories, including retired identities and internal ak-common as a public Skill."
   unresolved:
-    - "Engineer fallback inventory/parity refresh remains the next separate phase."
-    - "Project release/version strategy remains a later release decision."
-    - "Cross-harness release reconciliation remains required before any project release."
+    - "Engineer fallback is missing current stable packaged identities: ak-bro, ak-diagram, ak-enhance-ux-ax, ak-explain, ak-page-builder, ak-sowat, ak-sumup and ak-webmcp."
+    - "Engineer fallback still exposes retired public identities: ak-security-scan, ak-use-mcp, ak-handover, ak-html-video, ak-sequential-thinking and ak-web-design-guidelines."
+    - "ak-common is internal support but currently lives under the public Skill discovery root and is incorrectly counted."
+    - "Existing fallback routers/workflows that reference changed upstream identities must be reconciled before parity can be claimed."
+    - "Project release/version strategy and final cross-harness release reconciliation remain later release decisions."
   non_blocking_boundaries:
     - "Private plugin synchronization does not make project version 1.0.0 released or release-ready."
-    - "Engineer implementation remains separate from this cognitive/reliability repair."
+    - "Engineer parity means portable workflow-semantic coverage within harness capabilities, not byte-for-byte or runtime-mechanics parity with AgentKit."
 
-next_action: "Continue with the separately scoped Engineer inventory/parity refresh against current upstream while preserving correction interpretation, work-conserving frontier scheduling, authoring continuity, and the integrated cognitive core. Do not publish/tag project 1.0.0 until Engineer and cross-harness release reconciliation are complete."
+next_action: "Audit current fallback cross-references and current official stable Skill semantics, then refresh vendor/agentkit-engineer as one coherent catalog migration: add missing current Skills, retire old public identities outside skills/, move ak-common out of public discovery, update dependent routes/manifests/provenance, and verify semantic parity on representative workflows before claiming 103/16 coverage."
