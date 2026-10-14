@@ -1,33 +1,50 @@
 # Security mode guidance
 
-## Audit vs scan
+## Fast modes
 
-Use `ak-security-scan` for broad automated triage.
+### --secrets-only
+Scan for credentials/secrets within the authorized source boundary.
 
-Use `ak-security` when findings require threat-boundary reasoning, reachability analysis or remediation judgment.
+Do not add dependency audit, code-pattern, STRIDE or red-team work.
 
-## Adversarial discovery
+Redact matches as opaque secret markers. File/location and public issuer prefix may be enough for triage; never expose a live value.
 
-Choose perspectives based on the system rather than always running a fixed list.
+### --deps-only
+Run the stack-appropriate dependency/advisory audit when the tool/network boundary is available.
 
-Useful questions:
-- what can an unauthenticated actor influence?
-- what does a valid low-privilege account gain?
-- what happens if a dependency/build artifact is compromised?
-- which internal/admin capability has dangerous ambient privilege?
-- where can data cross tenant/trust boundaries?
+Do not claim the dependency tree is clean when the auditor is missing, its registry is unreachable, or the lock/manifest scope was incomplete.
+
+### Both fast flags
+Run the two fast evidence paths without silently expanding to comprehensive threat modeling.
+
+## Default comprehensive audit
+
+Use source/config evidence plus:
+- secret and dependency evidence;
+- relevant code-pattern review;
+- STRIDE;
+- OWASP categories;
+- reachability/impact reasoning.
+
+## Red-team mode
+
+Choose materially different attacker positions based on the system. The stable workflow commonly uses external, supply-chain, insider/internal and infrastructure perspectives.
+
+`--iterations N` is a user-selected bound. If the run stops before all intended perspectives/paths are examined, report partial coverage rather than a full audit.
 
 Do not equate “think like an attacker” with permission to attack external systems.
 
 ## Fix mode
 
-Group fixes by root cause when several findings are manifestations of one broken invariant.
+Group fixes by root cause when several findings share one broken invariant.
 
-After fixing:
-- reproduce the old vulnerable path when safe;
-- run targeted regression/security checks;
-- verify neighboring trust boundaries were not weakened;
-- rerun the relevant scan where useful.
+After each bounded change:
+- run the agreed test/lint/security guard;
+- stop visibly if the guard fails;
+- reproduce/rescan the original path when safe;
+- verify neighboring trust boundaries were not weakened.
+
+Local commit creation is a separate bounded effect and never implies push/PR/merge/deploy authority.
 
 ## Severity
 

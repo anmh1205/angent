@@ -1,7 +1,7 @@
 ---
 name: ak-security
-description: Perform an authorized defensive security audit, adversarial discovery pass, or fix-and-reverify cycle using threat models, trust boundaries and reachable evidence.
-metadata: {port: angent-fallback, mode: adapted}
+description: Run a bounded defensive security workflow covering secrets, dependencies, source patterns, STRIDE/OWASP threat reasoning, optional red-team discovery and authorized fix-and-reverify work.
+metadata: {port: angent-fallback, mode: adapted, baseline: "AgentKit Engineer 2.19.0"}
 ---
 
 # Security — Portable Fallback
@@ -12,61 +12,70 @@ Read:
 - `references/security-audit.md`;
 - `references/security-modes.md`.
 
-## Modes
+## Mode contract
 
-### Audit
+Preserve these stable 2.19.0 workflow distinctions:
 
-Default.
+- default scoped audit — secrets + dependencies + relevant code/config patterns + STRIDE/OWASP reasoning;
+- `--secrets-only` — secret/credential triage only;
+- `--deps-only` — dependency/advisory triage only;
+- both fast flags — still a fast scan; do not silently add code-pattern/STRIDE/red-team work;
+- `--red-team` — add bounded attacker-perspective discovery;
+- `--iterations N` — user-selected cap for iterative red-team/fix work; do not invent a universal default cap;
+- `--fix` — apply only validated targeted fixes with an explicit guard after each bounded iteration;
+- `--red-team --fix` — discover broadly, then fix only the confirmed findings within the authorized severity/scope boundary.
 
-1. Define assets, trust boundaries and attacker-relevant entry points.
-2. Map authentication, authorization, data/secret flows and external dependencies.
-3. Inspect relevant vulnerability classes.
-4. Validate findings against reachable code/config/runtime evidence.
-5. Rank by impact and exploitability in the actual system.
-6. Recommend containment/fix and verification.
+The fallback preserves these semantics even when the exact upstream helper scripts, report files, hooks or commit automation are unavailable.
 
-### Adversarial discovery
+## Scope and preparation
 
-Use when the user explicitly wants deeper defensive red-team-style discovery on an authorized codebase/system.
+Resolve:
+- exact file/directory/project scope;
+- source/manifests/lockfiles/CI/deployment evidence needed;
+- whether network-backed advisory tools may run;
+- whether local edits and local commits are allowed;
+- trusted verification commands;
+- files/behavior that must not change.
 
-Examine the same system from several materially different attacker positions, for example:
-- unauthenticated/external;
-- authenticated low-privilege;
-- supply-chain/dependency;
-- internal/operator/configuration.
+Do not let `full` or a broad glob silently expand into unrelated secret stores or external systems.
 
-These are analytical lenses, not autonomous offensive personas.
+## Audit
 
-Correlate duplicate findings by root cause.
-
-### Fix and reverify
-
-Only when fixes are authorized.
-
-1. start from validated findings;
-2. route each fix to the correct code/config owner;
-3. preserve behavior and compatibility requirements;
-4. run targeted security regression verification;
-5. rescan/retest the original finding;
-6. report residual risk and anything intentionally deferred.
-
-## Evidence discipline
+1. Resolve and inventory the authorized source scope.
+2. Map assets, trust boundaries, auth/authz, sensitive data/secret flows and external dependencies.
+3. Run the selected secret/dependency/code-pattern checks.
+4. Apply STRIDE/OWASP reasoning unless a fast flag intentionally skips it.
+5. Validate findings against reachable code/config/runtime evidence.
+6. Deduplicate by root cause and rank by consequence + actual reachability/exploitability.
+7. Return redacted evidence, bounded remediation and verification.
 
 Scanner output or a suspicious pattern is not automatically a vulnerability.
 
-For each material finding establish:
-- affected boundary;
-- trigger/reachability;
-- impact;
-- evidence;
-- severity rationale;
-- remediation;
-- verification.
+## Red-team discovery
 
-## Safety
+When explicitly requested, use materially different defensive perspectives such as external/unauthenticated, low-privilege/authenticated, supply-chain, and internal/infrastructure.
 
-Do not provide invasive exploitation instructions against third-party targets.
+These are analytical lenses, not permission to attack third-party systems.
 
-Do not expose secrets collected during an audit.
+Preserve partial coverage when an iteration cap or missing evidence prevents completion.
 
-Do not let a “fix” weaken security checks merely to silence a scanner.
+## Fix and reverify
+
+Only when fixes are authorized.
+
+1. Start from validated findings.
+2. Change the smallest responsible code/config boundary.
+3. Run the agreed guard after each bounded fix iteration.
+4. Stop when the guard fails; do not weaken verification to continue.
+5. Reproduce/rescan the original finding when safe.
+6. Report residual risk, unresolved findings and any intentionally deferred issue.
+
+If the harness/project supports commits and the user authorized them, a local commit may record a successful fix iteration. This does not authorize push, PR, merge, release or deployment.
+
+## Secrets and external services
+
+Never emit raw secrets. Redact secret evidence as an opaque marker; do not preserve suffixes, lengths or credential fragments merely for display.
+
+Dependency auditors may contact advisory registries and update caches. Their network access, freshness and failures are evidence boundaries.
+
+Static/source analysis does not authorize production requests, credential use, exploit execution, data exfiltration or destructive testing.
