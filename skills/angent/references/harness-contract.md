@@ -99,12 +99,13 @@ Regardless of backend, preserve:
 - revision/coherence;
 - active obligations needed to resume correctly;
 - verified/unfinished frontier;
+- branch scheduling state when losing it would change safe next-action selection;
 - accepted-baseline or artifact-state pointers when later work depends on them;
 - stale/recheck dependent work after a changed premise/interface;
-- active long-running operation identities/handles when needed for safe resume;
+- active long-running operation identities/handles and next informative observation conditions when needed for safe resume;
 - ambiguous-effect state;
 - artifact/source pointers;
-- next safe action.
+- next safe action or runnable-set pointer.
 
 A transient transcript or hidden model context alone is not a Continuity backend.
 
@@ -112,11 +113,17 @@ A transient transcript or hidden model context alone is not a Continuity backend
 
 When the harness exposes a long-running process, job, workflow, build, deployment, or asynchronous provider action, preserve the operation identity/handle if one exists.
 
-The adapter may expose a status/read-output mechanism, but availability of such a mechanism is not permission to tight-poll it.
+The adapter may expose status/read-output mechanisms, events, callbacks, or timeouts. Availability of a status endpoint is not permission to tight-poll it.
 
-Execution decides when another observation is informative. The harness should allow the agent to perform independent work between checks when possible.
+Execution observes the external operation and reports WAITING_EXTERNAL plus the next informative observation condition.
+
+Reasoning owns selection among frontier branches and decides when a waiting branch becomes eligible for another observation. The harness should allow the agent to perform independent work between checks when possible.
+
+If the harness itself supports event-driven completion notification, expose that fact so Reasoning can use the event as an informative trigger instead of polling.
 
 If the harness is purely synchronous, degrade honestly: wait for the call result or use the host's supported timeout behavior. Do not fabricate asynchronous progress.
+
+Tool-call serialization is a mechanical property of the harness; it does not imply that ANGENT's plan must remain serialized around one pending operation.
 
 ## External effects and read-back
 
@@ -131,7 +138,7 @@ Do not infer provider success from local memory, a previous response, or an exit
 When the harness lacks a capability:
 
 - choose a semantically adequate alternate route when one exists;
-- degrade parallel work to sequential work when safe;
+- degrade parallel work to interleaved/sequential tool execution while preserving independent frontier branches;
 - preserve the limitation explicitly when the outcome cannot be fully established;
 - do not invent unsupported tool results or background execution.
 
@@ -142,6 +149,7 @@ The adapter does not own:
 - task scope or authority;
 - problem/system model;
 - strategic decisions;
+- frontier branch selection;
 - evidence interpretation;
 - authoring quality;
 - learning policy.

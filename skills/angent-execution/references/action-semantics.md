@@ -29,7 +29,8 @@ Return:
 - artifacts/checks;
 - whether expectation matched;
 - uncertainty;
-- evidence pointers.
+- evidence pointers;
+- wait state and next informative observation condition when the action remains pending.
 
 ## Whole-scope reads
 
@@ -46,11 +47,15 @@ A first page or partial result cannot establish full coverage.
 
 ## Wait state
 
-A long-running operation may leave an action dependency in WAITING while unrelated work remains RUNNABLE.
+A long-running operation may leave its branch in WAITING_EXTERNAL while unrelated work remains RUNNABLE.
 
-Preserve the operation identity/handle and last observed state when the wait may survive interruption.
+Preserve the operation identity/handle, last observed state, dependent work and next informative observation condition when the wait may survive interruption.
 
-Do not convert WAITING into repeated equivalent polling. Another check should be justified by new timing/event/dependency information.
+When an action becomes WAITING_EXTERNAL, return control to Reasoning before any equivalent status observation is selected again.
+
+Execution does not decide whether the whole task should keep waiting or switch branches; that requires the full active frontier.
+
+Do not convert WAITING_EXTERNAL into repeated equivalent polling. Another check must be made eligible by new timing, event, dependency or explicit-status information.
 
 ## Retry and progress
 
@@ -66,6 +71,6 @@ Execution can change how a bounded action is realized without strategic re-appro
 
 ## Replan boundary
 
-Return to Reasoning when a precondition fails, the observation invalidates the model, expected state differs materially, or a new obligation changes the action.
+Return to Reasoning when a precondition fails, the observation invalidates the model, expected state differs materially, an operation becomes RUNNING/PENDING, or a new obligation changes the action.
 
 Do not continue a stale dependent plan merely because the next tool call is available.
