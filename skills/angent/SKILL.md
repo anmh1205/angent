@@ -65,7 +65,7 @@ Load/activate deeper semantics when the current decision requires them:
 - **long-running/asynchronous or multi-branch work** → Reasoning frontier-scheduling + Continuity; pending work must not monopolize the loop;
 - **non-trivial specialist/subagent delegation or fan-out synthesis** → Reasoning specialist-synthesis; add delegation-context when context/authority/raw evidence/write boundaries are material, while simple direct work stays direct;
 - **revision of accepted work** → Reasoning repair-and-regression + comparative Quality;
-- **broad method/prompt/bulk change** → behavioral-calibration Quality; preserve reproducible evidence only when later acceptance depends on it;
+- **broad core/method/prompt/owner-interface/bulk change** → load the relevant cases from Root `references/core-fixtures.md` plus behavioral-calibration Quality; preserve reproducible evidence only when later acceptance depends on it; do not run unrelated fixtures merely because the bank exists;
 - **long-form/teaching artifact** → Research subject model + Authoring reader/artifact/composition state; preserve response-quality prose and one explanatory spine;
 - **resume after interruption/concurrent change** → Continuity reconciliation + Context refresh + Reasoning revalidation;
 - **engineering specialist need** → Execution engineer routing; prefer usable native AgentKit Engineer, otherwise fallback.
