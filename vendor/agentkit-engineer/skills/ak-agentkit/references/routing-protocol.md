@@ -56,7 +56,7 @@ Good triggers include:
 
 Do not spawn an agent for trivial edits or when the full current context is essential.
 
-If delegation is unavailable, execute the role sequentially.
+If delegation is unavailable, execute the role sequentially only when delegation/parallel lifecycle is not a load-bearing requirement. When the selected workflow requires live team state, runtime diversity, parallel isolation, or another unavailable control, route to a qualified alternative or report the exact capability gap instead of simulating parity.
 
 ## 5. Risk-based verification
 
