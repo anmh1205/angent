@@ -12,7 +12,7 @@ Backends may differ across ChatGPT/local harnesses. Canonical semantics do not d
 
 Use a stable work identity and revisioned records.
 
-Preserve only resume-critical semantics: outcome, scope, constraints, verified work, unfinished unit, consequential decisions, compact decision basis/pointers, artifact/source pointers, dependencies, pending effects and next safe action.
+Preserve only resume-critical semantics: outcome, scope, constraints, verified work, unfinished unit/branches, consequential decisions, compact decision basis/pointers, artifact/source pointers, dependencies, pending effects, next safe action, and the minimal resume binding needed to know whether saved work still maps safely to live state.
 
 For a consequential decision, persisting only the selected action may be insufficient. Preserve enough basis to know which premise/evidence would invalidate it after resume.
 
@@ -31,7 +31,7 @@ Each save:
 
 Resume scans coherent revision files rather than trusting a single current pointer.
 
-A stale concurrent writer receives a revision conflict and must reload/reconcile.
+A stale concurrent writer receives a revision conflict and must reload/reconcile. Reload does not mean blindly adopting the newest summary: dependent saved work is resumed only after its live mapping is classified through resume compatibility.
 
 The store intentionally accepts a flexible frontier object; Continuity owns semantics and decides which fields matter for the current task.
 
@@ -51,6 +51,16 @@ Side-effect state may live inside the frontier record; the storage helper does n
 Persist meaningful completed units, durable artifact pointers and controlling decision basis when later units depend on them, even when there is no external write.
 
 Do not wait for a warning that the session may end.
+
+## Resume compatibility
+
+The storage layer preserves revision coherence; it does not prove that external state still matches the saved work.
+
+When interruption/concurrency can change the meaning of dependent work, Continuity reconstructs the minimal resume binding and classifies it through `resume-binding.md`.
+
+Do not require global exact equality. Bind only the identities, versions/digests, effect keys, capability semantics, and dependency assumptions whose drift can change continuation.
+
+AMBIGUOUS and INCOMPATIBLE bindings block only their dependent transitions; unrelated verified/runnable work may continue.
 
 ## Limitations
 
