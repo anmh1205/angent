@@ -71,7 +71,7 @@ Respect user-requested tool boundaries and project AGENTS.md.
 
 For low-risk reads, avoid heavy transaction ceremony.
 
-For consequential writes, use Continuity PREPARED/reconcile semantics.
+For consequential interruption-sensitive effects, use an authorized Continuity PREPARED/reconcile record or a provider-native idempotency/transaction boundary known to provide equivalent safety. If no reliable recovery route exists, block only the unsafe effect, not independent safe work. Never assert that a journal exists unless the store was actually written and readable.
 
 If a provider reports a version/precondition conflict, treat it as evidence that the mutation basis is stale. Refresh/reconcile the affected target and apply only a still-valid semantic delta; do not force or blindly retry the stale replacement.
 

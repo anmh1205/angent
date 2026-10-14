@@ -12,11 +12,11 @@ Retry behavior depends on the effect and the failure boundary, not merely on whe
 
 ## Consequential write protocol
 
-Before a consequential effect:
-- persist PREPARED intent through Continuity;
-- include target, expected state transition and reconciliation method;
-- after the concrete operation/target/material arguments are resolved, revalidate that current authority still covers exactly that effect.
+For a consequential effect that could be duplicated or left ambiguous after interruption, preserve a PREPARED intent in an authorized durable store when available. Include the exact target, expected transition and reconciliation method; revalidate current authority against the concrete operation and arguments immediately before dispatch.
 
+If the store is unavailable, first ask whether a provider-native idempotency key, conditional write, transaction or authoritative read-back makes replay/recovery equivalently safe. Use it only when the operation's actual semantics support that claim. Otherwise do not dispatch an irreversible, non-idempotent or otherwise unreconcilable effect whose outcome would be unsafe after interruption. Report the specific blocked effect; unrelated reads, reasoning and safely recoverable operations can continue. Never write checkpoint metadata into an audit-only target or public issue without separate authorization.
+
+A missing journal is a stated durability limitation, not permission to invent a checkpoint, and not a global failure of every task.
 If the target, scope, arguments, authority, or decisive precondition changed since planning/approval, do not treat the old authorization as transferable. Return to Contract/Reasoning or the required approval boundary.
 
 This prevents a planning-to-execution time-of-check/time-of-use gap without requiring ANGENT to implement its own permission runtime.

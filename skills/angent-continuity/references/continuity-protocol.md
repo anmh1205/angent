@@ -52,6 +52,8 @@ The store intentionally accepts a flexible frontier object; Continuity owns sema
 
 ## Side-effect transaction
 
+Use the following protocol when an effect can be consequential or ambiguous across interruptions. The harness may supply equivalent provider-native transactional/idempotency guarantees; assess them rather than requiring a journal that the runtime cannot actually persist. If no safe recovery route exists, block only that dependent risky effect and continue independent work.
+
 1. **PREPARED** — persist target, intent, expected before/after state, reconciliation method and the authority basis needed to know what effect was intended.
 2. **BIND** — when the concrete operation/target/material arguments become known, revalidate that they still match current authority and decisive preconditions. If they materially differ from PREPARED and resume/replay safety depends on the distinction, persist the revised prepared intent before attempt.
 3. **ATTEMPT** — perform one authorized effect.
@@ -82,6 +84,8 @@ AMBIGUOUS and INCOMPATIBLE bindings block only their dependent transitions; unre
 ## Limitations
 
 The local backend protects writers on one filesystem and detects stale revisions. It is not a distributed consensus system.
+
+Its OS-level writer lock is not interoperable with the old expiry-based directory lock. Do not run older and updated writer processes against the same local store concurrently: finish or stop old writers before switching, or use isolated stores. Filesystem locking alone also cannot establish a trusted snapshot's provenance.
 
 Cross-machine/cloud backends must implement equivalent revision/conflict semantics appropriate to their environment.
 

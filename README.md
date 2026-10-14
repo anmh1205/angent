@@ -35,6 +35,6 @@ This repository does not store private plugin release identifiers, past branch H
 
 ## Validation
 
-The repository checks deterministic structure and manifest consistency. For method changes, use evidence-backed behavioral cases and counter-cases appropriate to the actual consequence. A green hygiene CI run is not proof that a model's behavior improved.
+The repository checks deterministic structure and manifest consistency, and exercises Memory/Continuity filesystem races, process-exit lock release, revision conflicts and interrupted pointer recovery on CI. For cognitive method changes, use evidence-backed behavioral cases and counter-cases appropriate to the actual consequence. Green structural and runtime CI checks cannot establish that a model's reasoning, writing or cross-session Learning activation improved.
 
 ANGENT Core and Engineer Kit are maintained as separate scopes.
