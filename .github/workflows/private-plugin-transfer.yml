@@ -1,0 +1,29 @@
+name: ANGENT private 1.0.0 transfer
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build canonical private plugin
+        shell: bash
+        run: |
+          zip -r angent-private-1.0.0.zip plugin.json .codex-plugin skills/angent skills/angent-*
+          unzip -t angent-private-1.0.0.zip
+          python - <<'PY'
+          import json, zipfile
+          z=zipfile.ZipFile("angent-private-1.0.0.zip")
+          for p in ["plugin.json",".codex-plugin/plugin.json"]:
+              v=json.loads(z.read(p))["version"]
+              assert v=="1.0.0", (p,v)
+          print("manifest versions: 1.0.0")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: angent-private-1.0.0
+          path: angent-private-1.0.0.zip
+          if-no-files-found: error
+          retention-days: 1
