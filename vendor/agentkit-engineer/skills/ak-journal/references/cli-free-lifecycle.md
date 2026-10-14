@@ -21,3 +21,7 @@ An explicit user request to write a journal authorizes that journal scope; autom
 - Multiple entries on the same day with the same title must retain both histories rather than silently overwrite.
 - A history-only `show` or `list` request must not add new journal files, try to install `ak` or create a project registry.
 - An entry after a failed deployment must describe the failure and rollback status from evidence, not call the attempt a success.
+
+## Tested local document helper
+
+`../scripts/journal_files.py` is an optional stand-alone implementation of create/list/show/validate with explicit `--project-root`. It does not need the native AgentKit CLI. The current scope is `plans/journals/` under a verified local project root; when a project already has a different configured journal owner, do not silently create a second store. Its create operation uses exclusive creation and suffixes collisions; list/show/validate do not write. The package CI exercises same-title collisions, frontmatter mismatch, symlink escape, unsafe filename and read-only list behavior.

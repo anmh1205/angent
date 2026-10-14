@@ -77,5 +77,7 @@ jobs:
           assert result['source'] == 'local_python_ast_no_network'
           PY
           test -z "$(git status --porcelain)"
+      - name: Verify local journal lifecycle without AgentKit CLI
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-journal/scripts -p 'test_journal_files.py' -v
       - name: Check committed whitespace
         run: git diff --check HEAD^ HEAD

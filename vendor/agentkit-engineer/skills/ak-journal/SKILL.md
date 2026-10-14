@@ -8,6 +8,18 @@ metadata: {port: angent-fallback, mode: adapted}
 
 Journal create/list/show/validate are ordinary file/document actions and **do not require native `ak journal`**. Read `references/cli-free-lifecycle.md`; prefer existing project storage and real host file tools. Native journal publication/provider scripts remain separate capabilities and cannot be presumed.
 
+## Runnable optional local helper
+
+For a local worktree with Python and writable project files, `scripts/journal_files.py` provides **real** `create`, `list`, `show` and `validate` actions without `ak`. It uses collision-safe exclusive file creation, scoped `plans/journals/` paths and read-only history queries. Use a project's own existing journal system or connected document editor when that is authoritative. Do not assume a local filesystem exists in ChatGPT-only execution.
+
+```bash
+python3 scripts/journal_files.py --project-root /path/to/project create --title "Fix install race" --date 2026-10-15 --summary "Causal findings" --stdin
+python3 scripts/journal_files.py --project-root /path/to/project list
+python3 scripts/journal_files.py --project-root /path/to/project validate --name 2026-10-15-fix-install-race.md
+```
+
+File generation writes evidence only after actual authorized invocation. `create` reads its private body from stdin, never overwrites existing entries, and returns the verified file path. The helper is a subset of journal **document semantics**, not social publication or an AgentKit-managed journal database.
+
 ## Load progressively
 
 - `references/journal-semantics.md` — what a journal is and is not.
