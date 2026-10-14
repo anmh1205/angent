@@ -25,7 +25,8 @@ Relevant capability classes include:
 - native AgentKit Engineer visibility;
 - durable local/cloud storage;
 - long-running job/process handles and status observation;
-- provider read-back after external effects.
+- provider read-back after external effects;
+- structured trajectory/trace evidence when the host already exposes it.
 
 The inventory can be implicit when a capability is directly exposed by the host. ANGENT does not require one universal capability registry.
 
@@ -136,6 +137,23 @@ The harness/provider exposes identifiers, versions, release markers and current 
 Context resolves role→identity from the current Contract/project/provider source-of-truth when that distinction matters. The adapter then reads or acts on the resolved identity.
 
 A superseded object may remain addressable by the provider. Addressability is not canonicality.
+
+## Trajectory and trace evidence
+
+When the harness already exposes structured run trajectory—such as tool calls/results, handoffs, guardrail events, provider-operation states, branch transitions, or other observable spans—it may expose that trace as evidence to Reasoning/Quality when trajectory is load-bearing.
+
+The adapter supplies existing observability; ANGENT does not implement or require a tracing platform.
+
+Use the smallest sufficient trajectory slice:
+- preserve event identity/order, material arguments/results, state transitions and provenance needed to establish the behavior;
+- prefer structured observable events over reconstructed narrative;
+- do not require hidden chain-of-thought or private reasoning;
+- minimize/redact sensitive payloads not needed for the evaluation;
+- preserve model/provider/harness/version or other measurement context when it can change what the trace establishes.
+
+If structured tracing is unavailable, disabled, privacy-constrained or unnecessary, fall back to bounded externalizable action/state evidence, authoritative provider read-back and endpoint observations.
+
+Missing trace capability must not be misclassified as a task/domain failure.
 
 ## External effects and read-back
 
