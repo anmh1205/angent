@@ -13,7 +13,7 @@ ANGENT core and Engineer fallback are intentionally separate package roots:
 └── vendor/agentkit-engineer/
     ├── plugin.json             # portable Agent Plugins manifest
     ├── .codex-plugin/plugin.json # ChatGPT/Codex companion manifest
-    ├── skills/                 # 102 portable Engineer Skills
+    ├── skills/                 # 102 portable Engineer Skill identities
     ├── agents/                 # 16 portable role definitions
     └── scripts/select_engineer.py
 ```
@@ -45,10 +45,11 @@ If native AgentKit Engineer is absent, unusable or not proven usable, activate t
 
 Coverage:
 
-- **102/102 Skills implemented**
-- **16/16 portable Agent roles implemented**
+- **102/102 stable 2.19.0 Skill identities present**
+- **16/16 Agent role identities present**
+- **workflow-semantic parity refresh in progress**
 
-See `PORTING_MANIFEST.md` for the Skill inventory and portability modes.
+Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
 
 The fallback is an independent ANGENT implementation, not an upstream mirror.
 
@@ -76,9 +77,15 @@ The files under `agents/` are therefore role semantics for adapters/workflows:
 
 Do not create separate Claude/Codex/Cursor reasoning forks.
 
+## Pinned upstream baseline
+
+The current fallback audit baseline is the signed **AgentKit Engineer stable 2.19.0** package resolved through the official registry. The stable docs Skill guide is used for routing/capability context, but not as packaged-inventory authority.
+
+Raw upstream source/export content is not stored here. Audit evidence and source boundaries are recorded in `UPSTREAM_BASELINE.md`.
+
 ## Porting principle
 
-Preserve the useful workflow outcome, not AgentKit implementation mechanics.
+Preserve the useful workflow outcome, critical gates, reusable domain/support knowledge and safety boundaries—not AgentKit implementation mechanics.
 
 Examples:
 

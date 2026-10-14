@@ -1,127 +1,145 @@
-# Engineer full-port manifest
+# Engineer portable fallback parity ledger
 
-Target: **102/102 Skills + 16/16 Agents** available through ANGENT when native AgentKit Engineer is unavailable.
+Upstream packaged baseline: **AgentKit Engineer stable 2.19.0**.
+
+Verified identity surface: **102/102 Skill directories + 16/16 Agent role identities** are present in the ANGENT fallback.
+
+This identity match is not a semantic-parity verdict. Stable 2.19.0 remains under workflow-semantic/support-surface review; each row stays REVIEW_PENDING until its outcome, modes, gates, domain/support knowledge, runtime-specific dependencies, and portable replacement have been checked.
 
 Native AgentKit remains preferred when usable and is installed/managed from the official AgentKit distribution. This manifest tracks ANGENT's portable fallback only.
 
 ## Status meanings
 
-- **IMPLEMENTED** — portable fallback exists in this repository.
-- **ADAPTED** — implemented with runtime/tool replacement while preserving capability semantics.
-- **DEGRADED** — implemented with an explicit limitation because the original runtime capability cannot be reproduced in the active harness.
+- **REVIEW_PENDING** — identity exists, but semantic parity against the pinned upstream package has not yet been accepted.
+- **VERIFIED_PORTABLE** — the useful workflow semantics are preserved without material runtime substitution.
+- **VERIFIED_ADAPTED** — the useful workflow semantics are preserved through an explicit harness-neutral replacement.
+- **VERIFIED_DEGRADED** — the portable fallback preserves the safe/useful subset and records a real capability boundary that cannot be reproduced without native AgentKit/runtime machinery.
 
-No Skill/Agent is removed from the target merely because upstream depends on AgentKit CLI, Claude/Codex, hooks, browser tooling, or a runtime-specific surface.
+A shorter fallback can be better than a literal source copy, but size reduction is not evidence of parity. Acceptance is based on behavior and knowledge required for the workflow outcome.
 
-## Skills — 102 total
+No Skill/Agent is removed merely because upstream depends on AgentKit CLI, Claude/Codex, hooks, browser tooling, or another runtime-specific surface. Runtime mechanics are adapted; load-bearing workflow/domain semantics are not silently discarded.
+
+## Current audit evidence
+
+- Signed stable changelog resolves Engineer **2.19.0** as the current stable package.
+- A fresh stable 2.19.0 portable export resolves **102 Skills** and **16 Agent sidecar roles**.
+- Fallback identity diff is exact: no upstream-only or fallback-only Skill directory.
+- The upstream portable Skill tree contains about **1428 support files** versus **236** in the fallback; only **112** same relative paths overlap.
+- Upstream SKILL.md surfaces contain about **20,150 lines / 545 direct support references** versus fallback **3,632 lines / 136 direct support references**.
+- These size/path figures are triage signals only; they do not prove that an independently adapted shorter workflow is wrong.
+
+The old docs-derived assumption of 103 public Skills with eight missing/new identities is superseded by signed package evidence. The stable “choose a Skill” page is a usage guide, not the packaged-identity inventory.
+
+## Skills — 102 identities
 
 | Skill | Status | Note |
 |---|---|---|
-| `ak-advise` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-agent-browser` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-agentize` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-agentkit` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-ai-artist` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-ai-multimodal` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-ak` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-ask` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-autoresearch` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-backend-development` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-better-auth` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-bootstrap` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-brainstorm` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-chrome-profile` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-code-review` | IMPLEMENTED | Portable fallback present |
-| `ak-codex-goal` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-coding-level` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-common` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-context-engineering` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-cook` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-copywriting` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-cti-expert` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-databases` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-debug` | IMPLEMENTED | Portable fallback present |
-| `ak-deep-swe` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-deploy` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-design` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-devops` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-docs` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-docs-seeker` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-document-skills` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-excalidraw` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-fable-thinking` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-find-skills` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-fix` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-folder-context` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-frontend-design` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-frontend-development` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-git` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-github` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-gkg` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-goal-warmup` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-google-adk-python` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-graphify` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-handoff` | IMPLEMENTED | Portable fallback present |
-| `ak-handover` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-help` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-html-video` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-hyperframes` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-interview-docs` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-issue-to-plan` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-journal` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-llms` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-loop` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-markdown-novel-viewer` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-mcp-builder` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-media-processing` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-mermaidjs-v11` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-mintlify` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-mobile-development` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-orchestrate` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-payment-integration` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-plan` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-plans-kanban` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-predict` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-preview` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-problem-solving` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-project-management` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-project-organization` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-react-best-practices` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-remotion` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-repomix` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-research` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-research-prompt` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-retro` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-review-pr` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-scenario` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-scout` | IMPLEMENTED | Portable fallback present |
-| `ak-security` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-security-scan` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-sequential-thinking` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-shader` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-ship` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-shopify` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-show-off` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-skill-creator` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-stitch` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-tanstack` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-team` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-tech-graph` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-test` | IMPLEMENTED | Portable fallback present |
-| `ak-threejs` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-ui-styling` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-ui-ux-pro-max` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-use-mcp` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-vibe` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-watzup` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-web-design-guidelines` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-web-frameworks` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-web-testing` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-worktree` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-xia` | IMPLEMENTED | ADAPTED fallback implemented |
+| `ak-advise` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-agent-browser` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-agentize` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-agentkit` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-ai-artist` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-ai-multimodal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-ak` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-ask` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-autoresearch` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-backend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-better-auth` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-bootstrap` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-brainstorm` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-chrome-profile` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-code-review` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-codex-goal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-coding-level` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-common` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-context-engineering` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-cook` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-copywriting` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-cti-expert` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-databases` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-debug` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-deep-swe` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-deploy` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-devops` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-docs` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-docs-seeker` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-document-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-excalidraw` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-fable-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-find-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-fix` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-folder-context` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-frontend-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-frontend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-git` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-github` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-gkg` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-goal-warmup` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-google-adk-python` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-graphify` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-handoff` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-handover` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-help` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-html-video` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-hyperframes` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-interview-docs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-issue-to-plan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-journal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-llms` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-loop` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-markdown-novel-viewer` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-mcp-builder` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-media-processing` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-mermaidjs-v11` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-mintlify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-mobile-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-orchestrate` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-payment-integration` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-plan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-plans-kanban` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-predict` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-preview` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-problem-solving` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-project-management` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-project-organization` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-react-best-practices` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-remotion` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-repomix` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-research` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-research-prompt` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-retro` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-review-pr` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-scenario` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-scout` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-security` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-security-scan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-sequential-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-shader` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-ship` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-shopify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-show-off` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-skill-creator` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-stitch` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-tanstack` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-team` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-tech-graph` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-test` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-threejs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-ui-styling` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-ui-ux-pro-max` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-use-mcp` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-vibe` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-watzup` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-web-design-guidelines` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-web-frameworks` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-web-testing` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-worktree` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-xia` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 
-## Agents — 16 total
+## Agents — 16 identities
 
-All 16 portable role definitions are implemented under `vendor/agentkit-engineer/agents/`.
+All 16 role identities are present under `vendor/agentkit-engineer/agents/`. Upstream portable export preserves Agent files as inert sidecar reference content rather than a portable runtime component, so ANGENT compares role semantics rather than claiming runtime-agent parity. Agent semantic review is still pending.
 
 - advisor
 - brainstormer
@@ -139,6 +157,12 @@ All 16 portable role definitions are implemented under `vendor/agentkit-engineer
 - researcher
 - tester
 - ui-ux-designer
+
+## Upstream evidence boundary
+
+See `UPSTREAM_BASELINE.md` for the exact stable release/artifact evidence and why documentation navigation is not used as packaged-inventory authority.
+
+The upstream portable export is audit/source material only. ANGENT does not vendor a raw upstream mirror.
 
 ## Maintenance rule
 
