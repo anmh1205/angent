@@ -206,3 +206,11 @@ For reader-facing technical output ask:
 10. If the same failure recurred despite an existing rule, did the repair investigate activation/routing/ownership rather than add another guard?
 
 A candidate fails when it makes the reader reconstruct too much, violates active obligations, regresses a protected property, or preserves the generating mechanism behind a recurring complaint even if the named example was fixed.
+
+## Conversation repair and representation counter-cases
+
+When a user says an earlier explanation did not make sense, compare the changed answer against the actual conceptual gap. A successful revision changes the reader's usable model with a grounded distinction or trace; a longer paraphrase is not evidence of improvement. A previously correct short expert answer is a negative control: do not inflate it into an elaborate tutorial.
+
+For visual work, test both selection and fidelity. A protocol interaction may need a sequence diagram, while a stateful lifecycle needs guarded state transitions; substituting one for the other can fabricate semantics. A photo of a similar board is not an exact connector reference. A source Mermaid block that never renders is not an accepted illustration. Equally, a simple two-sentence distinction should remain prose when an extra diagram offers no new information.
+
+Check source/model/revision match, arrow and axis meaning, destination renderer support, actual legibility, rights and nearby interpretation. Distinguish a better documented method from observed gains in real outputs; do not claim behavioral improvement from these checks alone.

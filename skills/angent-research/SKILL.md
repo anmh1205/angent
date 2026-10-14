@@ -12,6 +12,7 @@ Research answers evidence questions and builds evidence-grounded subject structu
 - references/evidence-model.md — source roles, claim support/entailment, evidence items and information value.
 - references/source-conflict.md — reconcile version/platform/scope contradictions.
 - references/stopping-rule.md — know when more research no longer changes the decision/model.
+- references/visual-evidence.md — exact imagery, provenance, identity and reuse when visual evidence affects the answer.
 
 ## Input
 

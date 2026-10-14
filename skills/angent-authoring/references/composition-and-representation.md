@@ -83,3 +83,5 @@ Ask:
 - does every arrow/group/axis correspond to a real relation?
 
 Mermaid is not a substitute for authentic schematics, waveforms or UI evidence.
+
+For a consequential figure or a choice among flowchart, sequence, state, quantitative chart and sourced imagery, use `visual-explanation.md`. A visual must be validated in the destination; a source code block alone is not a rendered figure.

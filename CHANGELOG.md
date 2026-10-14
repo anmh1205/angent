@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — response and visual explanation
+
+- Refined follow-up explanation guidance for reader confusion, rather than repeated paraphrase or automatic document-style scaffolding; documented the comparative source-study boundary.
+- Added representation-specific Mermaid guidance and rendered-figure acceptance for process, message, state, structural and quantitative diagrams.
+- Added source- and revision-matched visual research, licensing/provenance boundaries and alternatives to Mermaid for physical/UI/measurement evidence.
+- Added a dedicated ChatGPT logo asset reference and OpenAI brand color; kept both portable/Codex manifests consistent, with short starter prompts.
+
 ## Unreleased — simpler Core coordination and state
 
 - Removed the committed active-work checkpoint and ignored all local .angent/ runtime state.

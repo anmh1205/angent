@@ -40,6 +40,7 @@ Verify:
 - tables and ordered procedures;
 - code/equations, including language tags, literal symbols, intended line breaks and execution semantics;
 - rendered diagrams, including actual arrow/label relationships rather than only block presence;
+- image/diagram compatibility with the target renderer and its supported syntax version; figure clarity at the actual display size;
 - figures/captions;
 - citations/links, including whether source markers became real readable references rather than unrendered internal tokens;
 - missing/duplicated blocks;
