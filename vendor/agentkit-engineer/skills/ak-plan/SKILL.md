@@ -41,7 +41,7 @@ The portable fallback preserves four useful operations:
 - **red-team** — adversarially challenge assumptions, dependencies, failure modes, migration/rollback and verification;
 - **archive** — mark a plan inactive/closed in the project's plan/index mechanism without deleting its durable files.
 
-Runtime-specific CLI/index mechanics are optional. The plan artifact remains authoritative enough to understand and resume work.
+Runtime-specific CLI/index mechanics are optional. The plan artifact remains authoritative enough to understand and resume work. Read `references/cli-free-lifecycle.md` for the complete plan/status/phase/file mapping **without** `ak plan`; use host file/connector actions and verify actual persistence.
 
 ## Workflow
 

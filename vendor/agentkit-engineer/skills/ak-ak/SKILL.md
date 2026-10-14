@@ -1,12 +1,18 @@
 ---
 name: ak-ak
-description: Operate or diagnose the official AgentKit CLI when it is installed; otherwise provide the official installation path instead of emulating AgentKit lifecycle commands.
+description: Resolve requests framed as AgentKit CLI operations into genuine portable Engineer Skills and host mechanisms, retaining native-only administrative boundaries.
 metadata: {port: angent-fallback, mode: degraded}
 ---
 
 # AgentKit CLI — Native Integration Helper
 
-This Skill intentionally does **not** reimplement the AgentKit control plane.
+This Skill is the **CLI-to-capability router** for requests expressed in AgentKit terms. Most engineering outcomes should run directly through ANGENT/Engineer Skills and available host tools; do not require or install the `ak` CLI merely to create plans, execute Skills, journal work, test, inspect code or coordinate tasks. Read `references/cli-workflow-crosswalk.md` before routing a CLI-shaped request.
+
+This Skill intentionally does **not** counterfeit the proprietary AgentKit control plane.
+
+## When the request can be fulfilled without AgentKit
+
+Identify the *user outcome* and use the crosswalk to resolve Plan, Journal, Run/Skill dispatch, Scout, Test, Orchestrate, local activity/continuity or provider operations. Preserve native feature-specific semantics (identity, project scope, errors, safety and verification). Do not invoke `ak` for convenience when the same goal can be achieved directly with the selected Skill.
 
 ## When `ak` is available
 
@@ -22,7 +28,7 @@ Before mutation:
 
 Do not fake AgentKit lifecycle behavior.
 
-Use the official sources:
+Only if the user specifically wants to **manage AgentKit itself** and the necessary control plane is absent, use the official sources. Otherwise dispatch the requested engineering task through the appropriate portable Skill without creating an installation prerequisite:
 - https://agentkit.best
 - https://docs.agentkit.best/en/stable
 - https://docs.agentkit.best/en/stable/getting-started/installation
@@ -31,7 +37,7 @@ If the user only needs ANGENT engineering capability, continue with the portable
 
 ## Boundary
 
-This Skill is the deliberate degraded case in the full-port target: it preserves the native-control capability by delegating to the official product rather than cloning its lifecycle runtime.
+Native AgentKit administration, signed-kit state, accounts, license, dashboard services and installed-binary upgrades remain product-specific and degraded without that product. Ordinary engineering tasks are **adapted** through their owning portable Skills. No universal fake `ak` executable or competing runtime registry is introduced.
 
 ## Stable 2.19.0 native control-plane operations
 For real `ak` invocations, distinguish read-only inspection, local/project write, user-global write, external network effect and destructive recovery. Resolve kit, target runtime, installation mode and scope before mutation. Inspect `ak --version`, exact `ak <cmd> --help` and `--json` envelopes; reuse until the CLI/target changes. Some diagnostics/semantic shadow evaluators execute tests or transmit data and incur costs despite no project file edit.

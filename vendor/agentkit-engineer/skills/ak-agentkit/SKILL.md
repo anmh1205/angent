@@ -10,7 +10,7 @@ This Skill provides Engineer routing when native AgentKit is unavailable.
 
 It does not replace ANGENT Root or Reasoning.
 
-Read `references/routing-protocol.md` for the full selection/delegation policy.
+Read `references/routing-protocol.md` for the full selection/delegation policy. Requests written as `ak run engineer/<skill>` are routed to the installed `ak-<skill>` Skill (or exact available identity in the selected harness), **not** passed through a missing `ak` CLI. For other CLI verbs use `../ak-ak/references/cli-workflow-crosswalk.md`.
 
 ## Core rule
 
@@ -26,6 +26,10 @@ Do not build a chain merely because several Skills exist.
 - PR → Review PR / Code Review;
 - long continuation → Continuity/Handoff;
 - independent parallel jobs → Orchestrate or Team only when parallelism/isolation is worth its coordination cost.
+
+## CLI-free skill invocation
+
+Resolve requested Skill identity, supported arguments and actual installed Skills/roles in this session. Load the selected Skill instructions, invoke available host tools within the user's authority, capture evidence and respect timeout/cancellation where supported. A Skill file alone is not an agent process: do not claim stdout/stderr, adapter selection, `--json` NDJSON or independent worker state without an actual runtime. Report unsupported native process/adapter options separately from the usable task outcome.
 
 ## Native boundary
 
