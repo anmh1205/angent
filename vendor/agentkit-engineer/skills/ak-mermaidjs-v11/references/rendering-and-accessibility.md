@@ -6,13 +6,13 @@ The stable Engineer 2.19.0 source covers Markdown embedding, Mermaid.js integrat
 
 A standard Mermaid-supporting Markdown surface recognizes:
 
-~~~markdown
+~~~~markdown
 ~~~mermaid
 flowchart LR
   Client --> API
   API --> Store
 ~~~
-~~~
+~~~~
 
 The code block is **source**, not proof of successful rendering. Different destinations support different versions and diagram types. Preserve the source for future edits, and verify the target's actual preview if user-facing presentation quality matters.
 

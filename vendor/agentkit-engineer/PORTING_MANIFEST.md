@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **66 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **68 / 102 Skill identities reviewed semantically**.
 
-- **57 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
-- **8 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-graphify`, `ak-journal`, `ak-team`, `ak-ui-ux-pro-max`.
+- **58 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **9 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-team`, `ak-ui-ux-pro-max`.
 - **1 VERIFIED_PORTABLE**: `ak-ask`.
-- **36 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **34 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -144,6 +144,10 @@ Direct inspection of the stable 2.19.0 Mermaid Skill and five source references 
 
 Graphify's stable 2.19.0 beta workflow includes graphifyy native CLI, graph.json/HTML/report/cache artifacts, AST and semantic extraction, query_graph/get_node/get_neighbors/shortest_path operations, incremental invalidation and source provenance. The portable graph substitute retains the decision/query workflow, but native parser/transcriber/web/MCP runtime parity is explicitly degraded. Documents/images sent to an external model require a visible privacy boundary; marketing token-savings numbers are not guarantees.
 
+### Publish-grade SVG and semantic code navigation
+
+The stable 2.19.0 Tech Graph bundle adds detailed architecture/UML/network/state/sequence layout and seven styles, SVG validation/export scripts, marker/arrow routing, typography, collision and PNG visual review gates. The adapted fallback now restores those behaviors through explicit source/renderer/tool selection and a style/layout reference without falsely claiming the bundled SVG templates or rasterizer exist. GKG preserves its seven MCP discovery/definition/reference/index/navigation operations and supported-language/incremental-index limitations; the portable fallback accurately degrades to language-server/AST/checked source tracing when GKG is unavailable.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -188,7 +192,7 @@ Graphify's stable 2.19.0 beta workflow includes graphifyy native CLI, graph.json
 | `ak-frontend-development` | VERIFIED_ADAPTED | stable 2.19.0 frontend implementation semantics preserved while project-specific libraries are derived from the current codebase |
 | `ak-git` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-github` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-gkg` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-gkg` | VERIFIED_DEGRADED | stable 2.19.0 GKG definition/reference/impact workflow and MCP/search semantics retained; native AST/index server remains optional |
 | `ak-goal-warmup` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-google-adk-python` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-graphify` | VERIFIED_DEGRADED | stable 2.19.0 graph build/query, provenance, media privacy and MCP/native capability boundaries restored; external Graphify runtime not bundled |
@@ -237,7 +241,7 @@ Graphify's stable 2.19.0 beta workflow includes graphifyy native CLI, graph.json
 | `ak-stitch` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-tanstack` | VERIFIED_ADAPTED | stable 2.19.0 Start/Router/Form/AI scope restored; unrelated TanStack Query/Table/Virtual expansion removed and volatile package APIs bound to current installed docs |
 | `ak-team` | VERIFIED_DEGRADED | true live-team lifecycle is load-bearing; hard-stop/route elsewhere when harness lacks it |
-| `ak-tech-graph` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-tech-graph` | VERIFIED_ADAPTED | stable 2.19.0 diagram views, seven style families, SVG/PNG workflow, routing/label/layout and rendered QA retained with runtime tool substitution |
 | `ak-test` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-threejs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ui-styling` | VERIFIED_ADAPTED | stable 2.19.0 component/tokens/shadcn-Tailwind mutation and rendered-accessibility gates preserved |
