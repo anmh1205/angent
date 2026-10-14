@@ -43,5 +43,7 @@ jobs:
           assert unknown["mode"] == "fallback" and unknown["fallback"]["ready"], unknown
           assert yes["mode"] == "native" and not yes["policy"]["load_both"], yes
           PY
+      - name: Exercise offline Git snapshot packer and security fixtures
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-repomix/scripts -p 'test_pack_local.py' -v
       - name: Check committed whitespace
         run: git diff --check HEAD^ HEAD

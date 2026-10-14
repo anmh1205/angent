@@ -23,9 +23,26 @@ Use observed per-file and total token metrics when available. Reserve space for 
 
 ## Batch and fallback limits
 
-The pinned AgentKit package includes a separate Python batch helper, manifest-style repository configuration and tests. They are **not present by implication** in this portable fallback; don't promise batch orchestration from a Markdown file.
+The pinned upstream batch helper and remote-repository configuration remain absent; the independent local script below handles only one Git worktree.
 
-When native Repomix is absent, assemble a small clearly marked **partial** snapshot only from exact authorized files, or use bounded source search if packaging is unnecessary. Report that native formatting/token counts/security scanner and remote fetch features were not exercised.
+When native Repomix is absent, use the tested **local-only subset** below when a Git worktree and file operations are available, or use bounded source search if packaging is unnecessary. Report that native formatting/token counts/security scanner and remote fetch features were not exercised.
+
+## Runnable local Git fallback
+
+When the native Repomix runtime is absent, this package includes an independently implemented, offline Python/Git subset at `scripts/pack_local.py`.
+
+```bash
+# Inspect selected paths only (no source text or new file)
+python3 scripts/pack_local.py --root /path/to/repo --dry-run
+# Create a bounded JSON snapshot; existing files will not be overwritten
+python3 scripts/pack_local.py --root /path/to/repo --include 'src/*' --format json --output /path/to/context.json
+```
+
+Supported: local Git roots, tracked/untracked non-ignored source, explicit include/exclude globs, XML/Markdown/JSON, file/total byte budgets, symlink/binary exclusion, heuristic credentials filtering, an explicit skipped-file list and safe exclusive output creation. Review the actual output before sending private code to any external model.
+
+Not supported: upstream remote fetch, native Repomix/Secretlint scanner, exact token counting, comment removal, compress/batch modes, and full data-loss-prevention guarantees. Keep `VERIFIED_DEGRADED` until the unavailable original capabilities have been proven. The source revision in the output does not uniquely identify uncommitted or untracked file contents.
+
+Inspect with `--dry-run` before a potentially sensitive pack, and use `--stdout` only when streaming the source to the active destination is authorized.
 
 ## Deliverable
 

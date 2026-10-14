@@ -208,6 +208,10 @@ The new branch-only workflow surfaced five adapted skills with legacy multi-line
 
 The branch-only validator additionally checks bundle-local Markdown links across supporting references, and rejects reference path traversal that escapes an individual Skill reference root. New counterexample tests cover missing nested Markdown links and references/../../ traversal; the status still proves **package structure**, not online links or runtime/media operations.
 
+### Executable local repository packer
+
+A native-command-free local Git packer now supplies a real offline output for `ak-repomix`, including explicit bytes/file budgets, excluded/sensitive file reporting, symlink protection and exclusive output. The original remote/token/batch/full-secret-scanner modes are still absent, so this does **not** promote the status above DEGRADED. Its CI tests are the operational evidence for this independent subset.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -283,7 +287,7 @@ The branch-only validator additionally checks bundle-local Markdown links across
 | `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored |
 | `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
 | `ak-remotion` | VERIFIED_DEGRADED | stable 2.19.0 33-rule React frame timeline, media, captions and render QA; rule pack/runtime absent |
-| `ak-repomix` | VERIFIED_DEGRADED | stable 2.19.0 bounded packaging formats, remote/token/security workflow; native CLI/batch helper absent |
+| `ak-repomix` | VERIFIED_DEGRADED | runnable local Git Markdown/JSON/XML snapshot subset and security/limit fixtures; full remote/token/batch/Secretlint unavailable |
 | `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-research-prompt` | VERIFIED_ADAPTED | stable 2.19.0 Research-assignment-only boundary and one-paragraph evidence brief contract restored |
 | `ak-retro` | VERIFIED_ADAPTED | stable 2.19.0 period/team comparisons, raw Git metrics, evidence caveats and Markdown/HTML reporting restored |
