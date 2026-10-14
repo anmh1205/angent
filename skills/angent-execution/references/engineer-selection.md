@@ -87,19 +87,17 @@ A harness without Agent Plugins support may project the fallback Skills/roles th
 
 This projection is mechanical packaging/runtime work. It must not rewrite the Skill semantics into a harness-specific fork.
 
-## Preview acceptance must not mutate canonical version identity
+## Version identity during preview and acceptance
 
-A cross-harness acceptance run is not itself a release.
+A cross-harness acceptance run is not a version event.
 
-For clients whose private-plugin update mechanism automatically advances the semantic version, do **not** reuse the canonical ANGENT 1.0.0 private package as a disposable test target if doing so would turn the candidate into 1.0.1 or otherwise change release identity.
+Every ANGENT-owned package used for canonical, private, preview, staging, or acceptance purposes keeps semantic version **1.0.0** until the user explicitly changes the project version.
 
-Use one of these paths instead:
+Provider-specific release IDs, upload revisions, artifact digests, commit SHAs, or preview identities may change and should be used to distinguish deployments/builds. They must not be translated into `1.0.1`, `1.0.2`, or another semantic version automatically.
 
-- a disposable/private preview identity whose purpose is acceptance testing;
-- a client-supported unpublished preview/staging mechanism that preserves candidate identity;
-- another harness that can load the branch/package directly without mutating the canonical plugin record.
+If a client/tool cannot update the canonical private plugin without mutating the manifest version, do not accept that mutation as ANGENT version policy. Use a disposable preview identity, staging mechanism, or another harness while preserving manifest version `1.0.0`.
 
-The preview must be built from the exact upgrade source being accepted.
+The preview must be built from the exact source being accepted.
 
 Do not claim ChatGPT/Codex acceptance from an older installed baseline package merely because that package is callable.
 

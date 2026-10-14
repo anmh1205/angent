@@ -4,7 +4,7 @@
 
 ANGENT helps an agent preserve intent and authority, understand how the current collaboration is meant to work, reconstruct high-signal state, distinguish evidence from inference, build a usable model, reason and decide, interpret corrections at the right abstraction level, schedule independent work without polling churn, repair without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable working methods.
 
-> **Status:** ANGENT 1.0.0 remains an **unreleased project candidate**. The private ChatGPT plugin package is versioned separately. Core hardening and cognitive-collaboration alignment are integrated; reliability hardening is in progress. Engineer fallback inventory/parity refresh remains a separate phase.
+> **Status:** ANGENT **1.0.0** remains an unreleased project candidate. Every ANGENT-owned package and runtime surface uses the same canonical version `1.0.0`; private plugin synchronization may change its release ID but never its semantic version unless the user explicitly changes the project version. Reliability hardening and Engineer refresh remain in progress.
 
 ## Core architecture
 
@@ -106,10 +106,25 @@ For frontier scheduling, calibration must cover both sides: switch away from a p
 
 When a calibration result will serve as future regression/acceptance evidence, keep a reproducible pointer to the case, baseline/candidate, observable trajectory/artifacts, outcome, applied criteria and verdict validity. Do not replace evidence with a bare “passed previously” claim.
 
+## Version identity
+
+ANGENT has one canonical semantic version across all ANGENT-owned surfaces: **1.0.0**.
+
+This includes:
+- root plugin manifests;
+- private ChatGPT plugin manifests/runtime;
+- portable Engineer fallback manifests;
+- checkpoints and release-state documentation;
+- preview/staging packages derived from ANGENT source.
+
+Content synchronization, private plugin publication, acceptance testing, or a new internal release ID does **not** increment the semantic version.
+
+A version change is a project-level decision and requires an explicit user instruction. Do not infer a patch bump from implementation progress or plugin tooling behavior.
+
 ## Release boundary
 
 Do not publish or tag project version 1.0.0 yet.
 
-Private plugin package updates may be used to keep the working ChatGPT surface aligned with canonical cognitive source, but they do not make the project release-ready.
+Private plugin updates may keep the working ChatGPT surface aligned with canonical source, but the plugin must remain version `1.0.0`. Its provider release ID may change as deployment metadata.
 
-Complete reliability hardening and the deferred Engineer refresh, then perform cross-harness/release reconciliation before any project release decision.
+Complete reliability hardening and the Engineer refresh, then perform cross-harness/release reconciliation before any public project release decision.
