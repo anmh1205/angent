@@ -7,21 +7,34 @@ Resume is not “read an old summary and continue”.
 1. identify the active work item;
 2. read the highest coherent continuity revision;
 3. apply newest explicit instruction/current authority;
-4. inspect pending/ambiguous effects that require reconciliation before safe replay;
-5. recover saved long-running process/job/workflow identities, branch states and next informative observation conditions;
-6. validate artifact/source pointers;
-7. refresh external state that may change the next decision;
-8. revalidate stale or time-sensitive decisive premises in the saved decision basis;
-9. resolve conflicts/divergence;
-10. return the reconciled frontier to Context/Reasoning;
-11. let Reasoning recompute RUNNABLE, WAITING_EXTERNAL and BLOCKED branches;
-12. continue from the highest-value unfinished valid RUNNABLE branch.
+4. reconstruct the resume binding needed by unfinished dependent work;
+5. compare it with live canonical/provider state;
+6. classify the mapping as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE;
+7. inspect pending/ambiguous effects that require reconciliation before safe replay;
+8. recover saved long-running process/job/workflow identities, branch states and next informative observation conditions;
+9. validate artifact/source pointers;
+10. refresh external state that may change the next decision;
+11. revalidate stale or time-sensitive decisive premises in the saved decision basis;
+12. return the reconciled frontier to Context/Reasoning;
+13. let Reasoning recompute RUNNABLE, WAITING_EXTERNAL and BLOCKED branches;
+14. continue only from an unfinished branch whose required binding is compatible or has completed revalidation.
 
 A saved decision remains usable only while its decisive basis remains valid enough for the next dependent action.
 
+## Compatibility before continuation
+
+Load resume-binding.md when saved work depends on exact target/effect/baseline/capability identity.
+
+- COMPATIBLE → continue after ordinary freshness/authority checks.
+- REVALIDATE → mark affected work stale/recheck and rebuild the changed premise/dependency before continuation.
+- AMBIGUOUS → fail closed for the dependent transition and inspect authoritative state.
+- INCOMPATIBLE → do not continue the old dependent plan; establish a new baseline/action model or migration.
+
+Do not classify the whole task from one changed timestamp or version. Judge the dependency closure that the saved work actually relies on.
+
 ## External change
 
-A provider may have changed while ANGENT was interrupted: branch HEAD advanced, issue moved, page edited, deployment changed, process/job completed, or another session completed work.
+A provider may have changed while ANGENT was interrupted: branch HEAD advanced, issue moved, page edited, deployment changed, process/job completed, capability semantics changed, or another session completed work.
 
 Do not discard the stored frontier. Reconcile it so completed/remaining work still has meaning.
 
@@ -46,7 +59,9 @@ If the operation no longer exists, distinguish provider retention/expiration fro
 
 A later timestamp does not automatically win.
 
-Compare source versions, identify overlap, preserve independently verified disjoint work, and reconcile conflicting frontier/decision state before dependent action.
+Compare source versions and semantic overlap, preserve independently verified disjoint work, and classify only the overlapping dependency closure.
+
+If overlap is partial and the provider/canonical state cannot establish whether saved work is still valid, treat that dependent path as AMBIGUOUS rather than guessing a winner.
 
 ## Ambiguous effects
 

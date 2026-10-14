@@ -64,6 +64,8 @@ Treat tool/provider output as evidence before treating it as state. A material o
 
 Branch independence is conditional on the current dependency/shared-state model. A material effect or observation that changes shared state can invalidate a previously RUNNABLE branch; Reasoning recomputes only affected dependencies instead of assuming prior independence remains true.
 
+Resume state is not trusted merely because the checkpoint is coherent. For dependent saved work, Continuity classifies the live mapping as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE. AMBIGUOUS/INCOMPATIBLE fails closed for the dependent continuation or replay while unrelated verified/runnable work may continue.
+
 ## Collaboration state
 
 Context reconstructs task-relevant collaboration state when it can change correct behavior: interaction mode, expected initiative, evidence/verification bar, explanation job, progress/checkpoint expectation and applicable working-method mechanisms.

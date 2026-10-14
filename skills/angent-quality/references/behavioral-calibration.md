@@ -78,6 +78,18 @@ Use distinct cases such as:
 
 Fail the method if it either trusts stale plan/output state automatically or turns every trivial read into an approval transaction.
 
+## Resume compatibility calibration
+
+Use only when resume semantics changed:
+
+- unrelated live drift outside the saved dependency closure should remain COMPATIBLE;
+- changed decisive dependency should become REVALIDATE;
+- uncertain prior external effect should become AMBIGUOUS and must not replay blindly;
+- replaced target/effect semantics should become INCOMPATIBLE;
+- trivial work with no saved dependency should not acquire resume ceremony.
+
+The method fails if it resumes through ambiguity or invalidates all saved work because any unrelated state changed.
+
 ## Cross-surface authoring calibration
 
 When chat/response quality is accepted but document quality regresses, compare the same subject relation across surfaces.

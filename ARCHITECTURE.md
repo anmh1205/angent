@@ -196,6 +196,25 @@ Multi-branch independence is also conditional. If one branch changes shared stat
 
 These are cognitive semantics. ANGENT does not implement a permission server, event bus, transaction coordinator or observation database.
 
+## Resume compatibility
+
+A durable checkpoint can be internally coherent while no longer mapping safely to the live world.
+
+Continuity therefore treats resume as a compatibility problem over only the state that dependent work actually relies on:
+
+- target/source identity and relevant version/digest;
+- accepted baseline/artifact pointer;
+- decisive evidence used by the saved decision basis;
+- pending effect/operation identity;
+- capability semantics when a changed tool/provider could alter a pending action;
+- branch dependency assumptions.
+
+The mapping is classified as `COMPATIBLE`, `REVALIDATE`, `AMBIGUOUS`, or `INCOMPATIBLE`.
+
+`AMBIGUOUS` and `INCOMPATIBLE` fail closed for the dependent transition. They do not globally discard independently verified work or block unrelated runnable branches.
+
+This is deliberately narrower than exact whole-project equality: an unrelated new commit can be compatible, while one changed dependency can require revalidation.
+
 ## Verdict and measurement validity
 
 Quality's own PASS/FAIL is not ground truth merely because Quality produced it.
