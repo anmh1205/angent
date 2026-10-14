@@ -8,6 +8,8 @@ from __future__ import annotations
 import argparse
 from dataclasses import dataclass
 from fnmatch import fnmatchcase
+import hashlib
+from html import escape as escape_html
 import json
 from pathlib import Path
 import re
@@ -28,6 +30,7 @@ SENSITIVE_TEXT = re.compile(
     r"\bghp_[A-Za-z0-9]{30,}\b",
     re.IGNORECASE,
 )
+INVALID_CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
 BINARY_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf", ".zip",
               ".tar", ".gz", ".7z", ".exe", ".so", ".dll", ".mp4", ".mp3", ".wav"}
 
@@ -51,7 +54,7 @@ def matches(path: str, patterns: list[str]) -> bool:
 
 def collect(root: Path, include: list[str], exclude: list[str],
             max_files: int, max_file_bytes: int, max_total_bytes: int,
-            output: Path | None) -> tuple[list[Item], list[dict[str, str]], str]:
+            output: Path | None) -> tuple[list[Item], list[dict[str, str]], str, bool]:
     root = root.resolve(strict=True)
     top = git(root, "rev-parse", "--show-toplevel").stdout.decode("utf-8").strip()
     if root != Path(top).resolve():
@@ -61,6 +64,7 @@ def collect(root: Path, include: list[str], exclude: list[str],
                             found.stdout.split(b"\0") if x))
     rev = git(root, "rev-parse", "--verify", "HEAD", check=False)
     revision = rev.stdout.decode("utf-8").strip() if rev.returncode == 0 else "UNBORN"
+    dirty = bool(git(root, "status", "--porcelain", "-z", "--untracked-files=normal").stdout)
     items: list[Item] = []
     skipped: list[dict[str, str]] = []
     total = 0
@@ -93,7 +97,9 @@ def collect(root: Path, include: list[str], exclude: list[str],
                     except UnicodeDecodeError:
                         reason = "non_utf8"
                     else:
-                        if SENSITIVE_TEXT.search(content):
+                        if INVALID_CONTROL.search(content):
+                            reason = "control_character"
+                        elif SENSITIVE_TEXT.search(content):
                             reason = "possible_secret"
                         elif len(items) >= max_files:
                             reason = "file_count_limit"
@@ -106,26 +112,30 @@ def collect(root: Path, include: list[str], exclude: list[str],
             reason = "file_unreadable_or_changed"
         if reason:
             skipped.append({"path": rel, "reason": reason})
-    return items, skipped, revision
+    return items, skipped, revision, dirty
 
 
 def render(items: list[Item], skipped: list[dict[str, str]],
-           revision: str, fmt: str) -> str:
+           revision: str, fmt: str, dirty: bool = False) -> str:
     meta = {
-        "revision": revision, "files_included": len(items),
+        "revision": revision, "git_worktree_dirty": dirty,
+        "candidate_set": "git_ls_files_cached_others_exclude_standard",
+        "files_included": len(items),
         "bytes_included": sum(x.size for x in items),
         "complete": not skipped, "skipped": skipped,
         "scope": "local_git_only", "security": "heuristic_not_a_secret_scan",
     }
     if fmt == "json":
         return json.dumps({"metadata": meta, "files": [
-            {"path": x.path, "content": x.content} for x in items
+            {"path": x.path, "content": x.content,
+             "sha256": hashlib.sha256(x.content.encode("utf-8")).hexdigest()} for x in items
         ]}, ensure_ascii=False, indent=2) + "\n"
     if fmt == "xml":
         root = ET.Element("repository", revision=revision, complete=str(not skipped).lower())
         ET.SubElement(root, "metadata").text = json.dumps(meta, ensure_ascii=False)
         for item in items:
-            ET.SubElement(root, "file", path=item.path).text = item.content
+            ET.SubElement(root, "file", path=item.path,
+                          sha256=hashlib.sha256(item.content.encode("utf-8")).hexdigest()).text = item.content
         return ET.tostring(root, encoding="unicode") + "\n"
     tick = chr(96)
     result = ["# Local repository context", "", tick * 3 + "json",
@@ -134,7 +144,8 @@ def render(items: list[Item], skipped: list[dict[str, str]],
         longest = max((len(match.group()) for match in
                        re.finditer(tick + "+", item.content)), default=0)
         fence = tick * max(3, longest + 1)
-        result.extend(["## " + item.path, "", fence, item.content, fence, ""])
+        result.extend(["## " + escape_html(json.dumps(item.path, ensure_ascii=False)),
+                       "", fence, item.content, fence, ""])
     return "\n".join(result)
 
 
@@ -156,15 +167,16 @@ def main(argv: list[str] | None = None) -> int:
         p.error("limits must be positive")
     try:
         output = args.output.resolve() if args.output else None
-        items, skipped, revision = collect(args.root, args.include, args.exclude,
-                                           args.max_files, args.max_file_bytes,
-                                           args.max_total_bytes, output)
+        items, skipped, revision, dirty = collect(args.root, args.include, args.exclude,
+                                                  args.max_files, args.max_file_bytes,
+                                                  args.max_total_bytes, output)
         if args.dry_run:
             print(json.dumps({"revision": revision, "included": [i.path for i in items],
                               "skipped": skipped, "complete": not skipped,
-                              "no_contents_output": True}, ensure_ascii=False, indent=2))
+                              "no_contents_output": True, "git_worktree_dirty": dirty},
+                             ensure_ascii=False, indent=2))
         else:
-            content = render(items, skipped, revision, args.format)
+            content = render(items, skipped, revision, args.format, dirty)
             if args.stdout:
                 sys.stdout.write(content)
             else:

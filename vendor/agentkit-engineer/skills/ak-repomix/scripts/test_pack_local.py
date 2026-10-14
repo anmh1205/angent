@@ -1,5 +1,7 @@
 """Safety and format regression fixtures for the local repository packer."""
 from pathlib import Path
+import hashlib
+import xml.etree.ElementTree as ET
 import json
 import subprocess
 import sys
@@ -39,6 +41,32 @@ class PackerTests(unittest.TestCase):
         self.assertNotIn("ignored.txt", paths)
         self.assertFalse(value["metadata"]["complete"])
         self.assertNotIn("verysecretvalue123", out.stdout)
+
+    def test_provenance_tracks_uncommitted_source_and_sha(self):
+        result = json.loads(self.invoke('--format', 'json', '--stdout').stdout)
+        self.assertTrue(result['metadata']['git_worktree_dirty'])
+        self.assertEqual(result['metadata']['revision'], 'UNBORN')
+        source = next(x for x in result['files'] if x['path'] == 'src.py')
+        self.assertEqual(source['sha256'], hashlib.sha256(source['content'].encode('utf-8')).hexdigest())
+
+    def test_xml_excludes_invalid_control_character(self):
+        p = self.root / 'invalid.xml'
+        p.write_bytes(b'<good>hello\x01world</good>')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'invalid.xml'], check=True)
+        out = self.invoke('--format', 'xml', '--stdout')
+        self.assertEqual(out.returncode, 0, out.stderr)
+        tree = ET.fromstring(out.stdout)
+        self.assertNotIn('invalid.xml', [node.attrib['path'] for node in tree.findall('file')])
+        self.assertIn('control_character', out.stdout)
+
+    def test_markdown_header_escapes_html_filename(self):
+        p = self.root / 'evil<img onerror=alert(1)>.md'
+        p.write_text('safe\n', encoding='utf-8')
+        subprocess.run(['git', '-C', str(self.root), 'add', p.name], check=True)
+        out = self.invoke('--format', 'markdown', '--stdout', '--include', 'evil*')
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertIn('## "evil&lt;img', out.stdout)
+        self.assertNotIn('## evil<img', out.stdout)
 
     def test_dry_run_excludes_contents(self):
         out = self.invoke("--dry-run")
