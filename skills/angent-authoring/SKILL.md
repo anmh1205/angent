@@ -24,7 +24,9 @@ For document writing, surface-profiles and language-vi are part of the generatio
 
 ## Three models must stay distinct
 
-Authoring consumes a rich established cognitive/subject model, chooses an active teaching/communication model for the current reader and job, then realizes a presented model in prose/representation.
+Authoring consumes a rich established cognitive/subject model whose load-bearing relations/mechanisms have survived the Reasoning handoff, chooses an active teaching/communication model for the current reader and job, then realizes a presented model in prose/representation.
+
+Do not reconstruct the explanation from a flat fact inventory when the established model already contains causal, dependency, ownership, state, contrast or trace relations. Those relations are inputs to composition; Authoring still owns which one becomes the current explanatory spine and how it is staged.
 
 These are not the same thing:
 

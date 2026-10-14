@@ -11,7 +11,9 @@ Symptoms:
 - causal/ownership/state relations remain implicit;
 - reader must assemble the mechanism alone.
 
-Return to Authoring: expose the relation and interpretation.
+First locate the loss boundary. If Research/Reasoning established the relation but the candidate flattened it, return to Authoring. If the handoff itself lost or never established the load-bearing relation/mechanism, return to Reasoning/Research rather than asking prose to invent it.
+
+Return to Authoring only when the established subject model is sufficient and the realization failed to expose the relation and interpretation.
 
 ### Surface-induced prose regression
 

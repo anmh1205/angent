@@ -190,6 +190,6 @@ To Research: active question, alternatives, required precision, discriminating e
 
 To Execution: bounded action, obligations, collaboration constraints relevant to execution, preconditions, expected observation, replan condition and verification target.
 
-To Authoring: established model, epistemic boundaries, decisive evidence, reader target, collaboration expectations relevant to explanation, repair target and protected properties when revising.
+To Authoring: a structured established subject model that preserves the load-bearing objects/states, relations and mechanisms/traces; epistemic boundaries; decisive evidence; reader capability target; collaboration expectations relevant to explanation; repair target and protected properties when revising. Preserve what must be understood without prescribing the teaching order or document structure.
 
 To Quality: active obligations, baseline when relevant, candidate/solution, decision basis when needed for traceability, evidence, unresolved uncertainty and completion criteria.

@@ -255,6 +255,10 @@ Execution observes this state. Reasoning decides when the branch becomes eligibl
 
 ~~~yaml
 established_model:
+  objects_or_states: []
+  relations: []
+  mechanisms_or_traces: []
+load_bearing_relations: []
 epistemic_boundaries:
 conclusion:
 decision_basis_pointer:
@@ -266,7 +270,9 @@ collaboration_expectations:
 repair_model:
 ~~~
 
-Authoring may choose teaching order and representation but cannot silently alter the established conclusion, epistemic status, or protected repair properties.
+`load_bearing_relations` are the established causal/dependency/ownership/state/contrast/trace relations that materially support the conclusion or reader capability. They preserve cognition across the handoff; they do **not** prescribe teaching order.
+
+Authoring combines this structured subject model with reader/artifact state to choose the active teaching model, explanatory spine and representation. It may stage or omit nonessential relations, but cannot silently flatten away a load-bearing mechanism, alter established epistemic status, or violate protected repair properties.
 
 ## Authoring → Quality: ArtifactCandidate
 
