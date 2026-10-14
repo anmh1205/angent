@@ -62,15 +62,15 @@ Unverified persisted state can guide investigation, but it cannot manufacture au
 
 GitHub, Jira, Notion, deployment state, running processes/jobs, and provider APIs establish outside-world facts.
 
-They do not replace the active-work frontier.
+They do not replace a recoverable active-work frontier or by themselves establish the task's next step. When a durable store is unavailable, they are the best available evidence for reconstructing progress; preserve the uncertainty instead of inventing an old frontier.
 
 On resume, recover the frontier first, then inspect external sources, saved operations, and decisive premises that may have changed and reconcile accordingly.
 
 ## Consequential side effects
 
-Before a consequential/non-idempotent effect, persist PREPARED intent with enough information to identify/reconcile the operation.
+For a consequential/non-idempotent effect whose outcome may become ambiguous, persist PREPARED intent in an authorized durable store when available. A provider-native idempotency or transactional/reconciliation mechanism may provide equivalent safety when its semantics are verified. If neither can make an irreversible or non-idempotent effect safe across interruption, block only that effect; continue independently safe work.
 
-Afterward inspect authoritative state and mark VERIFIED/COMMITTED or ATTEMPTED_UNKNOWN.
+Afterward inspect authoritative state and mark VERIFIED/COMMITTED or ATTEMPTED_UNKNOWN where a journal exists. Do not claim persistent state if no durable store was available.
 
 Never blindly replay an uncertain write.
 
@@ -86,7 +86,7 @@ An unchanged RUNNING/PENDING observation normally updates neither completed-work
 
 ## Read-only / authoring work
 
-Persist meaningful completed units, artifact pointers, controlling decision basis, curriculum/research frontier, independent unfinished branches, and next runnable work even when there is no external write.
+When a durable store is available and authorized, persist meaningful completed units, artifact pointers, controlling decision basis, curriculum/research frontier, independent unfinished branches, and next runnable work even when there is no external write. Without one, preserve the outputs in the requested canonical destination where authorized, and report the remaining recovery limit.
 
 ## Multi-unit capability continuity
 
@@ -94,7 +94,7 @@ When the next unit depends on prior explanations, persist the accepted reader-pr
 
 ## Resume
 
-1. recover the highest coherent frontier;
+1. recover the highest coherent frontier if one exists; otherwise reconstruct only supported progress from current task instructions and canonical evidence;
 2. apply newest instruction/current authority;
 3. establish resume compatibility for the saved dependency/effect bindings as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE;
 4. fail closed for dependent replay/continuation when the binding is AMBIGUOUS or INCOMPATIBLE;
