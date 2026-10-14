@@ -94,7 +94,17 @@ Engineering specialist capability remains native-first:
 2. otherwise use the ANGENT fallback;
 3. do not expose complete native and fallback catalogs together by default.
 
-Engineer inventory/parity refresh is separate from cognitive/reliability semantics.
+The portable fallback tracks the current stable Engineer public surface with an explicit `STABLE_CATALOG.json`:
+
+- **103 public Skill identities**;
+- **16 portable Agent roles**;
+- retired route mappings kept outside public Skill discovery;
+- internal support kept outside the public `skills/` root;
+- readiness based on exact identity-set equality, not directory count.
+
+Portable parity means preserving workflow semantics, authority/review gates and honest failure/degradation boundaries. It does **not** mean copying AgentKit source or pretending every harness provides native Team, Orchestrate, browser, background-process, or Agent lifecycle mechanics.
+
+A workflow whose load-bearing runtime contract is unavailable must block or use a separately named permitted route rather than silently claiming native parity.
 
 ## Validation policy
 

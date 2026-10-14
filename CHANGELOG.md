@@ -104,9 +104,19 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Restored staging ≠ compression and point-stated ≠ explanatory-closure semantics.
 - Added causal working-method Learning.
 
-### Engineer boundary
+### Engineer stable fallback refresh
 
-Engineer implementation remains intentionally unchanged during reliability hardening.
+- Refreshed the portable fallback target to the current stable Engineer composition: **103 public Skills + 16 Agent roles**.
+- Added `STABLE_CATALOG.json` as machine-readable provenance/expected identity state rather than relying on remembered counts.
+- Added the eight current public identities that were missing: `ak-bro`, `ak-diagram`, `ak-enhance-ux-ax`, `ak-explain`, `ak-page-builder`, `ak-sowat`, `ak-sumup`, and `ak-webmcp`.
+- Removed retired public identities from the fallback discovery root and moved compatibility guidance to `COMPATIBILITY.md`.
+- Moved common fallback conventions out of `skills/` so internal support no longer inflates public Skill inventory.
+- Changed fallback readiness from count equality to exact Skill/Agent identity-set validation; a 103-item catalog with one wrong identity now fails closed.
+- Refreshed routing-critical workflows including Help, AgentKit router, Bootstrap, AutoResearch, Find Skills, Team, Orchestrate, Cook, Test, Code Review, and Security against current stable semantics.
+- Team now hard-stops when the required live team lifecycle is unavailable instead of silently pretending ordinary subagents/sequential work are Team.
+- Orchestrate distinguishes dependency/job-graph semantics from native process-supervisor/durability guarantees and exposes interruption/degradation honestly.
+- Bootstrap preserves current `auto/full/fast/parallel` mode semantics and does not treat modes as authority.
+- No native AgentKit source mirror or runtime implementation was copied into ANGENT.
 
 ### Version identity
 
