@@ -200,6 +200,10 @@ The complete 102-entrypoint second-pass review found four frontmatter mode decla
 
 The prior native/fallback selector only counted Skill/Agent directories. It could return fallback ready even with invalid frontmatter, mode mismatches or broken reference pointers. It now calls `scripts/verify_port.py` and fails closed when the 102 identity/16 role manifest, declarations, references or summary disagree. A branch-specific GitHub Actions workflow tests the current source and counterexamples. This gate proves **package structure**, not that any browser/provider or generated artifact was run end-to-end.
 
+### First live CI diagnostic and repair
+
+The new branch-only workflow surfaced five adapted skills with legacy multi-line `metadata` blocks missing an explicit `mode`: ak-code-review, ak-debug, ak-handoff, ak-scout and ak-test. Their mode declarations were added without changing their behavior. The workflow checkout now fetches enough history to perform its own `git diff --check HEAD^ HEAD` gate. This is a concrete exercised counterexample of the selector's previous identity-count-only false-positive readiness.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |

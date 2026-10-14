@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
       - name: Prepare Python
         uses: actions/setup-python@v6
         with:

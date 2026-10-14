@@ -5,6 +5,7 @@ license: MIT
 metadata:
   author: agentkit
   port: angent-fallback
+  mode: adapted
   upstream: "handoff@ce70edaa26247b84c2b9491a0cdb4964f65cf3a5"
 ---
 

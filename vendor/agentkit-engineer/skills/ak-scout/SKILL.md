@@ -5,6 +5,7 @@ license: MIT
 metadata:
   author: agentkit
   port: angent-fallback
+  mode: adapted
   baseline: "AgentKit Engineer 2.19.0"
 ---
 
