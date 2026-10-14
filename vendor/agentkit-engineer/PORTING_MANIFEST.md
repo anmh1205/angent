@@ -119,7 +119,7 @@ A DEGRADED route must not claim native runtime guarantees it does not have.
 | `ak-stitch` | DEGRADED | Implemented as ANGENT portable fallback |
 | `ak-sumup` | PORTABLE | Implemented as ANGENT portable fallback |
 | `ak-tanstack` | PORTABLE | Implemented as ANGENT portable fallback |
-| `ak-team` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-team` | ADAPTED | Live-team lifecycle is required; unsupported harnesses hard-stop rather than emulate Team |
 | `ak-tech-graph` | ADAPTED | Implemented as ANGENT portable fallback |
 | `ak-test` | PORTABLE | Implemented as ANGENT portable fallback |
 | `ak-threejs` | PORTABLE | Implemented as ANGENT portable fallback |
