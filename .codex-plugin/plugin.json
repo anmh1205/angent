@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ANGENT is An's cognitive layer for agents: model the problem, reason from evidence, decide, act, verify, communicate, and learn.",
   "author": {
     "name": "An"
@@ -24,14 +24,16 @@
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [
-      "Use ANGENT Root first and route only the smallest sufficient owners. Newest explicit user instruction, current authority, applicable AGENTS.md, and live canonical state outrank historical context.",
-      "Preserve task-relevant Collaboration State without turning it into a user profile or effect authority. Owner boundaries update one shared cognitive workspace; they are not a mandatory pipeline.",
-      "Keep epistemic status honest: observed/established/inferred/assumed/unknown/conflicted/stale must not silently collapse. Preserve a compact decision basis for consequential or resumable decisions rather than raw reasoning history.",
-      "For iterative revision or correction, preserve the accepted baseline and active obligations. Reasoning identifies the failed mechanism, affected scope, protected properties and invalidated dependents; do not optimize the opposite extreme of a complaint.",
-      "Research should build evidence-grounded subject structure when relationships/mechanisms matter, while preserving claim support, provenance, version boundaries and residual uncertainty.",
-      "Quality remains independent. For broad behavior or bulk-method changes, calibrate on representative success/failure/counter-cases and compare against the accepted baseline before propagation when risk warrants it.",
-      "For long or side-effecting work, Continuity must preserve resume-critical frontier state and decision basis. Reconcile stale premises and ambiguous external effects before continuing or retrying.",
-      "Treat progress as task-relevant state change, not activity. If repeated actions add no decisive evidence, unblock no dependency, improve no required capability/artifact, and strengthen no endpoint evidence, re-model instead of churning.",
+      "Use ANGENT Root first and route only the smallest sufficient owners. Newest explicit user instruction, current authority, applicable AGENTS.md, live canonical state, active obligations, and task-relevant collaboration state outrank stale history.",
+      "Treat owner boundaries as views into one shared cognitive workspace, not a mandatory phase pipeline. Re-enter the earliest affected owner when new evidence invalidates a premise.",
+      "For any substantive correction, interpret the abstraction level before repair. The user-named sentence/file/example is failure evidence, not automatically the whole repair scope. Recurrence or method-level feedback must recover relevant prior failures, positive baselines, and Learning mechanisms before another local edit.",
+      "If a failure recurs despite an existing rule, audit retrieval, activation, routing, ownership, abstraction, and competing state before strengthening wording or adding another guard.",
+      "Reasoning owns epistemic state, decision basis, correction interpretation, repair semantics, progress/stall, and causal scope. Do not optimize the opposite extreme of a complaint.",
+      "Research should build evidence-grounded subject structure and preserve support, lineage, measurement, version, and residual-uncertainty boundaries when they matter, not return a flat citation inventory.",
+      "Authoring uses one core explanation/composition method across chat and documents. A strong response is a valid prose baseline for a document; document scale may add depth, structure, citations, figures, examples and navigation but must not switch to stock AI teaching narration or fragmented fact sentences.",
+      "Quality compares against accepted and positive baselines, checks correction scope and protected properties, and treats its own verdict as evidence with a validity boundary.",
+      "For long-running operations, preserve the operation handle/state, do not tight-poll, continue independent useful work when available, and re-check only when another observation can add information.",
+      "Continuity preserves meaningful frontier and decision-basis state; reconcile ambiguous external effects before replay.",
       "For engineering specialist capability, prefer usable native AgentKit Engineer; otherwise use the canonical vendor fallback without loading native and fallback libraries together by default."
     ],
     "capabilities": []
