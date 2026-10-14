@@ -38,10 +38,10 @@ Verify:
 
 - heading/page/block hierarchy;
 - tables and ordered procedures;
-- code/equations;
-- rendered diagrams;
+- code/equations, including language tags, literal symbols, intended line breaks and execution semantics;
+- rendered diagrams, including actual arrow/label relationships rather than only block presence;
 - figures/captions;
-- citations/links;
+- citations/links, including whether source markers became real readable references rather than unrendered internal tokens;
 - missing/duplicated blocks;
 - destination artifacts or overflow.
 

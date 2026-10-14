@@ -90,6 +90,18 @@ FAIL:
 - individually correct paragraphs expose several equally primary relations, follow source/note order, or read like dense engineering notes/AI lesson narration;
 - example repetition or topic coverage is treated as proof of reader capability.
 
+## 7a. A8 paired explanation transfer (MCP2515)
+
+Give chat and document Authoring the same established MCP2515 model and the same novice reader state: SPI chip select identifies the peripheral, oscillator drives controller timing, interrupt reports controller events, `spi-max-frequency` bounds the SPI interface, and Devicetree binding states required hardware properties. Compare a coherent answer with a document unit. PASS only when both let the reader distinguish clock from SPI bus speed and explain why binding requirements and driver implementation are different, without first dumping file paths or narrating author intent. FAIL when a syntactically correct document loses prerequisites, stable referents, and causal explanation. The test cannot pass by copying exact chat sentences or matching heading counts.
+
+## 7b. Longitudinal progression and unseen transfer
+
+Use an early, middle and advanced unit from a technical curriculum, plus a previously unreported subject. Given the accepted reader-progress ledger, test whether a later inference uses only established prerequisites and revisits the required deeper mechanism instead of assuming a topic mention established mastery. Suggested distinct cases: ROS USB enumeration → device node → driver/ROS node; AUTOSAR SWC/RTE/IoHwAb; ELNX process → syscall; Buildroot kernel configuration. A valid introductory overview that explicitly previews rather than teaches all internals is a counter-case: do not force expert depth into it. PASS needs actual reader-capability affordances, not words/figures/chapters counted.
+
+## 7c. Recurrence-after-promotion boundary
+
+A writing mechanism already exists in Learning but a new unit repeats the same defect. PASS: identify whether it was retrieved and activated before the control point, whether the Research→Reasoning→Authoring relation survived, whether Quality independently checked the capability transition, and whether the destination preserved it. An absent trace is UNKNOWN, not proof of a specific owner failure. FAIL: strengthen wording, add lexical bans, or mark the entire book VERIFIED from a sample. Positive control: a previously accepted response-quality explanation remains natural after document conversion; negative control: simple direct answers and unrelated work do not acquire a full curriculum workflow.
+
 ## 8. Direct-answer negative control
 
 The user asks for a narrow stable API semantic fact.

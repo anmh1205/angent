@@ -331,6 +331,7 @@ decisive_evidence: []
 boundaries: []
 uncertainty: []
 reader_capability_target:
+reader_state_or_curriculum_pointer:
 collaboration_expectations:
 repair_model:
 ~~~
@@ -339,16 +340,42 @@ repair_model:
 
 Authoring combines this structured subject model with reader/artifact state to choose the active teaching model, explanatory spine and representation. It may stage or omit nonessential relations, but cannot silently flatten away a load-bearing mechanism, alter established epistemic status, or violate protected repair properties.
 
+## Authoring → workspace: ReaderProgressDelta (multi-unit teaching only)
+
+~~~yaml
+reader_state_basis:
+unit_or_chapter:
+capability_before:
+capability_target:
+active_relations: []
+prerequisite_repairs: []
+concept_transitions:
+  - concept:
+    from: PREVIEWED | INTRODUCED | USABLE | FRAGILE | UNKNOWN
+    to: PREVIEWED | INTRODUCED | USABLE | FRAGILE
+    role: ESTABLISH | DEEPEN | REVISIT | PREVIEW
+    supporting_explanation_or_probe:
+    downstream_dependents: []
+deferred_depth_and_revisit: []
+unresolved_prerequisite_debt: []
+reader_capability_evidence:
+progress_status: CANDIDATE | ACCEPTED | RECHECK_REQUIRED
+~~~
+
+These fields describe a compact semantic transition, not a fixed outline, mandatory file, or automated mastery claim. `USABLE` means the authored unit provides a grounded explanation and representative inference/probe for the promised capability; mention/definition alone leaves a concept INTRODUCED or PREVIEWED. Authoring proposes the transition; required Quality review and accepted artifact/destination evidence govern promotion to ACCEPTED. A changed prerequisite invalidates only dependent transitions. Context retrieves and Continuity preserves the pointer when later units need it.
+
 ## Authoring → Quality: ArtifactCandidate
 
 ~~~yaml
 candidate:
 accepted_baseline:
 artifact_state:
+reader_progress_delta:
 repair_target:
 protected_properties: []
 active_obligations: []
 coverage_state:
+capability_evidence_pointer:
 calibration_state:
 behavioral_evidence_pointer:
 ~~~

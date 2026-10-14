@@ -53,6 +53,10 @@ Do not mistake this calibration for proof that uninspected scope is clean.
 
 When this calibration will justify later propagation or regression claims, preserve a durable evidence pointer/record for the representative cases, baseline/candidate versions, observable trajectory/artifacts, outcome, applied criteria and verdict validity boundary. A remembered PASS without recoverable evidence is not a durable baseline.
 
+## Curriculum/capability transition check (when teaching across units)
+
+Compare the candidate's proposed reader-progress delta with the preceding accepted state. Require an inspectable explanation, inference, trace, application or diagnostic probe proportionate to the unit's promise before promoting INTRODUCED/PREVIEWED to USABLE. Check missing prerequisites, depth deferred to later units, semantic continuity and invalidated dependents. This is evidence of a *capability affordance in the artifact*, not proof that an actual reader learned without a reader study. A format/read-back PASS proves destination fidelity, not this capability condition. For broad repairs, compare early, middle, advanced and previously unreported units; label remaining scope uninspected.
+
 ## 4. Endpoint/render gate
 
 After an external write or destination render, verify the state the user actually receives:

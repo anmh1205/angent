@@ -20,6 +20,12 @@ Distinguish:
 - **current gap** — missing distinction/mechanism/capability;
 - **target state** — what the reader should be able to explain, predict, diagnose, compare, implement or verify afterward.
 
+## Capability is a transition, not a chapter label
+
+Record the distinction between *previewed* (recognizable name), *introduced* (definition and immediate role are available), *usable* (reader has enough mechanism to draw the target inference or operate on a representative case), and *fragile* (earlier exposure requires repair in a new context). A concept may be usable at one precision and remain incomplete at a deeper level. The next chapter must inherit the demonstrated level, not an inferred expert-level model from a heading or glossary entry.
+
+If the current inference depends on a fragile or merely introduced concept, repair that relation before piling on downstream terminology. When the underlying relation is not established in the subject model, return to Reasoning/Research rather than using prose to hide the gap.
+
 ## Active cognitive job
 
 A section should usually resolve one meaningful question, mechanism, distinction, decision or procedure.

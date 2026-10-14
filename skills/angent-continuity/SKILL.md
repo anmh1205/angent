@@ -88,6 +88,10 @@ An unchanged RUNNING/PENDING observation normally updates neither completed-work
 
 Persist meaningful completed units, artifact pointers, controlling decision basis, curriculum/research frontier, independent unfinished branches, and next runnable work even when there is no external write.
 
+## Multi-unit capability continuity
+
+When the next unit depends on prior explanations, persist the accepted reader-progress/curriculum pointer alongside the artifact-state pointer, including deferred prerequisite debt, dependent units requiring recheck and the actual evidence boundary of each accepted capability. Do not treat a chapter's completion or destination write-success as automatically promoting its concept state. Recover this pointer from current canonical artifact evidence on resume when stale or untrusted.
+
 ## Resume
 
 1. recover the highest coherent frontier;

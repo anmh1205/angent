@@ -40,6 +40,10 @@ For repeated, oscillating, method-level, or “you are doing this wrong again”
 
 Do not load the full chat history by default. Retrieve the smallest set that can distinguish a local defect from a recurring/systemic one.
 
+## Reader-state reconstruction for continuing documents
+
+When continuing or revising a multi-unit teaching artifact, recover the accepted artifact/curriculum pointer: which concepts were previewed versus made usable, the reader capability already supported, unresolved prerequisite debt, protected successful explanations, and downstream dependencies. Do not reconstruct reader mastery from chapter titles, keyword matches, content length, or a self-reported VERIFIED label. Refresh the affected canonical units when their content or revision changed; retrieve only the units needed to establish the next capability boundary.
+
 ## Collaboration reconstruction
 
 When collaboration method matters, recover the smallest state that answers questions such as:

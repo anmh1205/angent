@@ -66,7 +66,7 @@ Load/activate deeper semantics when the current decision requires them:
 - **non-trivial specialist/subagent delegation or fan-out synthesis** → Reasoning specialist-synthesis; add delegation-context when context/authority/raw evidence/write boundaries are material, while simple direct work stays direct;
 - **revision of accepted work** → Reasoning repair-and-regression + comparative Quality;
 - **broad core/method/prompt/owner-interface/bulk change** → load the relevant cases from Root `references/core-fixtures.md` plus behavioral-calibration Quality; when comparative/reliability evidence can be contaminated by shared state, preserve/reset the initial-state boundary; preserve reproducible evidence only when later acceptance depends on it; do not run unrelated fixtures merely because the bank exists;
-- **long-form/teaching artifact** → Research subject model + Authoring reader/artifact/composition state; preserve response-quality prose and one explanatory spine;
+- **long-form/teaching artifact** → Research subject model + Authoring reader/artifact/composition state; preserve response-quality prose and one explanatory spine; for multi-unit progressions, activate Authoring curriculum transitions and Quality capability evidence rather than treating a topic mention as mastery;
 - **resume after interruption/concurrent change** → Continuity persisted-state trust + resume reconciliation + Context refresh + Reasoning revalidation; coherent serialized state is not automatically authenticated/owned state;
 - **engineering specialist need** → Execution engineer routing; prefer usable native AgentKit Engineer, otherwise fallback.
 
