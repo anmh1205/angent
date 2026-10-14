@@ -29,7 +29,19 @@ jobs:
       - name: Smoke native/fallback selection without doctor side effects
         shell: bash
         run: |
-          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable no > /tmp/engineer-selection.json
-          python3 -c 'import json; d=json.load(open("/tmp/engineer-selection.json")); assert d["mode"] == "fallback" and d["fallback"]["ready"], d'
+          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable no > /tmp/engineer-no.json
+          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable unknown > /tmp/engineer-unknown.json
+          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable yes > /tmp/engineer-yes.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          base = Path("/tmp")
+          no = json.loads((base / "engineer-no.json").read_text())
+          unknown = json.loads((base / "engineer-unknown.json").read_text())
+          yes = json.loads((base / "engineer-yes.json").read_text())
+          assert no["mode"] == "fallback" and no["fallback"]["ready"], no
+          assert unknown["mode"] == "fallback" and unknown["fallback"]["ready"], unknown
+          assert yes["mode"] == "native" and not yes["policy"]["load_both"], yes
+          PY
       - name: Check committed whitespace
         run: git diff --check HEAD^ HEAD

@@ -2,6 +2,9 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+from select_engineer import _fallback_info
 
 from verify_port import audit_port
 
@@ -36,6 +39,13 @@ class PortAuditTests(unittest.TestCase):
 
     def check(self):
         return audit_port(self.root, expected_skills=1, expected_agents=1)
+
+    def test_selector_fails_closed_when_structure_invalid(self):
+        live_root = Path(__file__).resolve().parents[1]
+        with patch("select_engineer.audit_port", return_value=["invalid metadata"]):
+            result = _fallback_info(live_root)
+        self.assertEqual(result["structural_check"], "fail")
+        self.assertFalse(result["ready"])
 
     def test_valid_fixture(self):
         self.assertEqual(self.check(), [])
