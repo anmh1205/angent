@@ -29,6 +29,43 @@ When over-triggering is plausible, include both:
 
 For long-form or multi-unit work, choose representative units across meaningful difficulty/dependency classes rather than only the easiest first unit.
 
+## Correction-routing calibration
+
+When changing how ANGENT handles corrections, calibrate the abstraction decision itself.
+
+Useful distinct cases include:
+
+- **genuinely local defect** — one incorrect fact/sentence with no recurrence/shared mechanism evidence; repair should stay local;
+- **shared artifact mechanism** — several units exhibit the same generating error; repair should cover causal peers rather than only the latest example;
+- **method-level recurrence** — the user has reported the same underlying failure across outputs/tasks; retrieve history/positive baseline and inspect the generating method before editing;
+- **rule-exists-but-failure-recurs** — inspect retrieval, activation, routing, ownership and competing state before strengthening the rule;
+- **positive-baseline divergence** — current behavior is worse than an explicitly accepted earlier behavior; reconstruct what mechanism changed rather than copying surface wording from the old output.
+
+A correction system fails calibration if it always stays local or always escalates globally. The target is the correct causal abstraction level.
+
+## Cross-surface authoring calibration
+
+When chat/response quality is accepted but document quality regresses, compare the same subject relation across surfaces.
+
+Preserve:
+- technical relation;
+- paragraph cohesion;
+- stable referents;
+- semantic/epistemic strength;
+- explanation depth.
+
+Allow document-only additions only when scale requires them:
+- curriculum continuity;
+- section architecture;
+- cross-reference/navigation;
+- figures/tables/code;
+- citations;
+- larger examples and prerequisite repair.
+
+Fail the method if document mode introduces generic teaching narration, detached fact sentences, ceremonial transitions, or a separate “formal AI” persona not required by the subject.
+
+Do not solve this with a phrase blacklist.
+
 ## Compare to baseline
 
 Ask what changed relative to accepted behavior:
