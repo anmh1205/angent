@@ -32,15 +32,27 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted batch: **14 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **20 / 102 Skill identities reviewed semantically**.
 
-- **13 VERIFIED_ADAPTED**: `ak-agentkit`, `ak-bootstrap`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-goal-warmup`, `ak-handoff`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-skill-creator`, `ak-test`.
+- **19 VERIFIED_ADAPTED**: `ak-agentkit`, `ak-bootstrap`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-deploy`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-worktree`.
 - **1 VERIFIED_DEGRADED**: `ak-team` because a real live-team lifecycle is load-bearing and cannot be truthfully emulated by ordinary subagents/sequential roles.
-- **88 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **82 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
 No status is promoted solely from identity, line count, reference count, or textual similarity.
+
+### Delivery/runtime batch
+
+The second accepted batch reviewed `ak-ship`, `ak-deploy`, `ak-git`, `ak-github`, `ak-handover` and `ak-worktree`.
+
+Key corrections included:
+- Handover now preserves the selected-runtime contract and blocks instead of silently falling back to another execution path.
+- Deploy retains provider-family recognition while treating current project/provider docs and live help as authority for commands, product limits and pricing.
+- Git/GitHub preserve live identity/state, history safety, issue/PR/Actions/admin boundaries and untrusted-provider-content handling.
+- Ship preserves official/beta/dry-run/optional publication semantics without inheriting the upstream convenience rule that automatically sweeps unrelated uncommitted work into shipping.
+- Worktree preserves create/list/status/remove/prune, exact-branch/base/monorepo/submodule semantics while cleanup remains fail-safe.
+
 
 ## Skills — 102 identities
 
@@ -71,7 +83,7 @@ No status is promoted solely from identity, line count, reference count, or text
 | `ak-databases` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-deep-swe` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
-| `ak-deploy` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-deploy` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-devops` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-docs` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -84,14 +96,14 @@ No status is promoted solely from identity, line count, reference count, or text
 | `ak-folder-context` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-frontend-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-frontend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-git` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-github` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-git` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
+| `ak-github` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-gkg` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-goal-warmup` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-google-adk-python` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-graphify` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-handoff` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-handover` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-handover` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-help` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-html-video` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-hyperframes` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
@@ -128,7 +140,7 @@ No status is promoted solely from identity, line count, reference count, or text
 | `ak-security-scan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-sequential-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-shader` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-ship` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-shopify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-show-off` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-skill-creator` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
@@ -146,7 +158,7 @@ No status is promoted solely from identity, line count, reference count, or text
 | `ak-web-design-guidelines` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-web-frameworks` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-web-testing` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-worktree` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-worktree` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-xia` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 
 ## Agents — 16 identities
