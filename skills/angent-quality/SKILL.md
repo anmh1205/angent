@@ -31,6 +31,7 @@ Evaluate only relevant dimensions:
 - causal/uncertainty calibration;
 - decision integrity and decision-basis traceability;
 - dependency/replan integrity, including revalidation of branch independence after shared-state changes;
+- resume-compatibility integrity when saved work is resumed: dependent continuation/replay is supported by a compatible or completed-revalidation binding;
 - effect-boundary integrity: current authority matches the resolved consequential target/material arguments;
 - observation-admission integrity: model/decision changes are supported by the actual observed identity/scope/version/completeness;
 - scope-to-evidence coverage;
