@@ -26,6 +26,21 @@ After attempt:
 - mark VERIFIED/COMMITTED if known;
 - mark ATTEMPTED_UNKNOWN if ambiguous.
 
+## Authority/objective change after attempt
+
+Once ATTEMPT occurs, a later instruction cannot be treated as if dispatch never happened.
+
+If current authority or requested outcome changes while an operation is in flight:
+1. stop selecting new dependent effects whose authority/goal no longer holds;
+2. preserve the original operation identity and effect state;
+3. determine whether the provider has already committed/completed, is still running, failed, or is ambiguous;
+4. when current authority calls for cancellation/compensation and the provider supports it, model that cancellation/compensation as a separate effect and revalidate its exact invocation;
+5. verify the resulting state that now matters to the user.
+
+Do not blindly retry, relaunch, or “cancel” by dropping the handle.
+
+Cancellation may itself be non-idempotent, partial, or too late. Apply the same reconciliation discipline to it.
+
 ## Mutation basis and concurrent drift
 
 When a write is derived from previously inspected canonical state, protect the read→modify→write boundary when stale overwrite is material.

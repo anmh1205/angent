@@ -43,6 +43,19 @@ Tool availability, a specialist proposal, an old plan, a generic approval for th
 
 If the material target/arguments cannot be inspected well enough to determine whether they remain authorized, use a safer route or return for the needed decision/approval instead of assuming.
 
+## Authority change after attempt
+
+A newer instruction or revoked permission governs every **future** action immediately. It does not retroactively make an already-attempted external effect disappear.
+
+When authority/objective changes after an effect has been dispatched:
+- do not launch further dependent effects under the old authority;
+- preserve whether the prior effect is PREPARED, ATTEMPTED_UNKNOWN, RUNNING/PENDING, or already VERIFIED;
+- reconcile the provider/world state before assuming the old effect stopped;
+- if cancellation/compensation is available and current authority calls for it, treat that as a new bounded effect with its own target, arguments, risk, and verification;
+- if the provider cannot cancel or the outcome is ambiguous, report/persist that residual state rather than pretending revocation rewound history.
+
+“Stop” or a changed task can end future work immediately while an already-dispatched operation still needs reconciliation.
+
 ## Success state
 
 Define completion by the requested world/artifact state, not by the mechanism used.

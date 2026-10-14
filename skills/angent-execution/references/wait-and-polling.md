@@ -64,6 +64,17 @@ When the host permits visible progress updates, send a brief state marker only w
 
 Do not tell the user that ANGENT will continue in the background unless the host actually schedules/runs future work.
 
+## Changed instruction while waiting
+
+If a new user instruction changes the objective or authority while a branch is WAITING_EXTERNAL:
+- Reasoning re-evaluates whether any **future dependent work** remains authorized/useful;
+- keep the operation handle until authoritative state shows what happened;
+- do not interpret “stop” as proof the provider operation stopped;
+- when cancellation is available and currently desired/authorized, execute it as a separate bounded effect rather than as a polling shortcut;
+- continue unrelated newly authorized work only when its dependencies remain valid.
+
+The branch may remain relevant only for reconciliation even when it is no longer part of the desired forward plan.
+
 ## Resume
 
 On resume:

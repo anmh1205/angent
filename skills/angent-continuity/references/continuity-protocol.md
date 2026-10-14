@@ -44,6 +44,8 @@ The store intentionally accepts a flexible frontier object; Continuity owns sema
 5. **VERIFIED/COMMITTED** — persist actual result and advance frontier.
 6. **ATTEMPTED_UNKNOWN** — preserve uncertainty and do not replay blindly.
 
+If current instruction/authority changes after ATTEMPT, keep the attempted/in-flight effect record until reconciled even when the forward task no longer wants that effect. A later cancellation or compensation is a distinct effect record, not a rewrite of the original attempt.
+
 Side-effect state may live inside the frontier record; the storage helper does not execute or retry effects.
 
 ## Read-only / authoring work
