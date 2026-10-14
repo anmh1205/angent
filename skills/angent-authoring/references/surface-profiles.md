@@ -20,6 +20,9 @@ Document adaptation may add depth, cross-section continuity, citations, figures,
 
 ## Chat
 
+For a substantive answer, the entry states the strongest supported answer or bounded state and orients the reader to the decisive explanation. The ending integrates the evidence into a usable conclusion, mechanism or decision boundary. These functions need not be separately labeled or repeated; a short direct answer can complete both immediately. Preserve the same inferential closure when converting substantive chat prose into a document, without trading away depth. See `reader-orientation-and-closure.md` for cases and counter-cases.
+
+
 Prefer:
 - answer/conclusion early;
 - cohesive paragraphs;
