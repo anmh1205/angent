@@ -1,7 +1,7 @@
 schema_version: 2
 work_key: angent/core
-record_type: COGNITIVE_ALIGNMENT_INTEGRATED
-phase: cognitive-alignment-integrated-engineer-deferred
+record_type: RELIABILITY_RUNTIME_ALIGNED
+phase: reliability-scheduling-integrated-runtime-aligned-engineer-deferred
 source_of_truth:
   provider: github
   repository: anmh1205/angent
@@ -11,12 +11,19 @@ source_verification:
   core_hardening_commit: 68f075b34c2b8948842d6bdf8aaaf14257db9733
   cognitive_alignment_pr: 5
   cognitive_alignment_commit: 8e94413d1460be5946e3d53083110c52a2817469
+  correction_interpretation_pr: 12
+  correction_interpretation_commit: c9ad580aade085472c26b99522e9fd9db28b7ea4
+  frontier_scheduling_pr: 15
+  frontier_scheduling_commit: afccb2e95eec4cef3a3167a254bcddcaff45a6d1
 
 release_state:
-  version: 1.0.0
+  project_version: 1.0.0
   released: false
   release_ready: false
-  private_chatgpt_plugin_updated: false
+  private_chatgpt_plugin:
+    updated: true
+    version: 1.0.4
+    release_id: pluginrel_6acf4e9b32448191ad227395f24a17ac
 
 frontier:
   repair_state: NONE
@@ -24,23 +31,26 @@ frontier:
   verified_units:
     - "Core hardening PR #3 is canonical on main."
     - "Cognitive collaboration alignment PR #5 is canonical on main."
-    - "Collaboration State is task-scoped, provenance-aware, separate from authority/profile/memory, and reconstructed by Context."
-    - "Owner boundaries update one shared cognitive workspace rather than forming a mandatory one-way pipeline."
-    - "Research returns evidence-grounded subject-model deltas when relationships/mechanisms matter."
-    - "Reasoning integrates task, collaboration, evidence, hypotheses, observations, decisions and repair state."
-    - "Authoring preserves full cognitive/subject model != active teaching model != presented model."
-    - "Authoring preserves staging != compression and point-stated != explanatory-closure semantics."
-    - "Learning can promote causal working-method mechanisms without turning them into blanket user preferences."
-    - "Continuity carries collaboration-state pointers/subsets only when resume correctness depends on them."
-    - "No new top-level skill or runtime/workflow infrastructure was added."
-    - "Engineer fallback implementation remains unchanged."
-    - "Root tests remain removed; GitHub hygiene passed for PR #5."
+    - "Systemic correction interpretation PR #12 is canonical on main: user examples are evidence, not automatic repair scope."
+    - "Work-conserving frontier scheduling PR #15 is canonical on main."
+    - "Reasoning owns multi-branch frontier selection across RUNNABLE, WAITING_EXTERNAL, BLOCKED and DONE states."
+    - "Execution reports pending external operations plus next informative observation conditions and yields before an equivalent status action can be selected again."
+    - "Continuity preserves resume-critical branch/wait state without becoming a scheduler runtime."
+    - "Resume and harness contracts no longer assign global polling/independent-work selection to Execution."
+    - "Learning promotes control-point placement: an invariant must be active at the earliest owner that controls the decision."
+    - "Authoring preserves the shared response/document composition baseline and correction interpretation remains integrated."
+    - "Private ChatGPT plugin 1.0.4 was guarded-updated from release pluginrel_6acf385bf8488191a03167b13cea2c2c to pluginrel_6acf4e9b32448191ad227395f24a17ac."
+    - "Private plugin read-back verified 13 bootstrap prompts, WAITING_EXTERNAL/control-point semantics, Reasoning frontier scheduling, Execution yield behavior, corrected resume ownership and harness ownership."
+    - "Runtime delta archive integrity was verified before update; original delta SHA-256 e15d552b9dbe45465c9cf1abf6bef73096bcae24cb87456b3b76574f9f70c603."
+    - "Temporary transport PR #16 was closed without merge and its branch was reset to canonical main."
+    - "No scheduler service, queue, background worker, event journal, fixed poll interval or fixed poll-count mechanism was added."
+    - "Root static behavioral tests remain removed; GitHub hygiene passed for PR #15."
   unresolved:
     - "Engineer fallback inventory/parity refresh remains the next separate phase."
-    - "The private ChatGPT ANGENT plugin still runs an older package and is not updated in this phase."
-    - "Release/plugin identity strategy remains a later release decision."
+    - "Project release/version strategy remains a later release decision."
+    - "Cross-harness release reconciliation remains required before any project release."
   non_blocking_boundaries:
-    - "No publishing, tagging, release, or private-plugin update is authorized by this integration."
-    - "Engineer implementation starts only after this cognitive-core checkpoint."
+    - "Private plugin synchronization does not make project version 1.0.0 released or release-ready."
+    - "Engineer implementation remains separate from this cognitive/reliability repair."
 
-next_action: "Start the separately scoped Engineer inventory/parity refresh against current upstream while preserving the integrated cognitive core. Do not release or update the canonical private ChatGPT plugin until Engineer and release-surface reconciliation are complete."
+next_action: "Continue with the separately scoped Engineer inventory/parity refresh against current upstream while preserving correction interpretation, work-conserving frontier scheduling, authoring continuity, and the integrated cognitive core. Do not publish/tag project 1.0.0 until Engineer and cross-harness release reconciliation are complete."
