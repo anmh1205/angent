@@ -22,3 +22,26 @@ jobs:
       - name: Check committed diff hygiene
         shell: bash
         run: git diff --check HEAD^ HEAD
+
+
+  package-private-plugin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Build plugin archive
+        shell: bash
+        run: |
+          zip -qr angent-plugin-1.0.4.zip plugin.json .codex-plugin skills vendor
+          unzip -t angent-plugin-1.0.4.zip
+          sha256sum angent-plugin-1.0.4.zip
+
+      - name: Upload plugin archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: angent-plugin-1.0.4
+          path: angent-plugin-1.0.4.zip
+          if-no-files-found: error
+          retention-days: 1
