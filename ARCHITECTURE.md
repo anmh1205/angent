@@ -72,6 +72,8 @@ Operational failure and domain evidence are distinct. Tool lookup/schema errors,
 
 Existing-state mutation has a separate freshness boundary. A candidate derived from canonical version V remains trustworthy only while the live state that its delta depends on is compatible with V. Provider-native expected-version/CAS mechanics are preferred when available; otherwise ANGENT refreshes enough state to rebase/reconcile the semantic delta. This is not a transaction subsystem.
 
+Canonical identity has a different boundary: provider identity is a locator, while project canon is a role binding. Context resolves a semantic role such as current/production/private to the authoritative live object before dependent work; explicit exact/historical targets remain exact. Provider recency alone does not define project canon.
+
 Research preserves what a source directly establishes versus what ANGENT derives. Reasoning owns the resulting epistemic state. Quality rejects conclusions stronger than their decisive premises.
 
 Evidence volume is not evidence independence. When correlation matters, Research preserves shared lineage across sources, graders, references, models, datasets, or measurement environments rather than treating repetition as independent corroboration.

@@ -17,7 +17,8 @@ Context should maximize decision signal, not token occupancy.
 - project memory;
 - promoted Learning mechanisms;
 - retrieved historical/session evidence;
-- live provider/source state when freshness matters.
+- live provider/source state when freshness matters;
+- canonical role→provider/source identity mapping when stale aliases or superseded objects can change the decision.
 
 ## Start from the current decision
 
@@ -61,6 +62,19 @@ Do not copy AGENTS.md into memory merely because it was loaded.
 
 Know whether material context is current instruction, prior preference, project instruction, canonical provider state, active task state, collaboration state, inferred memory, Learning guidance, recurrence evidence, or positive baseline.
 
+## Canonical target resolution
+
+A remembered provider ID, old URL, prior release, archived object, or historical checkpoint is not automatically the current target.
+
+When the user's target is a semantic role such as current/canonical/production/private/latest-for-this-project and provider identity can drift:
+- resolve the role from current user/project/provider source-of-truth;
+- preserve the resolved identity/version and mapping provenance;
+- carry any material conflict instead of guessing from recency or familiarity.
+
+When the user names one exact provider identity or historical object, keep that exact identity unless current authority changes the task.
+
+Load `canonical-identity.md` for detailed boundaries.
+
 ## Freshness
 
 Refresh when another session/process may have changed the state, a pointer/version is stale, or the next action depends on exact current state.
@@ -69,7 +83,7 @@ Refresh when another session/process may have changed the state, a pointer/versi
 
 Before a consequential decision or effect, ask whether omitted context could plausibly change:
 - current authority or exclusions;
-- resolved target/scope;
+- resolved target/scope and canonical role→identity binding when relevant;
 - a decisive premise;
 - a protected property;
 - a dependency that makes the selected branch unsafe or stale.

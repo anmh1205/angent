@@ -29,6 +29,18 @@ When over-triggering is plausible, include both:
 
 For long-form or multi-unit work, choose representative units across meaningful difficulty/dependency classes rather than only the easiest first unit.
 
+## Canonical-identity calibration
+
+When external identities can be replaced, migrated, aliased or superseded, calibrate role resolution against exact-target preservation:
+
+- **stale remembered identity + current-role request** — prior memory points to object A, current authoritative project/provider mapping points to B, task asks for the current/canonical object → use B;
+- **explicit exact historical identity** — task asks to inspect or clean up A specifically → keep A even though B is current;
+- **project pin versus provider recency** — project source-of-truth intentionally pins A while provider also has newer B → use A for the pinned role; newest timestamp alone does not define canon;
+- **mapping conflict** — project and provider disagree materially about the canonical role → preserve/reconcile the conflict rather than guessing;
+- **stable immutable identity** — identity cannot drift or role-vs-exact distinction is irrelevant → do not add resolution ceremony.
+
+The method fails if familiar history silently chooses a superseded object, or if every exact historical request is forcibly remapped to the current object.
+
 ## Failure-domain calibration
 
 When changing error/observation semantics, use contrasting cases that prove the boundary rather than the wording:

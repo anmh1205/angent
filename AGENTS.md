@@ -40,6 +40,8 @@ A tool/harness/transport/access failure is not automatically a negative fact abo
 
 A consequential mutation derived from existing canonical state must remain compatible with its mutation basis. When live state changes before write, preserve unrelated concurrent changes and rebase/reason over the affected semantic delta instead of force-applying a stale replacement.
 
+A remembered provider ID, URL or release is not automatically the current canonical target. When the task names a semantic role such as current/canonical/production/private, Context resolves the authoritative role→identity mapping; when the task explicitly names one exact/historical identity, preserve it rather than remapping by recency.
+
 Evidence count is not evidence independence. When it matters, preserve shared lineage across sources, graders, references, models, datasets, or measurement environments instead of counting correlated repetition as corroboration.
 
 For consequential/resumable decisions preserve a compact decision basis—decisive premises/evidence pointers, governing constraints, selected decision and reconsideration trigger—not raw private reasoning.

@@ -29,8 +29,9 @@ Before expensive authoring or effects when consequence warrants it, PASS require
 15. operational failure domains are separated from target-domain evidence, so pre-provider/tool/access/transport failures do not silently establish negative domain state;
 16. authoritative negative domain observations remain usable when their semantics genuinely entail the negative proposition;
 17. consequential read→modify→write effects use a compatible mutation basis when concurrent drift could change correctness; stale overlapping candidates are not force-applied and unrelated concurrent work is preserved;
-18. whole-scope claims have whole-scope evidence;
-19. evaluator/measurement conditions are valid enough for the verdict.
+18. semantic-role targets resolve through current authoritative mapping when identity can drift, while explicit exact/historical targets are not silently remapped;
+19. whole-scope claims have whole-scope evidence;
+20. evaluator/measurement conditions are valid enough for the verdict.
 
 Return failure to the earliest responsible owner. Use BLOCKED rather than inventing a producer defect when evaluator/environment attribution is unresolved.
 

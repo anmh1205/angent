@@ -50,6 +50,7 @@ Format preserves destination representation.
 - **Observation admission** — provider/tool results become established task state only within the identity, scope/version, completeness and uncertainty boundary they actually support.
 - **Failure-domain separation** — harness/tool lookup, schema, access, timeout and transport failures remain operational evidence; they do not become negative domain facts unless an authoritative observation actually establishes that state.
 - **Mutation freshness** — existing-state writes remain tied to the canonical version/basis they were derived from; concurrent drift is reconciled/rebased instead of overwritten blindly.
+- **Canonical target identity** — semantic roles such as current/production/private resolve through current project/provider source-of-truth; exact historical IDs remain exact when explicitly requested.
 - **Conditional branch independence** — shared-state changes can invalidate previous RUNNABLE assumptions; only affected dependencies are recomputed.
 - **Progress/stall semantics** — progress is relevant state change, not activity; no-progress causes re-modeling instead of churn.
 - **Behavioral calibration** — broad method/prompt changes are checked on representative target, accepted-success and counter-cases before propagation when risk warrants it.

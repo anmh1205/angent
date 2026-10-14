@@ -37,13 +37,15 @@ For an existing repository, document, provider object, deployment, dataset, devi
 
 If the user names a canonical live artifact, operate on that artifact. Do not silently substitute a detached copy, export, replacement object, or newly created parallel artifact unless the task requires it or the limitation is explicit.
 
+When the target was expressed as a semantic role such as current/canonical/production/private rather than one exact provider ID, require the Context-resolved canonical binding when identity drift could change correctness. A remembered ID or previous release is not an acceptable substitute merely because the tool can still access it.
+
 When a consequential mutation is derived from existing canonical state, preserve a mutation basis when concurrent/stale overwrite could change correctness. Prefer provider-native expected-version/precondition mechanics when available; otherwise refresh enough current state before write. Read `references/mutation-freshness.md` for read→modify→write work.
 
 Do not execute a specialist proposal that contradicts current Contract/Reasoning invariants.
 
 If the selected effect depends on a candidate/solution transition whose required Quality phase is FAIL or BLOCKED, the precondition is false: return to the responsible owner instead of treating tool availability as permission to bypass the unresolved gate.
 
-For a consequential effect, revalidate authority after the concrete tool operation, resolved target and material arguments are known. If they differ materially from the Reasoning-selected action, current authority changed, or another branch/provider change invalidated a precondition, return to Contract/Reasoning before invocation.
+For a consequential effect, revalidate authority after the concrete tool operation, resolved target and material arguments are known. If the current canonical role→identity mapping changed after Context resolved it, re-enter Context/Reasoning and the mutation-freshness boundary before acting. If they differ materially from the Reasoning-selected action, current authority changed, or another branch/provider change invalidated a precondition, return to Contract/Reasoning before invocation.
 
 Capability, tool availability, a prior plan/approval, and an operation handle are not effect authority.
 

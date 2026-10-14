@@ -61,6 +61,16 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Append/commutative/new-object operations remain lightweight when stale-overwrite risk is not material.
 - No transaction engine, lock service or universal CAS requirement was added.
 
+### Canonical provider/source identity
+
+- Added semantic role→identity resolution for external objects that can be replaced, migrated, aliased or superseded.
+- Current/canonical/production/private role intent resolves from the strongest applicable user/project/provider source-of-truth instead of stale memory or familiar historical IDs.
+- Explicit exact/historical identity requests remain bound to the named object even when a newer canonical object exists.
+- Provider recency alone does not override a project-level pinned canonical mapping.
+- Resume binding now distinguishes current-role intent from exact/historical identity.
+- Added calibration for stale aliases, exact historical targets, project pin versus provider recency, mapping conflicts and immutable counter-cases.
+- No global provider registry or identity service was added.
+
 ### Resume compatibility
 
 - Added semantic resume binding for saved work whose safe continuation depends on live target/source/baseline/effect/capability identity.

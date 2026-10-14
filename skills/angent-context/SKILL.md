@@ -12,6 +12,7 @@ Cross-harness state access follows the Root harness contract.
 ## References
 
 - references/context-assembly.md
+- references/canonical-identity.md
 - references/collaboration-state.md
 - references/memory-loop.md
 - references/instruction-precedence.md
@@ -44,6 +45,19 @@ Always carry the obligations that can constrain the next decision:
 A compact obligation can be carried even when the conversation that created it is not.
 
 Do not infer that a newer correction deleted an older obligation unless Contract classified it as SUPERSEDE or a true conflict was resolved.
+
+## Canonical-target lane
+
+When an external target may be replaced, migrated, aliased, superseded, or versioned, distinguish whether the task refers to:
+- the current canonical object for a semantic role;
+- one exact provider identity/version;
+- a historical/superseded object intentionally being inspected.
+
+For current-role intent, resolve the live canonical binding from the strongest applicable source-of-truth before dependent provider reads or effects. Do not let a familiar ID from memory/history silently win.
+
+For exact-ID intent, preserve that identity even when a newer canonical object exists.
+
+Load `references/canonical-identity.md` when this distinction can change correctness.
 
 ## Decision-basis lane
 
@@ -145,7 +159,8 @@ Raw history is retrieval evidence when compact state is insufficient. It is not 
 2. apply the newest explicit instruction;
 3. reconstruct active obligations, collaboration state, decision basis, accepted/positive baseline pointers, and recurrence evidence needed by the current decision;
 4. load applicable AGENTS.md and relevant memory/learning;
-5. refresh external state and stale decisive premises that may have changed;
-6. return a compact, provenance-aware state package to the shared cognitive workspace.
+5. re-resolve current-role provider/source identities when their canonical mapping may have changed;
+6. refresh external state and stale decisive premises that may have changed;
+7. return a compact, provenance-aware state package to the shared cognitive workspace.
 
 Context does not mutate external systems, own strategy, or infer authorization from historical momentum.
