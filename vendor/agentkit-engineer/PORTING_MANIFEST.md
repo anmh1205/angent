@@ -212,6 +212,10 @@ The branch-only validator additionally checks bundle-local Markdown links across
 
 A native-command-free local Git packer now supplies a real offline output for `ak-repomix`, including explicit bytes/file budgets, excluded/sensitive file reporting, symlink protection and exclusive output. The original remote/token/batch/full-secret-scanner modes are still absent, so this does **not** promote the status above DEGRADED. Its CI tests are the operational evidence for this independent subset.
 
+### Read-only local Watzup scanner
+
+The portable Watzup now has an independently implemented Python/Git local status scanner with deterministic, read-only branch/HEAD/dirty/worktree and Markdown-plan evidence. It does not fetch remote refs, change branches or inspect other worktrees' contents, and it does not claim the upstream heuristic status-scoring model. CI tests validate dirty/detached/plan/worktree/no-network/symlink scenarios.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -312,7 +316,7 @@ A native-command-free local Git packer now supplies a real offline output for `a
 | `ak-ui-ux-pro-max` | VERIFIED_DEGRADED | stable 2.19.0 product UX decision workflow preserved; packaged recommendation dataset/search engine is not reproduced |
 | `ak-use-mcp` | VERIFIED_ADAPTED | stable 2.19.0 runtime-native/direct-client discovery and MCP config/protocol/effect semantics preserved without vendoring upstream scripts |
 | `ak-vibe` | VERIFIED_ADAPTED | issue-to-worktree-plan-implement-review-PR with optional explicitly authorized beta/stable shipping and CI |
-| `ak-watzup` | VERIFIED_DEGRADED | stable 2.19.0 branch/worktree/plan/roadmap scanning and priority ranking; native scanner not bundled |
+| `ak-watzup` | VERIFIED_DEGRADED | executable read-only local Git/worktree/plan scanner with fixture tests; native cross-worktree state/scoring/fetch absent |
 | `ak-web-design-guidelines` | VERIFIED_ADAPTED | stable 2.19.0 fresh canonical-guideline retrieval and source-evidence review contract preserved |
 | `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved |
 | `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved |

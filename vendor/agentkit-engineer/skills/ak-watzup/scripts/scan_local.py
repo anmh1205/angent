@@ -28,7 +28,7 @@ def output(root: Path, *args: str, check: bool = True) -> str:
 def parse_worktrees(raw: str) -> list[dict[str, str | bool]]:
     result: list[dict[str, str | bool]] = []
     current: dict[str, str | bool] = {}
-    for line in (raw + "\n").splitlines():
+    for line in (raw + "\n\n").splitlines():
         if not line:
             if current:
                 result.append(current)

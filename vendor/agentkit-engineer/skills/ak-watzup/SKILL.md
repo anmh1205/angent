@@ -6,13 +6,26 @@ metadata: {port: angent-fallback, mode: degraded}
 
 # Watzup — Portable Fallback
 
-Stable Engineer 2.19.0 Watzup is a **read-only project handoff/status scanner**, distinct from ak-handoff conversation/context compaction. Its packaged `watzup-scan.cjs` traverses local/remote refs, worktrees, incomplete plans, roadmap milestones and priority-ranked next steps. This fallback cannot claim the original scanner ran or reproduce its cross-ref inventory automatically.
+Stable Engineer 2.19.0 Watzup is a **read-only project handoff/status scanner**, distinct from ak-handoff conversation/context compaction. Its packaged `watzup-scan.cjs` traverses local/remote refs, worktrees, incomplete plans, roadmap milestones and priority-ranked next steps. This fallback cannot claim the original scanner ran. Its independent offline scanner below provides a real local Git/plan subset, while the native scoring and full worktree traversal remain unavailable.
 
 ## Native scan if available
 
 First verify the scanner file and Node runtime **in the installed Skill's actual package location**. If available and authorized for read-only inspection, invoke the native scanner with `--json`, parse its actual output and disclose failures. Network `--fetch` is **not** default: use only when the user specifically wants freshly fetched remote refs and the active Git scope permits it. Scanner invocation must not silently checkout, merge, edit, commit or push.
 
 The stable priority scheme places checkout hygiene (dirty tree/detached HEAD) first, followed by active branch/worktree alignment, plan statuses/progress, visible source provenance and roadmap milestones. Scores are heuristic navigation aids, not acceptance evidence or permission to switch branches.
+
+## Runnable read-only local scanner
+
+The portable package now includes an independent Python/Git status scanner at `scripts/scan_local.py`. It makes no Git mutations and **never fetches** network refs.
+
+```bash
+python3 scripts/scan_local.py --root /path/to/repo --json
+python3 scripts/scan_local.py --root /path/to/repo
+```
+
+The scanner reports the current exact branch/HEAD, dirty state, worktree roster, local and cached remote refs, bounded plans/roadmap Markdown checkbox counts, observation gaps and evidence-based next-action suggestions. It reads plan files only within the verified Git root, excludes escaping symlinks and caps the number and size of documents.
+
+**Unsupported native features:** upstream cross-worktree dirty/state traversal, remote fetch, the original scoring and plan/roadmap interpretation engine. These limitations keep status `VERIFIED_DEGRADED`. A checked box does not establish completion, a remote branch may be stale, and GitHub-only remote access cannot establish the local checkout's cleanliness.
 
 ## Portable scan
 

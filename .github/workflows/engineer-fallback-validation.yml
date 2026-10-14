@@ -45,5 +45,7 @@ jobs:
           PY
       - name: Exercise offline Git snapshot packer and security fixtures
         run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-repomix/scripts -p 'test_pack_local.py' -v
+      - name: Exercise local read-only Git status scanner fixtures
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-watzup/scripts -p 'test_scan_local.py' -v
       - name: Check committed whitespace
         run: git diff --check HEAD^ HEAD
