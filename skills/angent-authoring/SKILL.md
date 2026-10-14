@@ -1,6 +1,6 @@
 ---
 name: angent-authoring
-description: Create reader-facing content while preserving reader state, artifact state, accepted quality, revision intent and explanatory depth.
+description: Create reader-facing content while preserving reader state, artifact state, accepted quality, revision intent, cross-surface prose continuity and explanatory depth.
 ---
 
 # ANGENT Authoring — Integrated Explanation
@@ -19,6 +19,8 @@ Authoring owns reader-facing content and semantic artifact state. It does not so
 - references/language-vi.md
 
 For long-form or iterative revision, load artifact-state and long-form-consistency.
+
+For document writing, surface-profiles and language-vi are part of the generation method, not optional polishing. Chat/document surface changes must preserve the same core explanatory prose quality.
 
 ## Three models must stay distinct
 
@@ -54,18 +56,31 @@ Do not:
 
 Epistemic calibration should improve accuracy, not make every sentence hesitant.
 
+## Shared prose baseline
+
+A document is not a different species of prose from a good technical response.
+
+Use the same core composition behavior across chat and document:
+- build from the subject/reader model;
+- make the active technical relation explicit;
+- maintain stable referents and given→new progression;
+- keep paragraphs cohesive around one real explanatory job;
+- state the rule, mechanism, evidence, contrast, boundary or consequence directly.
+
+Document scale adds structure and continuity. It does not justify author-commentary, lesson choreography, stock “important point” sentences, or a separate formal/AI narrator.
+
 ## Revision discipline
 
 When revising existing material:
 
 1. start from the accepted baseline and artifact state;
-2. consume Reasoning's repair target, affected scope and protected properties;
+2. consume Reasoning's correction interpretation, repair target, affected scope and protected properties;
 3. change only the required dependency closure;
 4. preserve unrelated accepted strengths;
 5. emit a candidate against the baseline;
 6. advance the accepted revision only after Quality accepts it and the destination result is verified when applicable.
 
-A complaint about one property is not permission to rewrite the artifact around that property.
+A complaint about one property or one quoted sentence is not permission to rewrite the artifact around that example. If the complaint signals recurrence or method failure, return to Reasoning before local editing.
 
 ## Depth and novelty
 
@@ -73,7 +88,7 @@ Depth is capability, not word count: recognize, explain, trace, predict, diagnos
 
 Information staging controls how many unfamiliar relationships compete for attention; it does not set a brevity target. One important relation may need several paragraphs, a trace, code, or a diagram to reach closure.
 
-A sentence, example or figure should add a fact, relation, inference, boundary, necessary prerequisite repair, interpretation, or connective reasoning that helps the reader build/carry the active model. Avoid repetition that leaves the reader model unchanged.
+A sentence, example or figure should add a fact, relation, inference, boundary, necessary prerequisite repair, interpretation, or connective reasoning that helps the reader build/carry the active model. Avoid repetition or commentary that leaves the reader model unchanged.
 
 ## Representation and examples
 
@@ -85,11 +100,13 @@ Examples should be representative, inspectable, plausible, interpreted and bound
 
 Paragraphs perform real explanatory jobs. Headings name technical scope or boundaries.
 
-For Vietnamese, compose from technical meaning, keep conventional technical terms when clearer, and avoid conversational filler or bureaucratic wording.
+For Vietnamese, compose from technical meaning, keep conventional technical terms when clearer, and avoid conversational filler, stock teaching narration or bureaucratic wording.
 
 ## Feedback to the cognitive workspace
 
-If Authoring cannot produce an honest explanation because the underlying conclusion, mechanism, prerequisite, evidence, or uncertainty/validity boundary is underspecified, return that gap to Reasoning/Research. Do not hide missing cognition with polished prose.
+If Authoring cannot produce an honest explanation because the underlying conclusion, mechanism, prerequisite, evidence, uncertainty/validity boundary, or correction scope is underspecified, return that gap to Reasoning/Research.
+
+Do not hide missing cognition with polished prose and do not locally patch a recurring method-level complaint.
 
 ## Handoff
 

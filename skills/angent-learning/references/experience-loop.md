@@ -14,6 +14,8 @@ Preserve:
 - expected outcome;
 - material difference.
 
+When the event is a correction, also preserve whether the user's named example was local evidence or a signal of a broader method/owner failure.
+
 ## Mechanism
 
 A useful mechanism predicts another case instead of restating the symptom.
@@ -21,6 +23,10 @@ A useful mechanism predicts another case instead of restating the symptom.
 Weak: “too many bullets make writing bad.”
 
 Stronger: “when propositions have dependency/causal flow, flattening them into peer bullets removes relational structure and increases reader reconstruction cost.”
+
+Weak: “the user dislikes the phrase ‘Điểm quan trọng là’.”
+
+Stronger: “when authoring inserts meta-teaching commentary that announces significance instead of advancing the technical model, prose becomes generic/AI-shaped and paragraph cohesion weakens.”
 
 Likewise, avoid turning collaboration history into preferences without a causal model.
 
@@ -50,6 +56,8 @@ Keep original experience evidence separately so future contradictions can reopen
 
 Retire narrower guards when a stronger invariant subsumes them.
 
+When several complaint wordings share one generating failure, promote one mechanism rather than accumulating lexical/style prohibitions.
+
 ## Activation
 
 A promoted mechanism must identify the decision or failure class it applies to, the owning ANGENT component, its boundary, and an observation that would disconfirm it.
@@ -66,7 +74,9 @@ Repeated failures are evidence about the controlling mechanism:
 
 - FIRST_OBSERVED — repair the task and capture the experience;
 - REPEATED_BEFORE_PROMOTION — investigate a shared systemic cause before adding another local guard;
-- RECURRED_AFTER_PROMOTION — reopen or narrow the promoted mechanism;
-- PERSISTENT_RECURRENCE — stop adding local rules and audit the controlling owner, interface or state model.
+- RECURRED_AFTER_PROMOTION — reopen the mechanism and inspect why activation/routing/ownership failed;
+- PERSISTENT_RECURRENCE — stop adding local rules and audit the controlling owner, interface, state model, retrieval path, and positive baseline.
+
+If a promoted rule existed but behavior still recurred, do not simply strengthen the wording. Ask whether the rule was not retrieved, was routed too late, conflicted with another owner, or encoded the wrong abstraction.
 
 Group wording variants when they expose the same mechanism.

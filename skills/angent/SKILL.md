@@ -13,7 +13,7 @@ Read the repository AGENTS.md for project-wide instruction and source-layout rul
 
 - **Contract** — outcome, scope, authority, constraint evolution, and success semantics.
 - **Context** — smallest relevant working state, collaboration state, decision-basis context, provenance, and always-active obligations.
-- **Reasoning** — problem/system model, epistemic state, uncertainty, decisions, adaptive plan, repair model, progress/stall and invalidation propagation.
+- **Reasoning** — problem/system model, epistemic state, correction interpretation, uncertainty, decisions, adaptive plan, repair model, progress/stall and invalidation propagation.
 - **Research** — evidence acquisition plus evidence-grounded subject-model deltas that reduce decision-relevant uncertainty.
 - **Execution** — authorized effects, observation, and provider reconciliation.
 - **Continuity** — interruption-safe active-work frontier, compact decision basis and ambiguous-effect recovery.
@@ -65,6 +65,21 @@ Use the smallest sufficient mode and change it when evidence changes the task.
 
 Do not promote a simple task into ceremony merely because an architecture exists.
 
+## Correction routing
+
+Do not route a complaint directly to the producer merely because the user named a sentence, file, chapter, or tool action.
+
+First decide whether the correction is:
+- local to one artifact instance;
+- repeated across artifacts/tasks;
+- about the generating method or working style;
+- about an owner/interface/state-model failure;
+- about collaboration behavior itself.
+
+When recurrence or method-level signals are present, Context retrieves relevant prior complaints/positive baselines and Learning mechanisms; Reasoning reconstructs the shared failure mechanism before any local edit.
+
+Examples supplied by the user are evidence and calibration anchors, not automatically the full repair scope.
+
 ## Routing
 
 The routes below are dependency hints, not fixed pipelines.
@@ -72,7 +87,7 @@ The routes below are dependency hints, not fixed pipelines.
 - **Factual/simple:** relevant owner only.
 - **Explanation/chat:** reconstruct only needed Contract/Context state; Reasoning and Research iterate as needed; Authoring realizes the accepted model; Quality is used when consequence or complexity warrants independent judgment.
 - **Long-form/new artifact:** establish task/collaboration state and evidence-grounded model; calibrate a reusable authoring method before broad propagation when failure would replicate; Authoring maintains reader/artifact state; Reasoning/Research remain reachable throughout; Quality judges solution/candidate/endpoint as needed.
-- **Revision/repair:** recover accepted baseline + active obligations → Reasoning repair model → candidate by the responsible producer → comparative Quality → accept only when the target improves without protected regression.
+- **Revision/repair:** interpret the correction level first; recover accepted/positive baseline + active obligations; for recurrence/method complaints reconstruct prior evidence and controlling mechanism; Reasoning builds the repair model; the responsible producer emits a candidate; comparative Quality accepts only when the mechanism-level target improves without protected regression.
 - **External artifact write:** accepted candidate → Format representation plan → Execution write → Format visible read-back → endpoint Quality when required.
 - **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage and whether the evaluation itself can support the verdict.
 - **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; Continuity persists only resume-critical frontier state.
@@ -90,6 +105,7 @@ A correction to existing work is a state transition from an accepted baseline.
 Do not:
 
 - treat the newest complaint as permission to discard earlier accepted strengths;
+- treat the user's example as the complete repair scope when it is evidence of a broader mechanism;
 - infer that a newer instruction supersedes older obligations unless replacement is explicit;
 - optimize the opposite extreme of the reported problem;
 - keep patching locally when the same failure recurs or fixes oscillate.
@@ -102,7 +118,7 @@ AGENTS.md is the canonical project instruction surface.
 
 Memory is scoped durable knowledge. Collaboration state is the task-relevant working relationship. Continuity is active-work state. Learning is reusable causal mechanism. Artifact state belongs to Authoring. None silently substitutes for another.
 
-Context may minimize ordinary history, but it must not omit still-active obligations, decisive epistemic/decision-basis state, or collaboration constraints needed by the next decision.
+Context may minimize ordinary history, but it must not omit still-active obligations, decisive epistemic/decision-basis state, relevant recurrence evidence, positive baselines, or collaboration constraints needed by the next decision.
 
 ## Engineering workforce
 
@@ -117,7 +133,7 @@ Engineer catalog maintenance is independent from ANGENT core semantics.
 
 ## Invariants
 
-Reasoning owns decision, epistemic and repair state. Research supplies evidence and evidence-grounded subject-model structure without taking strategic authority. Execution supplies observations/effects. Authoring owns semantic artifact state and communication. Quality supplies independent judgment. Format preserves destination representation. Continuity persists only the subset of active state needed to resume safely. Learning changes future behavior only through supported, retrievable mechanisms.
+Reasoning owns decision, epistemic, correction-interpretation and repair state. Research supplies evidence and evidence-grounded subject-model structure without taking strategic authority. Execution supplies observations/effects. Authoring owns semantic artifact state and communication. Quality supplies independent judgment. Format preserves destination representation. Continuity persists only the subset of active state needed to resume safely. Learning changes future behavior only through supported, retrievable mechanisms.
 
 Newest explicit user instruction and live canonical state outrank stale history, but instruction recency alone does not imply supersession. Context and Continuity cannot create authority.
 

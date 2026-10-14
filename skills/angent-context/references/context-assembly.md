@@ -10,7 +10,7 @@ Context should maximize decision signal, not token occupancy.
 - active obligations from Contract/task state;
 - collaboration state relevant to the current task;
 - accepted baseline or artifact-state pointer when revision work depends on it;
-- compact decision basis when a prior decision still controls downstream work;
+- accepted positive/calibration baseline when a recurring quality complaint compares current behavior to prior good behavior;
 - applicable AGENTS.md scope;
 - project knowledge;
 - user/global memory;
@@ -23,43 +23,33 @@ Context should maximize decision signal, not token occupancy.
 
 Ask what the next owner needs to decide or do.
 
-Retrieve only context that can change task interpretation, constraints, collaboration method, available options, execution method, epistemic status, or communication/quality requirements. Active obligations that can constrain the next decision are mandatory context, not optional retrieval candidates.
+Retrieve only context that can change task interpretation, constraints, collaboration method, available options, execution method, or communication/quality requirements. Active obligations that can constrain the next decision are mandatory context, not optional retrieval candidates.
 
-## Preserve why, not the transcript
+## Correction reconstruction
 
-For a consequential prior decision, the next owner may need more than “decision X was chosen”.
+For a one-off local defect, ordinary baseline/context may be enough.
 
-Carry the smallest reconstructable decision basis: decisive premises/evidence pointers, governing constraints, selected decision and reconsideration trigger. Preserve material rejected alternatives only when a changed premise could make them viable again.
+For repeated, oscillating, method-level, or “you are doing this wrong again” feedback, retrieve enough prior evidence to answer:
 
-This is a compact rationale summary, not raw reasoning history or private chain-of-thought.
+- Has the same failure mechanism appeared before?
+- What previous repair was attempted?
+- What accepted/positive output did the user identify as better?
+- Which working-method Learning mechanisms should already have applied?
+- Is the latest example only one manifestation of a broader owner/interface/state-model failure?
 
-When context is compacted, prioritize recall of active obligations, accepted baselines, unresolved hypotheses, decisive evidence/boundaries, decision basis, pending effects and next safe action. Redundant tool output and narrative history can be retrieved later if needed.
+Do not load the full chat history by default. Retrieve the smallest set that can distinguish a local defect from a recurring/systemic one.
 
 ## Collaboration reconstruction
 
 When collaboration method matters, recover the smallest state that answers questions such as:
 
-- Is this answer-only, research/report-before-edit, audit-only, explanation-first, autonomous execution, verify-and-fix, or another task-specific mode?
+- Is this answer-only, research-first, audit-only, explanation-first, autonomous execution, verify-and-fix, or another task-specific mode?
 - How much initiative is expected before a genuine decision boundary?
 - What evidence or verification standard is expected?
 - How should progress/checkpoints be surfaced?
 - Which promoted working-method mechanisms actually apply to this decision class?
 
 Prefer explicit current instructions over historical inference. Do not treat collaboration state as effect authorization.
-
-## Context sufficiency and contamination
-
-For consequential, whole-scope, or state-sensitive decisions, do a small sufficiency check before treating compact context as complete:
-
-- could a missing context class plausibly reverse the decision?
-- is a decisive baseline/source/provider/evaluator result fresh enough for this version and environment?
-- is a high-salience old instruction, memory, project version, example, or evaluator result being given the wrong scope?
-- could a changed model/provider/harness/environment make earlier evidence stale?
-- did compaction hide a provenance conflict that matters?
-
-If yes, retrieve or refresh the minimum missing context. If no, proceed.
-
-Do not turn sufficiency into exhaustive history loading. High-salience stale/wrong-scope context can be more harmful than missing low-value context.
 
 ## AGENTS.md scope
 
@@ -69,18 +59,16 @@ Do not copy AGENTS.md into memory merely because it was loaded.
 
 ## Provenance
 
-Know whether material context is current instruction, prior context, project instruction, canonical provider state, active task state, collaboration state, decision basis, inferred memory, Learning guidance, evaluator result, external evidence, or model inference.
-
-Do not promote an inferred proposition to an established fact merely because it was summarized into context.
+Know whether material context is current instruction, prior preference, project instruction, canonical provider state, active task state, collaboration state, inferred memory, Learning guidance, recurrence evidence, or positive baseline.
 
 ## Freshness
 
-Refresh when another session/process may have changed the state, a decisive premise/pointer/version is stale, a relevant measurement condition changed, or the next action depends on exact current state.
+Refresh when another session/process may have changed the state, a pointer/version is stale, or the next action depends on exact current state.
 
 ## Progressive disclosure
 
 Prefer maps/pointers over large preloads.
 
-Retrieve deeper source text when exact wording matters, compact state lacks detail, conflict exists, a decisive premise needs revalidation, or verification needs source evidence.
+Retrieve deeper source text when exact wording matters, compact memory lacks detail, recurrence/systemic interpretation needs historical evidence, conflict exists, or verification needs source evidence.
 
 Return a compact state package with unresolved conflict explicitly preserved.

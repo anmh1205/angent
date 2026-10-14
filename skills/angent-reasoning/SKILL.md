@@ -1,11 +1,11 @@
 ---
 name: angent-reasoning
-description: Own ANGENT's shared problem/system model, epistemic state, decisions, repair semantics, dependencies and adaptive replanning.
+description: Own ANGENT's shared problem/system model, epistemic state, decisions, correction interpretation, repair semantics, dependencies and adaptive replanning.
 ---
 
 # ANGENT Reasoning — Cognitive Core
 
-Reasoning owns the current problem model, epistemic/uncertainty state, decision state, repair model and next-action graph.
+Reasoning owns the current problem model, epistemic/uncertainty state, decision state, correction interpretation, repair model and next-action graph.
 
 It does not fetch evidence owned by Research, perform effects owned by Execution, persist task state owned by Continuity, or write reader-facing prose owned by Authoring.
 
@@ -13,9 +13,12 @@ It does not fetch evidence owned by Research, perform effects owned by Execution
 
 - references/core-models.md
 - references/cognitive-workspace.md
+- references/correction-interpretation.md
 - references/abstraction-and-invariants.md
 - references/specialist-synthesis.md
 - references/repair-and-regression.md
+
+Load correction-interpretation for substantive user corrections, especially recurrence, “not local/systemic/method/thinking” feedback, or cases where an example may only be evidence of a broader generating failure.
 
 Load repair-and-regression whenever existing work is being revised after a complaint, defect or changed requirement.
 
@@ -34,6 +37,16 @@ Start from the requested outcome, collaboration state, and active obligations, n
 Preserve hard constraints, accepted decisions and quality floors across later planning. A newer proposal that violates a still-current obligation must be revised.
 
 Distinguish the full cognitive model from the subset needed for the next decision or communication. Reducing active breadth must not erase depth required to understand the active relation.
+
+## Interpret corrections before choosing repair scope
+
+A correction may point to a sentence, chapter, tool action, or response while actually criticizing a repeated method, owner boundary, state model, or collaboration behavior.
+
+Do not equate “example named by the user” with “entire repair scope”.
+
+When recurrence or method-level signals exist, reconstruct the relevant positive baseline, prior correction history, promoted Learning mechanisms, and controlling owner/interface before editing. Infer the shared generating mechanism and repair its causal scope.
+
+The latest complaint is an observation plus possible instruction; it is not a complete model of the defect.
 
 ## Epistemic discipline
 
@@ -70,7 +83,7 @@ Do not reduce Research to citation collection, and do not delegate strategic own
 For an existing artifact, plan or implementation:
 
 1. recover the accepted baseline;
-2. identify the failed property or mechanism;
+2. interpret the correction and identify the failed property/mechanism at the correct abstraction level;
 3. determine the causal affected scope;
 4. record protected properties;
 5. produce a bounded candidate delta;
@@ -84,7 +97,9 @@ A complaint is evidence of failure, not an instruction to maximize the opposite 
 
 Escalate from local repair to systemic analysis when the same failure returns, fixing one dimension repeatedly breaks another, successive candidates alternate between rejected states, or the user must restate the same underlying requirement.
 
-When this occurs, stop local patching and reconstruct the controlling model, obligations, collaboration assumptions, and ownership boundary.
+When this occurs, stop local patching and reconstruct the controlling model, obligations, collaboration assumptions, owner/interface, and positive baseline.
+
+Do not respond to persistent recurrence by adding another lexical/style guard unless evidence shows the lexical form itself is the mechanism.
 
 ## Uncertainty
 

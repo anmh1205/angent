@@ -1,6 +1,20 @@
 # Authoring surface profiles
 
-Surface profiles change pacing and presentation, not the underlying explanation model.
+Surface profiles change pacing, scale and destination structure. They do not replace the underlying explanation/composition method.
+
+## Shared prose baseline
+
+Use the same core explanatory prose generation for chat and documents:
+
+- build from the subject/reader model;
+- make relationships explicit enough to follow;
+- use cohesive paragraphs with stable referents and real given→new progression;
+- state the technical mechanism, condition, contrast, evidence or consequence directly;
+- remove author commentary that does not advance the model.
+
+A good response is a valid prose baseline for a document. Moving to a document surface should not trigger a separate “formal AI document voice”.
+
+Document adaptation may add depth, cross-section continuity, citations, figures, examples, navigation and curriculum structure. It should not replace natural explanatory prose with stock transitions, coaching remarks, importance announcements or ceremonial framing.
 
 ## Chat
 
@@ -21,14 +35,21 @@ Avoid:
 
 ## Long-form technical document
 
+Start from the same prose/composition baseline as a strong technical response, then add only what document scale requires.
+
 Preserve:
 - curriculum state;
 - concept dependencies;
 - terminology consistency;
 - stable examples;
+- cross-section explanatory continuity;
 - depth/quality baseline across later chapters.
 
 Use sections because the knowledge structure needs them, not because a template expects them.
+
+Do not introduce a special document narrator that repeatedly says things equivalent to “điểm quan trọng là”, “ta chưa cần…”, “thay vì học thuộc…”, “cần nhớ rằng…”, unless the sentence performs a real technical contrast or scope decision that could not be stated more directly.
+
+The problem is not those exact phrases. The problem is meta-commentary replacing technical progression.
 
 ## Research/report
 

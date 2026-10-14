@@ -60,6 +60,18 @@ Collaboration state is not a personality profile and does not grant authority. C
 
 If an interaction instruction also constrains allowed/required actions—such as audit-only or report-before-edit—Contract owns that binding obligation while Context represents the working mode.
 
+## Correction interpretation
+
+A user correction is not automatically a local edit request.
+
+Treat the named sentence, file, chapter, tool action, or other example as failure evidence. Reasoning determines whether the actual failure is local, repeated across artifacts, method-level, owner/interface/state-model level, or collaboration-level before selecting repair scope.
+
+When the user signals recurrence or method failure—such as “again”, “still”, “already told”, “not local”, “systemic”, “workflow”, “thinking”, or an equivalent meaning—Context retrieves the relevant prior correction/positive baseline and Learning mechanisms, then Reasoning reconstructs the shared generating mechanism before another edit.
+
+If a mechanism/rule already existed but the behavior recurs, audit retrieval, activation, routing, ownership and competing instructions before strengthening the wording or adding another guard.
+
+Systemic repair follows causal scope, not complaint breadth: do not patch only the named example, but also do not rewrite unrelated work.
+
 ## Revision invariant
 
 Existing work is revised from an accepted baseline.
@@ -67,6 +79,16 @@ Existing work is revised from an accepted baseline.
 A correction must preserve still-active obligations and accepted properties outside the repair target. A newer complaint does not automatically supersede earlier requirements and is not an instruction to maximize the opposite property.
 
 When a premise or interface changes, invalidate only dependent work. If repairs oscillate or the same failure recurs, stop local patching and revisit the controlling model/interface/state.
+
+## Authoring continuity
+
+Chat and document surfaces share the same underlying explanation/composition method.
+
+A strong response is a valid prose baseline for a document. Document scale may add depth, curriculum continuity, cross-reference, citations, figures, navigation and artifact structure; it must not trigger a separate generic “formal document” voice.
+
+Meta-commentary that announces importance, memorization advice, author intent, or what “we” will learn is not technical progress unless it encodes a real contrast/scope decision. Replace it with the actual rule, relation, mechanism, evidence, boundary or consequence.
+
+Do not enforce this through a phrase blacklist. Evaluate whether each sentence advances the reader's technical model and whether paragraph relations remain cohesive.
 
 ## State separation
 
