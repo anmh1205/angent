@@ -72,6 +72,21 @@ When reusing an example:
 - avoid retelling its entire history;
 - generalize the new lesson.
 
+## Explanatory spine across long-form units
+
+A chapter may contain several sections, but it still needs a dominant technical progression.
+
+Before scaling a chapter, identify:
+- the capability the chapter must create;
+- the primary mechanism/question/trace that carries that capability;
+- which prerequisites must be repaired before the spine can continue;
+- which examples/evidence make the spine inspectable;
+- which exceptions truly alter the model.
+
+Do not let accumulation of valid subtopics turn the chapter into a survey of nearby facts.
+
+Across chapters, the global book progression can change spine as the subject changes, but each new spine should inherit the reader state established by the previous one.
+
 ## Chapter structure follows knowledge structure
 
 Do not force every chapter into identical sections such as “Khái niệm / Cách hoạt động / Ví dụ / Kết luận”.

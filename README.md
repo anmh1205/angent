@@ -55,6 +55,8 @@ Format preserves destination representation.
 - **Comparative Quality** — local improvement cannot hide regression, and producer rationale is not treated as proof.
 - **Cognitive/teaching/presented model separation** — rich internal understanding is narrowed for the active reader/task without confusing staging with compression.
 - **Cross-surface authoring continuity** — chat and document surfaces share one explanation/composition method; document scale adds structure/depth without introducing a generic AI document voice.
+- **Explanatory spine** — each substantive section/chapter has one dominant technical relation/trace; facts, examples, prerequisites and exceptions are staged around it instead of becoming a knowledge-graph dump.
+- **Internal-vocabulary boundary** — ANGENT's own owner/gate/baseline/artifact-state/repair terminology stays out of unrelated reader-facing technical prose.
 - **Artifact state** — long-form work preserves reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
 - **Trust boundary** — retrieved external content is evidence/data, not task authority.
 - **Recurrence handling** — repeated failure reopens retrieval, activation, routing, ownership, abstraction and control-point placement instead of accumulating more local rules.

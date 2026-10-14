@@ -38,6 +38,14 @@ Do not dump the full expert graph onto the reader. Do not mistake a smaller acti
 
 For each substantive unit, identify what the reader can already use, the current gap, and the capability the unit must create.
 
+## Explanatory spine
+
+Choose one dominant technical question/relation/trace for each substantive section or compact unit. Supporting definitions, prerequisites, evidence, examples, exceptions and consequences should advance that spine rather than form several equally primary mini-essays.
+
+If two mechanisms are both load-bearing and cannot be subordinated without confusion, stage or split them at a real technical boundary instead of interleaving them.
+
+The spine is not a visible template. It is the causal/relational continuity that keeps a section from degenerating into a knowledge-graph dump or dense engineering notes.
+
 For long-lived work preserve the accepted revision pointer, concept dependencies, terminology, recurring examples, promised depth, quality baseline, prerequisite debt and actual coverage.
 
 Mention is not mastery. A point being stated is not explanatory closure.
@@ -101,6 +109,8 @@ Examples should be representative, inspectable, plausible, interpreted and bound
 Paragraphs perform real explanatory jobs. Headings name technical scope or boundaries.
 
 For Vietnamese, compose from technical meaning, keep conventional technical terms when clearer, and avoid conversational filler, stock teaching narration or bureaucratic wording.
+
+Keep ANGENT/process-control vocabulary internal unless the subject itself is the workflow or architecture. Terms such as owner, gate, baseline, artifact state, repair model, active obligation or calibration are not reader-facing technical prose merely because they helped produce it.
 
 ## Feedback to the cognitive workspace
 

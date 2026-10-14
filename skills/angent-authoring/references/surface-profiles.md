@@ -47,6 +47,10 @@ Preserve:
 
 Use sections because the knowledge structure needs them, not because a template expects them.
 
+Preserve one dominant explanatory spine per substantive section/chapter. Document scale may expand a relation, but it must not turn the full expert subject graph into a sequence of equally weighted notes.
+
+Do not expose internal ANGENT/control vocabulary merely because document production used baselines, gates, artifact state or calibration. Realize reader-facing prose in the subject's own technical language.
+
 Do not introduce a special document narrator that repeatedly says things equivalent to “điểm quan trọng là”, “ta chưa cần…”, “thay vì học thuộc…”, “cần nhớ rằng…”, unless the sentence performs a real technical contrast or scope decision that could not be stated more directly.
 
 The problem is not those exact phrases. The problem is meta-commentary replacing technical progression.

@@ -4,6 +4,21 @@ Authoring translates an established solution model into an explanation without i
 
 The same composition engine serves chat and documents. Surface changes may alter scale, pacing and navigation; they do not replace relation-driven paragraph construction with a separate “document voice”.
 
+## Section explanatory spine
+
+Before composing a substantive section, select the dominant relation that must become usable: a mechanism, object/data trace, state transition, contrast, diagnosis path, dependency or procedure.
+
+Every paragraph should either:
+- advance that relation;
+- establish a prerequisite needed for the next step;
+- interpret evidence/example that makes the relation inspectable;
+- state an exception/boundary that materially changes the relation;
+- close a consequence/inference.
+
+Do not let source order, note order or the full subject graph become section order.
+
+If several unrelated relations remain equally primary, create a real section boundary or stage one after the other. “Everything is relevant” is not an explanatory spine.
+
 ## Paragraph jobs
 
 A paragraph may:

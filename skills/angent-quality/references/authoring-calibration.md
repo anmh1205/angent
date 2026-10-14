@@ -22,6 +22,24 @@ Symptoms:
 
 Return to Authoring: restore the shared response-quality prose/composition baseline, then add only document-scale structure/depth. Do not invent a separate formal-document voice.
 
+### Multiple competing explanatory spines
+
+Symptoms:
+- every paragraph is individually relevant/correct;
+- the section alternates among several mechanisms, layers or examples without one dominant relation;
+- the reader must decide which details are central and reconstruct the path themselves;
+- source/note order is visible in the prose.
+
+Return to Authoring: choose the dominant explanatory spine, subordinate prerequisites/evidence/exceptions to it, and split only at a real technical boundary.
+
+### Internal process vocabulary leakage
+
+Symptoms:
+- reader-facing technical prose contains ANGENT/workflow terms such as owner, gate, baseline, artifact state, repair target, active obligation or calibration even though those are not concepts in the subject;
+- the document narrates its own quality/reasoning process instead of the domain mechanism.
+
+Return to Authoring: translate internal control state into the subject's objects, relations, evidence and consequences. Keep process vocabulary internal unless the document is actually about that process.
+
 ### Meta-commentary replacing technical progression
 
 Symptoms:

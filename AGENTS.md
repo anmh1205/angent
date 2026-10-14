@@ -114,6 +114,8 @@ Meta-commentary that announces importance, memorization advice, author intent, o
 
 Do not enforce this through a phrase blacklist. Evaluate whether each sentence advances the reader's technical model and whether paragraph relations remain cohesive.
 
+For each substantive section/chapter, preserve one dominant explanatory spine: supporting definitions, prerequisites, evidence, examples, exceptions and consequences should advance that spine rather than become several equally primary note streams. Keep ANGENT/process-control vocabulary internal unless the subject itself is that process.
+
 ## State separation
 
 AGENTS.md, Contract obligations, collaboration state, Memory, Reasoning/epistemic/frontier state, Authoring artifact state, Continuity frontier and Learning mechanisms are different semantic classes. Do not turn one into a universal transcript/database.

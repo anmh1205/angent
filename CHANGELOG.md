@@ -65,6 +65,14 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Added calibration for meta-commentary that announces importance, memorization advice, author intention or lesson choreography instead of advancing the technical model.
 - Explicitly avoids phrase blacklists; the failure property is missing technical progress/cohesion, not specific lexical tokens.
 
+### Explanatory-spine authoring
+
+- Restored the v13.2-style relation-driven explanatory spine at section/chapter level rather than relying only on paragraph cohesion.
+- Added Quality failure classes for multiple competing explanatory spines and internal process-vocabulary leakage.
+- Kept source/log/API detail subordinate to the technical relation being taught unless source/runtime navigation is itself the reader task.
+- Prevented ANGENT control vocabulary such as owner/gate/baseline/artifact-state/repair terms from leaking into unrelated technical documents.
+- Preserved one response/document composition engine rather than introducing a separate document voice.
+
 ### Cognitive collaboration alignment
 
 - Added task-scoped Collaboration State and a shared cognitive workspace without adding a new owner/runtime.

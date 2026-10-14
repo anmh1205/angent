@@ -297,6 +297,8 @@ A document surface must not introduce meta-commentary merely to sound instructio
 
 The invariant is semantic, not lexical: phrases are not banned by token; they fail when they replace technical progression or fragment paragraph cohesion.
 
+A substantive section/chapter should also preserve one dominant explanatory spine. The full subject graph can contain many valid relations, but reader-facing prose stages them around the capability being built instead of exposing source/note order. Internal ANGENT control vocabulary remains internal unless the document is actually about that process.
+
 ## Revision loop
 
 Existing work is changed relative to an accepted baseline.
