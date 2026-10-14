@@ -63,6 +63,7 @@ Load/activate deeper semantics when the current decision requires them:
 - **consequential external effect** → Contract authority-and-success + Context decision-point sufficiency + Execution effect-safety/action-semantics; bind authority to resolved invocation before effect;
 - **tool/provider observation that can change a material decision** → Execution observation boundary + Reasoning observation admission;
 - **long-running/asynchronous or multi-branch work** → Reasoning frontier-scheduling + Continuity; pending work must not monopolize the loop;
+- **non-trivial specialist/subagent delegation or fan-out synthesis** → Reasoning specialist-synthesis; add delegation-context when context/authority/raw evidence/write boundaries are material, while simple direct work stays direct;
 - **revision of accepted work** → Reasoning repair-and-regression + comparative Quality;
 - **broad method/prompt/bulk change** → behavioral-calibration Quality; preserve reproducible evidence only when later acceptance depends on it;
 - **long-form/teaching artifact** → Research subject model + Authoring reader/artifact/composition state; preserve response-quality prose and one explanatory spine;
