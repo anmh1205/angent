@@ -47,7 +47,7 @@ Coverage:
 
 - **102/102 stable 2.19.0 Skill identities present**
 - **16/16 Agent role identities present**
-- **workflow-semantic parity refresh in progress: 39/102 Skill identities reviewed (36 adapted, 3 explicitly degraded)**
+- **workflow-semantic parity refresh in progress: 43/102 Skill identities reviewed (40 adapted, 3 explicitly degraded)**
 
 Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
 

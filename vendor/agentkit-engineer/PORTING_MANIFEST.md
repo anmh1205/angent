@@ -32,11 +32,11 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **39 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **43 / 102 Skill identities reviewed semantically**.
 
-- **36 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-react-best-practices`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **40 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-html-video`, `ak-orchestrate`, `ak-plan`, `ak-react-best-practices`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
 - **3 VERIFIED_DEGRADED**: `ak-design` and `ak-ui-ux-pro-max` preserve the load-bearing design/UX workflow but do not reproduce upstream packaged generator/search datasets; `ak-team` cannot truthfully reproduce a live-team lifecycle without harness support.
-- **63 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **59 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -81,14 +81,14 @@ The stable public guides support these workflow boundaries; acceptance still res
 
 ### Backend / data / DevOps / security batch
 
-This batch reviewed `ak-backend-development`, `ak-databases`, `ak-devops`, `ak-security` and the packaged compatibility identity `ak-security-scan`.
+This batch reviewed `ak-backend-development`, `ak-databases`, `ak-devops` and `ak-security`. `ak-security-scan` was provisionally treated as a docs-level compatibility route here, then reopened and corrected by direct package-artifact review in the package-truth batch below.
 
 Key corrections and acceptance findings:
 - Backend Development now preserves bounded implementation against the current stack, external contract/state ownership, explicit migration/deployment authority and verification proportional to the runtime claim.
 - Databases now preserves engine/environment identity, least-privilege access, production recovery evidence, coexistence-aware migrations and the distinction between analysis/preparation and production mutation.
 - DevOps now preserves source-of-truth/current-vs-desired state, plan/apply separation, create/update/replace/delete consequences, GitOps/controller ownership, runtime readiness and rollback/forward-fix boundaries.
 - Security now preserves stable fast-mode precedence, default comprehensive audit, red-team perspectives, user-bounded iterations, fix guards, redaction and network/advisory evidence boundaries.
-- `ak-security-scan` remains packaged for identity parity but is a compatibility route into `ak-security`, matching the stable public retirement route instead of maintaining a second divergent workflow.
+- The docs-level retirement route for `ak-security-scan` was not accepted as package truth; later direct inspection of the signed 2.19.0 portable artifact showed a substantive standalone scan workflow and superseded that provisional interpretation.
 
 No status was promoted from docs alone; public stable guides were used to check workflow meaning against the pinned 2.19.0 package and the fallback implementation.
 
@@ -102,6 +102,20 @@ Key acceptance findings:
 - React Best Practices preserves evidence-led optimization: compatible installed versions, audit-only versus mutation mode, comparable baseline, ranked findings, semantic risk of parallelism/cache/server-client changes and same-method before/after verification.
 
 Payment, Shopify, TanStack and mobile remain REVIEW_PENDING in this pass because the available stable documentation evidence was not sufficiently detailed to promote their semantic parity verdicts; beta documentation was not used as a substitute for the pinned stable baseline.
+
+### Package-truth legacy workflow batch
+
+Direct inspection of the resolved stable 2.19.0 portable artifact reopened identities that the public navigation/docs can present as retired or redirected.
+
+Key acceptance findings:
+- `ak-security-scan` is a substantive packaged read-only workflow, not merely an alias: secret scanning, dependency audit, code-pattern analysis, repository exposure checks, validation, redaction and report-only semantics are restored independently from the broader `ak-security` workflow.
+- `ak-handover` package truth confirms the already accepted thin composition: Handoff capture/validation → one selected-runtime Orchestrate job → reconciliation/reporting, with no silent runtime substitution.
+- `ak-use-mcp` restores the runtime-native versus deterministic-direct-client paths, exact schema discovery, project config/credential boundaries, catalog freshness and protocol/transport error semantics without copying upstream bundled client scripts.
+- `ak-html-video` restores toolchain preflight, template/project discovery, Studio/preview path, explicit render output and media-artifact verification while keeping installation/source-checkout mechanics harness-dependent.
+- `ak-sequential-thinking` restores revision, branching, hypothesis testing, uncertainty and meta-stall semantics while adapting the upstream visible-thought format to ANGENT's privacy boundary: no private chain-of-thought transcript is exposed or persisted.
+- `ak-web-design-guidelines` restores fresh retrieval of the canonical Web Interface Guidelines source on each review plus exact source-scope/evidence reporting; source review remains distinct from rendered-browser verification.
+
+This batch demonstrates the evidence hierarchy: docs navigation can describe migration/routing, but the resolved signed package artifact remains authoritative for what stable 2.19.0 actually packages.
 
 ## Skills — 102 identities
 
@@ -154,7 +168,7 @@ Payment, Shopify, TanStack and mobile remain REVIEW_PENDING in this pass because
 | `ak-handoff` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-handover` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-help` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-html-video` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-html-video` | VERIFIED_ADAPTED | stable 2.19.0 html-video template/project/preview/render workflow restored; renderer/toolchain mechanics remain harness-dependent |
 | `ak-hyperframes` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-interview-docs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-issue-to-plan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -186,8 +200,8 @@ Payment, Shopify, TanStack and mobile remain REVIEW_PENDING in this pass because
 | `ak-scenario` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-scout` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-security` | VERIFIED_ADAPTED | stable 2.19.0 comprehensive/fast/red-team/fix semantics reviewed; runtime scanners and advisory access remain harness-dependent |
-| `ak-security-scan` | VERIFIED_ADAPTED | packaged compatibility identity reviewed; explicitly routes to canonical ak-security semantics rather than a competing scan workflow |
-| `ak-sequential-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-security-scan` | VERIFIED_ADAPTED | stable 2.19.0 packaged standalone read-only security-scan semantics restored from artifact truth; not collapsed into ak-security |
+| `ak-sequential-thinking` | VERIFIED_ADAPTED | stable 2.19.0 revision/branch/hypothesis/uncertainty semantics preserved while private chain-of-thought exposure is intentionally omitted |
 | `ak-shader` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-shopify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
@@ -201,10 +215,10 @@ Payment, Shopify, TanStack and mobile remain REVIEW_PENDING in this pass because
 | `ak-threejs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ui-styling` | VERIFIED_ADAPTED | stable 2.19.0 component/tokens/shadcn-Tailwind mutation and rendered-accessibility gates preserved |
 | `ak-ui-ux-pro-max` | VERIFIED_DEGRADED | stable 2.19.0 product UX decision workflow preserved; packaged recommendation dataset/search engine is not reproduced |
-| `ak-use-mcp` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-use-mcp` | VERIFIED_ADAPTED | stable 2.19.0 runtime-native/direct-client discovery and MCP config/protocol/effect semantics preserved without vendoring upstream scripts |
 | `ak-vibe` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-watzup` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-web-design-guidelines` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-web-design-guidelines` | VERIFIED_ADAPTED | stable 2.19.0 fresh canonical-guideline retrieval and source-evidence review contract preserved |
 | `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved |
 | `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved |
 | `ak-worktree` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
