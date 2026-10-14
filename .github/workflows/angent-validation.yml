@@ -1,4 +1,4 @@
-name: ANGENT hygiene
+name: ANGENT core validation
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  hygiene:
+  core:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -22,3 +22,6 @@ jobs:
       - name: Check committed diff hygiene
         shell: bash
         run: git diff --check HEAD^ HEAD
+
+      - name: Check manifest and core skill structure
+        run: python3 scripts/validate_core.py

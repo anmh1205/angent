@@ -1,8 +1,15 @@
 # Changelog
 
+## Unreleased — simpler Core coordination and state
+
+- Removed the committed active-work checkpoint and ignored all local .angent/ runtime state.
+- Reduced Root routing and owner handoff contracts to conditional, decision-relevant information instead of mandatory schemas and sequential owner steps.
+- Removed duplicated hard-coded version policy and deployment markers from source instructions; plugin manifests retain package metadata.
+- Added deterministic package/skill-reference checks in CI; behavioral claims still require behavioral evidence.
+
 ## Unreleased — reliability hardening
 
-ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cognitive-collaboration alignment are canonical. Reliability hardening strengthens evidence/belief/decision continuity, correction interpretation, work-conserving frontier scheduling and behavioral change validation without adding runtime infrastructure.
+ANGENT Core remains an unreleased candidate. Core hardening and cognitive-collaboration alignment are canonical. Reliability hardening strengthens evidence/belief/decision continuity, correction interpretation, work-conserving frontier scheduling and behavioral change validation without adding runtime infrastructure.
 
 ### Reliability semantics
 
@@ -42,7 +49,7 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Continuity preserves branch scheduling state when losing it would change safe resume behavior.
 - Quality calibration now covers pending+independent-work, pending-only, eligible-recheck, resume, several-runnable, and direct-completion cases.
 - Promoted the general control-point lesson: a behavioral invariant must be owned or activated before the decision it needs to control; downstream guidance cannot reliably correct an already-selected behavior.
-- The canonical 1.0.0 plugin bootstrap activates the scheduling semantics at the entrypoint rather than relying on a deep Execution reference.
+- The root plugin bootstrap activates the scheduling semantics at the entrypoint rather than relying on a deep Execution reference.
 - No queue, scheduler service, background runtime, fixed timer or polling-count mechanism was added.
 
 ### Decision-boundary reliability
@@ -149,25 +156,11 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 
 Engineer implementation remains intentionally unchanged during reliability hardening.
 
-### Version identity
-
-- ANGENT has one canonical semantic version: **1.0.0**.
-- Root manifests, private ChatGPT plugin/runtime, Engineer fallback manifests, preview/staging packages, checkpoints and release-state documentation all remain `1.0.0`.
-- Provider release IDs, commit SHAs, artifact digests and upload revisions distinguish builds/deployments without changing semantic version.
-- Content synchronization or private plugin publication must not auto-bump ANGENT to another version.
-- The version changes only by explicit user/project decision.
 
 ### Release boundary
 
-The project remains unreleased and not release-ready.
+Before a public release, verify behavior and the package against the actual source and target runtime. Package metadata stays in plugin manifests; deployment identity is obtained from its provider.
 
-Private plugin synchronization is allowed for runtime alignment while keeping semantic version `1.0.0`.
-
-Before project release:
-1. complete reliability hardening and read-back;
-2. complete the Engineer inventory/parity refresh;
-3. reconcile cross-harness behavior and plugin package against exact canonical source;
-4. make any future version change only through an explicit user/project decision.
 
 ## Previous candidate history
 
