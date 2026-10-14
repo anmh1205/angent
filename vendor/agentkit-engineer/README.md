@@ -53,6 +53,15 @@ Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md
 
 The fallback is an independent ANGENT implementation, not an upstream mirror.
 
+## Executable offline fallback subsets
+
+Some DEGRADED Skills still provide a **tested runnable local subset**, not just instructions:
+
+- `skills/ak-repomix/scripts/pack_local.py`: bounded Git context export; use `--dry-run` before explicitly emitting source or creating an output.
+- `skills/ak-watzup/scripts/scan_local.py`: read-only local Git/worktree/plan inventory; use `--json` for structured status.
+
+Both need Git, Python 3.12-compatible runtime and an accessible local worktree. They never enable the full upstream native CLI. The [audit report](AUDIT_REPORT.md) records exactly what CI has tested.
+
 ## Selection
 
 `scripts/select_engineer.py` is a small read-only selector.

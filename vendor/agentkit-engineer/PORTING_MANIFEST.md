@@ -4,7 +4,7 @@ Upstream packaged baseline: **AgentKit Engineer stable 2.19.0**.
 
 Verified identity surface: **102/102 Skill directories + 16/16 Agent role identities** are present in the ANGENT fallback.
 
-This identity match is not a semantic-parity verdict. Stable 2.19.0 remains under workflow-semantic/support-surface review; each row stays REVIEW_PENDING until its outcome, modes, gates, domain/support knowledge, runtime-specific dependencies, and portable replacement have been checked.
+Identity coverage is complete at the first-pass workflow level (102/102 Skills, 16/16 Agent roles). **It is not runtime equivalence**: 25 Skills retain explicit degraded capabilities, and full support-asset/runtime/provider acceptance remains open. Per-Skill verdicts below describe the portable contract, not a guarantee that every mode runs in every harness.
 
 Native AgentKit remains preferred when usable and is installed/managed from the official AgentKit distribution. This manifest tracks ANGENT's portable fallback only.
 
@@ -110,7 +110,7 @@ Key acceptance findings:
 - Web Frameworks is now correctly bounded to the stable Next.js/Turborepo-oriented workflow instead of pretending to be a universal framework cookbook; render/cache/build graph, SEO/GEO, scaffold/migration and deployment boundaries remain explicit.
 - React Best Practices preserves evidence-led optimization: compatible installed versions, audit-only versus mutation mode, comparable baseline, ranked findings, semantic risk of parallelism/cache/server-client changes and same-method before/after verification.
 
-Payment, Shopify, TanStack and mobile remain REVIEW_PENDING in this pass because the available stable documentation evidence was not sufficiently detailed to promote their semantic parity verdicts; beta documentation was not used as a substitute for the pinned stable baseline.
+At that intermediate review stage, Payment, Shopify, TanStack and mobile were deferred because the available stable documentation evidence was not sufficiently detailed to promote their semantic parity verdicts; beta documentation was not used as a substitute for the pinned stable baseline.
 
 ### Package-truth legacy workflow batch
 
@@ -215,6 +215,12 @@ A native-command-free local Git packer now supplies a real offline output for `a
 ### Read-only local Watzup scanner
 
 The portable Watzup now has an independently implemented Python/Git local status scanner with deterministic, read-only branch/HEAD/dirty/worktree and Markdown-plan evidence. It does not fetch remote refs, change branches or inspect other worktrees' contents, and it does not claim the upstream heuristic status-scoring model. CI tests validate dirty/detached/plan/worktree/no-network/symlink scenarios.
+
+### Executed portable runtime subsets and security hardening
+
+Two initially DEGRADED Skills now contain runnable, independently authored local Python/Git subsets: `ak-repomix` packs bounded Git source into Markdown/JSON/XML, and `ak-watzup` scans branch, status, worktrees and plan checkboxes without checkout, fetch or merge. Both remain DEGRADED because native provider, batch, token, multi-worktree and other original modes are not implemented. They are covered by real fixture suites and GitHub Actions smoke execution on the Engineer checkout.
+
+Security/quality regressions exercised include secret and binary/symlink omission, budget reporting, exclusive output creation, invalid XML control bytes, Markdown escaping, content SHA-256, dirty-state provenance, Git porcelain whitespace, detached HEAD, two worktrees and a nonfetching remote. Current validated run: [38655909604](https://github.com/anmh1205/angent/actions/runs/38655909604) on `2d35dafe90b4f63ce1618b1bacf15779c1b5aa98`. These tests verify the **implemented local subset**, not a native Repomix or Watzup runtime.
 
 ## Skills — 102 identities
 

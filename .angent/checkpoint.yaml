@@ -59,7 +59,7 @@ frontier:
       progress_ledger: vendor/agentkit-engineer/PORTING_MANIFEST.md
 
   verified_units:
-    - "Engineer fallback first-pass review now covers all 102 Skill identities and 16 Agent role identities on the isolated Engineer branch. The manifest records 25 real degraded runtime/support boundaries; this is not full runtime parity."
+    - "Engineer fallback first-pass covers 102 Skills and 16 Agent roles; 25 Skills remain degraded. Real offline Repomix and Watzup subset scripts now pass GitHub Actions fixture and real-checkout smoke tests at Engineer branch commit 2d35dafe90b4f63ce1618b1bacf15779c1b5aa98."
     - "Reliability/state-evaluation integrity PR #36 is canonical on main."
     - "Persisted-state trust distinguishes coherent serialized state from authenticated/owned resume state; calibration isolation, fixture satisfiability and composite endpoint semantics are integrated."
     - "Canonical semantic version remains 1.0.0; no public release/tag has been made."
@@ -74,7 +74,7 @@ frontier:
 
   unresolved:
     - "Run representative cross-harness task execution before asserting native-equivalent end-to-end outcomes; current GitHub CI establishes bundle structure and selector behavior only."
-    - "Prioritize missing native/runtime assets for the 25 VERIFIED_DEGRADED Skill identities by actual user demand and integration feasibility; do not relabel degraded without a tested substitute."
+    - "Continue resolving the remaining native-specific gaps for the 25 VERIFIED_DEGRADED Skills by observed user value and executable test coverage; Repomix/Watzup local subsets now run but do not remove upstream-only modes."
     - "Validate representative Agent role invocation on a genuinely supported harness; sidecars remain inert role contracts absent an adapter."
     - "Keep the fallback README free of duplicated progress counters; use PORTING_MANIFEST.md and AUDIT_REPORT.md as live ledger and dated evidence."
     - "Resolve private plugin version-policy versus Plugin Creator auto-patch behavior before synchronizing runtime beyond source commit 59f04f4."
@@ -86,4 +86,4 @@ frontier:
     - "Portable export is evidence/source material for audit, not a verified runtime adapter and not permission to vendor a raw upstream mirror."
     - "File-count/text-similarity metrics alone cannot accept or reject a fallback capability."
 
-next_action: "Engineer semantic first-pass is complete. On engineer-semantic-parity-2.19.0, read current HEAD, PORTING_MANIFEST.md, AUDIT_REPORT.md and latest branch-only CI; continue representative live-runtime acceptance and the 25 explicitly degraded capabilities without merging or changing main. Do not resume obsolete ak-document-skills/copywriting/journal review clusters."
+next_action: "Continue runtime acceptance from latest branch engineer-semantic-parity-2.19.0 HEAD, not this dated evidence SHA. Recheck GitHub Actions and AUDIT_REPORT; prioritize real adapters or safe tested capability subsets for the remaining degraded provider/browser/graphics Skills. Preserve 102/16 inventory and never merge, publish or mutate main without separate authority."
