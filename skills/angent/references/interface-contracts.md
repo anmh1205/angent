@@ -35,6 +35,12 @@ evidence_expectation:
 explanation_expectation:
 progress_checkpoint_expectation:
 working_method_mechanisms: []
+activated_mechanisms:
+  - mechanism_pointer:
+    decision_or_failure_class:
+    applicability_basis: []
+    owner_or_control_point:
+    current_effect:
 task_scoped_exceptions: []
 provenance: []
 confidence:
@@ -324,6 +330,7 @@ A PASS/FAIL is itself an evidence-backed claim. Use BLOCKED when the available e
 ## Learning → Context/owner: PromotedMechanism
 
 ~~~yaml
+mechanism_pointer:
 mechanism:
 decision_or_failure_class:
 owner:

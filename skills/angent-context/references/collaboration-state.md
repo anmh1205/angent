@@ -13,7 +13,7 @@ Carry only dimensions that can change the current work:
 - **evidence expectation** — what degree or kind of grounding/verification the user currently expects;
 - **explanation expectation** — concise decision support, deep teaching, implementation-oriented reasoning, or another relevant communication job;
 - **progress/checkpoint expectation** — when visible updates or durable state matter;
-- **working-method mechanisms** — promoted Learning mechanisms about how this class of work succeeds or fails;
+- **working-method mechanisms** — promoted Learning mechanisms about how this class of work succeeds or fails; when one materially changes current behavior, keep its pointer plus the applicability basis/effect needed to distinguish retrieval from actual activation;
 - **task-scoped exceptions** — temporary deviations from broader patterns;
 - **provenance and confidence** — whether each element is explicit, accepted from earlier task state, or inferred.
 

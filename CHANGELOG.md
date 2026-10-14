@@ -65,6 +65,13 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Added calibration for meta-commentary that announces importance, memorization advice, author intention or lesson choreography instead of advancing the technical model.
 - Explicitly avoids phrase blacklists; the failure property is missing technical progress/cohesion, not specific lexical tokens.
 
+### Learning activation observability
+
+- Added compact mechanism-activation evidence for recurrence diagnosis: mechanism pointer, matched decision/failure class, applicability basis, control point and current effect.
+- Context can now distinguish “rule existed/retrieved” from “rule actually activated for this decision”.
+- Missing activation evidence is treated as UNKNOWN rather than reverse-inferred from the final failure/success.
+- Continuity carries only the activation pointer/subset when resume or recurrence diagnosis depends on it; no event log or Learning-store duplication is added.
+
 ### Explanatory-spine authoring
 
 - Restored the v13.2-style relation-driven explanatory spine at section/chapter level rather than relying only on paragraph cohesion.

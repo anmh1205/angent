@@ -60,6 +60,7 @@ Collaboration state is not a personality profile and cannot grant authority. A c
 - For stochastic/open-ended behavior, one success establishes possibility more readily than reliability; repeated evidence is used when the claim and consequence warrant it, never by fixed quota.
 - Representative calibration validates the method, not unseen whole-scope coverage.
 - A behavioral acceptance claim reused across turns/releases should remain reconstructable from case/baseline/candidate, observable trajectory/artifacts, outcome, criteria and verdict-validity evidence; “passed before” is not durable proof by itself.
+- When recurrence diagnosis depends on whether a promoted Learning mechanism was actually active, use compact activation evidence (mechanism pointer, applicability match, control point and current effect); if it was not preserved, mark activation UNKNOWN instead of inferring it from the outcome.
 
 ## Effort modes
 

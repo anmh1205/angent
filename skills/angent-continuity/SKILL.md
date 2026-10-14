@@ -45,7 +45,7 @@ Keep enough durable state to answer:
 
 A decision basis contains only the decisive premises/evidence pointers, constraints, decision and reconsideration trigger needed to resume correctly. Do not persist raw private reasoning.
 
-Persist collaboration state only when losing it could materially change how the task resumes. Do not duplicate a full user profile or Learning store into Continuity.
+Persist collaboration state only when losing it could materially change how the task resumes. When recurrence diagnosis or resumed behavior depends on whether a promoted mechanism actually activated, carry only the relevant mechanism/activation pointer or compact subset. Do not duplicate a full user profile or Learning store into Continuity.
 
 Advance at meaningful work boundaries, including branch scheduling-state changes that alter safe next work, not after every tool call or unchanged poll.
 

@@ -93,7 +93,17 @@ Context should retrieve it because the current decision matches that class, not 
 
 Working-method mechanisms can be activated into collaboration state when they materially change how the current task should proceed.
 
-A stored lesson that is not activated at the relevant decision is not operational learning.
+When activation materially affects a decision, correction interpretation, or collaboration method, preserve compact activation evidence:
+- mechanism pointer/topic;
+- current decision/failure class;
+- applicability facts that matched the mechanism boundary;
+- owner/control point where it became active;
+- effect on the current plan/collaboration/quality expectation;
+- competing instruction or boundary that suppressed it, when relevant.
+
+This is diagnostic semantic state, not an event log. Do not record every retrieved lesson. Persist a pointer/subset only when later resume, recurrence diagnosis or acceptance depends on knowing whether the mechanism actually activated.
+
+A stored lesson that is not activated at the relevant decision is not operational learning. If activation evidence is absent when recurrence diagnosis depends on it, treat activation status as UNKNOWN rather than inferring from the final outcome.
 
 ## Recurrence
 
