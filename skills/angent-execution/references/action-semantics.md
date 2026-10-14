@@ -44,11 +44,21 @@ Relevant evidence can include:
 
 A first page or partial result cannot establish full coverage.
 
+## Wait state
+
+A long-running operation may leave an action dependency in WAITING while unrelated work remains RUNNABLE.
+
+Preserve the operation identity/handle and last observed state when the wait may survive interruption.
+
+Do not convert WAITING into repeated equivalent polling. Another check should be justified by new timing/event/dependency information.
+
 ## Retry and progress
 
 Retry only when another attempt can plausibly change the result.
 
 If repeated equivalent actions produce no new observation, return to Reasoning rather than churning tools.
+
+A pending/running response with no state change is not substantive progress.
 
 ## Mechanical adaptation
 

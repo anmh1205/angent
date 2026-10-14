@@ -8,17 +8,26 @@ Resume is not “read an old summary and continue”.
 2. read the highest coherent continuity revision;
 3. apply newest explicit instruction/current authority;
 4. inspect pending/ambiguous effects;
-5. validate artifact/source pointers;
-6. refresh external state that may have changed;
-7. resolve conflicts/divergence;
-8. return the reconciled frontier to Context/Reasoning;
-9. continue from the first unfinished valid unit.
+5. inspect saved long-running processes/jobs/workflow runs by their recorded handle/identity;
+6. validate artifact/source pointers;
+7. refresh external state that may have changed;
+8. resolve conflicts/divergence;
+9. return the reconciled frontier to Context/Reasoning;
+10. continue from the first unfinished valid unit.
 
 ## External change
 
-A provider may have changed while ANGENT was interrupted: branch HEAD advanced, issue moved, page edited, deployment changed, or another session completed work.
+A provider may have changed while ANGENT was interrupted: branch HEAD advanced, issue moved, page edited, deployment changed, process/job completed, or another session completed work.
 
 Do not discard the stored frontier. Reconcile it so completed/remaining work still has meaning.
+
+## Running operations
+
+If a saved operation is still running, preserve that wait state.
+
+Do not immediately enter a tight status loop. Let Execution decide whether another check is informative and whether independent work can proceed first.
+
+If the operation no longer exists, distinguish provider retention/expiration from failure before deciding to relaunch.
 
 ## Concurrent sessions
 

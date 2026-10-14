@@ -54,6 +54,7 @@ accepted_baseline:
 artifact_state_pointer:
 coverage_pointer:
 stale_or_recheck: []
+active_long_running_operations: []
 pending_or_ambiguous_effects: []
 artifact_pointers: []
 provenance: []
@@ -149,6 +150,22 @@ enumeration_evidence:
 
 An acknowledgement or exit code without authoritative state is not automatically success.
 
+## Authoring/Execution wait state
+
+For a long-running external operation whose result is not yet available:
+
+~~~yaml
+operation_identity:
+provider_or_tool:
+state: RUNNING | PENDING | UNKNOWN
+last_observation:
+dependent_work: []
+independent_runnable_work: []
+next_informative_check_condition:
+~~~
+
+This state is descriptive. It does not create a polling schedule. Execution decides when another check can add information.
+
 ## Reasoning → Authoring: SolutionModel
 
 ~~~yaml
@@ -236,6 +253,7 @@ accepted_baseline_pointer:
 artifact_state_pointer:
 coverage_pointer:
 stale_or_recheck: []
+active_long_running_operations: []
 artifact_pointers: []
 pending_or_ambiguous_effects: []
 unresolved_dependencies: []
