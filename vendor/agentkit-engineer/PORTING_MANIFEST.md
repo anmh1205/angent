@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **80 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **84 / 102 Skill identities reviewed semantically**.
 
-- **65 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-find-skills`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-loop`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
-- **12 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-plans-kanban`, `ak-repomix`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
+- **67 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-find-skills`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
+- **14 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-mintlify`, `ak-plans-kanban`, `ak-repomix`, `ak-show-off`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
 - **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
-- **22 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **18 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -160,6 +160,10 @@ Direct 2.19.0 package review restored explicit 0–5 coding-level selection with
 
 Retro restores actual Git period metrics and optional equal-length comparison, source-aware plan/issue evidence, Markdown/HTML outputs and honest missing-data handling; its metrics are descriptive, never an individual productivity score. Watzup retains the native package's scanner semantics for local/remote branches, worktrees, plans/roadmaps and priority ranking, but degrades without its Node scanner and never fetches or switches branches implicitly. Plans Kanban is specifically an integrated AgentKit CLI dashboard launcher with health/feature probes and project/global scope; a portable board is not certified native parity. Repomix preserves format/filter/remote/token/security contracts but cannot claim its CLI, batch Python script or built-in scanner exist; all three optional-runtime skills remain DEGRADED.
 
+### AI-readable documentation, Mintlify, repository feature port and showcases
+
+The stable 2.19.0 llms skill retains index/full file modes, project docs/title/URL extraction, format constraints, validation and exact authoring output while degrading only missing helper scripts to manual generation. Mintlify retains configuration/MDX/navigation/API/AI/CLI/deploy contracts but remains explicitly DEGRADED without its six extensive bundled versioned references/native CLI. Xia's earlier fallback incorrectly implemented source features inside Xia; this batch restores the six-phase analysis/challenge/plan handoff with compare/copy/improve/port variants and implementation only through an authorized execution owner. Show Off restores original user preferences, language modes, content-to-HTML and capture prerequisites but does not treat the upstream default publishing toggle as consent, and correctly marks native screenshot helpers/AgentWiki absent.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -216,13 +220,13 @@ Retro restores actual Git period metrics and optional equal-length comparison, s
 | `ak-interview-docs` | VERIFIED_ADAPTED | stable 2.19.0 Vision versus structured-doc modes, user-owned decisions and per-answer read-back restored |
 | `ak-issue-to-plan` | VERIFIED_ADAPTED | stable 2.19.0 issue evidence, implementation-ready plan and stop-before-code decision gate |
 | `ak-journal` | VERIFIED_DEGRADED | stable 2.19.0 local journal and optional publication semantics; Zernio/media scripts not packaged |
-| `ak-llms` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-llms` | VERIFIED_ADAPTED | stable 2.19.0 llms.txt/llms-full.txt sources, URL scope, optional sections, generator preflight and validation |
 | `ak-loop` | VERIFIED_ADAPTED | stable 2.19.0 sequential atomic, numeric/guard/noise-aware optimization, Git experiment history and safe rollback bounds |
 | `ak-markdown-novel-viewer` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-mcp-builder` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-media-processing` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-mermaidjs-v11` | VERIFIED_ADAPTED | stable 2.19.0 diagram families, v11 syntax, CLI/JS/Markdown targets, security, accessibility and rendered-result gates restored |
-| `ak-mintlify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-mintlify` | VERIFIED_DEGRADED | stable 2.19.0 docs.json/MDX/navigation/OpenAPI/AI/CLI/deployment flows retained; full refs/native CLI absent |
 | `ak-mobile-development` | VERIFIED_ADAPTED | stable 2.19.0 React Native/Flutter/native mobile workflow preserved while stale adoption/performance figures are excluded from architectural decisions |
 | `ak-orchestrate` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-payment-integration` | VERIFIED_ADAPTED | stable 2.19.0 SePay/Polar/Stripe and multi-provider payment semantics reviewed; volatile provider APIs are refreshed from current docs and internal/provider state reconciliation is preserved |
@@ -248,7 +252,7 @@ Retro restores actual Git period metrics and optional equal-length comparison, s
 | `ak-shader` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-shopify` | VERIFIED_ADAPTED | stable 2.19.0 app/extension/theme lifecycle reviewed with current GraphQL-first API, scope/webhook/version and deploy/publish boundaries |
-| `ak-show-off` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-show-off` | VERIFIED_DEGRADED | stable 2.19.0 prefs/plan/bilingual HTML/screenshots/publishing gates; capture/helper/AgentWiki unavailable |
 | `ak-skill-creator` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-stitch` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-tanstack` | VERIFIED_ADAPTED | stable 2.19.0 Start/Router/Form/AI scope restored; unrelated TanStack Query/Table/Virtual expansion removed and volatile package APIs bound to current installed docs |
@@ -265,7 +269,7 @@ Retro restores actual Git period metrics and optional equal-length comparison, s
 | `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved |
 | `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved |
 | `ak-worktree` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-xia` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-xia` | VERIFIED_ADAPTED | stable 2.19.0 compare/copy/improve/port modes, source challenge and Plan/Cook handoff, no direct Xia implementation |
 
 ## Agents — 16 identities
 
