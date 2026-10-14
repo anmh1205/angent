@@ -37,6 +37,7 @@ Evaluate only relevant dimensions:
 - failure-domain integrity: tool/harness/transport/access failures are not laundered into negative domain facts, and authoritative negative observations are not weakened to generic UNKNOWN;
 - mutation-freshness integrity: consequential existing-state writes are based on a compatible live target version/basis and preserve unrelated concurrent changes;
 - canonical-target integrity: semantic-role targets resolve to the current authoritative object while explicit exact/historical targets remain bound to the identity actually requested;
+- retrieval-negative integrity: search misses are not promoted beyond their index/scope/filter/freshness/query boundary; consequential absence claims use authoritative lookup or sufficient coverage when available;
 - delegation-context integrity when specialists are used: bounded work context/effect authority is preserved, material trust/epistemic boundaries survive handoff, and specialist self-report is re-admitted rather than promoted automatically;
 - fan-out synthesis integrity when several branches inform one decision: unresolved decision-reversing evidence is not bypassed, correlated agreement is not counted as independent confirmation, and arrival order does not determine truth;
 - scope-to-evidence coverage;

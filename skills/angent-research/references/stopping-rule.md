@@ -24,6 +24,22 @@ Research should end when additional evidence has low decision/model value.
 - a cheap reversible action can teach more than further reading;
 - the user asked for a bounded quick answer and existing evidence is sufficient.
 
+## Negative-claim stopping
+
+When the claim is absence/nonexistence/non-support, stop with the strongest bounded proposition the retrieval evidence actually supports.
+
+Continue or change retrieval strategy when:
+- a search miss is the only support for a consequential global absence claim;
+- index freshness, non-default scope, access exclusions, top-k/truncation, or query formulation can plausibly hide a result;
+- an exact authoritative lookup or complete-enough enumeration is cheaply available and would materially strengthen the claim.
+
+Stop rather than search indefinitely when:
+- the decision is robust even if the missing item exists outside the searched boundary;
+- available sources cannot provide stronger coverage and the residual uncertainty is stated;
+- an authoritative negative lookup or sufficient enumeration already closes the relevant scope.
+
+Do not require arbitrary numbers of failed searches.
+
 ## Detect research stall
 
 More searches are not progress when they only produce repetitions, low-authority variants of the same claim, or evidence that cannot discriminate live alternatives.
