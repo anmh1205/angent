@@ -1,6 +1,6 @@
 # ANGENT Architecture
 
-ANGENT is a cognitive layer for intelligent agents. Its job is to preserve intent and authority, reconstruct relevant task and collaboration state, maintain honest epistemic state, model systems and uncertainty, seek evidence, reason, decide, repair existing work without regression, act, verify, communicate and learn.
+ANGENT is a cognitive layer for intelligent agents. Its job is to preserve intent and authority, reconstruct relevant task and collaboration state, maintain honest epistemic state, model systems and uncertainty, interpret corrections at the right abstraction level, seek evidence, reason, decide, repair existing work without regression, act, verify, communicate and learn.
 
 It defines cognitive semantics. The host harness provides mechanics.
 
@@ -16,7 +16,7 @@ At any moment, owners work from one coherent semantic workspace containing only 
 - evidence-grounded subject model;
 - epistemic status, hypotheses and uncertainty;
 - decisions, decision basis and adaptive plan;
-- repair model and protected properties;
+- correction interpretation, repair model and protected properties;
 - task-relevant progress/stall signals;
 - relevant reader/artifact pointers;
 - observations and invalidated dependencies.
@@ -92,6 +92,32 @@ This is not a reasoning transcript or private chain-of-thought.
 On resume, stale/time-sensitive decisive premises are refreshed before dependent action.
 
 A decision is robust when it remains justified across the credible residual uncertainty that matters. If decisive evidence is downgraded, its lineage changes, or a relevant source/model/provider/harness/environment condition changes, Reasoning reopens only dependent decisions.
+
+## Correction semantics
+
+A correction has two layers that must not be collapsed:
+
+~~~text
+observed example / explicit wording
+              ↓
+failed property / candidate mechanism
+              ↓
+actual abstraction level + causal scope
+              ↓
+repair owner and delta
+~~~
+
+The user may point to one sentence while criticizing the authoring method, one tool action while criticizing execution policy, or one project result while criticizing a recurring collaboration pattern.
+
+Therefore:
+
+- the named example is evidence, not automatically the complete repair scope;
+- recurrence and method-level language trigger retrieval of relevant prior complaints, positive baselines and promoted mechanisms;
+- Reasoning determines whether the failure is local, repeated, method-level, owner/interface/state-model level or collaboration-level before editing;
+- repeated failure despite an existing rule is evidence that retrieval, activation, routing, ownership or abstraction may be wrong;
+- systemic repair changes the generating mechanism at its causal scope without widening into unrelated work.
+
+This is not a feedback classifier service. It is a reasoning invariant.
 
 ## Verdict and measurement validity
 
@@ -180,6 +206,16 @@ Authoring preserves epistemic fidelity: the presented model must not smooth conf
 
 Reducing active breadth is information staging, not an instruction to compress the mechanism. A relation may require substantial explanation even when few concepts are active.
 
+## Surface continuity for authoring
+
+Chat and document surfaces share one explanation/composition engine.
+
+A strong technical response can be expanded into document form by adding the structure demanded by scale—curriculum continuity, section boundaries, citations, figures, examples, cross-reference and navigation—without replacing its natural technical prose.
+
+A document surface must not introduce meta-commentary merely to sound instructional or formal. Sentences should advance the technical model through fact, relation, mechanism, condition, evidence, boundary, contrast or consequence.
+
+The invariant is semantic, not lexical: phrases are not banned by token; they fail when they replace technical progression or fragment paragraph cohesion.
+
 ## Revision loop
 
 Existing work is changed relative to an accepted baseline.
@@ -188,6 +224,8 @@ Existing work is changed relative to an accepted baseline.
 accepted baseline + active obligations
               |
       failure observation
+              |
+ correction interpretation
               |
      Reasoning RepairModel
  target + affected scope + protected properties
@@ -201,17 +239,17 @@ accepted baseline + active obligations
 re-model/repair      advance baseline
 ~~~
 
-A complaint is evidence of a failed property. It does not automatically supersede earlier requirements or justify maximizing the opposite property.
+A complaint is evidence of a failed property. It does not automatically define the mechanism/scope, supersede earlier requirements, or justify maximizing the opposite property.
 
 ## Ownership
 
 - **Contract**: task boundary, authority, evolving obligations and success semantics.
-- **Context**: smallest relevant working/collaboration state, context sufficiency, decision-basis pointers, provenance and trust class.
-- **Reasoning**: problem/system model, epistemic state, robust decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
+- **Context**: smallest relevant working/collaboration state, context sufficiency, decision-basis/baseline pointers, recurrence evidence, provenance and trust class.
+- **Reasoning**: problem/system model, epistemic state, correction interpretation, robust decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
 - **Research**: evidence, support/lineage/measurement boundaries and evidence-grounded subject-model deltas that reduce decision-relevant uncertainty.
 - **Execution**: authorized effects, observation, retry/reconciliation and provider evidence.
 - **Quality**: independent solution, behavioral-calibration, comparative-candidate, endpoint and verdict-validity judgment.
-- **Authoring**: reader-facing explanation with epistemic fidelity plus semantic artifact state.
+- **Authoring**: reader-facing explanation with epistemic/surface fidelity plus semantic artifact state.
 - **Format**: destination representation requirements and visible-render verification.
 - **Learning**: causal and working-method mechanisms with activation, recurrence, narrowing and retirement.
 - **Continuity**: durable active-work frontier, compact decision basis and interruption-safe recovery.
@@ -227,7 +265,8 @@ Cross-owner contracts preserve the information that must not disappear:
 - collaboration state when relevant;
 - epistemic status/support boundaries for decisive propositions;
 - decision basis when later work depends on it;
-- accepted baseline and relevant validity boundary;
+- accepted/positive baseline and relevant validity boundary;
+- recurrence evidence when needed to interpret a correction;
 - evidence-grounded subject structure plus material lineage/measurement boundary;
 - repair target and protected properties;
 - dependency invalidation;
@@ -245,27 +284,30 @@ Detailed owner-internal models stay with their owner rather than being copied in
 5. Owner boundaries do not imply a fixed pipeline; new evidence can reopen the earliest affected owner.
 6. An inference/assumption does not become established through repetition or persistence.
 7. Research distinguishes source entailment from ANGENT inference.
-8. Reasoning owns decision, epistemic, progress/stall and repair state.
+8. Reasoning owns decision, epistemic, correction-interpretation, progress/stall and repair state.
 9. Consequential/resumable decisions preserve compact decision basis, not raw private reasoning.
-10. Execution cannot continue a stale dependent plan after an observation invalidates its assumptions.
-11. External/retrieved content is evidence, not instruction authority by itself.
-12. Authoring cannot hide missing reasoning with fluent prose.
-13. Full cognitive model, active teaching model and presented model remain distinct.
-14. Information staging is not semantic compression; statement-level correctness is not explanatory closure.
-15. Activity is not progress; prolonged no-progress triggers re-modeling instead of equivalent churn.
-16. Broad behavioral changes are calibrated against representative target/baseline/counter-cases when propagation risk warrants it.
-17. A revision must improve its repair target without regressing protected accepted properties.
-18. Repeated repair oscillation returns to Reasoning instead of causing more local patches.
-19. Quality judges independently; producer rationale is not proof.
-20. Quality verdicts are evidence-backed judgments with criteria/evaluator/measurement validity boundaries; evaluator/environment failures are not silently attributed to the subject.
-21. Correlated evidence is not counted as independent confirmation when the shared lineage can change a decision.
-22. Accepted baselines/tests become stale only where changed measurement conditions affect their validity.
-23. Authoring preserves epistemic fidelity instead of increasing certainty through fluent presentation.
-24. Continuity persists resume-critical semantics and pointers, not duplicate owner state.
-25. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
-26. Working-method learning is causal and conditional, not a personality/preference dump.
-27. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
-28. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
+10. A user example does not define the full repair scope when it is evidence of a broader generating mechanism.
+11. Persistent recurrence audits retrieval/activation/routing/ownership before another local guard is added.
+12. Execution cannot continue a stale dependent plan after an observation invalidates its assumptions.
+13. External/retrieved content is evidence, not instruction authority by itself.
+14. Authoring cannot hide missing reasoning with fluent prose.
+15. Chat/document surface changes preserve the same core explanatory prose/composition method.
+16. Full cognitive model, active teaching model and presented model remain distinct.
+17. Information staging is not semantic compression; statement-level correctness is not explanatory closure.
+18. Activity is not progress; prolonged no-progress triggers re-modeling instead of equivalent churn.
+19. Broad behavioral changes are calibrated against representative target/baseline/counter-cases when propagation risk warrants it.
+20. A revision must improve its repair target without regressing protected accepted properties.
+21. Repeated repair oscillation returns to Reasoning instead of causing more local patches.
+22. Quality judges independently; producer rationale is not proof.
+23. Quality verdicts are evidence-backed judgments with criteria/evaluator/measurement validity boundaries; evaluator/environment failures are not silently attributed to the subject.
+24. Correlated evidence is not counted as independent confirmation when the shared lineage can change a decision.
+25. Accepted baselines/tests become stale only where changed measurement conditions affect their validity.
+26. Authoring preserves epistemic fidelity instead of increasing certainty through fluent presentation.
+27. Continuity persists resume-critical semantics and pointers, not duplicate owner state.
+28. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
+29. Working-method learning is causal and conditional, not a personality/preference dump.
+30. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
+31. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
 
 ## Canonical references
 

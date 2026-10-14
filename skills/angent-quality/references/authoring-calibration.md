@@ -1,6 +1,6 @@
 # Authoring calibration
 
-Quality evaluates communication by failure mechanism, not by word count, heading count or visual density.
+Quality evaluates communication by failure mechanism, not by word count, heading count, visual density, or a forbidden-phrase list.
 
 ## Failure classes
 
@@ -12,6 +12,24 @@ Symptoms:
 - reader must assemble the mechanism alone.
 
 Return to Authoring: expose the relation and interpretation.
+
+### Surface-induced prose regression
+
+Symptoms:
+- chat/response prose is cohesive and natural;
+- the same material becomes fragmented, ceremonial, generic or “AI-document-like” when moved into a document;
+- document-specific narration/commentary appears even though the underlying subject model did not require it.
+
+Return to Authoring: restore the shared response-quality prose/composition baseline, then add only document-scale structure/depth. Do not invent a separate formal-document voice.
+
+### Meta-commentary replacing technical progression
+
+Symptoms:
+- sentences announce importance, what to memorize, what “we” will learn, or the author's intention;
+- neighboring technical claims become separated by coaching/commentary;
+- prose sounds conversational or AI-generated despite correct facts.
+
+Return to Authoring: replace commentary with the actual rule, relation, mechanism, boundary, evidence or consequence. Do not create a lexical blacklist.
 
 ### Outline decay
 
@@ -95,6 +113,25 @@ Symptoms:
 
 Return to Reasoning: reconstruct the failed function, repair target and protected properties before another edit.
 
+### Local patch without conceptual closure
+
+Symptoms:
+- a complaint causes one sentence to be patched;
+- the same failure mechanism remains elsewhere;
+- the revision contradicts neighboring sections;
+- user examples are treated as the complete scope even though they expose a repeated generating pattern.
+
+Return to Reasoning and load correction-interpretation. Repair the shared mechanism/affected dependency closure, not only the named example.
+
+### Recurring failure despite an existing rule
+
+Symptoms:
+- the relevant rule/mechanism already exists in Authoring/Learning/Quality;
+- the same behavior still appears;
+- another wording tweak to the rule is proposed.
+
+Do not strengthen wording by default. Audit whether the mechanism was retrieved, activated, routed early enough, owned by the correct component, or contradicted by another instruction/state.
+
 ### Repair regression
 
 Symptoms:
@@ -103,15 +140,6 @@ Symptoms:
 - the candidate is good in isolation but worse than the accepted baseline on a protected dimension.
 
 Reject the candidate. A repair must pass both target and preservation checks.
-
-### Local patch without conceptual closure
-
-Symptoms:
-- a complaint causes one sentence to be patched;
-- the same failure mechanism remains elsewhere;
-- the revision contradicts neighboring sections.
-
-Return to Reasoning at the earliest systemic cause and repair the affected dependency closure.
 
 ### Oscillating revision
 
@@ -141,6 +169,8 @@ For reader-facing technical output ask:
 5. For a revision, what improved relative to baseline and what protected property could regress?
 6. Did any fluent passage hide unresolved reasoning/evidence?
 7. For long-form work, is depth comparable with earlier units of similar difficulty?
-8. Did a complaint get translated into a causal repair, or merely an opposite extreme?
+8. Did the surface change preserve the same core prose/composition quality?
+9. Did a complaint get interpreted at the correct abstraction level, or merely patched at the latest example?
+10. If the same failure recurred despite an existing rule, did the repair investigate activation/routing/ownership rather than add another guard?
 
-A candidate fails when it makes the reader reconstruct too much, violates active obligations, or regresses a protected property even if the local complaint was fixed.
+A candidate fails when it makes the reader reconstruct too much, violates active obligations, regresses a protected property, or preserves the generating mechanism behind a recurring complaint even if the named example was fixed.

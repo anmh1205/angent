@@ -1,6 +1,6 @@
 # Vietnamese technical language
 
-Compose from the intended proposition and technical relation, not an English sentence skeleton.
+Compose from the intended proposition and technical relation, not an English sentence skeleton or a stock “technical-document” voice.
 
 ## Register
 
@@ -16,13 +16,29 @@ Preserve cause, condition, contrast, sequence, scope and uncertainty.
 
 Rebuild an unnatural clause rather than translating word-by-word.
 
-Maintain stable referents and real given→new flow.
+Maintain stable referents and real given→new flow across sentences and paragraphs. Adjacent sentences should usually share a visible conceptual relation; do not make every sentence a detached fact.
 
-## Avoid artificial gravity
+When a paragraph teaches one mechanism, prefer a continuous explanation over a sequence of mini-declarations separated by author comments.
 
-Do not add sentences whose main function is to announce importance, author intention or sophistication.
+## Remove meta-commentary, not just phrases
 
-State the mechanism/distinction/consequence directly.
+Do not add sentences whose main function is to:
+
+- announce that something is important;
+- tell the reader what not to memorize;
+- narrate what “we” will or will not learn next;
+- praise/summarize the author's own explanation;
+- create conversational transitions without technical information.
+
+State the underlying technical relation directly.
+
+Example of the mechanism:
+
+Weak: “Điểm quan trọng là stack pointer phải luôn thỏa căn chỉnh.”
+
+Better: “AAPCS64 yêu cầu SP căn chỉnh 16 byte tại các public interface; vi phạm điều kiện này có thể làm callee hoặc mã sinh bởi compiler truy cập stack sai giả định.”
+
+The lesson is not to ban “Điểm quan trọng là”. It is to replace meta-commentary with the actual rule, reason, or consequence.
 
 ## Formal technical writing
 

@@ -1,11 +1,11 @@
 ---
 name: angent-quality
-description: Independently evaluate solution integrity, comparative candidate quality, behavioral calibration and verified endpoint state, returning failures to the earliest responsible owner.
+description: Independently evaluate solution integrity, correction scope, comparative candidate quality, behavioral calibration and verified endpoint state, returning failures to the earliest responsible owner.
 ---
 
 # ANGENT Quality — Independent Gate
 
-Quality judges solution, candidate, behavior change, or endpoint state against the Contract, active obligations, evidence, and the accepted baseline when revision work has one.
+Quality judges solution, candidate, behavior change, correction scope, or endpoint state against the Contract, active obligations, evidence, and the accepted baseline when revision work has one.
 
 It does not rewrite the candidate, invent missing evidence or become a second planner.
 
@@ -23,6 +23,7 @@ It does not rewrite the candidate, invent missing evidence or become a second pl
 Evaluate only relevant dimensions:
 - task/goal fit;
 - constraint/invariant preservation;
+- correction interpreted at the right abstraction level;
 - epistemic-status integrity;
 - model completeness;
 - evidence sufficiency and entailment/version boundaries;
@@ -33,7 +34,7 @@ Evaluate only relevant dimensions:
 - scope-to-evidence coverage;
 - authoritative endpoint evidence.
 
-A fluent answer cannot compensate for a wrong model.
+A fluent answer cannot compensate for a wrong model, and fixing the user's quoted example cannot compensate for leaving the same generating failure intact.
 
 ## Verdict validity
 
@@ -54,8 +55,8 @@ Use BLOCKED when available evidence cannot reliably distinguish these and the di
 
 When Layer A fails, return the earliest fault:
 - task boundary/authority → Contract;
-- state provenance/collaboration/context → Context;
-- model/decision/plan → Reasoning;
+- state provenance/collaboration/context/recurrence retrieval → Context;
+- correction interpretation/model/decision/plan → Reasoning;
 - evidence/support boundary → Research;
 - provider/action result → Execution;
 - active-work persistence/recovery → Continuity.
@@ -70,6 +71,8 @@ For reader-facing output, evaluate:
 - reader-state fit;
 - concept admission;
 - explanatory progress;
+- cross-surface prose continuity;
+- paragraph cohesion;
 - representation fit;
 - prose/structure integrity;
 - terminology/language;
@@ -78,7 +81,9 @@ For reader-facing output, evaluate:
 - long-form consistency when applicable;
 - render fidelity through Format when destination-specific.
 
-Return failures to Authoring/Format. For revision work, use the comparative-gates reference and reject a locally improved candidate if it regresses protected accepted properties.
+A document does not pass merely because it is more formal or more structured than the equivalent response. If moving to document form introduces stock teaching narration, detached sentences, generic AI prose, or weaker cohesion, return the failure to Authoring even when the facts remain correct.
+
+For revision work, use the comparative-gates reference and reject a locally improved candidate if it regresses protected accepted properties.
 
 ## Review-context discipline
 
@@ -95,6 +100,8 @@ Self-review is useful evidence but is not independent confirmation. Different gr
 When a method/prompt/architecture change will affect many future tasks or units, Quality should calibrate the behavior before broad propagation when practical.
 
 Use representative real failure/success cases and counter-cases rather than keyword/count checks. Compare candidate behavior with the accepted baseline and inspect actual trajectories/outcomes when the behavior is agentic.
+
+For recurring corrections, include at least one analogous case not literally named by the latest complaint when practical. This checks whether the generating mechanism was repaired rather than the example memorized.
 
 Calibration is evidence about a method; it is not whole-scope proof and should not become a mandatory platform for trivial changes.
 

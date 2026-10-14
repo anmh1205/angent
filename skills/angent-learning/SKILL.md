@@ -1,6 +1,6 @@
 ---
 name: angent-learning
-description: Turn meaningful work experience into evidence-backed causal and working-method knowledge, retrieve it when relevant, and retire mechanisms that no longer transfer.
+description: Turn meaningful work experience into evidence-backed causal and working-method knowledge, retrieve it when relevant, diagnose recurrence, and retire mechanisms that no longer transfer.
 ---
 
 # ANGENT Learning — Experience to Understanding
@@ -11,7 +11,7 @@ It improves future decisions without turning every incident into a permanent rul
 
 ## Load references progressively
 
-- references/experience-loop.md — capture experiences, infer/test mechanisms, promote carefully.
+- references/experience-loop.md — capture experiences, infer/test mechanisms, promote carefully, and diagnose recurrence.
 - references/memory-boundary.md — distinguish Learning from memory, AGENTS.md, collaboration state, and active task state.
 
 ## Experience intake
@@ -35,6 +35,8 @@ Keep original evidence separate from causal interpretation.
 
 A complaint or success proves that an outcome occurred, not why.
 
+The user's quoted example is not automatically the whole lesson. Ask what generating behavior produced it and what other cases that behavior predicts.
+
 ## Infer a mechanism
 
 Before generalizing:
@@ -56,15 +58,32 @@ Do not encode “the user likes X” when the evidence actually supports “X wo
 
 Context may activate applicable working-method mechanisms into the current collaboration state. Learning itself does not choose the interaction mode for a task.
 
-## Promote narrowly
+## Promote narrowly, but at the correct abstraction
 
-Promote the smallest mechanism to the owner controlling the decision.
+Promote the smallest mechanism that explains the recurring behavior, not the smallest quoted symptom.
 
-Do not paste user wording, project names, or one-off examples into global instructions.
+Do not paste user wording, project names, isolated disliked phrases, or one-off examples into global instructions.
+
+When several examples are manifestations of one generating failure, promote one mechanism and use the examples as evidence/calibration cases.
 
 A project-specific mechanism may remain project-local.
 
 A success does not prove every workflow step was necessary.
+
+## Recurrence diagnosis
+
+When a promoted mechanism existed but the failure returns, do not merely strengthen the rule text.
+
+Ask which layer failed:
+
+- **retrieval** — the relevant mechanism/context was not recovered;
+- **activation** — it was present but not recognized as applicable;
+- **routing** — correction/work was sent to the wrong owner or too late;
+- **ownership** — the mechanism was encoded under an owner that cannot control the behavior;
+- **abstraction** — the stored lesson described a symptom rather than the real generator;
+- **competition** — another instruction/state/model systematically overrode it.
+
+Persistent recurrence is evidence about the system that applies the lesson, not just about the lesson wording.
 
 ## Retrieval and retirement
 
