@@ -65,7 +65,7 @@ class PackerTests(unittest.TestCase):
         subprocess.run(['git', '-C', str(self.root), 'add', p.name], check=True)
         out = self.invoke('--format', 'markdown', '--stdout', '--include', 'evil*')
         self.assertEqual(out.returncode, 0, out.stderr)
-        self.assertIn('## "evil&lt;img', out.stdout)
+        self.assertIn('## &quot;evil&lt;img', out.stdout)
         self.assertNotIn('## evil<img', out.stdout)
 
     def test_dry_run_excludes_contents(self):
