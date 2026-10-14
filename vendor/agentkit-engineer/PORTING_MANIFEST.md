@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **91 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **94 / 102 Skill identities reviewed semantically**.
 
-- **69 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
+- **72 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-fable-thinking`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-google-adk-python`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-mcp-builder`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
 - **19 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-mintlify`, `ak-plans-kanban`, `ak-repomix`, `ak-show-off`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
 - **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
-- **11 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **8 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -176,6 +176,10 @@ The stable Multix runtime pins an exact CLI and routes image/video/audio/music/d
 
 CTI Expert preserves AEAD case handling, evidence time/source/identity confidence and real defensive scope; its much larger specialist collection corpus remains outside the portable bundle, so the mode is DEGRADED. Excalidraw preserves live canvas versus editable .excalidraw JSON with rendered validation and a source-backed codebase auto-diagram route; its real MCP/browser tool must still be present. Document Skills acts as a high-fidelity destination router to installed DOCX/PDF/PPTX/XLSX authoring and validation engines, not an imaginary built-in replacement for over a hundred upstream helper documents.
 
+### Proportional reasoning, Google ADK and MCP builder contracts
+
+Fable Thinking retains its always-run floor, proportional depth, five evidence/decision moves and mechanically checked exact-output constraints without private reasoning disclosure or a proprietary model claim. Google ADK restores versioned Python entrypoint/agent graph selection, session versus durable state/memory, MCP/A2A contracts and eval/deployment proof. MCP Builder restores four separate user-workflow research, typed SDK implementation, live client integration and agent-facing verification phases, including server lifecycle, read/write authorization and error recovery. SDK compatibility is verified in the executing project rather than presumed from this portable text.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -212,7 +216,7 @@ CTI Expert preserves AEAD case handling, evidence time/source/identity confidenc
 | `ak-docs-seeker` | VERIFIED_ADAPTED | stable 2.19.0 Versioned canonical docs and llms.txt discovery preserved; unbundled Node scripts explicitly non-operative |
 | `ak-document-skills` | VERIFIED_ADAPTED | format-specific native Word/PDF/Slides/Sheets capability dispatch, source and render gates |
 | `ak-excalidraw` | VERIFIED_DEGRADED | native MCP canvas and editable JSON/Playwright modes, semantic maps and render QA; backend not bundled |
-| `ak-fable-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-fable-thinking` | VERIFIED_ADAPTED | floor/proportional FRAME-GROUND-REASON-ATTACK-DELIVER, strict exact-output checks and truthful evidence |
 | `ak-find-skills` | VERIFIED_ADAPTED | stable 2.19.0 local domain routing versus external Skills CLI discovery/install authority retained |
 | `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-folder-context` | VERIFIED_ADAPTED | stable 2.19.0 Subtree-only sanity/approval gate and canonical AGENTS.md compatibility restored |
@@ -222,7 +226,7 @@ CTI Expert preserves AEAD case handling, evidence time/source/identity confidenc
 | `ak-github` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-gkg` | VERIFIED_DEGRADED | stable 2.19.0 GKG definition/reference/impact workflow and MCP/search semantics retained; native AST/index server remains optional |
 | `ak-goal-warmup` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-google-adk-python` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-google-adk-python` | VERIFIED_ADAPTED | ADK package entrypoint, workflows, state/memory, MCP/A2A, eval and deployed-runtime gates |
 | `ak-graphify` | VERIFIED_DEGRADED | stable 2.19.0 graph build/query, provenance, media privacy and MCP/native capability boundaries restored; external Graphify runtime not bundled |
 | `ak-handoff` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-handover` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
@@ -235,7 +239,7 @@ CTI Expert preserves AEAD case handling, evidence time/source/identity confidenc
 | `ak-llms` | VERIFIED_ADAPTED | stable 2.19.0 llms.txt/llms-full.txt sources, URL scope, optional sections, generator preflight and validation |
 | `ak-loop` | VERIFIED_ADAPTED | stable 2.19.0 sequential atomic, numeric/guard/noise-aware optimization, Git experiment history and safe rollback bounds |
 | `ak-markdown-novel-viewer` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-mcp-builder` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-mcp-builder` | VERIFIED_ADAPTED | four-phase research/typed implementation/client handshake and evaluation workflow, effect semantics |
 | `ak-media-processing` | VERIFIED_ADAPTED | stable 2.19.0 FFmpeg/ImageMagick/RMBG routes, codec/batch/stream quality and output verification restored |
 | `ak-mermaidjs-v11` | VERIFIED_ADAPTED | stable 2.19.0 diagram families, v11 syntax, CLI/JS/Markdown targets, security, accessibility and rendered-result gates restored |
 | `ak-mintlify` | VERIFIED_DEGRADED | stable 2.19.0 docs.json/MDX/navigation/OpenAPI/AI/CLI/deployment flows retained; full refs/native CLI absent |
