@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **72 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **76 / 102 Skill identities reviewed semantically**.
 
-- **61 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-loop`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **64 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-find-skills`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-loop`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
 - **9 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-team`, `ak-ui-ux-pro-max`.
-- **2 VERIFIED_PORTABLE**: `ak-ask`, `ak-problem-solving`.
-- **30 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
+- **26 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -152,6 +152,10 @@ The stable 2.19.0 Tech Graph bundle adds detailed architecture/UML/network/state
 
 The stable 2.19.0 Loop preserves its numeric goal/scope/verify/guard contract, sequential one-change experiments, Git memory, keep/discard result log, directional Min-Delta/noise management and nonconvergence stops. The portable replacement additionally refuses destructive resets or unapproved commits on shared/dirty branches; safety and user branch authority take precedence over the upstream convenience of committing every trial. Predict restores the five explicit architecture/security/performance/UX/devil's-advocate lenses, worst-case conflicts, advisory GO/CAUTION/STOP gates and two non-standalone reason/probe chain modes. Scenario restores all 12 candidate dimensions and distinct one-shot, bounded-iteration and two-round saturation/novelty modes without presenting generated scenarios as executed tests. Problem Solving restores the six technique families and selection/validation processes without mandatory runtime tools or artificial extra agents.
 
+### Skill discovery, presentation calibration and plan coordination
+
+Direct 2.19.0 package review restored explicit 0–5 coding-level selection with native Claude style-injection/persistence treated as a conditional runtime effect rather than hidden fallback behavior. Common remains internal-only; it does not introduce an independent user-facing skill. Find Skills preserves its two separate paths: choosing among actually installed AgentKit/ANGENT capabilities and using the external Skills CLI with explicit installation/update authority and source inspection. Project Management retains durable files-first plans, optional ephemeral runtime hydration, verified whole-plan phase backfill/sync-back, progress evidence and documentation-impact routing. No update to project or global user configuration is implied by any of these skill Markdown changes.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -172,8 +176,8 @@ The stable 2.19.0 Loop preserves its numeric goal/scope/verify/guard contract, s
 | `ak-chrome-profile` | VERIFIED_DEGRADED | stable 2.19.0 profile-identity/sensitive-state safeguards; real Chrome attachment runtime-dependent |
 | `ak-code-review` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-codex-goal` | VERIFIED_ADAPTED | stable 2.19.0 goal frontier, stop criteria and honest harness-independent execution bounds |
-| `ak-coding-level` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-common` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-coding-level` | VERIFIED_ADAPTED | stable 2.19.0 explicit 0–5 reader levels and runtime-specific style/persistence limits retained |
+| `ak-common` | VERIFIED_PORTABLE | stable 2.19.0 internal-only shared support role; no phantom scripts or user invocation |
 | `ak-context-engineering` | VERIFIED_ADAPTED | stable 2.19.0 Measured context/runtime boundaries, four-bucket lifecycle and decision-quality evaluation retained; no fabricated provider telemetry |
 | `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-copywriting` | VERIFIED_ADAPTED | stable 2.19.0 conversion patterns, channel composition, evidence and style boundaries reviewed |
@@ -189,7 +193,7 @@ The stable 2.19.0 Loop preserves its numeric goal/scope/verify/guard contract, s
 | `ak-document-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-excalidraw` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-fable-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-find-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-find-skills` | VERIFIED_ADAPTED | stable 2.19.0 local domain routing versus external Skills CLI discovery/install authority retained |
 | `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-folder-context` | VERIFIED_ADAPTED | stable 2.19.0 Subtree-only sanity/approval gate and canonical AGENTS.md compatibility restored |
 | `ak-frontend-design` | VERIFIED_ADAPTED | stable 2.19.0 visual-direction/state/render-verification semantics preserved with harness-native implementation/render tools |
@@ -223,7 +227,7 @@ The stable 2.19.0 Loop preserves its numeric goal/scope/verify/guard contract, s
 | `ak-predict` | VERIFIED_ADAPTED | stable 2.19.0 five-perspective debate, worst-case GO/CAUTION/STOP verdict and reason/probe follow-on modes |
 | `ak-preview` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-problem-solving` | VERIFIED_PORTABLE | stable 2.19.0 six technique families restored with diagnosis, concrete probes and no runtime dependency |
-| `ak-project-management` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-project-management` | VERIFIED_ADAPTED | stable 2.19.0 durable plan hydration, all-phase sync-back, verified progress and docs-impact routing retained |
 | `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored |
 | `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
 | `ak-remotion` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |

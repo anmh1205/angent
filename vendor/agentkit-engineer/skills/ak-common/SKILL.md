@@ -1,21 +1,23 @@
 ---
 name: ak-common
-description: Shared fallback conventions for Engineer Skills; internal-only support, not a user workflow.
-metadata: {port: angent-fallback, mode: adapted}
+description: Internal-only shared conventions and support material for Engineer skills; never selected as a standalone user task.
+metadata: {port: angent-fallback, mode: portable}
 ---
 
 # Common — Portable Fallback
 
-Shared rules for fallback Engineer Skills:
+Stable Engineer 2.19.0 declares Common **internal-only** with model invocation disabled. It provides reusable conventions/resources to other skills rather than a user-invocable workflow. Load it only when another selected Skill explicitly needs its common material; never route a user's request to Common as an agent.
 
-- read applicable AGENTS.md before project-specific work;
-- preserve ANGENT Contract and Reasoning ownership;
-- use native harness capability instead of hard-coded tool names when possible;
-- degrade explicitly when a capability is absent;
-- use Continuity for long-running work and ambiguous effects;
-- prefer project-native commands/configuration;
-- do not claim completion from intermediate tool success;
-- do not expose secrets in reports/handoffs;
-- return evidence/artifact pointers instead of full transcripts.
+The upstream Common SKILL.md is a small index pointing to package-local support directories. Discover and load any actually bundled files rather than presuming scripts, references or resources were copied into this fallback.
 
-Individual Skills may add stricter domain rules.
+## Shared integration boundaries
+
+- Follow relevant AGENTS.md and the consuming repository's current instructions.
+- Preserve ANGENT Contract/Reasoning ownership; shared helpers do not override skill-specific domain contracts.
+- Prefer the real host's available tools, commands and schemas to upstream-specific assumed names or inactive support files.
+- Distinguish read-only observation, proposed change, authorized effect and verified completion.
+- For high-impact Git/system changes, preserve branch, file, credential, privacy and rollback boundaries.
+- For long-running work, keep only decision-relevant Continuity state, evidence and next valid action.
+- Return source-backed results without inventing executed scripts, live subagents, status, files or test passes.
+
+Individual skills may require more restrictive safety rules. No shared generic helper should flatten their distinctions, introduce mandatory process ceremonies or silently weaken a destination's authority model.

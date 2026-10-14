@@ -1,41 +1,41 @@
 ---
 name: ak-project-management
-description: Track implementation progress against durable plans and provider state, coordinate workstreams and keep the active project frontier accurate across sessions.
+description: Reconcile durable multi-phase plans with optional live task tracking, verify completion, update all affected phases and coordinate meaningful docs/status changes.
 metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Project Management — Portable Fallback
 
-Use when a project has multiple work units, agents, issues or phases whose status must remain coherent.
+Use when plans, issues, phases or teams need reliable status, dependency and resumption information. Stable Engineer 2.19.0 separates durable plan files from ephemeral runtime task tracking, supplies **hydration and whole-plan sync-back**, and coordinates actual documentation changes only when triggered by a meaningful contract change.
 
-Read `references/plan-task-reconciliation.md`.
+Read **references/plan-task-reconciliation.md** and **references/progress-and-docs.md**. This is not a requirement to create a project manager agent or duplicate plans on every task.
 
-## Sources
+## Authorities
 
-Use together as appropriate:
-- files-first plan;
-- ANGENT Continuity frontier;
-- authoritative issue/project system;
-- Git/artifact state;
-- verification evidence.
+The active implementation plan (and its phases) owns durable work intent and completion criteria; authoritative provider tasks own their live statuses/assignments; Git/tests/artifacts own observed implementation evidence. ANGENT Continuity supplies the active, interruption-safe frontier, **not** a second permanent copy of every plan item. Reconcile disagreements and mark uncertain mappings rather than accepting the newest prose status at face value.
 
-Do not treat worker status messages as completion evidence.
+## Operations
 
-## Workflow
+### Status and resume
 
-1. Recover the current active plan/frontier.
-2. Discover the live task/project surface if one exists.
-3. Hydrate missing operational tasks from unfinished plan work when useful.
-4. Reconcile completed/in-progress/blocked work against actual artifacts and verification.
-5. Sync verified status back to all affected plan phases/items, not only the current one.
-6. Update provider task state when authorized.
-7. Recompute dependencies when prerequisite state changed.
-8. Surface the first unfinished valid work unit, blockers and unresolved mappings.
+Locate the actual active plan according to project instructions; inspect its full phase set, dependencies, checked/unchecked work, current branch, known blockers, acceptance gates and any live task view. Do not assume an upstream `./plans` directory if the consuming repo has a different owner.
 
-## Boundary
+### Hydration and work tracking
 
-Project Management coordinates delivery state.
+Discover a live task system at runtime; never infer it from a client name or historical tool list. If available, map unfinished phase items to unique operational tasks with source location, owner and dependencies. Reuse existing mappings; do not create duplicates. Without it, work from the durable plan and keep progress there.
 
-It does not own product/architecture decisions.
+### Verified completion and sync-back
 
-A dashboard/task board is an operational projection; it must not erase the durable implementation meaning stored in the plan and Continuity.
+Verify observed code/artifact/test/review results against the **specific task acceptance contract**. When syncing back, scan every phase file under the target plan, reconcile completed provider items to their exact source entries, repair stale earlier checkboxes, and update aggregate plan status only from verified phase state. Report unmapped completed items and blockers; do not claim a fully completed plan with unresolved mappings. If native AgentKit plan CLI is installed, discover current `ak plan --help` semantics; otherwise make the smallest plan-file edit authorized by this project.
+
+### Docs and communication
+
+Determine whether new behavior, API/schema, architecture, security, command or operator knowledge changes demand documentation; ordinary checkbox or internal refactor does **not** automatically trigger a documentation rewrite. Route the changed contract to the actual doc owner and verify its final claims. Generate concise status reports only at a real requested checkpoint or useful milestone. No automatic issue updates or externally delivered reports unless authorized.
+
+## Outputs
+
+Return evidence-backed completed/in-progress/blocked counts, provenance, scope changes, risks and dependency implications; first valid next unit with owner/gate; live/durable mismatch; provider/write action results and limitations. Avoid percentage claims when no verified denominator is available.
+
+## Boundaries
+
+Project Management coordinates state, not strategic product decisions. Do not override user approval, merge policy, branch restrictions or artifact ownership to satisfy a plan checkbox.
