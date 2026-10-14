@@ -399,6 +399,16 @@ Detailed owner-internal models stay with their owner rather than being copied in
 36. Branch independence is conditional and affected dependencies are recomputed after shared-state change.
 37. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
 
+## Version identity
+
+ANGENT treats semantic version as one project identity, not as per-surface deployment state.
+
+All ANGENT-owned manifests and runtime packages remain at **1.0.0** until the user explicitly changes the project version.
+
+Commit SHAs, provider release IDs, artifact hashes, upload revisions and preview identities may distinguish builds/deployments of the same semantic version. They must not be reinterpreted as patch-version increments.
+
+A semantic-version change is an explicit project decision, not an automatic consequence of implementation progress, plugin synchronization, acceptance testing or provider release creation.
+
 ## Canonical references
 
 Owner-specific guidance lives beside each owner under skills/angent-*/references/.

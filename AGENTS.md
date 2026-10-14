@@ -166,6 +166,18 @@ When a reliability rule is important but task-specific, prefer:
 
 Adding another always-on instruction is justified only when the property truly constrains almost every ANGENT task.
 
+## Version identity
+
+ANGENT uses one canonical semantic version across every ANGENT-owned surface: **1.0.0**.
+
+The root/plugin manifests, private ChatGPT plugin/runtime, Engineer fallback manifests, preview/staging packages, checkpoint and release-state documentation must all remain `1.0.0` until the user explicitly changes the project version.
+
+Provider release IDs, commit SHAs, artifact digests, upload revisions and preview identities may change. They identify deployments/builds, not semantic versions.
+
+Do not auto-increment ANGENT because content changed, a private plugin was synchronized, an internal release ID changed, or acceptance testing occurred.
+
+If a tooling path would force a semantic-version bump, use another transport/preview mechanism or stop at that tooling boundary rather than silently changing version policy.
+
 ## Change discipline
 
 For architecture/prompt changes, inspect current source, update affected owner interfaces/entry surfaces, read back changed files, compare with the accepted baseline, and use representative behavioral calibration when propagation risk warrants it.
