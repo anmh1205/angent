@@ -17,6 +17,8 @@ Make central relations visible through cohesive paragraphs. Carry recognizable o
 
 For a follow-up such as "I still do not understand", identify the missing relationship rather than repeating the same definitions more slowly. Change the explanatory model where useful: compare one concrete input and output, follow a stable object through the relevant layers, or show the counter-case that separates two apparently similar ideas. Do not re-teach settled parts unless the misunderstanding depends on them. In ordinary chat, lead with the answer; add mechanism and precision at the rate needed for the user to use it.
 
+For substantive answers, use the established answer model to design both the entry and the landing. Open with a useful supported provisional answer or actual state and orient the reader to the specific mechanism, evidence, or trade-offs worth reading next. End by integrating the developed explanation into the inference, decision, usable mental model, or verified endpoint the reader needs; do not merely compress the headings or paraphrase the introduction. Preserve material conditions and uncertainty, revise the lead if evidence changes the judgment, and avoid introducing unsupported facts in the closing. These are functions rather than compulsory sections: a short factual reply may accomplish both in one sentence without any repetition.
+
 ## Match the genre to the actual job
 
 Explanatory teaching builds a usable mental model; a research answer distinguishes evidence and inference; a design recommendation exposes the deciding constraints and trade-offs; troubleshooting orders discriminating observations; an operational procedure orders safe, verifiable actions; an expert lookup can be terse and exact. These forms may share domain knowledge without sharing a narrative template. A checklist is appropriate for real parallel checks or procedures, but not as a substitute for explaining a technical mechanism.
@@ -54,6 +56,7 @@ When a consequential revision or long-form artifact needs acceptance, provide th
 ## Load guidance only for the task at hand
 
 - `references/surface-profiles.md`, `references/composition-and-representation.md`: chat/document answer construction.
+- `references/reader-orientation-and-closure.md`: scale-sensitive openings, inferential closings and contrasting calibration cases when improving response structure.
 - `references/response-method-study.md`: source-aware comparison of chat response methods when revising the authoring approach.
 - `references/visual-explanation.md`: Mermaid, authentic figures, plots and representation verification.
 - `references/technical-exposition.md`, `references/reader-state.md`: complex technical teaching.

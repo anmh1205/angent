@@ -25,6 +25,8 @@ A required PASS supports only the dependent transition and its evidenced scope. 
 
 For value-oriented change, discriminate (1) authorized work completed, (2) solution characteristics met, and (3) benefit realized in the relevant stakeholder/context. A passed test, published document, visually polished design or completed ticket does not by itself establish operational impact. Choose the level of verification the Contract actually requires and the available evidence can establish. If benefits can only be observed after deployment, adoption or passage of time, state that separately; do not fail a sound artifact merely because post-adoption data do not yet exist, and do not invent an outcome metric or claim realized value. Assess competing stakeholder criteria using their real authority and requirements, not an averaged score invented by the evaluator.
 
+For substantive response-authoring changes, compare what a reader understands from the opening alone, the opening with the ending, and the full explanation. Verify that closure integrates supported evidence rather than repeats the lead; preserve short-answer economy, depth, uncertainty, and chat-to-document parity. Use Authoring's `reader-orientation-and-closure.md` positive and negative cases as inputs, not a fixed-format checklist.
+
 ## Calibrate changes, not arbitrary counts
 
 For a change to a widely used skill, method or multi-unit writing approach, compare representative failure, accepted-success and counter-cases where feasible. Inspect observable outputs/trajectories and protected properties, not heading counts, forbidden words, source counts or a self-reported score. One successful test demonstrates possibility, not whole-system reliability.

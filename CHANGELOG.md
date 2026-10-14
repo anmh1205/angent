@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — response orientation and inferential closure
+
+- Improved opening orientation and evidence-grounded synthesis in the existing Authoring method without imposing a three-part answer format.
+- Preserved short-response economy, conceptual explanation depth, uncertainty boundaries, and chat-to-document parity.
+- Added positive and negative calibration cases for facts, teaching, strategy, operational outcomes, research uncertainty and follow-up explanations.
+
 ## Unreleased — cross-domain needs and change analysis
 
 - Extended ANGENT's existing Contract–Research–Reasoning–Quality boundaries to analyze needs, stakeholder value, current/future states, options, impact and realized benefit without importing an IT BA pipeline.
