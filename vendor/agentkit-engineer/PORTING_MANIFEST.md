@@ -32,11 +32,11 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **36 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **39 / 102 Skill identities reviewed semantically**.
 
-- **33 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-web-testing`, `ak-worktree`.
+- **36 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-react-best-practices`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
 - **3 VERIFIED_DEGRADED**: `ak-design` and `ak-ui-ux-pro-max` preserve the load-bearing design/UX workflow but do not reproduce upstream packaged generator/search datasets; `ak-team` cannot truthfully reproduce a live-team lifecycle without harness support.
-- **66 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **63 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -92,6 +92,17 @@ Key corrections and acceptance findings:
 
 No status was promoted from docs alone; public stable guides were used to check workflow meaning against the pinned 2.19.0 package and the fallback implementation.
 
+### Auth / framework / React-performance batch
+
+This batch reviewed `ak-better-auth`, `ak-web-frameworks` and `ak-react-best-practices` against stable public workflow guidance plus the pinned 2.19.0 package boundary.
+
+Key acceptance findings:
+- Better Auth preserves project/version discovery, credentials isolation, account/session/authorization boundaries, minimal provider scope, schema-generation versus migration-execution separation, isolated email/provider testing and explicit production rollout authority.
+- Web Frameworks is now correctly bounded to the stable Next.js/Turborepo-oriented workflow instead of pretending to be a universal framework cookbook; render/cache/build graph, SEO/GEO, scaffold/migration and deployment boundaries remain explicit.
+- React Best Practices preserves evidence-led optimization: compatible installed versions, audit-only versus mutation mode, comparable baseline, ranked findings, semantic risk of parallelism/cache/server-client changes and same-method before/after verification.
+
+Payment, Shopify, TanStack and mobile remain REVIEW_PENDING in this pass because the available stable documentation evidence was not sufficiently detailed to promote their semantic parity verdicts; beta documentation was not used as a substitute for the pinned stable baseline.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -106,7 +117,7 @@ No status was promoted from docs alone; public stable guides were used to check 
 | `ak-ask` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-autoresearch` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-backend-development` | VERIFIED_ADAPTED | stable 2.19.0 bounded backend/API/data-access workflow reviewed; migration/deploy and runtime verification boundaries preserved |
-| `ak-better-auth` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-better-auth` | VERIFIED_ADAPTED | stable 2.19.0 Better Auth workflow reviewed; credentials, schema/migration, session/provider and production rollout boundaries preserved |
 | `ak-bootstrap` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-brainstorm` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-chrome-profile` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -165,7 +176,7 @@ No status was promoted from docs alone; public stable guides were used to check 
 | `ak-problem-solving` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-project-management` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-project-organization` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-react-best-practices` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
 | `ak-remotion` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-repomix` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
@@ -194,7 +205,7 @@ No status was promoted from docs alone; public stable guides were used to check 
 | `ak-vibe` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-watzup` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-web-design-guidelines` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-web-frameworks` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved |
 | `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved |
 | `ak-worktree` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-xia` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
