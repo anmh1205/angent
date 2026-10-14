@@ -13,13 +13,17 @@ Start from:
 - Engineer Skills: https://docs.agentkit.best/en/stable/kits/engineer/skills
 - Engineer Agents: https://docs.agentkit.best/en/stable/kits/engineer/agents
 
+As retrieved on 2026-10-14, the stable resolved Engineer package documents **103 public Skills and 16 Agents**.
+
+That count is provenance, not runtime proof. Native availability still depends on the active target/scope and current installation.
+
 ## Target and scope
 
 AgentKit `--global` means **user scope for a selected runtime target**.
 
 It is not one universal “global target”.
 
-Native Engineer may be projected to Claude Code, Codex, Cursor, DeepSeek Harness, Grok, Pi, OMP or another supported AgentKit adapter according to the current AgentKit release.
+Native Engineer may be projected to supported runtimes according to the current AgentKit release.
 
 ANGENT therefore does not detect native Engineer by checking only one runtime home.
 
@@ -33,9 +37,9 @@ Supporting diagnostics may include:
 
 - `ak --version`;
 - `ak doctor --offline --json` or `ak doctor --json`;
-- runtime-native Skill/agent inventory.
+- runtime-native Skill/Agent inventory.
 
-Binary presence, an old cache or a historical install receipt is insufficient on its own.
+Binary presence, an old cache, a historical install receipt, or documentation saying a Skill exists is insufficient on its own.
 
 If native usability cannot be established, use the ANGENT fallback plugin instead of reconstructing native AgentKit from cache.
 
@@ -49,7 +53,7 @@ The harness supplies whether native Engineer is usable; the script adds read-onl
 
 - `native`;
 - `fallback`;
-- `blocked` when the fallback package itself is invalid.
+- `blocked` when the fallback package/catalog itself is invalid.
 
 ## No upstream source copy
 
@@ -57,4 +61,4 @@ Do not copy AgentKit's native Skill/Agent tree into ANGENT for the native path.
 
 The official AgentKit installation owns native upstream content and updates.
 
-ANGENT maintains its own fallback plugin only for environments where native Engineer is unavailable or unusable.
+ANGENT maintains its own semantically adapted fallback only for environments where native Engineer is unavailable or unusable.

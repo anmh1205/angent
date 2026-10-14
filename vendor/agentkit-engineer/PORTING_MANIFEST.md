@@ -1,127 +1,156 @@
-# Engineer full-port manifest
+# Engineer stable-port manifest
 
-Target: **102/102 Skills + 16/16 Agents** available through ANGENT when native AgentKit Engineer is unavailable.
+Target: **103/103 current stable public Skills + 16/16 Agent roles** available through ANGENT when native AgentKit Engineer is unavailable or unusable.
 
-Native AgentKit remains preferred when usable and is installed/managed from the official AgentKit distribution. This manifest tracks ANGENT's portable fallback only.
+Native AgentKit remains preferred when usable and is installed/managed from the official AgentKit distribution. This manifest tracks ANGENT's independent portable fallback only.
 
-## Status meanings
+## Upstream basis
 
-- **IMPLEMENTED** — portable fallback exists in this repository.
-- **ADAPTED** — implemented with runtime/tool replacement while preserving capability semantics.
-- **DEGRADED** — implemented with an explicit limitation because the original runtime capability cannot be reproduced in the active harness.
+- channel: **stable**
+- catalog retrieved: **2026-10-14**
+- Skill catalog: https://docs.agentkit.best/en/stable/kits/engineer/skills
+- Engineer Kit composition: https://docs.agentkit.best/en/stable/kits/engineer
+- Agent roster: https://docs.agentkit.best/en/stable/kits/engineer/agents
+- machine-readable fallback expectation: `STABLE_CATALOG.json`
 
-No Skill/Agent is removed from the target merely because upstream depends on AgentKit CLI, Claude/Codex, hooks, browser tooling, or a runtime-specific surface.
+Current stable documentation resolves **103 public Skill identities** and **16 Agent roles**.
 
-## Skills — 102 total
+The fallback is parity-targeted to workflow semantics and public identity, not byte-for-byte upstream source or runtime mechanics.
 
-| Skill | Status | Note |
+## Portability meanings
+
+- **PORTABLE** — behavior can be expressed with ordinary agent/project capabilities without relying on one AgentKit runtime implementation.
+- **ADAPTED** — preserves workflow semantics but maps upstream helpers/runtime surfaces to capabilities actually provided by the active harness.
+- **DEGRADED** — preserves the contract and explicit limitations when a native runtime capability cannot be reproduced safely.
+
+A DEGRADED route must not claim native runtime guarantees it does not have.
+
+## Skills — 103 current public identities
+
+| Skill | Portability | Fallback state |
 |---|---|---|
-| `ak-advise` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-agent-browser` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-agentize` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-agentkit` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-ai-artist` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-ai-multimodal` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-ak` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-ask` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-autoresearch` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-backend-development` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-better-auth` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-bootstrap` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-brainstorm` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-chrome-profile` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-code-review` | IMPLEMENTED | Portable fallback present |
-| `ak-codex-goal` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-coding-level` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-common` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-context-engineering` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-cook` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-copywriting` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-cti-expert` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-databases` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-debug` | IMPLEMENTED | Portable fallback present |
-| `ak-deep-swe` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-deploy` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-design` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-devops` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-docs` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-docs-seeker` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-document-skills` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-excalidraw` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-fable-thinking` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-find-skills` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-fix` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-folder-context` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-frontend-design` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-frontend-development` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-git` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-github` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-gkg` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-goal-warmup` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-google-adk-python` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-graphify` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-handoff` | IMPLEMENTED | Portable fallback present |
-| `ak-handover` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-help` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-html-video` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-hyperframes` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-interview-docs` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-issue-to-plan` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-journal` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-llms` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-loop` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-markdown-novel-viewer` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-mcp-builder` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-media-processing` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-mermaidjs-v11` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-mintlify` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-mobile-development` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-orchestrate` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-payment-integration` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-plan` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-plans-kanban` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-predict` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-preview` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-problem-solving` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-project-management` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-project-organization` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-react-best-practices` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-remotion` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-repomix` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-research` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-research-prompt` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-retro` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-review-pr` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-scenario` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-scout` | IMPLEMENTED | Portable fallback present |
-| `ak-security` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-security-scan` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-sequential-thinking` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-shader` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-ship` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-shopify` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-show-off` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-skill-creator` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-stitch` | IMPLEMENTED | DEGRADED fallback implemented |
-| `ak-tanstack` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-team` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-tech-graph` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-test` | IMPLEMENTED | Portable fallback present |
-| `ak-threejs` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-ui-styling` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-ui-ux-pro-max` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-use-mcp` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-vibe` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-watzup` | IMPLEMENTED | ADAPTED fallback implemented |
-| `ak-web-design-guidelines` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-web-frameworks` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-web-testing` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-worktree` | IMPLEMENTED | PORTABLE fallback implemented |
-| `ak-xia` | IMPLEMENTED | ADAPTED fallback implemented |
+| `ak-advise` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-agent-browser` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-agentize` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-agentkit` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-ai-artist` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-ai-multimodal` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-ak` | DEGRADED | Implemented as ANGENT portable fallback |
+| `ak-ask` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-autoresearch` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-backend-development` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-better-auth` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-bootstrap` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-brainstorm` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-bro` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-chrome-profile` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-code-review` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-codex-goal` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-coding-level` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-context-engineering` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-cook` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-copywriting` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-cti-expert` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-databases` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-debug` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-deep-swe` | DEGRADED | Implemented as ANGENT portable fallback |
+| `ak-deploy` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-design` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-devops` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-diagram` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-docs` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-docs-seeker` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-document-skills` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-enhance-ux-ax` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-excalidraw` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-explain` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-fable-thinking` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-find-skills` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-fix` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-folder-context` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-frontend-design` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-frontend-development` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-git` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-github` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-gkg` | DEGRADED | Implemented as ANGENT portable fallback |
+| `ak-goal-warmup` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-google-adk-python` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-graphify` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-handoff` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-help` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-hyperframes` | DEGRADED | Implemented as ANGENT portable fallback |
+| `ak-interview-docs` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-issue-to-plan` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-journal` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-llms` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-loop` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-markdown-novel-viewer` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-mcp-builder` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-media-processing` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-mermaidjs-v11` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-mintlify` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-mobile-development` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-orchestrate` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-page-builder` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-payment-integration` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-plan` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-plans-kanban` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-predict` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-preview` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-problem-solving` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-project-management` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-project-organization` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-react-best-practices` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-remotion` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-repomix` | DEGRADED | Implemented as ANGENT portable fallback |
+| `ak-research` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-research-prompt` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-retro` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-review-pr` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-scenario` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-scout` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-security` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-shader` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-ship` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-shopify` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-show-off` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-skill-creator` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-sowat` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-stitch` | DEGRADED | Implemented as ANGENT portable fallback |
+| `ak-sumup` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-tanstack` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-team` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-tech-graph` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-test` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-threejs` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-ui-styling` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-ui-ux-pro-max` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-vibe` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-watzup` | ADAPTED | Implemented as ANGENT portable fallback |
+| `ak-web-frameworks` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-web-testing` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-webmcp` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-worktree` | PORTABLE | Implemented as ANGENT portable fallback |
+| `ak-xia` | ADAPTED | Implemented as ANGENT portable fallback |
 
-## Agents — 16 total
+## Removed from public discovery
 
-All 16 portable role definitions are implemented under `vendor/agentkit-engineer/agents/`.
+These historical routes are **not** packaged current Skill identities and therefore are not kept under `skills/`:
+
+- `ak-security-scan`
+- `ak-use-mcp`
+- `ak-handover`
+- `ak-html-video`
+- `ak-sequential-thinking`
+- `ak-web-design-guidelines`
+
+Migration routes live in `COMPATIBILITY.md`.
+
+`ak-common` is internal support rather than a user workflow and now lives under `internal/common-conventions.md`.
+
+## Agents — 16 portable role definitions
+
+All 16 fallback role definitions remain under `agents/`:
 
 - advisor
 - brainstormer
@@ -140,16 +169,31 @@ All 16 portable role definitions are implemented under `vendor/agentkit-engineer
 - tester
 - ui-ux-designer
 
+The official Engineer roster uses runtime-specific projection and includes a canonical `Explore` display identity; the portable file/role ID remains `explore`.
+
+## Readiness semantics
+
+Fallback readiness requires more than a count:
+
+1. fallback plugin manifest is valid;
+2. `STABLE_CATALOG.json` is valid and internally consistent;
+3. discovered public Skill identity set exactly matches the expected 103;
+4. discovered Agent role set exactly matches the expected 16;
+5. no retired/internal identity leaks into public Skill discovery.
+
+`scripts/select_engineer.py` checks the exact sets and reports missing/extra identities.
+
 ## Maintenance rule
 
-When an upstream Engineer capability changes or a fallback regression is found:
+When stable Engineer changes:
 
-1. identify the capability and quality gates that changed;
-2. preserve the useful behavior rather than upstream invocation syntax;
-3. map runtime-specific mechanics to harness-native capability when available;
-4. keep a sequential/local replacement when parallel/native machinery is unavailable;
-5. state real limitations instead of pretending parity;
-6. keep strategic ownership in ANGENT Reasoning;
-7. verify the changed behavior before updating the manifest.
+1. establish the current stable resolved catalog from official sources;
+2. separate public identities, retired routes, aliases and nested support files;
+3. identify behavior/gates that materially changed;
+4. preserve useful workflow semantics rather than invocation syntax or raw upstream runtime code;
+5. adapt runtime-specific mechanics to the active harness only when the semantics remain honest;
+6. keep explicit limitations where parity is impossible;
+7. update `STABLE_CATALOG.json`, affected Skills/routers, selector readiness and this manifest together;
+8. calibrate changed behavior on real representative cases before claiming parity.
 
-The fallback is an ANGENT implementation, not a mirror of upstream AgentKit source.
+Do not claim parity from a directory count alone.
