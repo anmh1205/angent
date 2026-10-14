@@ -26,6 +26,8 @@ AGENT_ROW = re.compile(
     re.MULTILINE,
 )
 LOCAL_REF = re.compile(r"(?:\]\(|`)(?:\./)?(references/[\w./-]+\.md)")
+MARKDOWN_LINK = re.compile(r"\[[^\]\n]+\]\(([^)\n]+)\)")
+LOCAL_EXTENSIONS = {".md", ".mdx", ".png", ".jpg", ".svg", ".html", ".json", ".py", ".js", ".ts", ".cjs", ".css"}
 NAME = re.compile(r"^name:\s*(\S+)", re.MULTILINE)
 MODE = re.compile(r"\bmode:\s*(portable|adapted|degraded)\b")
 
@@ -109,9 +111,35 @@ def audit_port(root: Path, expected_skills: int = 102, expected_agents: int = 16
         except OSError:
             continue
         for ref in set(LOCAL_REF.findall(content)):
-            relative = root / "skills" / name / ref
-            if not relative.is_file():
+            ref_root = (skills_dir / name / "references").resolve()
+            relative = (skills_dir / name / ref).resolve()
+            if not relative.is_relative_to(ref_root):
+                issues.append(f"unsafe local reference traversal: {name}/{ref}")
+            elif not relative.is_file():
                 issues.append(f"missing local reference: {name}/{ref}")
+
+    # Check actual Markdown links throughout the bundle, including support references.
+    for document in root.rglob("*.md"):
+        if document.name == "PORTING_MANIFEST.md":
+            continue
+        try:
+            body = document.read_text(encoding="utf-8")
+        except OSError as exc:
+            issues.append(f"unreadable markdown: {document}: {exc.__class__.__name__}")
+            continue
+        for match in MARKDOWN_LINK.finditer(body):
+            target = match.group(1).strip().split(" ", 1)[0].strip("<>")
+            if not target or target.startswith(("https:", "http:", "mailto:", "data:", "#", "/")):
+                continue
+            path_part = target.split("#", 1)[0].split("?", 1)[0]
+            if not path_part or Path(path_part).suffix.lower() not in LOCAL_EXTENSIONS:
+                continue
+            target_path = (document.parent / path_part).resolve()
+            if not target_path.is_relative_to(root.resolve()):
+                continue  # Caller-repository links are outside this package's scope.
+            if not target_path.is_file():
+                line = body.count("\n", 0, match.start()) + 1
+                issues.append(f"broken markdown link: {document.relative_to(root)}:{line} -> {target}")
 
     for name, status in agent_rows:
         path = agents_dir / f"{name}.md"

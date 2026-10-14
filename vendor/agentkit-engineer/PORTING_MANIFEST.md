@@ -204,6 +204,10 @@ The prior native/fallback selector only counted Skill/Agent directories. It coul
 
 The new branch-only workflow surfaced five adapted skills with legacy multi-line `metadata` blocks missing an explicit `mode`: ak-code-review, ak-debug, ak-handoff, ak-scout and ak-test. Their mode declarations were added without changing their behavior. The workflow checkout now fetches enough history to perform its own `git diff --check HEAD^ HEAD` gate. This is a concrete exercised counterexample of the selector's previous identity-count-only false-positive readiness.
 
+### Secondary link and traversal audit
+
+The branch-only validator additionally checks bundle-local Markdown links across supporting references, and rejects reference path traversal that escapes an individual Skill reference root. New counterexample tests cover missing nested Markdown links and references/../../ traversal; the status still proves **package structure**, not online links or runtime/media operations.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |

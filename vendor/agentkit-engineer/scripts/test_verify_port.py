@@ -49,6 +49,16 @@ class PortAuditTests(unittest.TestCase):
         (self.skill / "references" / "real.md").unlink()
         self.assertTrue(any("missing local reference" in e for e in self.check()))
 
+    def test_broken_support_link_blocks(self):
+        p = self.skill / "references" / "real.md"
+        p.write_text("[Unresolved](missing.md)", encoding="utf-8")
+        self.assertTrue(any("broken markdown link" in e for e in self.check()))
+
+    def test_reference_escape_blocks(self):
+        p = self.skill / "SKILL.md"
+        p.write_text(p.read_text().replace("references/real.md", "references/../../agents/example.md"))
+        self.assertTrue(any("unsafe local reference traversal" in e for e in self.check()))
+
     def test_missing_entrypoint_blocks(self):
         (self.skill / "SKILL.md").unlink()
         self.assertTrue(any("unreadable" in e for e in self.check()))
