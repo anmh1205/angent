@@ -1,88 +1,31 @@
 ---
 name: ak-cti-expert
-description: Conduct authorized cyber-threat-intelligence and public-source OSINT cases through acquire, enrich, assess and deliver phases with evidence provenance and privacy boundaries.
-metadata: {port: angent-fallback, mode: adapted}
+description: Conduct authorized defensive CTI and OSINT investigations through AEAD case lifecycle, documented collection gaps and source-backed intelligence reporting.
+metadata: {port: angent-fallback, mode: degraded}
 ---
 
 # CTI Expert — Portable Fallback
 
-Use for defensive threat intelligence, organization-owned exposure review, vulnerability intelligence and lawful public-source investigations.
+Stable Engineer 2.19.0 CTI Expert is a broad source-backed **Acquire → Enrich → Assess → Deliver (AEAD)** investigation workflow. The upstream bundle includes over a hundred specialized support documents and commands for domains, threat feeds, public incidents, infrastructure, forensics and entity relations. This fallback retains case reasoning and risk boundaries, **not** full bundled collection/automation coverage.
 
-Do not use this Skill to stalk private individuals, obtain credentials, bypass access controls or perform intrusive access.
+Read `references/entity-provenance.md`, `references/case-lifecycle.md` and `references/case-state.md`. Resolve actual sources, permissions and jurisdiction before active collection.
 
-## Load progressively
+## Case intake and evidence
 
-- `references/entity-provenance.md` — identity/entity resolution and source confidence.
-- `references/case-lifecycle.md` — acquire → enrich → assess → deliver.
-- `references/case-state.md` — durable findings, timeline and resume semantics.
+Define a legitimate defensive scope: organization-owned exposure, public threat indicators, security advisories, published breach reporting, malware campaigns, vulnerable software versions or authorized incident artifacts. Record case ID, target class, collection window, user authorization, retention/handling constraints and decision question.
 
-## Case lifecycle
+**Acquire** only permitted evidence using official security feeds, public records, advisory sources or authorized connector/browser access. Typical categories are DNS/certificate history, CVEs and affected versions, hosting/domain metadata, published hashes/IOCs, code/repo exposure and incidents. Upstream `/case`, `/sweep`, `/query` and targeted subcommands describe workflow intents, not callable portable commands.
 
-### Acquire
+**Enrich** relevant links with clear entity type, relation, observed timestamp and confidence. Two accounts/domains sharing a string does not establish a person/organization match. Avoid mass collection of private people, credentials, leaked datasets, direct targeted enumeration or covert tracking.
 
-Collect only evidence relevant to the authorized intelligence question.
+**Assess** reliability, independent corroboration, temporal validity, alternate explanations, true exploitability/context and severity. Explicitly distinguish observed vulnerability from exploitable deployment. Missing a JavaScript-heavy page/browser/paid feed is a coverage gap, not proof that no evidence exists.
 
-Prefer public/official/organization-owned sources.
+**Deliver** a bounded brief, IOC sheet, timeline, exposure assessment or actionable defensive report. Each material claim links to source, capture time and confidence; redact secrets and unnecessary identifiers. Keep raw evidence under approved access/retention policy. Document gaps, false-positive checks, detection/remediation candidates and what follow-up evidence would change the finding.
 
-Record source URL/system, observation time and collection limitation.
+## Mode and authority
 
-### Enrich
+A user-supplied `--yolo` shortcut may reduce benign interview overhead in the native workflow; it does **not** authorize intrusive scanning, mass personal-data aggregation, credential access or security boundary circumvention. No command inferred from the original CTI catalog becomes automatically executable in this portable skill.
 
-Expand only from evidence-backed leads.
+When the user requests a persistent workspace/export, use a real authorized file tool and verify output. Do not claim a DOCX or rendered case report was generated just because the native workflow normally produces one.
 
-Correlate domains, infrastructure, identifiers, vulnerabilities or organizations conservatively.
-
-Do not turn similarity into identity.
-
-### Assess
-
-Evaluate:
-- reliability/provenance;
-- confidence;
-- temporal freshness;
-- alternative explanations;
-- exposure/impact;
-- collection gaps.
-
-For vulnerability intelligence bind claims to affected version/product and source.
-
-### Deliver
-
-Produce the smallest intelligence product needed:
-- short brief;
-- detailed report;
-- timeline;
-- IOC/exposure list;
-- defensive recommendations;
-- machine-readable findings when requested.
-
-Separate observed fact, inference and unknown.
-
-## Tool routing
-
-Use the strongest authorized collection surface available:
-- current web search/fetch;
-- browser automation for JavaScript-heavy public pages;
-- official APIs/feeds if already available;
-- local files/evidence supplied by the user.
-
-A missing collection tool is a coverage gap, not permission to bypass it.
-
-## Privacy and security
-
-Minimize personal data.
-
-Never persist secrets, credentials or unrelated sensitive personal information into case state/reports.
-
-Do not perform breach credential retrieval, invasive account enumeration or covert monitoring.
-
-## Output
-
-State:
-- scope/question;
-- key findings with provenance/confidence;
-- assessed relationships;
-- timeline when material;
-- gaps/blind spots;
-- defensive actions;
-- what remains unverified.
+**Capability:** VERIFIED_DEGRADED — primary defensive reasoning and provenance survive, but specialist collector/runtime/reference parity has not been established.

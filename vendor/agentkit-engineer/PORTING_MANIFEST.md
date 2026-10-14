@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **88 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **91 / 102 Skill identities reviewed semantically**.
 
-- **68 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
-- **17 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-deep-swe`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-mintlify`, `ak-plans-kanban`, `ak-repomix`, `ak-show-off`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
+- **69 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
+- **19 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-mintlify`, `ak-plans-kanban`, `ak-repomix`, `ak-show-off`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
 - **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
-- **14 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **11 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -172,6 +172,10 @@ DeepSWE preserves its third-party Pier/OpenRouter runner, task/model/version pre
 
 The stable Multix runtime pins an exact CLI and routes image/video/audio/music/document tasks through different provider capabilities. This portable skill resolves only actually available modalities, retains page/frame/audio provenance, tests result media and does not silently fetch executables or expose private media to third-party providers. AI Artist preserves the 129-prompt search/creative/wild catalog workflow, brief gate and rendering provider contract, but explicitly degrades without the curated scripts/data. Both require runtime validation for genuine provider parity; neither asserts an unavailable script or prompt database exists.
 
+### CTI case, editable Excalidraw and office document routing
+
+CTI Expert preserves AEAD case handling, evidence time/source/identity confidence and real defensive scope; its much larger specialist collection corpus remains outside the portable bundle, so the mode is DEGRADED. Excalidraw preserves live canvas versus editable .excalidraw JSON with rendered validation and a source-backed codebase auto-diagram route; its real MCP/browser tool must still be present. Document Skills acts as a high-fidelity destination router to installed DOCX/PDF/PPTX/XLSX authoring and validation engines, not an imaginary built-in replacement for over a hundred upstream helper documents.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -197,7 +201,7 @@ The stable Multix runtime pins an exact CLI and routes image/video/audio/music/d
 | `ak-context-engineering` | VERIFIED_ADAPTED | stable 2.19.0 Measured context/runtime boundaries, four-bucket lifecycle and decision-quality evaluation retained; no fabricated provider telemetry |
 | `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-copywriting` | VERIFIED_ADAPTED | stable 2.19.0 conversion patterns, channel composition, evidence and style boundaries reviewed |
-| `ak-cti-expert` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-cti-expert` | VERIFIED_DEGRADED | AEAD cases, provenance, scope/privacy and defensive reporting; specialist 113-file support pack not ported |
 | `ak-databases` | VERIFIED_ADAPTED | stable 2.19.0 data-model/query/migration workflow reviewed with least-privilege, recovery and production-mutation gates |
 | `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-deep-swe` | VERIFIED_DEGRADED | stable 2.19.0 Pier/OpenRouter one-task/subset/full-cost gates and confidential benchmark evidence; native runner absent |
@@ -206,8 +210,8 @@ The stable Multix runtime pins an exact CLI and routes image/video/audio/music/d
 | `ak-devops` | VERIFIED_ADAPTED | stable 2.19.0 infrastructure/CI/CD/GitOps workflow reviewed with plan/apply/delete/replace and readiness/recovery gates |
 | `ak-docs` | VERIFIED_ADAPTED | stable 2.19.0 Init/update/summarize/agent-context modes plus drift-resistant ownership and verification restored |
 | `ak-docs-seeker` | VERIFIED_ADAPTED | stable 2.19.0 Versioned canonical docs and llms.txt discovery preserved; unbundled Node scripts explicitly non-operative |
-| `ak-document-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-excalidraw` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-document-skills` | VERIFIED_ADAPTED | format-specific native Word/PDF/Slides/Sheets capability dispatch, source and render gates |
+| `ak-excalidraw` | VERIFIED_DEGRADED | native MCP canvas and editable JSON/Playwright modes, semantic maps and render QA; backend not bundled |
 | `ak-fable-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-find-skills` | VERIFIED_ADAPTED | stable 2.19.0 local domain routing versus external Skills CLI discovery/install authority retained |
 | `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |

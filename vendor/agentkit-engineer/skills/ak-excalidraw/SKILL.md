@@ -1,50 +1,27 @@
 ---
 name: ak-excalidraw
-description: Create or edit Excalidraw-compatible architecture, data-flow and workflow diagrams, including codebase auto-diagramming, with editable source and rendered validation.
-metadata: {port: angent-fallback, mode: adapted}
+description: Author editable Excalidraw architectural diagrams with real MCP canvas or file-based scene JSON, grounded source relations, export and visual verification.
+metadata: {port: angent-fallback, mode: degraded}
 ---
 
 # Excalidraw — Portable Fallback
 
-Use when the user wants an **editable Excalidraw-style diagram**.
+Use when the user needs an **editable Excalidraw diagram**, not a flattened vector illustration. Stable Engineer 2.19.0 offers two modes: live Excalidraw MCP canvas (when connected), and file-based `.excalidraw` JSON rendered through a real browser/Playwright backend. Both require observed runtime capability; generic Mermaid/SVG is a different output contract.
 
-For inline documentation, Mermaid may be simpler. For tightly controlled publish-grade SVG/PNG, Tech Graph may be a better fit.
+Read `references/diagram-model.md` and `references/layout-validation.md` for the semantic model and layout discipline.
 
-## Load progressively
+## Capability selection
 
-- `references/diagram-model.md` — convert a system/flow into diagram elements.
-- `references/layout-validation.md` — keep the drawing readable.
+**Live canvas:** Discover the actual MCP canvas tool and its guide. Verify it can read/write the intended document before editing; do not print upstream `mcp__excalidraw__read_diagram_guide` as though it were a portable host tool. Use actual canvas coordinates/IDs and read back elements.
 
-## Modes
+**File-based:** Create a valid Excalidraw scene with the required `type`, `version`, `elements`, `appState` and `files` schema as supported by the destination. Include stable element IDs, bindings, positioning, consistent grouping and embedded assets when required. Use a real Excalidraw-compatible viewer or renderer; SVG/XML or Markdown alone does **not** satisfy the editable deliverable.
 
-### Live canvas
+**Auto-diagram from code:** Scout actual project boundary, component/module owners, public contracts, data/trigger directions and error flows. Group unrelated components, represent precise topology, and cite source paths separately. Do not draw a package tree as architectural behavior. The upstream's discovery/diagram-size quotas are pragmatic heuristics, not universal proof of completeness.
 
-Use an available Excalidraw/MCP/canvas integration when the harness exposes one and live iterative editing is useful.
+## Visual encoding and review
 
-### File based
+Before producing elements, choose a diagram form that **conveys the mechanism**: fan-out for dispatch, convergence for aggregation, timeline for ordered events, loop for feedback, tree for hierarchy, side-by-side for comparison, zones for trust/ownership. Decisions are diamonds; mere labels usually need no box.
 
-Generate/edit `.excalidraw` JSON through deterministic file tooling and render/preview it with the best available viewer/exporter.
+Plan generous text and connector corridors, one primary reading direction, edge labels/arrowheads and a restrained role palette; don't invent relationships because the layout seems sparse. Render/read back each meaningful revision and check text clipping, collisions, connector anchoring, arrows passing through unrelated nodes, viewport balance and missing assets. Fix visible defects, then export PNG/SVG if requested/available. A parsable JSON scene alone is **not** a verified image.
 
-### Codebase auto-diagram
-
-When asked to “diagram this repo/architecture”:
-
-1. Scout the relevant system boundary.
-2. Identify components, ownership, external systems and important flows.
-3. Build the semantic diagram model.
-4. Generate the Excalidraw artifact.
-5. Render and self-review it.
-
-Do not visualize every directory as a box.
-
-## Workflow
-
-1. Identify the relation the diagram must communicate.
-2. Choose a small visual vocabulary.
-3. Plan primary reading direction and grouping.
-4. Generate the editable artifact.
-5. Render/preview.
-6. Fix overlaps, edge ambiguity, scale and text issues.
-7. Export SVG/PNG when requested and supported.
-
-If Excalidraw-specific tooling is unavailable, produce an equivalent supported diagram only when the user accepts a degraded destination.
+**Capability:** VERIFIED_DEGRADED without an accessible canvas/scene renderer. If the runtime supports only SVG or Mermaid, explicitly label a non-Excalidraw substitute and do not represent it as editable Excalidraw source.
