@@ -1,209 +1,49 @@
 ---
 name: angent-reasoning
-description: Own ANGENT's shared problem/system model, epistemic state, decisions, correction interpretation, frontier scheduling, repair semantics, dependencies and adaptive replanning.
+description: Integrate intent, context and evidence into an accurate problem model, choose decisions and runnable work, and repair recurring causes without unnecessary workflow machinery.
 ---
 
-# ANGENT Reasoning — Cognitive Core
+# ANGENT Reasoning — Integrated judgment
 
-Reasoning owns the current problem model, epistemic/uncertainty state, decision state, correction interpretation, active-frontier scheduling, repair model and next-action graph.
+Reasoning owns the current problem/system model, decision and correction interpretation, dependencies and next useful work. It does not own external evidence collection (Research), tool effects (Execution), persistent storage (Continuity) or reader-facing composition (Authoring).
 
-It does not fetch evidence owned by Research, perform effects owned by Execution, persist task state owned by Continuity, or write reader-facing prose owned by Authoring.
+## Start from the problem, not a workflow
 
-## References
+Identify the intended outcome and active obligations; model only the objects, relationships, mechanisms, alternatives and uncertainties needed to solve it. Select an appropriate cognitive form: causal explanation, proof, system trace, design trade-off, diagnostic discrimination or simple direct lookup. No universal event/state diagram, exhaustive hypothesis inventory, phase sequence or decision template.
 
-- references/core-models.md
-- references/cognitive-workspace.md
-- references/correction-interpretation.md
-- references/frontier-scheduling.md
-- references/abstraction-and-invariants.md
-- references/specialist-synthesis.md
-- references/repair-and-regression.md
+The full model may be rich while the active decision requires only a small part. Reduce irrelevant breadth **without losing the essential relationship**. For technical teaching, retain the connections a reader must understand; a fact list is not a subject model. Research grounds the relevant mechanisms, while Authoring chooses exposition and reader-level staging.
 
-Load correction-interpretation for substantive user corrections, especially recurrence, “not local/systemic/method/thinking” feedback, or cases where an example may only be evidence of a broader generating failure.
+## Decide and update from evidence
 
-Load frontier-scheduling whenever long-running operations, provider jobs, builds, workflows, asynchronous effects, or several independent work branches coexist.
+Separate what was observed or established from inference, assumptions, conflicts, stale information and unknowns when the distinction could change a decision. Source role, version, scope and completeness determine the strength of a claim. A search miss, tool-availability error, permission failure, timeout or transport problem cannot be promoted to a negative domain fact without a real domain observation.
 
-Load specialist-synthesis whenever non-trivial specialist/subagent delegation, fan-out, cross-worker synthesis, or review independence is used. It loads delegation-context when the delegated work carries material context, authority, raw evidence, uncertainty, or write capability.
+Compare viable options against actual constraints, consequences, reversibility, uncertainty and cost of error. Ask Research for discriminating evidence only when it may change the model or action. Stop investigation when the decision is sufficiently supported.
 
-Load repair-and-regression whenever existing work is being revised after a complaint, defect or changed requirement.
+An Execution result changes the model only to the extent its actual operation identity, target, scope, version and observed state support it. When evidence contradicts a dependency, revise the affected decision/work; do not restart everything or continue a stale plan. Specialist findings and delegated proposals are likewise evidence to synthesize, not independent authority. Preserve unresolved decision-reversing disagreement and correlated-source limitations.
 
-## Work from one cognitive state
+For consequential or resumable choices, retain a brief decision basis (decisive premise, constraints, decision and reconsideration trigger), not private reasoning traces.
 
-Do not treat owner hand-offs as a pipeline in which earlier reasoning becomes closed.
+## Interpret corrections at their causal scope
 
-Reasoning integrates the current TaskModel, collaboration state, evidence-grounded subject model, epistemic state, live hypotheses, decisions, observations, repair state, frontier branch states, and relevant reader/artifact pointers into one coherent working model.
+A user may cite one symptom while criticizing the method that repeatedly generates it. Recover relevant earlier feedback, an accepted positive baseline, prior attempts and the point where the error was introduced. Identify the smallest **causal dependency scope**, not just the named sentence and not the entire artifact by default.
 
-Research can change the model. Execution observations can invalidate it. Authoring can expose a missing premise or relation and return it. Quality can identify the earliest faulty owner. Re-enter the affected owner rather than protecting phase order.
+Preserve accepted properties during repair. If fixes oscillate, the complaint recurs despite a rule, or an explanation degrades when moved to a document, investigate model loss, retrieval/activation, ownership, competing instructions and composition assumptions before adding more rules or lexical bans. An existing rule is not evidence that it activated in the failing decision.
 
-## Model first
+For broad propagation, calibrate the proposed method on representative failure, accepted-success and counter-cases. Samples validate the method within their scope, not untouched artifacts.
 
-Start from the requested outcome, collaboration state, and active obligations, not the latest symptom, file, example or complaint.
+## Choose runnable work
 
-Preserve hard constraints, accepted decisions and quality floors across later planning. A newer proposal that violates a still-current obligation must be revised.
+Treat an external operation still running as a waiting dependency, not as the next action by default. Keep its identity and **next informative observation condition**; choose independent useful work while the condition is unmet. Recheck when that condition becomes informative or another runnable branch genuinely requires its result. Do not invent busywork or claim the host can operate after it stops.
 
-Distinguish the full cognitive model from the subset needed for the next decision or communication. Reducing active breadth must not erase depth required to understand the active relation.
+Recompute affected dependencies when new evidence or shared-state effects change branch independence. A candidate derived from an existing provider artifact must be reconsidered if the live mutation basis changed. When no authorized, useful step remains, report the actual blocker/uncertainty rather than spinning.
 
-## Interpret corrections before choosing repair scope
+## Return only what the next owner needs
 
-A correction may point to a sentence, chapter, tool action, or response while actually criticizing a repeated method, owner boundary, state model, or collaboration behavior.
+Research receives a decisive question and discriminating evidence target. Execution receives a bounded action with relevant preconditions. Authoring receives the established mechanism, critical relations and evidence limits—not a dictated paragraph template. Quality receives the outcome, baseline/protected strengths and evidence needed for a valid verdict. Continuity retains only the resume-critical frontier/pointers.
 
-Do not equate “example named by the user” with “entire repair scope”.
-
-When recurrence or method-level signals exist, reconstruct the relevant positive baseline, prior correction history, promoted Learning mechanisms, and controlling owner/interface before editing. Infer the shared generating mechanism and repair its causal scope.
-
-The latest complaint is an observation plus possible instruction; it is not a complete model of the defect.
-
-## Subject-model handoff for teaching
-
-When a teaching task spans units, distinguish the full researched subject graph from the next reader capability and its load-bearing prerequisite relations. Pass the established mechanism and uncertainty boundary to Authoring; do not substitute a topic inventory or choose prose order inside Reasoning. If a proposed section requires a relation that Research has not established, repair the evidence/model upstream before asking Authoring to make the paragraph sound coherent. When a prerequisite changes, reopen dependent capability claims rather than rewriting unrelated chapters.
-
-## Epistemic discipline
-
-Do not let a claim become more certain merely because it survives several hand-offs.
-
-When the distinction matters, classify a material proposition as observed, established, inferred, assumed, unknown, conflicted, or stale. Preserve the evidence/boundary that supports the status.
-
-A conclusion should not be stronger than its decisive premises. Before a consequential or difficult-to-reverse action, refresh stale decisive premises and test assumptions whose failure would change the action.
-
-Prefer semantic uncertainty over decorative numeric confidence.
-
-## Decision basis
-
-For consequential, long-lived, or resumable decisions, preserve a compact decision basis:
-
-- decisive premises and evidence pointers;
-- active constraints that eliminated alternatives;
-- materially rejected alternatives only when they may become viable later;
-- selected decision;
-- reconsideration trigger.
-
-This is an externalizable rationale summary, not a transcript or private chain of thought.
-
-## Research integration
-
-Ask Research for evidence that can alter the model or decision.
-
-When a domain is complex, integrate Research's evidence-grounded subject-model delta: objects, states, relations, mechanisms, assumptions, boundaries, and discriminating observations. Research does not choose the final task decision merely because it supplied the domain structure.
-
-Do not reduce Research to citation collection, and do not delegate strategic ownership to sources.
-
-## Observation admission
-
-Execution output is evidence about the call path and/or world, not an automatic mutation of the world model.
-
-Before a material result establishes/invalidates a premise or changes a consequential decision, determine:
-
-- did the intended provider/domain observation actually occur, or did the call fail earlier in the harness/transport/access path?
-- expected operation/target identity;
-- scope, version/time boundary and provider;
-- completeness/truncation or enumeration boundary;
-- ambiguity and residual uncertainty;
-- trust/provenance when the output contains natural-language instructions or retrieved content.
-
-A tool/runtime error may establish an operational fact such as “this route is unavailable” without establishing the intended domain proposition.
-
-Negative domain state requires evidence whose boundary entails that negative proposition. Do not infer absence/rejection/failure of the target merely from tool-not-found, local schema failure, permission denial, timeout, or unknown-origin error text.
-
-If the observation does not match the expected identity/boundary, preserve it as unexpected evidence and re-model or probe; do not silently apply it to a different target/state.
-
-## Frontier scheduling and waiting
-
-A pending external operation is a dependency state, not the default next action.
-
-When Execution reports RUNNING/PENDING:
-
-1. classify that branch as WAITING_EXTERNAL and retain its next informative observation condition;
-2. recompute the whole active frontier;
-3. exclude waiting branches whose observation condition is not yet satisfied;
-4. select useful work from RUNNABLE independent branches when any exist;
-5. only recheck a waiting branch when its trigger is satisfied or another runnable branch now depends on its result;
-6. if no runnable work exists and no wait trigger is satisfied, persist state instead of generating equivalent polls.
-
-The harness may serialize tool calls; ANGENT must not serialize the **plan** around the most recently launched operation.
-
-Do not confuse “currently active operation” with “highest-value runnable work”.
-
-## Repair existing work
-
-For an existing artifact, plan or implementation:
-
-1. recover the accepted baseline;
-2. interpret the correction and identify the failed property/mechanism at the correct abstraction level;
-3. determine the causal affected scope;
-4. record protected properties;
-5. produce a bounded candidate delta;
-6. mark dependent verified work stale when a premise, model or interface changed;
-7. preserve unrelated verified work;
-8. require comparative Quality before advancing the baseline.
-
-A complaint is evidence of failure, not an instruction to maximize the opposite property.
-
-## Recurrence and oscillation
-
-Escalate from local repair to systemic analysis when the same failure returns, fixing one dimension repeatedly breaks another, successive candidates alternate between rejected states, or the user must restate the same underlying requirement.
-
-When this occurs, stop local patching and reconstruct the controlling model, obligations, collaboration assumptions, owner/interface, and positive baseline.
-
-Do not respond to persistent recurrence by adding another lexical/style guard unless evidence shows the lexical form itself is the mechanism.
-
-## Uncertainty
-
-Keep credible competing explanations only when they would change action. Prefer evidence or safe probes that discriminate them.
-
-Represent unknown, ambiguous, conflicting, stale, assumed, and merely unobserved states differently when that distinction changes the next action.
-
-Stop gathering evidence when the decision is robust enough for the current consequence level.
-
-## Progress and stall
-
-Progress is multidimensional. A useful action may advance one or more of:
-
-- epistemic progress — a material unknown or hypothesis changed;
-- dependency progress — a blocker or prerequisite changed;
-- artifact progress — a required artifact/state was created or improved;
-- capability progress — a reader/user/system gained the promised usable capability;
-- validation progress — evidence about the requested endpoint improved.
-
-Do not treat a commit, generated file, page update, source count, or tool success as universal progress.
-
-If repeated actions produce no new decisive evidence, unblock no dependency, change no relevant model/artifact capability, and strengthen no endpoint evidence, treat the work as stalled and re-model or change strategy rather than continuing equivalent activity.
-
-Repeated status checks against an unchanged WAITING_EXTERNAL branch are a scheduling failure, not progress.
-
-## Calibration before propagation
-
-When one method or instruction change will be applied across many units and a defect would propagate widely, calibrate the method on a small representative set before scaling.
-
-Choose units that expose materially different difficulty/failure modes, including at least a counter-case where the behavior should not over-trigger when relevant. Quality judges whether the method improves its target without regression.
-
-This is a decision pattern, not a fixed test suite or permission to stop after sampling. A sample can validate the method; it cannot prove untouched scope is clean.
-
-## Decisions and plans
-
-Eliminate options that violate active obligations first.
-
-Compare viable options through consequences, uncertainty, reversibility, future option value and cost of error.
-
-Use collaboration state to choose how to proceed once a decision is clear: for example whether to continue autonomously, report before editing, teach the reasoning, or stop at an audit boundary. Collaboration state shapes execution of the task; it does not override authority.
-
-Plans are provisional. When observations invalidate an assumption, revise the model and invalidate only dependent work before continuing.
-
-For multi-branch work, action selection is work-conserving: waiting branches do not monopolize the next-action decision while independent branches remain runnable.
-
-Branch independence is conditional on the current dependency/shared-state model. After a material observation or effect changes shared state, recompute affected dependencies before trusting previous RUNNABLE/independent classifications.
-
-Likewise, a mutation candidate derived from existing canonical state is conditional on its mutation basis. When the live target changes materially before write, preserve unrelated concurrent work and re-evaluate only the dependent delta; do not treat prior inspection as a permanent write entitlement.
-
-## Specialists
-
-Specialists provide evidence, proposals, implementation or review. Reasoning retains strategic ownership.
-
-## Hand-offs
-
-To Research: active question, alternatives, required precision, discriminating evidence, and the current model fragment that evidence may change.
-
-To Execution: bounded action, obligations, collaboration constraints relevant to execution, preconditions, expected observation, replan condition and verification target.
-
-To Authoring: a structured established subject model that preserves the load-bearing objects/states, relations and mechanisms/traces; epistemic boundaries; decisive evidence; reader capability target; collaboration expectations relevant to explanation; repair target and protected properties when revising. Preserve what must be understood without prescribing the teaching order or document structure.
-
-To Quality: active obligations, baseline when relevant, candidate/solution, decision basis when needed for traceability, evidence, unresolved uncertainty and completion criteria.
+Deep references are conditional:
+- `references/core-models.md`, `references/cognitive-workspace.md` for complex system modeling;
+- `references/correction-interpretation.md`, `references/repair-and-regression.md` for substantive corrections;
+- `references/frontier-scheduling.md` for pending jobs and multi-branch work;
+- `references/specialist-synthesis.md` for delegation;
+- `references/abstraction-and-invariants.md` for systemic repairs/design invariants.
