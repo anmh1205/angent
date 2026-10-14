@@ -32,11 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **43 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **47 / 102 Skill identities reviewed semantically**.
 
-- **40 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-html-video`, `ak-orchestrate`, `ak-plan`, `ak-react-best-practices`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
-- **3 VERIFIED_DEGRADED**: `ak-design` and `ak-ui-ux-pro-max` preserve the load-bearing design/UX workflow but do not reproduce upstream packaged generator/search datasets; `ak-team` cannot truthfully reproduce a live-team lifecycle without harness support.
-- **59 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **44 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-html-video`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-react-best-practices`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **3 VERIFIED_DEGRADED**: `ak-design`, `ak-team`, `ak-ui-ux-pro-max`.
+- **0 VERIFIED_PORTABLE**: none currently.
+- **55 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -117,6 +118,18 @@ Key acceptance findings:
 
 This batch demonstrates the evidence hierarchy: docs navigation can describe migration/routing, but the resolved signed package artifact remains authoritative for what stable 2.19.0 actually packages.
 
+### Payment / commerce / TanStack / mobile batch
+
+This batch reviewed `ak-payment-integration`, `ak-shopify`, `ak-tanstack` and `ak-mobile-development` using the pinned package artifact plus current provider/framework documentation for facts that are intentionally volatile.
+
+Key acceptance findings:
+- Payment Integration preserves SePay/Polar/Stripe provider roles, internal-vs-provider state machines, idempotent/authenticated webhooks, ambiguous-outcome reconciliation, subscription/refund lifecycle and multi-provider accounting while refusing package-era API/rate-limit values as permanent truth.
+- Shopify preserves app/extension/theme distinctions, minimal scopes, install/session/webhook/billing/uninstall lifecycle and preview/deploy/publish gates; current GraphQL Admin guidance supersedes package-era REST/version snapshots for new work.
+- TanStack preserves exactly the packaged Start/Router/Form/AI capability. The previous fallback drift that treated TanStack Query as owned by this Skill was removed; current installed package/docs control version-sensitive APIs and maturity.
+- Mobile preserves React Native/Flutter/native iOS/native Android selection, lifecycle/offline/permissions/security/device-testing/store boundaries while removing package-era popularity percentages and universal performance targets from the decision model.
+
+These ports deliberately preserve workflow/domain semantics while treating provider/framework versions, rate limits, maturity labels and platform requirements as refreshable evidence.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -180,9 +193,9 @@ This batch demonstrates the evidence hierarchy: docs navigation can describe mig
 | `ak-media-processing` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-mermaidjs-v11` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-mintlify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-mobile-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-mobile-development` | VERIFIED_ADAPTED | stable 2.19.0 React Native/Flutter/native mobile workflow preserved while stale adoption/performance figures are excluded from architectural decisions |
 | `ak-orchestrate` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-payment-integration` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-payment-integration` | VERIFIED_ADAPTED | stable 2.19.0 SePay/Polar/Stripe and multi-provider payment semantics reviewed; volatile provider APIs are refreshed from current docs and internal/provider state reconciliation is preserved |
 | `ak-plan` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-plans-kanban` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-predict` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -204,11 +217,11 @@ This batch demonstrates the evidence hierarchy: docs navigation can describe mig
 | `ak-sequential-thinking` | VERIFIED_ADAPTED | stable 2.19.0 revision/branch/hypothesis/uncertainty semantics preserved while private chain-of-thought exposure is intentionally omitted |
 | `ak-shader` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-shopify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-shopify` | VERIFIED_ADAPTED | stable 2.19.0 app/extension/theme lifecycle reviewed with current GraphQL-first API, scope/webhook/version and deploy/publish boundaries |
 | `ak-show-off` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-skill-creator` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-stitch` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
-| `ak-tanstack` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-tanstack` | VERIFIED_ADAPTED | stable 2.19.0 Start/Router/Form/AI scope restored; unrelated TanStack Query/Table/Virtual expansion removed and volatile package APIs bound to current installed docs |
 | `ak-team` | VERIFIED_DEGRADED | true live-team lifecycle is load-bearing; hard-stop/route elsewhere when harness lacks it |
 | `ak-tech-graph` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-test` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
