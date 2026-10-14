@@ -14,8 +14,10 @@ Run the stack-appropriate dependency/advisory audit when the tool/network bounda
 
 Do not claim the dependency tree is clean when the auditor is missing, its registry is unreachable, or the lock/manifest scope was incomplete.
 
-### Both fast flags
-Run the two fast evidence paths without silently expanding to comprehensive threat modeling.
+### Fast-flag precedence
+If either fast flag is present, run only the selected fast evidence path(s). Fast flags win over red-team/comprehensive behavior when combined.
+
+Do not silently expand a fast request into code-pattern review, STRIDE, OWASP or attacker-persona work.
 
 ## Default comprehensive audit
 

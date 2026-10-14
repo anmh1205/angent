@@ -19,7 +19,7 @@ Preserve these stable 2.19.0 workflow distinctions:
 - default scoped audit — secrets + dependencies + relevant code/config patterns + STRIDE/OWASP reasoning;
 - `--secrets-only` — secret/credential triage only;
 - `--deps-only` — dependency/advisory triage only;
-- both fast flags — still a fast scan; do not silently add code-pattern/STRIDE/red-team work;
+- any fast flag narrows the run to the selected fast evidence path(s); fast flags win over red-team/comprehensive behavior when combined, so do not silently add code-pattern/STRIDE/red-team work;
 - `--red-team` — add bounded attacker-perspective discovery;
 - `--iterations N` — user-selected cap for iterative red-team/fix work; do not invent a universal default cap;
 - `--fix` — apply only validated targeted fixes with an explicit guard after each bounded iteration;
