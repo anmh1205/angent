@@ -12,6 +12,7 @@ cached Skill tree is not enough to prove that.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -153,7 +154,21 @@ EXPECTED_AGENT_ROLES = frozenset([
     "tester",
     "ui-ux-designer"
 ])
-CATALOG_IDENTITY_SHA256 = "fbe4be0fa01ff696fdc783d8e398a4fb157b7c31d831d6eb792dea55ca627a9e"
+EXPECTED_CATALOG_IDENTITY_SHA256 = "439bc625174a6e9e780f8f464b0129ccf9bfcb4ba5b63d7fa3734d0e05541ddc"
+
+
+def _catalog_identity_digest(skills: set[str] | frozenset[str], agents: set[str] | frozenset[str]) -> str:
+    payload = {
+        "agent_roles": sorted(agents),
+        "skills": sorted(skills),
+    }
+    canonical = json.dumps(
+        payload,
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def _portable_manifest_valid(manifest: Any, expected_name: str) -> bool:
@@ -337,6 +352,17 @@ def _fallback_info(plugin_root: Path) -> dict[str, Any]:
         or missing_agents
         or unexpected_agents
     )
+    expected_catalog_digest = _catalog_identity_digest(
+        EXPECTED_SKILLS,
+        EXPECTED_AGENT_ROLES,
+    )
+    actual_catalog_digest = _catalog_identity_digest(
+        actual_skills,
+        actual_agents,
+    )
+    baseline_digest_valid = (
+        expected_catalog_digest == EXPECTED_CATALOG_IDENTITY_SHA256
+    )
 
     return {
         "plugin_path": str(plugin_root),
@@ -346,13 +372,15 @@ def _fallback_info(plugin_root: Path) -> dict[str, Any]:
         "agent_roles": len(actual_agents),
         "expected_skills": len(EXPECTED_SKILLS),
         "expected_agent_roles": len(EXPECTED_AGENT_ROLES),
-        "catalog_identity_sha256": CATALOG_IDENTITY_SHA256,
+        "catalog_identity_sha256": actual_catalog_digest,
+        "expected_catalog_identity_sha256": EXPECTED_CATALOG_IDENTITY_SHA256,
+        "baseline_digest_valid": baseline_digest_valid,
         "missing_skills": missing_skills,
         "unexpected_skills": unexpected_skills,
         "missing_agent_roles": missing_agents,
         "unexpected_agent_roles": unexpected_agents,
         "catalog_exact": catalog_exact,
-        "ready": manifest_valid and catalog_exact,
+        "ready": manifest_valid and catalog_exact and baseline_digest_valid,
     }
 
 def _usable_value(raw: str | None) -> str:

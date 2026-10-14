@@ -8,9 +8,22 @@ This file records the upstream **semantic/catalog baseline** used by ANGENT's po
 - retrieved: `2026-10-14`
 - resolved public Skills: `103`
 - resolved Agents: `16`
-- catalog identity SHA-256: `fbe4be0fa01ff696fdc783d8e398a4fb157b7c31d831d6eb792dea55ca627a9e`
+- catalog identity SHA-256: `439bc625174a6e9e780f8f464b0129ccf9bfcb4ba5b63d7fa3734d0e05541ddc`
 
-The digest is over the sorted resolved public Skill identities and Agent role identities recorded by the fallback selector. It proves which identity set this migration targets; it is **not** an upstream package-byte digest.
+The digest is reproducible from a canonical UTF-8 JSON document with exactly two arrays: `agent_roles` and `skills`. Both arrays are lexicographically sorted; JSON keys are sorted; serialization uses compact separators `,` and `:` with no insignificant whitespace. SHA-256 is applied to those exact UTF-8 bytes.
+
+Canonical construction is equivalent to:
+
+```python
+json.dumps(
+    {"agent_roles": sorted(agent_roles), "skills": sorted(skills)},
+    ensure_ascii=False,
+    separators=(",", ":"),
+    sort_keys=True,
+).encode("utf-8")
+```
+
+The digest proves which identity set this migration targets; it is **not** an upstream package-byte digest.
 
 ## Primary sources
 

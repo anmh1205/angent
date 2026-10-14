@@ -163,7 +163,7 @@ Compatibility navigation lives in `retired-routes/README.md`.
 
 `scripts/select_engineer.py` validates the exact public Skill identity set and exact Agent-role identity set, not only their counts.
 
-Stable catalog identity SHA-256: `fbe4be0fa01ff696fdc783d8e398a4fb157b7c31d831d6eb792dea55ca627a9e`.
+Stable catalog identity SHA-256: `439bc625174a6e9e780f8f464b0129ccf9bfcb4ba5b63d7fa3734d0e05541ddc`. The canonical encoding is defined in `UPSTREAM_BASELINE.md` and validated by the selector.
 
 A package with the right number of directories but a missing/retired/unexpected identity is not ready.
 
