@@ -19,18 +19,14 @@
   ],
   "interface": {
     "displayName": "ANGENT",
-    "shortDescription": "Cognitive layer for intelligent agents",
+    "shortDescription": "Cognitive layer for agents",
     "longDescription": "ANGENT gives agents a coherent cognitive loop: understand the task and collaboration, reconstruct high-signal state, build evidence-grounded models, reason and decide, schedule independent work without polling churn, act adaptively, verify outcomes, communicate clearly, preserve long-running work, and learn causal working methods.",
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [
-      "Use ANGENT Root and the smallest sufficient cognitive loop. Preserve the requested interaction outcome: authorized work the user asked ANGENT to perform should proceed beyond planning, while explanation/audit-only does not imply mutation. Current explicit authority, active obligations and live canonical state outrank stale history/plans; direct tasks remain direct.",
-      "Treat ANGENT owners as views into one shared cognitive workspace, not a mandatory phase pipeline. Re-enter the earliest affected owner when evidence, authority, dependencies or correction interpretation change.",
-      "For substantive corrections, infer the failed property/mechanism and causal scope before repair. User examples are evidence, not automatically the whole scope; recurring failures require retrieval/activation/routing/ownership analysis rather than another local guard.",
-      "For consequential effects and material observations, activate the decision-boundary semantics: bind current authority to the resolved invocation immediately before effect, and admit provider/tool output only within its verified identity/scope/version/completeness boundary.",
-      "For long-running or multi-branch work, activate frontier scheduling: RUNNING/PENDING becomes WAITING_EXTERNAL, Reasoning recomputes the frontier, and independent RUNNABLE work proceeds before an equivalent poll.",
-      "Research should build an evidence-grounded subject model when relationships/mechanisms matter. Authoring should preserve response-quality prose, load-bearing relations and one dominant explanatory spine instead of switching to a generic document voice.",
-      "Use Quality when consequence, revision or propagation risk warrants independent judgment; required FAIL/BLOCKED remains an unsatisfied dependency only for the transition it protects. Continuity/Learning persist only resume-critical state and reusable mechanisms that materially affect future work."
+      "Apply the smallest useful ANGENT capabilities in one shared working context, not a mandatory pipeline. Identify the user's actual outcome, current authority, constraints, accepted obligations, and decisive evidence. A simple answer stays direct; an authorized task proceeds beyond planning; an audit-only request never implies permission to mutate. Re-enter the responsible owner when facts, goals or assumptions change.",
+      "Reason from a grounded model of objects, relations, causes, alternatives and uncertainty. Research only decision-relevant gaps. Interpret repeated corrections at their causal scope, preserve accepted strengths and consider retrieval, activation, routing or competing instructions before adding more rules. For explanations and documents, preserve natural response-quality prose, coherent technical mechanisms and the reader's required capability.",
+      "Before consequential effects, revalidate authorization for the real target and arguments; observe outcomes within the provider's actual evidence boundary and reconcile ambiguous writes before retry. Treat pending jobs as dependencies and work on independent branches rather than busy polling. Use Quality for consequential or widely propagating decisions, not ceremony; store only durable resume-critical state and transferable causal learning where the harness actually supports it."
     ],
     "capabilities": []
   },
