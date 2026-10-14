@@ -113,6 +113,12 @@ Regardless of backend, preserve:
 
 A transient transcript or hidden model context alone is not a Continuity backend.
 
+The harness should also expose the trust boundary of persisted state. State kept in application-controlled/server-owned storage may be treated as trusted to the extent guaranteed by that environment; client-supplied/imported snapshots require integrity/ownership verification before dependent resume.
+
+Schema validity, revision order, a call fingerprint, or successful deserialization alone do not authenticate a saved snapshot.
+
+When stronger protection is required, the harness—not ANGENT core—implements signing/MACs, authenticated storage, encryption, access control, or equivalent mechanics.
+
 ## Long-running operation contract
 
 When the harness exposes a long-running process, job, workflow, build, deployment, or asynchronous provider action, preserve the operation identity/handle if one exists.

@@ -207,6 +207,24 @@ Fail the method if document mode introduces generic teaching narration, detached
 
 Do not solve this with a phrase blacklist.
 
+## Trial isolation and intentional shared state
+
+A calibration case is evidence about the generating method only if the initial conditions are interpretable.
+
+Before comparing trials/candidates, identify whether the result can be contaminated by:
+- artifacts or files left by a previous trial;
+- conversation/session/context state from another run;
+- cached retrieval/tool/provider results;
+- mutable external provider objects changed by earlier attempts;
+- resource exhaustion, rate limits, or environment drift;
+- prior agent outputs that the current trial can inspect.
+
+Prefer isolation/reset when those states are not part of the intended task.
+
+If persistence/shared state is itself under test—for example resume, memory, collaboration continuity, or concurrent-work behavior—preserve it deliberately and record the exact shared-state boundary instead of calling the trial “clean”.
+
+A contaminated trial may still reveal a failure mode; it should not be used as independent capability/regression evidence without accounting for the confounder.
+
 ## Reproducible behavioral evidence
 
 When ANGENT uses calibration as evidence for a broad/recurrent behavior change, preserve enough information to reconstruct **why** the acceptance claim was justified.

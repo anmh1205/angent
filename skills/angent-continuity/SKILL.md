@@ -50,6 +50,14 @@ Persist collaboration state only when losing it could materially change how the 
 
 Advance at meaningful work boundaries, including branch scheduling-state changes that alter safe next work, not after every tool call or unchanged poll.
 
+## Persisted-state trust
+
+A coherent checkpoint is not automatically a trusted checkpoint.
+
+Continuity must preserve or recover enough storage provenance to know whether the record came from a trusted/application-controlled backend or an external/imported surface whose integrity/ownership still needs verification.
+
+Unverified persisted state can guide investigation, but it cannot manufacture authority or silently establish verified completion, accepted baseline, or pending-effect truth.
+
 ## External sources are reconciliation evidence
 
 GitHub, Jira, Notion, deployment state, running processes/jobs, and provider APIs establish outside-world facts.

@@ -16,6 +16,7 @@ Use only fields that matter:
 - **scope/exclusions** — what is inside/outside the task;
 - **authority** — allowed read/write/external effects;
 - **success semantics** — what must be true to claim completion;
+- **success components** — optional independently verifiable required components when the endpoint is genuinely composite;
 - **required evidence** — what proves the success state;
 - **blocking ambiguity** — unresolved ambiguity that truly prevents correct work.
 
@@ -39,6 +40,14 @@ Examples:
 - “continue autonomously” describes initiative but does not grant an effect outside the current authority boundary.
 
 Context may reconstruct how to work; Contract remains the owner of anything that changes what actions are allowed or required.
+
+## Composite success
+
+Use component outcomes only when the requested endpoint naturally has independent required parts.
+
+A component can be verified complete while the overall task remains incomplete. Preserve that verified progress so Continuity/Quality do not redo it, but never promote partial completion to overall success.
+
+Do not invent a numeric score or partial-credit system for a task that has a binary endpoint. Components exist to preserve truth about progress and dependency, not to make an unfinished task look complete.
 
 ## Scope drift
 

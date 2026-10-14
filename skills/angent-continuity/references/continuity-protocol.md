@@ -8,6 +8,21 @@ A continuity store must be discoverable in a future session, readable/writable w
 
 Backends may differ across ChatGPT/local harnesses. Canonical semantics do not depend on one backend.
 
+## State integrity and ownership
+
+A continuity record being parseable, revision-coherent, or schema-compatible does **not** by itself prove that the snapshot is authentic, owned by the expected task/session, or safe to resume.
+
+Before a persisted record controls dependent work, preserve enough provenance to know whether it came from an application/harness-controlled store or from an external/imported/client-writable surface.
+
+If snapshot integrity or ownership is uncertain:
+- treat the saved record as historical evidence, not authoritative active state;
+- do not restore saved approvals/authority as permission;
+- re-establish consequential target/effect/baseline facts from current authoritative sources before dependent action;
+- reconcile pending/ambiguous effects before replay;
+- fail closed only for the dependency closure that relies on the untrusted state, not unrelated work.
+
+The harness owns cryptographic signing, authenticated storage, encryption, access control, or equivalent mechanics when stronger integrity is required. ANGENT owns the semantic rule that coherence is not authenticity.
+
 ## Frontier record
 
 Use a stable work identity and revisioned records.

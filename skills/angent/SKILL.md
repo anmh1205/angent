@@ -65,9 +65,9 @@ Load/activate deeper semantics when the current decision requires them:
 - **long-running/asynchronous or multi-branch work** → Reasoning frontier-scheduling + Continuity; pending work must not monopolize the loop;
 - **non-trivial specialist/subagent delegation or fan-out synthesis** → Reasoning specialist-synthesis; add delegation-context when context/authority/raw evidence/write boundaries are material, while simple direct work stays direct;
 - **revision of accepted work** → Reasoning repair-and-regression + comparative Quality;
-- **broad core/method/prompt/owner-interface/bulk change** → load the relevant cases from Root `references/core-fixtures.md` plus behavioral-calibration Quality; preserve reproducible evidence only when later acceptance depends on it; do not run unrelated fixtures merely because the bank exists;
+- **broad core/method/prompt/owner-interface/bulk change** → load the relevant cases from Root `references/core-fixtures.md` plus behavioral-calibration Quality; when comparative/reliability evidence can be contaminated by shared state, preserve/reset the initial-state boundary; preserve reproducible evidence only when later acceptance depends on it; do not run unrelated fixtures merely because the bank exists;
 - **long-form/teaching artifact** → Research subject model + Authoring reader/artifact/composition state; preserve response-quality prose and one explanatory spine;
-- **resume after interruption/concurrent change** → Continuity reconciliation + Context refresh + Reasoning revalidation;
+- **resume after interruption/concurrent change** → Continuity persisted-state trust + resume reconciliation + Context refresh + Reasoning revalidation; coherent serialized state is not automatically authenticated/owned state;
 - **engineering specialist need** → Execution engineer routing; prefer usable native AgentKit Engineer, otherwise fallback.
 
 Activation is semantic, not a demand to expose every referenced file or internal model to the user.
@@ -137,6 +137,12 @@ The routes below are dependency hints, not fixed pipelines.
 Quality is one owner with multiple phases, not one linear node placed permanently before or after Authoring.
 
 If the recovered frontier is in REPAIRING or UNSTABLE repair state, a terse continuation such as “continue” keeps the revision/repair route active until comparative Quality accepts a new baseline or current authority explicitly changes the task.
+
+## Composite outcome integrity
+
+When the Contract defines several genuinely independent required outcomes, preserve verified component progress without confusing it with overall completion.
+
+Do not invent componentization or numeric partial-credit for a binary task. Overall completion still follows the requested endpoint.
 
 ## Revision invariant
 

@@ -35,6 +35,18 @@ Examples:
 
 Do not count correlated checks as independent confirmation.
 
+## Isolation and contamination
+
+Evaluation evidence can be invalid even when the grader itself is sound if the trial inherits state that changes the result.
+
+When a behavioral calibration or repeated trial is used to support reliability/regression claims, preserve enough initial-state information to know whether prior runs, cached artifacts, conversation/session memory, modified repositories/workspaces, provider objects, resource exhaustion, or other shared state could have influenced the outcome.
+
+Prefer a clean or deliberately reconstructed initial state when feasible.
+
+If shared state is intentionally part of the behavior being evaluated, declare it as part of the measurement context rather than resetting it away.
+
+Do not count several trials as independent evidence when they share a contaminating state/failure source that can materially couple their outcomes.
+
 ## Failure attribution
 
 When an evaluation disagrees with the candidate or expected behavior, distinguish:
