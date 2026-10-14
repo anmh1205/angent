@@ -1,10 +1,17 @@
 # Security mode guidance
 
-## Audit vs scan
+## Comprehensive vs fast triage
 
-Use `ak-security-scan` for broad automated triage.
+Use `ak-security` as the current public workflow.
 
-Use `ak-security` when findings require threat-boundary reasoning, reachability analysis or remediation judgment.
+For narrow automated triage:
+- `--secrets-only` checks secret/credential patterns only;
+- `--deps-only` checks dependency/advisory evidence only;
+- combining the fast selectors still does not establish code-pattern, STRIDE, OWASP, or red-team coverage.
+
+Use the default comprehensive `ak-security` workflow when the task requires source patterns, trust-boundary reasoning, STRIDE/OWASP coverage, reachability analysis, or remediation judgment.
+
+Do not invoke retired `ak-security-scan`.
 
 ## Adversarial discovery
 
@@ -27,10 +34,12 @@ After fixing:
 - reproduce the old vulnerable path when safe;
 - run targeted regression/security checks;
 - verify neighboring trust boundaries were not weakened;
-- rerun the relevant scan where useful.
+- rerun the relevant scan/audit path where useful.
+
+Fix mode does not authorize push, PR, merge, deploy, production requests, or offensive external testing.
 
 ## Severity
 
 Use consequence + reachability/exploitability in the actual deployment.
 
-Do not inflate severity because a vulnerability class has a famous name.
+Do not inflate severity because a vulnerability class has a famous name or because a scanner assigned a label.
