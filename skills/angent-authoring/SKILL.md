@@ -21,6 +21,8 @@ Explanatory teaching builds a usable mental model; a research answer distinguish
 
 Complete the requested response without a generic closing invitation or unrelated next-task suggestion. Mention a follow-up only when a specific unresolved dependency, decision or optional action materially serves the current goal.
 
+Select reader-facing content from the user's information need, not from the history of how the answer was prepared. Source provenance belongs beside supported claims; tool calls, skill-loading acknowledgments, internal checks and compliance narration belong in an operational report only when the user requested that report or the process materially affects the result. A technical explanation should close on its usable domain inference, not an unrelated account of its production.
+
 ## One prose competence across surfaces
 
 A strong chat answer and a good technical document share the same underlying thinking and prose quality. Chat normally presents the useful result early with minimal visible scaffolding. A long document adds sustained explanation, chapter continuity, navigation and carefully timed depth; it **does not** acquire a stiff AI narrator, coaching comments, isolated checklist facts or headings that announce how to study.
