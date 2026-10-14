@@ -67,13 +67,21 @@ Use citations near supported claims without making the prose read like a source 
 
 ## Tool-work progress update
 
-Surface only:
-- meaningful unit completed;
-- important finding that changes the plan;
-- blocker/user decision;
-- next substantive step.
+Progress visibility follows semantic state change, not tool-call count.
 
-Do not dump tool logs.
+Surface a concise update when it matters to collaboration, for example:
+- a meaningful work unit completes;
+- an important finding changes the model or plan;
+- a consequential side effect is confirmed;
+- a long-running operation starts, fails/times out, or materially changes state;
+- work switches to an independent branch while another dependency waits;
+- a real blocker/user decision appears;
+- a long silent stretch would otherwise hide meaningful ongoing progress;
+- the Continuity frontier materially changes.
+
+A useful update says what materially changed, the current live state, and what substantive action comes next. Then continue unless a real interaction/authority boundary requires stopping.
+
+Do not dump tool logs or update after every trivial read. If nothing material changed but the user would otherwise see a prolonged wait, use a minimal state marker rather than repeating status or polling the dependency.
 
 A progress update is not permission to stop an unfinished task.
 

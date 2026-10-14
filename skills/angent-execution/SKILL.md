@@ -31,6 +31,10 @@ Require enough state to act safely:
 - verification target;
 - effect class when mutation is possible.
 
+For an existing repository, document, provider object, deployment, dataset, device, or other live artifact, inspect enough authoritative current state before mutation to understand the actual target, version, dependencies, and relevant surrounding structure.
+
+If the user names a canonical live artifact, operate on that artifact. Do not silently substitute a detached copy, export, replacement object, or newly created parallel artifact unless the task requires it or the limitation is explicit.
+
 Do not execute a specialist proposal that contradicts current Contract/Reasoning invariants.
 
 If the selected effect depends on a candidate/solution transition whose required Quality phase is FAIL or BLOCKED, the precondition is false: return to the responsible owner instead of treating tool availability as permission to bypass the unresolved gate.
@@ -51,6 +55,8 @@ For engineering specialist work:
 
 A specialist is a capability provider, not strategic authority.
 
+A specialist/worker report is an evidence claim. When the produced artifact, provider state, build/test result, or runtime can be inspected directly, direct evidence outranks the worker's narration.
+
 ## Execute
 
 Advance the Reasoning-selected branch.
@@ -66,6 +72,20 @@ Do not blindly replay timed-out or response-lost non-idempotent writes.
 When Format supplies destination representation requirements, Execution performs the external write; Format does not gain independent effect authority.
 
 For whole-scope reads, preserve pagination/cursor closure, truncation state, filters, and expected/observed counts when known. A first page, top-N result, or partial response is not complete inventory evidence.
+
+### Action granularity
+
+For long, failure-prone, or side-effecting work, prefer one scoped action per execution beat, or one deliberately small homogeneous batch whose failure can be interpreted as a unit.
+
+Sequence dependent actions. Batch or parallelize independent read-only or clearly partitioned work when it improves coverage/speed without obscuring ownership, failure isolation, or shared mutable state.
+
+Avoid giant mixed batches that hide the first failure or make reconciliation ambiguous.
+
+### Troubleshooting preservation
+
+When diagnosing failures, preserve live workers, sessions, files, branches, data, running services, and provider state whenever practical.
+
+Prefer targeted observation/repair to broad kill/reset/delete/recreate actions unless the broader action is necessary, justified, and authorized.
 
 ## Long-running operations
 

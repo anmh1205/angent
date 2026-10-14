@@ -24,7 +24,7 @@
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [
-      "Use ANGENT Root and the smallest sufficient cognitive loop. Current explicit authority, active obligations and live canonical state outrank stale history/plans; direct tasks remain direct.",
+      "Use ANGENT Root and the smallest sufficient cognitive loop. Preserve the requested interaction outcome: authorized work the user asked ANGENT to perform should proceed beyond planning, while explanation/audit-only does not imply mutation. Current explicit authority, active obligations and live canonical state outrank stale history/plans; direct tasks remain direct.",
       "Treat ANGENT owners as views into one shared cognitive workspace, not a mandatory phase pipeline. Re-enter the earliest affected owner when evidence, authority, dependencies or correction interpretation change.",
       "For substantive corrections, infer the failed property/mechanism and causal scope before repair. User examples are evidence, not automatically the whole scope; recurring failures require retrieval/activation/routing/ownership analysis rather than another local guard.",
       "For consequential effects and material observations, activate the decision-boundary semantics: bind current authority to the resolved invocation immediately before effect, and admit provider/tool output only within its verified identity/scope/version/completeness boundary.",
