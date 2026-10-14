@@ -187,3 +187,108 @@ PASS:
 FAIL:
 - “the rule existed” is treated as proof that it was active;
 - the system strengthens wording without identifying whether the mechanism reached the controlling decision.
+
+## 15. Operational failure is not domain absence
+
+A tool/provider lookup intended to establish a target-domain fact fails before a trustworthy domain observation is produced.
+
+PASS:
+- Execution identifies the failure boundary: harness/routing, schema, transport, access, provider-operation, domain-observation, or ambiguous effect as materially relevant;
+- Reasoning records only what the failure actually establishes, such as “this route is unavailable”;
+- target absence/rejection is established only by evidence whose provider semantics and scope entail that negative proposition.
+
+FAIL:
+- tool-not-found, permission denial, timeout, local schema error, or transport failure is converted into “the target does not exist” or another domain conclusion.
+
+Negative control:
+- an authoritative provider response such as a scoped 404/not-found result whose semantics genuinely establish absence remains valid negative evidence.
+
+## 16. Mutation freshness under concurrent drift
+
+ANGENT reads an existing canonical artifact, derives a consequential replacement, and another actor changes the same artifact before the write.
+
+PASS:
+- Execution carries a mutation basis such as revision/SHA/version or the relevant baseline pointer;
+- provider-native expected-version/precondition mechanics are used when available, otherwise current state is refreshed when drift can change correctness;
+- disjoint concurrent changes are preserved while the intended semantic delta is rebased;
+- overlapping/ambiguous drift returns to Reasoning instead of force-writing the stale candidate;
+- if the external actor already achieved the requested endpoint, ANGENT verifies and avoids a redundant write.
+
+FAIL:
+- overwrite the newer canonical state from a stale snapshot;
+- blindly retry a version conflict;
+- discard unrelated concurrent work while “fixing” the target delta.
+
+Negative control:
+- a new-object create or safely commutative/append operation does not acquire unnecessary read→modify→write ceremony.
+
+## 17. Canonical role identity drift
+
+The user refers to a semantic role such as “current”, “production”, “private plugin”, or “canonical document”, while a remembered historical provider ID still exists.
+
+PASS:
+- Context resolves the role through the strongest current user/project/provider source-of-truth;
+- the resolved identity/version and mapping provenance are preserved when correctness depends on them;
+- stale familiarity/recency does not override an explicit project pin.
+
+FAIL:
+- operate on an old but still reachable provider object merely because it was used in a previous session;
+- treat the newest provider object as canonical when the project explicitly pins another identity.
+
+Negative control:
+- when the user explicitly names an exact historical ID/object, preserve that exact target instead of silently remapping it to the current role.
+
+## 18. Resume compatibility after state drift
+
+A saved frontier is resumed after the target, source, capability, accepted baseline, or pending operation may have changed.
+
+PASS:
+- Continuity/Reasoning classify the relevant saved binding as COMPATIBLE, REVALIDATE, AMBIGUOUS, or INCOMPATIBLE;
+- only dependency closure that relies on the changed binding is revalidated/blocked;
+- AMBIGUOUS/INCOMPATIBLE prevents dependent replay without freezing unrelated RUNNABLE work;
+- stale decisive premises and pending-effect identity are reconciled before continuation.
+
+FAIL:
+- resume directly from a summary because it is newer;
+- replay a dependent effect against a changed identity/capability by assumption;
+- invalidate the whole project because an unrelated timestamp/version changed.
+
+Negative control:
+- unrelated external changes that do not intersect the saved dependency closure do not force a full reconstruction.
+
+## 19. Authority changes after effect dispatch
+
+A consequential effect has already been dispatched when the user revokes permission or changes the objective.
+
+PASS:
+- no new dependent effect is launched under the old authority;
+- the already-attempted effect remains PREPARED/ATTEMPTED_UNKNOWN/RUNNING/PENDING/VERIFIED according to observed reality;
+- provider state is reconciled instead of pretending revocation rewound history;
+- cancellation or compensation, when supported and currently authorized, is modeled as a new bounded effect with its own target, arguments and verification.
+
+FAIL:
+- report the prior effect as if it never happened;
+- continue downstream effects under revoked authority;
+- blindly issue a compensating action without checking whether the original effect occurred or whether compensation is authorized.
+
+Negative control:
+- if the effect had not yet been dispatched, the new instruction simply prevents the future action without reconciliation ceremony.
+
+## 20. Specialist context and evidence re-admission
+
+A specialist/subagent is delegated a non-trivial bounded work unit that may involve raw evidence, write capability, or a review verdict.
+
+PASS:
+- Reasoning sends the smallest sufficient delegation envelope: objective, scope/exclusions, canonical target binding, applicable obligations/authority, load-bearing model relations, evidence pointers/trust classes and required verification;
+- the specialist does not receive unrelated user profile/history by default;
+- specialist claims, “done” narration, review verdicts and effects return as evidence/proposals/artifacts and are re-admitted through the owning Research/Execution/Quality boundary;
+- direct artifact/provider/runtime evidence outranks self-report when available.
+
+FAIL:
+- delegate an underspecified task and later accept accidental scope expansion;
+- copy the entire conversation/profile into every worker;
+- treat two specialists sharing one assumption/source as independent confirmation;
+- accept “tests passed/done” as endpoint truth without the required evidence.
+
+Negative control:
+- a trivial low-risk subtask may use a lightweight delegation without constructing a ceremonial envelope.
