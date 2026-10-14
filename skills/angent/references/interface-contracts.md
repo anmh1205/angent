@@ -59,6 +59,9 @@ pending_or_ambiguous_effects: []
 artifact_pointers: []
 provenance: []
 uncertainty: []
+context_sufficiency:
+  material_missing_classes: []
+  stale_or_wrong_scope_context: []
 ~~~
 
 Ordinary history can be minimized. Active obligations and collaboration constraints needed by the next decision cannot be dropped.
@@ -73,6 +76,7 @@ live_alternatives: []
 discriminating_observation:
 required_precision:
 version_or_platform_boundary:
+evidence_that_would_reverse:
 ~~~
 
 ## Research → workspace/Reasoning: EvidenceDelta
@@ -85,10 +89,14 @@ subject_model_delta:
   mechanisms: []
   assumptions_or_boundaries: []
   discriminating_observations: []
+support_types: []
 source_roles: []
+source_lineages: []
 provenance: []
 instruction_trust_classes: []
 version_boundaries: []
+measurement_context: []
+validity_boundaries: []
 supported_hypotheses: []
 weakened_hypotheses: []
 rejected_hypotheses: []
@@ -98,12 +106,15 @@ residual_uncertainty: []
 
 Research returns evidence and evidence-grounded domain structure, not executable instructions, strategic authority, or a reader-facing teaching path.
 
+Multiple evidence items sharing one source/model/reference/environment lineage are not automatically independent confirmation.
+
 ## Reasoning → downstream: RepairModel
 
 Use when changing previously accepted work.
 
 ~~~yaml
 accepted_baseline:
+baseline_validity_boundary:
 failure_observation:
 failure_mechanism:
 repair_target:
@@ -146,6 +157,7 @@ new_evidence: []
 residual_uncertainty: []
 provider_evidence: []
 enumeration_evidence:
+measurement_context:
 ~~~
 
 An acknowledgement or exit code without authoritative state is not automatically success.
@@ -172,20 +184,23 @@ This state is descriptive. It does not create a polling schedule. Execution deci
 established_model:
 conclusion:
 decisive_evidence: []
+evidence_support_boundary:
 boundaries: []
 uncertainty: []
+reconsideration_triggers: []
 reader_capability_target:
 collaboration_expectations:
 repair_model:
 ~~~
 
-Authoring may choose teaching order and representation but cannot silently alter the established conclusion or protected repair properties.
+Authoring may choose teaching order and representation but cannot silently alter the established conclusion, uncertainty boundary, or protected repair properties.
 
 ## Authoring → Quality: ArtifactCandidate
 
 ~~~yaml
 candidate:
 accepted_baseline:
+baseline_validity_boundary:
 artifact_state:
 repair_target:
 protected_properties: []
@@ -200,6 +215,7 @@ The accepted baseline advances only after required Quality/destination gates pas
 ~~~yaml
 status: PASS | FAIL | BLOCKED
 phase: solution | candidate | endpoint
+criteria_basis: []
 findings:
   - dimension:
     evidence:
@@ -207,6 +223,14 @@ findings:
     earliest_fault_owner:
     required_repair_property:
     regression_risk:
+verdict_validity:
+  evidence_support:
+  evaluator_independence:
+  measurement_context:
+  confounders: []
+  validity_boundary:
+failure_attribution: SUBJECT_DEFECT | EVALUATOR_DEFECT | ENVIRONMENT_CONFOUND | MIXED | UNRESOLVED
+residual_uncertainty: []
 target_repaired:
 protected_properties_preserved:
 dependencies_reconciled:
@@ -214,6 +238,8 @@ endpoint_verified:
 ~~~
 
 Quality may return several findings. Findings sharing one mechanism should be grouped instead of forcing one-at-a-time repair.
+
+A PASS/FAIL is itself an evidence-backed claim. Use BLOCKED when the available evaluation cannot distinguish a material subject defect from evaluator/environment uncertainty.
 
 ## Learning → Context/owner: PromotedMechanism
 

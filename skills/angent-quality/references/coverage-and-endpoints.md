@@ -33,6 +33,20 @@ Use the provider/artifact that can establish the requested endpoint.
 
 When no authoritative read-back exists, preserve the result as unverified rather than manufacturing certainty.
 
+A grader prediction about endpoint state is weaker than authoritative endpoint observation when the provider can be queried directly.
+
+## Measurement conditions
+
+When environment or harness conditions can affect the observed result, preserve the conditions needed to interpret the evidence: relevant model/provider version, configuration, resource limits, runtime/tool version, test data or rubric version.
+
+A changed measurement condition does not automatically invalidate the artifact; it may invalidate the inference previously drawn from the measurement.
+
+## Stochastic/repeated evidence
+
+A single success can establish that an outcome occurred once. It does not by itself establish a reliability rate or regression absence for variable behavior.
+
+Use representative repeated observations only when the claim or consequence requires them. Do not impose a fixed number of repetitions.
+
 ## Samples
 
 Label samples as samples.

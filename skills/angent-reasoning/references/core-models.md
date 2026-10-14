@@ -35,9 +35,9 @@ When interactions matter, trace:
 
 When possible follow one stable object/event:
 
-```text
+~~~text
 input → interface → transformation → owned state → output / observation
-```
+~~~
 
 Localize the first point where actual behavior diverges from expectation.
 
@@ -47,7 +47,8 @@ Use explicit hypotheses only when alternative mechanisms would lead to different
 
 For each live hypothesis keep:
 - claim/mechanism;
-- current support;
+- current support and support type;
+- material evidence lineage/dependency;
 - predicted observation;
 - best discriminator;
 - status;
@@ -69,9 +70,37 @@ Keep:
 - reversibility;
 - cost of error;
 - selected decision;
+- decisive evidence/assumptions;
+- validity boundary;
 - reconsideration trigger.
 
 Do not substitute feature inventories or generic pros/cons for a decision model.
+
+### Decision robustness
+
+Prefer a decision that remains justified across the credible residual uncertainty that matters, rather than one that merely has a confident narrative.
+
+Before a consequential decision, ask:
+
+- which assumption/evidence dependency could reverse the choice?
+- is decisive evidence direct, inferred, evaluator-produced, or environmentally confounded?
+- would a plausible alternate environment/version/context change the ranking?
+- is a reversible probe cheaper than pretending uncertainty is resolved?
+
+Do not invent numeric confidence when the evidence does not support it.
+
+### Reconsideration
+
+Reopen a decision when a material part of its basis changes, for example:
+
+- decisive evidence is contradicted, downgraded, or shown to share a weaker lineage;
+- source/model/provider/version or relevant environment changes;
+- Context reveals a previously missing active obligation or decision-relevant fact;
+- Execution observes a state inconsistent with the model;
+- Quality cannot distinguish subject defect from evaluator/environment defect;
+- an accepted baseline's validity boundary no longer matches the current system.
+
+Reconsider only dependent decisions. A changed measurement condition does not invalidate unrelated reasoning.
 
 ## Adaptive plan
 
@@ -88,4 +117,4 @@ Represent:
 
 Prefer next actions that unblock a dependency, reduce decisive uncertainty, advance the critical path, and remain safe/reversible when uncertainty is high.
 
-Progress tokens such as commits, generated files, issue transitions, or command success prove the requested endpoint only when the Contract defines them as endpoint evidence.
+Progress tokens such as commits, generated files, issue transitions, command success, or repeated pending polls prove the requested endpoint only when the Contract defines them as endpoint evidence.

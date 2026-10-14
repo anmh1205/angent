@@ -2,6 +2,18 @@
 
 Quality is one owner with several evaluation phases. Use only the phases relevant to the task.
 
+## Criteria grounding
+
+Before judging, establish where the relevant criteria come from:
+
+- current Contract and success state;
+- active obligations/invariants;
+- accepted baseline/protected properties for revision;
+- authoritative domain requirements/evidence;
+- reader capability or destination requirements where applicable.
+
+Do not substitute an easy-to-measure proxy for the actual requested property.
+
 ## Phase A — solution integrity
 
 Before expensive authoring or effects when consequence warrants it, PASS requires the relevant items:
@@ -10,14 +22,16 @@ Before expensive authoring or effects when consequence warrants it, PASS require
 2. active obligations/invariants preserved;
 3. important model relations/states present;
 4. material conclusions supported at required precision;
-5. alternatives handled when they can change the decision;
-6. causal claims justified;
-7. unresolved uncertainty calibrated;
-8. decision follows from constraints/consequences;
-9. dependency/replan structure coherent;
-10. whole-scope claims have whole-scope evidence.
+5. evidence lineage/independence sufficient for the claim;
+6. alternatives handled when they can change the decision;
+7. causal claims justified;
+8. unresolved uncertainty calibrated;
+9. decision follows from constraints/consequences and is robust to remaining uncertainty;
+10. dependency/replan structure coherent;
+11. whole-scope claims have whole-scope evidence;
+12. evaluator/measurement conditions are valid enough for the verdict.
 
-Return failure to the earliest responsible owner.
+Return failure to the earliest responsible owner. Use BLOCKED instead of inventing a producer defect when evaluator/environment attribution is unresolved.
 
 ## Phase B — candidate integrity
 
@@ -30,8 +44,9 @@ For reader-facing work evaluate:
 5. paragraph/structure integrity;
 6. terminology/language;
 7. evidence/example interpretation;
-8. promised capability closure;
-9. long-form consistency.
+8. epistemic fidelity between claim strength and support;
+9. promised capability closure;
+10. long-form consistency.
 
 For a revision, do not judge the candidate only in isolation. Compare it with:
 
@@ -39,7 +54,8 @@ For a revision, do not judge the candidate only in isolation. Compare it with:
 - the stated repair target;
 - active obligations;
 - protected properties and accepted quality floors;
-- relevant artifact state.
+- relevant artifact state;
+- the baseline's still-valid measurement conditions.
 
 A repair passes only when the target improves without silently losing accepted strengths.
 
@@ -53,6 +69,14 @@ After a destination write or external effect, verify the actual user/provider st
 - requested endpoint is satisfied.
 
 Transport success is not endpoint proof.
+
+## Verdict validity
+
+A material PASS/FAIL is a claim that must itself be supported.
+
+Check criteria validity, evidence validity, evaluator independence, environment/configuration, confounders and validity boundary. If these cannot support a justified PASS or FAIL, return BLOCKED.
+
+For stochastic behavior, distinguish possibility, observed failure mode, repeatability and reliability. One trial does not establish all four.
 
 ## Findings
 
@@ -73,6 +97,7 @@ For revision work distinguish:
 - target repaired;
 - protected properties preserved;
 - invalidated dependencies reconciled;
-- endpoint/render verified when required.
+- endpoint/render verified when required;
+- verdict valid within the evidence/measurement boundary.
 
 All required conditions must hold before the accepted baseline advances.

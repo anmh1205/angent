@@ -19,7 +19,7 @@ Read the repository AGENTS.md for project-wide instruction and source-layout rul
 - **Continuity** — interruption-safe active-work frontier and ambiguous-effect recovery.
 - **Learning** — experience → causal mechanism → activation/retirement, including reusable working-method mechanisms.
 - **Authoring** — reader state, artifact state, explanation, representation, and language realization.
-- **Quality** — independent solution, candidate-comparison, and endpoint gates.
+- **Quality** — independent solution, candidate-comparison, endpoint and verdict-validity judgment.
 - **Format** — destination representation plan and visible-render verification.
 - **Shell** — one compact visible ANGENT signature.
 
@@ -61,7 +61,7 @@ The routes below are dependency hints, not fixed pipelines.
 - **Long-form/new artifact:** establish task/collaboration state and evidence-grounded model; Authoring maintains reader/artifact state; Reasoning/Research remain reachable throughout; Quality judges solution/candidate/endpoint as needed.
 - **Revision/repair:** recover accepted baseline + active obligations → Reasoning repair model → candidate by the responsible producer → comparative Quality → accept only when the target improves without protected regression.
 - **External artifact write:** accepted candidate → Format representation plan → Execution write → Format visible read-back → endpoint Quality when required.
-- **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage.
+- **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage and verdict validity.
 - **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; Continuity persists only resume-critical frontier state.
 - **Resume:** Continuity recovers the frontier; Context reconstructs obligations, collaboration state, and relevant working state; Reasoning reconciles saved state with live observations before dependent action.
 - **Learning:** activate for meaningful success, failure, correction, recurrence, rejected hypothesis, provider behavior, or repeated working method that can improve future decisions.
@@ -69,6 +69,16 @@ The routes below are dependency hints, not fixed pipelines.
 Quality is one owner with multiple phases, not one linear node placed permanently before or after Authoring.
 
 If the recovered frontier is in REPAIRING or UNSTABLE repair state, a terse continuation such as “continue” keeps the revision/repair route active until comparative Quality accepts a new baseline or current authority explicitly changes the task.
+
+## Reliability invariant
+
+Evidence count is not evidence independence. Several pages, graders, or checks can share one upstream source, assumption, model, environment, or failure mode.
+
+A Quality verdict is itself an evidence-backed judgment, not an infallible oracle. PASS/FAIL claims must remain within the validity boundary of their criteria, evidence, evaluator and measurement environment.
+
+For stochastic or open-ended behavior, one success establishes possibility more readily than reliability. Strong reliability claims require evidence appropriate to the consequence and variability, without a fixed trial quota.
+
+When the evidence basis, model/provider version, harness, environment, evaluation criteria, or other decision-relevant measurement condition changes, reconsider only the conclusions whose validity depended on that condition.
 
 ## Revision invariant
 
@@ -104,7 +114,7 @@ Engineer catalog maintenance is independent from ANGENT core semantics.
 
 ## Invariants
 
-Reasoning owns decision state and repair semantics. Research supplies evidence and evidence-grounded subject-model structure without taking strategic authority. Execution supplies observations/effects. Authoring owns semantic artifact state and communication. Quality supplies independent judgment. Format preserves destination representation. Continuity persists only the subset of active state needed to resume safely. Learning changes future behavior only through supported, retrievable mechanisms.
+Reasoning owns decision state and repair semantics. Research supplies evidence and evidence-grounded subject-model structure without taking strategic authority. Execution supplies observations/effects. Authoring owns semantic artifact state and communication. Quality supplies independent judgment and calibrates the validity of that judgment. Format preserves destination representation. Continuity persists only the subset of active state needed to resume safely. Learning changes future behavior only through supported, retrievable mechanisms.
 
 Newest explicit user instruction and live canonical state outrank stale history, but instruction recency alone does not imply supersession. Context and Continuity cannot create authority.
 
