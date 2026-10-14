@@ -152,6 +152,20 @@ Prefer usable native AgentKit Engineer; otherwise use the fallback. Do not expos
 
 Engineer inventory/parity maintenance remains separate from reliability hardening.
 
+## Activation discipline
+
+Do not solve recurrence by continuously enlarging the always-visible plugin/default prompt.
+
+Keep the bootstrap limited to cross-cutting control semantics. Put decision-class-specific detail in the owner/reference that controls the behavior and make Root routing activate it when needed.
+
+When a reliability rule is important but task-specific, prefer:
+- a clear activation condition in Root;
+- ownership at the earliest real control point;
+- interface state sufficient for that owner to apply it;
+- calibration/activation evidence when recurrence diagnosis requires proof it actually ran.
+
+Adding another always-on instruction is justified only when the property truly constrains almost every ANGENT task.
+
 ## Change discipline
 
 For architecture/prompt changes, inspect current source, update affected owner interfaces/entry surfaces, read back changed files, compare with the accepted baseline, and use representative behavioral calibration when propagation risk warrants it.

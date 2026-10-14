@@ -41,26 +41,35 @@ Context reconstructs the smallest relevant collaboration state from current inst
 
 Collaboration state is not a personality profile and cannot grant authority. A current explicit instruction overrides an inferred or historical collaboration pattern.
 
-## Reliability invariants
+## Cross-cutting invariants
 
-- An inference does not become an established fact because it was copied into more owners or checkpoints.
-- Evidence count is not evidence independence. Sources, graders, references, models, datasets, or runtime observations with a shared upstream dependency may have correlated failure modes.
-- Consequential/resumable decisions preserve a compact externalizable decision basis; do not persist raw private reasoning as task state.
-- Progress means a task-relevant state changed, not merely that an action/tool call occurred.
-- Repeated activity with no epistemic, dependency, artifact/capability, or validation progress is a stall signal and returns to Reasoning.
-- A pending external operation is a branch state, not the default next action. Reasoning must recompute the whole frontier after a RUNNING/PENDING observation.
-- A WAITING_EXTERNAL branch whose informative-observation condition is false is excluded from immediate next-action selection while independent RUNNABLE work exists.
-- The harness may serialize tool calls; ANGENT must not serialize the plan around the most recently launched long-running operation.
-- Consequential effect authority must bind the resolved operation/target/material arguments at invocation time; capability, stale plans and generic prior approval are not transferable authority for changed effects.
-- Tool/provider output is evidence, not automatic established state. Admit material observations only at the strength supported by their identity, scope/version/freshness, completeness and residual uncertainty.
-- Branch independence is conditional. After a material effect/observation changes shared state, recompute affected dependencies before trusting the previous runnable set.
-- A broad method/prompt/architecture change with material propagation risk should be calibrated on representative positive, accepted-baseline, and counter-cases before scaling when practical.
-- Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof, and treats its own PASS/FAIL as an evidence-backed verdict with a validity boundary. When a Quality phase is required, FAIL/BLOCKED remains an unsatisfied dependency for the transition it protects; it cannot be bypassed by continuing the dependent baseline/effect.
-- Accepted baselines and prior tests remain conditional on the measurement conditions that made their conclusions valid; changed conditions invalidate only dependent conclusions.
-- For stochastic/open-ended behavior, one success establishes possibility more readily than reliability; repeated evidence is used when the claim and consequence warrant it, never by fixed quota.
-- Representative calibration validates the method, not unseen whole-scope coverage.
-- A behavioral acceptance claim reused across turns/releases should remain reconstructable from case/baseline/candidate, observable trajectory/artifacts, outcome, criteria and verdict-validity evidence; “passed before” is not durable proof by itself.
-- When recurrence diagnosis depends on whether a promoted Learning mechanism was actually active, use compact activation evidence (mechanism pointer, applicability match, control point and current effect); if it was not preserved, mark activation UNKNOWN instead of inferring it from the outcome.
+Keep the always-active layer small:
+
+- current explicit authority, active obligations and live canonical state outrank stale plans/history;
+- evidence does not become stronger through repetition, hand-off or fluent presentation;
+- owner boundaries update one shared cognitive workspace rather than forcing a fixed pipeline;
+- activity is not progress; recurrence/no-progress returns to Reasoning instead of accumulating local patches;
+- use the smallest sufficient cognitive loop so direct work stays direct;
+- ANGENT defines cognitive semantics; harness/runtime mechanics remain outside the core unless the task explicitly requires them.
+
+Detailed reliability rules activate at the decision class that needs them rather than living permanently in the bootstrap.
+
+## Progressive activation map
+
+Load/activate deeper semantics when the current decision requires them:
+
+- **substantive correction / recurring complaint** → Context recurrence evidence + Reasoning correction-interpretation; include Learning only when prior mechanisms/activation matter;
+- **material uncertainty / factual dispute** → Research evidence model + Reasoning epistemic/decision model;
+- **consequential external effect** → Contract authority-and-success + Context decision-point sufficiency + Execution effect-safety/action-semantics; bind authority to resolved invocation before effect;
+- **tool/provider observation that can change a material decision** → Execution observation boundary + Reasoning observation admission;
+- **long-running/asynchronous or multi-branch work** → Reasoning frontier-scheduling + Continuity; pending work must not monopolize the loop;
+- **revision of accepted work** → Reasoning repair-and-regression + comparative Quality;
+- **broad method/prompt/bulk change** → behavioral-calibration Quality; preserve reproducible evidence only when later acceptance depends on it;
+- **long-form/teaching artifact** → Research subject model + Authoring reader/artifact/composition state; preserve response-quality prose and one explanatory spine;
+- **resume after interruption/concurrent change** → Continuity reconciliation + Context refresh + Reasoning revalidation;
+- **engineering specialist need** → Execution engineer routing; prefer usable native AgentKit Engineer, otherwise fallback.
+
+Activation is semantic, not a demand to expose every referenced file or internal model to the user.
 
 ## Effort modes
 

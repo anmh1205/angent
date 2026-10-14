@@ -61,6 +61,18 @@ A related timing failure occurs when a decision is valid when planned but stale 
 
 Likewise, a tool result should not become established state merely because it arrived after an authorized call. Observation identity, scope/version, completeness and uncertainty determine what the result can safely update.
 
+## Prompt-accumulation failure
+
+A correct mechanism can still degrade ANGENT if every discovered lesson is copied into the always-visible bootstrap.
+
+When reliability rules accumulate:
+- keep genuinely cross-cutting invariants always active;
+- move decision-class-specific detail to the owner/reference that controls the behavior;
+- add an activation condition at Root/Context instead of duplicating the full rule globally;
+- use activation evidence when later recurrence diagnosis needs to know whether the mechanism ran.
+
+Do not equate “important” with “must occupy every prompt”. The objective is reliable activation with minimal irrelevant control context.
+
 ## Alternative cause
 
 Ask whether another cause could explain the same outcome.
