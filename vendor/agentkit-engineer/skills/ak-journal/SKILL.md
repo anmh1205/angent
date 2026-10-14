@@ -1,7 +1,7 @@
 ---
 name: ak-journal
 description: Maintain chronological technical journals as historical evidence without treating them as current authority, task state or promoted learning.
-metadata: {port: angent-fallback, mode: adapted}
+metadata: {port: angent-fallback, mode: degraded}
 ---
 
 # Journal — Portable Fallback

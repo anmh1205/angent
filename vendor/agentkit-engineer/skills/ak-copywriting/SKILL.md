@@ -2,7 +2,7 @@
 name: ak-copywriting
 description: Write conversion-oriented marketing and product copy from audience, offer, evidence and desired action while preserving or extracting the intended writing style.
 license: MIT
-metadata: {port: angent-fallback, mode: portable}
+metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Copywriting — Portable Fallback

@@ -2,7 +2,7 @@
 name: ak-agent-browser
 description: Automate browser, web-app and browser-shell desktop flows through the active browser/computer-use capability, with observable state and session safety.
 license: Apache-2.0
-metadata: {port: angent-fallback, mode: adapted}
+metadata: {port: angent-fallback, mode: degraded}
 ---
 
 # Agent Browser — Portable Fallback

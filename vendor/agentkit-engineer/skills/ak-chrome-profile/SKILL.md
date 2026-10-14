@@ -2,7 +2,7 @@
 name: ak-chrome-profile
 description: Use an authorized real Chrome profile when the active browser runtime supports it; otherwise fall back to an isolated session without extracting credentials.
 license: MIT
-metadata: {port: angent-fallback, mode: adapted}
+metadata: {port: angent-fallback, mode: degraded}
 ---
 
 # Chrome Profile — Portable Fallback

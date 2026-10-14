@@ -192,6 +192,10 @@ Remotion now preserves composition/frame counts, useCurrentFrame deterministic m
 
 Stitch retains its project-aware quota/generate/edit/export and design-to-code normalization, with provider/account/cost and actual artifact gates; it remains DEGRADED without the native SDK/provider. Three.js retains the WebGL/WebGPU scene, asset loading/disposal, interactions and visual/GPU performance gates but honestly distinguishes an absent 556-example search corpus from native knowledge search. Vibe retains worktree/plan/Cook/Fix/review/PR and explicitly authorized --ship, --beta, --both and --advice modes with PR/CI read-back; user- and branch-level restrictions always override workflow convenience. These three complete the **first-pass semantic identity review of all 102 skills**, not a claim that optional vendor runtimes or all upstream auxiliary scripts have been installed and exercised.
 
+### Cross-Skill consistency audit
+
+The complete 102-entrypoint second-pass review found four frontmatter mode declarations inconsistent with the authoritative per-Skill manifest: ak-agent-browser and ak-chrome-profile were declared adapted despite recorded native-browser/runtime degradation; ak-journal was likewise overstated; and ak-copywriting was under-labelled portable despite its adapted contract. These mode declarations have been reconciled. The fallback README formerly duplicated an obsolete 47/102 progress snapshot; it now points to this ledger as the sole changing status authority. This is structural/provenance validation, not a claim that browser, journal or content workflows were run live.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
