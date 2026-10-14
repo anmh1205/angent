@@ -89,6 +89,10 @@ Sequence dependent actions. Batch or parallelize independent read-only or clearl
 
 Avoid giant mixed batches that hide the first failure or make reconciliation ambiguous.
 
+### Cost-aware verification scheduling
+
+Treat verification as part of execution, with timing proportional to failure risk and cost. Perform cheap syntax, structural and targeted checks early when they prevent propagating a defect; group expensive builds, hardware runs or integration tests at a coherent milestone when the user requires a single final run or repeated runs would add little evidence. An immediately dangerous or hard-to-reverse change still needs the necessary earlier check. Do not confuse postponing an expensive check with omitting it, or report final success before the required endpoint tests actually pass.
+
 ### Troubleshooting preservation
 
 When diagnosing failures, preserve live workers, sessions, files, branches, data, running services, and provider state whenever practical.

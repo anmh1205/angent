@@ -15,6 +15,12 @@ The explanation may require identity/state, cause/effect, logical derivation, sp
 
 Make central relations visible through cohesive paragraphs. Carry recognizable objects/referents across sentences, introduce prerequisites when needed, and use a trace, calculation, concrete case or contrast if it removes genuine reconstruction work. An example supports the general mechanism but does not replace its definition and limits. Depth is what the reader can subsequently explain, predict, diagnose or apply—not paragraph count.
 
+## Match the genre to the actual job
+
+Explanatory teaching builds a usable mental model; a research answer distinguishes evidence and inference; a design recommendation exposes the deciding constraints and trade-offs; troubleshooting orders discriminating observations; an operational procedure orders safe, verifiable actions; an expert lookup can be terse and exact. These forms may share domain knowledge without sharing a narrative template. A checklist is appropriate for real parallel checks or procedures, but not as a substitute for explaining a technical mechanism.
+
+Complete the requested response without a generic closing invitation or unrelated next-task suggestion. Mention a follow-up only when a specific unresolved dependency, decision or optional action materially serves the current goal.
+
 ## One prose competence across surfaces
 
 A strong chat answer and a good technical document share the same underlying thinking and prose quality. Chat normally presents the useful result early with minimal visible scaffolding. A long document adds sustained explanation, chapter continuity, navigation and carefully timed depth; it **does not** acquire a stiff AI narrator, coaching comments, isolated checklist facts or headings that announce how to study.
