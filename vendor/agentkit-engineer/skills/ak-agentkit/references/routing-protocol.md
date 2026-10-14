@@ -24,9 +24,11 @@ Check what is really available now:
 A cached file or remembered tool name is not proof the capability is callable.
 
 If a needed capability is absent:
-- choose a semantically adequate replacement;
-- execute inline/sequentially if safe;
+- choose a semantically adequate replacement when the owning workflow allows degradation;
+- execute inline/sequentially if safe and semantically equivalent enough;
 - otherwise report the exact gap.
+
+Do not degrade a workflow past its load-bearing capability boundary. In particular, `ak-team` requires a live team lifecycle; ordinary subagents/sequential roles belong to Orchestrate/Cook rather than being mislabeled as Team.
 
 ## 3. Skill chaining
 
@@ -56,7 +58,10 @@ Good triggers include:
 
 Do not spawn an agent for trivial edits or when the full current context is essential.
 
-If delegation is unavailable, execute the role sequentially.
+Choose the workflow by collaboration semantics:
+- persistent teammates/shared messaging → Team, only if lifecycle is actually available;
+- independent jobs/headless CLIs/one-shot workers → Orchestrate;
+- one coherent implementation owner → Cook.
 
 ## 5. Risk-based verification
 
@@ -79,4 +84,4 @@ After failure:
 4. do not resend the same failing request unchanged;
 5. return to Reasoning when the failure invalidates the plan.
 
-Do not stop merely because one specialist failed if a safe alternate route exists.
+Do not stop merely because one specialist failed if a safe semantically valid alternate route exists.
