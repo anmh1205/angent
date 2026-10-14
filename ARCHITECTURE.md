@@ -221,6 +221,31 @@ The mapping is classified as `COMPATIBLE`, `REVALIDATE`, `AMBIGUOUS`, or `INCOMP
 
 This is deliberately narrower than exact whole-project equality: an unrelated new commit can be compatible, while one changed dependency can require revalidation.
 
+## Persisted-state trust
+
+Durable state has two distinct questions:
+
+~~~text
+can this snapshot be parsed/recovered coherently?
+                    !=
+is this snapshot authentic/owned/trusted enough
+to control dependent continuation?
+~~~
+
+Revision order, schema validity and successful deserialization establish storage/coherence properties; they do not authenticate the snapshot or recreate current authority.
+
+Continuity therefore preserves the storage provenance/trust boundary when it matters. State from a trusted application-controlled backend can be resumed subject to ordinary freshness/compatibility checks. State imported from client-writable/external surfaces is historical evidence until its load-bearing completion/effect/decision claims are verified.
+
+Cryptographic signing, authenticated storage, encryption and access control are harness mechanics. ANGENT defines only the semantic trust boundary.
+
+## Evaluation isolation and composite outcomes
+
+Behavioral evidence is conditional on its initial-state boundary.
+
+Trials can become correlated or misleading when they inherit previous files/artifacts, conversation/session history, cache/provider state, mutated external objects, rate limits or resource exhaustion. When those carry-overs are not part of the intended task, isolate/reset or record them as confounders. When memory/resume/concurrency is the behavior under test, preserve the shared state deliberately and declare it.
+
+Composite task success is also distinct from overall completion. A required component may be verified while another remains blocked or unverified. Preserve component truth for Continuity and remaining-work accuracy; mark the whole task complete only when the Contract endpoint is satisfied. Do not convert component states into an arbitrary score.
+
 ## Verdict and measurement validity
 
 Quality's own PASS/FAIL is not ground truth merely because Quality produced it.

@@ -70,7 +70,11 @@ Treat tool/provider output as evidence before treating it as state. A material o
 
 Branch independence is conditional on the current dependency/shared-state model. A material effect or observation that changes shared state can invalidate a previously RUNNABLE branch; Reasoning recomputes only affected dependencies instead of assuming prior independence remains true.
 
-Resume state is not trusted merely because the checkpoint is coherent. For dependent saved work, Continuity classifies the live mapping as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE. AMBIGUOUS/INCOMPATIBLE fails closed for the dependent continuation or replay while unrelated verified/runnable work may continue.
+Resume state is not trusted merely because the checkpoint is coherent. Revision/schema coherence does not authenticate snapshot ownership/integrity; unverified imported/client-writable state is historical evidence until load-bearing fields are re-established. For dependent saved work, Continuity also classifies the live mapping as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE. AMBIGUOUS/INCOMPATIBLE fails closed for the dependent continuation or replay while unrelated verified/runnable work may continue.
+
+Behavioral calibration must preserve its initial-state/isolation boundary when carry-over can affect the result. Shared state that is intentionally part of memory/resume/concurrency behavior is declared as measurement context; accidental carry-over is a confounder, not independent evidence.
+
+When the requested endpoint has genuinely independent required components, preserve verified component progress without promoting the whole task to COMPLETED. Do not manufacture numeric partial-credit or artificial decomposition for a binary endpoint.
 
 ## Collaboration state
 
