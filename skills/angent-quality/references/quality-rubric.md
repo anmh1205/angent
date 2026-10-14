@@ -26,8 +26,10 @@ Before expensive authoring or effects when consequence warrants it, PASS require
 12. resumed dependent work has a compatible or completed-revalidation binding; ambiguous/incompatible mappings are not replayed by assumption;
 13. consequential effects bind current authority to the resolved target/material arguments at invocation time;
 14. material observations match the identity/scope/version/completeness needed for the model change they support;
-15. whole-scope claims have whole-scope evidence;
-16. evaluator/measurement conditions are valid enough for the verdict.
+15. operational failure domains are separated from target-domain evidence, so pre-provider/tool/access/transport failures do not silently establish negative domain state;
+16. authoritative negative domain observations remain usable when their semantics genuinely entail the negative proposition;
+17. whole-scope claims have whole-scope evidence;
+18. evaluator/measurement conditions are valid enough for the verdict.
 
 Return failure to the earliest responsible owner. Use BLOCKED rather than inventing a producer defect when evaluator/environment attribution is unresolved.
 

@@ -216,6 +216,8 @@ For consequential effects, `resolved_target` and `material_arguments` are popula
 attempted:
 operation_identity:
 target_identity:
+operational_status:
+failure_domain:
 observed_state:
 changed_identifiers_or_versions: []
 observation_boundary:
@@ -237,7 +239,9 @@ wait_state:
 
 An acknowledgement or exit code without authoritative state is not automatically success.
 
-Reasoning must admit the observation at the strength supported by target identity, scope/version/freshness, completeness and residual uncertainty before it changes established state or a consequential decision.
+`failure_domain` is populated only when the distinction matters. It identifies whether failure occurred in the harness/routing, transport/transient-provider, authorization/access, provider-operation, domain-observation, or ambiguous-effect boundary. These are semantic categories, not a required runtime enum.
+
+Reasoning must first separate operational failure from domain evidence, then admit any domain observation at the strength supported by target identity, scope/version/freshness, completeness and residual uncertainty before it changes established state or a consequential decision.
 
 When wait_state is returned, Reasoning recomputes the active frontier before any equivalent status action is selected again.
 

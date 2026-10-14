@@ -43,6 +43,15 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Added behavioral calibration cases for plan→invocation drift, observation mismatch/partiality, branch dependency invalidation and low-consequence counter-cases.
 - No permission runtime, transaction engine, event journal, observation database or scheduler service was added.
 
+### Failure-domain separation
+
+- Distinguished harness/routing, transport/transient-provider, authorization/access, provider-operation, domain-observation and ambiguous-effect boundaries when that distinction changes reasoning.
+- Tool-not-found, schema failure, access denial, timeout, rate limit and unknown-origin error text no longer imply target absence or domain rejection.
+- Authoritative negative observations remain valid evidence when provider semantics, target identity and scope genuinely entail the negative proposition.
+- Retry behavior now depends on both effect safety and failure boundary; ambiguous writes still reconcile before replay.
+- Added behavioral calibration cases for pre-provider failure versus legitimate negative provider observations.
+- No runtime error service or fixed retry matrix was added.
+
 ### Resume compatibility
 
 - Added semantic resume binding for saved work whose safe continuation depends on live target/source/baseline/effect/capability identity.

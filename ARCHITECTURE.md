@@ -68,6 +68,8 @@ When it changes action or quality, distinguish:
 
 A claim does not become established because it has been repeated across Context, Reasoning, Authoring or Continuity.
 
+Operational failure and domain evidence are distinct. Tool lookup/schema errors, access denial, timeout, transport failure, and ambiguous side effects can establish facts about the execution path without establishing the intended target proposition. A negative domain fact requires an authoritative observation whose identity, scope and documented semantics actually entail it.
+
 Research preserves what a source directly establishes versus what ANGENT derives. Reasoning owns the resulting epistemic state. Quality rejects conclusions stronger than their decisive premises.
 
 Evidence volume is not evidence independence. When correlation matters, Research preserves shared lineage across sources, graders, references, models, datasets, or measurement environments rather than treating repetition as independent corroboration.

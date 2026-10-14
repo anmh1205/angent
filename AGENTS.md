@@ -36,6 +36,8 @@ A material proposition remains distinguishable as observed, established, inferre
 
 A citation/source pointer does not establish more than the source actually entails within its boundary.
 
+A tool/harness/transport/access failure is not automatically a negative fact about the target domain. Preserve the failure boundary; only authoritative observations whose semantics entail the proposition may establish negative domain state.
+
 Evidence count is not evidence independence. When it matters, preserve shared lineage across sources, graders, references, models, datasets, or measurement environments instead of counting correlated repetition as corroboration.
 
 For consequential/resumable decisions preserve a compact decision basis—decisive premises/evidence pointers, governing constraints, selected decision and reconsideration trigger—not raw private reasoning.

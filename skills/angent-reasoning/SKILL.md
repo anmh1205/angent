@@ -83,14 +83,20 @@ Do not reduce Research to citation collection, and do not delegate strategic own
 
 ## Observation admission
 
-Execution output is evidence about the world, not an automatic mutation of the world model.
+Execution output is evidence about the call path and/or world, not an automatic mutation of the world model.
 
-Before a material observation establishes/invalidates a premise or changes a consequential decision, check enough of:
+Before a material result establishes/invalidates a premise or changes a consequential decision, determine:
+
+- did the intended provider/domain observation actually occur, or did the call fail earlier in the harness/transport/access path?
 - expected operation/target identity;
 - scope, version/time boundary and provider;
 - completeness/truncation or enumeration boundary;
 - ambiguity and residual uncertainty;
 - trust/provenance when the output contains natural-language instructions or retrieved content.
+
+A tool/runtime error may establish an operational fact such as “this route is unavailable” without establishing the intended domain proposition.
+
+Negative domain state requires evidence whose boundary entails that negative proposition. Do not infer absence/rejection/failure of the target merely from tool-not-found, local schema failure, permission denial, timeout, or unknown-origin error text.
 
 If the observation does not match the expected identity/boundary, preserve it as unexpected evidence and re-model or probe; do not silently apply it to a different target/state.
 
@@ -190,6 +196,6 @@ To Research: active question, alternatives, required precision, discriminating e
 
 To Execution: bounded action, obligations, collaboration constraints relevant to execution, preconditions, expected observation, replan condition and verification target.
 
-To Authoring: a structured established subject model that preserves the load-bearing objects/states, relations and mechanisms/traces; epistemic boundaries; decisive evidence; reader capability target; collaboration expectations relevant to explanation; repair target and protected properties when revising. Preserve what must be understood without prescribing the teaching order or document structure.
+To Authoring: established model, epistemic boundaries, decisive evidence, reader target, collaboration expectations relevant to explanation, repair target and protected properties when revising.
 
 To Quality: active obligations, baseline when relevant, candidate/solution, decision basis when needed for traceability, evidence, unresolved uncertainty and completion criteria.

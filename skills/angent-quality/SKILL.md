@@ -34,6 +34,7 @@ Evaluate only relevant dimensions:
 - resume-compatibility integrity when saved work is resumed: dependent continuation/replay is supported by a compatible or completed-revalidation binding;
 - effect-boundary integrity: current authority matches the resolved consequential target/material arguments;
 - observation-admission integrity: model/decision changes are supported by the actual observed identity/scope/version/completeness;
+- failure-domain integrity: tool/harness/transport/access failures are not laundered into negative domain facts, and authoritative negative observations are not weakened to generic UNKNOWN;
 - scope-to-evidence coverage;
 - authoritative endpoint evidence.
 
