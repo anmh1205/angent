@@ -14,6 +14,7 @@ Its job is broader than saving a checkpoint before chat disconnects. The storage
 - references/active-work-frontier.md — recognize non-trivial work, preserve branch scheduling state, and advance a durable frontier.
 - references/continuity-protocol.md — persist revisioned work state and side-effect records.
 - references/resume-reconciliation.md — resume after interruption or concurrent external change.
+- references/resume-binding.md — classify whether saved semantics remain compatible with live state before dependent continuation/replay.
 - references/frontier-lifecycle.md — task lifecycle, branch scheduling states, baseline/decision-basis pointers and invalidated dependent work.
 
 ## Recognize active work early
@@ -83,14 +84,16 @@ Persist meaningful completed units, artifact pointers, controlling decision basi
 
 1. recover the highest coherent frontier;
 2. apply newest instruction/current authority;
-3. inspect unresolved effects before replay;
-4. restore branch scheduling state and saved long-running operation handles;
-5. inspect an external operation only when reconciliation is required or its informative-observation condition is now eligible;
-6. validate artifact/source pointers;
-7. reconstruct or refresh collaboration state when it affects the next action;
-8. refresh stale/time-sensitive decisive premises;
-9. reconcile external state likely to have changed;
-10. return the frontier to Context/Reasoning so Reasoning can recompute RUNNABLE/WAITING_EXTERNAL/BLOCKED branches before action selection.
+3. establish resume compatibility for the saved dependency/effect bindings as COMPATIBLE, REVALIDATE, AMBIGUOUS or INCOMPATIBLE;
+4. fail closed for dependent replay/continuation when the binding is AMBIGUOUS or INCOMPATIBLE;
+5. inspect unresolved effects before replay;
+6. restore branch scheduling state and saved long-running operation handles;
+7. inspect an external operation only when reconciliation is required or its informative-observation condition is now eligible;
+8. validate artifact/source pointers;
+9. reconstruct or refresh collaboration state when it affects the next action;
+10. refresh stale/time-sensitive decisive premises;
+11. reconcile external state likely to have changed;
+12. return the frontier to Context/Reasoning so Reasoning can recompute RUNNABLE/WAITING_EXTERNAL/BLOCKED branches before action selection.
 
 A transcript, model context, or unsynced scratch file is not durable continuity by itself.
 
