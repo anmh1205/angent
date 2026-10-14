@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **68 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **72 / 102 Skill identities reviewed semantically**.
 
-- **58 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **61 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-loop`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
 - **9 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-gkg`, `ak-graphify`, `ak-journal`, `ak-team`, `ak-ui-ux-pro-max`.
-- **1 VERIFIED_PORTABLE**: `ak-ask`.
-- **34 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **2 VERIFIED_PORTABLE**: `ak-ask`, `ak-problem-solving`.
+- **30 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -148,6 +148,10 @@ Graphify's stable 2.19.0 beta workflow includes graphifyy native CLI, graph.json
 
 The stable 2.19.0 Tech Graph bundle adds detailed architecture/UML/network/state/sequence layout and seven styles, SVG validation/export scripts, marker/arrow routing, typography, collision and PNG visual review gates. The adapted fallback now restores those behaviors through explicit source/renderer/tool selection and a style/layout reference without falsely claiming the bundled SVG templates or rasterizer exist. GKG preserves its seven MCP discovery/definition/reference/index/navigation operations and supported-language/incremental-index limitations; the portable fallback accurately degrades to language-server/AST/checked source tracing when GKG is unavailable.
 
+### Optimization loops, risk forecasting and problem framing
+
+The stable 2.19.0 Loop preserves its numeric goal/scope/verify/guard contract, sequential one-change experiments, Git memory, keep/discard result log, directional Min-Delta/noise management and nonconvergence stops. The portable replacement additionally refuses destructive resets or unapproved commits on shared/dirty branches; safety and user branch authority take precedence over the upstream convenience of committing every trial. Predict restores the five explicit architecture/security/performance/UX/devil's-advocate lenses, worst-case conflicts, advisory GO/CAUTION/STOP gates and two non-standalone reason/probe chain modes. Scenario restores all 12 candidate dimensions and distinct one-shot, bounded-iteration and two-round saturation/novelty modes without presenting generated scenarios as executed tests. Problem Solving restores the six technique families and selection/validation processes without mandatory runtime tools or artificial extra agents.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -205,7 +209,7 @@ The stable 2.19.0 Tech Graph bundle adds detailed architecture/UML/network/state
 | `ak-issue-to-plan` | VERIFIED_ADAPTED | stable 2.19.0 issue evidence, implementation-ready plan and stop-before-code decision gate |
 | `ak-journal` | VERIFIED_DEGRADED | stable 2.19.0 local journal and optional publication semantics; Zernio/media scripts not packaged |
 | `ak-llms` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-loop` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-loop` | VERIFIED_ADAPTED | stable 2.19.0 sequential atomic, numeric/guard/noise-aware optimization, Git experiment history and safe rollback bounds |
 | `ak-markdown-novel-viewer` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-mcp-builder` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-media-processing` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
@@ -216,9 +220,9 @@ The stable 2.19.0 Tech Graph bundle adds detailed architecture/UML/network/state
 | `ak-payment-integration` | VERIFIED_ADAPTED | stable 2.19.0 SePay/Polar/Stripe and multi-provider payment semantics reviewed; volatile provider APIs are refreshed from current docs and internal/provider state reconciliation is preserved |
 | `ak-plan` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-plans-kanban` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-predict` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-predict` | VERIFIED_ADAPTED | stable 2.19.0 five-perspective debate, worst-case GO/CAUTION/STOP verdict and reason/probe follow-on modes |
 | `ak-preview` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-problem-solving` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-problem-solving` | VERIFIED_PORTABLE | stable 2.19.0 six technique families restored with diagnosis, concrete probes and no runtime dependency |
 | `ak-project-management` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored |
 | `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
@@ -228,7 +232,7 @@ The stable 2.19.0 Tech Graph bundle adds detailed architecture/UML/network/state
 | `ak-research-prompt` | VERIFIED_ADAPTED | stable 2.19.0 Research-assignment-only boundary and one-paragraph evidence brief contract restored |
 | `ak-retro` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-scenario` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-scenario` | VERIFIED_ADAPTED | stable 2.19.0 12-dimension one-shot and bounded/saturation novelty modes with test-oracle output |
 | `ak-scout` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-security` | VERIFIED_ADAPTED | stable 2.19.0 comprehensive/fast/red-team/fix semantics reviewed; runtime scanners and advisory access remain harness-dependent |
 | `ak-security-scan` | VERIFIED_ADAPTED | stable 2.19.0 packaged standalone read-only security-scan semantics restored from artifact truth; not collapsed into ak-security |

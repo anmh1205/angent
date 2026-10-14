@@ -1,33 +1,32 @@
 ---
 name: ak-problem-solving
-description: Apply targeted problem-solving techniques when ordinary reasoning is stuck, overcomplicated or constrained by a bad assumption.
+description: Apply targeted, source-grounded problem reframing methods to complexity spirals, innovation blocks, recurring patterns, bad assumptions and scale uncertainty.
 metadata: {port: angent-fallback, mode: portable}
 ---
 
 # Problem Solving — Portable Fallback
 
-Read `references/technique-selection.md`.
+This is a focused reasoning toolbox from stable Engineer 2.19.0, not an additional agent or compulsory ceremony. Use when ordinary work has **stalled for a specific identifiable reason**. Read **references/technique-selection.md**; select the applicable technique reference rather than performing all of them.
 
-This is a toolbox, not a mandatory sequence.
+## Techniques and dispatch
 
-## Trigger
+| Observable stuck pattern | Technique | What it changes |
+|---|---|---|
+| Repeated special cases or duplicated implementations | **Simplification Cascades** | Find an invariant/general case that removes several branches or components |
+| Existing-domain methods cannot explain/solve the problem | **Collision-Zone Thinking** | Deliberately combine distant domains to produce a testable new mechanism |
+| Same failure/solution shape appears across components or domains | **Meta-Pattern Recognition** | Extract a reusable relationship without erasing real differences |
+| 'Only possible way' rests on an unexamined constraint | **Inversion Exercise** | Reverse the premise and identify which constraints are actual vs assumed |
+| Production/edge behavior remains uncertain | **Scale Game** | Test qualitatively different magnitude/time/load regimes to reveal limits |
+| Unclear what is causing the block | **When Stuck** | Diagnose whether to inspect evidence, reframe owner/state, simplify or escalate |
 
-Use only when ordinary Reasoning shows a specific failure pattern such as:
-- growing special cases;
-- repeated local fixes with no system improvement;
-- one untested assumption constraining all options;
-- uncertainty about extreme scale or boundary behavior;
-- a claim that needs a counterexample;
-- a problem decomposed by the wrong ownership/state boundary.
+## Application
 
-## Workflow
+1. Name the concrete impasse, observed evidence, existing attempts and wrong or missing assumption. If facts are missing, inspect before inventing a clever theory.
+2. Choose **one** matching technique; see references/technique-cases.md for process and exit checks. A second technique is justified only if the first leaves an important different uncertainty.
+3. Apply it to the actual model: sketch counterfactual constraints, map duplicated mechanisms, compare domains, or model scale changes.
+4. Derive a **discriminating test/probe or ownership change** that can confirm/refute the new model.
+5. Compare old versus new solution on requirements, failure modes, change cost and simplicity. Return only the insight that improves explanation or an actionable decision.
 
-1. Name the stuckness.
-2. Choose one technique whose mechanism fits it.
-3. Reframe or probe the model.
-4. Compare the new model with the previous one.
-5. Return only changes that improve explanatory or decision power.
+## Boundaries
 
-Do not create a separate agent for every thinking method.
-
-If normal Reasoning is making progress, do not invoke this Skill ceremonially.
+Do not replace evidence with an appealing metaphor, automatically infer a universal abstraction from only superficial similarity, or assume 1000x scaling predicts the real bottleneck without measurements. ANGENT Reasoning remains owner of the integrated decision. No project changes are authorized by selecting a thinking technique.
