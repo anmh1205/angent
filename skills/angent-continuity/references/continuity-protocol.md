@@ -85,6 +85,8 @@ AMBIGUOUS and INCOMPATIBLE bindings block only their dependent transitions; unre
 
 The local backend protects writers on one filesystem and detects stale revisions. It is not a distributed consensus system.
 
+Its OS-level writer lock is not interoperable with the old expiry-based directory lock. Do not run older and updated writer processes against the same local store concurrently: finish or stop old writers before switching, or use isolated stores. Filesystem locking alone also cannot establish a trusted snapshot's provenance.
+
 Cross-machine/cloud backends must implement equivalent revision/conflict semantics appropriate to their environment.
 
 Continuity state cannot grant permission that the current user instruction no longer grants.
