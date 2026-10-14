@@ -1,19 +1,100 @@
 # Implementation workflow
 
-1. Inspect existing code, tests and project instructions.
-2. Confirm the next work unit and its acceptance condition.
-3. Implement the smallest coherent change.
-4. Keep unrelated cleanup separate.
-5. Add/update tests where behavior changed.
-6. Run targeted verification.
-7. Expand verification according to blast radius.
-8. Ask Code Review for independent review when the change is material.
-9. Update Continuity frontier for long work.
-10. Continue to the next dependent work unit while authorized/runnable.
+## 1. Inspect and bind the work unit
 
-For parallel work, assign non-overlapping ownership and integrate before final verification.
+Read:
+- applicable `AGENTS.md`;
+- accepted plan/spec/requirements;
+- existing code and adjacent conventions;
+- relevant tests;
+- current branch/worktree/provider state.
 
-## Finalize
+Confirm the next coherent work unit and its acceptance evidence.
+
+For multi-step work, keep durable progress in the active plan/Continuity. Runtime task trackers are optional working views.
+
+## 2. Scout before guessing
+
+Before forming implementation assumptions:
+- trace ownership/data/control flow when unclear;
+- inspect existing helpers/utilities;
+- inspect public interfaces/contracts touched;
+- identify downstream consumers and migration state.
+
+A "fast" mode may reduce breadth but does not allow blind editing.
+
+## 3. Implement
+
+Make the smallest coherent change.
+
+For each phase/work unit:
+- preserve accepted scope/non-goals;
+- respect project patterns unless evidence justifies a change;
+- keep generated/shared contracts consistent;
+- avoid unrelated cleanup;
+- run cheap compile/type/static checks at useful boundaries.
+
+### TDD path
+
+Where selected:
+1. establish current/regression behavior in tests;
+2. implement/refactor;
+3. verify regression tests remain green;
+4. add/adjust tests for new behavior;
+5. run the phase gate.
+
+### Parallel path
+
+Delegate only branches with explicit non-overlapping/safely composable ownership and established prerequisites.
+
+Record:
+- worker scope;
+- files/state owned;
+- dependencies;
+- expected evidence.
+
+Integrate all accepted results before final verification. Worker completion messages are not endpoint evidence.
+
+## 4. Review gate
+
+In interactive mode, pause only at a meaningful decision/review boundary—not after every file.
+
+In auto mode, continue when:
+- scope/authority are still valid;
+- no material decision is user-owned;
+- verification/review gates are satisfiable.
+
+New architecture, broadened scope, destructive/external effect, or unresolved safety trade-off returns to Reasoning/user decision as appropriate.
+
+## 5. Test
+
+Testing is required by default.
+
+Use project-native checks and `ak-test` semantics:
+- changed happy path;
+- error/edge paths material to the change;
+- regression protection;
+- build/type/lint/integration/UI checks as applicable.
+
+A failing test is evidence, not a license to weaken the assertion. Diagnose non-obvious failures before changing code.
+
+If tests are explicitly deferred, mark the result implemented-but-untested.
+
+## 6. Independent code review
+
+For material changes, use `ak-code-review` semantics after implementation/testing.
+
+Review must check:
+- acceptance/spec compliance;
+- blast radius and indirect consumers;
+- public contract breakage;
+- security/reliability concerns;
+- project-pattern consistency;
+- verification sufficiency.
+
+Repair accepted findings, retest, and re-review when needed. Repeated cycles without convergence trigger re-model/escalation rather than infinite patching.
+
+## 7. Finalize
 
 Before claiming a plan-backed or multi-step task complete:
 
@@ -21,9 +102,8 @@ Before claiming a plan-backed or multi-step task complete:
 2. sync verified completion to the task/project surface when one is in use;
 3. update Continuity so no stale unfinished frontier remains;
 4. verify earlier phases/items were not left stale while later work finished;
-5. check whether architecture/API/setup documentation became inaccurate and update only the authoritative affected docs when needed;
-6. report any intentionally deferred test, unresolved mapping or known limitation.
+5. update only authoritative affected documentation when behavior/setup/contracts/architecture changed;
+6. report intentionally deferred tests, unresolved mappings or known limitations;
+7. verify the requested endpoint itself.
 
-Do not make journal creation mandatory for every successful task. Journal only when the work creates historical evidence worth retaining.
-
-A generated patch, commit, task transition or specialist success message is progress, not the endpoint unless the task contract says so.
+Journal/history capture is optional and evidence-driven, not mandatory ceremony.
