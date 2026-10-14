@@ -32,11 +32,11 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **31 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **36 / 102 Skill identities reviewed semantically**.
 
-- **28 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-deploy`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-web-testing`, `ak-worktree`.
+- **33 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-web-testing`, `ak-worktree`.
 - **3 VERIFIED_DEGRADED**: `ak-design` and `ak-ui-ux-pro-max` preserve the load-bearing design/UX workflow but do not reproduce upstream packaged generator/search datasets; `ak-team` cannot truthfully reproduce a live-team lifecycle without harness support.
-- **71 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **66 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -79,6 +79,19 @@ Key acceptance findings:
 
 The stable public guides support these workflow boundaries; acceptance still rests on the pinned 2.19.0 package plus the portable fallback implementation, not documentation text alone.
 
+### Backend / data / DevOps / security batch
+
+This batch reviewed `ak-backend-development`, `ak-databases`, `ak-devops`, `ak-security` and the packaged compatibility identity `ak-security-scan`.
+
+Key corrections and acceptance findings:
+- Backend Development now preserves bounded implementation against the current stack, external contract/state ownership, explicit migration/deployment authority and verification proportional to the runtime claim.
+- Databases now preserves engine/environment identity, least-privilege access, production recovery evidence, coexistence-aware migrations and the distinction between analysis/preparation and production mutation.
+- DevOps now preserves source-of-truth/current-vs-desired state, plan/apply separation, create/update/replace/delete consequences, GitOps/controller ownership, runtime readiness and rollback/forward-fix boundaries.
+- Security now preserves stable fast-mode precedence, default comprehensive audit, red-team perspectives, user-bounded iterations, fix guards, redaction and network/advisory evidence boundaries.
+- `ak-security-scan` remains packaged for identity parity but is a compatibility route into `ak-security`, matching the stable public retirement route instead of maintaining a second divergent workflow.
+
+No status was promoted from docs alone; public stable guides were used to check workflow meaning against the pinned 2.19.0 package and the fallback implementation.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -92,7 +105,7 @@ The stable public guides support these workflow boundaries; acceptance still res
 | `ak-ak` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-ask` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-autoresearch` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-backend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-backend-development` | VERIFIED_ADAPTED | stable 2.19.0 bounded backend/API/data-access workflow reviewed; migration/deploy and runtime verification boundaries preserved |
 | `ak-better-auth` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-bootstrap` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-brainstorm` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
@@ -105,12 +118,12 @@ The stable public guides support these workflow boundaries; acceptance still res
 | `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-copywriting` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-cti-expert` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-databases` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-databases` | VERIFIED_ADAPTED | stable 2.19.0 data-model/query/migration workflow reviewed with least-privilege, recovery and production-mutation gates |
 | `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-deep-swe` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-deploy` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-design` | VERIFIED_DEGRADED | stable 2.19.0 design workflow reviewed; bundled generator/search datasets are an explicit portable capability boundary |
-| `ak-devops` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-devops` | VERIFIED_ADAPTED | stable 2.19.0 infrastructure/CI/CD/GitOps workflow reviewed with plan/apply/delete/replace and readiness/recovery gates |
 | `ak-docs` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-docs-seeker` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-document-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -161,8 +174,8 @@ The stable public guides support these workflow boundaries; acceptance still res
 | `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-scenario` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-scout` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-security` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-security-scan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-security` | VERIFIED_ADAPTED | stable 2.19.0 comprehensive/fast/red-team/fix semantics reviewed; runtime scanners and advisory access remain harness-dependent |
+| `ak-security-scan` | VERIFIED_ADAPTED | packaged compatibility identity reviewed; explicitly routes to canonical ak-security semantics rather than a competing scan workflow |
 | `ak-sequential-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-shader` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
