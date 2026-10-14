@@ -30,7 +30,9 @@ Default to Markdown.
 
 If the user requests simplified/ELI5 wording, simplify vocabulary and analogy without removing material warnings or changing the technical claim.
 
-If the user requests HTML, create a self-contained local explanation only when file-writing/rendering capability exists; otherwise return the explanation in Markdown and state the missing render capability.
+If the user requests HTML, compose a self-contained local visual explanation. Reuse `ak-frontend-design` for layout/visual system and `ak-diagram` for load-bearing visual relations when those Skills/capabilities are actually available; otherwise use semantic HTML/CSS/SVG directly. Report the written artifact path and which route was used.
+
+If file-writing or required render capability is unavailable, return the grounded explanation in Markdown and state the exact missing capability instead of claiming HTML completion.
 
 ## Boundary
 

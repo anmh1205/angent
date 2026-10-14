@@ -18,8 +18,9 @@ Read `references/page-builder-contract.md`.
 2. define page/block schemas and binding boundaries;
 3. implement editor/composition behavior using project-native components;
 4. keep draft, preview and publication states distinct;
-5. expose agent/operator interfaces only where the project actually needs them;
-6. verify at least one representative real block/page across target viewports and state transitions.
+5. create/update the project-specific operator Skill through `ak-skill-creator` when the builder is intended to be operated by an agent; keep it scoped to the project's real builder API/commands rather than generic page mutation;
+6. expose any additional agent/operator interface only where the project actually needs it;
+7. verify at least one representative real block/page across target viewports and state transitions, including the operator Skill when it is part of the contract.
 
 ### `update <request>`
 
@@ -39,4 +40,4 @@ Use the project's own framework/storage/runtime.
 
 If live browser, preview, CMS, database, or deployment capability is unavailable, implement only the parts that can be verified and report the remaining boundary.
 
-A generated scaffold is not proof that editing, preview, persistence, or publication works.
+A generated scaffold or operator Skill file is not proof that editing, preview, persistence, agent operation, or publication works.

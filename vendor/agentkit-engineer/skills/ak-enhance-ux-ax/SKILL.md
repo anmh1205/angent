@@ -30,9 +30,11 @@ Only when implementation is authorized:
 
 ### `--loop [N]`
 
-Run bounded review → implement → verify rounds. Default to three only when the user invokes loop semantics without another limit.
+Run bounded review → implement → verify rounds. Loop implies implementation and takes precedence over `--auto`.
 
-Do not continue a round when there is no actionable evidence or when verification is blocked.
+Use the positive integer immediately after `--loop` as the round count. If no valid integer is supplied, run three rounds; a remaining URL/path/topic is a focus, not a round count.
+
+Stop early when a round has no actionable evidence, when the DONE contract passes and another round would add no useful signal, or when verification is blocked.
 
 ## Runtime boundary
 
