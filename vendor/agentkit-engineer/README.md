@@ -59,8 +59,9 @@ Some DEGRADED Skills still provide a **tested runnable local subset**, not just 
 
 - `skills/ak-repomix/scripts/pack_local.py`: bounded Git context export; use `--dry-run` before explicitly emitting source or creating an output.
 - `skills/ak-watzup/scripts/scan_local.py`: read-only local Git/worktree/plan inventory; use `--json` for structured status.
+- `skills/ak-gkg/scripts/search_python_ast.py`: read-only Python AST definition and candidate-reference locations; requires `--symbol`.
 
-Both need Git, Python 3.12-compatible runtime and an accessible local worktree. They never enable the full upstream native CLI. The [audit report](AUDIT_REPORT.md) records exactly what CI has tested.
+All three need Git, a Python 3.12-compatible runtime and an accessible local worktree. None enables the full upstream native CLI or provider service. The [audit report](AUDIT_REPORT.md) records exactly what CI has tested.
 
 ## Selection
 

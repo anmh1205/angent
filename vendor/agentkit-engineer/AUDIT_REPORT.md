@@ -30,14 +30,15 @@ These are concrete *safety, portability and maintainability improvements to the 
 
 ## Executable local capability acceptance — follow-up audit
 
-Two independent fallback utilities were implemented on the Engineer branch, without vendoring AgentKit code or requiring a network provider:
+Three independent fallback utilities were implemented on the Engineer branch, without vendoring AgentKit code or requiring a network provider:
 
 - **Repomix local subset:** `skills/ak-repomix/scripts/pack_local.py` packages selected local Git files into Markdown, JSON or XML; limits total/file bytes; avoids symlinks, obvious credentials and binary/control bytes; preserves skip/incomplete metadata; tracks dirty worktree and per-file SHA-256; refuses to overwrite existing outputs. Its security filter is heuristic, not equivalent to upstream Secretlint, and cannot prove absence of every credential.
 - **Watzup local subset:** `skills/ak-watzup/scripts/scan_local.py` reads current branch/HEAD, dirty state, worktree list, local and cached remote refs and plan/roadmap checkboxes. It neither fetches remote refs nor mutates branches/worktrees; cached remote freshness and other worktree cleanliness remain unverified.
+- **GKG Python subset:** `skills/ak-gkg/scripts/search_python_ast.py` parses Python AST without running repository code and returns exact definition/import/name/attribute candidate locations, together with skipped-file diagnostics. It is not a resolved call graph or multi-language indexed GKG server: aliases, dynamic dispatch, reflection, transitive reachability and other languages remain unsupported.
 
-The test suite uses fresh temporary Git repositories, real commits/worktrees, symlink and sensitive-file counterexamples, dirty/detached scenarios, malformed XML input and escaped Markdown paths. The branch-only CI also runs both executables on its **actual checked-out source tree**, verifying that snapshots and current Git status agree and no working-tree mutation results.
+The test suite uses fresh temporary Git repositories, real commits/worktrees, symlink and sensitive-file counterexamples, dirty/detached scenarios, malformed XML input and escaped Markdown paths, as well as valid/invalid Python AST, import-binding, source scope and truncated-index cases. The branch-only CI also runs all three executables against its **actual checked-out source tree**, verifying snapshot correctness, Git status and AST definition discovery without mutating the working tree.
 
-**Actual evidence:** [GitHub Actions run 38655909604](https://github.com/anmh1205/angent/actions/runs/38655909604) passed for commit `2d35dafe90b4f63ce1618b1bacf15779c1b5aa98` after repairs to faulty test assertions exposed by CI. This proves successful source-level execution in the GitHub Ubuntu/Python 3.12 runner for the bounded subsets. It is not evidence of Windows/macOS behavior, remote Repomix exports, native Watzup scoring, authenticated provider operations, graphics/media rendering or comparative improvement on all 102 Skills.
+**Actual evidence:** [GitHub Actions run 38656278657](https://github.com/anmh1205/angent/actions/runs/38656278657) passed for commit `c3ab16d8517505b51b10881e266ed91a3ad713bb`, including 8 structural/selector tests, 10 Repomix tests, 6 Watzup tests, 7 Python AST/GKG tests and smoke executions on real checkout. Earlier red runs surfaced faulty test assertions and were repaired. This establishes successful execution of these bounded local subsets on GitHub Ubuntu/Python 3.12. It does **not** prove Windows/macOS behavior, native provider CLI and remote services, resolved graph semantics, graphics/media rendering or a general quality advantage over all 102 upstream Skills.
 
 ## Remaining runtime acceptance
 

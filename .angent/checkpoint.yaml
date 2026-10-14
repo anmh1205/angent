@@ -59,7 +59,7 @@ frontier:
       progress_ledger: vendor/agentkit-engineer/PORTING_MANIFEST.md
 
   verified_units:
-    - "Engineer fallback first-pass covers 102 Skills and 16 Agent roles; 25 Skills remain degraded. Real offline Repomix and Watzup subset scripts now pass GitHub Actions fixture and real-checkout smoke tests at Engineer branch commit 2d35dafe90b4f63ce1618b1bacf15779c1b5aa98."
+    - "Engineer fallback first-pass covers 102 Skills and 16 Agent roles; 25 Skills remain degraded. Offline Repomix, Watzup and Python AST/GKG subset scripts pass branch-only GitHub Actions unit/security and real checkout smoke tests at Engineer commit c3ab16d8517505b51b10881e266ed91a3ad713bb."
     - "Reliability/state-evaluation integrity PR #36 is canonical on main."
     - "Persisted-state trust distinguishes coherent serialized state from authenticated/owned resume state; calibration isolation, fixture satisfiability and composite endpoint semantics are integrated."
     - "Canonical semantic version remains 1.0.0; no public release/tag has been made."
@@ -73,8 +73,8 @@ frontier:
     - "These size/path metrics are audit signals, not proof that a shorter independent fallback is wrong; representative workflow semantics must be compared before each parity verdict."
 
   unresolved:
-    - "Run representative cross-harness task execution before asserting native-equivalent end-to-end outcomes; current GitHub CI establishes bundle structure and selector behavior only."
-    - "Continue resolving the remaining native-specific gaps for the 25 VERIFIED_DEGRADED Skills by observed user value and executable test coverage; Repomix/Watzup local subsets now run but do not remove upstream-only modes."
+    - "Run representative cross-harness end-to-end tests before asserting native equivalence: branch CI now proves package structure, selector behavior and three bounded offline source utilities on Ubuntu, not external provider/browser/graphics runtimes."
+    - "Continue resolving native-specific gaps for 25 VERIFIED_DEGRADED Skills by value and executable evidence; Repomix/Watzup/Python AST local subsets run, but original remote, cross-language, browser/graphics and provider modes remain unavailable."
     - "Validate representative Agent role invocation on a genuinely supported harness; sidecars remain inert role contracts absent an adapter."
     - "Keep the fallback README free of duplicated progress counters; use PORTING_MANIFEST.md and AUDIT_REPORT.md as live ledger and dated evidence."
     - "Resolve private plugin version-policy versus Plugin Creator auto-patch behavior before synchronizing runtime beyond source commit 59f04f4."
