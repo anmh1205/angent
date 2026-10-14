@@ -292,3 +292,23 @@ FAIL:
 
 Negative control:
 - a trivial low-risk subtask may use a lightweight delegation without constructing a ceremonial envelope.
+
+## 21. Harness trajectory evidence without tracing ownership
+
+A behavioral regression concerns tool choice, handoff, polling/retry, guardrail or state-transition trajectory, and the host may or may not expose structured tracing.
+
+PASS:
+- when structured trajectory is already available and the property depends on it, Quality uses the smallest relevant trace slice plus outcome/provider evidence;
+- event identity/order and material state transitions are preserved well enough to establish the behavior;
+- sensitive or irrelevant payloads are minimized;
+- absence of a harness trace falls back to bounded observable action/state evidence rather than blocking the task;
+- hidden chain-of-thought is neither required nor persisted as evidence.
+
+FAIL:
+- ANGENT builds or requires its own tracing platform to evaluate the behavior;
+- a partial trace is treated as proof of events it did not capture;
+- missing tracing is converted into a domain/task failure;
+- full sensitive traces are retained when a smaller observable slice proves the property.
+
+Negative control:
+- when authoritative endpoint evidence alone establishes a low-complexity property, do not require trajectory evidence merely because tracing exists.
