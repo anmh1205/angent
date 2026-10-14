@@ -1,103 +1,79 @@
-# Test Execution Workflow
+# Test execution workflow
 
-## Step 1: Identify Scope
+Testing starts from the acceptance claim, not from a universal suite or coverage target.
 
-Determine what to test based on recent changes:
-- New feature → full test suite + new test cases
-- Bug fix → regression tests + targeted fix validation
-- Refactor → existing test suite (no new tests unless gaps found)
-- Coverage check → full suite with coverage flags
+## 1. Resolve the operation
 
-## Step 2: Pre-flight Checks
+Determine whether the job is:
+- focused/broad validation;
+- new test coverage for accepted behavior;
+- test-suite audit/repair;
+- CI/runtime optimization while preserving signal;
+- UI/browser/accessibility validation;
+- build/type/lint/coverage evidence.
 
-Run syntax/type checks before tests to catch compile errors early:
+Establish the relevant environment and whether test-source edits are authorized.
 
-```bash
-# JavaScript/TypeScript
-npx tsc --noEmit          # TypeScript check
-npx eslint .              # Lint check
+## 2. Discover project-native evidence
 
-# Python
-python -m py_compile file.py
-flake8 .
+Inspect project instructions, package/build configuration, CI workflow, test directories, and known-good commands.
 
-# Flutter
-flutter analyze
+Prefer project-native checks. Do not add a new test framework or dependency merely because a generic example uses one.
 
-# Go
-go vet ./...
+## 3. Preflight only when useful
 
-# Rust
-cargo check
-```
+Syntax/type/lint/build preflight can catch failures cheaply, but it is not universally required before every test.
 
-## Step 3: Execute Tests
+Choose ordering by:
+- cost;
+- expected information value;
+- project convention;
+- dependency on generated/build artifacts.
 
-### JavaScript/TypeScript
-```bash
-npm test                    # or yarn test / pnpm test / bun test
-npm run test:coverage       # with coverage
-npx vitest run              # Vitest
-npx jest --coverage         # Jest with coverage
-```
+## 4. Execute proportionally
 
-### Python
-```bash
-pytest                      # basic
-pytest --cov=src --cov-report=term-missing  # with coverage
-python -m unittest discover # unittest
-```
+Run the smallest checks that can establish or falsify the current claim.
 
-### Go / Rust / Flutter
-```bash
-go test ./... -cover        # Go with coverage
-cargo test                  # Rust
-flutter test --coverage     # Flutter
-```
+Widen when:
+- an interface/shared dependency changed;
+- failures expose wider impact;
+- release/merge policy requires it;
+- the Contract promises broad coverage.
 
-## Step 4: Analyze Results
+For UI/browser behavior, use the dedicated UI workflow and actual visual/runtime evidence when required.
 
-Focus on:
-1. **Failing tests** — read error messages and stack traces carefully
-2. **Flaky tests** — tests that pass/fail intermittently indicate race conditions or state leaks
-3. **Slow tests** — identify bottlenecks (>5s per test is suspicious)
-4. **Skipped tests** — ensure skips are intentional, not hiding failures
+## 5. Interpret results
 
-## Step 5: Coverage Analysis
+Separate:
+- product defect;
+- test defect;
+- flaky/noisy result;
+- environment/configuration/provider failure;
+- missing prerequisite;
+- unresolved attribution.
 
-Thresholds:
-- **80%+** line coverage — standard minimum
-- **70%+** branch coverage — acceptable for most projects
-- Focus on critical paths: auth, payment, data mutations
+A failing test is not automatically the root cause.
 
-Identify gaps:
-- Uncovered error handlers
-- Missing edge case branches
-- Untested utility functions
+A passing test establishes only the behavior/environment/assertions it actually exercised.
 
-## Step 6: Build Verification
+## 6. Coverage
 
-```bash
-npm run build               # JS/TS production build
-python setup.py build       # Python
-go build ./...              # Go
-cargo build --release       # Rust
-flutter build               # Flutter
-```
+Use the project's accepted coverage policy or task-specific threshold when one exists.
 
-Check for:
-- Build warnings or deprecation notices
-- Unresolved dependencies
-- Production config correctness
+Do **not** invent universal line/branch/function percentages.
 
-## Quality Checklist
+Coverage helps find unexercised code; it does not prove behavior outside the assertions or runtime conditions.
 
-- [ ] All tests pass (zero failures)
-- [ ] Coverage meets project threshold
-- [ ] No flaky tests detected
-- [ ] Build completes without errors
-- [ ] Error scenarios tested
-- [ ] Test isolation verified (no shared state)
-- [ ] Test data cleaned up after execution
-- [ ] Mocks/stubs properly configured
-- [ ] Environment variables correctly set
+Prioritize coverage gaps by risk and promised behavior, especially critical error/authorization/data-mutation paths.
+
+## 7. Build and delivery checks
+
+Run build/package checks when the requested gate requires them.
+
+Warnings/deprecations are findings only when they violate the current quality/release contract or represent material risk; do not fail work from generic warning-count rules.
+
+## Completion
+
+Report what was executed, what changed if test files were edited, outcomes, material failures, limitations, and whether the original acceptance claim is established.
+
+Do not convert a green command into a broader PASS than its evidence supports.
