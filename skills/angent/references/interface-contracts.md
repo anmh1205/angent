@@ -350,6 +350,30 @@ collaboration_effect is optional. Use it only when the causal mechanism should a
 
 A promoted mechanism changes behavior only when Context can retrieve it for the matching decision/failure class.
 
+## Continuity resume compatibility
+
+Use only when saved work depends on identity/state that may have drifted.
+
+~~~yaml
+resume_binding:
+  work_identity:
+  target_or_source_identity:
+  target_or_source_version:
+  accepted_baseline_pointer:
+  decisive_evidence_pointers: []
+  pending_effect_identity:
+  operation_identity:
+  capability_semantic_identity:
+  dependency_assumptions: []
+compatibility: COMPATIBLE | REVALIDATE | AMBIGUOUS | INCOMPATIBLE
+affected_dependents: []
+required_reconciliation:
+~~~
+
+Exact fields are task-dependent. Do not populate a universal fingerprint for trivial work.
+
+AMBIGUOUS or INCOMPATIBLE blocks dependent replay/continuation; it does not globally block unrelated runnable work.
+
 ## Continuity → workspace: Frontier
 
 ~~~yaml
@@ -371,6 +395,8 @@ frontier_branches:
     next_informative_observation_condition:
 decisions: []
 decision_basis_pointer:
+resume_binding_pointer:
+resume_compatibility:
 accepted_baseline_pointer:
 artifact_state_pointer:
 coverage_pointer:
@@ -383,6 +409,6 @@ source_versions: []
 next_safe_action:
 ~~~
 
-Continuity stores only the compact subset needed to resume safely, not full owner-internal state. Persist collaboration/decision basis and long-running operation identity only when losing them could change resume behavior.
+Continuity stores only the compact subset needed to resume safely, not full owner-internal state. Persist collaboration/decision basis, resume binding, and long-running operation identity only when losing them could change resume behavior.
 
 Recovered state never overrides current authorization or live external state.
