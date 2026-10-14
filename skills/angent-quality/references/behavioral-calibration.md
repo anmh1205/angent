@@ -241,6 +241,16 @@ Ask what changed relative to accepted behavior:
 
 Do not optimize one scalar such as brevity, tool count, speed, poll interval, diagram count, or source count unless the Contract truly makes it the objective.
 
+## Trajectory evidence
+
+When the behavior under evaluation depends on routing, tool choice, handoff, polling, retries, guardrails or state transitions, use trajectory evidence when it can distinguish the mechanism.
+
+Prefer a structured harness trace when one is already available and appropriate. Otherwise preserve the smallest externalizable action/state sequence sufficient to establish the property.
+
+Do not require private chain-of-thought, and do not collect full traces by ritual when endpoint evidence alone establishes the property.
+
+Treat trace evidence as measurement evidence with its own scope, privacy, version and completeness boundary; a missing/partial trace cannot establish events outside what it captured.
+
 ## Judge the mechanism, not only the score
 
 For agentic behavior, inspect enough trajectory/state to understand why the result passed or failed.
