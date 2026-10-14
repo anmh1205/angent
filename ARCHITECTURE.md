@@ -70,6 +70,8 @@ A claim does not become established because it has been repeated across Context,
 
 Operational failure and domain evidence are distinct. Tool lookup/schema errors, access denial, timeout, transport failure, and ambiguous side effects can establish facts about the execution path without establishing the intended target proposition. A negative domain fact requires an authoritative observation whose identity, scope and documented semantics actually entail it.
 
+Existing-state mutation has a separate freshness boundary. A candidate derived from canonical version V remains trustworthy only while the live state that its delta depends on is compatible with V. Provider-native expected-version/CAS mechanics are preferred when available; otherwise ANGENT refreshes enough state to rebase/reconcile the semantic delta. This is not a transaction subsystem.
+
 Research preserves what a source directly establishes versus what ANGENT derives. Reasoning owns the resulting epistemic state. Quality rejects conclusions stronger than their decisive premises.
 
 Evidence volume is not evidence independence. When correlation matters, Research preserves shared lineage across sources, graders, references, models, datasets, or measurement environments rather than treating repetition as independent corroboration.

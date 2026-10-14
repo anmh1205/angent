@@ -186,6 +186,8 @@ For multi-branch work, action selection is work-conserving: waiting branches do 
 
 Branch independence is conditional on the current dependency/shared-state model. After a material observation or effect changes shared state, recompute affected dependencies before trusting previous RUNNABLE/independent classifications.
 
+Likewise, a mutation candidate derived from existing canonical state is conditional on its mutation basis. When the live target changes materially before write, preserve unrelated concurrent work and re-evaluate only the dependent delta; do not treat prior inspection as a permanent write entitlement.
+
 ## Specialists
 
 Specialists provide evidence, proposals, implementation or review. Reasoning retains strategic ownership.

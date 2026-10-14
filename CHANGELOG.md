@@ -52,6 +52,15 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Added behavioral calibration cases for pre-provider failure versus legitimate negative provider observations.
 - No runtime error service or fixed retry matrix was added.
 
+### Mutation freshness
+
+- Added mutation-basis semantics for consequential read→modify→write operations on existing canonical state.
+- Prefer provider-native expected version/revision/SHA/precondition mechanics when available; otherwise refresh enough live state before mutation when drift can change correctness.
+- Disjoint concurrent changes are preserved while the intended semantic delta is rebased; overlapping/ambiguous changes return to Reasoning instead of force-writing stale content.
+- If another actor already satisfied the requested endpoint, verify and avoid duplicate/redundant writes.
+- Append/commutative/new-object operations remain lightweight when stale-overwrite risk is not material.
+- No transaction engine, lock service or universal CAS requirement was added.
+
 ### Resume compatibility
 
 - Added semantic resume binding for saved work whose safe continuation depends on live target/source/baseline/effect/capability identity.
