@@ -8,7 +8,8 @@ This is not byte-for-byte checkpoint equality. Preserve and compare only identit
 
 When needed, bind:
 - stable work identity and revision;
-- canonical target/source identity and version/digest;
+- target identity intent when material: current canonical role versus exact/historical identity;
+- canonical target/source identity and version/digest or role→identity binding;
 - accepted baseline/artifact pointer;
 - decisive evidence pointers used by a saved decision;
 - pending effect identity and reconciliation key;
@@ -34,6 +35,8 @@ AMBIGUOUS fails closed for the dependent transition. Inspect authoritative state
 INCOMPATIBLE does not continue the old dependent plan. Establish a new baseline/action model or explicit migration.
 
 Exact identity is required only where replay/effect safety depends on it. A new unrelated commit need not invalidate a saved frontier, while one changed dependency may.
+
+A saved provider identity records what earlier work referred to; it does not prove that identity is still canonical. If the saved task intent was “current canonical object”, re-resolve the semantic role before dependent continuation. If the task intentionally targeted one exact historical object, preserve that identity rather than remapping it to the current canonical object.
 
 A later timestamp never wins automatically. Preserve independently verified disjoint work and classify only the overlapping dependency closure.
 

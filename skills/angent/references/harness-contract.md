@@ -125,6 +125,14 @@ If the harness is purely synchronous, degrade honestly: wait for the call result
 
 Tool-call serialization is a mechanical property of the harness; it does not imply that ANGENT's plan must remain serialized around one pending operation.
 
+## Canonical external identity
+
+The harness/provider exposes identifiers, versions, release markers and current provider state. It does not independently decide which object fulfills a project-level semantic role such as “current canonical”, “production”, or “the private ANGENT plugin”.
+
+Context resolves role→identity from the current Contract/project/provider source-of-truth when that distinction matters. The adapter then reads or acts on the resolved identity.
+
+A superseded object may remain addressable by the provider. Addressability is not canonicality.
+
 ## External effects and read-back
 
 After consequential GitHub/Jira/Notion/deployment/email/etc. effects, use the provider/tool that can establish actual current state.

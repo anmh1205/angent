@@ -10,6 +10,7 @@ The contracts describe views into one shared cognitive workspace. They do not im
 outcome:
 underlying_objective:
 target:
+target_identity_intent: CURRENT_CANONICAL_ROLE | EXACT_IDENTITY | HISTORICAL_REFERENCE
 source_of_truth:
 hard_constraints: []
 active_obligations: []
@@ -23,6 +24,8 @@ open_ambiguity: []
 ~~~
 
 Material instruction changes preserve their relation to existing obligations: ADD, REFINE, SUPERSEDE, SCOPED_EXCEPTION or CONFLICT.
+
+`target_identity_intent` is optional and only useful when a provider/source identity may drift or a historical object can be confused with the current canonical role. CURRENT_CANONICAL_ROLE asks Context to resolve the live binding; EXACT_IDENTITY and HISTORICAL_REFERENCE preserve the explicitly named identity.
 
 ## Context → workspace: CollaborationState
 
@@ -55,6 +58,12 @@ verified_state: []
 active_obligations: []
 collaboration_state:
 project_decisions: []
+canonical_target_binding:
+  semantic_role:
+  resolved_identity:
+  resolved_version_or_release:
+  mapping_source:
+  mapping_provenance:
 decision_basis_pointer:
 task_frontier:
 accepted_baseline:
