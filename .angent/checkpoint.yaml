@@ -1,7 +1,7 @@
 schema_version: 2
 work_key: angent/core
-record_type: RELIABILITY_RUNTIME_ALIGNED_ENGINEER_REFRESH_ACTIVE
-phase: reliability-boundary-integrated-version-1.0.0-runtime-aligned-engineer-refresh
+record_type: RELIABILITY_CORE_AHEAD_OF_RUNTIME_ENGINEER_SEMANTIC_AUDIT
+phase: state-eval-integrity-integrated-plugin-sync-version-blocked-engineer-semantic-refresh
 
 source_of_truth:
   provider: github
@@ -21,6 +21,8 @@ source_verification:
   reliability_boundary_commit: 601efaa7843029575b5f10a2d4d9a70e471d10f8
   canonical_version_pr: 19
   canonical_version_commit: 59a00c3e78fd91e112f769ad5d3a9a2fedf7239a
+  state_eval_integrity_pr: 36
+  state_eval_integrity_commit: 15c12ec0c5efe6743d69df88c807f895cc378c0d
 
 release_state:
   version: 1.0.0
@@ -32,13 +34,15 @@ release_state:
     provider_release_ids_are_deployment_metadata: true
     version_change_requires_explicit_user_instruction: true
   private_chatgpt_plugin:
-    updated: true
+    updated_to_current_main: false
     canonical_plugin_id: plugins_6acf96d527f48191823a817e4e5bf35f
     version: 1.0.0
     release_id: pluginrel_6acf96d9eaf88191b361f9a3446c6644
-    source_commit: 59f04f4b177074bd170d82a243488295b7ffc30b
-    source_archive_sha256: 507842faa9bed5f77b1b070e1ce30b7594019a519c52a516f5dda245a115b22e
-    read_back_verified: true
+    verified_source_commit: 59f04f4b177074bd170d82a243488295b7ffc30b
+    current_main_commit: 15c12ec0c5efe6743d69df88c807f895cc378c0d
+    pending_delta_sha256: c332605146d9ec7a3e205481434b739cf01d6a0d1a163288a07fb2c7fca8f5af
+    sync_blocker: "Plugin Creator update_plugin auto-bumps an unchanged 1.0.0 manifest to 1.0.1; applying it would violate the canonical single-version invariant without explicit user authorization."
+    read_back_verified_at_current_release: true
     superseded_provider_identities:
       - plugins_6ace3b6877a0819193f1481bf46b9f00
       - plugins_6acf66b0888c81918532ccd5d81cbde1
@@ -47,36 +51,36 @@ release_state:
 frontier:
   repair_state: NONE
   active_work:
-    - id: engineer-refresh
+    - id: engineer-semantic-refresh
       state: ACTIVE
       scope: vendor/agentkit-engineer
-      objective: "Refresh portable Engineer fallback against current AgentKit stable package semantics without mirroring upstream runtime mechanics, while keeping all ANGENT-owned manifests at version 1.0.0."
+      objective: "Refresh portable Engineer fallback against the signed stable AgentKit Engineer 2.19.0 package at workflow-semantic/support-surface level without mirroring upstream runtime mechanics."
 
   verified_units:
-    - "Core hardening PR #3, cognitive alignment PR #5, correction interpretation PR #12, frontier scheduling PR #15, reliability-boundary PR #17 and canonical-version PR #19 are canonical on main."
-    - "Canonical semantic version is 1.0.0 across root manifests, Engineer fallback manifests, checkpoint state and the canonical private ChatGPT plugin."
-    - "Private ChatGPT canonical plugin identity is plugins_6acf96d527f48191823a817e4e5bf35f at version 1.0.0; provider release IDs are deployment metadata rather than semantic versions."
-    - "Canonical private plugin replacement was built from exact main@59f04f4b177074bd170d82a243488295b7ffc30b; normalized core package SHA-256 is 507842faa9bed5f77b1b070e1ce30b7594019a519c52a516f5dda245a115b22e."
-    - "Canonical private plugin read-back verified 68 files, both manifests at 1.0.0, progressive activation, correction routing, multi-branch scheduling, invocation-bound authority, observation admission, failure-domain separation, mutation freshness, resume-binding/compatibility, interface contracts and Quality checks."
-    - "Consequential authority is re-bound at concrete invocation and material provider/tool observations pass an explicit admission boundary before changing established state."
-    - "Authority changes after dispatch stop future dependent effects but do not pretend an already-attempted effect disappeared; cancellation/compensation is modeled as a new bounded effect and ambiguous provider state remains subject to reconciliation."
-    - "Branch independence is conditional on current shared-state dependencies and affected branches are revalidated after material effects/observations."
-    - "Required Quality FAIL/BLOCKED prevents only the dependent accepted transition; unrelated runnable work may continue."
-    - "Reusable behavioral acceptance preserves reconstructable evidence pointers instead of relying on remembered PASS claims."
-    - "Learning activation evidence distinguishes rule existence/retrieval from actual activation when recurrence diagnosis depends on it."
-    - "Authoring preserves load-bearing relations and a dominant explanatory spine while allowing coupled interactions/comparisons to form one valid spine."
-    - "Engineer current stable catalog audit established 103 packaged Skills + 16 Agents; existing fallback still requires coherent catalog migration."
+    - "Reliability/state-evaluation integrity PR #36 is canonical on main."
+    - "Persisted-state trust distinguishes coherent serialized state from authenticated/owned resume state; calibration isolation, fixture satisfiability and composite endpoint semantics are integrated."
+    - "Canonical semantic version remains 1.0.0; no public release/tag has been made."
+    - "Private plugin exact main delta was built and integrity-verified, but runtime synchronization is intentionally blocked rather than silently auto-bumping semantic version."
+    - "Signed AgentKit stable changelog reports Engineer 2.19.0 as current stable release, published 2026-09-28."
+    - "A remote stable 2.19.0 portable export resolved 102 Skill directories and 16 Agent sidecar roles; portable export explicitly marks agents/hooks as preserved-only/inert and Skills/AGENTS.md as first-class portable content."
+    - "Fallback packaged identity set exactly matches the stable 2.19.0 artifact: 102 Skill directories upstream and 102 fallback, with no only-upstream or only-fallback identities."
+    - "The earlier 103-Skill / missing-8 / retired-6 catalog finding is superseded by signed package evidence; the stable documentation skill table is a usage guide, not packaged-identity inventory."
+    - "Engineer fallback semantic parity remains unverified: stable portable Skills contain 1428 support files versus 236 fallback files; only 112 relative support paths overlap."
+    - "Across SKILL.md surfaces, stable 2.19.0 contains about 20150 lines and 545 direct support references versus fallback 3632 lines and 136 references; 536 upstream direct support references have no same-path fallback file."
+    - "These size/path metrics are audit signals, not proof that a shorter independent fallback is wrong; representative workflow semantics must be compared before each parity verdict."
 
   unresolved:
-    - "Engineer fallback is missing current stable packaged identities: ak-bro, ak-diagram, ak-enhance-ux-ax, ak-explain, ak-page-builder, ak-sowat, ak-sumup and ak-webmcp."
-    - "Engineer fallback still exposes retired public identities: ak-security-scan, ak-use-mcp, ak-handover, ak-html-video, ak-sequential-thinking and ak-web-design-guidelines."
-    - "ak-common is internal support but currently lives under the public Skill discovery root and is incorrectly counted."
-    - "Existing fallback routers/workflows that reference changed upstream identities must be reconciled before parity can be claimed."
+    - "Replace PORTING_MANIFEST.md identity-presence completeness claims with provenance-aware workflow-semantic parity status."
+    - "Audit all 102 Skills by primary outcome, modes/options, critical gates, reusable domain/support knowledge, runtime-specific mechanics and portable replacement; expand fallback where capability is materially lost."
+    - "Audit the 16 Agent role definitions against stable 2.19.0 role semantics while preserving their portable/inert role boundary."
+    - "Reconcile fallback README and routing claims with the signed stable 2.19.0 artifact rather than the non-inventory docs guide."
+    - "Resolve private plugin version-policy versus Plugin Creator auto-patch behavior before synchronizing runtime beyond source commit 59f04f4."
     - "Final cross-harness release reconciliation remains required before public release."
 
   non_blocking_boundaries:
-    - "Runtime synchronization does not make version 1.0.0 released or release-ready."
-    - "Engineer parity means portable workflow-semantic coverage within harness capabilities, not byte-for-byte or runtime-mechanics parity with AgentKit."
-    - "Superseded provider plugin identities are not canonical ANGENT runtime sources."
+    - "Runtime/plugin drift is explicitly recorded and does not make project 1.0.0 released or release-ready."
+    - "Engineer parity means portable workflow-semantic capability within harness capabilities, not byte-for-byte/source-tree/runtime-mechanics parity."
+    - "Portable export is evidence/source material for audit, not a verified runtime adapter and not permission to vendor a raw upstream mirror."
+    - "File-count/text-similarity metrics alone cannot accept or reject a fallback capability."
 
-next_action: "Continue the Engineer inventory/parity migration and reliability audit from canonical main while preserving the single 1.0.0 version invariant. Do not publish/tag until Engineer and cross-harness release reconciliation are complete."
+next_action: "Create a clean Engineer semantic-parity refresh branch from canonical main, correct manifest/provenance claims, then audit and upgrade fallback Skills/Agents in capability groups against stable 2.19.0. Keep semantic version 1.0.0 unless the user explicitly authorizes a version-policy change."
