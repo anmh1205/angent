@@ -6,6 +6,8 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 
 ### Reliability semantics
 
+- Added a harness trajectory-evidence bridge: consume structured traces when already available and behaviorally necessary, otherwise use bounded observable action/state evidence; ANGENT still owns no tracing platform and requires no hidden chain-of-thought.
+- Added a fixture protecting trace availability/privacy/completeness boundaries and the endpoint-only negative control.
 - Activated the cross-cutting core fixture bank from Root for broad core/method/prompt/owner-interface changes with propagation risk; relevant cases are selected progressively rather than run as a global suite.
 - Added fixtures for operational-failure/domain separation, mutation freshness, canonical-role identity drift, resume compatibility, post-dispatch authority changes and specialist evidence re-admission, each with counter-cases where over-triggering is plausible.
 - Added explicit material epistemic states: OBSERVED, ESTABLISHED, INFERRED, ASSUMED, UNKNOWN, CONFLICTED and STALE.
