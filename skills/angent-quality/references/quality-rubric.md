@@ -2,6 +2,12 @@
 
 Quality is one owner with several evaluation phases. Use only the phases relevant to the task.
 
+## Criteria grounding
+
+Before judging, establish where the relevant criteria come from: current Contract/success state, active obligations, accepted baseline/protected properties, authoritative domain requirements, reader capability, or destination requirements.
+
+Do not substitute an easy-to-measure proxy for the actual requested property. A precise metric can still be the wrong criterion.
+
 ## Phase A — solution integrity
 
 Before expensive authoring or effects when consequence warrants it, PASS requires the relevant items:
@@ -11,14 +17,16 @@ Before expensive authoring or effects when consequence warrants it, PASS require
 3. material propositions keep honest epistemic status;
 4. important model relations/states present;
 5. material conclusions supported at required precision and entailment boundary;
-6. alternatives handled when they can change the decision;
-7. causal claims justified;
-8. unresolved uncertainty calibrated;
-9. decision follows from constraints/consequences and has a reconstructable basis when needed;
-10. dependency/replan structure coherent;
-11. whole-scope claims have whole-scope evidence.
+6. evidence lineage/independence is sufficient for the claim when correlation matters;
+7. alternatives handled when they can change the decision;
+8. causal claims justified;
+9. unresolved uncertainty calibrated;
+10. decision follows from constraints/consequences and has a reconstructable basis when needed;
+11. dependency/replan structure coherent;
+12. whole-scope claims have whole-scope evidence;
+13. evaluator/measurement conditions are valid enough for the verdict.
 
-Return failure to the earliest responsible owner.
+Return failure to the earliest responsible owner. Use BLOCKED rather than inventing a producer defect when evaluator/environment attribution is unresolved.
 
 ## Phase B — candidate integrity
 
@@ -31,8 +39,9 @@ For reader-facing work evaluate:
 5. paragraph/structure integrity;
 6. terminology/language;
 7. evidence/example interpretation;
-8. promised capability closure;
-9. long-form consistency.
+8. epistemic fidelity between claim strength and support;
+9. promised capability closure;
+10. long-form consistency.
 
 For a revision, do not judge the candidate only in isolation. Compare it with:
 
@@ -69,6 +78,14 @@ After a destination write or external effect, verify the actual user/provider st
 
 Transport success is not endpoint proof.
 
+## Verdict validity
+
+A material PASS/FAIL must itself be supported. Check criteria validity, evidence validity, evaluator independence, measurement conditions, confounders and validity boundary.
+
+For stochastic behavior distinguish possibility, observed failure mode, repeatability and reliability. One trial does not establish all four.
+
+When the available evaluation cannot justify PASS or FAIL, return BLOCKED.
+
 ## Findings
 
 Return every material finding needed for the verdict. A finding identifies its phase, dimension, evidence, affected scope, earliest responsible owner and required repair property.
@@ -88,6 +105,7 @@ For revision work distinguish:
 - target repaired;
 - protected properties preserved;
 - invalidated dependencies reconciled;
-- endpoint/render verified when required.
+- endpoint/render verified when required;
+- verdict valid within the applicable evidence/measurement boundary.
 
 All required conditions must hold before the accepted baseline advances.

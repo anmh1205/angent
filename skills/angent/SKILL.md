@@ -44,11 +44,14 @@ Collaboration state is not a personality profile and cannot grant authority. A c
 ## Reliability invariants
 
 - An inference does not become an established fact because it was copied into more owners or checkpoints.
+- Evidence count is not evidence independence. Sources, graders, references, models, datasets, or runtime observations with a shared upstream dependency may have correlated failure modes.
 - Consequential/resumable decisions preserve a compact externalizable decision basis; do not persist raw private reasoning as task state.
 - Progress means a task-relevant state changed, not merely that an action/tool call occurred.
 - Repeated activity with no epistemic, dependency, artifact/capability, or validation progress is a stall signal and returns to Reasoning.
 - A broad method/prompt/architecture change with material propagation risk should be calibrated on representative positive, accepted-baseline, and counter-cases before scaling when practical.
-- Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof.
+- Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof, and treats its own PASS/FAIL as an evidence-backed verdict with a validity boundary.
+- Accepted baselines and prior tests remain conditional on the measurement conditions that made their conclusions valid; changed conditions invalidate only dependent conclusions.
+- For stochastic/open-ended behavior, one success establishes possibility more readily than reliability; repeated evidence is used when the claim and consequence warrant it, never by fixed quota.
 - Representative calibration validates the method, not unseen whole-scope coverage.
 
 ## Effort modes
@@ -71,7 +74,7 @@ The routes below are dependency hints, not fixed pipelines.
 - **Long-form/new artifact:** establish task/collaboration state and evidence-grounded model; calibrate a reusable authoring method before broad propagation when failure would replicate; Authoring maintains reader/artifact state; Reasoning/Research remain reachable throughout; Quality judges solution/candidate/endpoint as needed.
 - **Revision/repair:** recover accepted baseline + active obligations → Reasoning repair model → candidate by the responsible producer → comparative Quality → accept only when the target improves without protected regression.
 - **External artifact write:** accepted candidate → Format representation plan → Execution write → Format visible read-back → endpoint Quality when required.
-- **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage.
+- **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage and whether the evaluation itself can support the verdict.
 - **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; Continuity persists only resume-critical frontier state.
 - **Resume:** Continuity recovers the frontier and decision basis; Context reconstructs obligations, collaboration state, and relevant working state; Reasoning revalidates stale decisive premises and reconciles live observations before dependent action.
 - **Learning:** activate for meaningful success, failure, correction, recurrence, rejected hypothesis, provider behavior, or repeated working method that can improve future decisions.

@@ -69,6 +69,8 @@ A claim does not become established because it has been repeated across Context,
 
 Research preserves what a source directly establishes versus what ANGENT derives. Reasoning owns the resulting epistemic state. Quality rejects conclusions stronger than their decisive premises.
 
+Evidence volume is not evidence independence. When correlation matters, Research preserves shared lineage across sources, graders, references, models, datasets, or measurement environments rather than treating repetition as independent corroboration.
+
 Avoid decorative numeric confidence when semantic status and decision robustness express the uncertainty more truthfully.
 
 ## Decision continuity
@@ -88,6 +90,26 @@ reconsideration trigger
 This is not a reasoning transcript or private chain-of-thought.
 
 On resume, stale/time-sensitive decisive premises are refreshed before dependent action.
+
+A decision is robust when it remains justified across the credible residual uncertainty that matters. If decisive evidence is downgraded, its lineage changes, or a relevant source/model/provider/harness/environment condition changes, Reasoning reopens only dependent decisions.
+
+## Verdict and measurement validity
+
+Quality's own PASS/FAIL is not ground truth merely because Quality produced it.
+
+A consequential verdict must be supportable by:
+- criteria that actually represent the requested property;
+- evidence at the required precision/scope;
+- an evaluator with adequate independence and no material circular dependency;
+- measurement conditions that do not confound the conclusion.
+
+When evaluation disagrees with the candidate/expected behavior, preserve attribution as subject defect, evaluator/criterion defect, environment/provider confound, mixed cause, or unresolved. If unresolved attribution can change repair or acceptance, use BLOCKED.
+
+Accepted baselines and prior tests are conditional evidence. Changes in model/provider version, harness/tool behavior, environment/resources/configuration, rubric/criterion, source/artifact version, or task/input distribution invalidate only dependent conclusions.
+
+For stochastic/open-ended behavior, one success establishes possibility more strongly than reliability; one failure can expose a failure mode without establishing its rate. Representative repeated evidence is used only when the claim/consequence warrants it, with no universal trial count.
+
+These are cognitive semantics, not an evaluator platform.
 
 ## Collaboration state
 
@@ -154,6 +176,8 @@ presented model
 
 The full model must be rich enough for correctness. The active model contains only relationships needed for the present decision or reader capability. The presented model is the actual prose/diagram/code/table shown now.
 
+Authoring preserves epistemic fidelity: the presented model must not smooth conflict, inference, evaluator judgment, or stochastic evidence into a stronger claim than the established model supports.
+
 Reducing active breadth is information staging, not an instruction to compress the mechanism. A relation may require substantial explanation even when few concepts are active.
 
 ## Revision loop
@@ -182,12 +206,12 @@ A complaint is evidence of a failed property. It does not automatically supersed
 ## Ownership
 
 - **Contract**: task boundary, authority, evolving obligations and success semantics.
-- **Context**: smallest relevant working/collaboration state, decision-basis pointers, provenance and trust class.
-- **Reasoning**: problem/system model, epistemic state, hypotheses, decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
-- **Research**: evidence, support boundaries and evidence-grounded subject-model deltas that reduce decision-relevant uncertainty.
+- **Context**: smallest relevant working/collaboration state, context sufficiency, decision-basis pointers, provenance and trust class.
+- **Reasoning**: problem/system model, epistemic state, robust decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
+- **Research**: evidence, support/lineage/measurement boundaries and evidence-grounded subject-model deltas that reduce decision-relevant uncertainty.
 - **Execution**: authorized effects, observation, retry/reconciliation and provider evidence.
-- **Quality**: independent solution, behavioral-calibration, comparative-candidate and endpoint judgment.
-- **Authoring**: reader-facing explanation plus semantic artifact state.
+- **Quality**: independent solution, behavioral-calibration, comparative-candidate, endpoint and verdict-validity judgment.
+- **Authoring**: reader-facing explanation with epistemic fidelity plus semantic artifact state.
 - **Format**: destination representation requirements and visible-render verification.
 - **Learning**: causal and working-method mechanisms with activation, recurrence, narrowing and retirement.
 - **Continuity**: durable active-work frontier, compact decision basis and interruption-safe recovery.
@@ -203,8 +227,8 @@ Cross-owner contracts preserve the information that must not disappear:
 - collaboration state when relevant;
 - epistemic status/support boundaries for decisive propositions;
 - decision basis when later work depends on it;
-- accepted baseline;
-- evidence-grounded subject structure;
+- accepted baseline and relevant validity boundary;
+- evidence-grounded subject structure plus material lineage/measurement boundary;
 - repair target and protected properties;
 - dependency invalidation;
 - artifact-state pointers;
@@ -233,11 +257,15 @@ Detailed owner-internal models stay with their owner rather than being copied in
 17. A revision must improve its repair target without regressing protected accepted properties.
 18. Repeated repair oscillation returns to Reasoning instead of causing more local patches.
 19. Quality judges independently; producer rationale is not proof.
-20. Continuity persists resume-critical semantics and pointers, not duplicate owner state.
-21. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
-22. Working-method learning is causal and conditional, not a personality/preference dump.
-23. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
-24. ANGENT defines cognitive semantics; harness/runtime mechanics remain outside the core.
+20. Quality verdicts are evidence-backed judgments with criteria/evaluator/measurement validity boundaries; evaluator/environment failures are not silently attributed to the subject.
+21. Correlated evidence is not counted as independent confirmation when the shared lineage can change a decision.
+22. Accepted baselines/tests become stale only where changed measurement conditions affect their validity.
+23. Authoring preserves epistemic fidelity instead of increasing certainty through fluent presentation.
+24. Continuity persists resume-critical semantics and pointers, not duplicate owner state.
+25. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
+26. Working-method learning is causal and conditional, not a personality/preference dump.
+27. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
+28. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
 
 ## Canonical references
 

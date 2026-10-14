@@ -12,6 +12,7 @@ It does not rewrite the candidate, invent missing evidence or become a second pl
 ## Load references progressively
 
 - references/quality-rubric.md — solution and communication integrity dimensions.
+- references/verdict-validity.md — criteria/evidence/evaluator/measurement validity and failure attribution.
 - references/coverage-and-endpoints.md — whole-scope claims and operational endpoint evidence.
 - references/authoring-calibration.md — reader-facing failure mechanisms without superficial length/format scoring.
 - references/comparative-gates.md — baseline comparison, preservation checks and endpoint phases for revision work.
@@ -34,6 +35,21 @@ Evaluate only relevant dimensions:
 
 A fluent answer cannot compensate for a wrong model.
 
+## Verdict validity
+
+A Quality verdict is itself a measurement claim about the subject.
+
+Before a consequential PASS or FAIL, ask whether the criteria, evidence, evaluator independence, coverage and measurement conditions can support that verdict.
+
+Distinguish:
+- defect in the candidate/solution;
+- defect in the evaluator/criterion;
+- environment/provider/infrastructure confound;
+- mixed cause;
+- unresolved attribution.
+
+Use BLOCKED when available evidence cannot reliably distinguish these and the distinction can change the next action.
+
 ## Earliest faulty owner
 
 When Layer A fails, return the earliest fault:
@@ -45,6 +61,8 @@ When Layer A fails, return the earliest fault:
 - active-work persistence/recovery → Continuity.
 
 Do not repair inside Quality.
+
+Do not blame the producer merely because a grader failed, and do not blame the grader merely because the candidate disagrees with it.
 
 ## Layer B — communication integrity
 
@@ -70,6 +88,8 @@ Do not rely on the producer's persuasive narrative as proof. When anchoring/self
 
 Use stronger independence when consequence is high, a behavior change is broad, or the same failure has recurred.
 
+Self-review is useful evidence but is not independent confirmation. Different graders can remain correlated when they share the same source/reference, rubric, model family, dataset, environment, or failure mode.
+
 ## Behavioral calibration
 
 When a method/prompt/architecture change will affect many future tasks or units, Quality should calibrate the behavior before broad propagation when practical.
@@ -85,5 +105,7 @@ Scale verification to consequence and propagation risk.
 Quality is strongly warranted for consequential external effects, revision of accepted work, broad/whole-scope claims, recurrent failures, high material uncertainty, and methods that will be propagated across many units.
 
 A direct low-consequence answer should not acquire ceremony just because Quality exists.
+
+For stochastic/open-ended behavior, match evidence strength to the claim: one success shows possibility more readily than reliability. Do not impose a universal trial count.
 
 Do not add expensive checks that cannot change the verdict.
