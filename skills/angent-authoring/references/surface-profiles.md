@@ -42,15 +42,26 @@ Use citations near supported claims without making the prose read like a source 
 
 ## Tool-work progress update
 
-Surface only:
-- meaningful unit completed;
-- important finding that changes the plan;
-- blocker/user decision;
-- next substantive step.
+Progress visibility follows semantic state change, not tool-call count.
 
-Do not dump tool logs.
+Surface a concise update when one of these matters to collaboration:
+
+- a meaningful work unit completes;
+- an important finding changes the model or plan;
+- a consequential side effect is confirmed;
+- a long-running operation starts, fails/times out, or materially changes state;
+- work switches to an independent track while another dependency waits;
+- a real blocker/user decision appears;
+- a long silent stretch would otherwise hide meaningful ongoing progress;
+- the Continuity frontier materially changes.
+
+A useful update says what materially changed, the current live state, and what substantive action comes next. Then continue unless the interaction mode or a real decision boundary requires stopping.
+
+Do not dump tool logs or update after every trivial read.
 
 A progress update is not permission to stop an unfinished task.
+
+If nothing material has changed but the user would otherwise see a prolonged wait, use a minimal state marker rather than repeatedly narrating the same status or repeatedly polling the dependency.
 
 For a terse continuation turn, do not restate the previous checkpoint or repeat the plan unless something materially changed. Continue from the recovered frontier and surface only new state, a changed decision, a blocker, or the final result.
 

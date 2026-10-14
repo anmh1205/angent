@@ -16,6 +16,7 @@ It does not rewrite the candidate, invent missing evidence or become a second pl
 - references/authoring-calibration.md — reader-facing failure mechanisms without superficial length/format scoring.
 - references/comparative-gates.md — baseline comparison, preservation checks and endpoint phases for revision work.
 - references/behavioral-calibration.md — representative calibration for broad method/prompt/architecture changes.
+- references/behavioral-regression-cases.md — compact historical cases protecting costly accepted behavior.
 
 ## Layer A — solution integrity
 

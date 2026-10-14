@@ -14,6 +14,22 @@ Research organizes evidence around active claims, subject relations and uncertai
 
 Authority is claim-specific. Evidence authority for a claim does not imply task/effect authority.
 
+## Claim-to-source locality
+
+Prefer the source closest to the fact being established, not a universal prestige order.
+
+Examples:
+
+- current contents of the user's repository → canonical repository/commit, not a public description of the framework;
+- current Jira/Notion/deployment/account state → that provider's live object/state when accessible;
+- supported API behavior → current normative/vendor documentation;
+- actual runtime behavior → observed runtime evidence;
+- mechanism in a specific implementation → its source/implementation plus runtime evidence when needed.
+
+A live private/project artifact can establish its own state but not automatically a general platform contract. A public normative source can establish the platform contract but not the user's current deployed state.
+
+When direct canonical evidence is unavailable, preserve that limitation rather than silently substituting a weaker source as if it were equivalent.
+
 ## Evidence item
 
 For material claims preserve:
