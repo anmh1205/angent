@@ -33,14 +33,15 @@ release_state:
     version_change_requires_explicit_user_instruction: true
   private_chatgpt_plugin:
     updated: true
-    canonical_plugin_id: plugins_6acf66b0888c81918532ccd5d81cbde1
+    canonical_plugin_id: plugins_6acf6c3597308191b7235938e3bb4fe8
     version: 1.0.0
-    release_id: pluginrel_6acf66b357d8819196fe7f4c694fb9e0
-    source_commit: 59a00c3e78fd91e112f769ad5d3a9a2fedf7239a
-    source_archive_sha256: b89f3cdf98f3d0acbe7bc33dbace8186b52bee73daf97bb2194fe53542f919a6
+    release_id: pluginrel_6acf6c387f548191a366fd5d67cf3da8
+    source_commit: 32b9d9190d7527d24f1c1cfec6596991bc2d5eda
+    source_archive_sha256: 5ed6080a4fe0e8d42fb80b1457f85749d9611378753aed1375aa006e3cb014d7
     read_back_verified: true
     superseded_provider_identities:
       - plugins_6ace3b6877a0819193f1481bf46b9f00
+      - plugins_6acf66b0888c81918532ccd5d81cbde1
 
 frontier:
   repair_state: NONE
@@ -53,8 +54,9 @@ frontier:
   verified_units:
     - "Core hardening PR #3, cognitive alignment PR #5, correction interpretation PR #12, frontier scheduling PR #15, reliability-boundary PR #17 and canonical-version PR #19 are canonical on main."
     - "Canonical semantic version is 1.0.0 across root manifests, Engineer fallback manifests, checkpoint state and the canonical private ChatGPT plugin."
-    - "Private ChatGPT canonical plugin identity is plugins_6acf66b0888c81918532ccd5d81cbde1 at version 1.0.0; provider release IDs are deployment metadata rather than semantic versions."
-    - "Canonical private plugin read-back verified 63 files, both manifests at 1.0.0, correction routing, multi-branch scheduling, observation admission, wait semantics, Continuity frontier semantics and effect-boundary Quality checks."
+    - "Private ChatGPT canonical plugin identity is plugins_6acf6c3597308191b7235938e3bb4fe8 at version 1.0.0; provider release IDs are deployment metadata rather than semantic versions."
+    - "Canonical private plugin replacement was built from exact main@32b9d9190d7527d24f1c1cfec6596991bc2d5eda; normalized package SHA-256 is 5ed6080a4fe0e8d42fb80b1457f85749d9611378753aed1375aa006e3cb014d7."
+    - "Canonical private plugin read-back verified 64 files, both manifests at 1.0.0, correction routing, multi-branch scheduling, invocation-bound authority, observation admission, resume-binding/compatibility, interface contracts and Quality resume-compatibility checks."
     - "Consequential authority is re-bound at concrete invocation and material provider/tool observations pass an explicit admission boundary before changing established state."
     - "Branch independence is conditional on current shared-state dependencies and affected branches are revalidated after material effects/observations."
     - "Required Quality FAIL/BLOCKED prevents only the dependent accepted transition; unrelated runnable work may continue."
