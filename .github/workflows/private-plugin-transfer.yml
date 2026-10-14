@@ -1,0 +1,21 @@
+name: ANGENT private plugin transfer
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode and verify delta
+        shell: bash
+        run: |
+          base64 -d tmp/angent-plugin-delta.b64 > angent-plugin-delta.zip
+          sha256sum angent-plugin-delta.zip
+          test "$(sha256sum angent-plugin-delta.zip | cut -d' ' -f1)" = "c332605146d9ec7a3e205481434b739cf01d6a0d1a163288a07fb2c7fca8f5af"
+          unzip -t angent-plugin-delta.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: angent-plugin-delta
+          path: angent-plugin-delta.zip
+          retention-days: 1
