@@ -39,6 +39,10 @@ Prefer evidence that:
 
 Ten sources repeating a non-decisive fact may add less value than one authoritative observation. Ten sources or graders sharing the same upstream dependency may also add far less independent support than their count suggests.
 
+## Elicit and verify missing domain knowledge
+
+When a change decision depends on unclear stakeholder needs, process behavior, baselines or realized outcomes, investigate first through available documents, observations, interviews/feedback already in context, runtime data or direct sources appropriate to the domain. Distinguish stakeholder statements from observed behavior, and hypotheses about needs from confirmed requirements. Ask the user only when a decision-reversing gap cannot be resolved from authorized evidence. A survey, stakeholder interview, measurement or field observation may be the best next evidence, but do not fabricate one or imply it happened. Research supplies grounded current-state and competing-explanation evidence; Reasoning owns the change/option decision.
+
 ## Build a usable subject model
 
 For complex domains, do not return a flat inventory of facts or citations.

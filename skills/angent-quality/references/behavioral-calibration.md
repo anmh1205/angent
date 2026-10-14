@@ -316,3 +316,7 @@ The representative cases establish confidence in the method. They do not establi
 A calibration case can be retired, narrowed or replaced when the underlying mechanism changes.
 
 Do not let the case bank grow into an unowned museum of historical complaints.
+
+## Cross-domain needs and change calibration
+
+For substantial changes to problem analysis, select the adjacent cases from Root's core fixtures. Calibrate diagnosis, not vocabulary: can the agent distinguish a requested means from the need, identify the actual affected party and decision constraints, derive discriminating evidence, compare a nontechnical option when plausible, preserve authorized means, and separate verified deliverables from outcomes that require later observation? Pair consequential positive cases with direct-answer and explicit-means counter-cases. A case passes only when the selected action and its justification are valid for the evidence and authority supplied; naming BACCM concepts or writing a requirements matrix is not evidence of competence.

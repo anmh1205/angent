@@ -8,6 +8,8 @@ Use only fields that matter:
 
 - **requested outcome** — state/result the user explicitly asked for;
 - **underlying objective** — purpose behind the requested action when clear and materially relevant;
+- **need/value/context** — observed problem or opportunity, relevant beneficiaries/affected parties, and expected benefit or avoided harm, only if they change the solution or success criterion;
+- **current/future state** — the decision-relevant difference between verified present behavior and desired outcome, when the task involves a change;
 - **target** — system, artifact, decision or audience being changed or understood;
 - **source-of-truth map** — provider/artifact/version for important claims;
 - **active obligations** — currently binding constraints, accepted decisions, exclusions, quality floors, promises and scoped exceptions;
@@ -28,7 +30,7 @@ Use:
 requested action → intended effect → success state
 ~~~
 
-Reason about whether the requested action produces the objective, but do not silently substitute another means when the user explicitly constrained the method.
+Reason about whether the requested action produces the objective, but do not silently substitute another means when the user explicitly constrained the method. A requested feature, document or tool can be either a mandatory deliverable or a candidate solution. Confirm from instruction authority and context before treating it as optional. Do not force a business-case exercise onto narrow factual questions or personal creative work.
 
 ## Collaboration instructions that constrain action
 

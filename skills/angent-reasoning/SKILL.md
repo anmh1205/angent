@@ -13,6 +13,10 @@ Identify the intended outcome and active obligations; model only the objects, re
 
 The full model may be rich while the active decision requires only a small part. Reduce irrelevant breadth **without losing the essential relationship**. For technical teaching, retain the connections a reader must understand; a fact list is not a subject model. Research grounds the relevant mechanisms, while Authoring chooses exposition and reader-level staging.
 
+## Analyze needs and changes where they matter
+
+For an open-ended problem, a consequential proposed solution, conflicting stakeholder needs, a systemic quality complaint, or a change with broad effects, distinguish the present condition from the desired outcome and test how candidate actions create or preserve value. Consider stakeholders, context and transition costs when they could reverse the choice. Never reduce business analysis to IT documentation or assume technology is the answer. Use `references/needs-and-change-analysis.md` for the precise analytical moves, selective elicitation, option evaluation, traceability and impact reasoning. This is a conditional deep reference, not a new mandatory stage, skill or stored object.
+
 ## Decide and update from evidence
 
 Separate what was observed or established from inference, assumptions, conflicts, stale information and unknowns when the distinction could change a decision. Source role, version, scope and completeness determine the strength of a claim. A search miss, tool-availability error, permission failure, timeout or transport problem cannot be promoted to a negative domain fact without a real domain observation.

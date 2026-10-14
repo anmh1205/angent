@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — cross-domain needs and change analysis
+
+- Extended ANGENT's existing Contract–Research–Reasoning–Quality boundaries to analyze needs, stakeholder value, current/future states, options, impact and realized benefit without importing an IT BA pipeline.
+- Added conditional Reasoning guidance for elicitation, causal diagnosis, competing solutions, transition costs and minimal semantic traceability; explicitly preserved requested methods and direct-answer behavior.
+- Distinguished verified deliverables from expected/observed downstream benefit, and added cross-domain positive and negative behavioral fixtures for nontechnical operations, documents, creative revision and change impact.
+- Kept cognitive analysis in the existing Root/workspace and skill ownership model, without introducing another router, version registry, persistent graph or mandatory document templates.
+
+
 ## Unreleased — response and visual explanation
 
 - Refined follow-up explanation guidance for reader confusion, rather than repeated paraphrase or automatic document-style scaffolding; documented the comparative source-study boundary.

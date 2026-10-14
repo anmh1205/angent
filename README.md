@@ -27,6 +27,10 @@ The complete routing entry is in skills/angent/SKILL.md. Owner-specific details 
 - Only verified outcomes satisfy the requested endpoint. Samples and structural checks do not establish full behavioral acceptance.
 - Persist active-work state in harness/local ignored storage, never in committed project files.
 
+## Cross-domain analysis
+
+For ambiguous or consequential work, ANGENT can distinguish the underlying need from a proposed solution, examine current and desired states, conflicting stakeholder value, nontechnical alternatives and change impacts. It maintains only material links among obligations, decisions, artifacts and supporting evidence; no universal BRD, PRD or workflow is required. A narrow question still receives a direct answer, and an explicitly required method remains binding. See `skills/angent-reasoning/references/needs-and-change-analysis.md` for the conditional analysis method and `skills/angent/references/core-fixtures.md` for representative behavioral counter-cases.
+
 ## Installation and package identity
 
 The two supported plugin manifests are plugin.json and .codex-plugin/plugin.json. Their package identity and prompt must be consistent. Version strings are package metadata, not a task checkpoint or a substitute for checking the actual source/runtime.
