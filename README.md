@@ -1,136 +1,40 @@
 # ANGENT
 
-**Cognitive collaborator layer for intelligent agents.**
+ANGENT is a cognitive layer that helps an agent understand the requested outcome, reason from evidence, act with permission, verify results, preserve unfinished work and learn from recurring successes or failures.
 
-ANGENT helps an agent preserve intent and authority, understand how the current collaboration is meant to work, reconstruct high-signal state, distinguish evidence from inference, build a usable model, reason and decide, interpret corrections at the right abstraction level, schedule independent work without polling churn, repair without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable working methods.
+## How it works
 
-> **Status:** ANGENT **1.0.0** remains an unreleased project candidate. Every ANGENT-owned package and runtime surface uses the same canonical version `1.0.0`; private plugin synchronization may change its release ID but never its semantic version unless the user explicitly changes the project version. Reliability hardening and Engineer refresh remain in progress.
+ANGENT has one small Root router and focused supporting skills. **Skills are responsibilities, not a prescribed workflow or a mandatory collection of agent instances.** Ordinary questions stay direct. Larger tasks activate only what is necessary:
 
-## Core architecture
+- Contract and Context: objective, active constraints, authority and relevant state.
+- Reasoning and Research: decisions, uncertainty, dependencies and evidence when needed.
+- Execution: provider/tool actions and observed effects.
+- Authoring and Format: coherent explanations and accurate destination representation.
+- Quality: verification for consequential work, accepted revisions and broad changes.
+- Continuity and Learning: resumable unfinished work and reusable conditional lessons.
 
-ANGENT uses focused owners around one shared cognitive workspace rather than a mandatory phase pipeline.
+Root does not ask every skill to produce a handoff document. A consequential mutation or long-running task carries only the identity, evidence, constraints and dependency information needed for safe action or recovery.
 
-~~~text
-            current instruction
-                   |
-          Contract + Context
-         /                  \
- obligations          collaboration state
-         \                  /
-        shared cognitive workspace
-       /          |          \
-Reasoning <----> Research    Authoring
-    ^             |            |
-    |      evidence + model     v
-Observation                  Quality
-    ^                           |
-    |                           |
- Execution <------ replan ------+
+The complete routing entry is in skills/angent/SKILL.md. Owner-specific details live alongside the relevant skill. Repository-level rules are in AGENTS.md.
 
-Reasoning also selects among RUNNABLE / WAITING_EXTERNAL /
-BLOCKED frontier branches. A pending operation does not own the loop.
+## Operating principles
 
-Continuity preserves resume-critical state + decision basis + frontier state.
-Learning supplies reusable causal/working-method mechanisms.
-Format preserves destination representation.
-~~~
+- Current authority and canonical provider facts outrank remembered plans or saved checkpoint text.
+- Research supplies evidence and domain relationships, not automatic authority.
+- A pending operation does not monopolize the work loop when independent useful work remains.
+- Corrections preserve accepted properties and address the generating failure, not only an example sentence.
+- Documents and chat should share coherent technical explanation quality; authoring is not a checklist generator.
+- Only verified outcomes satisfy the requested endpoint. Samples and structural checks do not establish full behavioral acceptance.
+- Persist active-work state in harness/local ignored storage, never in committed project files.
 
-## Core semantics
+## Installation and package identity
 
-- **Constraint evolution** — recency alone does not erase older active obligations.
-- **Collaboration state** — task-relevant interaction mode, initiative, evidence, explanation and checkpoint expectations; never a substitute for authority.
-- **Shared cognitive workspace** — owners update different semantic views of one coherent model; they are not a one-way workflow.
-- **Epistemic integrity** — observed/established/inferred/assumed/unknown/conflicted/stale remain distinguishable when the distinction matters.
-- **Evidence-grounded subject modeling** — Research returns relations/mechanisms as well as facts and preserves source-support boundaries.
-- **Decision basis** — consequential/resumable decisions keep compact premises/evidence/constraints + reconsideration trigger instead of raw reasoning history.
-- **Correction interpretation** — a user-named example is evidence; Reasoning identifies the failed mechanism, abstraction level and causal scope before choosing repair scope.
-- **Control-point placement** — a behavioral invariant is owned or activated before the decision it needs to control; downstream guidance is not expected to compensate after the behavior is already selected.
-- **Work-conserving frontier scheduling** — RUNNING/PENDING becomes WAITING_EXTERNAL; Reasoning recomputes the full frontier and selects independent RUNNABLE work before another equivalent status check.
-- **Invocation-bound authority** — consequential effects are revalidated against the resolved operation/target/material arguments at the point where the invocation is actually known.
-- **Observation admission** — provider/tool results become established task state only within the identity, scope/version, completeness and uncertainty boundary they actually support.
-- **Failure-domain separation** — harness/tool lookup, schema, access, timeout and transport failures remain operational evidence; they do not become negative domain facts unless an authoritative observation actually establishes that state.
-- **Mutation freshness** — existing-state writes remain tied to the canonical version/basis they were derived from; concurrent drift is reconciled/rebased instead of overwritten blindly.
-- **Canonical target identity** — semantic roles such as current/production/private resolve through current project/provider source-of-truth; exact historical IDs remain exact when explicitly requested.
-- **Conditional branch independence** — shared-state changes can invalidate previous RUNNABLE assumptions; only affected dependencies are recomputed.
-- **Progress/stall semantics** — progress is relevant state change, not activity; no-progress causes re-modeling instead of churn.
-- **Behavioral calibration** — broad method/prompt changes are checked on representative target, accepted-success and counter-cases before propagation when risk warrants it.
-- **Baseline-preserving repair** — revisions preserve protected accepted properties and invalidate only dependent work.
-- **Comparative Quality** — local improvement cannot hide regression, and producer rationale is not treated as proof.
-- **Cognitive/teaching/presented model separation** — rich internal understanding is narrowed for the active reader/task without confusing staging with compression.
-- **Cross-surface authoring continuity** — chat and document surfaces share one explanation/composition method; document scale adds structure/depth without introducing a generic AI document voice.
-- **Explanatory spine** — each substantive section/chapter has one dominant technical relation/trace; facts, examples, prerequisites and exceptions are staged around it instead of becoming a knowledge-graph dump.
-- **Internal-vocabulary boundary** — ANGENT's own owner/gate/baseline/artifact-state/repair terminology stays out of unrelated reader-facing technical prose.
-- **Artifact state** — long-form work preserves reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
-- **Trust boundary** — retrieved external content is evidence/data, not task authority.
-- **Recurrence handling** — repeated failure reopens retrieval, activation, routing, ownership, abstraction and control-point placement instead of accumulating more local rules.
-- **Continuity lifecycle** — task lifecycle and per-branch scheduling state remain distinct; one waiting branch does not globally block runnable work.
-- **Persisted-state trust** — a coherent serialized checkpoint is not automatically authentic/owned; unverified state is treated as historical evidence until dependent facts are re-established.
-- **Calibration isolation** — reliability/regression evidence records the initial-state/shared-state boundary so carry-over does not masquerade as independent capability.
-- **Composite outcome integrity** — independently verified components are preserved as progress while overall completion still requires every Contract-required component.
-- **Whole-scope coverage** — samples/calibration never masquerade as full inspection.
+The two supported plugin manifests are plugin.json and .codex-plugin/plugin.json. Their package identity and prompt must be consistent. Version strings are package metadata, not a task checkpoint or a substitute for checking the actual source/runtime.
 
-## State separation
+This repository does not store private plugin release identifiers, past branch HEADs or live next-action pointers as project instructions. Check the running plugin or Git branch directly when that identity matters.
 
-ANGENT keeps different semantic classes separate:
+## Validation
 
-- **AGENTS.md** — stable project instructions;
-- **Contract obligations** — currently binding task requirements;
-- **Collaboration state** — task-relevant way of working together;
-- **Memory** — durable scoped context;
-- **Reasoning/epistemic/frontier state** — current model, belief status, decision/basis, branch selection, progress and repair state;
-- **Authoring artifact state** — reader/document continuity;
-- **Continuity** — interruption-safe multi-branch active-work frontier;
-- **Learning** — reusable causal and working-method mechanisms.
+The repository checks deterministic structure and manifest consistency. For method changes, use evidence-backed behavioral cases and counter-cases appropriate to the actual consequence. A green hygiene CI run is not proof that a model's behavior improved.
 
-No one store becomes a universal transcript or authority source.
-
-## Semantic core, harness mechanics
-
-ANGENT defines how state and decisions should be understood. It does not implement a workflow engine, event-sourcing platform, distributed lease system, effect database, scheduler service, tracing platform, evaluator platform, or policy sandbox merely to represent those semantics.
-
-Harnesses provide actual storage, tools, scheduling, execution and observability mechanics.
-
-A harness may serialize tool calls. That does not force ANGENT's cognitive plan to remain serialized around one pending operation.
-
-## Engineer integration
-
-Engineering specialist capability remains native-first:
-
-1. use usable native AgentKit Engineer when available;
-2. otherwise use the ANGENT fallback;
-3. do not expose complete native and fallback catalogs together by default.
-
-Engineer inventory/parity refresh is separate from cognitive/reliability semantics.
-
-## Validation policy
-
-The old root /tests suite remains removed because static strings/counts/self-consistency were not behavioral acceptance evidence.
-
-For changes with propagation risk, prefer small representative behavioral calibration drawn from real failures and accepted successes, including counter-cases, plus source/read-back inspection and real endpoint evidence. Whole-scope claims still require whole-scope coverage.
-
-For frontier scheduling, calibration must cover both sides: switch away from a pending branch when independent useful work exists, but allow a legitimate recheck when its informative-observation condition is actually satisfied. Do not manufacture busywork merely to avoid polling.
-
-When a calibration result will serve as future regression/acceptance evidence, keep a reproducible pointer to the case, baseline/candidate, observable trajectory/artifacts, outcome, applied criteria and verdict validity. Do not replace evidence with a bare “passed previously” claim.
-
-## Version identity
-
-ANGENT has one canonical semantic version across all ANGENT-owned surfaces: **1.0.0**.
-
-This includes:
-- root plugin manifests;
-- private ChatGPT plugin manifests/runtime;
-- portable Engineer fallback manifests;
-- checkpoints and release-state documentation;
-- preview/staging packages derived from ANGENT source.
-
-Content synchronization, private plugin publication, acceptance testing, or a new internal release ID does **not** increment the semantic version.
-
-A version change is a project-level decision and requires an explicit user instruction. Do not infer a patch bump from implementation progress or plugin tooling behavior.
-
-## Release boundary
-
-Do not publish or tag project version 1.0.0 yet.
-
-Private plugin updates may keep the working ChatGPT surface aligned with canonical source, but the plugin must remain version `1.0.0`. Its provider release ID may change as deployment metadata.
-
-Complete reliability hardening and the Engineer refresh, then perform cross-harness/release reconciliation before any public project release decision.
+ANGENT Core and Engineer Kit are maintained as separate scopes.
