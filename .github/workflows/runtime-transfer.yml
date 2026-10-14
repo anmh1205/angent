@@ -1,0 +1,24 @@
+name: ANGENT runtime transfer
+on:
+  push:
+    branches:
+      - runtime-sync-transfer
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode runtime delta
+        shell: bash
+        run: |
+          base64 -d tmp/angent-runtime-delta.b64 > angent-runtime-delta.zip
+          sha256sum angent-runtime-delta.zip
+          unzip -t angent-runtime-delta.zip
+      - name: Upload runtime delta
+        uses: actions/upload-artifact@v4
+        with:
+          name: angent-runtime-delta
+          path: angent-runtime-delta.zip
+          if-no-files-found: error
+          retention-days: 1
