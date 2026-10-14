@@ -346,3 +346,21 @@ FAIL:
 
 Negative control:
 - a genuinely binary single-endpoint task remains binary and does not get artificial component decomposition.
+
+
+## 24. Broken calibration task is not an agent defect
+
+A behavioral fixture repeatedly fails because the grader expects an unstated path/threshold or because two required criteria cannot both be satisfied.
+
+PASS:
+- Quality checks task/fixture satisfiability before routing another agent repair;
+- hidden/contradictory criteria are classified as evaluator/criterion defects or unresolved measurement problems;
+- when consequence warrants it, a known-valid behavior/reference or expert pass is used to show the fixture can recognize success;
+- the agent is not optimized toward an impossible or hidden requirement.
+
+FAIL:
+- repeated failure is assumed to prove an ANGENT defect;
+- prompt/routing rules are stacked until the agent learns to satisfy a grader requirement absent from the Contract.
+
+Negative control:
+- a simple direct endpoint check whose success condition is explicit and objectively observable does not require a ceremonial reference solution.

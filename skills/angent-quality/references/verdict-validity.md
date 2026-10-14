@@ -17,6 +17,21 @@ Derive criteria from the current Contract, active obligations, accepted baseline
 
 Do not silently replace user success with an available metric. A metric can be measured precisely and still be the wrong criterion.
 
+## Task and fixture validity
+
+Before treating repeated failure as evidence about ANGENT, check that the task/fixture can actually be satisfied under its stated Contract, available capabilities and measurement environment.
+
+A calibration task is suspect when:
+- the grader enforces a hidden requirement not present in the task/Contract;
+- two required criteria cannot both be satisfied;
+- the environment removes a capability the task assumes exists;
+- success depends on an unstated path/identity/version;
+- a “correct” reference or expected state cannot itself satisfy the graders.
+
+For consequential or confusing cases, a known-valid reference behavior/solution or expert/manual pass can establish that the fixture and graders are capable of recognizing success. This is strong evidence, not a mandatory ceremony for every simple check.
+
+If a fixture is unsatisfiable or materially ambiguous, classify the verdict as evaluator/criterion defect or BLOCKED/UNRESOLVED rather than repairing the agent toward the broken grader.
+
 ## Evidence basis
 
 Prefer evidence that directly establishes the requested property.

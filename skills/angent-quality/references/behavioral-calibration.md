@@ -12,6 +12,14 @@ A local example may also make a bad method look good by accident.
 
 Calibrate the **generating method** before propagating it when failure cost and propagation scope justify the effort.
 
+## Validate the case before optimizing against it
+
+A regression/capability case must express a success condition that a compliant agent could actually satisfy in the stated environment.
+
+When a case produces surprising persistent failure, inspect the task wording, available capabilities, hidden assumptions and grader criteria before adding more prompt/routing rules.
+
+For high-impact or ambiguous cases, a known-valid behavior/reference that passes the same checks is useful evidence that the case/grader is not broken. Do not require a reference artifact when the criterion is already direct and objective.
+
 ## Build the smallest useful case set
 
 Prefer real cases from:

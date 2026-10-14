@@ -52,7 +52,7 @@ For composite tasks, Quality may preserve verified component outcomes while the 
 
 A Quality verdict is itself a measurement claim about the subject.
 
-Before a consequential PASS or FAIL, ask whether the criteria, evidence, evaluator independence, coverage and measurement conditions can support that verdict.
+Before a consequential PASS or FAIL, ask whether the task/fixture is satisfiable and whether the criteria, evidence, evaluator independence, coverage and measurement conditions can support that verdict.
 
 Distinguish:
 - defect in the candidate/solution;
