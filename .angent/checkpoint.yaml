@@ -1,7 +1,7 @@
 schema_version: 2
 work_key: angent/core
 record_type: RELIABILITY_CORE_AHEAD_OF_RUNTIME_ENGINEER_SEMANTIC_AUDIT
-phase: engineer-semantic-parity-2.19.0-in-progress-with-runtime-sync-blocked
+phase: engineer-first-pass-reviewed-runtime-acceptance-open
 
 source_of_truth:
   provider: github
@@ -56,11 +56,10 @@ frontier:
       scope: vendor/agentkit-engineer
       objective: "Refresh portable Engineer fallback against the signed stable AgentKit Engineer 2.19.0 package at workflow-semantic/support-surface level without mirroring upstream runtime mechanics."
       active_working_branch: engineer-semantic-parity-2.19.0
-      baseline_evidence_head: 0cb1c719f9133ac63848dc5252f9e5ce1ef7e76b
       progress_ledger: vendor/agentkit-engineer/PORTING_MANIFEST.md
 
   verified_units:
-    - "Engineer semantic parity context/docs support batch reviewed on engineer-semantic-parity-2.19.0; use the manifest for verified units, not this historical aggregate."
+    - "Engineer fallback first-pass review now covers all 102 Skill identities and 16 Agent role identities on the isolated Engineer branch. The manifest records 25 real degraded runtime/support boundaries; this is not full runtime parity."
     - "Reliability/state-evaluation integrity PR #36 is canonical on main."
     - "Persisted-state trust distinguishes coherent serialized state from authenticated/owned resume state; calibration isolation, fixture satisfiability and composite endpoint semantics are integrated."
     - "Canonical semantic version remains 1.0.0; no public release/tag has been made."
@@ -74,10 +73,10 @@ frontier:
     - "These size/path metrics are audit signals, not proof that a shorter independent fallback is wrong; representative workflow semantics must be compared before each parity verdict."
 
   unresolved:
-    - "Replace PORTING_MANIFEST.md identity-presence completeness claims with provenance-aware workflow-semantic parity status."
-    - "Audit all 102 Skills by primary outcome, modes/options, critical gates, reusable domain/support knowledge, runtime-specific mechanics and portable replacement; expand fallback where capability is materially lost."
-    - "Audit the 16 Agent role definitions against stable 2.19.0 role semantics while preserving their portable/inert role boundary."
-    - "Reconcile fallback README and routing claims with the signed stable 2.19.0 artifact rather than the non-inventory docs guide."
+    - "Run representative cross-harness task execution before asserting native-equivalent end-to-end outcomes; current GitHub CI establishes bundle structure and selector behavior only."
+    - "Prioritize missing native/runtime assets for the 25 VERIFIED_DEGRADED Skill identities by actual user demand and integration feasibility; do not relabel degraded without a tested substitute."
+    - "Validate representative Agent role invocation on a genuinely supported harness; sidecars remain inert role contracts absent an adapter."
+    - "Keep the fallback README free of duplicated progress counters; use PORTING_MANIFEST.md and AUDIT_REPORT.md as live ledger and dated evidence."
     - "Resolve private plugin version-policy versus Plugin Creator auto-patch behavior before synchronizing runtime beyond source commit 59f04f4."
     - "Final cross-harness release reconciliation remains required before public release."
 
@@ -87,4 +86,4 @@ frontier:
     - "Portable export is evidence/source material for audit, not a verified runtime adapter and not permission to vendor a raw upstream mirror."
     - "File-count/text-similarity metrics alone cannot accept or reject a fallback capability."
 
-next_action: "Continue the Engineer 2.19.0 semantic audit on branch engineer-semantic-parity-2.19.0; current first unfinished cluster: ak-document-skills, ak-copywriting, ak-journal and adjacent knowledge skills. Read live HEAD and PORTING_MANIFEST before selecting work; do not resume reliability-boundary-hardening or infer unfinished work from the canonical main branch."
+next_action: "Engineer semantic first-pass is complete. On engineer-semantic-parity-2.19.0, read current HEAD, PORTING_MANIFEST.md, AUDIT_REPORT.md and latest branch-only CI; continue representative live-runtime acceptance and the 25 explicitly degraded capabilities without merging or changing main. Do not resume obsolete ak-document-skills/copywriting/journal review clusters."

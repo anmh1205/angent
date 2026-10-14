@@ -49,7 +49,7 @@ Coverage:
 - **16/16 Agent role identities present**
 - **current per-Skill semantic status and explicit runtime degradations are tracked only in [PORTING_MANIFEST.md](PORTING_MANIFEST.md); do not duplicate mutable progress counts here**
 
-Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
+Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger, `AUDIT_REPORT.md` for dated verification evidence and remaining runtime gates, and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
 
 The fallback is an independent ANGENT implementation, not an upstream mirror.
 
