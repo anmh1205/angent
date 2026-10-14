@@ -1,32 +1,44 @@
 ---
 name: ak-autoresearch
-description: Run bounded goal-directed research/iteration by routing each cycle to the Skill that owns the measurable outcome.
+description: Route a measurable optimization, prediction, scenario, or security objective to the installed workflow that owns the loop, with a bounded evidence contract.
 metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Autoresearch — Portable Fallback
 
-Use when the work has a measurable objective and benefits from repeated evidence-driven iteration.
+Use when the user has a measurable objective but the correct iterative workflow is not yet clear.
+
+Autoresearch is a router, not a universal self-improvement loop.
 
 ## Contract
 
-Require:
-- objective;
-- metric/acceptance condition;
-- allowed search/action space;
-- maximum cost/time/iterations when relevant;
-- stop conditions;
-- artifact/source to preserve.
+Establish:
+- objective and why it matters;
+- mechanical metric or observable success state;
+- baseline;
+- guard conditions;
+- allowed change/search surface;
+- iteration/time/cost bound when relevant;
+- stop condition;
+- authority boundary.
 
-## Loop
+Reject or reframe proxy metrics that no longer represent the real objective.
 
-1. Measure current state.
-2. Form one changeable hypothesis.
-3. Route the next step to the owning Skill.
-4. Execute the smallest experiment.
-5. Measure again.
-6. Keep, revert or revise based on evidence.
-7. Record the iteration in Continuity.
-8. Stop when the target is met, progress saturates, the budget ends, or a new decision is required.
+## Route
 
-Do not run unbounded loops or optimize a proxy metric that no longer represents the user's objective.
+Discover the live fallback/installed catalog, then route by outcome:
+- measurable optimization/experiment → `ak-loop`;
+- prediction → `ak-predict`;
+- scenario exploration/coverage → `ak-scenario`;
+- bounded security review/iteration → `ak-security`;
+- another installed owner when it clearly fits better.
+
+If no installed Skill owns the objective, return blocked with the closest normal workflow for approval rather than fabricating a loop.
+
+## Handoff
+
+Pass the accepted metric/baseline/guards/bounds/evidence state to the selected owner.
+
+From that point the selected Skill owns its artifacts and completion rules.
+
+Autoresearch does not weaken effect authority, hide failed iterations, or claim convergence.

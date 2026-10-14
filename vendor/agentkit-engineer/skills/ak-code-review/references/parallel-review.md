@@ -1,33 +1,44 @@
-# Parallel review
+# Parallel and multi-reviewer strategies
 
-Multiple reviewers are useful when the review can be partitioned into independent scopes.
+Parallel review is useful only when independence changes coverage, elapsed time, or confidence.
 
-## Good partitions
+## Partitioned parallel review
 
+Good partitions include:
 - backend vs frontend;
 - independent packages/services;
 - security-specific pass plus correctness pass when both are substantial;
-- separate migration/data path vs application behavior.
+- migration/data path vs application behavior.
 
-## Poor partitions
-
-- several reviewers reading the same diff with no distinct question;
-- scopes that all depend on one unresolved requirement;
-- parallel reviewers that will produce duplicate findings and no synthesis owner.
-
-## Worker brief
-
-Give each reviewer:
+Each reviewer receives:
 - exact scope;
-- requirements/AGENTS.md relevant to that scope;
+- relevant requirements/AGENTS.md;
 - specific risk/question;
-- expected finding format;
-- no-write rule unless explicitly authorized.
+- no-write rule;
+- expected evidence/finding format.
 
-## Synthesis
+Join findings before fixes. Deduplicate shared root causes and preserve conflicts.
 
-Join findings before fixes.
+If the requested strategy is merely partitioned review and safe delegation is unavailable, sequential independent passes may be an honest degradation when elapsed-time parallelism is not load-bearing.
 
-Deduplicate shared root causes and distinguish genuinely independent confirmation from repeated reasoning over the same source.
+## Ultra / fixed independent candidate pool
 
-If the harness has no safe delegation, perform the passes sequentially.
+A strategy such as `--ultra` uses a stronger evidence contract: several independent read-only candidate reviews over the same evidence packet followed by a verification/deduplication finalizer.
+
+When the current installed stable workflow specifies a fixed independent candidate pool or parallel wave, preserve that requirement.
+
+If the runtime cannot produce the required usable independent candidates after the allowed retry behavior, fail closed for that strategy.
+
+Do not silently:
+- run one reviewer and call it ultra;
+- reuse one review several times;
+- replace required parallel independent candidates with sequential self-review;
+- combine ultra with another mode that owns the same multi-reviewer strategy when the stable workflow marks them incompatible.
+
+## Independence
+
+Different reviewer labels do not guarantee independent evidence.
+
+Record shared source packets, model/runtime family, rubric and assumptions when those correlations can materially affect the verdict.
+
+Final synthesis verifies/deduplicates evidence; it does not majority-vote candidate opinions.

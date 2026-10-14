@@ -1,65 +1,51 @@
 ---
 name: ak-team
-description: Coordinate a small team of independent specialist agents for research, implementation, review or debugging when parallelism or context isolation adds real value.
+description: Coordinate independent live teammate sessions with shared work, direct communication, explicit ownership, verification, shutdown, and cleanup when the active harness truly supports that lifecycle.
 metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Team — Portable Fallback
 
-Use only when multiple independent teammates improve quality or elapsed time enough to justify coordination.
+Use only when genuine live teammate collaboration creates value.
 
-Read `references/team-protocol.md`.
+## Required capability
 
-## Runtime capability
+Before starting, verify that the active harness exposes the lifecycle required by the requested team work:
+- team/session creation;
+- shared work/task state;
+- bounded delegation;
+- direct messaging/coordination;
+- waiting/status observation;
+- shutdown;
+- cleanup;
+- write/isolation controls when implementation is involved.
 
-Discover what the active harness actually supports:
-- persistent team/teammate sessions;
-- one-shot subagents;
-- isolated worktrees/files;
-- messaging/task surfaces;
-- no delegation.
+If any load-bearing lifecycle capability is unavailable, **hard-stop this Team workflow**.
 
-If true teams are unavailable, execute the same role assignments through one-shot workers or sequential role isolation.
+Do not silently substitute ordinary subagents, sequential role-play, or an Orchestrate job graph and still call the result Team. Offer that as a separately named route only after making the semantic difference explicit.
 
-Do not pretend sequential execution is parallel.
+## When Team fits
 
-## Lifecycle
+Use for:
+- several genuinely independent workstreams that need ongoing direct coordination;
+- competing debugging hypotheses that need live cross-checking;
+- non-overlapping implementation ownership with shared work state;
+- work where teammates must message, wait on, and react to each other.
 
-1. Define the parent outcome and why a team is useful.
-2. Partition independent jobs with explicit dependencies.
-3. Give each teammate a narrow context contract: role, job, inputs, ownership, allowed effects, acceptance evidence and return format.
-4. Isolate concurrent writers and avoid overlapping ownership.
-5. Track blocked/completed jobs durably enough to recover from interruption.
-6. Join evidence/artifacts, not full transcripts.
-7. Preserve disagreement until ANGENT Reasoning resolves it.
-8. Reconcile integrated results and update Continuity.
+Avoid for short sequential chains or overlapping writers.
 
-## Lead responsibilities
+## Lead workflow
 
-The lead/synthesizer owns:
-- job decomposition;
-- dependency order;
-- authority propagation;
-- conflict/integration handling;
-- checking that worker claims match artifacts/evidence.
-
-Workers do not become independent strategic owners.
-
-## Failure handling
-
-- blocked worker → re-scope or supply missing context; do not resend unchanged;
-- worker failure → keep useful partial evidence and reassess routing;
-- overlapping writes → stop/sequence or isolate before continuing;
-- conflicting conclusions → compare evidence or use independent arbiter; do not majority-vote.
-
-## Resource policy
-
-Use the smallest team that creates real value.
-
-Do not duplicate the same context across many agents only to obtain more opinions.
-
-## Boundary
+1. Define one combined outcome and acceptance evidence.
+2. Partition independent work with explicit dependencies.
+3. Give each teammate a bounded contract: role, scope, inputs, ownership, effects, output, checks.
+4. Keep concurrent writers disjoint; worktrees are collision isolation, not sandboxes.
+5. Coordinate through the verified live shared state/messages.
+6. Treat idle as waiting, not completion.
+7. Integrate only completed prerequisites.
+8. Verify the combined result independently; teammate messages are handoffs/evidence, not proof.
+9. Shut down and clean up using the verified lifecycle; report cleanup failure rather than guessing state directories.
 
 Team does not create new authority.
 
-ANGENT Reasoning remains the strategic owner and Continuity remains the active-work state owner.
+Use the smallest team that creates real value.

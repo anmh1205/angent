@@ -19,7 +19,9 @@ angent/
 ├── skills/                             # ANGENT owners
 └── vendor/agentkit-engineer/
     ├── plugin.json                     # portable Engineer fallback plugin
-    ├── skills/                         # 102 fallback Skills
+    ├── STABLE_CATALOG.json             # documented stable public workflow target
+    ├── skills/                         # 103 public fallback Skills
+    ├── internal/                       # non-public support semantics
     └── agents/                         # 16 portable role definitions
 ```
 
@@ -34,6 +36,7 @@ Do not infer native usability from:
 - an `ak` binary alone;
 - `~/.agentkit` cache content;
 - one historical install receipt;
+- documentation saying a Skill exists;
 - a Claude/Codex/Cursor-specific path;
 - memory of a prior session.
 
@@ -75,7 +78,18 @@ native_usable = no / unknown
 
 Unknown fails closed to fallback so ANGENT never exposes native and fallback together based on a guess.
 
-If the fallback plugin is missing/invalid, selection is blocked rather than pretending a capability exists.
+If fallback is selected, `scripts/select_engineer.py` validates the ANGENT fallback against its documented-stable public workflow target:
+
+- fallback plugin manifest;
+- `STABLE_CATALOG.json`;
+- exact public Skill identity set;
+- exact portable Agent role set.
+
+Missing or extra identities block fallback readiness. Counts alone are insufficient.
+
+A ready fallback means the local ANGENT package exactly matches its recorded semantic identity target. It does **not** mean the current AgentKit registry export is byte-for-byte or identity-for-identity identical. Upstream docs/registry drift is carried in `STABLE_CATALOG.json` / `UPSTREAM_BASELINE.md` and does not alter the native-first rule.
+
+If the fallback package/catalog is invalid, selection is blocked rather than pretending a capability exists.
 
 ## Fallback activation
 
@@ -103,15 +117,19 @@ Do not claim ChatGPT/Codex acceptance from an older installed baseline package m
 
 After acceptance, the disposable preview is evidence only; it does not become release authority.
 
-## Agent roles
+## Agent roles and workflow guarantees
 
-Agent Plugins v1 standardizes Skills and MCP servers, not an Agent component.
+Agent Plugins v1 standardizes Skills and MCP servers, not a portable Agent component.
 
-The 16 fallback Agent files are therefore a portable **role library**:
+The 16 fallback Agent files are therefore a portable **role library**. A workflow may project a role into a harness-native agent/worker only when that workflow's contract allows the available lifecycle.
 
-- a harness with native subagents may project a role into its own agent format;
-- Team/Orchestrate may pass the role instruction to a one-shot worker;
-- a harness without delegation may apply the role sequentially in the main agent.
+This is not a blanket rule that every multi-agent workflow can degrade to sequential role execution.
+
+Examples:
+
+- a bounded researcher/reviewer role can often be applied through one-shot delegation or sequential isolation;
+- `ak-orchestrate` may explicitly degrade a job graph when its contract and evidence remain honest;
+- `ak-team` requires a live team lifecycle and must not silently label ordinary subagents/sequential work as Team when creation/shared-state/messaging/wait/shutdown/cleanup are unavailable.
 
 Do not duplicate role reasoning into separate Claude/Codex/Cursor sources.
 

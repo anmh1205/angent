@@ -12,6 +12,7 @@ cached Skill tree is not enough to prove that.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -171,8 +172,26 @@ def _detect_agentkit(doctor_mode: str, timeout: float) -> dict[str, Any]:
     return info
 
 
+def _catalog_identity_digest(
+    skills: set[str],
+    agents: set[str],
+) -> str:
+    payload = {
+        "agent_roles": sorted(agents),
+        "skills": sorted(skills),
+    }
+    canonical = json.dumps(
+        payload,
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
 def _fallback_info(plugin_root: Path) -> dict[str, Any]:
     manifest_path = plugin_root / "plugin.json"
+    catalog_path = plugin_root / "STABLE_CATALOG.json"
     skills_root = plugin_root / "skills"
     agents_root = plugin_root / "agents"
 
@@ -189,37 +208,119 @@ def _fallback_info(plugin_root: Path) -> dict[str, Any]:
         except (OSError, json.JSONDecodeError):
             pass
 
-    skills = 0
+    catalog_valid = False
+    expected_skill_ids: set[str] = set()
+    expected_agent_roles: set[str] = set()
+    catalog_meta: dict[str, Any] = {}
+    if catalog_path.is_file():
+        try:
+            catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+            public_skills = catalog.get("public_skills")
+            portable_agents = catalog.get("portable_agent_roles")
+            upstream = catalog.get("upstream")
+            if (
+                catalog.get("schema_version") == 1
+                and isinstance(public_skills, list)
+                and all(isinstance(value, str) for value in public_skills)
+                and len(public_skills) == len(set(public_skills))
+                and isinstance(portable_agents, list)
+                and all(isinstance(value, str) for value in portable_agents)
+                and len(portable_agents) == len(set(portable_agents))
+                and isinstance(upstream, dict)
+            ):
+                expected_skill_ids = set(public_skills)
+                expected_agent_roles = set(portable_agents)
+                target_policy = catalog.get("target_policy")
+                observed_registry = upstream.get("observed_registry_export")
+                expected_digest = upstream.get("documented_identity_sha256")
+                actual_expected_digest = _catalog_identity_digest(
+                    expected_skill_ids,
+                    expected_agent_roles,
+                )
+                catalog_meta = {
+                    "channel": upstream.get("channel"),
+                    "retrieved_at": upstream.get("retrieved_at"),
+                    "documented_resolved_skills": upstream.get(
+                        "documented_resolved_skills"
+                    ),
+                    "documented_resolved_agents": upstream.get(
+                        "documented_resolved_agents"
+                    ),
+                    "documented_identity_sha256": expected_digest,
+                    "computed_identity_sha256": actual_expected_digest,
+                    "fallback_identity_target": (
+                        target_policy.get("fallback_identity_target")
+                        if isinstance(target_policy, dict)
+                        else None
+                    ),
+                    "exact_upstream_package_parity": (
+                        target_policy.get("exact_upstream_package_parity")
+                        if isinstance(target_policy, dict)
+                        else None
+                    ),
+                    "observed_registry_export": (
+                        observed_registry
+                        if isinstance(observed_registry, dict)
+                        else None
+                    ),
+                }
+                catalog_valid = (
+                    catalog_meta["documented_resolved_skills"]
+                    == len(expected_skill_ids)
+                    and catalog_meta["documented_resolved_agents"]
+                    == len(expected_agent_roles)
+                    and isinstance(expected_digest, str)
+                    and expected_digest == actual_expected_digest
+                    and catalog_meta["fallback_identity_target"]
+                    == "docs_stable_public_contract"
+                    and catalog_meta["exact_upstream_package_parity"] is False
+                )
+        except (OSError, json.JSONDecodeError):
+            pass
+
+    actual_skill_ids: set[str] = set()
     if skills_root.is_dir():
-        skills = sum(
-            1
+        actual_skill_ids = {
+            child.name
             for child in skills_root.iterdir()
             if child.is_dir() and (child / "SKILL.md").is_file()
-        )
+        }
 
-    agents = 0
+    actual_agent_roles: set[str] = set()
     if agents_root.is_dir():
-        agents = sum(
-            1
+        actual_agent_roles = {
+            child.stem
             for child in agents_root.glob("*.md")
             if child.name != "README.md"
-        )
+        }
 
-    expected_skills = 102
-    expected_agents = 16
+    missing_skills = sorted(expected_skill_ids - actual_skill_ids)
+    extra_skills = sorted(actual_skill_ids - expected_skill_ids)
+    missing_agents = sorted(expected_agent_roles - actual_agent_roles)
+    extra_agents = sorted(actual_agent_roles - expected_agent_roles)
 
     return {
         "plugin_path": str(plugin_root),
         "plugin_name": plugin_name,
         "plugin_manifest_valid": manifest_valid,
-        "skills": skills,
-        "agent_roles": agents,
-        "expected_skills": expected_skills,
-        "expected_agent_roles": expected_agents,
+        "catalog_path": str(catalog_path),
+        "catalog_valid": catalog_valid,
+        "catalog": catalog_meta,
+        "skills": len(actual_skill_ids),
+        "agent_roles": len(actual_agent_roles),
+        "expected_skills": len(expected_skill_ids),
+        "expected_agent_roles": len(expected_agent_roles),
+        "missing_skills": missing_skills,
+        "extra_skills": extra_skills,
+        "missing_agent_roles": missing_agents,
+        "extra_agent_roles": extra_agents,
         "ready": (
             manifest_valid
-            and skills == expected_skills
-            and agents == expected_agents
+            and catalog_valid
+            and not missing_skills
+            and not extra_skills
+            and not missing_agents
+            and not extra_agents
         ),
     }
 

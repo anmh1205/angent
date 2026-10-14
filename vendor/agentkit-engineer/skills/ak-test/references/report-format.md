@@ -1,58 +1,52 @@
-# Test Report Format
+# Test report semantics
 
-Structured QA report template. Sacrifice grammar for concision.
+A test report should make the acceptance evidence inspectable without forcing one rigid template.
 
-## Template
+## Include what matters
 
-```markdown
-# Test Report — {date} — {scope}
+Depending on the job, preserve:
+- scope/acceptance question;
+- environment or target identity when material;
+- commands/tools actually used;
+- test/build/type/lint outcomes;
+- failed checks with enough evidence to reproduce or investigate;
+- coverage evidence and **the policy/threshold source**, when coverage is relevant;
+- UI/browser artifacts and what each proves;
+- tests created/changed/removed and why, when mutation was authorized;
+- flaky/noisy/environment failures separately from product failures;
+- evidence gaps and unverified states;
+- final verdict limited to the tested scope.
 
-## Test Results Overview
-- **Total**: X tests
-- **Passed**: X | **Failed**: X | **Skipped**: X
-- **Duration**: Xs
+## Coverage reporting
 
-## Coverage Metrics
-| Metric   | Value | Threshold | Status |
-|----------|-------|-----------|--------|
-| Lines    | X%    | 80%       | PASS/FAIL |
-| Branches | X%    | 70%       | PASS/FAIL |
-| Functions| X%    | 80%       | PASS/FAIL |
+Never inject universal 80/70/etc. thresholds.
 
-## Failed Tests
-### `test/path/file.test.ts` — TestName
-- **Error**: Error message
-- **Stack**: Relevant stack trace (truncated)
-- **Cause**: Brief root cause analysis
-- **Fix**: Suggested resolution
+If a project/task defines a threshold, name its source.
 
-## UI Test Results (if applicable)
-- **Pages tested**: X
-- **Screenshots**: ./screenshots/
-- **Console errors**: none | [list]
-- **Responsive**: checked at [viewports] | skipped
-- **Performance**: LCP Xs, FID Xms, CLS X
+If no threshold exists, report observed coverage and risk-relevant gaps without inventing a PASS/FAIL policy.
 
-## Build Status
-- **Build**: PASS/FAIL
-- **Warnings**: none | [list]
-- **Dependencies**: all resolved | [issues]
+## Failure detail
 
-## Critical Issues
-1. [Blocking issue description + impact]
+Preserve exact failure identity and the evidence needed for diagnosis, but avoid dumping enormous logs into the main report.
 
-## Recommendations
-1. [Actionable improvement with priority]
+Use pointers/artifacts for large traces.
 
-## Unresolved Questions
-- [Any open questions, if any]
-```
+Do not state “cause” unless the evidence establishes a cause; otherwise report the observed failure and current hypothesis/attribution status.
 
-## Guidelines
+## UI evidence
 
-- Include ALL failed tests with error messages — don't summarize away details
-- Coverage: highlight specific uncovered files/functions, not just percentages
-- Screenshots: embed paths directly in report for easy access
-- Recommendations: prioritize by impact (critical > high > medium > low)
-- Keep report under 200 lines — split into sections if larger scope needed
-- Save report using naming pattern from `## Naming` section injected by hooks
+For visual/responsive/accessibility work, record:
+- tested routes/states/viewports/interactions;
+- screenshots/traces/reports where useful;
+- console/network/accessibility evidence when material;
+- what was not testable.
+
+A screenshot path alone is not a visual verdict.
+
+## Writing quality
+
+Use clear technical prose and compact structure.
+
+Do not sacrifice grammar, semantic boundaries, or uncertainty merely to make the report terse.
+
+Do not depend on a hook-injected naming convention unless the active harness/project actually provides that convention.

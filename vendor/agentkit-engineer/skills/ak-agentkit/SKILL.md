@@ -1,36 +1,45 @@
 ---
 name: ak-agentkit
-description: Route a multi-step or ambiguous engineering request to the smallest useful combination of Engineer Skills and Agents.
+description: Classify ambiguous or multi-step engineering work, discover live installed capabilities, and build the shortest defensible route with risk-proportional verification.
 metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Engineer Router — Portable Fallback
 
-This Skill provides Engineer routing when native AgentKit is unavailable.
+Use when routing adds value: multi-step, multi-domain, ambiguous, or high-risk work.
 
-It does not replace ANGENT Root or Reasoning.
+If one named/installed Skill clearly owns a small task, use it directly.
 
-Read `references/routing-protocol.md` for the full selection/delegation policy.
+This Skill routes; ANGENT Reasoning remains strategic owner.
 
-## Core rule
+## Route record
 
-Use the **smallest workflow that preserves quality**.
+Capture only what affects routing:
+- final-deliverable/workflow class;
+- task size;
+- highest-link risk;
+- domain count;
+- authority/effect boundaries;
+- installed capability evidence;
+- required completion/verification evidence.
 
-Do not build a chain merely because several Skills exist.
+## Workflow
 
-## Typical routes
+1. Apply proportionality: collapse trivial and obvious single-Skill work.
+2. Classify the outcome, not the user's guessed tool/Skill.
+3. Inventory capabilities visible **now**.
+4. Build the shortest useful chain; each link has one owner, entry condition, and verifiable exit.
+5. Delegate only when specialization, isolation, independence, or parallelism adds real value.
+6. Match verification to risk.
+7. Stop at missing capability, failed prerequisite, or authority boundary instead of inventing a substitute.
+8. If the same link fails repeatedly without new evidence, return to ANGENT Reasoning rather than looping the route.
 
-- unclear ownership → Scout → Plan or Debug;
-- bug → Scout if needed → Debug → Fix/Cook → Test → Code Review;
-- feature → Research/Brainstorm if needed → Plan → Cook → Test → Code Review;
-- PR → Review PR / Code Review;
-- long continuation → Continuity/Handoff;
-- independent parallel jobs → Orchestrate or Team only when parallelism/isolation is worth its coordination cost.
+Typical patterns are evidence, not templates:
+- bug: debug → bounded fix/cook → test → code review;
+- clear feature: plan only when needed → cook → test/review;
+- UI work: frontend-design/development → web-testing → review;
+- continuation: handoff when another session needs state;
+- headless/runtime-diverse job graph: orchestrate;
+- true live teammate collaboration: team only when its lifecycle exists.
 
-## Native boundary
-
-If native AgentKit Engineer is actually usable in the active environment, prefer it instead of loading the fallback library.
-
-## Output
-
-Return the selected route only when route visibility helps the user or downstream workflow. Do not add routing narration to trivial tasks.
+Selecting a route does not authorize effects, credentials, deployment, publication, spend, destructive actions, or Git delivery.
