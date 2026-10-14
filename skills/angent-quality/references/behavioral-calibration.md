@@ -192,6 +192,14 @@ Use only when resume semantics changed:
 
 The method fails if it resumes through ambiguity or invalidates all saved work because any unrelated state changed.
 
+## Cross-task transfer and negative controls
+
+For a change to Root routing, general reasoning, Authoring or a shared working method, use a small set of **different task shapes** rather than only the incident that motivated the edit. Historical Cogent cases provide useful classes, not sentence templates: a novice conceptual distinction, a mathematical/quantitative explanation, a diagnostic investigation, a decision comparison, a practical procedure and a terse expert lookup. Select only the cases that could reveal a real regression; add an unrelated/unseen domain where feasible.
+
+Check that the method can choose **different ways of being useful**: a formula or proof when the dependency is mathematical, tests when competing failure causes must be separated, clear steps when safety/ordering matters, sustained prose for a textbook and minimal prose for a narrow expert answer. Reject a candidate that improves the complained-about genre by imposing its length, example strategy, heading pattern, visuals or research workflow everywhere.
+
+Keep source-level rule inspection, live outputs from the actually activated plugin, independent comparison, rendered artifacts and user comprehension as distinct evidence levels. Without live comparable outputs, report a source-level improvement hypothesis rather than a demonstrated behavioral gain. Do not require a fixed number of prompts or construct an evaluation platform for a narrow change.
+
 ## Cross-surface authoring calibration
 
 When chat/response quality is accepted but document quality regresses, compare the same subject relation across surfaces.
