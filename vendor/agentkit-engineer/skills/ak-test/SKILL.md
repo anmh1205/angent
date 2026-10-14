@@ -1,76 +1,85 @@
 ---
 name: ak-test
-description: Run and interpret unit, integration, end-to-end, UI, build, coverage, and regression checks using project-native or harness-available testing capabilities.
+description: Run validation, create or optimize test suites, audit weak tests, and return structured evidence about code, build, coverage, browser/UI, and regression behavior.
 license: MIT
-metadata:
-  author: agentkit
-  port: angent-fallback
-  upstream-generation: "2.12.0"
+metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Test — Portable Fallback
 
-Testing exists to produce evidence about the requested behavior, not merely to run commands.
+Testing exists to establish a behavioral/quality claim, not merely to run commands or maximize a metric.
 
-This fallback does not require AgentKit browser/test Skills. Prefer project-native test tooling and whatever browser/runtime tools the active harness actually exposes.
+Use project-native tooling and the browser/runtime capabilities the active harness actually exposes.
 
-Read:
-- `references/test-execution-workflow.md`;
-- `references/ui-testing-workflow.md`;
-- `references/report-format.md`.
+## Choose the test job
+
+Distinguish the requested outcome:
+
+- **validate** — run focused or broad unit/integration/E2E/build/type/lint/coverage/UI checks;
+- **create** — add a test suite or missing tests for an accepted behavior;
+- **optimize** — reduce runtime/flakiness/CI cost without weakening the protected behavioral signal;
+- **audit** — identify weak, misleading, flaky, redundant, or missing tests and repair them only when edits are authorized.
+
+Do not mutate tests merely because Test can detect a gap.
 
 ## Start from the acceptance question
 
-Before running tests, identify what needs to be established:
-- regression safety;
-- specific bug reproduction/fix;
-- build/type/lint integrity;
-- API/contract behavior;
-- end-to-end user flow;
-- UI/render/accessibility state;
-- performance/security property.
+Identify:
+- claim to establish;
+- affected surface;
+- relevant environment/configuration;
+- project-native commands;
+- expected evidence;
+- whether test-source edits are authorized;
+- coverage/whole-scope promise, if any.
 
-Do not run every available suite by default.
+Coverage percentage is evidence about exercised code, not proof of behavioral completeness.
 
-## Discover project-native tests
+## Discover and execute proportionally
 
-Read applicable `AGENTS.md`, package/build config, CI workflow, test directories, and known-good commands.
+Read applicable `AGENTS.md`, build/package config, CI, test directories, and known-good commands.
 
-Prefer the repository's established tooling over inventing a new test harness.
-
-## Execute proportionally
-
-Run the smallest set that can establish the current claim, then widen when:
+Run the smallest set that can establish the claim, then widen when:
 - failures imply broader impact;
-- the task promises whole-scope coverage;
-- release/merge gates require it;
-- a changed interface has downstream consumers.
+- an interface has downstream consumers;
+- release/merge policy requires it;
+- the Contract promises broad coverage.
 
-## UI/browser testing
+For test creation/optimization, preserve the behavior the suite is intended to detect; do not optimize CI by deleting the signal.
 
-Use the browser/UI capability actually available in the harness:
-- project-native Playwright/Cypress/Vitest/browser tests;
-- connected browser/computer-use tools;
-- other installed browser Skills when present.
+## UI/browser validation
 
-Do not hard-require a named AgentKit browser Skill.
+Use actual available capability:
+- project-native Playwright/Cypress/browser suites;
+- connected browser/computer-use;
+- installed browser workflow.
 
-If no browser capability exists, report UI verification as unavailable instead of claiming visual pass from build success.
+When visual/responsive/accessibility/form/console behavior matters, collect the evidence needed for that claim.
+
+If browser capability or authenticated setup is unavailable, report the exact verification gap instead of inferring visual success from build success.
 
 ## Failure handling
 
-A failing test is evidence, not automatically a diagnosis.
+A failing test is an observation, not automatically a diagnosis.
 
-When failure cause is non-obvious, return the evidence to the debugging/reasoning path rather than patching blindly inside Test.
+Separate:
+- product/code defect;
+- test defect;
+- environment/provider/configuration failure;
+- flaky/noisy measurement;
+- unresolved attribution.
+
+Return non-obvious causes to debugging/Reasoning before patching blindly.
 
 ## Report
 
 Return:
-- commands/tools used;
-- scope covered;
-- pass/fail counts or key outcomes;
-- failures with exact evidence;
-- coverage limitations;
+- operation and test scope;
+- commands/tools/environments used;
+- fresh outcomes;
+- created/changed tests when authorized;
+- failures and attribution confidence;
+- coverage/visual limitations;
 - whether the requested acceptance claim is established.
 
-A green command that did not exercise the requested behavior is not a pass for the task.
+A green command that did not exercise the promised behavior is not a task PASS.
