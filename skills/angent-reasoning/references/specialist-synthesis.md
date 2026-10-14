@@ -1,6 +1,8 @@
 # Specialist synthesis
 
-Use specialists to increase expertise, parallel evidence gathering, or implementation throughput without creating competing strategic brains.
+Use specialists to increase expertise, parallel evidence gathering, review independence, or implementation throughput without creating competing strategic brains.
+
+Load `delegation-context.md` when a worker/subagent receives non-trivial task context, authority, raw evidence, or write capability.
 
 ## Treat output by type
 
@@ -17,7 +19,7 @@ It is not automatically the current decision or verified state.
 
 ## Delegation contract
 
-Give a specialist the smallest context sufficient to perform its bounded job.
+Give a specialist the smallest **semantic projection** sufficient to perform its bounded job. Do not assume that the harness's default handoff history is the intended task context.
 
 When relevant include:
 - objective or work unit it serves;
@@ -29,7 +31,9 @@ When relevant include:
 - expected output type: evidence, proposal, artifact, review, etc.;
 - acceptance criteria and verification evidence expected.
 
-Do not dump the whole user profile, full conversation, or unrelated project history into every worker.
+Do not dump the whole user profile, full conversation, unrelated project history, or raw tool traces into every worker.
+
+Preserve epistemic/trust boundaries for material evidence. Delegation does not transfer the parent's full effect authority; any allowed effect scope must be explicit and still satisfies invocation-bound authority at execution time.
 
 A worker may propose scope expansion when evidence demands it, but Reasoning retains authority to widen strategic scope.
 
@@ -46,6 +50,8 @@ Compare:
 Two agents repeating the same assumption are not independent confirmation.
 
 A worker/specialist saying “done”, “tests passed”, or “verified” is an evidence claim, not ground truth. When direct artifact/provider/runtime/test evidence is available, use it.
+
+Re-admit specialist claims through the same evidence/observation boundaries as any other input; do not promote them merely because the specialist was trusted or specialized.
 
 ## Roles
 

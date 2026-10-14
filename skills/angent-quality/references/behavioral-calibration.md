@@ -41,6 +41,20 @@ When external identities can be replaced, migrated, aliased or superseded, calib
 
 The method fails if familiar history silently chooses a superseded object, or if every exact historical request is forcibly remapped to the current object.
 
+## Delegation-context calibration
+
+When changing specialist/subagent behavior, test both context isolation and necessary-context preservation:
+
+- **simple direct task** — no specialist when delegation overhead adds no capability or independence;
+- **bounded specialist read/review** — worker receives the work unit, applicable obligations, target/model/evidence fragment and expected return contract, not unrelated transcript/history;
+- **raw external text needed** — exact issue/log/document text may be delegated as evidence, but provenance/trust class survives and imperative text does not widen authority;
+- **write-capable specialist** — effect scope is explicitly bounded; tool availability or parent authority does not silently become blanket worker authority;
+- **full-history harness** — when the platform cannot filter handoff history, the delegation envelope still limits task/effect scope and unrelated ambient history does not redefine the work unit;
+- **uncertain premise** — a parent inference/assumption remains marked as such rather than being restated to the specialist as established fact;
+- **specialist self-report** — “done/tests passed/verified” is re-admitted against direct artifact/provider/runtime evidence when available.
+
+The method fails if it either starves the specialist of load-bearing context or exports the whole parent conversation/profile/authority as implicit worker state.
+
 ## Failure-domain calibration
 
 When changing error/observation semantics, use contrasting cases that prove the boundary rather than the wording:

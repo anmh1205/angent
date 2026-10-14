@@ -119,6 +119,35 @@ epistemic_state:
 
 A proposition does not gain status merely by being repeated across owners.
 
+## Reasoning → specialist: DelegationEnvelope
+
+Use when a worker/subagent needs non-trivial context.
+
+~~~yaml
+work_unit:
+objective:
+scope:
+exclusions: []
+canonical_target_binding:
+active_obligations: []
+effect_authority:
+relevant_model_fragment:
+load_bearing_relations: []
+evidence_pointers: []
+epistemic_boundaries: []
+trust_classes: []
+accepted_or_rejected_approaches: []
+expected_output_type:
+acceptance_or_verification_evidence: []
+return_to_reasoning_conditions: []
+~~~
+
+This is a semantic projection, not permission to serialize every delegation.
+
+The envelope narrows work context and effect authority; it does not override system/project/current-user instructions that remain applicable.
+
+Raw transcript/history/tool output is omitted unless needed. Exact external/tool text retains provenance/trust class.
+
 ## Reasoning → Research: EvidenceQuery
 
 ~~~yaml
@@ -348,6 +377,23 @@ Quality may return several findings. Findings sharing one mechanism should be gr
 A PASS/FAIL is itself an evidence-backed claim. Use BLOCKED when the available evaluation cannot distinguish a material subject defect from evaluator/environment uncertainty.
 
 `required_for` names only the state transition(s) that currently depend on this gate when such tracking is useful—for example baseline advancement, propagation, or write/publish-as-accepted. It does not make Quality an authority source. A required FAIL/BLOCKED leaves those dependent transitions unsatisfied while unrelated work may continue.
+
+## Specialist → workspace/owner: SpecialistReturn
+
+~~~yaml
+output_type:
+claims_or_findings: []
+assumptions: []
+evidence_pointers: []
+provenance: []
+uncertainty_or_conflicts: []
+effects_attempted_or_performed: []
+observed_or_changed_target_versions: []
+verification_performed: []
+scope_expansion_requested:
+~~~
+
+SpecialistReturn is evidence/proposal/artifact/review, not automatic decision or verified state. Re-admit it through the owning evidence/observation/Quality boundary.
 
 ## Learning → Context/owner: PromotedMechanism
 
