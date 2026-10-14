@@ -14,10 +14,12 @@ The workspace may contain, only when relevant:
 - collaboration state;
 - current problem/system model;
 - evidence-grounded subject model;
+- material epistemic state;
 - live hypotheses and residual uncertainty;
-- current decision and reconsideration trigger;
+- current decision, compact decision basis and reconsideration trigger;
 - adaptive plan;
 - RepairModel and protected properties;
+- task-relevant progress/stall signals;
 - relevant reader/artifact-state pointers;
 - stale/dependent work markers;
 - latest observations that can change the model.
@@ -30,12 +32,12 @@ Each owner changes only the semantics it owns:
 
 - Contract changes task boundary, obligation and authority semantics.
 - Context changes reconstructed working/collaboration state and provenance.
-- Research changes evidence and evidence-grounded subject structure.
-- Reasoning changes problem/system/hypothesis/decision/plan/repair state.
+- Research changes evidence, support boundaries and evidence-grounded subject structure.
+- Reasoning changes problem/system/epistemic/hypothesis/decision/plan/progress/repair state.
 - Execution changes observed external state.
 - Authoring changes reader-facing candidate and artifact semantics.
 - Quality changes verdicts, not producer state.
-- Continuity persists the compact resume-critical subset.
+- Continuity persists the compact resume-critical subset and decision basis/pointers.
 - Learning changes reusable future mechanisms after promotion.
 
 ## Not a pipeline
@@ -44,11 +46,12 @@ No owner is “finished forever” because another owner ran.
 
 Examples:
 
-- Research finds evidence that changes the problem boundary → return to Contract/Reasoning as needed.
+- Research finds evidence that changes the problem boundary or epistemic status → return to Contract/Reasoning as needed.
 - Authoring cannot explain a relation because the underlying model is underspecified → return to Reasoning/Research.
 - Execution observes a false precondition → Reasoning replans.
 - Quality finds a factual/model defect → return to the earliest responsible owner, not to a prose patch.
 - A current instruction changes interaction mode → Context updates collaboration state without discarding unrelated verified work.
+- Repeated activity produces no relevant progress → Reasoning changes strategy instead of preserving the activity loop.
 
 ## Model breadth
 
@@ -59,6 +62,14 @@ This distinction is critical:
 full cognitive model ≠ active working model ≠ presented model.
 
 Narrowing the active model reduces competing concepts. It does not justify compressing away the mechanism needed to understand the active relation.
+
+## Epistemic and continuity boundary
+
+The workspace may know that a proposition is inferred/assumed/stale without copying all source material into active context.
+
+Use pointers and compact decision basis where possible; retrieve source detail just-in-time when a decisive premise needs refresh or verification.
+
+Do not persist private chain-of-thought to make the workspace “complete”.
 
 ## Harness boundary
 

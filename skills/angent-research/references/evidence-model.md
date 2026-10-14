@@ -1,6 +1,6 @@
 # Evidence model
 
-Research organizes evidence around active claims and uncertainty.
+Research organizes evidence around active claims, subject relations and uncertainty.
 
 ## Source roles
 
@@ -22,9 +22,26 @@ For material claims preserve:
 - version/platform/time boundary;
 - direct fact/observation;
 - interpretation;
+- epistemic effect: what becomes observed/established/inferred/conflicted/stale;
 - limitations;
 - conflict with other evidence;
 - effect on current hypothesis/decision.
+
+## Support and entailment boundary
+
+A citation or source pointer is not proof by itself.
+
+Ask what the source actually establishes within its version/scope boundary.
+
+Distinguish:
+- **direct support** — the source/observation establishes the proposition itself;
+- **derived support** — the proposition follows only after an explicit inference from established facts;
+- **contextual support** — the source helps explain/locate the claim but does not establish it;
+- **no support** — the source is merely nearby or topically related.
+
+Do not launder a derived inference into a direct fact by citing the underlying source.
+
+For consequential claims, preserve the inference boundary downstream so Quality can detect overclaiming.
 
 ## Information value
 
@@ -41,7 +58,6 @@ A good evidence question is often:
 For screenshots, traces and logs preserve exact identity/state and what relation they prove.
 
 Topic relevance is not proof.
-
 
 ## Evidence versus authority
 

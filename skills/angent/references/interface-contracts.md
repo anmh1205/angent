@@ -49,6 +49,7 @@ verified_state: []
 active_obligations: []
 collaboration_state:
 project_decisions: []
+decision_basis_pointer:
 task_frontier:
 accepted_baseline:
 artifact_state_pointer:
@@ -61,7 +62,22 @@ provenance: []
 uncertainty: []
 ~~~
 
-Ordinary history can be minimized. Active obligations and collaboration constraints needed by the next decision cannot be dropped.
+Ordinary history can be minimized. Active obligations, decisive state, and collaboration constraints needed by the next decision cannot be dropped.
+
+## Reasoning epistemic view
+
+Use only for material propositions.
+
+~~~yaml
+epistemic_state:
+  - proposition:
+    status: OBSERVED | ESTABLISHED | INFERRED | ASSUMED | UNKNOWN | CONFLICTED | STALE
+    support_or_pointer:
+    boundary:
+    disconfirming_or_refresh_condition:
+~~~
+
+A proposition does not gain status merely by being repeated across owners.
 
 ## Reasoning → Research: EvidenceQuery
 
@@ -85,6 +101,10 @@ subject_model_delta:
   mechanisms: []
   assumptions_or_boundaries: []
   discriminating_observations: []
+claim_support:
+  - claim:
+    support: DIRECT | DERIVED | CONTEXTUAL | NONE
+    boundary:
 source_roles: []
 provenance: []
 instruction_trust_classes: []
@@ -97,6 +117,21 @@ residual_uncertainty: []
 ~~~
 
 Research returns evidence and evidence-grounded domain structure, not executable instructions, strategic authority, or a reader-facing teaching path.
+
+## Reasoning decision basis
+
+Use when later correctness depends on reconstructing why a consequential/resumable decision was valid.
+
+~~~yaml
+decision_basis:
+  decisive_premises: []
+  evidence_pointers: []
+  governing_constraints: []
+  selected_decision:
+  reconsideration_trigger:
+~~~
+
+This is a compact externalizable rationale, not a reasoning transcript.
 
 ## Reasoning → downstream: RepairModel
 
@@ -146,6 +181,7 @@ new_evidence: []
 residual_uncertainty: []
 provider_evidence: []
 enumeration_evidence:
+progress_dimensions: []
 ~~~
 
 An acknowledgement or exit code without authoritative state is not automatically success.
@@ -170,7 +206,9 @@ This state is descriptive. It does not create a polling schedule. Execution deci
 
 ~~~yaml
 established_model:
+epistemic_boundaries:
 conclusion:
+decision_basis_pointer:
 decisive_evidence: []
 boundaries: []
 uncertainty: []
@@ -179,7 +217,7 @@ collaboration_expectations:
 repair_model:
 ~~~
 
-Authoring may choose teaching order and representation but cannot silently alter the established conclusion or protected repair properties.
+Authoring may choose teaching order and representation but cannot silently alter the established conclusion, epistemic status, or protected repair properties.
 
 ## Authoring → Quality: ArtifactCandidate
 
@@ -191,6 +229,7 @@ repair_target:
 protected_properties: []
 active_obligations: []
 coverage_state:
+calibration_state:
 ~~~
 
 The accepted baseline advances only after required Quality/destination gates pass.
@@ -199,7 +238,7 @@ The accepted baseline advances only after required Quality/destination gates pas
 
 ~~~yaml
 status: PASS | FAIL | BLOCKED
-phase: solution | candidate | endpoint
+phase: solution | candidate | behavioral_calibration | endpoint
 findings:
   - dimension:
     evidence:
@@ -249,6 +288,7 @@ collaboration_state_pointer:
 verified_completed: []
 unfinished:
 decisions: []
+decision_basis_pointer:
 accepted_baseline_pointer:
 artifact_state_pointer:
 coverage_pointer:
@@ -261,6 +301,6 @@ source_versions: []
 next_safe_action:
 ~~~
 
-Continuity stores only the compact subset needed to resume safely, not full owner-internal state. Persist collaboration state or a pointer only when losing it could change resume behavior.
+Continuity stores only the compact subset needed to resume safely, not full owner-internal state. Persist collaboration/decision basis and long-running operation identity only when losing them could change resume behavior.
 
 Recovered state never overrides current authorization or live external state.

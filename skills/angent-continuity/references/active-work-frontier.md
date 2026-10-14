@@ -17,6 +17,7 @@ Keep:
 - verified completed units;
 - current unfinished unit;
 - consequential decisions;
+- compact decision basis or pointer when later work depends on why a decision was valid;
 - accepted baseline/artifact pointers when later work depends on them;
 - collaboration-state pointer/subset when losing it would change resume behavior;
 - active long-running operations when needed: provider/tool, operation identity/handle, last observed state, dependent work, and next informative check condition;
@@ -25,9 +26,11 @@ Keep:
 - pending/ambiguous effects;
 - next safe action.
 
+Do not persist raw hidden reasoning. A decision basis contains only reconstructable premises/evidence pointers, constraints, decision and reconsideration trigger needed for future correctness.
+
 ## Meaningful boundaries
 
-Advance a revision when a work unit completes, a consequential decision changes later work, an artifact/source version materially changes, a blocker changes, scope/invariant changes, a collaboration mode materially changes ongoing work, a long-running operation materially changes state, an external effect is reconciled, or a handoff/compaction/phase boundary occurs.
+Advance a revision when a work unit completes, a consequential decision changes later work, a decisive premise/evidence version materially changes, an artifact/source version materially changes, a blocker changes, scope/invariant changes, a collaboration mode materially changes ongoing work, a long-running operation materially changes state, an external effect is reconciled, or a handoff/compaction/phase boundary occurs.
 
 An unchanged pending/running status is not by itself a meaningful frontier revision.
 

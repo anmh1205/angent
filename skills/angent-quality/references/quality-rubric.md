@@ -8,14 +8,15 @@ Before expensive authoring or effects when consequence warrants it, PASS require
 
 1. task fit and current authority;
 2. active obligations/invariants preserved;
-3. important model relations/states present;
-4. material conclusions supported at required precision;
-5. alternatives handled when they can change the decision;
-6. causal claims justified;
-7. unresolved uncertainty calibrated;
-8. decision follows from constraints/consequences;
-9. dependency/replan structure coherent;
-10. whole-scope claims have whole-scope evidence.
+3. material propositions keep honest epistemic status;
+4. important model relations/states present;
+5. material conclusions supported at required precision and entailment boundary;
+6. alternatives handled when they can change the decision;
+7. causal claims justified;
+8. unresolved uncertainty calibrated;
+9. decision follows from constraints/consequences and has a reconstructable basis when needed;
+10. dependency/replan structure coherent;
+11. whole-scope claims have whole-scope evidence.
 
 Return failure to the earliest responsible owner.
 
@@ -43,7 +44,21 @@ For a revision, do not judge the candidate only in isolation. Compare it with:
 
 A repair passes only when the target improves without silently losing accepted strengths.
 
-## Phase C — endpoint/render integrity
+## Phase C — behavioral calibration
+
+Use only when a shared method, prompt, owner interface or policy change has material propagation risk.
+
+Ask:
+
+- Does the target behavior improve on representative cases?
+- Does a negative/counter-case remain unaffected when the behavior should not trigger?
+- Did an accepted strength regress?
+- Does the actual trajectory show the intended mechanism, or did the score/result improve for another reason?
+- Is the evaluator itself rejecting valid behavior or rewarding a shortcut?
+
+Capability calibration asks what becomes possible. Regression calibration asks whether accepted behavior remains reliable. Do not confuse the two.
+
+## Phase D — endpoint/render integrity
 
 After a destination write or external effect, verify the actual user/provider state:
 

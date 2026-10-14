@@ -39,6 +39,18 @@ Prevent this by checking whether each chapter still contains the mechanisms, evi
 
 A later chapter may be shorter because its topic is narrower—not because the writing process is tired.
 
+## Calibrate the authoring method before large propagation
+
+When a rewrite/generation method will be applied across many chapters and a bad method would reproduce the same defect widely, calibrate on a small representative set first.
+
+Choose chapters that expose different difficulty patterns—for example conceptual explanation, mechanism/trace, implementation-heavy material, and an advanced chapter with dense prerequisites.
+
+Quality should compare the calibrated units with the accepted baseline and known failure mechanisms. Include a counter-case when the new behavior could over-trigger.
+
+Once the method is accepted, scale it. The calibrated chapters validate the method, not the untouched remainder of the book; whole-book claims still require coverage review.
+
+Do not turn this into a chapter-count, word-count or diagram-count gate.
+
 ## Stable terminology
 
 Use the same term for the same concept unless a more precise distinction is intentionally introduced.
