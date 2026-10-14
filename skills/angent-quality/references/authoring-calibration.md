@@ -34,6 +34,8 @@ Symptoms:
 
 Return to Authoring: choose the dominant explanatory spine, subordinate prerequisites/evidence/exceptions to it, and split only at a real technical boundary.
 
+Counter-case: do **not** flag multiple named mechanisms merely because more than one appears. When their interaction, feedback, negotiation, coupling or comparison is itself the load-bearing relation, that relation is one valid spine. A forced split would destroy the mechanism being taught.
+
 ### Internal process vocabulary leakage
 
 Symptoms:

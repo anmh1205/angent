@@ -46,6 +46,8 @@ Choose one dominant technical question/relation/trace for each substantive secti
 
 If two mechanisms are both load-bearing and cannot be subordinated without confusion, stage or split them at a real technical boundary instead of interleaving them.
 
+If the subject is **the interaction itself**—for example a feedback loop, protocol negotiation, producer/consumer coupling, competing mechanisms, or a comparison whose relation is the lesson—then that interaction can be the single explanatory spine. Do not split coupled mechanisms merely to satisfy a one-spine heuristic.
+
 The spine is not a visible template. It is the causal/relational continuity that keeps a section from degenerating into a knowledge-graph dump or dense engineering notes.
 
 For long-lived work preserve the accepted revision pointer, concept dependencies, terminology, recurring examples, promised depth, quality baseline, prerequisite debt and actual coverage.
