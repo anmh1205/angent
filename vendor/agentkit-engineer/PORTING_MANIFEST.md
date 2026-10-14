@@ -32,11 +32,11 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **25 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **31 / 102 Skill identities reviewed semantically**.
 
-- **24 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-deploy`, `ak-fix`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-worktree`.
-- **1 VERIFIED_DEGRADED**: `ak-team` because a real live-team lifecycle is load-bearing and cannot be truthfully emulated by ordinary subagents/sequential roles.
-- **77 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **28 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-deploy`, `ak-fix`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-ui-styling`, `ak-web-testing`, `ak-worktree`.
+- **3 VERIFIED_DEGRADED**: `ak-design` and `ak-ui-ux-pro-max` preserve the load-bearing design/UX workflow but do not reproduce upstream packaged generator/search datasets; `ak-team` cannot truthfully reproduce a live-team lifecycle without harness support.
+- **71 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -64,6 +64,20 @@ Key corrections:
 - Scout remains read-only reconnaissance, with explicit delegation and external-provider data-sharing boundaries rather than equating scouting with subagent spawning.
 - Autoresearch is a router for the measurable iteration contract; Loop/Predict/Scenario/Security own executable workflows.
 - Brainstorm stays proportional and contract-first, while Advise preserves its manually invoked one-question-at-a-time pressure-test and confirmed reframing. They are intentionally not collapsed into one interaction pattern.
+
+### UI / frontend / web-quality batch
+
+This batch reviewed `ak-design`, `ak-frontend-design`, `ak-frontend-development`, `ak-ui-styling`, `ak-ui-ux-pro-max` and `ak-web-testing`.
+
+Key acceptance findings:
+- Design preserves authentic brand/source-of-truth inspection, concept-first exploration, production constraints and exported-result review; upstream packaged generator/search datasets remain an explicit degraded boundary.
+- Frontend Design preserves the visual-thesis → complete states/responsive behavior → implementation/rendered verification loop and rejects generic template-mode collapse without turning heuristics into style bans.
+- Frontend Development derives React/router/data/component/styling contracts from the current project instead of forcing upstream-specific MUI/TanStack choices.
+- UI Styling preserves project tokens/primitives, mutation boundaries around shadcn/Tailwind generators, representative interaction states, accessibility and rendered verification.
+- UI/UX Pro Max preserves product-level design reasoning, systemic-vs-local findings, persistent approved rules and implementation re-verification; packaged recommendation datasets are explicitly not claimed.
+- Web Testing preserves layer selection, environment/account/test-data boundaries, flakiness diagnosis, browser/visual/a11y/performance distinctions and exact coverage reporting.
+
+The stable public guides support these workflow boundaries; acceptance still rests on the pinned 2.19.0 package plus the portable fallback implementation, not documentation text alone.
 
 ## Skills — 102 identities
 
@@ -95,7 +109,7 @@ Key corrections:
 | `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-deep-swe` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-deploy` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-design` | VERIFIED_DEGRADED | stable 2.19.0 design workflow reviewed; bundled generator/search datasets are an explicit portable capability boundary |
 | `ak-devops` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-docs` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-docs-seeker` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -105,8 +119,8 @@ Key corrections:
 | `ak-find-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-folder-context` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-frontend-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-frontend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-frontend-design` | VERIFIED_ADAPTED | stable 2.19.0 visual-direction/state/render-verification semantics preserved with harness-native implementation/render tools |
+| `ak-frontend-development` | VERIFIED_ADAPTED | stable 2.19.0 frontend implementation semantics preserved while project-specific libraries are derived from the current codebase |
 | `ak-git` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-github` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-gkg` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
@@ -161,14 +175,14 @@ Key corrections:
 | `ak-tech-graph` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-test` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-threejs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-ui-styling` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-ui-ux-pro-max` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-ui-styling` | VERIFIED_ADAPTED | stable 2.19.0 component/tokens/shadcn-Tailwind mutation and rendered-accessibility gates preserved |
+| `ak-ui-ux-pro-max` | VERIFIED_DEGRADED | stable 2.19.0 product UX decision workflow preserved; packaged recommendation dataset/search engine is not reproduced |
 | `ak-use-mcp` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-vibe` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-watzup` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-web-design-guidelines` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-web-frameworks` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-web-testing` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved |
 | `ak-worktree` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-xia` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 
