@@ -53,6 +53,8 @@ Synthesize the evidence-grounded subset needed by the current decision:
 
 This is a subject-model delta, not the final task decision and not a reader-facing teaching path. Reasoning integrates it into the task model; Authoring later decides how much of it the reader should encounter.
 
+For teaching work, preserve the **edges** that make facts explanatory: which claim depends on which prerequisite, what changes state at an interface, which observation distinguishes two mechanisms, and what is source-established versus inferred. Flag missing load-bearing relations as open research questions. Do not compensate by supplying a longer fact inventory or by prescribing chapter structure; teaching order and reader-state transitions belong to Authoring.
+
 ## Source roles and claim support
 
 Classify a source by what it can establish, not by generic prestige:

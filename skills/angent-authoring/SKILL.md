@@ -10,6 +10,7 @@ Authoring owns reader-facing content and semantic artifact state. It does not so
 ## References
 
 - references/reader-state.md
+- references/curriculum-progression.md — capability transitions and deferred depth across teaching units.
 - references/composition-and-representation.md
 - references/technical-exposition.md
 - references/long-form-consistency.md
@@ -18,7 +19,7 @@ Authoring owns reader-facing content and semantic artifact state. It does not so
 - references/surface-profiles.md
 - references/language-vi.md
 
-For long-form or iterative revision, load artifact-state and long-form-consistency.
+For long-form or iterative revision, load artifact-state and long-form-consistency. For a multi-unit teaching sequence, load curriculum-progression before deciding the next unit's active model.
 
 For document writing, surface-profiles and language-vi are part of the generation method, not optional polishing. Chat/document surface changes must preserve the same core explanatory prose quality.
 
@@ -39,6 +40,10 @@ Do not dump the full expert graph onto the reader. Do not mistake a smaller acti
 ## Reader and artifact state
 
 For each substantive unit, identify what the reader can already use, the current gap, and the capability the unit must create.
+
+## Capability transition before composition
+
+For multi-unit teaching, inherit the last accepted reader capability state and select the next **usable relation**, not a list of topics to mention. Distinguish introducing a term, making it usable for the current inference, deepening an earlier model, and previewing material deliberately deferred. Keep the current active set small enough to explain its mechanism fully, with later revisits assigned to an actual dependency rather than indefinitely promised. Propose a reader-progress delta after composing; do not declare mastery or advance accepted curriculum state solely because the term, figure, code, or chapter exists. The compact contract is in `references/curriculum-progression.md` and Root interface contracts.
 
 ## Explanatory spine
 

@@ -85,6 +85,10 @@ Ask which layer failed:
 
 Persistent recurrence is evidence about the system that applies the lesson, not just about the lesson wording.
 
+## Close the feedback loop at the next controlling decision
+
+For a recurrent complaint, link the observed episode to the earlier mechanism, the retrieval/activation evidence (or UNKNOWN), the owner/control point that could have prevented it, and the transfer behavior that would disconfirm the revised explanation. A stored rule is not behavioral evidence. On a later matching task, check whether the mechanism was activated *before* the decision, whether it changed the chosen action/composition/quality check, and whether the observed result preserved the accepted baseline. If the behavior recurs, reopen the incident as recurrence-after-promotion instead of recording a duplicate banned phrase.
+
 ## Retrieval and retirement
 
 Load Learning guidance only when its boundary matches the current decision.

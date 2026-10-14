@@ -9,7 +9,9 @@ Quality must be preserved across the whole sequence.
 Maintain a compact working ledger for the book or long artifact:
 
 - concepts already established;
-- concepts only previewed;
+- concepts only previewed or introduced but not yet usable;
+- capability/precision reached for established concepts and the unit/evidence that supports it;
+- deferred depth, planned revisits and units depending on each prerequisite;
 - terminology and notation chosen;
 - recurring system/example and its current state;
 - skills/capabilities the reader is expected to possess;
@@ -17,6 +19,12 @@ Maintain a compact working ledger for the book or long artifact:
 - promises made about later depth.
 
 This ledger is authoring state, not a rigid chapter template.
+
+## Curriculum transitions
+
+For a unit, select the relation/capability to establish, the minimum usable prerequisite set, what will be deepened, and what will remain explicitly deferred. Close the active relation at the depth promised by this unit; distribute additional precision, failure behavior, implementation and deployment implications across units where they are needed. A topic's first appearance is not the end of its teaching trajectory. Revisit it when a later mechanism depends on the stronger model, with a new inference rather than a recycled definition.
+
+Update only the transitions supported by the actual explanation and an inspectable reader-facing probe. A new chapter or a formatting read-back is not evidence that its conceptual prerequisites became usable. If a prior concept is corrected, recheck the downstream claims whose inferences relied on that version, without invalidating unrelated established work.
 
 ## Chapter entry
 

@@ -53,6 +53,16 @@ Symptoms:
 
 Return to Authoring: replace commentary with the actual rule, relation, mechanism, boundary, evidence or consequence. Do not create a lexical blacklist.
 
+### False reader-state promotion and curriculum compression
+
+Symptoms:
+- a concept is marked established because a glossary/heading/diagram mentioned it;
+- a chapter jumps from a definition to advanced design without the intermediate inference;
+- later chapters rely on an expert-level concept that was only previewed earlier;
+- the whole book is declared covered from chapter counts or a few acceptable samples.
+
+Check an actual target inference or representative diagnosis using only what prior units have equipped the reader to know. Return missing subject relations to Reasoning/Research, premature admission or absent explanatory closure to Authoring, and unsupported quality claims to Quality's coverage gate. A narrow introductory overview is a negative control: it may legitimately preview concepts without promising mastery.
+
 ### Outline decay
 
 Symptoms:

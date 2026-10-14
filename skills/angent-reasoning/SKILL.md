@@ -53,6 +53,10 @@ When recurrence or method-level signals exist, reconstruct the relevant positive
 
 The latest complaint is an observation plus possible instruction; it is not a complete model of the defect.
 
+## Subject-model handoff for teaching
+
+When a teaching task spans units, distinguish the full researched subject graph from the next reader capability and its load-bearing prerequisite relations. Pass the established mechanism and uncertainty boundary to Authoring; do not substitute a topic inventory or choose prose order inside Reasoning. If a proposed section requires a relation that Research has not established, repair the evidence/model upstream before asking Authoring to make the paragraph sound coherent. When a prerequisite changes, reopen dependent capability claims rather than rewriting unrelated chapters.
+
 ## Epistemic discipline
 
 Do not let a claim become more certain merely because it survives several hand-offs.
