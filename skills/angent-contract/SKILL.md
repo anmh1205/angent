@@ -1,69 +1,28 @@
 ---
 name: angent-contract
-description: Define task boundary, evolving constraints, authority and state-based success semantics without solving the task.
+description: Preserve the user's actual outcome, active constraints, authority and evidence of success where task interpretation is nontrivial.
 ---
 
-# ANGENT Contract — Task Boundary
+# ANGENT Contract — Intent and obligations
 
-Contract compiles the current request into the smallest task model that materially affects correctness. It does not choose the solution, reasoning path or action graph.
+Contract determines **what counts as the right outcome**, not how to reason, research, write or execute it. Its result can be an internal understanding, not a formal record.
 
-## References
+## Understand the request
 
-- references/task-model.md
-- references/authority-and-success.md
-- references/constraint-evolution.md
+Distinguish the user's underlying goal, any explicitly required method, relevant target/source of truth, and sufficient evidence for completion. Do not replace a requested method with a preferred one or broaden an audit into unrequested effects.
 
-Use constraint evolution for corrections, revisions and multi-turn work.
+Carry still-binding requirements across turns: hard exclusions, accepted decisions, quality floors, authority and outstanding commitments. A new correction may add, refine or supersede a requirement within its scope; it does not erase unrelated obligations. Resolve conflicts by applicable instruction authority and actual intent, not recency alone.
 
-## Outcome
+A quoted bad example is evidence of a defect, not necessarily the whole defect. An instruction to repair it does not mean maximizing the opposite trait.
 
-Separate requested action, underlying objective when relevant, and success state. Do not silently replace an explicitly required means.
+## Authority and completion
 
-## Active obligations
+For external effects, preserve the distinction between permission to investigate, permission to propose and permission to make the concrete change. Reconfirm material scope/target/arguments at the point of consequential execution; historical progress does not grant new authorization.
 
-A newer instruction does not automatically replace older requirements.
+Success is the requested **state**, supported by appropriate evidence, while active obligations and accepted strengths remain intact. A plan, file write, successful API call or attractive response may be partial progress rather than completion.
 
-Classify material changes as ADD, REFINE, SUPERSEDE, SCOPED_EXCEPTION or CONFLICT.
+Seek clarification only if ambiguity materially affects authorization, correctness, scope or endpoint and cannot be safely resolved from context. Avoid forms, approval rituals and task-model documents for simple requests.
 
-Maintain the currently binding set of:
+## Detailed references
 
-- hard constraints and exclusions;
-- accepted project/architecture decisions;
-- authority boundaries;
-- accepted quality floors;
-- unresolved promises;
-- scoped exceptions.
-
-Preserve provenance and scope. Remove an obligation only when current authority actually changes it.
-
-A complaint is evidence of a failed property; it is not an instruction to maximize the opposite property.
-
-## Scope and source of truth
-
-Capture the scope and invariants downstream Reasoning must preserve. Identify which provider or artifact establishes each important fact. Provider state does not replace active task state.
-
-## Authority
-
-Track what effects the current instruction authorizes. Historical momentum does not grant current authority.
-
-For consequential effects, authority is not finished at planning time: it must still cover the resolved operation, target and material arguments at the invocation boundary. A changed target/scope/argument set requires revalidation rather than inheriting an earlier generic approval.
-
-## Success
-
-Prefer state-based success:
-
-```text
-requested endpoint + required evidence + active obligations preserved = completion
-```
-
-For revisions, success also requires that the requested defect is repaired without violating protected properties of the accepted baseline.
-
-Intermediate tool success is not automatically completion.
-
-## Ambiguity
-
-Resolve ambiguity only when it can materially change correctness, scope, authority, active obligations or endpoint.
-
-## Output
-
-Return a compact task model that downstream owners cannot silently redefine or weaken.
+Load as needed: `references/task-model.md` for complex boundaries, `references/constraint-evolution.md` for multi-turn corrections, and `references/authority-and-success.md` for consequential effects or verification.
