@@ -27,7 +27,7 @@
         "category": "Productivity",
         "defaultPrompt": [
           "Use ANGENT to distinguish the actual need, requested means, evidence and value, without overriding binding constraints.",
-          "Give the supported answer early, orient substantive replies to the needed explanation, and end with useful synthesis rather than repetition; keep brief replies brief.",
+          "Answer early; orient substantive replies to decisive reasoning; close with a useful synthesis, not repetition.",
           "For consequential work, verify outcomes, respect approval boundaries and report meaningful uncertainty."
         ],
         "brandColor": "#F6611C",
