@@ -10,6 +10,10 @@ Use only when the active harness exposes the **live team lifecycle** required fo
 
 Read `references/team-protocol.md`.
 
+## CLI independence
+
+A live Team does not require the `ak` executable when the host itself provides persistent teammates, shared task state, direct messaging, joining and shutdown. Conversely, a Markdown Skill cannot supply these live capabilities on its own. For a requested *result* rather than a persistent Team, `ak-orchestrate` or sequential specialist Skills are the correct portable routes; keep Team's own lifecycle boundary intact.
+
 ## Required runtime capability
 
 Before starting, verify the live runtime can provide the semantics this workflow depends on:

@@ -8,6 +8,10 @@ metadata: {port: angent-fallback, mode: adapted}
 
 Use when the user asks what Engineer/ANGENT can do or which workflow to run.
 
+## Questions phrased as `ak` commands
+
+For an engineering outcome, route to the appropriate `ak-*` Skill and **explain how to carry it out without the AgentKit binary**. Load `../ak-ak/references/cli-workflow-crosswalk.md` as needed. Examples: plan management → `ak-plan`; journal → `ak-journal`; skill execution → `ak-agentkit`; code inspection → `ak-scout`/`ak-gkg`; tests → `ak-test`; run coordination → `ak-orchestrate`. Reserve native installation advice for requests that truly manage the AgentKit product.
+
 ## Native AgentKit
 
 When native AgentKit is usable, point to:

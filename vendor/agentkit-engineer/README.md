@@ -22,7 +22,7 @@ Agent Plugins v1 uses a fixed `skills/` discovery root and does not provide a po
 
 ## Native path
 
-If official AgentKit Engineer is usable in the active environment, use native.
+If official AgentKit Engineer is usable in the active environment, use native. **Installing the `ak` binary is not a prerequisite for normal fallback engineering work:** Plans, Journal, Skill routing, status boards and orchestration reasoning are independently routed to Skills and available host file/agent capabilities.
 
 Do not vendor or mirror native AgentKit source in this repository.
 
@@ -51,7 +51,7 @@ Coverage:
 
 Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger, `AUDIT_REPORT.md` for dated verification evidence and remaining runtime gates, and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
 
-The fallback is an independent ANGENT implementation, not an upstream mirror.
+The fallback is an independent ANGENT implementation, not an upstream mirror. [CLI-to-Skill crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) documents which `ak` commands are replaced by actual portable outcomes and which native administration/service effects remain unavailable.
 
 ## Executable offline fallback subsets
 

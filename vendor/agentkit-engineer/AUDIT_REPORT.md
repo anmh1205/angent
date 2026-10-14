@@ -4,7 +4,7 @@ Audit date: **2026-10-15**. Baseline: signed AgentKit Engineer **stable 2.19.0**
 
 ## Result and acceptance boundary
 
-The fallback now contains the same **102 Skill identities** and **16 Agent role identities** as the pinned stable package. A first-pass workflow-semantic comparison is complete for all identities: 74 skills are adapted to the available host contract, 3 have portable semantics without material dependency substitution and 25 are explicitly degraded by absent native tooling, proprietary/provider services, dataset/scripts or rendering facilities. All 16 agent sidecars have been reviewed as role contracts, not certified as installed parallel agent runtimes.
+The fallback now contains the same **102 Skill identities** and **16 Agent role identities** as the pinned stable package. A first-pass workflow-semantic comparison is complete for all identities: 75 skills are adapted to the available host contract, 3 have portable semantics without material dependency substitution and 24 are explicitly degraded by absent native tooling, proprietary/provider services, dataset/scripts or rendering facilities. All 16 agent sidecars have been reviewed as role contracts, not certified as installed parallel agent runtimes.
 
 **Accepted result:** coherent *source-level skill and role contracts*, native-first/fallback selection discipline, verified frontmatter/identity/reference packaging and branch CI. **Not accepted:** full end-to-end operational parity across unavailable browsers, external services, datasets, model backends or installed AgentKit runtimes. Nor does the evidence prove that all 102 workflows produce outputs of higher quality than upstream.
 
@@ -39,6 +39,12 @@ Three independent fallback utilities were implemented on the Engineer branch, wi
 The test suite uses fresh temporary Git repositories, real commits/worktrees, symlink and sensitive-file counterexamples, dirty/detached scenarios, malformed XML input and escaped Markdown paths, as well as valid/invalid Python AST, import-binding, source scope and truncated-index cases. The branch-only CI also runs all three executables against its **actual checked-out source tree**, verifying snapshot correctness, Git status and AST definition discovery without mutating the working tree.
 
 **Actual evidence:** [GitHub Actions run 38656278657](https://github.com/anmh1205/angent/actions/runs/38656278657) passed for commit `c3ab16d8517505b51b10881e266ed91a3ad713bb`, including 8 structural/selector tests, 10 Repomix tests, 6 Watzup tests, 7 Python AST/GKG tests and smoke executions on real checkout. Earlier red runs surfaced faulty test assertions and were repaired. This establishes successful execution of these bounded local subsets on GitHub Ubuntu/Python 3.12. It does **not** prove Windows/macOS behavior, native provider CLI and remote services, resolved graph semantics, graphics/media rendering or a general quality advantage over all 102 upstream Skills.
+
+## AK CLI decoupling audit — 2026-10-15
+
+Direct stable 2.19.0 help inspection established that `ak plan create` scaffolds plan.md and a phase file, `ak journal create` creates collision-safe Markdown, `ak run` dispatches a Skill to an adapter, and `ak orchestrate` provides distinct observation/process-control actions. The fallback now maps those intents through Skills rather than treating the `ak` binary as a prerequisite. `ak-journal` is reclassified as **VERIFIED_ADAPTED**, changing the ledger to **75 adapted, 24 degraded and 3 portable**.
+
+The [CLI-to-Skill crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) and [orchestration dispatch contracts](skills/ak-orchestrate/references/cli-free-dispatch.md) distinguish files-first workflows and actual host-tool dispatch from native-only signed-kit, authentication, license, proprietary telemetry, dashboard/server, durable process-supervisor or provider effects. This is a **workflow-source migration**; it does not demonstrate execution of every host file/provider operation on every harness. Runtime and cross-harness acceptance remain open.
 
 ## Remaining runtime acceptance
 
