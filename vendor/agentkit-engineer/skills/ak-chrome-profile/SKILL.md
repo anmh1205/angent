@@ -25,3 +25,8 @@ When profile attachment is unavailable:
 - or mark authenticated-profile capability unavailable.
 
 Do not copy browser profile files or export cookies/tokens as a workaround.
+
+## Stable 2.19.0 signed-in profile requirements
+Use this route when existing real Chrome authentication, extensions or tabs are essential; otherwise prefer isolated browsing. Identify and confirm a supported browser/DevTools attachment, exact profile/tab/account and permitted navigation/effects before acting. Browser profiles hold high-value cookies, downloads and unrelated accounts: never copy profile files, export tokens/cookies, scrape all tabs or substitute a different logged-in profile.
+
+Refresh account/tab identity after navigation and before consequential actions. When the runtime has no authorized profile attachment, explicitly mark capability unavailable or ask the user to sign in normally in a permitted isolated browser; do not claim to have preserved the profile. Verify final page state and release/detach browser resources.

@@ -27,3 +27,6 @@ metadata: {port: angent-fallback, mode: portable}
 10. Generate variants only when they test different mechanisms.
 
 Frameworks such as AIDA/PAS are optional tools, not mandatory templates.
+
+## Stable 2.19.0 conversion workflow
+Load `references/conversion-patterns.md` for distinct AIDA, PAS, BAB, 4Ps, 4Us and FAB mechanisms, and channel-specific headline, email/preview, landing-page, CTA, social and product-copy patterns. Choose a mechanism by actual audience awareness and decision; do not force one template across channels. Create real alternative copy angles only where they test different user choices. Ground benefit, differentiator, urgency, scarcity, endorsements and statistics in available evidence; never invent proof. Extract style from provided files using only installed parser/media capabilities, without implying upstream Gemini scripts or keys exist. Organize a saved artifact according to project conventions only when the user requests a file.

@@ -26,3 +26,8 @@ Read `references/surface-design.md` for transport and contract choices.
 Return the exposed operations, transport, credential model, package/install path, tests, docs and remaining limitations.
 
 Do not invent a second business-logic implementation inside the tool wrapper.
+
+## Stable 2.19.0 agent-facing surface
+Inventory existing capabilities and select small stable operations; do not duplicate the business implementation. Define discoverable command/tool names, typed arguments, schema/structured output, error semantics, versioning, permissions, rate limits and operation idempotency/reconciliation before implementation. A CLI is often the simplest local contract; add MCP discovery/session transport when it materially helps. Both projections must call one underlying implementation and share the safety semantics.
+
+Separate reads from consequential writes; retain explicit authorization, secret isolation and safe defaults. Implement and test argument validation, representative success/failure paths, package/distribution and clean-consumer discovery. Verify a fresh agent client can invoke the published tool correctly instead of assuming the wrapper is usable. Never expose unrestricted shell/file/admin effects by default.

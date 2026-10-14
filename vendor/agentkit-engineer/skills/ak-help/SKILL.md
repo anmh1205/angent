@@ -26,3 +26,8 @@ Use `PORTING_MANIFEST.md` and active fallback catalog to explain:
 - recommended workflow for the user's outcome.
 
 Prefer task-oriented help over dumping a list of 102 names.
+
+## Stable 2.19.0 outcome router
+Select by result rather than dumping every installed name: `ak-ask` for a narrow architecture answer; `ak-advise` for guided problem reframing; `ak-brainstorm` for choices; `ak-scout`/`ak-research` for evidence; `ak-plan`/`ak-issue-to-plan` for planning; `ak-cook` for authorized implementation; `ak-debug` for cause; `ak-fix` for proven repair; `ak-test`/`ak-code-review` for validation; `ak-ship`/`ak-deploy` for delivery.
+
+Prefer actually installed native AgentKit help and its live CLI/catalog when usable. In fallback, `PORTING_MANIFEST.md` gives semantic review and degraded boundaries: a packaged directory or sidecar agent name never establishes browser/CLI/worker availability. Return an actionable shortest supported workflow, relevant invocation and honest limitations, rather than generic skill advertising.

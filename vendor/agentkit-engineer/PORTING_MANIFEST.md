@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **54 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **64 / 102 Skill identities reviewed semantically**.
 
-- **51 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-context-engineering`, `ak-cook`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-html-video`, `ak-interview-docs`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
-- **3 VERIFIED_DEGRADED**: `ak-design`, `ak-team`, `ak-ui-ux-pro-max`.
-- **0 VERIFIED_PORTABLE**: none currently.
-- **48 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **56 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-review-pr`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`.
+- **7 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ak`, `ak-chrome-profile`, `ak-design`, `ak-journal`, `ak-team`, `ak-ui-ux-pro-max`.
+- **1 VERIFIED_PORTABLE**: `ak-ask`.
+- **38 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -46,6 +46,10 @@ No status is promoted solely from identity, line count, reference count, or text
 ### Context, documentation and research support batch
 
 Reviewed `ak-context-engineering`, `ak-folder-context`, `ak-docs`, `ak-docs-seeker`, `ak-interview-docs`, `ak-research-prompt` and `ak-project-organization` against the signed stable 2.19.0 export. The adapted fallback retains context quality evaluation, runtime-aware signal limits, subtree instruction authority, four distinct docs operations, versioned official documentation discovery, interview ownership, a standalone research-brief contract and a separated advisory/authorized-move workflow. Upstream-only telemetry hooks and docs-fetch scripts are not represented as available runtime tools.
+
+### Native CLI, browser, consultation and content workflows
+
+Reviewed the stable 2.19.0 published workflows for browser, authenticated profile, native CLI, Codex goal, advice, agentization, help and issue-to-plan; paired with upstream export evidence for copywriting and journal. Verified adapted advisory and tooling contracts, while external browser/profile, AgentKit CLI and journal/social mechanics are explicitly degraded when unavailable. No shell/browser/session effect is implied by the presence of its Markdown fallback.
 
 ### Delivery/runtime batch
 
@@ -139,26 +143,26 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 | Skill | Status | Note |
 |---|---|---|
 | `ak-advise` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-agent-browser` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-agentize` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-agent-browser` | VERIFIED_DEGRADED | stable 2.19.0 session/snapshot/browser effect semantics; external CLI/specialized provider absent |
+| `ak-agentize` | VERIFIED_ADAPTED | stable 2.19.0 agent tool CLI/MCP design, effect safety and consumer verification preserved |
 | `ak-agentkit` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-ai-artist` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-ai-multimodal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-ak` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
-| `ak-ask` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-ak` | VERIFIED_DEGRADED | stable 2.19.0 native AgentKit CLI control-plane without emulated lifecycle |
+| `ak-ask` | VERIFIED_PORTABLE | stable 2.19.0 one-question, evidence-led, four-perspective consultation with no implementation |
 | `ak-autoresearch` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-backend-development` | VERIFIED_ADAPTED | stable 2.19.0 bounded backend/API/data-access workflow reviewed; migration/deploy and runtime verification boundaries preserved |
 | `ak-better-auth` | VERIFIED_ADAPTED | stable 2.19.0 Better Auth workflow reviewed; credentials, schema/migration, session/provider and production rollout boundaries preserved |
 | `ak-bootstrap` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-brainstorm` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-chrome-profile` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-chrome-profile` | VERIFIED_DEGRADED | stable 2.19.0 profile-identity/sensitive-state safeguards; real Chrome attachment runtime-dependent |
 | `ak-code-review` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-codex-goal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-codex-goal` | VERIFIED_ADAPTED | stable 2.19.0 goal frontier, stop criteria and honest harness-independent execution bounds |
 | `ak-coding-level` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-common` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-context-engineering` | VERIFIED_ADAPTED | stable 2.19.0 Measured context/runtime boundaries, four-bucket lifecycle and decision-quality evaluation retained; no fabricated provider telemetry |
 | `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-copywriting` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-copywriting` | VERIFIED_ADAPTED | stable 2.19.0 conversion patterns, channel composition, evidence and style boundaries reviewed |
 | `ak-cti-expert` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-databases` | VERIFIED_ADAPTED | stable 2.19.0 data-model/query/migration workflow reviewed with least-privilege, recovery and production-mutation gates |
 | `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
@@ -184,12 +188,12 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 | `ak-graphify` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-handoff` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-handover` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-help` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-help` | VERIFIED_ADAPTED | stable 2.19.0 outcome based routing and true native/fallback capability boundaries |
 | `ak-html-video` | VERIFIED_ADAPTED | stable 2.19.0 html-video template/project/preview/render workflow restored; renderer/toolchain mechanics remain harness-dependent |
 | `ak-hyperframes` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-interview-docs` | VERIFIED_ADAPTED | stable 2.19.0 Vision versus structured-doc modes, user-owned decisions and per-answer read-back restored |
-| `ak-issue-to-plan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-journal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-issue-to-plan` | VERIFIED_ADAPTED | stable 2.19.0 issue evidence, implementation-ready plan and stop-before-code decision gate |
+| `ak-journal` | VERIFIED_DEGRADED | stable 2.19.0 local journal and optional publication semantics; Zernio/media scripts not packaged |
 | `ak-llms` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-loop` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-markdown-novel-viewer` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
