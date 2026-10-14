@@ -11,6 +11,19 @@ Use when a feature, refactor, repair, migration, or architecture change needs a 
 
 Do not use Plan to hide an unresolved product/architecture decision. If the direction itself is still open, return to Brainstorm/Research/Reasoning first.
 
+## Executable local plan helper
+
+When the project uses local Markdown plans, `scripts/plan_files.py` provides a scoped **non-AgentKit** helper for `create`, `list`, `status`, `validate` and `add-phase`. Plan content, decision quality, acceptance and updates remain owned by this Skill and authorized file tools; the script intentionally does not mark anything verified or auto-execute a phase.
+
+```bash
+python3 scripts/plan_files.py --project-root /path/to/repo create --title "Fleet device runtime"
+python3 scripts/plan_files.py --project-root /path/to/repo list
+python3 scripts/plan_files.py --project-root /path/to/repo status --plan-id <exact-id>
+python3 scripts/plan_files.py --project-root /path/to/repo validate --plan-id <exact-id>
+```
+
+`create` refuses overwrites and adds a reviewable `plan.md` and initial phase file; the files are **unapproved scaffolds** until the user/Skill supplies real decisions and verification. `status` reports checkbox counts separately from proven completion. Prefer an existing plan owner (GitHub/Jira/Notion/project convention) rather than introducing a second file store. No `ak plan` is required.
+
 ## Load progressively
 
 - `references/scope-and-modes.md` — scope challenge, planning modes, TDD and parallel/two-approach semantics.

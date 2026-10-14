@@ -79,5 +79,7 @@ jobs:
           test -z "$(git status --porcelain)"
       - name: Verify local journal lifecycle without AgentKit CLI
         run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-journal/scripts -p 'test_journal_files.py' -v
+      - name: Verify local plan lifecycle without AgentKit CLI
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-plan/scripts -p 'test_plan_files.py' -v
       - name: Check committed whitespace
         run: git diff --check HEAD^ HEAD

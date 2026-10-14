@@ -24,3 +24,7 @@ ANGENT Continuity may point to the active plan but does **not** replace the plan
 ## Scenario test for a reviewing agent
 
 Given a partially checked plan and two overlapping workstreams, `status` must report the checkbox count **separately** from verification evidence and must not merge/overwrite either plan. Given an updated dependency, verify downstream phase assumptions before claiming plan validation passed. For `archive`, confirm explicit allowed target and path/read-back; `parse` must never create or mutate any file.
+
+## Tested deterministic local subset
+
+`../scripts/plan_files.py` provides optional `create`/`list`/`status`/`validate`/`add-phase` for a project whose approved plans owner is `plans/`. It refuses unsafe plan identifiers, escaping symlinks, duplicate phase numbers and overwrites; `list`, `status` and `validate` are read-only. The output distinguishes checkbox state from accepted/verified work. This is **file lifecycle**, not AgentKit global plan registry, archive/index/HTML dashboard or full structural-semantic plan validation; use the Skill plus available project tools for those outcomes.
