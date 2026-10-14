@@ -41,6 +41,20 @@ When external identities can be replaced, migrated, aliased or superseded, calib
 
 The method fails if familiar history silently chooses a superseded object, or if every exact historical request is forcibly remapped to the current object.
 
+## Retrieval-negative calibration
+
+When changing research/search semantics, test false-negative boundaries explicitly:
+
+- **top-k miss** — desired item exists outside returned results; do not claim global absence;
+- **non-default branch/scope** — search covers only default/current scope while the item exists elsewhere; preserve the scope boundary;
+- **stale/unready index** — search misses a recent item until indexing catches up; do not convert index state into domain absence;
+- **exact authoritative NOT_FOUND** — provider lookup for the exact resolved identity returns a documented negative result; allow the bounded negative fact;
+- **complete enumeration** — pagination/cursor is exhausted over the canonical relevant scope; bounded absence can be established;
+- **consequential absence + weak search miss** — change query/source/retrieval path when it can improve recall instead of repeating equivalent searches;
+- **low-consequence bounded answer** — report “not found in this search/scope” without unnecessary retrieval ceremony.
+
+The method fails if either every miss becomes UNKNOWN forever or a successful search with zero hits is treated as proof of universal nonexistence.
+
 ## Delegation-context calibration
 
 When changing specialist/subagent behavior, test both context isolation and necessary-context preservation:

@@ -81,6 +81,27 @@ Preserve only the measurement conditions needed to know what the evidence actual
 
 A changed measurement condition does not automatically make the artifact wrong; it can make a previous inference stale.
 
+## Retrieval-negative evidence
+
+Negative retrieval has its own entailment boundary.
+
+Distinguish:
+- **SEARCH_MISS** — no relevant result returned within one retrieval boundary; does not by itself establish global absence;
+- **BOUNDED_ABSENCE** — sufficiently complete retrieval/enumeration establishes absence inside a stated scope/version/corpus;
+- **AUTHORITATIVE_NOT_FOUND** — an exact provider/source lookup with known semantics establishes the named object/fact is absent at that boundary.
+
+For material negative claims preserve, when relevant:
+- retrieval source/index/corpus;
+- query or semantic-search formulation;
+- scope/filter/branch/account boundary;
+- pagination/top-k/truncation state;
+- freshness/indexing boundary;
+- access/content-exclusion limitations.
+
+Do not turn “I searched and did not see it” into “it does not exist”.
+
+Several search misses with the same index, query family, exclusion, or ranking failure may be highly correlated. Change the retrieval path only when doing so can improve recall or change the decision.
+
 ## Information value
 
 Prefer evidence that discriminates live alternatives.

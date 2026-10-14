@@ -174,6 +174,14 @@ claim_support:
   - claim:
     support: DIRECT | DERIVED | CONTEXTUAL | NONE
     boundary:
+retrieval_negative:
+  kind: SEARCH_MISS | BOUNDED_ABSENCE | AUTHORITATIVE_NOT_FOUND
+  source_or_index:
+  scope_or_filters:
+  query_or_retrieval_form:
+  pagination_topk_or_truncation:
+  freshness_or_index_boundary:
+  exclusions_or_access_boundary:
 source_roles: []
 source_lineages: []
 provenance: []
@@ -189,6 +197,8 @@ residual_uncertainty: []
 ~~~
 
 Research returns evidence and evidence-grounded domain structure, not executable instructions, strategic authority, or a reader-facing teaching path.
+
+`retrieval_negative` is optional and only useful when a negative claim materially depends on retrieval. A SEARCH_MISS must not be silently promoted to global absence.
 
 ## Reasoning decision basis
 
