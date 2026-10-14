@@ -52,6 +52,8 @@ The store intentionally accepts a flexible frontier object; Continuity owns sema
 
 ## Side-effect transaction
 
+Use the following protocol when an effect can be consequential or ambiguous across interruptions. The harness may supply equivalent provider-native transactional/idempotency guarantees; assess them rather than requiring a journal that the runtime cannot actually persist. If no safe recovery route exists, block only that dependent risky effect and continue independent work.
+
 1. **PREPARED** — persist target, intent, expected before/after state, reconciliation method and the authority basis needed to know what effect was intended.
 2. **BIND** — when the concrete operation/target/material arguments become known, revalidate that they still match current authority and decisive preconditions. If they materially differ from PREPARED and resume/replay safety depends on the distinction, persist the revised prepared intent before attempt.
 3. **ATTEMPT** — perform one authorized effect.

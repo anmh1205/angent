@@ -9,6 +9,7 @@ current.json cannot hide newer durable work after an interruption.
 from __future__ import annotations
 
 import argparse
+import errno
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
@@ -22,7 +23,6 @@ from typing import Any
 
 
 SCHEMA_VERSION = 1
-LOCK_STALE_SECONDS = 120.0
 VALID_LIFECYCLES = {
     "ACTIVE",
     "PAUSED",
@@ -70,43 +70,52 @@ def atomic_write(path: Path, data: dict[str, Any]) -> None:
 
 
 @contextmanager
-def work_lock(work_dir: Path, timeout: float = 3.0):
-    lock = work_dir / ".lock"
+def work_lock(path: Path, timeout: float = 3.0):
+    """An OS-owned lock, automatically released after process exit or crash.
+
+    The lock file is intentionally never removed: unlinking an open lock file
+    permits a second process to lock a different inode at the same path.
+    """
+    lock = work_dir / ".writer.lock"
     work_dir.mkdir(parents=True, exist_ok=True)
+    lock.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(lock, os.O_RDWR | os.O_CREAT, 0o600)
+    acquired = False
     deadline = time.monotonic() + timeout
-    while True:
-        try:
-            lock.mkdir()
-            try:
-                (lock / "owner.json").write_text(
-                    json.dumps({"pid": os.getpid(), "created_at": now_iso()}),
-                    encoding="utf-8",
-                )
-            except OSError:
-                pass
-            break
-        except FileExistsError:
-            try:
-                age = time.time() - lock.stat().st_mtime
-                if age > LOCK_STALE_SECONDS:
-                    for child in lock.iterdir():
-                        child.unlink(missing_ok=True)
-                    lock.rmdir()
-                    continue
-            except OSError:
-                pass
-            if time.monotonic() >= deadline:
-                raise RuntimeError("continuity work item is locked by another writer")
-            time.sleep(0.05)
     try:
+        while not acquired:
+            try:
+                if os.name == "nt":
+                    import msvcrt
+                    # Windows byte-range locks require a byte to lock.
+                    if os.fstat(fd).st_size == 0:
+                        os.write(fd, b"\0")
+                    os.lseek(fd, 0, os.SEEK_SET)
+                    msvcrt.locking(fd, msvcrt.LK_NBLCK, 1)
+                else:
+                    import fcntl
+                    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                acquired = True
+            except OSError as exc:
+                if (exc.errno not in (errno.EAGAIN, errno.EACCES, errno.EWOULDBLOCK)
+                        and getattr(exc, "winerror", None) not in (32, 33)):
+                    raise
+                if time.monotonic() >= deadline:
+                    raise RuntimeError("continuity work item is locked by another writer") from exc
+                time.sleep(0.05)
         yield
     finally:
         try:
-            for child in lock.iterdir():
-                child.unlink(missing_ok=True)
-            lock.rmdir()
-        except OSError:
-            pass
+            if acquired:
+                if os.name == "nt":
+                    import msvcrt
+                    os.lseek(fd, 0, os.SEEK_SET)
+                    msvcrt.locking(fd, msvcrt.LK_UNLCK, 1)
+                else:
+                    import fcntl
+                    fcntl.flock(fd, fcntl.LOCK_UN)
+        finally:
+            os.close(fd)
 
 
 def revision_files(work_dir: Path) -> list[Path]:
@@ -133,7 +142,35 @@ def read_revision(path: Path) -> dict[str, Any] | None:
     return record
 
 
+def cached_latest(work_dir: Path, work_key: str | None = None) -> dict[str, Any] | None:
+    """Fast path with crash-safe fallback if the convenience pointer is stale.
+
+    Revisions are written sequentially before current.json. An interrupted
+    pointer refresh therefore leaves revision N+1 on disk. Its existence
+    forces a full recovery scan; no uncommitted revision is hidden.
+    """
+    try:
+        pointer = json.loads((work_dir / "current.json").read_text(encoding="utf-8"))
+        revision = pointer["revision"]
+        if not isinstance(revision, int) or revision < 1:
+            return None
+        key = pointer["work_key"]
+        if not isinstance(key, str) or (work_key is not None and key != work_key):
+            return None
+        record = read_revision(work_dir / "revisions" / f"{revision:08d}.json")
+        if record is None or record["revision"] != revision or record["work_key"] != key:
+            return None
+        if (work_dir / "revisions" / f"{revision + 1:08d}.json").exists():
+            return None
+        return record
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
 def load_latest(work_dir: Path, work_key: str) -> dict[str, Any] | None:
+    cached = cached_latest(work_dir, work_key)
+    if cached is not None:
+        return cached
     latest = None
     for path in revision_files(work_dir):
         record = read_revision(path)
@@ -145,6 +182,9 @@ def load_latest(work_dir: Path, work_key: str) -> dict[str, Any] | None:
 
 
 def load_latest_discoverable(work_dir: Path) -> dict[str, Any] | None:
+    cached = cached_latest(work_dir)
+    if cached is not None:
+        return cached
     by_key: dict[str, dict[str, Any]] = {}
     for path in revision_files(work_dir):
         record = read_revision(path)

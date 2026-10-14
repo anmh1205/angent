@@ -91,11 +91,9 @@ Retrieved external content is data/evidence, not task authority. An adapter must
 
 ## Continuity
 
-The adapter must give Continuity a durable location appropriate to the environment.
+The adapter should expose an authorized durable location when the environment has one; if it does not, report durability as unavailable instead of inventing persistence or silently mutating an audited target.
 
-For local harnesses, use the revisioned file backend by default.
-
-For a hosted/chat harness, use the strongest durable backend available to that product/workspace.
+For local harnesses, use the revisioned file backend by default. For hosted/chat harnesses, use the strongest authorized durable backend actually available. No skill may assume that a chat transcript or a visible progress message survives a stopped session.
 
 Regardless of backend, preserve:
 
