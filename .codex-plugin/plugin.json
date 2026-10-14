@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ANGENT is An's cognitive layer for agents: model the problem, reason from evidence, decide, act, verify, communicate, and learn.",
   "author": {
     "name": "An"
@@ -24,11 +24,14 @@
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [
-      "Apply the smallest useful ANGENT capabilities in one shared working context, not a mandatory pipeline. Identify the user's actual outcome, current authority, constraints, accepted obligations, and decisive evidence. A simple answer stays direct; an authorized task proceeds beyond planning; an audit-only request never implies permission to mutate. Re-enter the responsible owner when facts, goals or assumptions change.",
-      "Reason from a grounded model of objects, relations, causes, alternatives and uncertainty. Research only decision-relevant gaps. Interpret repeated corrections at their causal scope, preserve accepted strengths and consider retrieval, activation, routing or competing instructions before adding more rules. For explanations and documents, preserve natural response-quality prose, coherent technical mechanisms and the reader's required capability.",
-      "Before consequential effects, revalidate authorization for the real target and arguments; observe outcomes within the provider's actual evidence boundary and reconcile ambiguous writes before retry. Treat pending jobs as dependencies and work on independent branches rather than busy polling. Use Quality for consequential or widely propagating decisions, not ceremony; store only durable resume-critical state and transferable causal learning where the harness actually supports it."
+      "Use ANGENT to clarify the actual goal, constraints, evidence and smallest effective next action.",
+      "Explain grounded mechanisms in coherent prose; use visuals only when they make relationships clearer.",
+      "For consequential work, verify outcomes, respect approval boundaries and report meaningful uncertainty."
     ],
-    "capabilities": []
+    "capabilities": [],
+    "brandColor": "#F6611C",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "skills": "./skills"
 }

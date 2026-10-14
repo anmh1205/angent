@@ -206,3 +206,25 @@ For reader-facing technical output ask:
 10. If the same failure recurred despite an existing rule, did the repair investigate activation/routing/ownership rather than add another guard?
 
 A candidate fails when it makes the reader reconstruct too much, violates active obligations, regresses a protected property, or preserves the generating mechanism behind a recurring complaint even if the named example was fixed.
+
+## Conversation repair and representation counter-cases
+
+When a user says an earlier explanation did not make sense, compare the changed answer against the actual conceptual gap. A successful revision changes the reader's usable model with a grounded distinction or trace; a longer paraphrase is not evidence of improvement. A previously correct short expert answer is a negative control: do not inflate it into an elaborate tutorial.
+
+For visual work, test both selection and fidelity. A protocol interaction may need a sequence diagram, while a stateful lifecycle needs guarded state transitions; substituting one for the other can fabricate semantics. A photo of a similar board is not an exact connector reference. A source Mermaid block that never renders is not an accepted illustration. Equally, a simple two-sentence distinction should remain prose when an extra diagram offers no new information.
+
+Check source/model/revision match, arrow and axis meaning, destination renderer support, actual legibility, rights and nearby interpretation. Distinguish a better documented method from observed gains in real outputs; do not claim behavioral improvement from these checks alone.
+
+## Zephyr chat-to-Notion transfer case
+
+Observed source: a beginner-oriented Zephyr/RTOS conversation was judged understandable enough to start a Notion book, while three initial chapters published into Notion showed a different explanation pattern. The book targeted Ubuntu with `native_sim` before a physical board. This is a source-specific diagnostic example, not evidence that every chapter has been reviewed.
+
+- The first chapter covered MCU, interrupts, scheduler and real-time constraints, but some concept transitions remained short summaries rather than showing the intermediate reasoning needed for novice transfer.
+- The architecture chapter combined build dependencies and runtime interactions in one Mermaid graph, where the reader had to infer different arrow meanings. A GPIO example depended on an LED alias that need not be present on the selected simulator target.
+- The build chapter had useful executable workflow content but a `CMakeLists.txt` snippet was labeled `javascript`. This is a Format failure, not proof that the CMake code itself was wrong.
+
+The recurring failure is **loss of explanatory obligations at the artifact boundary**: a chapter outline, topic inventory and tool-ready blocks replace the earlier reader-centered explanatory path. The method must preserve the same subject relations and the reader capability when moving from chat to a document; content development may extend the path but must not turn it into summary notes.
+
+For comparative acceptance, take a technical question that the user initially understood in chat and ask a novice to reason from the resulting Notion chapter alone. Can the reader explain *why* the scheduler/state boundary or build/runtime boundary works, follow a concrete input to its output, and distinguish an unsupported peripheral example from a runnable `native_sim` one? If not, return the missing causal explanation to Authoring/Reasoning, not to Format. Independently check page rendering for code language, headings, Mermaid, citations and image identity.
+
+Counterexamples: a genuine reference checklist, a brief introductory overview, a short code lookup or an intentionally hardware-specific GPIO tutorial need not become a full standalone chapter or run on `native_sim`. Avoid calibrating by word count, forced diagrams or universal section templates.

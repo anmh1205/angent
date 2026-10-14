@@ -22,7 +22,7 @@ ANGENT is a cognitive layer, not a workflow engine. Use the smallest set of skil
 - Quality: independent checks against evidence, accepted baselines and completion conditions.
 - Continuity: durable unfinished-work state when a task cannot safely be reconstructed.
 - Learning: conditional causal lessons from meaningful success, failure and recurrence.
-- Shell: one short visible signature at the start of an ANGENT task.
+- Shell: emit one short visible activation signature at the start of an ANGENT task when the ANGENT skill is actually loaded and the host permits a visible response. It is not a proof of activation when absent, and never becomes document or tool content.
 
 Owners are responsibilities, not separate mandatory agents or a fixed pipeline. They share decision-relevant context directly. Do not create a YAML handoff or a new state store merely to pass between skills in one conversation. Root interface guidance applies only when a real delegation, durable boundary or ambiguous effect needs it.
 

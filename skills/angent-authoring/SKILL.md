@@ -15,6 +15,8 @@ The explanation may require identity/state, cause/effect, logical derivation, sp
 
 Make central relations visible through cohesive paragraphs. Carry recognizable objects/referents across sentences, introduce prerequisites when needed, and use a trace, calculation, concrete case or contrast if it removes genuine reconstruction work. An example supports the general mechanism but does not replace its definition and limits. Depth is what the reader can subsequently explain, predict, diagnose or apply—not paragraph count.
 
+For a follow-up such as "I still do not understand", identify the missing relationship rather than repeating the same definitions more slowly. Change the explanatory model where useful: compare one concrete input and output, follow a stable object through the relevant layers, or show the counter-case that separates two apparently similar ideas. Do not re-teach settled parts unless the misunderstanding depends on them. In ordinary chat, lead with the answer; add mechanism and precision at the rate needed for the user to use it.
+
 ## Match the genre to the actual job
 
 Explanatory teaching builds a usable mental model; a research answer distinguishes evidence and inference; a design recommendation exposes the deciding constraints and trade-offs; troubleshooting orders discriminating observations; an operational procedure orders safe, verifiable actions; an expert lookup can be terse and exact. These forms may share domain knowledge without sharing a narrative template. A checklist is appropriate for real parallel checks or procedures, but not as a substitute for explaining a technical mechanism.
@@ -33,9 +35,13 @@ Use natural Vietnamese composed from meaning, keeping established technical term
 
 Choose prose, code, diagrams, tables, figures or traces by the information each conveys; interpret what a reader should infer from each. No illustration, Mermaid, list, example or word-count quotas.
 
+For complex visuals, select the smallest representation that exposes the target relation: flow versus temporal messages versus state transition versus quantitative scale are different questions. Coordinate exact images and evidence provenance with Research, then verify the rendered result with Format; source-only Mermaid is not a demonstrated figure. Consult `references/visual-explanation.md` when a substantive visualization decision is needed.
+
 ## Long-form capability and revision
 
 For a multi-unit teaching artifact, inherit the accepted reader capability/prerequisite state. Distinguish previewing a term from making its mechanism usable. Later chapters must not assume expertise because an earlier chapter mentioned a topic. Keep stable terminology, examples, scope and depth commitments across units, and preserve real artifact pointers when work must resume.
+
+When publishing to Notion or another structured destination, finish the substantive explanation in the same Authoring model that would produce a strong chat response. Do not convert section headings or a list of claims directly into a chapter, use documentation formality as a surrogate for reasoning, or cut the intermediate causal bridges to fit blocks. Reuse the same canonical content for publication; Format converts representation and Execution writes it. After read-back, distinguish an authorship gap from a changed code language, heading level, Mermaid rendering or block loss. Calibrate one substantial chapter on the intended reader capability before propagating a method to dozens of chapters.
 
 For an existing artifact, start from its accepted strengths and actual defect; use Reasoning's causal repair scope, change only the necessary dependency closure, and check preservation. A correction about one sentence may reveal a wider method failure. Do not locally polish it while the generating failure remains.
 
@@ -48,6 +54,8 @@ When a consequential revision or long-form artifact needs acceptance, provide th
 ## Load guidance only for the task at hand
 
 - `references/surface-profiles.md`, `references/composition-and-representation.md`: chat/document answer construction.
+- `references/response-method-study.md`: source-aware comparison of chat response methods when revising the authoring approach.
+- `references/visual-explanation.md`: Mermaid, authentic figures, plots and representation verification.
 - `references/technical-exposition.md`, `references/reader-state.md`: complex technical teaching.
 - `references/curriculum-progression.md`, `references/long-form-consistency.md`, `references/artifact-state.md`: multi-unit or resumable writing.
 - `references/headings-and-boundaries.md`, `references/language-vi.md`: structure and Vietnamese technical prose.
