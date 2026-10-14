@@ -23,6 +23,8 @@ Load correction-interpretation for substantive user corrections, especially recu
 
 Load frontier-scheduling whenever long-running operations, provider jobs, builds, workflows, asynchronous effects, or several independent work branches coexist.
 
+Load specialist-synthesis whenever non-trivial specialist/subagent delegation, fan-out, cross-worker synthesis, or review independence is used. It loads delegation-context when the delegated work carries material context, authority, raw evidence, uncertainty, or write capability.
+
 Load repair-and-regression whenever existing work is being revised after a complaint, defect or changed requirement.
 
 ## Work from one cognitive state
