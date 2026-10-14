@@ -24,7 +24,9 @@ For document writing, surface-profiles and language-vi are part of the generatio
 
 ## Three models must stay distinct
 
-Authoring consumes a rich established cognitive/subject model, chooses an active teaching/communication model for the current reader and job, then realizes a presented model in prose/representation.
+Authoring consumes a rich established cognitive/subject model whose load-bearing relations/mechanisms have survived the Reasoning handoff, chooses an active teaching/communication model for the current reader and job, then realizes a presented model in prose/representation.
+
+Do not reconstruct the explanation from a flat fact inventory when the established model already contains causal, dependency, ownership, state, contrast or trace relations. Those relations are inputs to composition; Authoring still owns which one becomes the current explanatory spine and how it is staged.
 
 These are not the same thing:
 
@@ -37,6 +39,16 @@ Do not dump the full expert graph onto the reader. Do not mistake a smaller acti
 ## Reader and artifact state
 
 For each substantive unit, identify what the reader can already use, the current gap, and the capability the unit must create.
+
+## Explanatory spine
+
+Choose one dominant technical question/relation/trace for each substantive section or compact unit. Supporting definitions, prerequisites, evidence, examples, exceptions and consequences should advance that spine rather than form several equally primary mini-essays.
+
+If two mechanisms are both load-bearing and cannot be subordinated without confusion, stage or split them at a real technical boundary instead of interleaving them.
+
+If the subject is **the interaction itself**—for example a feedback loop, protocol negotiation, producer/consumer coupling, competing mechanisms, or a comparison whose relation is the lesson—then that interaction can be the single explanatory spine. Do not split coupled mechanisms merely to satisfy a one-spine heuristic.
+
+The spine is not a visible template. It is the causal/relational continuity that keeps a section from degenerating into a knowledge-graph dump or dense engineering notes.
 
 For long-lived work preserve the accepted revision pointer, concept dependencies, terminology, recurring examples, promised depth, quality baseline, prerequisite debt and actual coverage.
 
@@ -101,6 +113,8 @@ Examples should be representative, inspectable, plausible, interpreted and bound
 Paragraphs perform real explanatory jobs. Headings name technical scope or boundaries.
 
 For Vietnamese, compose from technical meaning, keep conventional technical terms when clearer, and avoid conversational filler, stock teaching narration or bureaucratic wording.
+
+Keep ANGENT/process-control vocabulary internal unless the subject itself is the workflow or architecture. Terms such as owner, gate, baseline, artifact state, repair model, active obligation or calibration are not reader-facing technical prose merely because they helped produce it.
 
 ## Feedback to the cognitive workspace
 

@@ -57,6 +57,22 @@ When a rule exists but failure recurs, ask not only “was it retrieved?” but 
 
 Prefer moving the invariant to the real control point over duplicating stronger wording across every downstream skill.
 
+A related timing failure occurs when a decision is valid when planned but stale when committed. If target, arguments, authority, dependency state or provider state can change between planning and execution, the controlling invariant must be revalidated at the boundary where those concrete values are known.
+
+Likewise, a tool result should not become established state merely because it arrived after an authorized call. Observation identity, scope/version, completeness and uncertainty determine what the result can safely update.
+
+## Prompt-accumulation failure
+
+A correct mechanism can still degrade ANGENT if every discovered lesson is copied into the always-visible bootstrap.
+
+When reliability rules accumulate:
+- keep genuinely cross-cutting invariants always active;
+- move decision-class-specific detail to the owner/reference that controls the behavior;
+- add an activation condition at Root/Context instead of duplicating the full rule globally;
+- use activation evidence when later recurrence diagnosis needs to know whether the mechanism ran.
+
+Do not equate “important” with “must occupy every prompt”. The objective is reliable activation with minimal irrelevant control context.
+
 ## Alternative cause
 
 Ask whether another cause could explain the same outcome.
@@ -89,7 +105,17 @@ Context should retrieve it because the current decision matches that class, not 
 
 Working-method mechanisms can be activated into collaboration state when they materially change how the current task should proceed.
 
-A stored lesson that is not activated at the relevant decision is not operational learning.
+When activation materially affects a decision, correction interpretation, or collaboration method, preserve compact activation evidence:
+- mechanism pointer/topic;
+- current decision/failure class;
+- applicability facts that matched the mechanism boundary;
+- owner/control point where it became active;
+- effect on the current plan/collaboration/quality expectation;
+- competing instruction or boundary that suppressed it, when relevant.
+
+This is diagnostic semantic state, not an event log. Do not record every retrieved lesson. Persist a pointer/subset only when later resume, recurrence diagnosis or acceptance depends on knowing whether the mechanism actually activated.
+
+A stored lesson that is not activated at the relevant decision is not operational learning. If activation evidence is absent when recurrence diagnosis depends on it, treat activation status as UNKNOWN rather than inferring from the final outcome.
 
 ## Recurrence
 

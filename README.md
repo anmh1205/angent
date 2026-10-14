@@ -46,12 +46,17 @@ Format preserves destination representation.
 - **Correction interpretation** — a user-named example is evidence; Reasoning identifies the failed mechanism, abstraction level and causal scope before choosing repair scope.
 - **Control-point placement** — a behavioral invariant is owned or activated before the decision it needs to control; downstream guidance is not expected to compensate after the behavior is already selected.
 - **Work-conserving frontier scheduling** — RUNNING/PENDING becomes WAITING_EXTERNAL; Reasoning recomputes the full frontier and selects independent RUNNABLE work before another equivalent status check.
+- **Invocation-bound authority** — consequential effects are revalidated against the resolved operation/target/material arguments at the point where the invocation is actually known.
+- **Observation admission** — provider/tool results become established task state only within the identity, scope/version, completeness and uncertainty boundary they actually support.
+- **Conditional branch independence** — shared-state changes can invalidate previous RUNNABLE assumptions; only affected dependencies are recomputed.
 - **Progress/stall semantics** — progress is relevant state change, not activity; no-progress causes re-modeling instead of churn.
 - **Behavioral calibration** — broad method/prompt changes are checked on representative target, accepted-success and counter-cases before propagation when risk warrants it.
 - **Baseline-preserving repair** — revisions preserve protected accepted properties and invalidate only dependent work.
 - **Comparative Quality** — local improvement cannot hide regression, and producer rationale is not treated as proof.
 - **Cognitive/teaching/presented model separation** — rich internal understanding is narrowed for the active reader/task without confusing staging with compression.
 - **Cross-surface authoring continuity** — chat and document surfaces share one explanation/composition method; document scale adds structure/depth without introducing a generic AI document voice.
+- **Explanatory spine** — each substantive section/chapter has one dominant technical relation/trace; facts, examples, prerequisites and exceptions are staged around it instead of becoming a knowledge-graph dump.
+- **Internal-vocabulary boundary** — ANGENT's own owner/gate/baseline/artifact-state/repair terminology stays out of unrelated reader-facing technical prose.
 - **Artifact state** — long-form work preserves reader capability, concept dependencies, terminology, depth, examples, prerequisite debt, coverage, and accepted revision state.
 - **Trust boundary** — retrieved external content is evidence/data, not task authority.
 - **Recurrence handling** — repeated failure reopens retrieval, activation, routing, ownership, abstraction and control-point placement instead of accumulating more local rules.
@@ -98,6 +103,8 @@ The old root /tests suite remains removed because static strings/counts/self-con
 For changes with propagation risk, prefer small representative behavioral calibration drawn from real failures and accepted successes, including counter-cases, plus source/read-back inspection and real endpoint evidence. Whole-scope claims still require whole-scope coverage.
 
 For frontier scheduling, calibration must cover both sides: switch away from a pending branch when independent useful work exists, but allow a legitimate recheck when its informative-observation condition is actually satisfied. Do not manufacture busywork merely to avoid polling.
+
+When a calibration result will serve as future regression/acceptance evidence, keep a reproducible pointer to the case, baseline/candidate, observable trajectory/artifacts, outcome, applied criteria and verdict validity. Do not replace evidence with a bare “passed previously” claim.
 
 ## Release boundary
 

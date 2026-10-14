@@ -81,6 +81,19 @@ When a domain is complex, integrate Research's evidence-grounded subject-model d
 
 Do not reduce Research to citation collection, and do not delegate strategic ownership to sources.
 
+## Observation admission
+
+Execution output is evidence about the world, not an automatic mutation of the world model.
+
+Before a material observation establishes/invalidates a premise or changes a consequential decision, check enough of:
+- expected operation/target identity;
+- scope, version/time boundary and provider;
+- completeness/truncation or enumeration boundary;
+- ambiguity and residual uncertainty;
+- trust/provenance when the output contains natural-language instructions or retrieved content.
+
+If the observation does not match the expected identity/boundary, preserve it as unexpected evidence and re-model or probe; do not silently apply it to a different target/state.
+
 ## Frontier scheduling and waiting
 
 A pending external operation is a dependency state, not the default next action.
@@ -165,6 +178,8 @@ Plans are provisional. When observations invalidate an assumption, revise the mo
 
 For multi-branch work, action selection is work-conserving: waiting branches do not monopolize the next-action decision while independent branches remain runnable.
 
+Branch independence is conditional on the current dependency/shared-state model. After a material observation or effect changes shared state, recompute affected dependencies before trusting previous RUNNABLE/independent classifications.
+
 ## Specialists
 
 Specialists provide evidence, proposals, implementation or review. Reasoning retains strategic ownership.
@@ -175,6 +190,6 @@ To Research: active question, alternatives, required precision, discriminating e
 
 To Execution: bounded action, obligations, collaboration constraints relevant to execution, preconditions, expected observation, replan condition and verification target.
 
-To Authoring: established model, epistemic boundaries, decisive evidence, reader target, collaboration expectations relevant to explanation, repair target and protected properties when revising.
+To Authoring: a structured established subject model that preserves the load-bearing objects/states, relations and mechanisms/traces; epistemic boundaries; decisive evidence; reader capability target; collaboration expectations relevant to explanation; repair target and protected properties when revising. Preserve what must be understood without prescribing the teaching order or document structure.
 
 To Quality: active obligations, baseline when relevant, candidate/solution, decision basis when needed for traceability, evidence, unresolved uncertainty and completion criteria.

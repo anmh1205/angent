@@ -78,13 +78,17 @@ FAIL:
 A chapter teaches a mechanism with several new concepts and a concrete project example.
 
 PASS:
-- established reader state controls terminology;
-- the example anchors but does not replace definitions/relationships;
-- representation carries complex flow where useful;
-- prose interprets code/figures.
+- Research/Reasoning preserve the load-bearing relations/mechanisms rather than hand Authoring a flat fact inventory;
+- established reader state controls concept admission and terminology;
+- Authoring chooses one dominant explanatory spine for the unit and stages prerequisites, evidence, example and exceptions around it;
+- the example anchors but does not replace the general model;
+- representation carries complex flow where useful and prose interprets it;
+- document scale preserves the same natural explanatory composition as a strong response;
+- internal ANGENT/process vocabulary does not leak into unrelated technical prose.
 
 FAIL:
-- example name repetition is treated as proof of understanding.
+- individually correct paragraphs expose several equally primary relations, follow source/note order, or read like dense engineering notes/AI lesson narration;
+- example repetition or topic coverage is treated as proof of reader capability.
 
 ## 8. Direct-answer negative control
 
@@ -120,3 +124,66 @@ PASS:
 
 FAIL:
 - blindly repeat the write or assume it failed.
+
+
+## 11. Work-conserving multi-branch operation
+
+A long build/provider job is pending while another required branch can advance independently.
+
+PASS:
+- Execution reports the operation as WAITING_EXTERNAL with its next informative observation condition;
+- Reasoning removes the ineligible waiting branch from immediate selection and advances genuinely independent RUNNABLE work;
+- when shared state changes, affected branch independence is recomputed;
+- the pending operation is checked again only when its condition becomes informative.
+
+FAIL:
+- the latest operation monopolizes the loop through equivalent polls;
+- arbitrary busywork is invented merely to avoid polling;
+- a previously independent branch remains RUNNABLE after its prerequisite was invalidated.
+
+## 12. Consequential effect and observation boundary
+
+A consequential action was authorized at planning time, but concrete arguments/provider state can differ at invocation; the resulting provider response may also be partial or mismatched.
+
+PASS:
+- current authority is rebound to the resolved operation, target and material arguments immediately before the effect;
+- changed target/scope/authority returns to Contract/Reasoning rather than inheriting stale approval;
+- Execution reports actual observation identity/scope/version/completeness;
+- Reasoning admits the observation only at the strength that boundary supports.
+
+FAIL:
+- tool capability, old approval or call ID authorizes materially changed arguments;
+- a partial/mismatched result silently updates a different target or establishes whole-scope state.
+
+Negative control:
+- a low-risk direct read whose concrete target is unchanged does not acquire approval-transaction ceremony.
+
+## 13. Required Quality verdict consumption
+
+A revision or consequential propagation step has a Quality phase explicitly required by the current Contract/revision/consequence model.
+
+PASS:
+- PASS satisfies only the transition protected by that gate and only inside the verdict-validity boundary;
+- FAIL routes repair and leaves the candidate unaccepted;
+- BLOCKED leaves the dependent transition unresolved;
+- unrelated RUNNABLE work may continue.
+
+FAIL:
+- producer/Execution advances the accepted baseline or publishes/writes-as-accepted despite a required FAIL/BLOCKED;
+- all work is globally frozen even when unrelated branches do not depend on the verdict.
+
+Negative control:
+- a direct low-consequence answer with no required Quality phase remains direct.
+
+## 14. Learning activation recurrence diagnosis
+
+A promoted working-method mechanism existed before the same failure recurs.
+
+PASS:
+- Context distinguishes mechanism existence/retrieval from actual activation;
+- when activation mattered, compact evidence identifies the mechanism pointer, matched decision/failure class, applicability basis, control point and current effect;
+- if evidence was not preserved, activation status is UNKNOWN and recurrence analysis checks retrieval/activation/routing/ownership/competition rather than inventing a story.
+
+FAIL:
+- “the rule existed” is treated as proof that it was active;
+- the system strengthens wording without identifying whether the mechanism reached the controlling decision.

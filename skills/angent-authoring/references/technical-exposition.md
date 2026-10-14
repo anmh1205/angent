@@ -20,6 +20,8 @@ The visible prose should make that relation inspectable.
 
 Do not open with generic importance statements when the mechanism can be stated directly.
 
+The full subject model may contain many valid relations. A section should expose one dominant explanatory spine and subordinate source details, side cases and implementation notes to the reader capability being built.
+
 ## Concepts need both definition and operation
 
 A concept is not established merely because its name is defined.
@@ -88,6 +90,8 @@ For commands, distinguish:
 - command;
 - observation it produces;
 - conclusion the observation supports.
+
+Source paths, API names, logs and exact implementation details are evidence for an explanation; they should not become the section's organizing principle unless the reader's actual task is source/runtime navigation.
 
 ## Diagrams
 

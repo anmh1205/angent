@@ -35,6 +35,12 @@ evidence_expectation:
 explanation_expectation:
 progress_checkpoint_expectation:
 working_method_mechanisms: []
+activated_mechanisms:
+  - mechanism_pointer:
+    decision_or_failure_class:
+    applicability_basis: []
+    owner_or_control_point:
+    current_effect:
 task_scoped_exceptions: []
 provenance: []
 confidence:
@@ -186,6 +192,7 @@ A complaint is evidence feeding this model; it is not itself the repair model.
 intent:
 target:
 authorization:
+authority_basis_pointer:
 active_obligations: []
 collaboration_constraints: []
 preconditions: []
@@ -196,14 +203,23 @@ action_success_predicate:
 replan_condition:
 verification_target:
 effect_class:
+resolved_target:
+material_arguments:
+authority_refresh_condition:
 ~~~
+
+For consequential effects, `resolved_target` and `material_arguments` are populated/checked only when the concrete invocation makes them known. They are conceptual fields, not mandatory ceremony for trivial reads.
 
 ## Execution → workspace/Reasoning: ObservationDelta
 
 ~~~yaml
 attempted:
+operation_identity:
+target_identity:
 observed_state:
 changed_identifiers_or_versions: []
+observation_boundary:
+scope_or_completeness:
 artifacts_or_checks: []
 expectation_match:
 new_evidence: []
@@ -220,6 +236,8 @@ wait_state:
 ~~~
 
 An acknowledgement or exit code without authoritative state is not automatically success.
+
+Reasoning must admit the observation at the strength supported by target identity, scope/version/freshness, completeness and residual uncertainty before it changes established state or a consequential decision.
 
 When wait_state is returned, Reasoning recomputes the active frontier before any equivalent status action is selected again.
 
@@ -243,6 +261,10 @@ Execution observes this state. Reasoning decides when the branch becomes eligibl
 
 ~~~yaml
 established_model:
+  objects_or_states: []
+  relations: []
+  mechanisms_or_traces: []
+load_bearing_relations: []
 epistemic_boundaries:
 conclusion:
 decision_basis_pointer:
@@ -254,7 +276,9 @@ collaboration_expectations:
 repair_model:
 ~~~
 
-Authoring may choose teaching order and representation but cannot silently alter the established conclusion, epistemic status, or protected repair properties.
+`load_bearing_relations` are the established causal/dependency/ownership/state/contrast/trace relations that materially support the conclusion or reader capability. They preserve cognition across the handoff; they do **not** prescribe teaching order.
+
+Authoring combines this structured subject model with reader/artifact state to choose the active teaching model, explanatory spine and representation. It may stage or omit nonessential relations, but cannot silently flatten away a load-bearing mechanism, alter established epistemic status, or violate protected repair properties.
 
 ## Authoring → Quality: ArtifactCandidate
 
@@ -267,15 +291,17 @@ protected_properties: []
 active_obligations: []
 coverage_state:
 calibration_state:
+behavioral_evidence_pointer:
 ~~~
 
-The accepted baseline advances only after required Quality/destination gates pass.
+The accepted baseline advances only after required Quality/destination gates pass. When `calibration_state` materially supports later acceptance, `behavioral_evidence_pointer` should resolve to enough case/baseline/candidate/observable-trajectory/outcome/criteria evidence to reconstruct the claim without private chain-of-thought.
 
 ## Quality → owner: QualityVerdict
 
 ~~~yaml
 status: PASS | FAIL | BLOCKED
 phase: solution | candidate | behavioral_calibration | endpoint
+required_for: []
 criteria_basis: []
 findings:
   - dimension:
@@ -302,9 +328,12 @@ Quality may return several findings. Findings sharing one mechanism should be gr
 
 A PASS/FAIL is itself an evidence-backed claim. Use BLOCKED when the available evaluation cannot distinguish a material subject defect from evaluator/environment uncertainty.
 
+`required_for` names only the state transition(s) that currently depend on this gate when such tracking is useful—for example baseline advancement, propagation, or write/publish-as-accepted. It does not make Quality an authority source. A required FAIL/BLOCKED leaves those dependent transitions unsatisfied while unrelated work may continue.
+
 ## Learning → Context/owner: PromotedMechanism
 
 ~~~yaml
+mechanism_pointer:
 mechanism:
 decision_or_failure_class:
 owner:

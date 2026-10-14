@@ -32,6 +32,24 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Plugin bootstrap 1.0.4 activates the scheduling semantics at the entrypoint rather than relying on a deep Execution reference.
 - No queue, scheduler service, background runtime, fixed timer or polling-count mechanism was added.
 
+### Decision-boundary reliability
+
+- Added invocation-bound authority: consequential effects revalidate current authority after concrete operation/target/material arguments are known.
+- Capability, stale plans, generic prior approval and operation IDs no longer substitute for authorization of changed effects.
+- Added observation-admission semantics so partial, stale, mismatched or ambiguous tool/provider results cannot silently mutate established state beyond their evidence boundary.
+- Added target identity, observation boundary and scope/completeness fields to the conceptual ObservationDelta.
+- Made multi-branch independence conditional on the current dependency/shared-state model; material shared-state changes reclassify only affected branches.
+- Added decision-point Context sufficiency and trust-boundary handling for natural-language content returned by tools/providers.
+- Added behavioral calibration cases for plan→invocation drift, observation mismatch/partiality, branch dependency invalidation and low-consequence counter-cases.
+- No permission runtime, transaction engine, event journal, observation database or scheduler service was added.
+
+### Reproducible behavioral acceptance
+
+- Behavioral calibration used for later propagation/regression claims now preserves a recoverable evidence pointer/record rather than a bare PASS memory.
+- The record links case/contract, baseline and candidate identity, material environment boundary, observable trajectory/tool-state evidence, artifacts/outcome, applied criteria and verdict validity.
+- Hidden chain-of-thought is explicitly excluded; a smaller externalizable action/state trace is sufficient when it proves the behavior.
+- Static keyword/count checks remain insufficient for semantic acceptance, while deterministic endpoint checks remain valid when they actually establish the requested property.
+
 ### Systemic correction interpretation
 
 - Added an explicit correction-interpretation step before repair scope/owner selection.
@@ -46,6 +64,28 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Document adaptation may add scale-dependent depth, curriculum continuity, section structure, citations, figures, examples and navigation without introducing a separate generic “formal document” voice.
 - Added calibration for meta-commentary that announces importance, memorization advice, author intention or lesson choreography instead of advancing the technical model.
 - Explicitly avoids phrase blacklists; the failure property is missing technical progress/cohesion, not specific lexical tokens.
+
+### Quality verdict consumption
+
+- Required Quality phases now act as explicit dependencies of the baseline/effect/propagation transition they protect.
+- PASS satisfies only that dependency and only within its verdict-validity boundary.
+- FAIL/BLOCKED cannot be silently ignored to advance a dependent accepted baseline or consequential write/publish-as-accepted.
+- Independent work remains runnable, and direct low-consequence tasks do not acquire mandatory Quality ceremony.
+
+### Learning activation observability
+
+- Added compact mechanism-activation evidence for recurrence diagnosis: mechanism pointer, matched decision/failure class, applicability basis, control point and current effect.
+- Context can now distinguish “rule existed/retrieved” from “rule actually activated for this decision”.
+- Missing activation evidence is treated as UNKNOWN rather than reverse-inferred from the final failure/success.
+- Continuity carries only the activation pointer/subset when resume or recurrence diagnosis depends on it; no event log or Learning-store duplication is added.
+
+### Explanatory-spine authoring
+
+- Restored the v13.2-style relation-driven explanatory spine at section/chapter level rather than relying only on paragraph cohesion.
+- Added Quality failure classes for multiple competing explanatory spines and internal process-vocabulary leakage.
+- Kept source/log/API detail subordinate to the technical relation being taught unless source/runtime navigation is itself the reader task.
+- Prevented ANGENT control vocabulary such as owner/gate/baseline/artifact-state/repair terms from leaking into unrelated technical documents.
+- Preserved one response/document composition engine rather than introducing a separate document voice.
 
 ### Cognitive collaboration alignment
 

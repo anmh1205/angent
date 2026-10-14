@@ -11,7 +11,9 @@ Symptoms:
 - causal/ownership/state relations remain implicit;
 - reader must assemble the mechanism alone.
 
-Return to Authoring: expose the relation and interpretation.
+First locate the loss boundary. If Research/Reasoning established the relation but the candidate flattened it, return to Authoring. If the handoff itself lost or never established the load-bearing relation/mechanism, return to Reasoning/Research rather than asking prose to invent it.
+
+Return to Authoring only when the established subject model is sufficient and the realization failed to expose the relation and interpretation.
 
 ### Surface-induced prose regression
 
@@ -21,6 +23,26 @@ Symptoms:
 - document-specific narration/commentary appears even though the underlying subject model did not require it.
 
 Return to Authoring: restore the shared response-quality prose/composition baseline, then add only document-scale structure/depth. Do not invent a separate formal-document voice.
+
+### Multiple competing explanatory spines
+
+Symptoms:
+- every paragraph is individually relevant/correct;
+- the section alternates among several mechanisms, layers or examples without one dominant relation;
+- the reader must decide which details are central and reconstruct the path themselves;
+- source/note order is visible in the prose.
+
+Return to Authoring: choose the dominant explanatory spine, subordinate prerequisites/evidence/exceptions to it, and split only at a real technical boundary.
+
+Counter-case: do **not** flag multiple named mechanisms merely because more than one appears. When their interaction, feedback, negotiation, coupling or comparison is itself the load-bearing relation, that relation is one valid spine. A forced split would destroy the mechanism being taught.
+
+### Internal process vocabulary leakage
+
+Symptoms:
+- reader-facing technical prose contains ANGENT/workflow terms such as owner, gate, baseline, artifact state, repair target, active obligation or calibration even though those are not concepts in the subject;
+- the document narrates its own quality/reasoning process instead of the domain mechanism.
+
+Return to Authoring: translate internal control state into the subject's objects, relations, evidence and consequences. Keep process vocabulary internal unless the document is actually about that process.
 
 ### Meta-commentary replacing technical progression
 

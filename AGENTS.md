@@ -6,9 +6,9 @@ ANGENT is an unreleased cognitive-layer candidate. Core hardening, cognitive-col
 
 This file is the canonical repository instruction surface. Nested AGENTS.md files may refine a subtree without discarding applicable root rules.
 
-- Contract owns outcome, authority, active obligations and success semantics.
+- Contract owns outcome, authority, active obligations, invocation-bound effect authorization and success semantics.
 - Context owns relevant working state, collaboration state, provenance, context sufficiency and baseline/decision-basis pointers.
-- Reasoning owns strategic decisions, epistemic state, correction interpretation, frontier scheduling, repair semantics, progress/stall, dependency invalidation and integration of the shared cognitive workspace.
+- Reasoning owns strategic decisions, epistemic state, observation admission, correction interpretation, frontier scheduling, repair semantics, progress/stall, dependency invalidation and integration of the shared cognitive workspace.
 - Research owns evidence acquisition, support/lineage/measurement boundaries and evidence-grounded subject-model deltas.
 - Execution owns authorized effects, external observation and provider reconciliation.
 - Authoring owns reader-facing content, epistemic fidelity and semantic artifact state.
@@ -46,11 +46,23 @@ When a shared method/prompt/architecture change can propagate a defect broadly, 
 
 Quality should judge candidate/evidence independently and avoid being anchored by the producer's persuasive rationale.
 
+When a Quality phase is required by the current Contract/revision/consequence model, its verdict is a dependency of the transition it protects: PASS may satisfy it within the verdict-validity boundary; FAIL/BLOCKED cannot be ignored to advance the dependent accepted baseline, propagation, or write/publish-as-accepted. Unrelated runnable work may continue.
+
 A Quality verdict is itself an evidence-backed measurement claim. Distinguish subject defect from evaluator/criterion defect, environment/provider confound, mixed cause, or unresolved attribution; use BLOCKED rather than inventing certainty when attribution matters.
 
 Accepted baselines and prior tests are conditional on the measurement conditions that made their conclusions valid. A changed model/provider/harness/environment/rubric/input boundary invalidates only dependent conclusions.
 
 For stochastic/open-ended behavior, one success establishes possibility more readily than reliability. Use repeated representative evidence only when the claim and consequence warrant it, never by fixed quota.
+
+When a behavioral calibration/PASS will be reused later, preserve a reproducible evidence pointer linking case, baseline/candidate, observable trajectory/artifacts, outcome, criteria and verdict-validity boundary. “Passed before” without recoverable evidence is not durable acceptance.
+
+When a promoted Learning mechanism materially changes a decision/collaboration method, preserve only enough activation evidence to later distinguish retrieval from applicability/activation: mechanism pointer, matched decision/failure class, applicability basis, owner/control point and current effect. Absence of such evidence means activation is UNKNOWN, not false or true by assumption.
+
+For consequential effects, authority must still match the resolved operation, target and material arguments at the invocation boundary. Tool availability, an earlier plan, generic prior approval or possession of an operation ID does not authorize a materially changed effect.
+
+Treat tool/provider output as evidence before treating it as state. A material observation changes established state only at the strength supported by its operation/target identity, scope/version/freshness, completeness and residual uncertainty.
+
+Branch independence is conditional on the current dependency/shared-state model. A material effect or observation that changes shared state can invalidate a previously RUNNABLE branch; Reasoning recomputes only affected dependencies instead of assuming prior independence remains true.
 
 ## Collaboration state
 
@@ -106,6 +118,8 @@ Meta-commentary that announces importance, memorization advice, author intent, o
 
 Do not enforce this through a phrase blacklist. Evaluate whether each sentence advances the reader's technical model and whether paragraph relations remain cohesive.
 
+For each substantive section/chapter, preserve one dominant explanatory spine: supporting definitions, prerequisites, evidence, examples, exceptions and consequences should advance that spine rather than become several equally primary note streams. Keep ANGENT/process-control vocabulary internal unless the subject itself is that process.
+
 ## State separation
 
 AGENTS.md, Contract obligations, collaboration state, Memory, Reasoning/epistemic/frontier state, Authoring artifact state, Continuity frontier and Learning mechanisms are different semantic classes. Do not turn one into a universal transcript/database.
@@ -137,6 +151,20 @@ Whole-scope claims require complete-enough inventory and coverage. Pagination, t
 Prefer usable native AgentKit Engineer; otherwise use the fallback. Do not expose complete native and fallback catalogs together by default.
 
 Engineer inventory/parity maintenance remains separate from reliability hardening.
+
+## Activation discipline
+
+Do not solve recurrence by continuously enlarging the always-visible plugin/default prompt.
+
+Keep the bootstrap limited to cross-cutting control semantics. Put decision-class-specific detail in the owner/reference that controls the behavior and make Root routing activate it when needed.
+
+When a reliability rule is important but task-specific, prefer:
+- a clear activation condition in Root;
+- ownership at the earliest real control point;
+- interface state sufficient for that owner to apply it;
+- calibration/activation evidence when recurrence diagnosis requires proof it actually ran.
+
+Adding another always-on instruction is justified only when the property truly constrains almost every ANGENT task.
 
 ## Change discipline
 

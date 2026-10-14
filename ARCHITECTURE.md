@@ -160,6 +160,42 @@ The harness may serialize calls, but the cognitive plan remains multi-branch. AN
 
 This is not a scheduler runtime. Reasoning owns selection semantics; Execution owns external observation; Continuity preserves enough branch/wait state to resume correctly.
 
+## Decision-boundary integrity
+
+A plan can be correct when selected and wrong by the time it is executed or interpreted.
+
+For a consequential effect, ANGENT therefore distinguishes:
+
+~~~text
+planned action
+     |
+resolved operation + target + material arguments
+     |
+current authority / obligations / decisive preconditions
+     |
+effect invocation
+~~~
+
+Contract owns authority semantics. Reasoning selects the action. Execution sees the concrete invocation. Immediately before a consequential effect, the resolved invocation must still fit current authority; a stale plan, generic approval or available tool cannot authorize changed target/scope/arguments.
+
+The reverse boundary exists for observations:
+
+~~~text
+tool/provider result
+      |
+identity + scope/version + completeness + uncertainty
+      |
+Reasoning observation admission
+      |
+world/problem model update
+~~~
+
+Execution reports what was observed and its boundary. Reasoning decides what proposition that evidence can establish or invalidate. A partial, stale, mismatched or ambiguous result remains evidence, but it does not silently mutate a different target or whole-scope state.
+
+Multi-branch independence is also conditional. If one branch changes shared state, Reasoning recomputes affected dependency assumptions before trusting previous RUNNABLE classifications.
+
+These are cognitive semantics. ANGENT does not implement a permission server, event bus, transaction coordinator or observation database.
+
 ## Verdict and measurement validity
 
 Quality's own PASS/FAIL is not ground truth merely because Quality produced it.
@@ -175,6 +211,8 @@ When evaluation disagrees with the candidate/expected behavior, preserve attribu
 Accepted baselines and prior tests are conditional evidence. Changes in model/provider version, harness/tool behavior, environment/resources/configuration, rubric/criterion, source/artifact version, or task/input distribution invalidate only dependent conclusions.
 
 For stochastic/open-ended behavior, one success establishes possibility more strongly than reliability; one failure can expose a failure mode without establishing its rate. Representative repeated evidence is used only when the claim/consequence warrants it, with no universal trial count.
+
+When a behavioral calibration/PASS will be reused across turns or releases, preserve a reproducible evidence pointer connecting the case, baseline/candidate version, observable trajectory/artifacts, outcome, criteria and verdict-validity boundary. A remembered PASS is not durable evidence.
 
 These are cognitive semantics, not an evaluator platform.
 
@@ -259,6 +297,8 @@ A document surface must not introduce meta-commentary merely to sound instructio
 
 The invariant is semantic, not lexical: phrases are not banned by token; they fail when they replace technical progression or fragment paragraph cohesion.
 
+A substantive section/chapter should also preserve one dominant explanatory spine. The full subject graph can contain many valid relations, but reader-facing prose stages them around the capability being built instead of exposing source/note order. Internal ANGENT control vocabulary remains internal unless the document is actually about that process.
+
 ## Revision loop
 
 Existing work is changed relative to an accepted baseline.
@@ -286,9 +326,9 @@ A complaint is evidence of a failed property. It does not automatically define t
 
 ## Ownership
 
-- **Contract**: task boundary, authority, evolving obligations and success semantics.
+- **Contract**: task boundary, invocation-bound authority, evolving obligations and success semantics.
 - **Context**: smallest relevant working/collaboration state, context sufficiency, decision-basis/baseline pointers, recurrence evidence, provenance and trust class.
-- **Reasoning**: problem/system model, epistemic state, correction interpretation, frontier scheduling, robust decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
+- **Reasoning**: problem/system model, epistemic state, observation admission, correction interpretation, frontier scheduling, robust decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
 - **Research**: evidence, support/lineage/measurement boundaries and evidence-grounded subject-model deltas that reduce decision-relevant uncertainty.
 - **Execution**: authorized effects, external observation, retry/reconciliation and provider evidence.
 - **Quality**: independent solution, behavioral-calibration, comparative-candidate, endpoint and verdict-validity judgment.
@@ -354,7 +394,10 @@ Detailed owner-internal models stay with their owner rather than being copied in
 31. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
 32. Working-method learning is causal and conditional, not a personality/preference dump.
 33. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
-34. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
+34. Consequential effect authority binds to the resolved invocation, not merely a plan/tool capability.
+35. Material observations update established state only within their verified identity/scope/version/completeness boundary.
+36. Branch independence is conditional and affected dependencies are recomputed after shared-state change.
+37. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
 
 ## Canonical references
 

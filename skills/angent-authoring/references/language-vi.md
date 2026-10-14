@@ -40,6 +40,14 @@ Better: “AAPCS64 yêu cầu SP căn chỉnh 16 byte tại các public interfac
 
 The lesson is not to ban “Điểm quan trọng là”. It is to replace meta-commentary with the actual rule, reason, or consequence.
 
+## Internal process vocabulary boundary
+
+Do not leak the vocabulary used to manage ANGENT's own work into an unrelated technical document.
+
+Words such as `owner`, `gate`, `baseline`, `artifact state`, `repair target`, `quality floor`, `active obligation` or `calibration` are valid only when the subject itself requires those concepts.
+
+When internal state helped produce a sentence, realize the sentence in the domain's objects, relations and consequences instead of narrating the authoring/reasoning machinery.
+
 ## Formal technical writing
 
 Avoid habitual direct-address coaching, fake rhetorical questions and conversational filler.

@@ -30,7 +30,9 @@ Evaluate only relevant dimensions:
 - handling of material alternatives;
 - causal/uncertainty calibration;
 - decision integrity and decision-basis traceability;
-- dependency/replan integrity;
+- dependency/replan integrity, including revalidation of branch independence after shared-state changes;
+- effect-boundary integrity: current authority matches the resolved consequential target/material arguments;
+- observation-admission integrity: model/decision changes are supported by the actual observed identity/scope/version/completeness;
 - scope-to-evidence coverage;
 - authoritative endpoint evidence.
 
@@ -50,6 +52,21 @@ Distinguish:
 - unresolved attribution.
 
 Use BLOCKED when available evidence cannot reliably distinguish these and the distinction can change the next action.
+
+## Verdict consumption
+
+Quality does not grant effect authority, but a Quality phase that the current Contract/revision/risk model has made **required** is a dependency of the transition it protects.
+
+For that dependent transition:
+- **PASS** satisfies the Quality dependency only within its verdict-validity boundary;
+- **FAIL** rejects the current candidate/solution for that dependency and routes repair to the earliest faulty owner;
+- **BLOCKED** leaves the dependency unsatisfied until evidence/evaluator/environment uncertainty is resolved or the requirement is legitimately changed.
+
+Do not advance an accepted baseline, publish/write a candidate as accepted, or perform another consequential dependent effect merely by ignoring a required FAIL/BLOCKED.
+
+Do not globally stop unrelated RUNNABLE work. The verdict blocks only transitions that rely on that gate.
+
+A direct low-consequence task with no required Quality phase remains direct.
 
 ## Earliest faulty owner
 
@@ -104,6 +121,8 @@ Use representative real failure/success cases and counter-cases rather than keyw
 For recurring corrections, include at least one analogous case not literally named by the latest complaint when practical. This checks whether the generating mechanism was repaired rather than the example memorized.
 
 Calibration is evidence about a method; it is not whole-scope proof and should not become a mandatory platform for trivial changes.
+
+When a material behavioral acceptance claim will be reused later, keep a reproducible evidence pointer/record linking the case, baseline, candidate, observable trajectory/artifacts, outcome, criteria and verdict validity boundary. Do not rely on “passed before” as an ungrounded memory.
 
 ## Effort
 

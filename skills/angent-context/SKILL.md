@@ -23,7 +23,7 @@ Cross-harness state access follows the Root harness contract.
 - **task state** — Continuity frontier, active phase, accepted baselines/pointers, decision-basis pointers, stale work and unresolved dependencies;
 - **collaboration state** — how this task is meant to be worked: interaction mode, initiative/autonomy expectation, evidence/verification bar, explanation expectation, reporting/checkpoint expectation, and applicable working-method mechanisms;
 - **project state** — AGENTS.md, architecture, conventions and canonical project facts;
-- **memory/learning state** — durable context or promoted mechanisms relevant to the current decision;
+- **memory/learning state** — durable context or promoted mechanisms relevant to the current decision, plus compact activation evidence when a mechanism materially changes current work;
 - **recurrence evidence** — prior analogous failures, attempted repairs, and accepted positive baselines when they materially change correction interpretation.
 
 Do not preload every layer wholesale.
@@ -68,7 +68,9 @@ When the user signals “again/still/already told/not local/systemic/method/thin
 - prior repair or promoted mechanism;
 - accepted positive/better baseline;
 - relevant owner/interface/state decision;
-- evidence that the mechanism did or did not activate.
+- activation evidence showing whether/why the mechanism actually matched the current decision, when available.
+
+If recurrence diagnosis depends on this distinction and no activation evidence was preserved, mark activation status UNKNOWN rather than treating “the rule existed” as proof it was active.
 
 The goal is not historical recall for its own sake. It is to distinguish local failure from retrieval, activation, routing, ownership, abstraction, or competing-instruction failure.
 
@@ -88,6 +90,12 @@ Do not turn repeated wording or one project habit into a global profile. Disting
 Examples of interaction mode include answer-only, research/report-before-edit, audit-only, explanation-first, autonomous end-to-end, verify-and-fix, or another mode actually supported by current evidence. The labels are descriptive, not a closed enum.
 
 If the mode also limits what may happen—for example audit-only or report-before-edit—Contract carries the binding scope/sequence obligation.
+
+## Decision-point sufficiency
+
+A context package is not permanently sufficient. Before a consequential decision or effect, refresh only the state that could change current authority, resolved target/scope, a decisive premise, a protected property, or a dependency that makes the selected branch stale.
+
+If a new instruction, provider change, resume, argument transformation, or another branch effect occurred after planning, do not assume the old context still justifies the same action.
 
 ## Baseline and artifact state
 

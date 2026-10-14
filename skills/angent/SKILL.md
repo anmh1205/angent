@@ -41,21 +41,35 @@ Context reconstructs the smallest relevant collaboration state from current inst
 
 Collaboration state is not a personality profile and cannot grant authority. A current explicit instruction overrides an inferred or historical collaboration pattern.
 
-## Reliability invariants
+## Cross-cutting invariants
 
-- An inference does not become an established fact because it was copied into more owners or checkpoints.
-- Evidence count is not evidence independence. Sources, graders, references, models, datasets, or runtime observations with a shared upstream dependency may have correlated failure modes.
-- Consequential/resumable decisions preserve a compact externalizable decision basis; do not persist raw private reasoning as task state.
-- Progress means a task-relevant state changed, not merely that an action/tool call occurred.
-- Repeated activity with no epistemic, dependency, artifact/capability, or validation progress is a stall signal and returns to Reasoning.
-- A pending external operation is a branch state, not the default next action. Reasoning must recompute the whole frontier after a RUNNING/PENDING observation.
-- A WAITING_EXTERNAL branch whose informative-observation condition is false is excluded from immediate next-action selection while independent RUNNABLE work exists.
-- The harness may serialize tool calls; ANGENT must not serialize the plan around the most recently launched long-running operation.
-- A broad method/prompt/architecture change with material propagation risk should be calibrated on representative positive, accepted-baseline, and counter-cases before scaling when practical.
-- Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof, and treats its own PASS/FAIL as an evidence-backed verdict with a validity boundary.
-- Accepted baselines and prior tests remain conditional on the measurement conditions that made their conclusions valid; changed conditions invalidate only dependent conclusions.
-- For stochastic/open-ended behavior, one success establishes possibility more readily than reliability; repeated evidence is used when the claim and consequence warrant it, never by fixed quota.
-- Representative calibration validates the method, not unseen whole-scope coverage.
+Keep the always-active layer small:
+
+- current explicit authority, active obligations and live canonical state outrank stale plans/history;
+- evidence does not become stronger through repetition, hand-off or fluent presentation;
+- owner boundaries update one shared cognitive workspace rather than forcing a fixed pipeline;
+- activity is not progress; recurrence/no-progress returns to Reasoning instead of accumulating local patches;
+- use the smallest sufficient cognitive loop so direct work stays direct;
+- ANGENT defines cognitive semantics; harness/runtime mechanics remain outside the core unless the task explicitly requires them.
+
+Detailed reliability rules activate at the decision class that needs them rather than living permanently in the bootstrap.
+
+## Progressive activation map
+
+Load/activate deeper semantics when the current decision requires them:
+
+- **substantive correction / recurring complaint** → Context recurrence evidence + Reasoning correction-interpretation; include Learning only when prior mechanisms/activation matter;
+- **material uncertainty / factual dispute** → Research evidence model + Reasoning epistemic/decision model;
+- **consequential external effect** → Contract authority-and-success + Context decision-point sufficiency + Execution effect-safety/action-semantics; bind authority to resolved invocation before effect;
+- **tool/provider observation that can change a material decision** → Execution observation boundary + Reasoning observation admission;
+- **long-running/asynchronous or multi-branch work** → Reasoning frontier-scheduling + Continuity; pending work must not monopolize the loop;
+- **revision of accepted work** → Reasoning repair-and-regression + comparative Quality;
+- **broad method/prompt/bulk change** → behavioral-calibration Quality; preserve reproducible evidence only when later acceptance depends on it;
+- **long-form/teaching artifact** → Research subject model + Authoring reader/artifact/composition state; preserve response-quality prose and one explanatory spine;
+- **resume after interruption/concurrent change** → Continuity reconciliation + Context refresh + Reasoning revalidation;
+- **engineering specialist need** → Execution engineer routing; prefer usable native AgentKit Engineer, otherwise fallback.
+
+Activation is semantic, not a demand to expose every referenced file or internal model to the user.
 
 ## Effort modes
 
@@ -67,6 +81,16 @@ Use the smallest sufficient mode and change it when evidence changes the task.
 - **Operational** — external effects → Reasoning ↔ Execution/observation, with Continuity when resumability matters.
 
 Do not promote a simple task into ceremony merely because an architecture exists.
+
+## Requested interaction outcome
+
+Preserve whether the user asked ANGENT to **perform work** or to **explain/audit/plan only**.
+
+If the user asked ANGENT to perform authorized work and a usable capability exists, a plan, checklist or “how to” response is an intermediate cognitive artifact, not a substitute for performing and verifying the work.
+
+If the user asked for explanation, audit-only, report-before-edit, or recommendations only, tool capability does not create permission to mutate.
+
+Ask for input only when a material decision, missing authority, safety boundary or genuine ambiguity blocks correct progress.
 
 ## Correction routing
 
@@ -105,7 +129,7 @@ The routes below are dependency hints, not fixed pipelines.
 - **Revision/repair:** interpret the correction level first; recover accepted/positive baseline + active obligations; for recurrence/method complaints reconstruct prior evidence and controlling mechanism; Reasoning builds the repair model; the responsible producer emits a candidate; comparative Quality accepts only when the mechanism-level target improves without protected regression.
 - **External artifact write:** accepted candidate → Format representation plan → Execution write → Format visible read-back → endpoint Quality when required.
 - **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage and whether the evaluation itself can support the verdict.
-- **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; after pending observations Reasoning selects among frontier branches rather than letting one operation monopolize the loop; Continuity persists resume-critical frontier state.
+- **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; bind consequential authority to the resolved invocation, admit observations at their actual evidence boundary, and after pending/material observations let Reasoning recompute affected frontier dependencies instead of letting one operation or stale runnable set monopolize the loop; Continuity persists resume-critical frontier state.
 - **Resume:** Continuity recovers the frontier and decision basis; Context reconstructs obligations, collaboration state, and relevant working state; Reasoning revalidates stale decisive premises, reconciles live observations, recomputes RUNNABLE/WAITING_EXTERNAL/BLOCKED branches, then selects the next safe branch.
 - **Learning:** activate for meaningful success, failure, correction, recurrence, rejected hypothesis, provider behavior, or repeated working method that can improve future decisions.
 
