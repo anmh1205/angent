@@ -1,24 +1,30 @@
 ---
 name: ak-shader
-description: Design and debug GLSL-style procedural shaders with explicit coordinate systems, SDF/noise/color math and measurable performance constraints.
-metadata: {port: angent-fallback, mode: portable}
+description: Author and debug GLSL/WebGL fragment shaders with correct coordinates, SDF/noise math, version-specific compilation and GPU visual/performance checks.
+metadata: {port: angent-fallback, mode: adapted}
 ---
 
-# Shader — Portable Fallback
+# GLSL Shader — Portable Fallback
 
-## Load progressively
+Use for procedural textures, distance-field geometry, noise/patterns, animation and shader effects in WebGL/Three.js/other graphics runtimes. Stable Engineer 2.19.0 describes fragment fundamentals, shader functions, shape/raster logic and progressively loaded math/reference patterns. Preserve the **rendering mechanism** rather than a generic 'write a shader' task.
 
-- `references/building-blocks.md` — coordinates, SDF, patterns, noise and color.
-- `references/debug-performance.md` — diagnose visual/numeric/performance failures.
+Read `references/building-blocks.md` and `references/debug-performance.md`.
 
-## Workflow
+## Language/runtime contract
 
-1. Identify shader language/runtime version and uniforms.
-2. Normalize coordinates explicitly.
-3. Build the effect in layers.
-4. Preview after each meaningful layer.
-5. Keep numeric ranges/space transforms understandable.
-6. Animate with time only after static structure works.
-7. Profile expensive loops/noise/layers when target hardware matters.
+Identify GLSL ES 1.00/WebGL1 versus GLSL ES 3.00/WebGL2, three.js ShaderMaterial/RawShaderMaterial, or another target. Version affects precision declarations, `attribute/varying` versus `in/out`, and `gl_FragColor` versus named fragment outputs; do not paste incompatible boilerplate.
 
-Explain the mechanism, not only the final code.
+A fragment shader computes each fragment's output from interpolated coordinates/uniforms; it cannot safely assume arbitrary cross-fragment shared memory. Common uniforms include time, resolution, pointer position and textures; establish actual names from the target host rather than inventing bindings.
+
+Normalize screen coordinates consistently, including aspect correction, texture UV origin, pixel density and derivatives. Compose simple signed-distance functions, `mix`, `smoothstep`, gradients, frequency/tiling/noise and fBm with numerical ranges and color space explicit.
+
+## Build and debug
+
+1. Start from the smallest static valid shader in the intended host, confirm compile/link errors.
+2. Add one mathematical component at a time: shape/mask, coordinate mapping, color transformation, procedural noise, lighting and time evolution.
+3. Visualize intermediate scalar masks/UVs and edge cases (zero resolution, NaN/divide-by-zero, precision on mobile, missing textures, extreme zoom) before introducing heavy animation.
+4. Inspect actual rendered pixels at normal and atypical resolutions and device pixel ratios. Diagnose gamma/sRGB/linear mismatches, aliasing, banding, unstable temporal noise and seams at tile boundaries.
+5. Profile GPU cost when relevant: loops, many noise octaves, branches, texture sampling and framebuffer passes. Simplify while preserving output semantics; avoid promises of cross-platform performance without measurements.
+6. Return shader source, required uniforms/renderer version, observed compile/render checks and unsupported targets.
+
+Without an actual GPU/browser shader compiler the outcome is **source with unverified visual/runtime behavior**, not a validated live effect.

@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **97 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **99 / 102 Skill identities reviewed semantically**.
 
-- **72 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-fable-thinking`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-google-adk-python`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-mcp-builder`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
-- **22 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-hyperframes`, `ak-journal`, `ak-markdown-novel-viewer`, `ak-mintlify`, `ak-plans-kanban`, `ak-preview`, `ak-repomix`, `ak-show-off`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
+- **73 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-fable-thinking`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-google-adk-python`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-mcp-builder`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-shader`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
+- **23 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-hyperframes`, `ak-journal`, `ak-markdown-novel-viewer`, `ak-mintlify`, `ak-plans-kanban`, `ak-preview`, `ak-remotion`, `ak-repomix`, `ak-show-off`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
 - **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
-- **5 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **3 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -184,6 +184,10 @@ Fable Thinking retains its always-run floor, proportional depth, five evidence/d
 
 HyperFrames retains its pinned HTML composition timing, lint-before-render, local MP4 QA and separate authorized HeyGen cloud pathway. Markdown Novel Viewer retains source-root/localhost-safe file/directory HTTP reader behavior, reading navigation, responsive rendering and Mermaid support without pretending its Node server package is installed. Preview now distinguishes read-only view, Markdown/HTML explanation/diagram/slides, visual Git diff, plan review and recaps with exact source and rendered acceptance; its upstream HTML templates/server are not bundled. All three remain DEGRADED until their native runtimes are verified, while a host-native substitution may still fulfill a specific user-facing output.
 
+### Frame-exact video and shader rendering
+
+Remotion now preserves composition/frame counts, useCurrentFrame deterministic motion, asset/caption/audio alignment and real rendered-video acceptance; the upstream 33-rule pack and renderer remain absent in the fallback, so it is DEGRADED. Shader preserves target GLSL version/fragment output, UV/aspect/SDF/noise and explicit shader compile, framebuffer visual and performance checks, adapted to runtime-provided graphics tools. Both avoid claiming graphics output from unexecuted source code.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -258,7 +262,7 @@ HyperFrames retains its pinned HTML composition timing, lint-before-render, loca
 | `ak-project-management` | VERIFIED_ADAPTED | stable 2.19.0 durable plan hydration, all-phase sync-back, verified progress and docs-impact routing retained |
 | `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored |
 | `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
-| `ak-remotion` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-remotion` | VERIFIED_DEGRADED | stable 2.19.0 33-rule React frame timeline, media, captions and render QA; rule pack/runtime absent |
 | `ak-repomix` | VERIFIED_DEGRADED | stable 2.19.0 bounded packaging formats, remote/token/security workflow; native CLI/batch helper absent |
 | `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-research-prompt` | VERIFIED_ADAPTED | stable 2.19.0 Research-assignment-only boundary and one-paragraph evidence brief contract restored |
@@ -269,7 +273,7 @@ HyperFrames retains its pinned HTML composition timing, lint-before-render, loca
 | `ak-security` | VERIFIED_ADAPTED | stable 2.19.0 comprehensive/fast/red-team/fix semantics reviewed; runtime scanners and advisory access remain harness-dependent |
 | `ak-security-scan` | VERIFIED_ADAPTED | stable 2.19.0 packaged standalone read-only security-scan semantics restored from artifact truth; not collapsed into ak-security |
 | `ak-sequential-thinking` | VERIFIED_ADAPTED | stable 2.19.0 revision/branch/hypothesis/uncertainty semantics preserved while private chain-of-thought exposure is intentionally omitted |
-| `ak-shader` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-shader` | VERIFIED_ADAPTED | GLSL version-aware fragment/SDF/noise/coordinate pipeline with compile/visual/GPU QA |
 | `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
 | `ak-shopify` | VERIFIED_ADAPTED | stable 2.19.0 app/extension/theme lifecycle reviewed with current GraphQL-first API, scope/webhook/version and deploy/publish boundaries |
 | `ak-show-off` | VERIFIED_DEGRADED | stable 2.19.0 prefs/plan/bilingual HTML/screenshots/publishing gates; capture/helper/AgentWiki unavailable |
