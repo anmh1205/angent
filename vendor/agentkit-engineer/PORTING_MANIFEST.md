@@ -32,11 +32,11 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **20 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **25 / 102 Skill identities reviewed semantically**.
 
-- **19 VERIFIED_ADAPTED**: `ak-agentkit`, `ak-bootstrap`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-deploy`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-worktree`.
+- **24 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentkit`, `ak-autoresearch`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-deploy`, `ak-fix`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-handoff`, `ak-handover`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-scout`, `ak-ship`, `ak-skill-creator`, `ak-test`, `ak-worktree`.
 - **1 VERIFIED_DEGRADED**: `ak-team` because a real live-team lifecycle is load-bearing and cannot be truthfully emulated by ordinary subagents/sequential roles.
-- **82 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **77 REVIEW_PENDING**: no semantic acceptance claim yet.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -54,11 +54,22 @@ Key corrections included:
 - Worktree preserves create/list/status/remove/prune, exact-branch/base/monorepo/submodule semantics while cleanup remains fail-safe.
 
 
+
+### Causal-repair and decision-workflow batch
+
+This batch reviewed `ak-fix`, `ak-scout`, `ak-autoresearch`, `ak-brainstorm` and `ak-advise`.
+
+Key corrections:
+- Fix restores bounded intent, scout-before-diagnose, evidence-backed root cause, mode semantics, blast-radius/no-side-effect verification and non-convergence escalation.
+- Scout remains read-only reconnaissance, with explicit delegation and external-provider data-sharing boundaries rather than equating scouting with subagent spawning.
+- Autoresearch is a router for the measurable iteration contract; Loop/Predict/Scenario/Security own executable workflows.
+- Brainstorm stays proportional and contract-first, while Advise preserves its manually invoked one-question-at-a-time pressure-test and confirmed reframing. They are intentionally not collapsed into one interaction pattern.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
 |---|---|---|
-| `ak-advise` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-advise` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-agent-browser` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-agentize` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-agentkit` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
@@ -66,11 +77,11 @@ Key corrections included:
 | `ak-ai-multimodal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-ak` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-ask` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-autoresearch` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-autoresearch` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-backend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-better-auth` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-bootstrap` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-brainstorm` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-brainstorm` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-chrome-profile` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-code-review` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-codex-goal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -92,7 +103,7 @@ Key corrections included:
 | `ak-excalidraw` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-fable-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-find-skills` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-fix` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-folder-context` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-frontend-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-frontend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
@@ -135,7 +146,7 @@ Key corrections included:
 | `ak-retro` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-scenario` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-scout` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-scout` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
 | `ak-security` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-security-scan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-sequential-thinking` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
