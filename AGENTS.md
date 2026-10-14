@@ -1,6 +1,6 @@
 # AGENTS.md — ANGENT repository instructions
 
-ANGENT is an unreleased cognitive-layer candidate. Core hardening is integrated. The cognitive-collaboration alignment is being integrated while Engineer inventory/parity remains a separate deferred phase.
+ANGENT is an unreleased cognitive-layer candidate. Core hardening and the cognitive-collaboration alignment are integrated; Engineer inventory/parity refresh is the next separate phase.
 
 ## Authority and ownership
 
@@ -72,7 +72,7 @@ Whole-scope claims require complete-enough inventory and coverage. Pagination, t
 
 Prefer usable native AgentKit Engineer; otherwise use the fallback. Do not expose complete native and fallback catalogs together by default.
 
-Engineer inventory/parity maintenance remains a separate phase after cognitive-core alignment.
+Engineer inventory/parity maintenance is the next separate phase after the integrated cognitive core.
 
 ## Change discipline
 

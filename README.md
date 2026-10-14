@@ -4,7 +4,7 @@
 
 ANGENT helps an agent preserve intent and authority, understand how the current collaboration is meant to work, reconstruct relevant state, reason from evidence, repair existing work without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable mechanisms.
 
-> **Status:** ANGENT 1.0.0 remains **unreleased**. Core hardening is integrated and the cognitive-collaboration alignment is being integrated. Engineer fallback inventory/parity refresh remains a separate deferred phase; the project is not release-ready yet.
+> **Status:** ANGENT 1.0.0 remains **unreleased**. Core hardening and the cognitive-collaboration alignment are integrated into main through PR #3 and PR #5. Engineer fallback inventory/parity refresh is the next separate phase; the project is not release-ready yet.
 
 ## Core architecture
 
@@ -82,7 +82,7 @@ Engineering specialist capability remains native-first:
 2. otherwise use the ANGENT fallback;
 3. do not expose complete native and fallback catalogs together by default.
 
-The current fallback implementation remains intentionally unchanged during cognitive-core alignment. Its upstream catalog/parity refresh is a separate next phase, and current inventory counts must not be treated as proof of parity with the latest AgentKit release.
+The current fallback implementation remains intentionally unchanged during cognitive-core work. Its upstream catalog/parity refresh is the **next separate phase**, and current inventory counts must not be treated as proof of parity with the latest AgentKit release.
 
 ## Repository validation policy
 
@@ -94,4 +94,4 @@ Repository CI keeps only minimal committed-diff hygiene. Core correctness is est
 
 Do not publish, tag, or update the canonical private ChatGPT plugin yet.
 
-Complete cognitive-core alignment and the deferred Engineer refresh, then perform cross-harness and release-surface reconciliation before any release decision.
+Complete the deferred Engineer refresh, then perform cross-harness and release-surface reconciliation before any release decision.

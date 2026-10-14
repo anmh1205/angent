@@ -1,8 +1,8 @@
 # Changelog
 
-## Unreleased — cognitive collaboration alignment, Engineer deferred
+## Unreleased — cognitive collaboration aligned, Engineer deferred
 
-ANGENT 1.0.0 remains unreleased. Core hardening was integrated into main through PR #3 as squash commit 68f075b34c2b8948842d6bdf8aaaf14257db9733. A subsequent cognitive-alignment pass restores the strongest reasoning/authoring behavior identified in the Cogent lineage without reverting ANGENT's repair, continuity, quality or learning improvements.
+ANGENT 1.0.0 remains unreleased. Core hardening was integrated into main through PR #3 as squash commit 68f075b34c2b8948842d6bdf8aaaf14257db9733. Cognitive collaboration alignment was integrated through PR #5 as squash commit 8e94413d1460be5946e3d53083110c52a2817469.
 
 ### Cognitive collaboration alignment
 
@@ -42,7 +42,7 @@ ANGENT 1.0.0 remains unreleased. Core hardening was integrated into main through
 
 ### Engineer boundary
 
-Engineer implementation remains intentionally unchanged during this cognitive-core alignment.
+Engineer implementation remains intentionally unchanged during cognitive-core alignment.
 
 The next separate phase is to refresh native/fallback Engineer inventory/parity against current upstream while preserving canonical ANGENT cognitive semantics.
 
@@ -51,10 +51,9 @@ The next separate phase is to refresh native/fallback Engineer inventory/parity 
 1.0.0 is **not release-ready**.
 
 Before any release:
-1. complete the cognitive-core alignment and read-back;
-2. complete the deferred Engineer inventory/parity refresh;
-3. reconcile cross-harness behavior and the private ChatGPT package against the exact canonical source;
-4. resolve the release/plugin identity/version strategy explicitly.
+1. complete the deferred Engineer inventory/parity refresh;
+2. reconcile cross-harness behavior and the private ChatGPT package against the exact canonical source;
+3. resolve the release/plugin identity/version strategy explicitly.
 
 ## Previous candidate history
 
