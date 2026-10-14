@@ -55,6 +55,19 @@ When changing specialist/subagent behavior, test both context isolation and nece
 
 The method fails if it either starves the specialist of load-bearing context or exports the whole parent conversation/profile/authority as implicit worker state.
 
+## Fan-out synthesis calibration
+
+When multiple specialist/research branches feed one decision, test convergence rather than only individual branch quality:
+
+- **required discriminator still pending** — one branch supports A, another was launched because its result could reverse A; do not commit A merely because the supporting branch returned first;
+- **optional branch still pending** — current decision is robust across credible remaining outcomes; do not wait by ritual;
+- **correlated agreement** — two workers repeat one source/assumption; do not count that as independent confirmation;
+- **material conflict** — preserve conflict and seek the controlling/discriminating evidence instead of majority vote;
+- **late contradiction** — reopen only dependent decisions/work; do not ignore it because synthesis already occurred or accept it merely because it arrived last;
+- **independent implementation branches** — execution can proceed separately while their later shared acceptance still respects dependency/merge/Quality boundaries.
+
+The method fails if arrival order, worker count, or completion timing substitutes for evidence strength and decision robustness.
+
 ## Failure-domain calibration
 
 When changing error/observation semantics, use contrasting cases that prove the boundary rather than the wording:

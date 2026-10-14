@@ -38,6 +38,7 @@ Evaluate only relevant dimensions:
 - mutation-freshness integrity: consequential existing-state writes are based on a compatible live target version/basis and preserve unrelated concurrent changes;
 - canonical-target integrity: semantic-role targets resolve to the current authoritative object while explicit exact/historical targets remain bound to the identity actually requested;
 - delegation-context integrity when specialists are used: bounded work context/effect authority is preserved, material trust/epistemic boundaries survive handoff, and specialist self-report is re-admitted rather than promoted automatically;
+- fan-out synthesis integrity when several branches inform one decision: unresolved decision-reversing evidence is not bypassed, correlated agreement is not counted as independent confirmation, and arrival order does not determine truth;
 - scope-to-evidence coverage;
 - authoritative endpoint evidence.
 

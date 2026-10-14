@@ -47,6 +47,20 @@ Independence is a reasoning conclusion, not a permanent branch property. Preserv
 
 A branch can move RUNNABLE → BLOCKED/STALE when another branch changes a prerequisite, and a blocked/waiting branch can become RUNNABLE when a dependency is satisfied.
 
+## Decision joins
+
+Independent execution does not imply independent acceptance.
+
+Several branches can run independently yet converge on one later decision. When unresolved branch output can materially reverse that decision, preserve the dependency instead of treating the first completed branch as sufficient by default.
+
+A decision join is semantic, not a runtime barrier:
+- identify which branch results remain decision-relevant;
+- synthesize completed results by provenance/evidence strength, not arrival order;
+- allow early decision when it is robust across credible outcomes of the unfinished branches;
+- otherwise keep only the dependent decision/work blocked while unrelated RUNNABLE work continues.
+
+Do not wait for every branch merely to satisfy a fan-out count.
+
 ## Recheck eligibility
 
 A WAITING_EXTERNAL branch becomes eligible for another observation only when a stated condition is satisfied, such as:

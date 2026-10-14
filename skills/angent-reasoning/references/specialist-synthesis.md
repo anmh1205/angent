@@ -53,6 +53,27 @@ A worker/specialist saying “done”, “tests passed”, or “verified” is 
 
 Re-admit specialist claims through the same evidence/observation boundaries as any other input; do not promote them merely because the specialist was trusted or specialized.
 
+## Fan-out convergence
+
+When several specialist/research branches inform one decision, arrival order is not evidence weight and the first completed branch does not automatically close the decision.
+
+Before or during fan-out, Reasoning should know enough to distinguish:
+- branches whose unresolved result can still reverse or materially change the decision;
+- branches that are useful but non-blocking because the decision is already robust without them;
+- branches that are redundant/correlated rather than independent confirmation.
+
+Do not wait for every branch by ritual. A pending branch stops being decision-blocking when the current decision is robust across its credible remaining outcomes or when its information value no longer justifies the delay.
+
+Do not commit a consequential decision merely because one favorable branch returned first while another still-open branch was specifically launched to discriminate a live alternative that could reverse the choice.
+
+When outputs conflict:
+- preserve each claim's provenance, scope and epistemic boundary;
+- inspect shared assumptions/source lineage before counting them as independent votes;
+- identify the discriminating observation or controlling authority;
+- keep the decision unresolved when the conflict is material and cannot yet be adjudicated.
+
+A late result that contradicts a decisive premise reopens only the dependent decision/work. It is not discarded because synthesis already happened, and it does not win merely because it arrived last.
+
 ## Roles
 
 Planner proposes implementation structure; Reasoning still checks objective/invariants.
@@ -67,4 +88,4 @@ Reviewer/tester provides implementation evidence; Quality still owns task-level 
 
 Implementer produces artifacts/effects; Execution/Quality verify the resulting state rather than trusting completion narration.
 
-Fan out only when work is meaningfully independent or specialist context isolation adds value.
+Fan out only when work is meaningfully independent or specialist context isolation adds value. Keep synthesis ownership in Reasoning even when execution is parallel or delegated.
