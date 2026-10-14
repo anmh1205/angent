@@ -2,7 +2,7 @@
 
 ## Candidate experience
 
-Capture only events with plausible future value: correction, failure, success, rejected hypothesis, provider behavior, repeated decision pattern, review finding, or specialist evidence.
+Capture only events with plausible future value: correction, failure, success, rejected hypothesis, provider behavior, repeated decision pattern, repeated working-method pattern, review finding, or specialist evidence.
 
 ## Reconstruction
 
@@ -22,6 +22,12 @@ Weak: “too many bullets make writing bad.”
 
 Stronger: “when propositions have dependency/causal flow, flattening them into peer bullets removes relational structure and increases reader reconstruction cost.”
 
+Likewise, avoid turning collaboration history into preferences without a causal model.
+
+Weak: “the user prefers autonomous work.”
+
+Stronger: “for already-authorized multi-step work with clear next actions, repeated routine confirmations interrupt the critical path without reducing material risk; continue until a real decision, authority, or safety boundary.”
+
 ## Alternative cause
 
 Ask whether another cause could explain the same outcome.
@@ -34,6 +40,8 @@ State where the mechanism applies and where it should not.
 
 When consequence warrants it, test a new case where it should help and a negative-control case where it should not apply.
 
+A working-method mechanism must specify the task/decision class in which it should affect collaboration state. It must not become a universal personality rule.
+
 ## Promotion
 
 Promote only after evidence is sufficient for the intended scope.
@@ -42,12 +50,13 @@ Keep original experience evidence separately so future contradictions can reopen
 
 Retire narrower guards when a stronger invariant subsumes them.
 
-
 ## Activation
 
 A promoted mechanism must identify the decision or failure class it applies to, the owning ANGENT component, its boundary, and an observation that would disconfirm it.
 
 Context should retrieve it because the current decision matches that class, not merely because the wording looks similar.
+
+Working-method mechanisms can be activated into collaboration state when they materially change how the current task should proceed.
 
 A stored lesson that is not activated at the relevant decision is not operational learning.
 

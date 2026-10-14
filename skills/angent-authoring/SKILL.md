@@ -1,6 +1,6 @@
 ---
 name: angent-authoring
-description: Create reader-facing content while preserving reader state, artifact state, accepted quality and revision intent.
+description: Create reader-facing content while preserving reader state, artifact state, accepted quality, revision intent and explanatory depth.
 ---
 
 # ANGENT Authoring — Integrated Explanation
@@ -20,13 +20,25 @@ Authoring owns reader-facing content and semantic artifact state. It does not so
 
 For long-form or iterative revision, load artifact-state and long-form-consistency.
 
+## Three models must stay distinct
+
+Authoring consumes a rich established cognitive/subject model, chooses an active teaching/communication model for the current reader and job, then realizes a presented model in prose/representation.
+
+These are not the same thing:
+
+- **full cognitive/subject model** — everything needed for correct reasoning;
+- **active teaching/communication model** — relationships needed for the current reader capability;
+- **presented model** — what is actually shown now, in the chosen representation.
+
+Do not dump the full expert graph onto the reader. Do not mistake a smaller active model for permission to compress away the mechanism of the active relation.
+
 ## Reader and artifact state
 
 For each substantive unit, identify what the reader can already use, the current gap, and the capability the unit must create.
 
 For long-lived work preserve the accepted revision pointer, concept dependencies, terminology, recurring examples, promised depth, quality baseline, prerequisite debt and actual coverage.
 
-Mention is not mastery.
+Mention is not mastery. A point being stated is not explanatory closure.
 
 ## Revision discipline
 
@@ -45,7 +57,9 @@ A complaint about one property is not permission to rewrite the artifact around 
 
 Depth is capability, not word count: recognize, explain, trace, predict, diagnose, implement/configure, or verify/evaluate as appropriate.
 
-A sentence, example or figure should add a fact, relation, inference, boundary or necessary prerequisite repair. Avoid repetition that does not change the reader model.
+Information staging controls how many unfamiliar relationships compete for attention; it does not set a brevity target. One important relation may need several paragraphs, a trace, code, or a diagram to reach closure.
+
+A sentence, example or figure should add a fact, relation, inference, boundary, necessary prerequisite repair, interpretation, or connective reasoning that helps the reader build/carry the active model. Avoid repetition that leaves the reader model unchanged.
 
 ## Representation and examples
 
@@ -58,6 +72,10 @@ Examples should be representative, inspectable, plausible, interpreted and bound
 Paragraphs perform real explanatory jobs. Headings name technical scope or boundaries.
 
 For Vietnamese, compose from technical meaning, keep conventional technical terms when clearer, and avoid conversational filler or bureaucratic wording.
+
+## Feedback to the cognitive workspace
+
+If Authoring cannot produce an honest explanation because the underlying conclusion, mechanism, prerequisite, or evidence is underspecified, return that gap to Reasoning/Research. Do not hide missing cognition with polished prose.
 
 ## Handoff
 

@@ -25,13 +25,13 @@ A terse continuation does not clear REPAIRING/UNSTABLE state.
 
 Repair-state transitions:
 
-```text
+~~~text
 NONE → REPAIRING        when revision against an accepted baseline begins
 REPAIRING → NONE        when comparative Quality accepts the new baseline
 REPAIRING → UNSTABLE    when recurrence/oscillation invalidates local repair confidence
 UNSTABLE → REPAIRING    after Reasoning re-establishes the controlling model and bounded repair
 UNSTABLE → NONE         only when the repair task is explicitly superseded/abandoned or a stable accepted baseline is established
-```
+~~~
 
 ## Persist semantics, not transcripts
 
@@ -43,13 +43,16 @@ A frontier should preserve:
 - current unfinished unit;
 - consequential decisions;
 - accepted baseline or artifact-state pointer/digest when revisions depend on it;
+- collaboration-state pointer/subset only when losing it would materially change resume behavior;
 - stale/recheck units caused by changed dependencies;
 - unresolved dependencies;
 - pending or ambiguous external effects;
 - source/provider versions needed for reconciliation;
 - next safe action.
 
-Large authoring/research models should remain with their owner artifact/store. Continuity persists a compact pointer, digest and the subset needed to resume safely.
+Large authoring/research models and complete collaboration/history models should remain with their owning context/artifact/store. Continuity persists a compact pointer, digest and the subset needed to resume safely.
+
+A recovered collaboration-state pointer does not override a newer explicit interaction mode or grant effect authority.
 
 ## Discovery must match recovery
 
@@ -63,7 +66,8 @@ Create a new frontier revision when meaning changes:
 
 - a coherent work unit completes;
 - scope/obligation changes;
-- an accepted baseline changes;
+- accepted baseline changes;
+- collaboration mode materially changes ongoing work;
 - a dependency invalidates completed work;
 - a consequential decision changes downstream work;
 - an external effect is reconciled;
