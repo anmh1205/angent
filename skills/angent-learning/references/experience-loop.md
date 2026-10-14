@@ -34,6 +34,29 @@ Weak: “the user prefers autonomous work.”
 
 Stronger: “for already-authorized multi-step work with clear next actions, repeated routine confirmations interrupt the critical path without reducing material risk; continue until a real decision, authority, or safety boundary.”
 
+Weak: “poll less while a process runs.”
+
+Stronger: “when a wait/poll invariant is encoded only in the downstream owner that performs status checks, it cannot reliably prevent the upstream planner from selecting the same pending branch again. Put the controlling invariant at the earliest owner that chooses the behavior, and let downstream owners report the state needed for that choice.”
+
+## Control-point placement
+
+A reusable rule must be owned or activated at the earliest decision point that can actually prevent the failure.
+
+If a behavior is selected by Reasoning/Root before Execution sees it, an Execution-only rule cannot reliably govern that selection.
+
+If correction scope is chosen before Authoring receives a candidate, an Authoring-only rule cannot prevent local-patch routing.
+
+If accepted work can advance before Quality is consulted, a Quality-only statement cannot protect the baseline.
+
+When a rule exists but failure recurs, ask not only “was it retrieved?” but also:
+
+- Was it active before the controlling decision?
+- Is it owned by a component with authority over that decision?
+- Does the upstream interface expose the state needed to apply it?
+- Is a downstream owner being asked to compensate after the behavior has already been chosen?
+
+Prefer moving the invariant to the real control point over duplicating stronger wording across every downstream skill.
+
 ## Alternative cause
 
 Ask whether another cause could explain the same outcome.
@@ -75,8 +98,8 @@ Repeated failures are evidence about the controlling mechanism:
 - FIRST_OBSERVED — repair the task and capture the experience;
 - REPEATED_BEFORE_PROMOTION — investigate a shared systemic cause before adding another local guard;
 - RECURRED_AFTER_PROMOTION — reopen the mechanism and inspect why activation/routing/ownership failed;
-- PERSISTENT_RECURRENCE — stop adding local rules and audit the controlling owner, interface, state model, retrieval path, and positive baseline.
+- PERSISTENT_RECURRENCE — stop adding local rules and audit the controlling owner, interface, state model, retrieval path, positive baseline, and control-point placement.
 
-If a promoted rule existed but behavior still recurred, do not simply strengthen the wording. Ask whether the rule was not retrieved, was routed too late, conflicted with another owner, or encoded the wrong abstraction.
+If a promoted rule existed but behavior still recurred, do not simply strengthen the wording. Ask whether the rule was not retrieved, was routed too late, conflicted with another owner, encoded the wrong abstraction, or lived downstream of the decision it needed to control.
 
 Group wording variants when they expose the same mechanism.

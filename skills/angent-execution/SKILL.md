@@ -1,19 +1,19 @@
 ---
 name: angent-execution
-description: Execute authorized ANGENT actions, choose native or fallback specialist capability, observe real effects, reconcile ambiguity and return evidence for reasoning.
+description: Execute authorized ANGENT actions, choose native or fallback specialist capability, observe real effects, report wait state, reconcile ambiguity and return evidence for reasoning.
 ---
 
 # ANGENT Execution — Actuator and Observer
 
 Execution owns action realization, tool/specialist selection, retry safety, observation and provider reconciliation. Harness-specific capability discovery/activation follows the Root `harness-contract.md` rather than a separate execution architecture per client.
 
-It does not own strategic reasoning after evidence invalidates the model.
+It does not own strategic reasoning or global frontier selection.
 
 ## Load references progressively
 
 - references/action-semantics.md — ActionNode requirements, observation and replanning boundaries.
 - references/effect-safety.md — idempotency, PREPARED/RECONCILE and retry policy.
-- references/wait-and-polling.md — long-running operations, non-blocking progress and polling discipline.
+- references/wait-and-polling.md — long-running operations, wait-state reporting and polling discipline.
 - references/engineer-routing.md — native-first / port-fallback specialist routing.
 - references/engineer-selection.md — source-selection evidence and fallback plugin activation contract.
 
@@ -47,7 +47,7 @@ A specialist is a capability provider, not strategic authority.
 
 ## Execute
 
-Advance the current frontier.
+Advance the Reasoning-selected branch.
 
 Respect user-requested tool boundaries and project AGENTS.md.
 
@@ -63,15 +63,19 @@ For whole-scope reads, preserve pagination/cursor closure, truncation state, fil
 
 ## Long-running operations
 
-When a command/job/tool action remains in progress, capture the operation handle and enough state to recognize it later.
+When a command/job/tool action remains in progress:
 
-Do not tight-poll.
+1. capture the operation handle/identity and latest observed state;
+2. identify the next condition that could make another observation informative;
+3. report the branch as WAITING_EXTERNAL;
+4. return control to Reasoning before any equivalent status call is selected again;
+5. persist the handle/wait condition through Continuity when resume correctness depends on it.
 
-If independent useful work exists, mark the dependent path waiting, continue the independent work, and return to the running operation only when a meaningful interval, event, dependency, or expected state transition makes another check informative.
+Execution must not keep polling simply because it owns the provider call.
 
-Repeated identical status checks that add no evidence are no-progress, not work.
+Repeated identical status checks that add no evidence are no-progress and usually evidence that Reasoning/Root failed to exclude the waiting branch from runnable selection.
 
-If no independent work exists, preserve the operation state and use a concise progress update when appropriate rather than issuing a rapid sequence of equivalent polls.
+If Reasoning later selects the branch because its informative-check condition is satisfied, perform the observation and return the new state.
 
 Do not claim background execution when the harness cannot actually continue after the turn ends.
 
@@ -86,7 +90,8 @@ Return an observation delta that describes the world, not merely tool output:
 - checks performed;
 - expectation match/mismatch;
 - residual uncertainty;
-- evidence/artifact pointers.
+- evidence/artifact pointers;
+- wait state and next informative observation condition when still pending.
 
 Exit code 0 is evidence about the command, not automatically the requested endpoint.
 
@@ -101,12 +106,13 @@ Return to Reasoning when:
 - a model assumption is contradicted;
 - a new constraint appears;
 - expected observation differs materially;
+- an operation becomes RUNNING/PENDING;
 - a specialist proposes a strategic change.
 
 ## Completion
 
-Continue while an authorized runnable next step remains and the requested endpoint is not verified.
+Continue while an authorized RUNNABLE next step remains and the requested endpoint is not verified.
 
-Stop only at verified completion, genuine blocker, required user decision, authority/safety boundary or unavailable capability.
+Stop only at verified completion, genuine blocker, required user decision, authority/safety boundary, unavailable capability, or a state in which no runnable branch exists and no waiting observation is yet informative.
 
 A progress update is communication, not a stop condition.

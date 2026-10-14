@@ -2,7 +2,7 @@
 
 ## Unreleased — reliability hardening
 
-ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cognitive-collaboration alignment are canonical. Reliability hardening strengthens evidence/belief/decision continuity, correction interpretation and behavioral change validation without adding runtime infrastructure.
+ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cognitive-collaboration alignment are canonical. Reliability hardening strengthens evidence/belief/decision continuity, correction interpretation, work-conserving frontier scheduling and behavioral change validation without adding runtime infrastructure.
 
 ### Reliability semantics
 
@@ -18,6 +18,19 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Strengthened Quality independence against producer-rationale anchoring and separated capability gains from regression protection.
 - Clarified that restrictive collaboration modes such as audit-only/report-before-edit also create Contract obligations when they limit actions.
 - Added long-form authoring method calibration before bulk propagation when one bad method could reproduce defects across many chapters.
+
+### Work-conserving frontier scheduling
+
+- Moved long-running-operation branch selection from Execution-local polling discipline into Reasoning-owned frontier scheduling.
+- Added semantic branch states: RUNNABLE, WAITING_EXTERNAL, BLOCKED and DONE.
+- A RUNNING/PENDING observation returns control to Reasoning before another equivalent status call can be selected.
+- WAITING_EXTERNAL branches are excluded from immediate next-action selection until their informative-observation condition is satisfied.
+- One waiting branch no longer makes the whole task blocked while independent useful work remains.
+- Continuity preserves branch scheduling state when losing it would change safe resume behavior.
+- Quality calibration now covers pending+independent-work, pending-only, eligible-recheck, resume, several-runnable, and direct-completion cases.
+- Promoted the general control-point lesson: a behavioral invariant must be owned or activated before the decision it needs to control; downstream guidance cannot reliably correct an already-selected behavior.
+- Plugin bootstrap 1.0.4 activates the scheduling semantics at the entrypoint rather than relying on a deep Execution reference.
+- No queue, scheduler service, background runtime, fixed timer or polling-count mechanism was added.
 
 ### Systemic correction interpretation
 

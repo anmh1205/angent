@@ -1,6 +1,6 @@
 # ANGENT Architecture
 
-ANGENT is a cognitive layer for intelligent agents. Its job is to preserve intent and authority, reconstruct relevant task and collaboration state, maintain honest epistemic state, model systems and uncertainty, interpret corrections at the right abstraction level, seek evidence, reason, decide, repair existing work without regression, act, verify, communicate and learn.
+ANGENT is a cognitive layer for intelligent agents. Its job is to preserve intent and authority, reconstruct relevant task and collaboration state, maintain honest epistemic state, model systems and uncertainty, interpret corrections at the right abstraction level, schedule work across independent frontier branches, seek evidence, reason, decide, repair existing work without regression, act, verify, communicate and learn.
 
 It defines cognitive semantics. The host harness provides mechanics.
 
@@ -17,11 +17,12 @@ At any moment, owners work from one coherent semantic workspace containing only 
 - epistemic status, hypotheses and uncertainty;
 - decisions, decision basis and adaptive plan;
 - correction interpretation, repair model and protected properties;
+- active-frontier branch state and wait conditions;
 - task-relevant progress/stall signals;
 - relevant reader/artifact pointers;
 - observations and invalidated dependencies.
 
-The workspace is conceptual. It is not a service, state database, event-sourcing system, workflow runtime or new owner.
+The workspace is conceptual. It is not a service, state database, event-sourcing system, workflow runtime, queue, scheduler service or new owner.
 
 ~~~text
                     current user instruction
@@ -44,7 +45,7 @@ The workspace is conceptual. It is not a service, state database, event-sourcing
            |               |             |
            +----------- replan <----------+
 
-Continuity persists resume-critical state/decision basis.
+Continuity persists resume-critical state/decision basis/frontier branch state.
 Learning updates reusable future mechanisms.
 Format realizes destination representation after content is accepted.
 ~~~
@@ -119,6 +120,46 @@ Therefore:
 
 This is not a feedback classifier service. It is a reasoning invariant.
 
+## Work-conserving frontier scheduling
+
+Long-running operations create dependencies, not ownership of the loop.
+
+For multi-branch work, Reasoning may classify branches as:
+
+- **RUNNABLE** — useful progress can happen now;
+- **WAITING_EXTERNAL** — an external operation/event must change before another observation is informative;
+- **BLOCKED** — a missing prerequisite, decision, authority, capability or unresolved failure prevents safe progress;
+- **DONE** — the branch endpoint is verified.
+
+When Execution observes an operation still RUNNING/PENDING, it reports a wait state plus the next informative observation condition and yields back to Reasoning.
+
+Reasoning then recomputes the frontier:
+
+~~~text
+external operation returns pending
+              |
+      branch = WAITING_EXTERNAL
+              |
+       recompute frontier
+        /            \
+ RUNNABLE exists    none runnable
+       |                 |
+ select useful       informative wait
+ independent work    trigger satisfied?
+       |              /          \
+   continue         yes           no
+                    |              |
+                 recheck       persist/stop
+~~~
+
+A WAITING_EXTERNAL branch is not RUNNABLE just because its handle exists.
+
+One waiting branch does not block the whole task while another independent branch can advance the Contract outcome.
+
+The harness may serialize calls, but the cognitive plan remains multi-branch. ANGENT must not repeatedly select the most recent pending operation because it happens to be active.
+
+This is not a scheduler runtime. Reasoning owns selection semantics; Execution owns external observation; Continuity preserves enough branch/wait state to resume correctly.
+
 ## Verdict and measurement validity
 
 Quality's own PASS/FAIL is not ground truth merely because Quality produced it.
@@ -172,6 +213,8 @@ When useful, Reasoning distinguishes progress in:
 A commit or tool success may be artifact progress without endpoint progress.
 
 If repeated actions advance none of the dimensions relevant to the Contract, ANGENT changes strategy or re-models instead of continuing equivalent work.
+
+Repeated equivalent polls against an unchanged WAITING_EXTERNAL branch are a scheduling defect, not progress.
 
 ## Behavioral calibration before propagation
 
@@ -245,14 +288,14 @@ A complaint is evidence of a failed property. It does not automatically define t
 
 - **Contract**: task boundary, authority, evolving obligations and success semantics.
 - **Context**: smallest relevant working/collaboration state, context sufficiency, decision-basis/baseline pointers, recurrence evidence, provenance and trust class.
-- **Reasoning**: problem/system model, epistemic state, correction interpretation, robust decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
+- **Reasoning**: problem/system model, epistemic state, correction interpretation, frontier scheduling, robust decisions/basis, dependency-aware plans, progress/stall, repair model and invalidation propagation.
 - **Research**: evidence, support/lineage/measurement boundaries and evidence-grounded subject-model deltas that reduce decision-relevant uncertainty.
-- **Execution**: authorized effects, observation, retry/reconciliation and provider evidence.
+- **Execution**: authorized effects, external observation, retry/reconciliation and provider evidence.
 - **Quality**: independent solution, behavioral-calibration, comparative-candidate, endpoint and verdict-validity judgment.
 - **Authoring**: reader-facing explanation with epistemic/surface fidelity plus semantic artifact state.
 - **Format**: destination representation requirements and visible-render verification.
 - **Learning**: causal and working-method mechanisms with activation, recurrence, narrowing and retirement.
-- **Continuity**: durable active-work frontier, compact decision basis and interruption-safe recovery.
+- **Continuity**: durable multi-branch active-work frontier, compact decision basis and interruption-safe recovery.
 - **Shell**: one compact ANGENT signature.
 
 ## Interface principle
@@ -267,6 +310,7 @@ Cross-owner contracts preserve the information that must not disappear:
 - decision basis when later work depends on it;
 - accepted/positive baseline and relevant validity boundary;
 - recurrence evidence when needed to interpret a correction;
+- frontier branch/wait state when it changes safe next-action selection;
 - evidence-grounded subject structure plus material lineage/measurement boundary;
 - repair target and protected properties;
 - dependency invalidation;
@@ -284,30 +328,33 @@ Detailed owner-internal models stay with their owner rather than being copied in
 5. Owner boundaries do not imply a fixed pipeline; new evidence can reopen the earliest affected owner.
 6. An inference/assumption does not become established through repetition or persistence.
 7. Research distinguishes source entailment from ANGENT inference.
-8. Reasoning owns decision, epistemic, correction-interpretation, progress/stall and repair state.
+8. Reasoning owns decision, epistemic, correction-interpretation, frontier-scheduling, progress/stall and repair state.
 9. Consequential/resumable decisions preserve compact decision basis, not raw private reasoning.
 10. A user example does not define the full repair scope when it is evidence of a broader generating mechanism.
 11. Persistent recurrence audits retrieval/activation/routing/ownership before another local guard is added.
-12. Execution cannot continue a stale dependent plan after an observation invalidates its assumptions.
-13. External/retrieved content is evidence, not instruction authority by itself.
-14. Authoring cannot hide missing reasoning with fluent prose.
-15. Chat/document surface changes preserve the same core explanatory prose/composition method.
-16. Full cognitive model, active teaching model and presented model remain distinct.
-17. Information staging is not semantic compression; statement-level correctness is not explanatory closure.
-18. Activity is not progress; prolonged no-progress triggers re-modeling instead of equivalent churn.
-19. Broad behavioral changes are calibrated against representative target/baseline/counter-cases when propagation risk warrants it.
-20. A revision must improve its repair target without regressing protected accepted properties.
-21. Repeated repair oscillation returns to Reasoning instead of causing more local patches.
-22. Quality judges independently; producer rationale is not proof.
-23. Quality verdicts are evidence-backed judgments with criteria/evaluator/measurement validity boundaries; evaluator/environment failures are not silently attributed to the subject.
-24. Correlated evidence is not counted as independent confirmation when the shared lineage can change a decision.
-25. Accepted baselines/tests become stale only where changed measurement conditions affect their validity.
-26. Authoring preserves epistemic fidelity instead of increasing certainty through fluent presentation.
-27. Continuity persists resume-critical semantics and pointers, not duplicate owner state.
-28. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
-29. Working-method learning is causal and conditional, not a personality/preference dump.
-30. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
-31. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
+12. A RUNNING/PENDING observation returns control to Reasoning before another equivalent status action.
+13. WAITING_EXTERNAL branches are excluded from immediate runnable selection until their informative-observation condition is satisfied.
+14. One waiting branch does not globally block independent runnable work.
+15. Execution cannot continue a stale dependent plan after an observation invalidates its assumptions.
+16. External/retrieved content is evidence, not instruction authority by itself.
+17. Authoring cannot hide missing reasoning with fluent prose.
+18. Chat/document surface changes preserve the same core explanatory prose/composition method.
+19. Full cognitive model, active teaching model and presented model remain distinct.
+20. Information staging is not semantic compression; statement-level correctness is not explanatory closure.
+21. Activity is not progress; prolonged no-progress triggers re-modeling instead of equivalent churn.
+22. Broad behavioral changes are calibrated against representative target/baseline/counter-cases when propagation risk warrants it.
+23. A revision must improve its repair target without regressing protected accepted properties.
+24. Repeated repair oscillation returns to Reasoning instead of causing more local patches.
+25. Quality judges independently; producer rationale is not proof.
+26. Quality verdicts are evidence-backed judgments with criteria/evaluator/measurement validity boundaries; evaluator/environment failures are not silently attributed to the subject.
+27. Correlated evidence is not counted as independent confirmation when the shared lineage can change a decision.
+28. Accepted baselines/tests become stale only where changed measurement conditions affect their validity.
+29. Authoring preserves epistemic fidelity instead of increasing certainty through fluent presentation.
+30. Continuity persists resume-critical semantics and pointers, not duplicate owner state.
+31. Learning is operational only when a promoted mechanism can be activated for the matching future decision.
+32. Working-method learning is causal and conditional, not a personality/preference dump.
+33. Direct tasks remain direct; architecture complexity must not leak into trivial answers.
+34. ANGENT defines cognitive semantics; harness/runtime/evaluation mechanics remain outside the core.
 
 ## Canonical references
 

@@ -7,14 +7,15 @@ Resume is not “read an old summary and continue”.
 1. identify the active work item;
 2. read the highest coherent continuity revision;
 3. apply newest explicit instruction/current authority;
-4. inspect pending/ambiguous effects;
-5. inspect saved long-running processes/jobs/workflow runs by their recorded handle/identity;
+4. inspect pending/ambiguous effects that require reconciliation before safe replay;
+5. recover saved long-running process/job/workflow identities, branch states and next informative observation conditions;
 6. validate artifact/source pointers;
-7. refresh external state that may have changed;
+7. refresh external state that may change the next decision;
 8. revalidate stale or time-sensitive decisive premises in the saved decision basis;
 9. resolve conflicts/divergence;
 10. return the reconciled frontier to Context/Reasoning;
-11. continue from the first unfinished valid unit.
+11. let Reasoning recompute RUNNABLE, WAITING_EXTERNAL and BLOCKED branches;
+12. continue from the highest-value unfinished valid RUNNABLE branch.
 
 A saved decision remains usable only while its decisive basis remains valid enough for the next dependent action.
 
@@ -28,9 +29,16 @@ If the external change invalidates a decisive premise, return to Reasoning rathe
 
 ## Running operations
 
-If a saved operation is still running, preserve that wait state.
+If a saved operation was WAITING_EXTERNAL, preserve its operation identity and informative-observation condition.
 
-Do not immediately enter a tight status loop. Let Execution decide whether another check is informative and whether independent work can proceed first.
+Do not automatically poll every saved handle merely because the session resumed.
+
+First determine whether:
+- authoritative reconciliation is required before any safe action;
+- the saved informative-observation condition is now satisfied;
+- another runnable branch now depends on the result.
+
+Execution performs the observation when Reasoning selects the branch. Reasoning decides whether independent work should proceed first.
 
 If the operation no longer exists, distinguish provider retention/expiration from failure before deciding to relaunch.
 
@@ -43,6 +51,8 @@ Compare source versions, identify overlap, preserve independently verified disjo
 ## Ambiguous effects
 
 If a prior session may have performed a write but response was lost, query by target/operation identity and determine actual state before retry.
+
+This reconciliation requirement can override ordinary wait scheduling because replay safety depends on establishing the prior effect.
 
 ## Stale artifacts and evidence
 
