@@ -1,11 +1,26 @@
 schema_version: 2
 work_key: angent/core
-record_type: CANONICAL_VERSION_RECONCILIATION
-phase: canonical-version-1.0.0-runtime-realignment
+record_type: RELIABILITY_RUNTIME_ALIGNED_ENGINEER_REFRESH_ACTIVE
+phase: reliability-boundary-integrated-version-1.0.0-runtime-aligned-engineer-refresh
+
 source_of_truth:
   provider: github
   repository: anmh1205/angent
   branch: main
+
+source_verification:
+  core_hardening_pr: 3
+  core_hardening_commit: 68f075b34c2b8948842d6bdf8aaaf14257db9733
+  cognitive_alignment_pr: 5
+  cognitive_alignment_commit: 8e94413d1460be5946e3d53083110c52a2817469
+  correction_interpretation_pr: 12
+  correction_interpretation_commit: c9ad580aade085472c26b99522e9fd9db28b7ea4
+  frontier_scheduling_pr: 15
+  frontier_scheduling_commit: afccb2e95eec4cef3a3167a254bcddcaff45a6d1
+  reliability_boundary_pr: 17
+  reliability_boundary_commit: 601efaa7843029575b5f10a2d4d9a70e471d10f8
+  canonical_version_pr: 19
+  canonical_version_commit: 59a00c3e78fd91e112f769ad5d3a9a2fedf7239a
 
 release_state:
   version: 1.0.0
@@ -14,36 +29,50 @@ release_state:
   semantic_version_policy:
     canonical_version: 1.0.0
     all_angent_owned_surfaces_must_match: true
-    provider_release_ids_are_versionless_deployment_metadata: true
+    provider_release_ids_are_deployment_metadata: true
     version_change_requires_explicit_user_instruction: true
   private_chatgpt_plugin:
-    updated: false
+    updated: true
+    canonical_plugin_id: plugins_6acf66b0888c81918532ccd5d81cbde1
     version: 1.0.0
-    release_id: null
-    runtime_alignment: pending
+    release_id: pluginrel_6acf66b357d8819196fe7f4c694fb9e0
+    source_commit: 59a00c3e78fd91e112f769ad5d3a9a2fedf7239a
+    source_archive_sha256: b89f3cdf98f3d0acbe7bc33dbace8186b52bee73daf97bb2194fe53542f919a6
+    read_back_verified: true
+    superseded_provider_identities:
+      - plugins_6ace3b6877a0819193f1481bf46b9f00
 
 frontier:
-  repair_state: REPAIRING
+  repair_state: NONE
   active_work:
-    - id: version-runtime-realignment
-      state: ACTIVE
-      objective: "Republish/read-back the private ChatGPT plugin with the canonical 1.0.0 manifest without changing cognitive content."
     - id: engineer-refresh
       state: ACTIVE
       scope: vendor/agentkit-engineer
-      objective: "Refresh portable Engineer fallback against current stable AgentKit semantics while preserving canonical ANGENT version 1.0.0."
-  verified_units:
-    - "Canonical project semantic version is 1.0.0."
-    - "Root plugin manifests on the version-reconciliation branch are 1.0.0."
-    - "Engineer fallback manifests remain 1.0.0."
-    - "Version identity is now defined as one project-wide invariant; provider release IDs, commit SHAs, artifact hashes and upload revisions do not create semantic versions."
-    - "Core hardening, cognitive collaboration, systemic correction interpretation, work-conserving frontier scheduling and reliability-boundary semantics remain preserved."
-  unresolved:
-    - "Private ChatGPT plugin must be runtime-reconciled and read back at 1.0.0 before this repair can close."
-    - "Engineer catalog/parity refresh remains active."
-    - "Final cross-harness release reconciliation remains required before public release."
-  non_blocking_boundaries:
-    - "Runtime synchronization does not make 1.0.0 released or release-ready."
-    - "Version remains 1.0.0 throughout internal development until explicitly changed by the user."
+      objective: "Refresh portable Engineer fallback against current AgentKit stable package semantics without mirroring upstream runtime mechanics, while keeping all ANGENT-owned manifests at version 1.0.0."
 
-next_action: "Merge the canonical version invariant, republish the private ChatGPT plugin with manifest 1.0.0, read back the provider state, update this checkpoint with the observed release ID, then continue the active reliability/Engineer audit."
+  verified_units:
+    - "Core hardening PR #3, cognitive alignment PR #5, correction interpretation PR #12, frontier scheduling PR #15, reliability-boundary PR #17 and canonical-version PR #19 are canonical on main."
+    - "Canonical semantic version is 1.0.0 across root manifests, Engineer fallback manifests, checkpoint state and the canonical private ChatGPT plugin."
+    - "Private ChatGPT canonical plugin identity is plugins_6acf66b0888c81918532ccd5d81cbde1 at version 1.0.0; provider release IDs are deployment metadata rather than semantic versions."
+    - "Canonical private plugin read-back verified 63 files, both manifests at 1.0.0, correction routing, multi-branch scheduling, observation admission, wait semantics, Continuity frontier semantics and effect-boundary Quality checks."
+    - "Consequential authority is re-bound at concrete invocation and material provider/tool observations pass an explicit admission boundary before changing established state."
+    - "Branch independence is conditional on current shared-state dependencies and affected branches are revalidated after material effects/observations."
+    - "Required Quality FAIL/BLOCKED prevents only the dependent accepted transition; unrelated runnable work may continue."
+    - "Reusable behavioral acceptance preserves reconstructable evidence pointers instead of relying on remembered PASS claims."
+    - "Learning activation evidence distinguishes rule existence/retrieval from actual activation when recurrence diagnosis depends on it."
+    - "Authoring preserves load-bearing relations and a dominant explanatory spine while allowing coupled interactions/comparisons to form one valid spine."
+    - "Engineer current stable catalog audit established 103 packaged Skills + 16 Agents; existing fallback still requires coherent catalog migration."
+
+  unresolved:
+    - "Engineer fallback is missing current stable packaged identities: ak-bro, ak-diagram, ak-enhance-ux-ax, ak-explain, ak-page-builder, ak-sowat, ak-sumup and ak-webmcp."
+    - "Engineer fallback still exposes retired public identities: ak-security-scan, ak-use-mcp, ak-handover, ak-html-video, ak-sequential-thinking and ak-web-design-guidelines."
+    - "ak-common is internal support but currently lives under the public Skill discovery root and is incorrectly counted."
+    - "Existing fallback routers/workflows that reference changed upstream identities must be reconciled before parity can be claimed."
+    - "Final cross-harness release reconciliation remains required before public release."
+
+  non_blocking_boundaries:
+    - "Runtime synchronization does not make version 1.0.0 released or release-ready."
+    - "Engineer parity means portable workflow-semantic coverage within harness capabilities, not byte-for-byte or runtime-mechanics parity with AgentKit."
+    - "Superseded provider plugin identities are not canonical ANGENT runtime sources."
+
+next_action: "Continue the Engineer inventory/parity migration and reliability audit from canonical main while preserving the single 1.0.0 version invariant. Do not publish/tag until Engineer and cross-harness release reconciliation are complete."
