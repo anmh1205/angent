@@ -2,6 +2,16 @@
 
 Reader-facing material is complete when it creates the promised capability, not when it exhausts the subject.
 
+## Three distinct models
+
+Do not collapse:
+
+- **full cognitive/subject model** — everything needed for correctness;
+- **active teaching model** — the relationships that must become usable for this reader now;
+- **presented model** — the content and representation actually exposed in this unit.
+
+The author may know twenty relevant constraints while the reader needs four now. Restricting the active set prevents overload; it does not require a short explanation.
+
 ## State
 
 Distinguish:
@@ -30,10 +40,14 @@ Connect first use to something inspectable: object, behavior, operation, trace o
 
 Introduce the minimum precise model needed now, then deepen when later reasoning depends on additional detail.
 
+Progressive precision limits premature breadth, not the explanatory depth needed for the active relation.
+
 ## Closure
 
-Stop when target state is reached at the promised depth.
+Do not stop because the point has been named or asserted once.
 
-More correct facts are not automatically more useful.
+Stop when the target state is reached at the promised depth: the reader can use the relation for the intended nearby inference, prediction, diagnosis, comparison, implementation or verification.
+
+More correct facts are not automatically more useful, but supporting examples, observations, contrasts and implementation details remain valuable when they are what makes the active relation understandable.
 
 For long-form work, preserve reader state across chapters instead of recreating a generic beginner each time.

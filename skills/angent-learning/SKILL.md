@@ -1,18 +1,18 @@
 ---
 name: angent-learning
-description: Turn meaningful work experience into evidence-backed causal knowledge, retrieve it when relevant, and retire mechanisms that no longer transfer.
+description: Turn meaningful work experience into evidence-backed causal and working-method knowledge, retrieve it when relevant, and retire mechanisms that no longer transfer.
 ---
 
 # ANGENT Learning — Experience to Understanding
 
 Learning is broader than complaint handling and narrower than indiscriminate memory.
 
-It improves future decisions without turning every incident into a permanent rule.
+It improves future decisions without turning every incident into a permanent rule or user profile.
 
 ## Load references progressively
 
 - references/experience-loop.md — capture experiences, infer/test mechanisms, promote carefully.
-- references/memory-boundary.md — distinguish Learning from memory, AGENTS.md, and active task state.
+- references/memory-boundary.md — distinguish Learning from memory, AGENTS.md, collaboration state, and active task state.
 
 ## Experience intake
 
@@ -23,6 +23,7 @@ Capture when an event can plausibly improve future decisions:
 - rejected hypothesis;
 - unexpected provider/tool behavior;
 - repeated decision pattern;
+- repeated working/collaboration pattern whose mechanism is identifiable;
 - specialist finding exposing a reusable mechanism;
 - unusually strong output with an identifiable cause.
 
@@ -45,6 +46,16 @@ Before generalizing:
 6. identify a counterexample/disconfirming case;
 7. test before broad/consequential promotion.
 
+## Working-method learning
+
+Some durable lessons describe not a domain fact but a way of working that repeatedly improves decisions: how much autonomy is useful, when research should precede editing, what evidence standard prevents false completion, how to repair without overcorrection, or how explanation should expose relations.
+
+Promote these only as causal working-method mechanisms with explicit applicability and counterconditions.
+
+Do not encode “the user likes X” when the evidence actually supports “X works under condition Y because mechanism Z”.
+
+Context may activate applicable working-method mechanisms into the current collaboration state. Learning itself does not choose the interaction mode for a task.
+
 ## Promote narrowly
 
 Promote the smallest mechanism to the owner controlling the decision.
@@ -63,12 +74,14 @@ Later contradictory evidence may narrow, supersede, reopen, or retire a mechanis
 
 Do not keep an old rule merely because it was previously published.
 
-## Relationship to memory
+## Relationship to memory and collaboration state
 
-User preference and project facts belong to memory/context.
+User/project facts belong to memory/context.
+
+Task-relevant working relationship belongs to collaboration state assembled by Context.
 
 Active work belongs to Continuity.
 
-Learning owns reusable causal mechanisms.
+Learning owns reusable causal mechanisms that may inform future reasoning or collaboration.
 
 Keep these classes separate even if they share storage infrastructure.

@@ -31,12 +31,15 @@ Keep enough durable state to answer:
 - what is unfinished;
 - what decisions affect later work;
 - which accepted baseline/artifact-state pointer later work depends on;
+- whether a task-relevant collaboration-state pointer/subset must survive resume;
 - which previously verified units are stale/recheck after dependency changes;
 - where artifacts/evidence live;
 - which coverage ledger a broad audit/inspection depends on;
 - what blockers/dependencies remain;
 - whether an external effect is ambiguous;
 - what the next safe action is.
+
+Persist collaboration state only when losing it could materially change how the task resumes. Do not duplicate a full user profile or Learning store into Continuity.
 
 Advance at meaningful work boundaries, not after every tool call.
 
@@ -66,8 +69,9 @@ Persist meaningful completed units, artifact pointers, curriculum/research front
 2. apply newest instruction/current authority;
 3. inspect unresolved effects before replay;
 4. validate artifact/source pointers;
-5. reconcile external state likely to have changed;
-6. return the current frontier to Context/Reasoning.
+5. reconstruct or refresh collaboration state when it affects the next action;
+6. reconcile external state likely to have changed;
+7. return the current frontier to Context/Reasoning.
 
 A transcript, model context, or unsynced scratch file is not durable continuity by itself.
 

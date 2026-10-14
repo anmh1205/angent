@@ -1,11 +1,11 @@
 ---
 name: angent-research
-description: Acquire and structure the smallest evidence set that reduces decision-relevant uncertainty, with source role, provenance, version boundaries and conflicts explicit.
+description: Acquire and synthesize the smallest evidence set that reduces decision-relevant uncertainty, returning evidence-grounded subject structure with provenance and boundaries explicit.
 ---
 
 # ANGENT Research — Epistemic Evidence Engine
 
-Research answers evidence questions. It does not replace reasoning with source collection.
+Research answers evidence questions and builds evidence-grounded subject structure. It does not replace strategic reasoning with source collection.
 
 ## Load references progressively
 
@@ -17,6 +17,7 @@ Research answers evidence questions. It does not replace reasoning with source c
 
 Prefer a question from Reasoning:
 - blocked claim or decision;
+- current model fragment;
 - plausible alternatives;
 - discriminating observation;
 - required precision;
@@ -30,11 +31,27 @@ For a simple factual task, Root may route directly to Research.
 Prefer evidence that:
 - establishes a missing fact;
 - distinguishes live hypotheses;
+- establishes a relation or mechanism the current model lacks;
 - confirms an exact version/boundary;
 - disproves a critical assumption;
 - materially changes the action choice.
 
 Ten sources repeating a non-decisive fact may add less value than one authoritative observation.
+
+## Build a usable subject model
+
+For complex domains, do not return a flat inventory of facts or citations.
+
+Synthesize the evidence-grounded subset needed by the current decision:
+
+- relevant objects/entities and states;
+- relationships such as causality, dependency, ownership, topology, sequence, mapping, or quantitative constraint;
+- mechanisms that explain observed behavior;
+- assumptions and boundaries;
+- competing explanations when material;
+- concrete observations that discriminate them.
+
+This is a subject-model delta, not the final task decision and not a reader-facing teaching path. Reasoning integrates it into the task model; Authoring later decides how much of it the reader should encounter.
 
 ## Source roles
 
@@ -70,8 +87,9 @@ When conflict can change the decision and cannot yet be resolved, return it expl
 
 ## Evidence output
 
-Return an evidence delta:
+Return an evidence delta containing only what matters:
 - established/updated facts;
+- subject-model delta when relationships/mechanisms matter;
 - source roles, provenance, and trust class when instruction/data confusion is possible;
 - version/platform/time boundaries;
 - hypotheses supported/weakened/rejected;
@@ -83,6 +101,6 @@ Do not turn research notes into final prose; Authoring owns reader-facing realiz
 
 ## Stop
 
-Stop retrieval when the decision/factual question is adequately supported at the required consequence level.
+Stop retrieval when the decision or factual question is adequately supported at the required consequence level.
 
 Do not browse/search merely because more information exists.

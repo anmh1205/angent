@@ -17,6 +17,8 @@ Keep:
 - verified completed units;
 - current unfinished unit;
 - consequential decisions;
+- accepted baseline/artifact pointers when later work depends on them;
+- collaboration-state pointer/subset when losing it would change resume behavior;
 - artifact/source pointers and versions;
 - unresolved dependencies;
 - pending/ambiguous effects;
@@ -24,7 +26,7 @@ Keep:
 
 ## Meaningful boundaries
 
-Advance a revision when a work unit completes, a consequential decision changes later work, an artifact/source version materially changes, a blocker changes, scope/invariant changes, an external effect is reconciled, or a handoff/compaction/phase boundary occurs.
+Advance a revision when a work unit completes, a consequential decision changes later work, an artifact/source version materially changes, a blocker changes, scope/invariant changes, a collaboration mode materially changes ongoing work, an external effect is reconciled, or a handoff/compaction/phase boundary occurs.
 
 Do not persist after every read/tool call unless risk requires it.
 
@@ -32,4 +34,6 @@ Do not persist after every read/tool call unless risk requires it.
 
 The frontier is task state.
 
-It is not AGENTS.md, user preference memory, promoted Learning, or a transcript.
+It is not AGENTS.md, a permanent user profile, project memory, promoted Learning, or a transcript.
+
+Collaboration state is reconstructed by Context. Continuity carries only the compact subset/pointer needed for safe resume.
