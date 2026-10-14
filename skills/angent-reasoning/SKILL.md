@@ -1,11 +1,11 @@
 ---
 name: angent-reasoning
-description: Own ANGENT's shared problem/system model, epistemic state, decisions, correction interpretation, repair semantics, dependencies and adaptive replanning.
+description: Own ANGENT's shared problem/system model, epistemic state, decisions, correction interpretation, frontier scheduling, repair semantics, dependencies and adaptive replanning.
 ---
 
 # ANGENT Reasoning — Cognitive Core
 
-Reasoning owns the current problem model, epistemic/uncertainty state, decision state, correction interpretation, repair model and next-action graph.
+Reasoning owns the current problem model, epistemic/uncertainty state, decision state, correction interpretation, active-frontier scheduling, repair model and next-action graph.
 
 It does not fetch evidence owned by Research, perform effects owned by Execution, persist task state owned by Continuity, or write reader-facing prose owned by Authoring.
 
@@ -14,11 +14,14 @@ It does not fetch evidence owned by Research, perform effects owned by Execution
 - references/core-models.md
 - references/cognitive-workspace.md
 - references/correction-interpretation.md
+- references/frontier-scheduling.md
 - references/abstraction-and-invariants.md
 - references/specialist-synthesis.md
 - references/repair-and-regression.md
 
 Load correction-interpretation for substantive user corrections, especially recurrence, “not local/systemic/method/thinking” feedback, or cases where an example may only be evidence of a broader generating failure.
+
+Load frontier-scheduling whenever long-running operations, provider jobs, builds, workflows, asynchronous effects, or several independent work branches coexist.
 
 Load repair-and-regression whenever existing work is being revised after a complaint, defect or changed requirement.
 
@@ -26,7 +29,7 @@ Load repair-and-regression whenever existing work is being revised after a compl
 
 Do not treat owner hand-offs as a pipeline in which earlier reasoning becomes closed.
 
-Reasoning integrates the current TaskModel, collaboration state, evidence-grounded subject model, epistemic state, live hypotheses, decisions, observations, repair state, and relevant reader/artifact pointers into one coherent working model.
+Reasoning integrates the current TaskModel, collaboration state, evidence-grounded subject model, epistemic state, live hypotheses, decisions, observations, repair state, frontier branch states, and relevant reader/artifact pointers into one coherent working model.
 
 Research can change the model. Execution observations can invalidate it. Authoring can expose a missing premise or relation and return it. Quality can identify the earliest faulty owner. Re-enter the affected owner rather than protecting phase order.
 
@@ -78,6 +81,23 @@ When a domain is complex, integrate Research's evidence-grounded subject-model d
 
 Do not reduce Research to citation collection, and do not delegate strategic ownership to sources.
 
+## Frontier scheduling and waiting
+
+A pending external operation is a dependency state, not the default next action.
+
+When Execution reports RUNNING/PENDING:
+
+1. classify that branch as WAITING_EXTERNAL and retain its next informative observation condition;
+2. recompute the whole active frontier;
+3. exclude waiting branches whose observation condition is not yet satisfied;
+4. select useful work from RUNNABLE independent branches when any exist;
+5. only recheck a waiting branch when its trigger is satisfied or another runnable branch now depends on its result;
+6. if no runnable work exists and no wait trigger is satisfied, persist state instead of generating equivalent polls.
+
+The harness may serialize tool calls; ANGENT must not serialize the **plan** around the most recently launched operation.
+
+Do not confuse “currently active operation” with “highest-value runnable work”.
+
 ## Repair existing work
 
 For an existing artifact, plan or implementation:
@@ -123,6 +143,8 @@ Do not treat a commit, generated file, page update, source count, or tool succes
 
 If repeated actions produce no new decisive evidence, unblock no dependency, change no relevant model/artifact capability, and strengthen no endpoint evidence, treat the work as stalled and re-model or change strategy rather than continuing equivalent activity.
 
+Repeated status checks against an unchanged WAITING_EXTERNAL branch are a scheduling failure, not progress.
+
 ## Calibration before propagation
 
 When one method or instruction change will be applied across many units and a defect would propagate widely, calibrate the method on a small representative set before scaling.
@@ -140,6 +162,8 @@ Compare viable options through consequences, uncertainty, reversibility, future 
 Use collaboration state to choose how to proceed once a decision is clear: for example whether to continue autonomously, report before editing, teach the reasoning, or stop at an audit boundary. Collaboration state shapes execution of the task; it does not override authority.
 
 Plans are provisional. When observations invalidate an assumption, revise the model and invalidate only dependent work before continuing.
+
+For multi-branch work, action selection is work-conserving: waiting branches do not monopolize the next-action decision while independent branches remain runnable.
 
 ## Specialists
 

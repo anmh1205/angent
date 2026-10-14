@@ -13,10 +13,10 @@ Read the repository AGENTS.md for project-wide instruction and source-layout rul
 
 - **Contract** — outcome, scope, authority, constraint evolution, and success semantics.
 - **Context** — smallest relevant working state, collaboration state, decision-basis context, provenance, and always-active obligations.
-- **Reasoning** — problem/system model, epistemic state, correction interpretation, uncertainty, decisions, adaptive plan, repair model, progress/stall and invalidation propagation.
+- **Reasoning** — problem/system model, epistemic state, correction interpretation, frontier scheduling, uncertainty, decisions, adaptive plan, repair model, progress/stall and invalidation propagation.
 - **Research** — evidence acquisition plus evidence-grounded subject-model deltas that reduce decision-relevant uncertainty.
 - **Execution** — authorized effects, observation, and provider reconciliation.
-- **Continuity** — interruption-safe active-work frontier, compact decision basis and ambiguous-effect recovery.
+- **Continuity** — interruption-safe multi-branch active-work frontier, compact decision basis and ambiguous-effect recovery.
 - **Learning** — experience → causal mechanism → activation/retirement, including reusable working-method mechanisms.
 - **Authoring** — reader state, artifact state, explanation, representation, and language realization.
 - **Quality** — independent solution, candidate, behavioral-calibration, and endpoint judgment.
@@ -27,7 +27,7 @@ Read the repository AGENTS.md for project-wide instruction and source-layout rul
 
 ANGENT owners operate on one coherent cognitive workspace, not a mandatory sequence of completed phases.
 
-The workspace is a conceptual shared state containing only what is currently decision-relevant: task model, collaboration state, active obligations, problem/system model, evidence-grounded subject model, epistemic state, live uncertainty, decisions/decision basis, repair state, progress signals, and pointers to reader/artifact state when relevant.
+The workspace is a conceptual shared state containing only what is currently decision-relevant: task model, collaboration state, active obligations, problem/system model, evidence-grounded subject model, epistemic state, live uncertainty, decisions/decision basis, repair state, active-frontier branch states, progress signals, and pointers to reader/artifact state when relevant.
 
 It is not a new owner, service, database, event journal, or workflow engine. Each owner updates only the slice it owns. When new evidence changes an earlier premise, control returns to the earliest affected owner rather than continuing a stale pipeline.
 
@@ -48,6 +48,9 @@ Collaboration state is not a personality profile and cannot grant authority. A c
 - Consequential/resumable decisions preserve a compact externalizable decision basis; do not persist raw private reasoning as task state.
 - Progress means a task-relevant state changed, not merely that an action/tool call occurred.
 - Repeated activity with no epistemic, dependency, artifact/capability, or validation progress is a stall signal and returns to Reasoning.
+- A pending external operation is a branch state, not the default next action. Reasoning must recompute the whole frontier after a RUNNING/PENDING observation.
+- A WAITING_EXTERNAL branch whose informative-observation condition is false is excluded from immediate next-action selection while independent RUNNABLE work exists.
+- The harness may serialize tool calls; ANGENT must not serialize the plan around the most recently launched long-running operation.
 - A broad method/prompt/architecture change with material propagation risk should be calibrated on representative positive, accepted-baseline, and counter-cases before scaling when practical.
 - Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof, and treats its own PASS/FAIL as an evidence-backed verdict with a validity boundary.
 - Accepted baselines and prior tests remain conditional on the measurement conditions that made their conclusions valid; changed conditions invalidate only dependent conclusions.
@@ -80,6 +83,18 @@ When recurrence or method-level signals are present, Context retrieves relevant 
 
 Examples supplied by the user are evidence and calibration anchors, not automatically the full repair scope.
 
+## Multi-branch routing
+
+After any tool/provider observation returns RUNNING or PENDING:
+
+1. Execution returns the wait state and next informative observation condition.
+2. Reasoning re-enters before another equivalent status call.
+3. The pending branch becomes WAITING_EXTERNAL and is removed from the runnable set until its observation condition becomes true.
+4. Reasoning selects another independent RUNNABLE branch when one can advance the requested endpoint.
+5. If nothing is runnable and no wait condition is eligible, Continuity preserves the frontier; ANGENT does not generate equivalent polls to simulate activity.
+
+This is cognitive scheduling, not a background-task runtime.
+
 ## Routing
 
 The routes below are dependency hints, not fixed pipelines.
@@ -90,8 +105,8 @@ The routes below are dependency hints, not fixed pipelines.
 - **Revision/repair:** interpret the correction level first; recover accepted/positive baseline + active obligations; for recurrence/method complaints reconstruct prior evidence and controlling mechanism; Reasoning builds the repair model; the responsible producer emits a candidate; comparative Quality accepts only when the mechanism-level target improves without protected regression.
 - **External artifact write:** accepted candidate → Format representation plan → Execution write → Format visible read-back → endpoint Quality when required.
 - **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage and whether the evaluation itself can support the verdict.
-- **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; Continuity persists only resume-critical frontier state.
-- **Resume:** Continuity recovers the frontier and decision basis; Context reconstructs obligations, collaboration state, and relevant working state; Reasoning revalidates stale decisive premises and reconciles live observations before dependent action.
+- **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; after pending observations Reasoning selects among frontier branches rather than letting one operation monopolize the loop; Continuity persists resume-critical frontier state.
+- **Resume:** Continuity recovers the frontier and decision basis; Context reconstructs obligations, collaboration state, and relevant working state; Reasoning revalidates stale decisive premises, reconciles live observations, recomputes RUNNABLE/WAITING_EXTERNAL/BLOCKED branches, then selects the next safe branch.
 - **Learning:** activate for meaningful success, failure, correction, recurrence, rejected hypothesis, provider behavior, or repeated working method that can improve future decisions.
 
 Quality is one owner with multiple phases, not one linear node placed permanently before or after Authoring.
@@ -118,7 +133,7 @@ AGENTS.md is the canonical project instruction surface.
 
 Memory is scoped durable knowledge. Collaboration state is the task-relevant working relationship. Continuity is active-work state. Learning is reusable causal mechanism. Artifact state belongs to Authoring. None silently substitutes for another.
 
-Context may minimize ordinary history, but it must not omit still-active obligations, decisive epistemic/decision-basis state, relevant recurrence evidence, positive baselines, or collaboration constraints needed by the next decision.
+Context may minimize ordinary history, but it must not omit still-active obligations, decisive epistemic/decision-basis state, relevant recurrence evidence, positive baselines, active-frontier wait/runnable state, or collaboration constraints needed by the next decision.
 
 ## Engineering workforce
 
@@ -133,7 +148,7 @@ Engineer catalog maintenance is independent from ANGENT core semantics.
 
 ## Invariants
 
-Reasoning owns decision, epistemic, correction-interpretation and repair state. Research supplies evidence and evidence-grounded subject-model structure without taking strategic authority. Execution supplies observations/effects. Authoring owns semantic artifact state and communication. Quality supplies independent judgment. Format preserves destination representation. Continuity persists only the subset of active state needed to resume safely. Learning changes future behavior only through supported, retrievable mechanisms.
+Reasoning owns decision, epistemic, correction-interpretation, frontier-scheduling and repair state. Research supplies evidence and evidence-grounded subject-model structure without taking strategic authority. Execution supplies observations/effects. Authoring owns semantic artifact state and communication. Quality supplies independent judgment. Format preserves destination representation. Continuity persists only the subset of active state needed to resume safely. Learning changes future behavior only through supported, retrievable mechanisms.
 
 Newest explicit user instruction and live canonical state outrank stale history, but instruction recency alone does not imply supersession. Context and Continuity cannot create authority.
 

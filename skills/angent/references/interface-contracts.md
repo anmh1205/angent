@@ -55,6 +55,7 @@ accepted_baseline:
 artifact_state_pointer:
 coverage_pointer:
 stale_or_recheck: []
+frontier_branches: []
 active_long_running_operations: []
 pending_or_ambiguous_effects: []
 artifact_pointers: []
@@ -63,6 +64,30 @@ uncertainty: []
 ~~~
 
 Ordinary history can be minimized. Active obligations, decisive state, and collaboration constraints needed by the next decision cannot be dropped.
+
+## Reasoning frontier scheduling view
+
+Use when several independent branches or long-running external operations coexist.
+
+~~~yaml
+frontier_branches:
+  - id:
+    purpose:
+    state: RUNNABLE | WAITING_EXTERNAL | BLOCKED | DONE
+    depends_on: []
+    operation_identity:
+    last_observation:
+    next_informative_observation_condition:
+runnable_now: []
+waiting_external: []
+blocked: []
+~~~
+
+Reasoning owns selection from RUNNABLE branches.
+
+A WAITING_EXTERNAL branch is excluded from immediate next-action selection until its informative-observation condition is satisfied or another branch now materially depends on its result.
+
+This is a semantic planning view, not a runtime queue.
 
 ## Reasoning epistemic view
 
@@ -183,29 +208,36 @@ artifacts_or_checks: []
 expectation_match:
 new_evidence: []
 residual_uncertainty: []
-provider_evidence: []
+provider_evidence:
 enumeration_evidence:
 measurement_context:
 progress_dimensions: []
+wait_state:
+  branch_id:
+  operation_identity:
+  state: WAITING_EXTERNAL
+  next_informative_observation_condition:
 ~~~
 
 An acknowledgement or exit code without authoritative state is not automatically success.
 
-## Authoring/Execution wait state
+When wait_state is returned, Reasoning recomputes the active frontier before any equivalent status action is selected again.
 
-For a long-running external operation whose result is not yet available:
+## Long-running external operation
+
+For an operation whose result is not yet available:
 
 ~~~yaml
+branch_id:
 operation_identity:
 provider_or_tool:
 state: RUNNING | PENDING | UNKNOWN
 last_observation:
 dependent_work: []
-independent_runnable_work: []
-next_informative_check_condition:
+next_informative_observation_condition:
 ~~~
 
-This state is descriptive. It does not create a polling schedule. Execution decides when another check can add information.
+Execution observes this state. Reasoning decides when the branch becomes eligible for another observation by comparing its condition with the whole active frontier.
 
 ## Reasoning → Authoring: SolutionModel
 
@@ -302,7 +334,12 @@ phase:
 active_obligations: []
 collaboration_state_pointer:
 verified_completed: []
-unfinished:
+frontier_branches:
+  - id:
+    state: RUNNABLE | WAITING_EXTERNAL | BLOCKED | DONE
+    depends_on: []
+    operation_identity:
+    next_informative_observation_condition:
 decisions: []
 decision_basis_pointer:
 accepted_baseline_pointer:

@@ -1,6 +1,6 @@
 # AGENTS.md — ANGENT repository instructions
 
-ANGENT is an unreleased cognitive-layer candidate. Core hardening and cognitive-collaboration alignment are integrated; reliability hardening is the current phase. Engineer inventory/parity refresh remains separate.
+ANGENT is an unreleased cognitive-layer candidate. Core hardening, cognitive-collaboration alignment, correction-interpretation hardening, and work-conserving frontier scheduling are canonical directions; reliability hardening is the current phase. Engineer inventory/parity refresh remains separate.
 
 ## Authority and ownership
 
@@ -8,13 +8,13 @@ This file is the canonical repository instruction surface. Nested AGENTS.md file
 
 - Contract owns outcome, authority, active obligations and success semantics.
 - Context owns relevant working state, collaboration state, provenance, context sufficiency and baseline/decision-basis pointers.
-- Reasoning owns strategic decisions, epistemic state, repair semantics, progress/stall, dependency invalidation and integration of the shared cognitive workspace.
+- Reasoning owns strategic decisions, epistemic state, correction interpretation, frontier scheduling, repair semantics, progress/stall, dependency invalidation and integration of the shared cognitive workspace.
 - Research owns evidence acquisition, support/lineage/measurement boundaries and evidence-grounded subject-model deltas.
-- Execution owns authorized effects and provider observation.
+- Execution owns authorized effects, external observation and provider reconciliation.
 - Authoring owns reader-facing content, epistemic fidelity and semantic artifact state.
 - Quality independently judges solution, behavioral calibration, revision regression, endpoint state and verdict validity.
 - Format owns destination representation and render fidelity; external writes remain Execution effects.
-- Continuity owns compact interruption-safe task state and resumable decision basis.
+- Continuity owns compact interruption-safe multi-branch task state and resumable decision basis.
 - Learning owns reusable causal mechanisms, including working-method mechanisms.
 - Root routes owners.
 
@@ -24,7 +24,7 @@ Engineer/specialist output never replaces Reasoning ownership.
 
 Owner boundaries must not become a rigid workflow.
 
-Treat TaskModel, collaboration state, problem/system model, evidence-grounded subject model, epistemic state, uncertainty, decisions/decision basis, repair state, progress signals, observations and relevant artifact pointers as views into one coherent cognitive workspace.
+Treat TaskModel, collaboration state, problem/system model, evidence-grounded subject model, epistemic state, uncertainty, decisions/decision basis, correction interpretation, repair state, active-frontier branch state, progress signals, observations and relevant artifact pointers as views into one coherent cognitive workspace.
 
 The workspace is a semantic model, not a new owner, runtime service, database, event journal or orchestrator.
 
@@ -72,6 +72,22 @@ If a mechanism/rule already existed but the behavior recurs, audit retrieval, ac
 
 Systemic repair follows causal scope, not complaint breadth: do not patch only the named example, but also do not rewrite unrelated work.
 
+## Multi-branch work and waiting
+
+A long-running operation is one branch of work, not the scheduler.
+
+When Execution observes RUNNING/PENDING, it returns a WAITING_EXTERNAL branch plus the next informative observation condition. Reasoning must re-enter before any equivalent status call is selected again.
+
+Reasoning excludes WAITING_EXTERNAL branches whose observation condition is not yet satisfied. If another independent branch is RUNNABLE and advances the requested endpoint, select that work instead.
+
+A single waiting branch does not make the whole task BLOCKED.
+
+If no RUNNABLE work exists and no waiting observation is currently informative, persist the frontier rather than issuing equivalent polls.
+
+The harness may serialize tool calls; ANGENT must not serialize the plan around the most recent tool call.
+
+Do not repair repeated polling merely by changing sleep duration or poll count. Inspect branch-state representation, action selection, wait-trigger eligibility, Continuity recovery, and competing instructions.
+
 ## Revision invariant
 
 Existing work is revised from an accepted baseline.
@@ -92,7 +108,7 @@ Do not enforce this through a phrase blacklist. Evaluate whether each sentence a
 
 ## State separation
 
-AGENTS.md, Contract obligations, collaboration state, Memory, Reasoning/epistemic state, Authoring artifact state, Continuity frontier and Learning mechanisms are different semantic classes. Do not turn one into a universal transcript/database.
+AGENTS.md, Contract obligations, collaboration state, Memory, Reasoning/epistemic/frontier state, Authoring artifact state, Continuity frontier and Learning mechanisms are different semantic classes. Do not turn one into a universal transcript/database.
 
 ## Trust boundary
 
@@ -112,7 +128,7 @@ Information staging reduces competing conceptual breadth; it does not justify co
 
 ## Long work and coverage
 
-Persist active work at meaningful semantic boundaries. Continuity keeps only the compact subset/pointers needed to resume.
+Persist active work at meaningful semantic boundaries. Continuity keeps only the compact subset/pointers needed to resume, including branch wait/runnable state when losing it could change safe action selection.
 
 Whole-scope claims require complete-enough inventory and coverage. Pagination, truncation, filters and unseen units must not be treated as full inspection.
 

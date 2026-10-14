@@ -1,6 +1,6 @@
 # Behavioral calibration
 
-Use this reference when changing a shared ANGENT method, root/default prompt, routing/owner interface, long-form authoring method, or another behavior that can propagate across many future units/tasks.
+Use this reference when changing a shared ANGENT method, root/default prompt, routing/owner interface, long-form authoring method, frontier scheduling method, or another behavior that can propagate across many future units/tasks.
 
 This is behavioral evidence, not a replacement for reasoning and not a return to static keyword/count tests.
 
@@ -43,6 +43,25 @@ Useful distinct cases include:
 
 A correction system fails calibration if it always stays local or always escalates globally. The target is the correct causal abstraction level.
 
+## Frontier-scheduling calibration
+
+When changing long-running-operation behavior, judge branch selection rather than only poll interval.
+
+Use distinct cases such as:
+
+- **pending + independent work** — operation A is running while branch B can advance independently; A becomes WAITING_EXTERNAL and B is selected before another equivalent poll;
+- **pending + dependent work only** — everything else genuinely depends on A; preserve the wait state and do not invent busywork or rapid polls;
+- **wait trigger becomes eligible** — the documented interval/event/dependency condition is now satisfied; rechecking A is valid;
+- **several runnable branches** — select useful work by the task model rather than recency of tool calls;
+- **resume with saved handle** — reconstruct WAITING_EXTERNAL state and do not relaunch or aggressively poll merely because context was lost;
+- **short operation completes immediately** — do not overcomplicate a direct completion with unnecessary frontier machinery.
+
+Fail the method if:
+- the most recently launched operation keeps being selected merely because it is active;
+- WAITING_EXTERNAL is treated as RUNNABLE before its observation condition is satisfied;
+- a waiting branch turns the whole task idle while independent useful work exists;
+- the repair only increases a sleep/poll interval without changing branch-selection semantics.
+
 ## Cross-surface authoring calibration
 
 When chat/response quality is accepted but document quality regresses, compare the same subject relation across surfaces.
@@ -76,7 +95,7 @@ Ask what changed relative to accepted behavior:
 - cost/latency only when they actually matter to the task;
 - unexpected strategy changes.
 
-Do not optimize one scalar such as brevity, tool count, speed, diagram count, or source count unless the Contract truly makes it the objective.
+Do not optimize one scalar such as brevity, tool count, speed, poll interval, diagram count, or source count unless the Contract truly makes it the objective.
 
 ## Judge the mechanism, not only the score
 

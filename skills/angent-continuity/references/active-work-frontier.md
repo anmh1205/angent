@@ -15,7 +15,8 @@ Keep:
 - active scope/phase;
 - constraints/invariants;
 - verified completed units;
-- current unfinished unit;
+- unfinished branches when several independent paths exist;
+- branch status needed for safe scheduling: RUNNABLE, WAITING_EXTERNAL, BLOCKED, or DONE;
 - consequential decisions;
 - compact decision basis or pointer when later work depends on why a decision was valid;
 - accepted baseline/artifact pointers when later work depends on them;
@@ -24,13 +25,25 @@ Keep:
 - artifact/source pointers and versions;
 - unresolved dependencies;
 - pending/ambiguous effects;
-- next safe action.
+- next safe action or runnable-set pointer when one scalar next action would be misleading.
 
 Do not persist raw hidden reasoning. A decision basis contains only reconstructable premises/evidence pointers, constraints, decision and reconsideration trigger needed for future correctness.
 
+## Scheduling separation
+
+Continuity stores branch/wait state; it does not choose which branch runs next.
+
+Reasoning owns active-frontier selection.
+
+Execution owns external observation and reports when an operation is RUNNING/PENDING plus the condition under which another observation could be informative.
+
+A WAITING_EXTERNAL branch is not RUNNABLE merely because its handle exists.
+
+One waiting branch does not make the whole task BLOCKED while another branch can make task-relevant progress.
+
 ## Meaningful boundaries
 
-Advance a revision when a work unit completes, a consequential decision changes later work, a decisive premise/evidence version materially changes, an artifact/source version materially changes, a blocker changes, scope/invariant changes, a collaboration mode materially changes ongoing work, a long-running operation materially changes state, an external effect is reconciled, or a handoff/compaction/phase boundary occurs.
+Advance a revision when a work unit completes, a consequential decision changes later work, a decisive premise/evidence version materially changes, an artifact/source version materially changes, a branch changes between RUNNABLE/WAITING_EXTERNAL/BLOCKED/DONE, a blocker changes, scope/invariant changes, a collaboration mode materially changes ongoing work, a long-running operation materially changes state, an external effect is reconciled, or a handoff/compaction/phase boundary occurs.
 
 An unchanged pending/running status is not by itself a meaningful frontier revision.
 
@@ -43,5 +56,3 @@ The frontier is task state.
 It is not AGENTS.md, a permanent user profile, project memory, promoted Learning, or a transcript.
 
 Collaboration state is reconstructed by Context. Continuity carries only the compact subset/pointer needed for safe resume.
-
-Execution owns the decision of when polling a running operation is informative.
