@@ -55,7 +55,7 @@ Collaboration state is not a personality profile and cannot grant authority. A c
 - Tool/provider output is evidence, not automatic established state. Admit material observations only at the strength supported by their identity, scope/version/freshness, completeness and residual uncertainty.
 - Branch independence is conditional. After a material effect/observation changes shared state, recompute affected dependencies before trusting the previous runnable set.
 - A broad method/prompt/architecture change with material propagation risk should be calibrated on representative positive, accepted-baseline, and counter-cases before scaling when practical.
-- Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof, and treats its own PASS/FAIL as an evidence-backed verdict with a validity boundary.
+- Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof, and treats its own PASS/FAIL as an evidence-backed verdict with a validity boundary. When a Quality phase is required, FAIL/BLOCKED remains an unsatisfied dependency for the transition it protects; it cannot be bypassed by continuing the dependent baseline/effect.
 - Accepted baselines and prior tests remain conditional on the measurement conditions that made their conclusions valid; changed conditions invalidate only dependent conclusions.
 - For stochastic/open-ended behavior, one success establishes possibility more readily than reliability; repeated evidence is used when the claim and consequence warrant it, never by fixed quota.
 - Representative calibration validates the method, not unseen whole-scope coverage.

@@ -33,6 +33,8 @@ Require enough state to act safely:
 
 Do not execute a specialist proposal that contradicts current Contract/Reasoning invariants.
 
+If the selected effect depends on a candidate/solution transition whose required Quality phase is FAIL or BLOCKED, the precondition is false: return to the responsible owner instead of treating tool availability as permission to bypass the unresolved gate.
+
 For a consequential effect, revalidate authority after the concrete tool operation, resolved target and material arguments are known. If they differ materially from the Reasoning-selected action, current authority changed, or another branch/provider change invalidated a precondition, return to Contract/Reasoning before invocation.
 
 Capability, tool availability, a prior plan/approval, and an operation handle are not effect authority.

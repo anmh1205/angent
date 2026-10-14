@@ -301,6 +301,7 @@ The accepted baseline advances only after required Quality/destination gates pas
 ~~~yaml
 status: PASS | FAIL | BLOCKED
 phase: solution | candidate | behavioral_calibration | endpoint
+required_for: []
 criteria_basis: []
 findings:
   - dimension:
@@ -326,6 +327,8 @@ endpoint_verified:
 Quality may return several findings. Findings sharing one mechanism should be grouped instead of forcing one-at-a-time repair.
 
 A PASS/FAIL is itself an evidence-backed claim. Use BLOCKED when the available evaluation cannot distinguish a material subject defect from evaluator/environment uncertainty.
+
+`required_for` names only the state transition(s) that currently depend on this gate when such tracking is useful—for example baseline advancement, propagation, or write/publish-as-accepted. It does not make Quality an authority source. A required FAIL/BLOCKED leaves those dependent transitions unsatisfied while unrelated work may continue.
 
 ## Learning → Context/owner: PromotedMechanism
 

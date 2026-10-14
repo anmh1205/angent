@@ -64,6 +64,19 @@ After an external write or destination render, verify the state the user actuall
 
 Transport success alone is insufficient.
 
+## Gate consumption
+
+A gate is only meaningful if its verdict changes the state transition it protects.
+
+When a Quality phase is required for baseline advancement, propagation, publication/write-as-accepted, or another consequential dependent transition:
+- PASS can satisfy that dependency within the stated validity boundary;
+- FAIL keeps the candidate unaccepted and returns repair to the earliest faulty owner;
+- BLOCKED keeps the transition unresolved; it is not a soft PASS.
+
+Independent work that does not depend on the verdict may continue.
+
+Do not make all Quality phases globally mandatory. Requirement follows current Contract/revision/consequence/propagation semantics.
+
 ## Findings set
 
 Quality may return multiple related findings.

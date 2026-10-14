@@ -46,6 +46,8 @@ When a shared method/prompt/architecture change can propagate a defect broadly, 
 
 Quality should judge candidate/evidence independently and avoid being anchored by the producer's persuasive rationale.
 
+When a Quality phase is required by the current Contract/revision/consequence model, its verdict is a dependency of the transition it protects: PASS may satisfy it within the verdict-validity boundary; FAIL/BLOCKED cannot be ignored to advance the dependent accepted baseline, propagation, or write/publish-as-accepted. Unrelated runnable work may continue.
+
 A Quality verdict is itself an evidence-backed measurement claim. Distinguish subject defect from evaluator/criterion defect, environment/provider confound, mixed cause, or unresolved attribution; use BLOCKED rather than inventing certainty when attribution matters.
 
 Accepted baselines and prior tests are conditional on the measurement conditions that made their conclusions valid. A changed model/provider/harness/environment/rubric/input boundary invalidates only dependent conclusions.

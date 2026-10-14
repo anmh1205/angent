@@ -65,6 +65,13 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Added calibration for meta-commentary that announces importance, memorization advice, author intention or lesson choreography instead of advancing the technical model.
 - Explicitly avoids phrase blacklists; the failure property is missing technical progress/cohesion, not specific lexical tokens.
 
+### Quality verdict consumption
+
+- Required Quality phases now act as explicit dependencies of the baseline/effect/propagation transition they protect.
+- PASS satisfies only that dependency and only within its verdict-validity boundary.
+- FAIL/BLOCKED cannot be silently ignored to advance a dependent accepted baseline or consequential write/publish-as-accepted.
+- Independent work remains runnable, and direct low-consequence tasks do not acquire mandatory Quality ceremony.
+
 ### Learning activation observability
 
 - Added compact mechanism-activation evidence for recurrence diagnosis: mechanism pointer, matched decision/failure class, applicability basis, control point and current effect.

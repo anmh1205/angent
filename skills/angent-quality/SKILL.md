@@ -53,6 +53,21 @@ Distinguish:
 
 Use BLOCKED when available evidence cannot reliably distinguish these and the distinction can change the next action.
 
+## Verdict consumption
+
+Quality does not grant effect authority, but a Quality phase that the current Contract/revision/risk model has made **required** is a dependency of the transition it protects.
+
+For that dependent transition:
+- **PASS** satisfies the Quality dependency only within its verdict-validity boundary;
+- **FAIL** rejects the current candidate/solution for that dependency and routes repair to the earliest faulty owner;
+- **BLOCKED** leaves the dependency unsatisfied until evidence/evaluator/environment uncertainty is resolved or the requirement is legitimately changed.
+
+Do not advance an accepted baseline, publish/write a candidate as accepted, or perform another consequential dependent effect merely by ignoring a required FAIL/BLOCKED.
+
+Do not globally stop unrelated RUNNABLE work. The verdict blocks only transitions that rely on that gate.
+
+A direct low-consequence task with no required Quality phase remains direct.
+
 ## Earliest faulty owner
 
 When Layer A fails, return the earliest fault:
