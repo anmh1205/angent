@@ -159,6 +159,19 @@ Use distinct cases such as:
 
 Fail the method if it either trusts stale plan/output state automatically or turns every trivial read into an approval transaction.
 
+## In-flight authority-change calibration
+
+When authority/objective can change after a consequential operation was dispatched, distinguish future control from already-attempted effects:
+
+- **instruction narrows before dispatch** — do not invoke the now-unauthorized effect;
+- **instruction changes after dispatch, provider still running** — stop new dependent work, preserve/reconcile the original handle, and do not claim it stopped merely because the plan changed;
+- **supported cancellation requested** — treat cancel/abort as a new bounded effect with its own authority, target, invocation and verification;
+- **too late to cancel** — reconcile completed state and adapt the plan instead of pretending rollback occurred;
+- **cancel response lost/ambiguous** — reconcile both original operation and cancellation outcome before replaying either;
+- **unrelated in-flight operation** — do not globally stop independent authorized work just because one old branch now exists only for reconciliation.
+
+The method fails if revocation is applied retroactively to world state, or if prior authority is incorrectly reused for new effects after the instruction changed.
+
 ## Resume compatibility calibration
 
 Use only when resume semantics changed:

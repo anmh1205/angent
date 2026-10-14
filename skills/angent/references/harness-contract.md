@@ -117,7 +117,7 @@ A transient transcript or hidden model context alone is not a Continuity backend
 
 When the harness exposes a long-running process, job, workflow, build, deployment, or asynchronous provider action, preserve the operation identity/handle if one exists.
 
-The adapter may expose status/read-output mechanisms, events, callbacks, or timeouts. Availability of a status endpoint is not permission to tight-poll it.
+The adapter may expose status/read-output mechanisms, events, callbacks, timeouts, and cancellation/abort mechanisms when the host/provider actually supports them. Availability of a status or cancel endpoint does not itself authorize its use.
 
 Execution observes the external operation and reports WAITING_EXTERNAL plus the next informative observation condition.
 
