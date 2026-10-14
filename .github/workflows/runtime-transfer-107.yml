@@ -1,0 +1,20 @@
+name: ANGENT plugin runtime transfer
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode package
+        shell: bash
+        run: |
+          base64 -d tmp/angent-plugin-1.0.7.b64 > angent-plugin-1.0.7.zip
+          sha256sum angent-plugin-1.0.7.zip
+          unzip -t angent-plugin-1.0.7.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: angent-plugin-1.0.7
+          path: angent-plugin-1.0.7.zip
+          retention-days: 1
