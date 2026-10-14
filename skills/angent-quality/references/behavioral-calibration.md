@@ -1,6 +1,6 @@
 # Behavioral calibration
 
-Use this reference when changing a shared ANGENT method, root/default prompt, routing/owner interface, long-form authoring method, frontier scheduling method, failure/evidence boundary, or another behavior that can propagate across many future units/tasks.
+Use this reference when changing a shared ANGENT method, root/default prompt, routing/owner interface, long-form authoring method, frontier scheduling method, or another behavior that can propagate across many future units/tasks.
 
 This is behavioral evidence, not a replacement for reasoning and not a return to static keyword/count tests.
 
@@ -15,6 +15,7 @@ Calibrate the **generating method** before propagating it when failure cost and 
 ## Build the smallest useful case set
 
 Prefer real cases from:
+
 - user-reported failures;
 - accepted positive baselines;
 - recurrence/oscillation history;
@@ -48,6 +49,7 @@ The method fails if it treats every error as UNKNOWN or every error string as a 
 When changing how ANGENT handles corrections, calibrate the abstraction decision itself.
 
 Useful distinct cases include:
+
 - **genuinely local defect** — one incorrect fact/sentence with no recurrence/shared mechanism evidence; repair should stay local;
 - **shared artifact mechanism** — several units exhibit the same generating error; repair should cover causal peers rather than only the latest example;
 - **method-level recurrence** — the user has reported the same underlying failure across outputs/tasks; retrieve history/positive baseline and inspect the generating method before editing;
@@ -61,6 +63,7 @@ A correction system fails calibration if it always stays local or always escalat
 When changing long-running-operation behavior, judge branch selection rather than only poll interval.
 
 Use distinct cases such as:
+
 - **pending + independent work** — operation A is running while branch B can advance independently; A becomes WAITING_EXTERNAL and B is selected before another equivalent poll;
 - **pending + dependent work only** — everything else genuinely depends on A; preserve the wait state and do not invent busywork or rapid polls;
 - **wait trigger becomes eligible** — the documented interval/event/dependency condition is now satisfied; rechecking A is valid;
@@ -73,6 +76,34 @@ Fail the method if:
 - WAITING_EXTERNAL is treated as RUNNABLE before its observation condition is satisfied;
 - a waiting branch turns the whole task idle while independent useful work exists;
 - the repair only increases a sleep/poll interval without changing branch-selection semantics.
+
+## Decision-boundary calibration
+
+When changing authority/effect or observation-admission behavior, test the boundary where a previously valid plan can become stale.
+
+Use distinct cases such as:
+
+- **authorized plan, unchanged invocation** — resolved target/arguments still match current authority; proceed without extra ceremony;
+- **target/arguments drift after planning** — the concrete invocation is materially different; revalidate instead of inheriting generic prior approval;
+- **new instruction narrows authority before invocation** — current authority wins even if the earlier ActionNode was valid;
+- **mismatched observation identity/version** — preserve the result as unexpected evidence; do not update a different target/state;
+- **partial/truncated observation** — use it only for what it establishes; do not infer whole-scope completion;
+- **shared-state change invalidates branch independence** — recompute affected RUNNABLE/BLOCKED state before selecting the next action;
+- **low-consequence direct read** — do not add commit/admission ceremony that cannot change correctness.
+
+Fail the method if it either trusts stale plan/output state automatically or turns every trivial read into an approval transaction.
+
+## Resume compatibility calibration
+
+Use only when resume semantics changed:
+
+- unrelated live drift outside the saved dependency closure should remain COMPATIBLE;
+- changed decisive dependency should become REVALIDATE;
+- uncertain prior external effect should become AMBIGUOUS and must not replay blindly;
+- replaced target/effect semantics should become INCOMPATIBLE;
+- trivial work with no saved dependency should not acquire resume ceremony.
+
+The method fails if it resumes through ambiguity or invalidates all saved work because any unrelated state changed.
 
 ## Cross-surface authoring calibration
 
@@ -97,9 +128,32 @@ Fail the method if document mode introduces generic teaching narration, detached
 
 Do not solve this with a phrase blacklist.
 
+## Reproducible behavioral evidence
+
+When ANGENT uses calibration as evidence for a broad/recurrent behavior change, preserve enough information to reconstruct **why** the acceptance claim was justified.
+
+A compact record may contain:
+- case/task identity and the relevant input/contract;
+- accepted baseline identity/version;
+- candidate identity/version;
+- model/provider/harness/environment boundary when it can change behavior;
+- observable trajectory pointer or summary: owner/tool/action sequence, external observations and produced artifacts—not hidden private reasoning;
+- final outcome/endpoint state;
+- criteria/checks actually applied and which were decisive;
+- Quality verdict plus evaluator/measurement validity boundary;
+- trial count/variation only when repeatability/reliability is being claimed;
+- human/user judgment used to calibrate a subjective grader when applicable.
+
+Do not require a full transcript when a smaller artifact establishes the behavior. Do not persist private chain-of-thought to make an eval reproducible.
+
+A claim such as “calibration passed” without recoverable case/baseline/candidate/evidence is weak evidence and should become STALE/BLOCKED when later acceptance depends on it.
+
+This record can live in the harness's normal artifacts/logs; ANGENT only defines the semantics and may persist a pointer through Continuity when later work depends on the claim.
+
 ## Compare to baseline
 
 Ask what changed relative to accepted behavior:
+
 - target failure;
 - protected accepted strengths;
 - neighboring behavior likely to regress;
@@ -126,6 +180,7 @@ Use authoritative endpoint checks where objective. For semantic quality use inde
 ## Capability vs regression
 
 Keep two questions distinct:
+
 - **capability:** does the new method solve a class it previously could not?
 - **regression:** does it still preserve behavior that was already accepted?
 
