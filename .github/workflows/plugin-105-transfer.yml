@@ -1,0 +1,23 @@
+name: ANGENT plugin 1.0.5 transfer
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode and verify delta
+        shell: bash
+        run: |
+          base64 -d tmp/angent-plugin-105-delta.b64 > angent-plugin-105-delta.zip
+          echo "6fa67d2fd00f59f2d92c6e771ecef25dbffffb52d3032b5a3e62d9a0834210e2  angent-plugin-105-delta.zip" | sha256sum -c -
+          unzip -t angent-plugin-105-delta.zip
+      - name: Upload delta
+        uses: actions/upload-artifact@v4
+        with:
+          name: angent-plugin-105-delta
+          path: angent-plugin-105-delta.zip
+          if-no-files-found: error
+          retention-days: 1
