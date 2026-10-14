@@ -65,6 +65,19 @@ Know whether material context is current instruction, prior preference, project 
 
 Refresh when another session/process may have changed the state, a pointer/version is stale, or the next action depends on exact current state.
 
+## Decision-point sufficiency
+
+Before a consequential decision or effect, ask whether omitted context could plausibly change:
+- current authority or exclusions;
+- resolved target/scope;
+- a decisive premise;
+- a protected property;
+- a dependency that makes the selected branch unsafe or stale.
+
+Retrieve only the missing state that can change that decision. This is a sufficiency check, not permission to reload the entire history.
+
+A context package that was sufficient when a plan was formed can become insufficient after a new user instruction, another branch effect, provider drift, resume, or argument transformation.
+
 ## Progressive disclosure
 
 Prefer maps/pointers over large preloads.

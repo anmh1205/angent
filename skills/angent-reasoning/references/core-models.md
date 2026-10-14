@@ -128,12 +128,16 @@ Represent:
 - prerequisites;
 - critical path;
 - parallelizable independent work;
+- dependency assumptions that justify independence;
+- shared-state touch points that can invalidate another branch;
 - uncertainty-reducing probes;
 - side-effect boundaries;
 - verification points;
 - stop/replan conditions.
 
 Prefer next actions that unblock a dependency, reduce decisive uncertainty, advance the critical path, and remain safe/reversible when uncertainty is high.
+
+After a material effect/observation changes shared state, re-evaluate only branches whose prerequisites or independence assumptions depend on that state. Do not keep a stale RUNNABLE classification merely because the branch was previously independent.
 
 ## Progress dimensions
 

@@ -26,6 +26,23 @@ A previous session's permission to deploy, publish or delete does not automatica
 
 Continuity records work state; it cannot manufacture permission.
 
+## Invocation-bound authority
+
+Authority must still cover the **exact effect that is about to occur**, not merely the earlier plan or the existence of a capable tool.
+
+For a consequential effect, bind current authority to:
+- resolved operation and target identity;
+- material arguments/scope;
+- effect class and blast radius;
+- still-active obligations and exclusions;
+- the current instruction state that authorizes the effect.
+
+Revalidate this binding after arguments/target are known and immediately before the effect when an intervening instruction, provider change, branch effect, resume, handoff, or tool transformation could have changed what will actually happen.
+
+Tool availability, a specialist proposal, an old plan, a generic approval for the tool, or possession of an operation/call ID is not blanket authorization for changed arguments or a different target.
+
+If the material target/arguments cannot be inspected well enough to determine whether they remain authorized, use a safer route or return for the needed decision/approval instead of assuming.
+
 ## Success state
 
 Define completion by the requested world/artifact state, not by the mechanism used.

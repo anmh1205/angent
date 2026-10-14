@@ -43,6 +43,10 @@ Examples:
 
 Do not manufacture busywork. A branch is RUNNABLE only when it can create task-relevant progress.
 
+Independence is a reasoning conclusion, not a permanent branch property. Preserve the dependency/shared-state assumptions that matter. After a material observation or effect changes shared state, recompute affected branch states before selecting from the old runnable set.
+
+A branch can move RUNNABLE → BLOCKED/STALE when another branch changes a prerequisite, and a blocked/waiting branch can become RUNNABLE when a dependency is satisfied.
+
 ## Recheck eligibility
 
 A WAITING_EXTERNAL branch becomes eligible for another observation only when a stated condition is satisfied, such as:

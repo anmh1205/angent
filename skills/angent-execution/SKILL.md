@@ -33,6 +33,10 @@ Require enough state to act safely:
 
 Do not execute a specialist proposal that contradicts current Contract/Reasoning invariants.
 
+For a consequential effect, revalidate authority after the concrete tool operation, resolved target and material arguments are known. If they differ materially from the Reasoning-selected action, current authority changed, or another branch/provider change invalidated a precondition, return to Contract/Reasoning before invocation.
+
+Capability, tool availability, a prior plan/approval, and an operation handle are not effect authority.
+
 ## Choose the route
 
 Prefer the smallest sufficient route that preserves correctness and observability.
@@ -85,13 +89,17 @@ Read `references/wait-and-polling.md` when a task contains long-running operatio
 
 Return an observation delta that describes the world, not merely tool output:
 - attempted action;
+- operation/target identity actually observed;
 - actual observed state;
-- changed identifiers/versions;
+- changed identifiers/versions and relevant time/version boundary;
 - checks performed;
+- scope/completeness/truncation information when it can change interpretation;
 - expectation match/mismatch;
 - residual uncertainty;
 - evidence/artifact pointers;
 - wait state and next informative observation condition when still pending.
+
+Execution supplies the observation and its boundary. Reasoning decides whether the evidence is admissible for changing the current model/decision.
 
 Exit code 0 is evidence about the command, not automatically the requested endpoint.
 

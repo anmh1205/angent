@@ -46,6 +46,8 @@ Capture the scope and invariants downstream Reasoning must preserve. Identify wh
 
 Track what effects the current instruction authorizes. Historical momentum does not grant current authority.
 
+For consequential effects, authority is not finished at planning time: it must still cover the resolved operation, target and material arguments at the invocation boundary. A changed target/scope/argument set requires revalidation rather than inheriting an earlier generic approval.
+
 ## Success
 
 Prefer state-based success:

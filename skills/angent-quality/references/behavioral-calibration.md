@@ -62,6 +62,22 @@ Fail the method if:
 - a waiting branch turns the whole task idle while independent useful work exists;
 - the repair only increases a sleep/poll interval without changing branch-selection semantics.
 
+## Decision-boundary calibration
+
+When changing authority/effect or observation-admission behavior, test the boundary where a previously valid plan can become stale.
+
+Use distinct cases such as:
+
+- **authorized plan, unchanged invocation** — resolved target/arguments still match current authority; proceed without extra ceremony;
+- **target/arguments drift after planning** — the concrete invocation is materially different; revalidate instead of inheriting generic prior approval;
+- **new instruction narrows authority before invocation** — current authority wins even if the earlier ActionNode was valid;
+- **mismatched observation identity/version** — preserve the result as unexpected evidence; do not update a different target/state;
+- **partial/truncated observation** — use it only for what it establishes; do not infer whole-scope completion;
+- **shared-state change invalidates branch independence** — recompute affected RUNNABLE/BLOCKED state before selecting the next action;
+- **low-consequence direct read** — do not add commit/admission ceremony that cannot change correctness.
+
+Fail the method if it either trusts stale plan/output state automatically or turns every trivial read into an approval transaction.
+
 ## Cross-surface authoring calibration
 
 When chat/response quality is accepted but document quality regresses, compare the same subject relation across surfaces.

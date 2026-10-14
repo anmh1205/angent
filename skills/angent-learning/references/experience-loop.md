@@ -57,6 +57,10 @@ When a rule exists but failure recurs, ask not only “was it retrieved?” but 
 
 Prefer moving the invariant to the real control point over duplicating stronger wording across every downstream skill.
 
+A related timing failure occurs when a decision is valid when planned but stale when committed. If target, arguments, authority, dependency state or provider state can change between planning and execution, the controlling invariant must be revalidated at the boundary where those concrete values are known.
+
+Likewise, a tool result should not become established state merely because it arrived after an authorized call. Observation identity, scope/version, completeness and uncertainty determine what the result can safely update.
+
 ## Alternative cause
 
 Ask whether another cause could explain the same outcome.

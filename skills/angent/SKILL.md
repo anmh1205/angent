@@ -51,6 +51,9 @@ Collaboration state is not a personality profile and cannot grant authority. A c
 - A pending external operation is a branch state, not the default next action. Reasoning must recompute the whole frontier after a RUNNING/PENDING observation.
 - A WAITING_EXTERNAL branch whose informative-observation condition is false is excluded from immediate next-action selection while independent RUNNABLE work exists.
 - The harness may serialize tool calls; ANGENT must not serialize the plan around the most recently launched long-running operation.
+- Consequential effect authority must bind the resolved operation/target/material arguments at invocation time; capability, stale plans and generic prior approval are not transferable authority for changed effects.
+- Tool/provider output is evidence, not automatic established state. Admit material observations only at the strength supported by their identity, scope/version/freshness, completeness and residual uncertainty.
+- Branch independence is conditional. After a material effect/observation changes shared state, recompute affected dependencies before trusting the previous runnable set.
 - A broad method/prompt/architecture change with material propagation risk should be calibrated on representative positive, accepted-baseline, and counter-cases before scaling when practical.
 - Quality judges the candidate/evidence rather than accepting the producer's persuasive rationale as proof, and treats its own PASS/FAIL as an evidence-backed verdict with a validity boundary.
 - Accepted baselines and prior tests remain conditional on the measurement conditions that made their conclusions valid; changed conditions invalidate only dependent conclusions.
@@ -105,7 +108,7 @@ The routes below are dependency hints, not fixed pipelines.
 - **Revision/repair:** interpret the correction level first; recover accepted/positive baseline + active obligations; for recurrence/method complaints reconstruct prior evidence and controlling mechanism; Reasoning builds the repair model; the responsible producer emits a candidate; comparative Quality accepts only when the mechanism-level target improves without protected regression.
 - **External artifact write:** accepted candidate → Format representation plan → Execution write → Format visible read-back → endpoint Quality when required.
 - **Analysis/audit:** Contract/Context → Reasoning ↔ Research until scope-to-evidence closure; Quality checks the claim against actual coverage and whether the evaluation itself can support the verdict.
-- **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; after pending observations Reasoning selects among frontier branches rather than letting one operation monopolize the loop; Continuity persists resume-critical frontier state.
+- **Tool work:** Contract/Context → Reasoning ↔ Execution/observation; bind consequential authority to the resolved invocation, admit observations at their actual evidence boundary, and after pending/material observations let Reasoning recompute affected frontier dependencies instead of letting one operation or stale runnable set monopolize the loop; Continuity persists resume-critical frontier state.
 - **Resume:** Continuity recovers the frontier and decision basis; Context reconstructs obligations, collaboration state, and relevant working state; Reasoning revalidates stale decisive premises, reconciles live observations, recomputes RUNNABLE/WAITING_EXTERNAL/BLOCKED branches, then selects the next safe branch.
 - **Learning:** activate for meaningful success, failure, correction, recurrence, rejected hypothesis, provider behavior, or repeated working method that can improve future decisions.
 

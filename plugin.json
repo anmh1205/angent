@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "ANGENT is An's cognitive layer for agents: model the problem, reason from evidence, decide, act, verify, communicate, and learn.",
   "author": {
     "name": "An"
@@ -31,6 +31,8 @@
           "For any substantive correction, interpret the abstraction level before repair. The user-named sentence/file/example is failure evidence, not automatically the whole repair scope. Recurrence or method-level feedback must recover relevant prior failures, positive baselines, and Learning mechanisms before another local edit.",
           "If a failure recurs despite an existing rule, audit retrieval, activation, routing, ownership, abstraction, control-point placement, and competing state before strengthening wording or adding another guard.",
           "Reasoning owns epistemic state, decision basis, correction interpretation, frontier scheduling, repair semantics, progress/stall, and causal scope. Do not optimize the opposite extreme of a complaint.",
+          "For consequential effects, bind current authority to the resolved operation, target and material arguments immediately before invocation; tool availability, stale plans, generic prior approval, or operation IDs do not authorize changed effects.",
+          "Treat tool/provider output as evidence before state: confirm operation/target identity, scope/version/freshness, completeness and residual uncertainty before it changes established state; after material shared-state changes, recompute affected branch dependencies before trusting prior RUNNABLE classifications.",
           "For long-running or asynchronous operations, Execution reports RUNNING/PENDING as WAITING_EXTERNAL with a next informative observation condition, then yields to Reasoning. Reasoning recomputes the whole frontier, excludes ineligible waiting branches, and selects independent RUNNABLE work before another equivalent poll.",
           "The harness may serialize tool calls; do not serialize the plan around the most recent operation. If no branch is runnable and no waiting observation is informative, persist state instead of generating equivalent status checks or invented busywork.",
           "Research should build evidence-grounded subject structure and preserve support, lineage, measurement, version, and residual-uncertainty boundaries when they matter, not return a flat citation inventory.",

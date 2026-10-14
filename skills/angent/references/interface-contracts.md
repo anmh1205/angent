@@ -186,6 +186,7 @@ A complaint is evidence feeding this model; it is not itself the repair model.
 intent:
 target:
 authorization:
+authority_basis_pointer:
 active_obligations: []
 collaboration_constraints: []
 preconditions: []
@@ -196,14 +197,23 @@ action_success_predicate:
 replan_condition:
 verification_target:
 effect_class:
+resolved_target:
+material_arguments:
+authority_refresh_condition:
 ~~~
+
+For consequential effects, `resolved_target` and `material_arguments` are populated/checked only when the concrete invocation makes them known. They are conceptual fields, not mandatory ceremony for trivial reads.
 
 ## Execution → workspace/Reasoning: ObservationDelta
 
 ~~~yaml
 attempted:
+operation_identity:
+target_identity:
 observed_state:
 changed_identifiers_or_versions: []
+observation_boundary:
+scope_or_completeness:
 artifacts_or_checks: []
 expectation_match:
 new_evidence: []
@@ -220,6 +230,8 @@ wait_state:
 ~~~
 
 An acknowledgement or exit code without authoritative state is not automatically success.
+
+Reasoning must admit the observation at the strength supported by target identity, scope/version/freshness, completeness and residual uncertainty before it changes established state or a consequential decision.
 
 When wait_state is returned, Reasoning recomputes the active frontier before any equivalent status action is selected again.
 

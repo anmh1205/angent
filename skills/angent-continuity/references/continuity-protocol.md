@@ -37,11 +37,12 @@ The store intentionally accepts a flexible frontier object; Continuity owns sema
 
 ## Side-effect transaction
 
-1. **PREPARED** — persist target, intent, expected before/after state and reconciliation method.
-2. **ATTEMPT** — perform one authorized effect.
-3. **RECONCILE** — inspect authoritative provider state.
-4. **VERIFIED/COMMITTED** — persist actual result and advance frontier.
-5. **ATTEMPTED_UNKNOWN** — preserve uncertainty and do not replay blindly.
+1. **PREPARED** — persist target, intent, expected before/after state, reconciliation method and the authority basis needed to know what effect was intended.
+2. **BIND** — when the concrete operation/target/material arguments become known, revalidate that they still match current authority and decisive preconditions. If they materially differ from PREPARED and resume/replay safety depends on the distinction, persist the revised prepared intent before attempt.
+3. **ATTEMPT** — perform one authorized effect.
+4. **RECONCILE** — inspect authoritative provider state.
+5. **VERIFIED/COMMITTED** — persist actual result and advance frontier.
+6. **ATTEMPTED_UNKNOWN** — preserve uncertainty and do not replay blindly.
 
 Side-effect state may live inside the frontier record; the storage helper does not execute or retry effects.
 

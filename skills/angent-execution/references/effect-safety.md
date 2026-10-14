@@ -14,7 +14,12 @@ Retry behavior depends on the effect, not on whether the tool returned an error.
 
 Before a consequential effect:
 - persist PREPARED intent through Continuity;
-- include target, expected state transition and reconciliation method.
+- include target, expected state transition and reconciliation method;
+- after the concrete operation/target/material arguments are resolved, revalidate that current authority still covers exactly that effect.
+
+If the target, scope, arguments, authority, or decisive precondition changed since planning/approval, do not treat the old authorization as transferable. Return to Contract/Reasoning or the required approval boundary.
+
+This prevents a planning-to-execution time-of-check/time-of-use gap without requiring ANGENT to implement its own permission runtime.
 
 After attempt:
 - inspect authoritative state;

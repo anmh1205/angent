@@ -89,6 +89,12 @@ Examples of interaction mode include answer-only, research/report-before-edit, a
 
 If the mode also limits what may happen—for example audit-only or report-before-edit—Contract carries the binding scope/sequence obligation.
 
+## Decision-point sufficiency
+
+A context package is not permanently sufficient. Before a consequential decision or effect, refresh only the state that could change current authority, resolved target/scope, a decisive premise, a protected property, or a dependency that makes the selected branch stale.
+
+If a new instruction, provider change, resume, argument transformation, or another branch effect occurred after planning, do not assume the old context still justifies the same action.
+
 ## Baseline and artifact state
 
 For iterative repair, retrieve the accepted baseline or its durable pointer/digest before a dependent change.

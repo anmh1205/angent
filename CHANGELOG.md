@@ -32,6 +32,17 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Plugin bootstrap 1.0.4 activates the scheduling semantics at the entrypoint rather than relying on a deep Execution reference.
 - No queue, scheduler service, background runtime, fixed timer or polling-count mechanism was added.
 
+### Decision-boundary reliability
+
+- Added invocation-bound authority: consequential effects revalidate current authority after concrete operation/target/material arguments are known.
+- Capability, stale plans, generic prior approval and operation IDs no longer substitute for authorization of changed effects.
+- Added observation-admission semantics so partial, stale, mismatched or ambiguous tool/provider results cannot silently mutate established state beyond their evidence boundary.
+- Added target identity, observation boundary and scope/completeness fields to the conceptual ObservationDelta.
+- Made multi-branch independence conditional on the current dependency/shared-state model; material shared-state changes reclassify only affected branches.
+- Added decision-point Context sufficiency and trust-boundary handling for natural-language content returned by tools/providers.
+- Added behavioral calibration cases for plan→invocation drift, observation mismatch/partiality, branch dependency invalidation and low-consequence counter-cases.
+- No permission runtime, transaction engine, event journal, observation database or scheduler service was added.
+
 ### Systemic correction interpretation
 
 - Added an explicit correction-interpretation step before repair scope/owner selection.

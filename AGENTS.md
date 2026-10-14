@@ -6,9 +6,9 @@ ANGENT is an unreleased cognitive-layer candidate. Core hardening, cognitive-col
 
 This file is the canonical repository instruction surface. Nested AGENTS.md files may refine a subtree without discarding applicable root rules.
 
-- Contract owns outcome, authority, active obligations and success semantics.
+- Contract owns outcome, authority, active obligations, invocation-bound effect authorization and success semantics.
 - Context owns relevant working state, collaboration state, provenance, context sufficiency and baseline/decision-basis pointers.
-- Reasoning owns strategic decisions, epistemic state, correction interpretation, frontier scheduling, repair semantics, progress/stall, dependency invalidation and integration of the shared cognitive workspace.
+- Reasoning owns strategic decisions, epistemic state, observation admission, correction interpretation, frontier scheduling, repair semantics, progress/stall, dependency invalidation and integration of the shared cognitive workspace.
 - Research owns evidence acquisition, support/lineage/measurement boundaries and evidence-grounded subject-model deltas.
 - Execution owns authorized effects, external observation and provider reconciliation.
 - Authoring owns reader-facing content, epistemic fidelity and semantic artifact state.
@@ -51,6 +51,12 @@ A Quality verdict is itself an evidence-backed measurement claim. Distinguish su
 Accepted baselines and prior tests are conditional on the measurement conditions that made their conclusions valid. A changed model/provider/harness/environment/rubric/input boundary invalidates only dependent conclusions.
 
 For stochastic/open-ended behavior, one success establishes possibility more readily than reliability. Use repeated representative evidence only when the claim and consequence warrant it, never by fixed quota.
+
+For consequential effects, authority must still match the resolved operation, target and material arguments at the invocation boundary. Tool availability, an earlier plan, generic prior approval or possession of an operation ID does not authorize a materially changed effect.
+
+Treat tool/provider output as evidence before treating it as state. A material observation changes established state only at the strength supported by its operation/target identity, scope/version/freshness, completeness and residual uncertainty.
+
+Branch independence is conditional on the current dependency/shared-state model. A material effect or observation that changes shared state can invalidate a previously RUNNABLE branch; Reasoning recomputes only affected dependencies instead of assuming prior independence remains true.
 
 ## Collaboration state
 
