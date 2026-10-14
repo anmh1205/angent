@@ -30,6 +30,18 @@ No Skill/Agent is removed merely because upstream depends on AgentKit CLI, Claud
 
 The old docs-derived assumption of 103 public Skills with eight missing/new identities is superseded by signed package evidence. The stable “choose a Skill” page is a usage guide, not the packaged-identity inventory.
 
+## Semantic review progress
+
+Current accepted batch: **14 / 102 Skill identities reviewed semantically**.
+
+- **13 VERIFIED_ADAPTED**: `ak-agentkit`, `ak-bootstrap`, `ak-code-review`, `ak-cook`, `ak-debug`, `ak-goal-warmup`, `ak-handoff`, `ak-orchestrate`, `ak-plan`, `ak-research`, `ak-review-pr`, `ak-skill-creator`, `ak-test`.
+- **1 VERIFIED_DEGRADED**: `ak-team` because a real live-team lifecycle is load-bearing and cannot be truthfully emulated by ordinary subagents/sequential roles.
+- **88 REVIEW_PENDING**: no semantic acceptance claim yet.
+
+This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
+
+No status is promoted solely from identity, line count, reference count, or textual similarity.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -37,7 +49,7 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 | `ak-advise` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-agent-browser` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-agentize` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-agentkit` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-agentkit` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-ai-artist` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-ai-multimodal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-ak` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
@@ -45,19 +57,19 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 | `ak-autoresearch` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-backend-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-better-auth` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-bootstrap` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-bootstrap` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-brainstorm` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-chrome-profile` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-code-review` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-code-review` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-codex-goal` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-coding-level` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-common` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-context-engineering` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-cook` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-copywriting` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-cti-expert` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-databases` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-debug` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-deep-swe` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-deploy` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-design` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
@@ -75,10 +87,10 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 | `ak-git` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-github` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-gkg` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
-| `ak-goal-warmup` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-goal-warmup` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-google-adk-python` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-graphify` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-handoff` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-handoff` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-handover` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-help` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-html-video` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -94,9 +106,9 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 | `ak-mermaidjs-v11` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-mintlify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-mobile-development` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-orchestrate` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-orchestrate` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-payment-integration` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-plan` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-plan` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-plans-kanban` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-predict` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-preview` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -106,10 +118,10 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 | `ak-react-best-practices` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-remotion` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-repomix` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
-| `ak-research` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-research-prompt` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-retro` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-review-pr` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-scenario` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-scout` | REVIEW_PENDING | prior implementation present; semantic review pending |
 | `ak-security` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
@@ -119,12 +131,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 | `ak-ship` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
 | `ak-shopify` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-show-off` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-skill-creator` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-skill-creator` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-stitch` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
 | `ak-tanstack` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
-| `ak-team` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-team` | VERIFIED_DEGRADED | true live-team lifecycle is load-bearing; hard-stop/route elsewhere when harness lacks it |
 | `ak-tech-graph` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
-| `ak-test` | REVIEW_PENDING | prior implementation present; semantic review pending |
+| `ak-test` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
 | `ak-threejs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ui-styling` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
 | `ak-ui-ux-pro-max` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
