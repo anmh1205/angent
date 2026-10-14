@@ -1,6 +1,6 @@
 # AGENTS.md — ANGENT repository instructions
 
-ANGENT is an unreleased cognitive-layer candidate. Core hardening and the cognitive-collaboration alignment are integrated; Engineer inventory/parity refresh is the next separate phase.
+ANGENT is an unreleased cognitive-layer candidate. Core hardening and the cognitive-collaboration alignment are integrated; reliability hardening continues while Engineer inventory/parity refresh remains a separate phase.
 
 ## Authority and ownership
 
@@ -8,11 +8,11 @@ This file is the canonical repository instruction surface. Nested AGENTS.md file
 
 - Contract owns outcome, authority, active obligations and success semantics.
 - Context owns relevant working state, collaboration state, provenance and baseline pointers.
-- Reasoning owns strategic decisions, repair semantics, dependency invalidation and integration of the shared cognitive workspace.
+- Reasoning owns strategic decisions, repair semantics, dependency invalidation, progress/stall interpretation and integration of the shared cognitive workspace.
 - Research owns evidence acquisition and evidence-grounded subject-model deltas.
-- Execution owns authorized effects and provider observation.
+- Execution owns authorized effects, wait/poll behavior and provider observation.
 - Authoring owns reader-facing content and semantic artifact state.
-- Quality independently judges solution, revision regression and endpoint state.
+- Quality independently judges solution, behavioral regression, revision regression and endpoint state.
 - Format owns destination representation and render fidelity; external writes remain Execution effects.
 - Continuity owns compact interruption-safe task state.
 - Learning owns reusable causal mechanisms, including working-method mechanisms.
@@ -44,6 +44,26 @@ A correction must preserve still-active obligations and accepted properties outs
 
 When a premise or interface changes, invalidate only dependent work. If repairs oscillate or the same failure recurs, stop local patching and revisit the controlling model/interface/state.
 
+## Progress invariant
+
+Activity is not progress.
+
+For substantive iterative work, Reasoning should recognize progress only when decision-relevant state changes: evidence, model/hypothesis, dependency, accepted work, endpoint evidence, or material uncertainty.
+
+Repeated tool calls, searches, patches, polls, reviews, commits or generated text with no such delta are a replan signal.
+
+A waiting external dependency is not a stall while independent useful work is advancing.
+
+## Behavioral reliability
+
+Reliability claims should be evaluated with behavior cases grounded in real failure/acceptance evidence.
+
+Use scenario-based semantic evaluation for ANGENT/model behavior, deterministic tests for deterministic mechanics, and actual provider/integration state for provider-owned behavior.
+
+Do not claim behavioral quality from keyword/count assertions.
+
+Before scaling a new bulk transformation method, calibrate it on representative difficult/contrasting cases when method failure could propagate broadly.
+
 ## State separation
 
 AGENTS.md, Contract obligations, collaboration state, Memory, Reasoning state, Authoring artifact state, Continuity frontier and Learning mechanisms are different semantic classes. Do not turn one into a universal transcript/database.
@@ -68,11 +88,13 @@ Persist active work at meaningful semantic boundaries. Continuity keeps only the
 
 Whole-scope claims require complete-enough inventory and coverage. Pagination, truncation, filters and unseen units must not be treated as full inspection.
 
+Long-running operations should preserve handles/state when needed; Execution must not tight-poll and should advance independent runnable work before rechecking a waiting dependency.
+
 ## Engineer boundary
 
 Prefer usable native AgentKit Engineer; otherwise use the fallback. Do not expose complete native and fallback catalogs together by default.
 
-Engineer inventory/parity maintenance is the next separate phase after the integrated cognitive core.
+Engineer inventory/parity maintenance remains separate from cognitive/reliability hardening.
 
 ## Change discipline
 

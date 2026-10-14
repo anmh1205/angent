@@ -81,6 +81,7 @@ Represent:
 - prerequisites;
 - critical path;
 - parallelizable independent work;
+- waiting dependencies;
 - uncertainty-reducing probes;
 - side-effect boundaries;
 - verification points;
@@ -88,4 +89,8 @@ Represent:
 
 Prefer next actions that unblock a dependency, reduce decisive uncertainty, advance the critical path, and remain safe/reversible when uncertainty is high.
 
-Progress tokens such as commits, generated files, issue transitions, or command success prove the requested endpoint only when the Contract defines them as endpoint evidence.
+For substantive iterative work, reason about a progress delta: new evidence, model change, dependency change, accepted-work advancement, endpoint-evidence advancement, or material uncertainty reduction.
+
+Repeated activity with no such delta is a replan signal.
+
+Progress tokens such as commits, generated files, issue transitions, command success, repeated status checks, or added source count prove the requested endpoint only when the Contract defines them as endpoint evidence.

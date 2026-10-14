@@ -15,7 +15,8 @@ Before expensive authoring or effects when consequence warrants it, PASS require
 7. unresolved uncertainty calibrated;
 8. decision follows from constraints/consequences;
 9. dependency/replan structure coherent;
-10. whole-scope claims have whole-scope evidence.
+10. recent trajectory shows real progress rather than repeated no-progress activity when the task is iterative;
+11. whole-scope claims have whole-scope evidence.
 
 Return failure to the earliest responsible owner.
 
@@ -53,6 +54,14 @@ After a destination write or external effect, verify the actual user/provider st
 - requested endpoint is satisfied.
 
 Transport success is not endpoint proof.
+
+## Behavioral regression
+
+When a change affects cross-owner behavior, use relevant cases from behavioral-regression.md.
+
+Judge semantic properties and observable trajectory/state, not string presence or arbitrary counts.
+
+Use deterministic checks only for deterministic mechanics they actually own. Use live/representative model or provider evidence for claims owned by those systems.
 
 ## Findings
 

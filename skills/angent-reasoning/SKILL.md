@@ -13,11 +13,12 @@ It does not fetch evidence owned by Research, perform effects owned by Execution
 
 - references/core-models.md
 - references/cognitive-workspace.md
+- references/progress-and-stall.md
 - references/abstraction-and-invariants.md
 - references/specialist-synthesis.md
 - references/repair-and-regression.md
 
-Load repair-and-regression whenever existing work is being revised after a complaint, defect or changed requirement.
+Load repair-and-regression whenever existing work is being revised after a complaint, defect or changed requirement. Load progress-and-stall for long, iterative, tool-heavy, research-heavy or multi-owner work where activity can be mistaken for progress.
 
 ## Work from one cognitive state
 
@@ -57,6 +58,27 @@ For an existing artifact, plan or implementation:
 8. require comparative Quality before advancing the baseline.
 
 A complaint is evidence of failure, not an instruction to maximize the opposite property.
+
+## Progress and stall
+
+Activity is not automatically progress.
+
+For substantive iterative work, periodically judge whether recent actions produced a material delta in at least one of these dimensions:
+
+- new decision-relevant evidence;
+- improved or invalidated model/hypothesis;
+- dependency unblocked;
+- accepted artifact/implementation state advanced;
+- endpoint evidence strengthened;
+- genuine reduction in material uncertainty.
+
+Tool calls, commits, status checks, generated text, or repeated reviews do not count by themselves.
+
+If multiple actions produce no material delta while the same blocker/model/tactic remains, treat the work as stalled. Stop repeating the tactic, reconstruct the relevant model or dependency, choose a different discriminator/action, or mark a real blocker.
+
+A WAITING dependency is not the same as a stall when useful independent work is still advancing another part of the task.
+
+Do not implement a fixed global stall counter or progress service merely to represent this semantic rule.
 
 ## Recurrence and oscillation
 
