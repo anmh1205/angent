@@ -25,4 +25,4 @@ Use `PORTING_MANIFEST.md` and active fallback catalog to explain:
 - known degraded capabilities;
 - recommended workflow for the user's outcome.
 
-Prefer task-oriented help over dumping a list of 102 names.
+Prefer task-oriented help over dumping a list of 103 names.

@@ -30,6 +30,131 @@ PLUGIN_FIELDS = {
 }
 PLUGIN_NAME = re.compile(r"^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$")
 
+EXPECTED_SKILLS = frozenset([
+    "ak-advise",
+    "ak-agent-browser",
+    "ak-agentize",
+    "ak-agentkit",
+    "ak-ai-artist",
+    "ak-ai-multimodal",
+    "ak-ak",
+    "ak-ask",
+    "ak-autoresearch",
+    "ak-backend-development",
+    "ak-better-auth",
+    "ak-bootstrap",
+    "ak-brainstorm",
+    "ak-bro",
+    "ak-chrome-profile",
+    "ak-code-review",
+    "ak-codex-goal",
+    "ak-coding-level",
+    "ak-context-engineering",
+    "ak-cook",
+    "ak-copywriting",
+    "ak-cti-expert",
+    "ak-databases",
+    "ak-debug",
+    "ak-deep-swe",
+    "ak-deploy",
+    "ak-design",
+    "ak-devops",
+    "ak-diagram",
+    "ak-docs",
+    "ak-docs-seeker",
+    "ak-document-skills",
+    "ak-enhance-ux-ax",
+    "ak-excalidraw",
+    "ak-explain",
+    "ak-fable-thinking",
+    "ak-find-skills",
+    "ak-fix",
+    "ak-folder-context",
+    "ak-frontend-design",
+    "ak-frontend-development",
+    "ak-git",
+    "ak-github",
+    "ak-gkg",
+    "ak-goal-warmup",
+    "ak-google-adk-python",
+    "ak-graphify",
+    "ak-handoff",
+    "ak-help",
+    "ak-hyperframes",
+    "ak-interview-docs",
+    "ak-issue-to-plan",
+    "ak-journal",
+    "ak-llms",
+    "ak-loop",
+    "ak-markdown-novel-viewer",
+    "ak-mcp-builder",
+    "ak-media-processing",
+    "ak-mermaidjs-v11",
+    "ak-mintlify",
+    "ak-mobile-development",
+    "ak-orchestrate",
+    "ak-page-builder",
+    "ak-payment-integration",
+    "ak-plan",
+    "ak-plans-kanban",
+    "ak-predict",
+    "ak-preview",
+    "ak-problem-solving",
+    "ak-project-management",
+    "ak-project-organization",
+    "ak-react-best-practices",
+    "ak-remotion",
+    "ak-repomix",
+    "ak-research",
+    "ak-research-prompt",
+    "ak-retro",
+    "ak-review-pr",
+    "ak-scenario",
+    "ak-scout",
+    "ak-security",
+    "ak-shader",
+    "ak-ship",
+    "ak-shopify",
+    "ak-show-off",
+    "ak-skill-creator",
+    "ak-sowat",
+    "ak-stitch",
+    "ak-sumup",
+    "ak-tanstack",
+    "ak-team",
+    "ak-tech-graph",
+    "ak-test",
+    "ak-threejs",
+    "ak-ui-styling",
+    "ak-ui-ux-pro-max",
+    "ak-vibe",
+    "ak-watzup",
+    "ak-web-frameworks",
+    "ak-web-testing",
+    "ak-webmcp",
+    "ak-worktree",
+    "ak-xia"
+])
+EXPECTED_AGENT_ROLES = frozenset([
+    "advisor",
+    "brainstormer",
+    "code-reviewer",
+    "code-simplifier",
+    "debugger",
+    "docs-manager",
+    "explore",
+    "fullstack-developer",
+    "git-manager",
+    "journal-writer",
+    "kongming",
+    "planner",
+    "project-manager",
+    "researcher",
+    "tester",
+    "ui-ux-designer"
+])
+CATALOG_IDENTITY_SHA256 = "fbe4be0fa01ff696fdc783d8e398a4fb157b7c31d831d6eb792dea55ca627a9e"
+
 
 def _portable_manifest_valid(manifest: Any, expected_name: str) -> bool:
     if not isinstance(manifest, dict):
@@ -189,40 +314,46 @@ def _fallback_info(plugin_root: Path) -> dict[str, Any]:
         except (OSError, json.JSONDecodeError):
             pass
 
-    skills = 0
-    if skills_root.is_dir():
-        skills = sum(
-            1
-            for child in skills_root.iterdir()
-            if child.is_dir() and (child / "SKILL.md").is_file()
-        )
+    actual_skills = {
+        child.name
+        for child in skills_root.iterdir()
+        if child.is_dir() and (child / "SKILL.md").is_file()
+    } if skills_root.is_dir() else set()
 
-    agents = 0
-    if agents_root.is_dir():
-        agents = sum(
-            1
-            for child in agents_root.glob("*.md")
-            if child.name != "README.md"
-        )
+    actual_agents = {
+        child.stem
+        for child in agents_root.glob("*.md")
+        if child.name != "README.md"
+    } if agents_root.is_dir() else set()
 
-    expected_skills = 102
-    expected_agents = 16
+    missing_skills = sorted(EXPECTED_SKILLS - actual_skills)
+    unexpected_skills = sorted(actual_skills - EXPECTED_SKILLS)
+    missing_agents = sorted(EXPECTED_AGENT_ROLES - actual_agents)
+    unexpected_agents = sorted(actual_agents - EXPECTED_AGENT_ROLES)
+
+    catalog_exact = not (
+        missing_skills
+        or unexpected_skills
+        or missing_agents
+        or unexpected_agents
+    )
 
     return {
         "plugin_path": str(plugin_root),
         "plugin_name": plugin_name,
         "plugin_manifest_valid": manifest_valid,
-        "skills": skills,
-        "agent_roles": agents,
-        "expected_skills": expected_skills,
-        "expected_agent_roles": expected_agents,
-        "ready": (
-            manifest_valid
-            and skills == expected_skills
-            and agents == expected_agents
-        ),
+        "skills": len(actual_skills),
+        "agent_roles": len(actual_agents),
+        "expected_skills": len(EXPECTED_SKILLS),
+        "expected_agent_roles": len(EXPECTED_AGENT_ROLES),
+        "catalog_identity_sha256": CATALOG_IDENTITY_SHA256,
+        "missing_skills": missing_skills,
+        "unexpected_skills": unexpected_skills,
+        "missing_agent_roles": missing_agents,
+        "unexpected_agent_roles": unexpected_agents,
+        "catalog_exact": catalog_exact,
+        "ready": manifest_valid and catalog_exact,
     }
-
 
 def _usable_value(raw: str | None) -> str:
     value = (raw or "unknown").strip().lower()
