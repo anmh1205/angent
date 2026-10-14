@@ -1,10 +1,12 @@
 # Security mode guidance
 
-## Audit vs scan
+## Audit and broad triage
 
-Use `ak-security-scan` for broad automated triage.
+`ak-security` owns the current defensive security workflow, including broad triage, threat-boundary reasoning, reachability analysis, remediation, and re-verification.
 
-Use `ak-security` when findings require threat-boundary reasoning, reachability analysis or remediation judgment.
+Use available static/runtime scanners as evidence-producing tools inside that workflow when appropriate. Scanner output is triage evidence, not an independently authoritative vulnerability verdict.
+
+The historical `ak-security-scan` identity is retired and must not be invoked as a separate public Skill.
 
 ## Adversarial discovery
 

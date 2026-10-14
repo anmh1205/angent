@@ -21,7 +21,7 @@ When native Engineer is absent, unusable, or its usability cannot be established
 
 `vendor/agentkit-engineer/`
 
-The fallback plugin has its own Agent Plugins manifest and contains the 102 portable Skill implementations plus the 16 portable role definitions.
+The fallback plugin has its own Agent Plugins manifest and contains the exact 103 public stable-port Skill identities plus the 16 portable role definitions.
 
 Do not expose native and fallback Skill libraries together by default.
 
@@ -56,7 +56,9 @@ If a fallback Skill depended on AgentKit-specific runtime machinery:
 - preserve files-first plan semantics without requiring the CLI;
 - map active-work state into ANGENT Continuity;
 - use harness-native delegation when available;
-- degrade team/orchestrate to sequential execution when unavailable;
-- use proactive Continuity capture instead of requiring hooks.
+- use proactive Continuity capture instead of requiring hooks;
+- verify browser/render/provider/team lifecycle capability before relying on it.
 
-Do not claim portability if removing a runtime dependency silently removes the workflow capability.
+Sequential degradation is valid only when it preserves the load-bearing workflow semantics. If live team lifecycle, interactive browser state, publication state, renderer behavior, or another capability is essential to the requested outcome, hard-stop or report the exact degraded boundary instead of pretending parity.
+
+Fallback package readiness also requires the exact stable identity set; a matching directory count is not enough.

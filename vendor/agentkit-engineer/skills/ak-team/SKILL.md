@@ -19,9 +19,11 @@ Discover what the active harness actually supports:
 - messaging/task surfaces;
 - no delegation.
 
-If true teams are unavailable, execute the same role assignments through one-shot workers or sequential role isolation.
+This workflow requires a **live team lifecycle** when the requested job depends on team creation, shared work/task state, teammate messaging, waiting/joining, shutdown, or cleanup.
 
-Do not pretend sequential execution is parallel.
+If those lifecycle capabilities are unavailable, stop the `ak-team` workflow and report the missing capability. Do not substitute ordinary one-shot subagents or sequential role execution and call it Team.
+
+Use `ak-orchestrate` or direct Reasoning/Execution instead when the user's real requirement is merely decomposition, context isolation, or sequential specialist roles and live team semantics are not required.
 
 ## Lifecycle
 

@@ -4,110 +4,83 @@ ANGENT uses **native-first / portable-fallback** engineering capability.
 
 ## Two independent plugin roots
 
-ANGENT core and Engineer fallback are intentionally separate package roots:
-
-```text
+~~~text
 <repo>/
 ├── plugin.json
-├── skills/                     # ANGENT cognitive owners
+├── skills/                       # ANGENT cognitive owners
 └── vendor/agentkit-engineer/
-    ├── plugin.json             # portable Agent Plugins manifest
+    ├── plugin.json               # portable Agent Plugins manifest
     ├── .codex-plugin/plugin.json # ChatGPT/Codex companion manifest
-    ├── skills/                 # 102 portable Engineer Skills
-    ├── agents/                 # 16 portable role definitions
+    ├── skills/                   # 103 public portable Engineer Skills
+    ├── agents/                   # 16 portable role definitions
+    ├── internal/                 # non-discoverable fallback support
+    ├── retired-routes/           # compatibility navigation only
     └── scripts/select_engineer.py
-```
+~~~
 
-Agent Plugins v1 uses a fixed `skills/` discovery root and does not provide a portable conditional second Skill root. Keeping the fallback as its own plugin prevents the 102 fallback Skills from always colliding with native AgentKit Engineer.
+Keeping the fallback as a separate plugin prevents its full Skill catalog from colliding with native AgentKit Engineer.
 
 ## Native path
 
 If official AgentKit Engineer is usable in the active environment, use native.
 
-Do not vendor or mirror native AgentKit source in this repository.
+Do not vendor or mirror native AgentKit source in this repository. Install/manage native AgentKit from `agentkit.best` and its current stable documentation.
 
-Official sources:
-
-- https://agentkit.best
-- https://docs.agentkit.best/en/stable
-- https://docs.agentkit.best/en/stable/getting-started/installation
-- https://docs.agentkit.best/en/stable/kits/engineer
-- https://docs.agentkit.best/en/stable/kits/engineer/skills
-- https://docs.agentkit.best/en/stable/kits/engineer/agents
-
-Native usability means the **current harness can actually discover/invoke Engineer**. An `ak` binary, old cache or one runtime-specific filesystem path is not sufficient proof.
-
-AgentKit `--global` means user scope for the selected runtime target; it is not a universal runtime-independent target.
+Native usability means the **active harness can actually discover/invoke Engineer now**. An `ak` binary, cache, historical receipt or runtime-specific path is supporting evidence only.
 
 ## Fallback path
 
-If native AgentKit Engineer is absent, unusable or not proven usable, activate the plugin rooted at this directory.
+When native Engineer is absent, unusable, or its usability cannot be established, activate this plugin root.
 
-Coverage:
+Current stable-port coverage:
 
-- **102/102 Skills implemented**
-- **16/16 portable Agent roles implemented**
+- **103/103 public Skills**
+- **16/16 portable Agent roles**
 
-See `PORTING_MANIFEST.md` for the Skill inventory and portability modes.
+The exact identity baseline and provenance are in `UPSTREAM_BASELINE.md`; per-Skill port modes are in `PORTING_MANIFEST.md`.
 
-The fallback is an independent ANGENT implementation, not an upstream mirror.
+Retired upstream identities are navigation aliases only under `retired-routes/`. Internal fallback conventions are under `internal/`. Neither is discoverable as a public Skill.
 
-## Selection
+## Selection and integrity
 
-`scripts/select_engineer.py` is a small read-only selector.
+`scripts/select_engineer.py` is read-only.
 
-The active harness/adapter supplies whether native Engineer is usable. The helper may add `ak --version` / doctor health evidence, then returns one source:
+The active harness supplies whether native Engineer is usable. The selector may add read-only `ak --version` / doctor evidence, then chooses one source:
 
 1. native usability proven → `native`;
 2. no/unknown native usability → `fallback`;
-3. fallback package invalid → `blocked`.
+3. fallback package identity/manifest invalid → `blocked`.
 
-It never mutates AgentKit and never enables both libraries.
+Fallback readiness requires the **exact** 103-Skill and 16-role identity sets. Count equality alone is insufficient.
 
-## Agent roles
+The selector never mutates AgentKit and never enables both libraries.
 
-Agent Plugins v1 does not define a portable Agent component.
+## Portable runtime behavior
 
-The files under `agents/` are therefore role semantics for adapters/workflows:
-
-- project into a harness-native agent/subagent when supported;
-- pass to one-shot workers when supported;
-- apply sequentially when delegation is unavailable.
-
-Do not create separate Claude/Codex/Cursor reasoning forks.
-
-## Porting principle
-
-Preserve the useful workflow outcome, not AgentKit implementation mechanics.
+Preserve the useful workflow semantics, not AgentKit runtime implementation mechanics.
 
 Examples:
 
-- AgentKit plan state → files-first plan artifact + Continuity;
+- plan state → files-first artifact + ANGENT Continuity;
 - session handoff → Continuity frontier;
-- team/subagent runtime → harness-native delegation or sequential fallback;
-- hooks → proactive Continuity capture, with hooks only as an optimization;
-- browser helper → the browser/computer-use/test capability actually available.
+- team/subagent lifecycle → harness-native delegation when available; hard-stop/degrade when lifecycle semantics are load-bearing and unavailable;
+- browser/render workflows → actual browser/render capability of the active harness;
+- hooks → proactive Continuity behavior, with hooks only as an optimization.
 
-## Repository boundary
+Do not claim parity when replacing a runtime mechanism removes a load-bearing capability.
 
-Do not add a raw `upstream/` source mirror here.
+## Agent roles
 
-This directory contains ANGENT's fallback plugin, portable role library and native-use documentation.
+Agent Plugins v1 standardizes Skills, not portable Agent components.
 
-
-## ChatGPT / Codex packaging
-
-ChatGPT and Codex use the package manifest at `.codex-plugin/plugin.json`.
-
-The fallback companion points that manifest at the same `./skills/` tree used by the portable package. No Skill content is duplicated.
-
-Installing/enabling this companion is a client-level action. It should be enabled only when native AgentKit Engineer is not the selected source.
-
+The 16 role files can be projected into native subagents/workers where supported, or applied sequentially when that preserves the workflow. Do not pretend sequential execution is parallel.
 
 ## Portable Skill identity
 
-Native AgentKit may present an Engineer Skill with an upstream identity such as `ak:plan`.
+Native AgentKit commonly presents identities like `ak:plan`. The fallback uses Agent Skills-compatible directory/name identities such as `ak-plan`.
 
-The portable fallback must conform to the Agent Skills specification, where the Skill `name` matches its directory and uses lowercase alphanumerics plus hyphens. Fallback identities are therefore `ak-plan`, `ak-debug`, `ak-test`, and so on.
+The mapping is semantic. It does not make the fallback a byte-for-byte upstream mirror.
 
-This changes only the portable package identity. Capability mapping remains one-to-one with the corresponding native Engineer workflow.
+## Version boundary
+
+All ANGENT-owned package manifests remain semantic version **1.0.0** until the user explicitly changes the project version. Provider release IDs, commit SHAs and artifact digests are deployment evidence, not semantic versions.

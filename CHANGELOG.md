@@ -104,9 +104,18 @@ ANGENT 1.0.0 remains an unreleased project candidate. Core hardening and cogniti
 - Restored staging ≠ compression and point-stated ≠ explanatory-closure semantics.
 - Added causal working-method Learning.
 
-### Engineer boundary
+### Engineer stable catalog refresh
 
-Engineer implementation remains intentionally unchanged during reliability hardening.
+- Refreshed the portable fallback from the stale 102-directory generation to the current stable **103 public Skill + 16 Agent-role** identity set.
+- Added current stable workflows: `ak-bro`, `ak-diagram`, `ak-enhance-ux-ax`, `ak-explain`, `ak-page-builder`, `ak-sowat`, `ak-sumup`, and `ak-webmcp`.
+- Removed retired public identities from Skill discovery: `ak-security-scan`, `ak-use-mcp`, `ak-handover`, `ak-html-video`, `ak-sequential-thinking`, and `ak-web-design-guidelines`; compatibility navigation now lives outside `skills/`.
+- Moved `ak-common` out of public discovery into internal fallback guidance.
+- Added a pinned stable semantic/catalog baseline and identity-set digest without vendoring an upstream source/runtime mirror.
+- Changed fallback readiness from count-only validation to exact Skill/Agent identity-set validation with explicit missing/unexpected identities.
+- Corrected the stale security route so current `ak-security` owns broad triage instead of invoking retired `ak-security-scan`.
+- Calibrated runtime-sensitive workflows so `ak-team` hard-stops without required live team lifecycle and `ak-orchestrate` degrades sequentially only when concurrency/lifecycle semantics are not load-bearing.
+- Preserved semantic version `1.0.0` across both Engineer fallback manifests.
+- Source/catalog integrity and representative workflow semantics are verified; cross-harness fallback package acceptance remains a later release gate.
 
 ### Version identity
 

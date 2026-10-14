@@ -19,7 +19,7 @@ angent/
 ├── skills/                             # ANGENT owners
 └── vendor/agentkit-engineer/
     ├── plugin.json                     # portable Engineer fallback plugin
-    ├── skills/                         # 102 fallback Skills
+    ├── skills/                         # 103 public fallback Skills
     └── agents/                         # 16 portable role definitions
 ```
 
@@ -77,6 +77,8 @@ Unknown fails closed to fallback so ANGENT never exposes native and fallback tog
 
 If the fallback plugin is missing/invalid, selection is blocked rather than pretending a capability exists.
 
+Fallback integrity is identity-based. The selector validates the exact 103 public Skill identities and exact 16 Agent-role identities from the pinned stable semantic baseline, and reports missing/unexpected identities. Count equality alone cannot establish readiness. Retired routes and internal support live outside `skills/` and never satisfy public coverage.
+
 ## Fallback activation
 
 The selector returns the fallback plugin root.
@@ -111,7 +113,9 @@ The 16 fallback Agent files are therefore a portable **role library**:
 
 - a harness with native subagents may project a role into its own agent format;
 - Team/Orchestrate may pass the role instruction to a one-shot worker;
-- a harness without delegation may apply the role sequentially in the main agent.
+- a harness without delegation may apply a role sequentially in the main agent only when concurrency/lifecycle semantics are not load-bearing.
+
+If a workflow explicitly depends on live team membership, messages, worker lifecycle, or parallel isolation, lack of that runtime capability is a real capability boundary rather than permission to simulate success.
 
 Do not duplicate role reasoning into separate Claude/Codex/Cursor sources.
 

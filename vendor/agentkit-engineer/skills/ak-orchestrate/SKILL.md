@@ -34,6 +34,8 @@ Do not fan out when one agent can do the work with lower coordination cost.
 
 ## Degraded path
 
-If no delegation/runtime supervisor exists, execute the same graph sequentially while preserving dependency, capture and verification semantics.
+If no delegation/runtime supervisor exists, sequential execution is valid only when the job graph's load-bearing properties are dependency ordering, context separation, and verification—not true concurrency, runtime diversity, isolation, cancellation, or supervisor lifecycle behavior.
 
-Do not emulate background durability or sandbox guarantees the host does not provide.
+When a job explicitly requires one of those unavailable capabilities, block that job rather than silently weakening the contract.
+
+Do not emulate background durability, parallelism, sandbox guarantees, messaging, or runtime controls the host does not provide.
