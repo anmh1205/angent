@@ -76,8 +76,8 @@ def work_lock(path: Path, timeout: float = 3.0):
     The lock file is intentionally never removed: unlinking an open lock file
     permits a second process to lock a different inode at the same path.
     """
-    lock = work_dir / ".writer.lock"
-    work_dir.mkdir(parents=True, exist_ok=True)
+    lock = path / ".writer.lock"
+    path.mkdir(parents=True, exist_ok=True)
     lock.parent.mkdir(parents=True, exist_ok=True)
     fd = os.open(lock, os.O_RDWR | os.O_CREAT, 0o600)
     acquired = False
