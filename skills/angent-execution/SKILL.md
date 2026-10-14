@@ -31,6 +31,10 @@ Require enough state to act safely:
 - verification target;
 - effect class when mutation is possible.
 
+For an existing repository, document, provider object, deployment, dataset, device, or other live artifact, inspect enough authoritative current state before mutation to understand the actual target, version, dependencies, and relevant surrounding structure.
+
+If the user names a canonical live artifact, operate on that artifact. Do not silently substitute a detached copy/export/new object unless requested or technically necessary.
+
 Do not execute a specialist proposal that contradicts current Contract/Reasoning invariants.
 
 ## Choose the route
@@ -43,13 +47,23 @@ For engineering specialist work:
 3. do not silently mix generations;
 4. otherwise fall back to direct harness tools/single-agent work when the required capability does not depend on Engineer.
 
-A specialist is a capability provider, not strategic authority.
+A specialist is a capability provider, not strategic authority. A specialist/worker report is not ground truth when the produced artifact, provider state, build/test output, or runtime can be inspected directly.
 
 ## Execute
 
 Advance the current frontier.
 
 Respect user-requested tool boundaries and project AGENTS.md.
+
+### Action granularity
+
+For long, failure-prone, or side-effecting work, prefer one scoped action per execution beat, or one deliberately small homogeneous batch whose failure can be interpreted as a unit.
+
+Sequence dependent actions.
+
+Batch or parallelize independent read-only/clearly partitioned work when it improves coverage or speed without obscuring ownership, failure isolation, or shared mutable state.
+
+Avoid giant batches that mix unrelated effects, hide the first failure, or make reconciliation difficult.
 
 For low-risk reads, avoid heavy transaction ceremony.
 
@@ -60,6 +74,12 @@ Do not blindly replay timed-out or response-lost non-idempotent writes.
 When Format supplies destination representation requirements, Execution performs the external write; Format does not gain independent effect authority.
 
 For whole-scope reads, preserve pagination/cursor closure, truncation state, filters, and expected/observed counts when known. A first page, top-N result, or partial response is not complete inventory evidence.
+
+### Troubleshooting preservation
+
+When diagnosing failures, preserve live workers, sessions, files, branches, data, running services and provider state whenever practical.
+
+Prefer targeted observation/repair to broad kill/reset/delete/recreate actions unless the broader action is necessary, justified and authorized.
 
 ## Long-running operations
 
@@ -90,6 +110,8 @@ Return an observation delta that describes the world, not merely tool output:
 
 Exit code 0 is evidence about the command, not automatically the requested endpoint.
 
+When a specialist/worker performed work, prefer direct artifact/provider/runtime evidence over its self-report when such evidence is available.
+
 ## Adaptive boundary
 
 Execution may change mechanical tactics inside the accepted action: retry a read, alter a search query, choose an equivalent tool.
@@ -110,3 +132,5 @@ Continue while an authorized runnable next step remains and the requested endpoi
 Stop only at verified completion, genuine blocker, required user decision, authority/safety boundary or unavailable capability.
 
 A progress update is communication, not a stop condition.
+
+When useful, distinguish state precisely: drafted, implemented, checked, tested, verified, unable to verify. Do not collapse them into “done”.

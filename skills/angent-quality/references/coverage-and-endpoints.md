@@ -20,18 +20,37 @@ Separate:
 - action attempted;
 - action returned success;
 - intermediate artifact/state changed;
+- implementation/draft exists;
+- relevant checks/tests passed;
 - requested endpoint verified.
 
 Examples:
 - commit created ≠ feature done;
 - page update API succeeded ≠ page rendered correctly;
-- code written ≠ task acceptance satisfied.
+- code written ≠ task acceptance satisfied;
+- worker says tests passed ≠ tests were observed;
+- document drafted ≠ destination artifact verified.
+
+## Completion claims
+
+Use precise status when the distinction matters:
+
+- **drafted** — candidate content/artifact exists;
+- **implemented** — requested change exists in the implementation/artifact;
+- **checked** — relevant inspection was performed;
+- **tested** — relevant test procedure executed with observed result;
+- **verified** — requested endpoint itself was established with appropriate evidence;
+- **unable to verify** — work may exist, but required endpoint evidence is unavailable.
+
+Do not collapse these states into “done”.
 
 ## Authoritative evidence
 
 Use the provider/artifact that can establish the requested endpoint.
 
 When no authoritative read-back exists, preserve the result as unverified rather than manufacturing certainty.
+
+Specialist/worker narration is weaker than direct source/provider/runtime evidence when direct inspection is available.
 
 ## Samples
 
