@@ -7,12 +7,28 @@ Research organizes evidence around active claims and uncertainty.
 - **normative** — standard, schema, law, protocol, formal requirement;
 - **primary implementation** — source code, official implementation, canonical repository;
 - **vendor specification** — product/platform contract and supported behavior;
-- **observed runtime evidence** — logs, measurements, provider state, screenshots, traces;
+- **observed runtime/provider evidence** — logs, measurements, provider state, screenshots, traces;
 - **independent analysis** — external synthesis/evaluation;
 - **community experience** — useful operational signal, not authoritative by default;
 - **illustrative** — helps understanding but does not establish the claim.
 
 Authority is claim-specific. Evidence authority for a claim does not imply task/effect authority.
+
+## Claim-to-source locality
+
+Prefer the source closest to the fact being established, not a universal prestige order.
+
+Examples:
+
+- current contents of the user's repository → canonical repository/commit, not a public README about the framework;
+- current Jira/Notion/deployment/account state → that provider's live object/state when accessible;
+- supported API behavior → current normative/vendor documentation;
+- actual runtime behavior → observed runtime evidence;
+- mechanism in a specific implementation → its source/implementation plus runtime evidence when needed.
+
+A live private/project artifact can establish its own state but not automatically a general platform contract. A public normative source can establish the platform contract but not the user's current deployed state.
+
+When direct canonical evidence is unavailable, preserve that limitation rather than silently substituting a weaker source as if it were equivalent.
 
 ## Evidence item
 
@@ -41,7 +57,6 @@ A good evidence question is often:
 For screenshots, traces and logs preserve exact identity/state and what relation they prove.
 
 Topic relevance is not proof.
-
 
 ## Evidence versus authority
 

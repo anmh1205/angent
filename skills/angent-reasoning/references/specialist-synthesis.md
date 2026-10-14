@@ -15,6 +15,26 @@ A specialist output may be:
 
 It is not automatically the current decision or verified state.
 
+## Delegation contract
+
+Give a specialist the smallest context sufficient to perform its bounded job.
+
+When relevant include:
+
+- objective or decision/work unit it serves;
+- exact scope and exclusions;
+- canonical source/target and current version/pointer;
+- active obligations and project constraints that apply to this work;
+- task-relevant collaboration/working-method expectation only when it changes the specialist's method;
+- accepted/rejected approaches when repeating one would recreate a known failure;
+- expected output type: evidence, proposal, artifact, review, etc.;
+- acceptance criteria;
+- verification/evidence expected from the specialist.
+
+Do not dump the whole user profile, full conversation, or unrelated project history into every worker.
+
+A worker may propose expansion when evidence demands it, but Reasoning retains authority to widen strategic scope.
+
 ## Synthesis checks
 
 Compare:

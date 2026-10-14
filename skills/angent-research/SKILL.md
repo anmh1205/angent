@@ -9,7 +9,7 @@ Research answers evidence questions and builds evidence-grounded subject structu
 
 ## Load references progressively
 
-- references/evidence-model.md — source roles, evidence items and information value.
+- references/evidence-model.md — source roles, evidence items, source locality and information value.
 - references/source-conflict.md — reconcile version/platform/scope contradictions.
 - references/stopping-rule.md — know when more research no longer changes the decision.
 
@@ -37,6 +37,16 @@ Prefer evidence that:
 - materially changes the action choice.
 
 Ten sources repeating a non-decisive fact may add less value than one authoritative observation.
+
+## Match source to the claim
+
+There is no universal source ranking independent of the claim.
+
+When the claim concerns the current state/content of a user-owned or project-specific live artifact—repository, document, issue, deployment, account object, dataset, device state—prefer direct canonical artifact/provider evidence when available.
+
+Public documentation may still be the stronger source for platform contracts, standards, API semantics, or general mechanisms.
+
+Do not use a generic public description of a product to override the directly observed state of the user's actual instance, and do not use one private instance to redefine the platform's normative contract.
 
 ## Build a usable subject model
 
