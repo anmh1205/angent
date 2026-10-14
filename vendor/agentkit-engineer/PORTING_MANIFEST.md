@@ -32,12 +32,12 @@ The old docs-derived assumption of 103 public Skills with eight missing/new iden
 
 ## Semantic review progress
 
-Current accepted coverage: **99 / 102 Skill identities reviewed semantically**.
+Current accepted coverage: **102 / 102 Skill identities reviewed semantically**.
 
-- **73 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-fable-thinking`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-google-adk-python`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-mcp-builder`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-shader`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
-- **23 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-hyperframes`, `ak-journal`, `ak-markdown-novel-viewer`, `ak-mintlify`, `ak-plans-kanban`, `ak-preview`, `ak-remotion`, `ak-repomix`, `ak-show-off`, `ak-team`, `ak-ui-ux-pro-max`, `ak-watzup`.
+- **74 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-fable-thinking`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-google-adk-python`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-llms`, `ak-loop`, `ak-mcp-builder`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-shader`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-vibe`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
+- **25 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-hyperframes`, `ak-journal`, `ak-markdown-novel-viewer`, `ak-mintlify`, `ak-plans-kanban`, `ak-preview`, `ak-remotion`, `ak-repomix`, `ak-show-off`, `ak-stitch`, `ak-team`, `ak-threejs`, `ak-ui-ux-pro-max`, `ak-watzup`.
 - **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
-- **3 REVIEW_PENDING**: no semantic acceptance claim yet.
+- **0 REVIEW_PENDING**: no identities await first-pass workflow review; runtime and full support-corpus parity remain separate verification gates.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
 
@@ -188,6 +188,10 @@ HyperFrames retains its pinned HTML composition timing, lint-before-render, loca
 
 Remotion now preserves composition/frame counts, useCurrentFrame deterministic motion, asset/caption/audio alignment and real rendered-video acceptance; the upstream 33-rule pack and renderer remain absent in the fallback, so it is DEGRADED. Shader preserves target GLSL version/fragment output, UV/aspect/SDF/noise and explicit shader compile, framebuffer visual and performance checks, adapted to runtime-provided graphics tools. Both avoid claiming graphics output from unexecuted source code.
 
+### UI design provider, Three.js scene graph and end-to-end Vibe orchestration
+
+Stitch retains its project-aware quota/generate/edit/export and design-to-code normalization, with provider/account/cost and actual artifact gates; it remains DEGRADED without the native SDK/provider. Three.js retains the WebGL/WebGPU scene, asset loading/disposal, interactions and visual/GPU performance gates but honestly distinguishes an absent 556-example search corpus from native knowledge search. Vibe retains worktree/plan/Cook/Fix/review/PR and explicitly authorized --ship, --beta, --both and --advice modes with PR/CI read-back; user- and branch-level restrictions always override workflow convenience. These three complete the **first-pass semantic identity review of all 102 skills**, not a claim that optional vendor runtimes or all upstream auxiliary scripts have been installed and exercised.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
@@ -278,16 +282,16 @@ Remotion now preserves composition/frame counts, useCurrentFrame deterministic m
 | `ak-shopify` | VERIFIED_ADAPTED | stable 2.19.0 app/extension/theme lifecycle reviewed with current GraphQL-first API, scope/webhook/version and deploy/publish boundaries |
 | `ak-show-off` | VERIFIED_DEGRADED | stable 2.19.0 prefs/plan/bilingual HTML/screenshots/publishing gates; capture/helper/AgentWiki unavailable |
 | `ak-skill-creator` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-stitch` | REVIEW_PENDING | prior mode: DEGRADED; semantic review pending |
+| `ak-stitch` | VERIFIED_DEGRADED | Stitch quota/generate/edit/export and per-project identity with design-to-code handoff; provider absent |
 | `ak-tanstack` | VERIFIED_ADAPTED | stable 2.19.0 Start/Router/Form/AI scope restored; unrelated TanStack Query/Table/Virtual expansion removed and volatile package APIs bound to current installed docs |
 | `ak-team` | VERIFIED_DEGRADED | true live-team lifecycle is load-bearing; hard-stop/route elsewhere when harness lacks it |
 | `ak-tech-graph` | VERIFIED_ADAPTED | stable 2.19.0 diagram views, seven style families, SVG/PNG workflow, routing/label/layout and rendered QA retained with runtime tool substitution |
 | `ak-test` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-threejs` | REVIEW_PENDING | prior mode: PORTABLE; semantic review pending |
+| `ak-threejs` | VERIFIED_DEGRADED | Three.js scene/WebGL-WebGPU/runtime QA; upstream 556-example search corpus absent |
 | `ak-ui-styling` | VERIFIED_ADAPTED | stable 2.19.0 component/tokens/shadcn-Tailwind mutation and rendered-accessibility gates preserved |
 | `ak-ui-ux-pro-max` | VERIFIED_DEGRADED | stable 2.19.0 product UX decision workflow preserved; packaged recommendation dataset/search engine is not reproduced |
 | `ak-use-mcp` | VERIFIED_ADAPTED | stable 2.19.0 runtime-native/direct-client discovery and MCP config/protocol/effect semantics preserved without vendoring upstream scripts |
-| `ak-vibe` | REVIEW_PENDING | prior mode: ADAPTED; semantic review pending |
+| `ak-vibe` | VERIFIED_ADAPTED | issue-to-worktree-plan-implement-review-PR with optional explicitly authorized beta/stable shipping and CI |
 | `ak-watzup` | VERIFIED_DEGRADED | stable 2.19.0 branch/worktree/plan/roadmap scanning and priority ranking; native scanner not bundled |
 | `ak-web-design-guidelines` | VERIFIED_ADAPTED | stable 2.19.0 fresh canonical-guideline retrieval and source-evidence review contract preserved |
 | `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved |
