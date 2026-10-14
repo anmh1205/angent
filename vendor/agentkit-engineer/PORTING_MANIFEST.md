@@ -249,7 +249,7 @@ These ports deliberately preserve workflow/domain semantics while treating provi
 
 All 16 role identities are present under `vendor/agentkit-engineer/agents/`. In the portable AgentKit export, agents are inert sidecar role references rather than active runtime agents. ANGENT therefore evaluates transferable role behavior, not live teammate scheduling parity.
 
-Current role-semantic review: **12/16 VERIFIED_ADAPTED; 4/16 REVIEW_PENDING**. Live team claims, permissions and agent memory remain host-specific.
+Current role-semantic review: **16/16 VERIFIED_ADAPTED; 0/16 REVIEW_PENDING**. Live team claims, permissions and agent memory remain host-specific.
 
 | Role | Review status | Semantic evidence |
 |---|---|---|
@@ -262,11 +262,11 @@ Current role-semantic review: **12/16 VERIFIED_ADAPTED; 4/16 REVIEW_PENDING**. L
 | `explore` | VERIFIED_ADAPTED | bounded read-only repository/symbol tracing with evidence and secret safeguards |
 | `fullstack-developer` | VERIFIED_ADAPTED | phase/dependency ownership, failure handling, tests and live-team capability boundary |
 | `git-manager` | VERIFIED_ADAPTED | exact staging, authorization, branch lease safety and read-back verification |
-| `journal-writer` | REVIEW_PENDING | Review pending |
-| `kongming` | REVIEW_PENDING | Review pending |
+| `journal-writer` | VERIFIED_ADAPTED | grounded incident diary, evidence and human impact; verified CLI/local persistence boundary |
+| `kongming` | VERIFIED_ADAPTED | single-run no-interview counsel, confidence/flip conditions and true model boundary |
 | `planner` | VERIFIED_ADAPTED | file:line/consumer verification, state lifetime, risk/dependency/migration and phase contracts |
-| `project-manager` | REVIEW_PENDING | Review pending |
-| `researcher` | REVIEW_PENDING | Review pending |
+| `project-manager` | VERIFIED_ADAPTED | definition-of-done progress, risk/dependency, scope and provider status reconciliation |
+| `researcher` | VERIFIED_ADAPTED | source/versions, independent evidence, adoption risks and fit-based recommendations |
 | `tester` | VERIFIED_ADAPTED | diff-aware mapping, targeted/full escalation, observed evidence |
 | `ui-ux-designer` | VERIFIED_ADAPTED | UX, brand/visuals, Vietnamese typography, accessibility and rendered review |
 
@@ -274,7 +274,9 @@ The accepted role batches compared each selected stable 2.19.0 sidecar with its 
 
 The advisory, diagnostic, implementation and planning batch preserves the upstream advisor's interview/reframing-confirmation and relay safety without assuming Claude model or state hooks; debugger's incident triage, timelines, data/CI/performance diagnostics and evidence-backed root-cause gates; fullstack-developer's strict parallel phase/file ownership with bounded implementation and observed verification; and planner's source revalidation, caller/flow/lifetime tracing, dependency sequencing, migration, risk and rollback contracts.
 
-The next batch restores Brainstormer's architecture/feasibility debate and explicit decision consensus; Code Simplifier's behavior-preserving, recent-change refinement and file ownership; Explore's strictly read-only symbol-first reconnaissance; and Git Manager's narrow staging, conventional history and checked remote-ref updates. Source edits, plan creation, team coordination and native model execution are never inferred from an inert role file. Inert sidecars still do not establish a live team or native agent relay.
+The exploration and Git batch restores Brainstormer's architecture/feasibility debate and explicit decision consensus; Code Simplifier's behavior-preserving, recent-change refinement and file ownership; Explore's strictly read-only symbol-first reconnaissance; and Git Manager's narrow staging, conventional history and checked remote-ref updates. Source edits, plan creation, team coordination and native model execution are never inferred from an inert role file.
+
+The final role batch restores Journal Writer's concrete chronological engineering failures, real human impact, CLI/local persistence and publication boundary; Kongming's one-shot advice with stated confidence and model/runtime limitations; Project Manager's acceptance-backed task state and explicit risk/dependency/scope reconciliation; and Researcher's source credibility, version verification, adoption risk and architecture-fit comparisons. All 16 role identities are now semantically reviewed; this does **not** certify live runtime/team/model equivalence. Inert sidecars still do not establish a live team or native agent relay.
 
 ## Upstream evidence boundary
 
