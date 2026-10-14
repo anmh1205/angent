@@ -48,6 +48,7 @@ Format preserves destination representation.
 - **Work-conserving frontier scheduling** — RUNNING/PENDING becomes WAITING_EXTERNAL; Reasoning recomputes the full frontier and selects independent RUNNABLE work before another equivalent status check.
 - **Invocation-bound authority** — consequential effects are revalidated against the resolved operation/target/material arguments at the point where the invocation is actually known.
 - **Observation admission** — provider/tool results become established task state only within the identity, scope/version, completeness and uncertainty boundary they actually support.
+- **Failure-domain separation** — harness/tool lookup, schema, access, timeout and transport failures remain operational evidence; they do not become negative domain facts unless an authoritative observation actually establishes that state.
 - **Conditional branch independence** — shared-state changes can invalidate previous RUNNABLE assumptions; only affected dependencies are recomputed.
 - **Progress/stall semantics** — progress is relevant state change, not activity; no-progress causes re-modeling instead of churn.
 - **Behavioral calibration** — broad method/prompt changes are checked on representative target, accepted-success and counter-cases before propagation when risk warrants it.

@@ -1,11 +1,11 @@
 ---
 name: angent-execution
-description: Execute authorized ANGENT actions, choose native or fallback specialist capability, observe real effects, report wait state, reconcile ambiguity and return evidence for reasoning.
+description: Execute authorized ANGENT actions, choose native or fallback specialist capability, observe real effects, classify operational failures, reconcile ambiguity and return bounded evidence for reasoning.
 ---
 
 # ANGENT Execution — Actuator and Observer
 
-Execution owns action realization, tool/specialist selection, retry safety, observation and provider reconciliation. Harness-specific capability discovery/activation follows the Root `harness-contract.md` rather than a separate execution architecture per client.
+Execution owns action realization, tool/specialist selection, retry safety, observation, failure-domain classification and provider reconciliation. Harness-specific capability discovery/activation follows the Root `harness-contract.md` rather than a separate execution architecture per client.
 
 It does not own strategic reasoning or global frontier selection.
 
@@ -13,6 +13,7 @@ It does not own strategic reasoning or global frontier selection.
 
 - references/action-semantics.md — ActionNode requirements, observation and replanning boundaries.
 - references/effect-safety.md — idempotency, PREPARED/RECONCILE and retry policy.
+- references/failure-semantics.md — distinguish tool/harness/transport/access failures from actual domain observations.
 - references/wait-and-polling.md — long-running operations, wait-state reporting and polling discipline.
 - references/engineer-routing.md — native-first / port-fallback specialist routing.
 - references/engineer-selection.md — source-selection evidence and fallback plugin activation contract.
@@ -109,10 +110,11 @@ Read `references/wait-and-polling.md` when a task contains long-running operatio
 
 ## Observe
 
-Return an observation delta that describes the world, not merely tool output:
+Return an observation delta that describes the world or the operational failure boundary, not merely tool text:
 - attempted action;
 - operation/target identity actually observed;
-- actual observed state;
+- actual provider/local state when established;
+- operational/failure domain when the provider/world state was not established;
 - changed identifiers/versions and relevant time/version boundary;
 - checks performed;
 - scope/completeness/truncation information when it can change interpretation;
@@ -121,21 +123,24 @@ Return an observation delta that describes the world, not merely tool output:
 - evidence/artifact pointers;
 - wait state and next informative observation condition when still pending.
 
-Execution supplies the observation and its boundary. Reasoning decides whether the evidence is admissible for changing the current model/decision.
+Execution supplies the observation/failure boundary. Reasoning decides what proposition, if any, the result can establish.
 
-Exit code 0 is evidence about the command, not automatically the requested endpoint.
+Exit code 0 is evidence about the command, not automatically the requested endpoint. Likewise, an exception/error result is evidence about the call path, not automatically a negative fact about the target domain.
 
 ## Adaptive boundary
 
 Execution may change mechanical tactics inside the accepted action: retry a read, alter a search query, choose an equivalent tool.
 
-Classify failures when retry behavior differs: transient, rate-limited, authentication/permission, missing target, schema/capability mismatch, stale state, or semantic failure. Retry only when another attempt can plausibly change the result. If repeated attempts produce no new observation, return to Reasoning instead of churning equivalent actions.
+Classify failures by **where they occurred and what they establish**, not only by a retry label. Use `failure-semantics.md` when tool/harness/transport/access failure could be confused with target state.
+
+Retry only when another attempt can plausibly change the result. If repeated attempts produce no new observation, return to Reasoning instead of churning equivalent actions.
 
 Return to Reasoning when:
 - a precondition is false;
 - a model assumption is contradicted;
 - a new constraint appears;
 - expected observation differs materially;
+- the result cannot establish the expected domain proposition because the call failed at an earlier boundary;
 - an operation becomes RUNNING/PENDING;
 - a specialist proposes a strategic change.
 

@@ -29,6 +29,21 @@ When over-triggering is plausible, include both:
 
 For long-form or multi-unit work, choose representative units across meaningful difficulty/dependency classes rather than only the easiest first unit.
 
+## Failure-domain calibration
+
+When changing error/observation semantics, use contrasting cases that prove the boundary rather than the wording:
+
+- **local tool not found** — establish route/capability failure; do not infer target absence;
+- **schema/serialization rejection before provider** — establish invocation-shape failure; domain remains unknown;
+- **authentication/permission denial** — establish unavailable access; do not infer target absence;
+- **timeout on read** — domain result remains unknown unless another authoritative observation reconciles it;
+- **timeout/lost response on non-idempotent write** — classify effect outcome ambiguous and reconcile before replay;
+- **provider 5xx/rate limit** — treat as provider/transport failure unless provider semantics establish more;
+- **authoritative lookup says exact object not found** — when endpoint semantics and identity are known, a negative domain fact is valid;
+- **provider explicitly rejects an operation for a domain reason** — preserve the provider-operation fact without pretending the requested state change occurred.
+
+The method fails if it treats every error as UNKNOWN or every error string as a negative domain fact. The target is the strongest proposition justified by the actual failure/observation boundary.
+
 ## Correction-routing calibration
 
 When changing how ANGENT handles corrections, calibrate the abstraction decision itself.

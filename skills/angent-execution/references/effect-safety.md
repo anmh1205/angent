@@ -1,6 +1,6 @@
 # Effect safety
 
-Retry behavior depends on the effect, not on whether the tool returned an error.
+Retry behavior depends on the effect and the failure boundary, not merely on whether the tool returned an error.
 
 ## Effect classes
 
@@ -32,6 +32,20 @@ A timeout or lost response means outcome is unknown until reconciled.
 
 For create/send/publish operations, blind retry may duplicate effects.
 
+Likewise, a harness/tool dispatch error does not establish that the provider rejected the operation or that the target state is negative.
+
+## Failure boundary before retry
+
+Before retrying, distinguish at least:
+- did the harness/tool invocation fail before reaching the intended provider?
+- did transport/provider infrastructure fail without establishing domain outcome?
+- was access denied?
+- did the provider explicitly reject the requested operation?
+- did an authoritative observation succeed and establish a negative domain fact?
+- could a side effect have occurred with the outcome now unknown?
+
+Use `failure-semantics.md` when the distinction changes the next action.
+
 ## Reversibility
 
 When uncertainty is high, prefer reversible actions and narrow scope.
@@ -40,6 +54,6 @@ Do not broaden permissions merely because a tool supports it.
 
 ## Verification
 
-Verify the state the user cares about, not just transport success.
+Verify the state the user cares about, not just transport success or failure.
 
 For local writes inspect the diff/artifact. For remote writes read the provider. For deployment inspect health/state required by the Contract.
