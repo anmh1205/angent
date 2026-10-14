@@ -4,7 +4,7 @@
 
 ANGENT helps an agent preserve intent and authority, understand how the current collaboration is meant to work, reconstruct high-signal state, distinguish evidence from inference, build a usable model, reason and decide, interpret corrections at the right abstraction level, schedule independent work without polling churn, repair without regression, act through bounded effects, verify outcomes, communicate clearly, preserve long-running work, and learn reusable working methods.
 
-> **Status:** ANGENT **1.0.0** remains an unreleased project candidate. Every ANGENT-owned package and runtime surface uses the same canonical version `1.0.0`; private plugin synchronization may change its release ID but never its semantic version unless the user explicitly changes the project version. Reliability hardening and Engineer refresh remain in progress.
+> **Status:** ANGENT **1.0.0** remains an unreleased project candidate. Every ANGENT-owned package and runtime surface uses the same canonical version `1.0.0`; private plugin synchronization may change its release ID but never its semantic version unless the user explicitly changes the project version. Reliability hardening continues. The Engineer fallback source has been refreshed to the current stable 103-Skill / 16-role identity set; cross-harness acceptance and release reconciliation remain.
 
 ## Core architecture
 
@@ -94,7 +94,9 @@ Engineering specialist capability remains native-first:
 2. otherwise use the ANGENT fallback;
 3. do not expose complete native and fallback catalogs together by default.
 
-Engineer inventory/parity refresh is separate from cognitive/reliability semantics.
+The fallback source now validates the exact stable **103 public Skill + 16 Agent-role** identity sets rather than trusting directory counts. Retired upstream identities and internal fallback support are kept outside public Skill discovery, and runtime-dependent workflows fail closed when a load-bearing capability is unavailable.
+
+Source/catalog parity does not by itself prove every target harness can execute every workflow. Cross-harness acceptance remains a separate release gate.
 
 ## Validation policy
 
@@ -127,4 +129,4 @@ Do not publish or tag project version 1.0.0 yet.
 
 Private plugin updates may keep the working ChatGPT surface aligned with canonical source, but the plugin must remain version `1.0.0`. Its provider release ID may change as deployment metadata.
 
-Complete reliability hardening and the Engineer refresh, then perform cross-harness/release reconciliation before any public project release decision.
+Complete reliability hardening and cross-harness Engineer/core acceptance, then perform final release reconciliation before any public project release decision.
