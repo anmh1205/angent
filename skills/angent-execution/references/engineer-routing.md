@@ -3,7 +3,7 @@
 ANGENT obtains engineering specialist capability from one of two sources:
 
 1. official native AgentKit Engineer;
-2. ANGENT's portable Engineer fallback plugin.
+2. ANGENT's portable Engineer capability bundled in the same plugin.
 
 Read `engineer-selection.md` for the source-selection contract and packaging boundary.
 
@@ -17,13 +17,9 @@ AgentKit CLI version/doctor output can provide supporting health evidence, but c
 
 ## Fallback
 
-When native Engineer is absent, unusable, or its usability cannot be established, use the plugin root at:
+When native Engineer is absent, unusable, or its usability cannot be established, use the bundled `ak-*` Skills from ANGENT's discoverable `skills/` directory. Their maintained source remains at `extensions/angent-engineer/`, and the 16 portable role contracts are included as supporting files.
 
-`extensions/angent-engineer/`
-
-The fallback plugin has its own Agent Plugins manifest and contains the 103 portable Skill implementations plus the 16 portable role definitions.
-
-Do not expose native and fallback Skill libraries together by default.
+A single installed plugin does **not** guarantee the host hides fallback Skills when native Engineer is present. Route the task to one provider; avoid mixing native and fallback workflows. See `engineer-selection.md` for this limitation and the package boundary.
 
 ## Same semantics
 
@@ -47,7 +43,7 @@ Do not create a generic Capability Broker.
 The runtime adapter only needs to:
 
 1. report whether native Engineer is actually usable;
-2. expose native **or** fallback;
+2. select native **or** the already bundled fallback for the work, without claiming to install/uninstall or hide a static catalog;
 3. project fallback role files into native subagents when supported;
 4. otherwise keep the same role semantics through one-shot or sequential execution.
 

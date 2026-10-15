@@ -1,109 +1,31 @@
-# Engineer selection contract
+# Engineer source selection — one ANGENT plugin
 
-ANGENT has two Engineer sources:
+ANGENT publishes **one** installable plugin with both Core and the portable 103-Skill Engineer catalog. Engineer remains a separate **source-maintenance module** at `extensions/angent-engineer/`. The deterministic package builder `scripts/package_unified.py` projects those Skills into the same top-level `skills/` root as Core, preserves original Engineer source/support files for relative references, and omits the nested installable plugin manifests.
 
-1. official native AgentKit Engineer;
-2. the portable fallback plugin under `extensions/angent-engineer/`.
+There is one user-facing plugin identity, `angent`, one plugin version and one package. The internal `extensions/angent-engineer/source-manifest.json` in the distribution is only catalog metadata for read-only selector validation; it is not a second plugin.
 
-The selector chooses **one source per active session/workspace**.
+## Native-first capability selection
 
-## Why selection cannot live only in plugin.json
+The two **capability providers** remain:
+1. officially usable AgentKit Engineer in the active harness;
+2. portable Engineer Skills bundled with ANGENT.
 
-Agent Plugins v1 discovers Skills only from the fixed `skills/` directory of one plugin root. The portable manifest cannot declare a second Skill root or conditionally enable a nested directory.
+Determine native usability from **current harness discovery/invocation evidence**, never from `ak` binary presence, a cache, a version number or old memory. Let `native_usable = yes | no | unknown`.
 
-Therefore ANGENT core and Engineer fallback are separate plugin roots in the same repository:
+- **yes:** select native Engineer for the engineering task and do not mix in fallback workflows.
+- **no or unknown:** use the corresponding `ak-*` Skills already bundled in ANGENT.
+- **missing or invalid fallback:** do not pretend support exists; the selector reports BLOCKED when fallback is required.
 
-```text
-angent/
-├── plugin.json                         # ANGENT cognitive plugin
-├── skills/                             # ANGENT owners
-└── extensions/angent-engineer/
-    ├── plugin.json                     # portable Engineer fallback plugin
-    ├── skills/                         # 103 fallback Skills
-    └── agents/                         # 16 portable role definitions
-```
+This is **routing**, not an install/uninstall operation. One plugin remains installed in every case. The read-only `extensions/angent-engineer/scripts/select_engineer.py` still checks the exact 103 Skills, 16 role identities, ledger and catalog fingerprint in source and in the assembled plugin. Its report is structural evidence, not proof every provider or skill works in each harness.
 
-Client installation/enablement is outside the portable Agent Plugins v1 manifest. A runtime adapter or installer selects which Engineer source to expose.
+## Static discovery limitation
 
-For ChatGPT/Codex, the same fallback root also carries `.codex-plugin/plugin.json` pointing to the same `skills/` directory. This is a packaging projection only; there is still one fallback Skill source tree.
+Agent Plugins v1 discovers the top-level `skills/` tree statically. It cannot conditionally hide the fallback catalog when a separate native AgentKit installation is also visible. Thus **packaging unity does not mean runtime catalog exclusivity**. Root/Execution must choose one provider per task and reject hybrid workflows; any host that offers conditional skill filtering may additionally hide the unselected catalog. Never claim the single ZIP guarantees collision-free co-installation with native Engineer on every client.
 
-## Native usability
+The bundled `ak-*` identities avoid replacing ANGENT Core Skills. A deliberate comparison may inspect both sources, but production task execution must not mix their helper assumptions and generations.
 
-Do not infer native usability from:
+## Role and harness boundary
 
-- an `ak` binary alone;
-- `~/.agentkit` cache content;
-- one historical install receipt;
-- a Claude/Codex/Cursor-specific path;
-- memory of a prior session.
+The 16 files in `extensions/angent-engineer/agents/` are portable role contracts, not 16 automatically spawned agents. A harness may project them into supported native agents, one-shot delegation or sequential reasoning. No generic broker or separate AgentKit CLI requirement is introduced.
 
-AgentKit global installation is **user scope for a selected runtime target**, not one universal global target.
-
-The decisive evidence is whether the **active harness can actually discover/invoke native Engineer now**.
-
-A harness adapter should report:
-
-```text
-native_usable = yes | no | unknown
-```
-
-Use `yes` only after the current runtime inventory/session proves Engineer is callable.
-
-## Read-only AgentKit diagnostics
-
-`extensions/angent-engineer/scripts/select_engineer.py` may also inspect:
-
-- `ak --version`;
-- `ak doctor --offline --json` by default;
-- full `ak doctor --json` only when requested.
-
-These diagnostics describe AgentKit health. They do not by themselves prove Skill visibility in the current harness.
-
-The selector never calls setup, install, repair, refresh, login or other mutating AgentKit commands.
-
-## Decision
-
-```text
-native_usable = yes
-        ↓
-     NATIVE
-
-native_usable = no / unknown
-        ↓
-    FALLBACK
-```
-
-Unknown fails closed to fallback so ANGENT never exposes native and fallback together based on a guess.
-
-If the fallback plugin is missing/invalid, selection is blocked rather than pretending a capability exists.
-
-## Fallback activation
-
-The selector returns the fallback plugin root.
-
-A standards-compatible Agent Plugins client may install/enable that plugin root through its own plugin lifecycle.
-
-A harness without Agent Plugins support may project the fallback Skills/roles through its adapter.
-
-This projection is mechanical packaging/runtime work. It must not rewrite the Skill semantics into a harness-specific fork.
-
-
-## Agent roles
-
-Agent Plugins v1 standardizes Skills and MCP servers, not an Agent component.
-
-The 16 fallback Agent files are therefore a portable **role library**:
-
-- a harness with native subagents may project a role into its own agent format;
-- Team/Orchestrate may pass the role instruction to a one-shot worker;
-- a harness without delegation may apply the role sequentially in the main agent.
-
-Do not duplicate role reasoning into separate Claude/Codex/Cursor sources.
-
-## No hybrid default
-
-Do not expose both full native Engineer and full fallback Skill catalogs at the same time.
-
-That can mix generations, helper assumptions and cross-references into a workflow that neither source owns.
-
-A deliberate debug/comparison session may inspect both, but must not become the production default.
+Source installation from a raw repository checkout is **not** equivalent to installing the assembled plugin: the canonical consumer artifact is `dist/angent-unified.zip`. To test installed behavior, inspect that artifact and the active host's actual discovery state.
