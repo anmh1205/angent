@@ -60,13 +60,23 @@ class PackerTests(unittest.TestCase):
         self.assertIn('control_character', out.stdout)
 
     def test_markdown_header_escapes_html_filename(self):
-        p = self.root / 'evil<img onerror=alert(1)>.md'
+        # Windows forbids angle brackets in filenames; ampersand still tests
+        # header escaping there, while POSIX exercises HTML-tag injection too.
+        if sys.platform == 'win32':
+            name = 'evil&safe.md'
+            escaped = '## &quot;evil&amp;safe.md&quot;'
+            unescaped = '## &quot;evil&safe.md&quot;'
+        else:
+            name = 'evil<img onerror=alert(1)>.md'
+            escaped = '## &quot;evil&lt;img'
+            unescaped = '## &quot;evil<img'
+        p = self.root / name
         p.write_text('safe\n', encoding='utf-8')
         subprocess.run(['git', '-C', str(self.root), 'add', p.name], check=True)
         out = self.invoke('--format', 'markdown', '--stdout', '--include', 'evil*')
         self.assertEqual(out.returncode, 0, out.stderr)
-        self.assertIn('## &quot;evil&lt;img', out.stdout)
-        self.assertNotIn('## evil<img', out.stdout)
+        self.assertIn(escaped, out.stdout)
+        self.assertNotIn(unescaped, out.stdout)
 
     def test_dry_run_excludes_contents(self):
         out = self.invoke("--dry-run")
