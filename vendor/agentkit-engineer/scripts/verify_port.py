@@ -155,7 +155,7 @@ def audit_port(root: Path, expected_skills: int = 103, expected_agents: int = 16
     if expected_skills == 103:
         accepted = sum(s != "REVIEW_PENDING" for _, s in skill_rows)
         advertised = re.search(
-            r"Current accepted coverage: \*\*(\d+) / (\d+) Skill identities reviewed semantically\*\*",
+            r"Current accepted (?:source-level )?coverage: \*\*(\d+) / (\d+) Skill identities reviewed(?: semantically)?\*\*",
             text,
         )
         if not advertised or (int(advertised.group(1)), int(advertised.group(2))) != (accepted, 103):
