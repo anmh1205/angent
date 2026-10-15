@@ -3,7 +3,7 @@
 ANGENT has two Engineer sources:
 
 1. official native AgentKit Engineer;
-2. the portable fallback plugin under `vendor/agentkit-engineer/`.
+2. the portable fallback plugin under `extensions/angent-engineer/`.
 
 The selector chooses **one source per active session/workspace**.
 
@@ -17,9 +17,9 @@ Therefore ANGENT core and Engineer fallback are separate plugin roots in the sam
 angent/
 ├── plugin.json                         # ANGENT cognitive plugin
 ├── skills/                             # ANGENT owners
-└── vendor/agentkit-engineer/
+└── extensions/angent-engineer/
     ├── plugin.json                     # portable Engineer fallback plugin
-    ├── skills/                         # 102 fallback Skills
+    ├── skills/                         # 103 fallback Skills
     └── agents/                         # 16 portable role definitions
 ```
 
@@ -51,7 +51,7 @@ Use `yes` only after the current runtime inventory/session proves Engineer is ca
 
 ## Read-only AgentKit diagnostics
 
-`vendor/agentkit-engineer/scripts/select_engineer.py` may also inspect:
+`extensions/angent-engineer/scripts/select_engineer.py` may also inspect:
 
 - `ak --version`;
 - `ak doctor --offline --json` by default;

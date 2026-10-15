@@ -19,9 +19,9 @@ AgentKit CLI version/doctor output can provide supporting health evidence, but c
 
 When native Engineer is absent, unusable, or its usability cannot be established, use the plugin root at:
 
-`vendor/agentkit-engineer/`
+`extensions/angent-engineer/`
 
-The fallback plugin has its own Agent Plugins manifest and contains the 102 portable Skill implementations plus the 16 portable role definitions.
+The fallback plugin has its own Agent Plugins manifest and contains the 103 portable Skill implementations plus the 16 portable role definitions.
 
 Do not expose native and fallback Skill libraries together by default.
 
