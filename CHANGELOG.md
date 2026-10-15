@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.2 — Engineer extension distribution
+
+- Integrated the independent ANGENT Engineer extension under `extensions/angent-engineer/` with a verified stable AgentKit Engineer 2.19.0 catalog: 103 portable Skills and 16 Agent role contracts.
+- Aligned Core Engineer routing/selection references with the new extension path and kept the plugin roots separate, so native Engineer remains preferred and fallback is only activated when native is unavailable.
+- Preserved the existing ANGENT Core cognition; this patch release synchronizes the published Core package with the repository's merged Engineer integration, not the separate pending 1.3.0 cognitive upgrade.
+
+
 ## Unreleased — response orientation and inferential closure
 
 - Improved opening orientation and evidence-grounded synthesis in the existing Authoring method without imposing a three-part answer format.
