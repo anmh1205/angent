@@ -10,7 +10,7 @@ Ask:
 - Are decorative elements doing communicative work?
 - Are variations conceptually different or just cosmetic?
 
-A weak concept is not fixed by adding more polish.
+A weak concept is not fixed by adding more polish. Conversely, do not discard an accepted strong symbol because one export has uneven strokes, mismatched alignment or a poor color: repair the optical/production defect while protecting the agreed concept. Compare at equivalent size and background before attributing quality differences to the wrong cause.
 
 ## Craft
 

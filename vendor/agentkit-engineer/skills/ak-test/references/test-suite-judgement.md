@@ -26,6 +26,10 @@ Preserve hard safety and release gates, critical integration tests and tests for
 
 External semantic providers, test-impact backends, parallel agents and their costs/telemetry exist only when actually available and authorized. Do not claim a native optimizer or shadow AI evaluation ran because the Skill describes these methods.
 
+## Optional advisory and independent comparison
+
+When multiple analyses could materially improve a difficult test-suite decision, an actually available independent reviewer may compare assumptions and evidence. An advisor has no authority to mutate or certify the tests. User-requested approval/interview mode means pause at the material test/CI change decision, not after every fixture. If the user explicitly requests native `--ultra`-style independent parallel candidates, do not substitute sequential copies and call it equivalent; require a runtime with the requested independent capability or report that particular mode unavailable while preserving the normal single-agent method.
+
 ## Transfer examples
 
 - **Create:** an API rejects expired sessions. A test that merely asserts the mocked auth service returned "expired" does not prove the API rejects the request; test the application boundary and relevant response contract.

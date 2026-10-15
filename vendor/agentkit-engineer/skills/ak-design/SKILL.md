@@ -38,9 +38,9 @@ Do not fabricate an official logo, font, brand color or product asset because it
 
 1. Inspect authentic existing brand/reference assets and production constraints.
 2. Route to the correct deliverable semantics.
-3. Define the concept/thesis before styling details.
-4. Explore materially different **concepts**, not only color/font variants.
-5. Select direction by communication fit, distinctiveness and production reality.
+3. Form the actual visual thesis from product meaning and audience recognition. Explain **which shape/composition mechanism communicates it**, not just which style adjective it resembles.
+4. Explore materially different **concepts**, not merely palette/font changes or small geometric variations of one untested premise. When the user explicitly wants to preserve a chosen form, explore within that constraint instead.
+5. Judge concepts against communication fit, distinctiveness, optical balance and real target reproduction; distinguish weak underlying symbol design from a production/detail defect. Select by evidence and accepted direction rather than personal preference.
 6. Build reusable typography/color/grid/shape/image rules when the requested scope is a system.
 7. Produce representative assets through the available design/image/vector/render capability.
 8. Inspect the **exported/rendered result at real target size**, not only source/design canvas.

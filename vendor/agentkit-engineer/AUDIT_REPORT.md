@@ -78,6 +78,10 @@ A comparison with the official Engineer Test guide exposed meaningful omissions 
 
 The Bootstrap workflow also no longer forces a standalone Plan pass before Cook when the accepted project contract can be implemented without one. This preserves a genuine user/architecture decision gate while removing a duplicated compulsory workflow; future package-pinned comparisons should distinguish stable live documentation from immutable 2.19.0 snapshots. These are source-level improvements. No model-consumer trial or cross-host suite optimization run is claimed.
 
+## Product design judgment instead of dimension checklists — 2026-10-15
+
+The UI/UX Pro Max and Design Skills already inventoried visual dimensions, but needed stronger **causal design reasoning**: identify what fails a user's actual task, compare alternatives, preserve accepted baseline strengths and evaluate the rendered interaction/asset at its intended medium. UI/UX Pro Max now loads a focused product-design judgment reference when needed; Design explicitly distinguishes a weak concept from optical/color/export defects and avoids changing an accepted form when only refinement was authorized. The UI/UX Designer role and review reference were aligned. No proprietary upstream dataset or generator/runtime is implied by this analytical improvement, and model/rendered-output performance remains unmeasured.
+
 ## Remaining runtime acceptance
 
 The 25 `VERIFIED_DEGRADED` skills are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.

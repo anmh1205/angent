@@ -29,7 +29,7 @@ Source code alone is insufficient evidence for visual quality when the UI can be
 3. Extract the current/reference design grammar: grid, spacing, typography, color roles, density, components and interaction patterns.
 4. Reuse strong existing/template components before inventing new primitives.
 5. Evaluate accessibility, responsive behavior, content overflow, feedback and keyboard/focus states where relevant.
-6. Produce concrete design direction or implementation-ready component/state guidance.
+6. Diagnose the **mechanism** behind any meaningful user-task friction (navigation, incomplete state, hierarchy, perceived affordance, data density or inconsistent system grammar). Compare repair hypotheses and preserve strong accepted parts of the baseline; then produce concrete implementation-ready component/state guidance.
 7. Inspect representative rendered results and iterate on systemic issues first.
 8. Use external trend/reference research only when it answers a real design question; do not make it mandatory ritual.
 
