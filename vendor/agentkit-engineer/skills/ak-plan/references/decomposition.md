@@ -25,7 +25,7 @@ Trace:
 - runtime/deployment ordering;
 - test/verification dependencies.
 
-A phase can be RUNNABLE only when its prerequisites are established.
+A phase can be RUNNABLE only when its prerequisites are established. When a prerequisite is an uncertain external contract, define the smallest confirming observation before expensive dependent work. Treat a feature flag, compatibility layer, migration gate or reversible prototype as a deliberate way to isolate risk **only if** its operating and removal costs are justified.
 
 ## Parallel decomposition
 

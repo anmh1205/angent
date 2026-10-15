@@ -2,7 +2,7 @@
 
 ## Existing-plan scan
 
-Before creating a new plan, inspect unfinished plans relevant to the same feature/system.
+Before creating a new plan, identify the project's owning plan/issue/spec system and inspect unfinished work relevant to the same feature/system.
 
 Look for:
 - overlapping files/modules;
@@ -22,7 +22,7 @@ The important semantics are:
 - this plan changes an assumption another plan depends on;
 - both plans must coordinate a shared migration/interface.
 
-Update both sides when the plan format supports bidirectional links.
+Update both sides when the authoritative system supports bidirectional links and the relationship has been established. Do not edit a second source merely to mirror every status.
 
 If the relationship is genuinely ambiguous and changes execution order, surface it as a decision.
 
@@ -41,6 +41,4 @@ Do not hand a contradictory plan to Cook.
 
 A Jira/GitHub/task board may mirror plan items for coordination.
 
-The durable plan retains implementation meaning; the external task surface provides shared operational status.
-
-Reconcile both rather than assuming either one alone contains everything needed.
+Only when the project **actually separates** a canonical plan from operational task cards should the cards be treated as projections. In issue-first projects, the issues themselves can be the plan and the source of live task state. Identify ownership first, then reconcile any real projections; never generate a redundant plan store as a prerequisite for tracking.

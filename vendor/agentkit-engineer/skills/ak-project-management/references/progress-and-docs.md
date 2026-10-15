@@ -2,15 +2,15 @@
 
 ## Whole-plan progress evidence
 
-Read the actual `plan.md`/project plan and **every** phase file. A checked item is a status claim until its underlying acceptance evidence is examined. For a well-defined uniform checklist, an explicitly labeled work-item ratio can be calculated; it is **not** weighted scope completion unless the plan truly uses equal effort and comparable definitions of done.
+Read the actual authoritative plan, issue hierarchy or project work source. For whole-plan completion, inspect **every relevant** phase/item; for one bounded phase, inspect its dependency/impact closure. A checked item is a status claim until its underlying acceptance evidence is examined. For a well-defined uniform checklist, an explicitly labeled work-item ratio can be calculated; it is **not** weighted scope completion unless the plan truly uses equal effort and comparable definitions of done.
 
-Represent at least pending, active, blocked, verified complete and completed-but-unmapped/needs-proof. Cross-check task and acceptance evidence before changing a checkbox. When no provider task system exists, edit the durable plan directly only where authorized and preserve its schema.
+Represent at least pending, active, blocked, verified complete and completed-but-unmapped/needs-proof. Cross-check task and acceptance evidence before changing a checkbox. Where the provider task system is itself canonical, update it directly if authorized; do not create a shadow Markdown plan. Where local files are canonical, edit those files if authorized and preserve their schema.
 
 ## Hydration and sync-back
 
 Hydration maps only still-unfinished plan items into an actually available runtime task surface; preserve phase identity, dependencies, ownership and stale collision avoidance. Runtime task views may expire between sessions.
 
-Sync-back is **all-phase**, not just the latest phase: map verified provider completions to source plan entries, backfill previously skipped/stale phases, update plan frontmatter/status and plan-level progress from the reconciled actual state. Report unmapped or contradictory status instead of silently treating a task-board 'done' value as proof. On resume, rebuild optional runtime tasks from remaining plan items and active Continuity frontier; do not maintain a competing permanent task cache.
+For a **whole-plan** closure claim, sync-back is all-phase, not just the latest phase: match verified completions to authoritative items, repair previously skipped/stale prerequisites and derive aggregate status from the reconciled actual state. For a bounded update, touch only its necessary dependency closure. Update Markdown frontmatter only if the project actually uses it; an issue/Notion plan has its own canonical fields. Report unmapped or contradictory status instead of silently treating a task-board 'done' value as proof. On resume, rebuild optional runtime tasks from remaining plan items and active Continuity frontier; do not maintain a competing permanent task cache.
 
 ## Documentation trigger and routing
 

@@ -14,7 +14,7 @@ Do not use Plan to hide an unresolved product/architecture decision. If the dire
 ## Load progressively
 
 - `references/scope-and-modes.md` — scope challenge, planning modes, TDD and parallel/two-approach semantics.
-- `references/files-first-plan.md` — durable plan representation and execution handoff.
+- `references/files-first-plan.md` — durable plan meaning, project-native ownership and execution handoff.
 - `references/decomposition.md` — dependency/ownership/outcome decomposition.
 - `references/plan-validation.md` — evidence verification, adversarial review and decision validation.
 - `references/plan-reconciliation.md` — existing-plan overlap and whole-plan consistency.
@@ -56,7 +56,7 @@ The plan's decisions, dependencies and acceptance evidence matter more than its 
 9. For parallel work, prove ownership/dependency separation before marking phases concurrent.
 10. Run adversarial review and plan validation when the selected mode requires them.
 11. Reconcile any accepted validation change through every affected phase and perform a whole-plan consistency sweep.
-12. Persist the roadmap as ordinary readable project artifacts and return the exact path/pointer.
+12. Persist the accepted roadmap in the **actual project-authoritative plan/document/task owner** using permitted tools; return its exact path or provider pointer. Do not create an independent file plan merely because the upstream CLI does.
 
 Plan does not silently start implementation. Hand off to Cook only when the plan is accepted enough for the requested consequence level.
 

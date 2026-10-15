@@ -1,6 +1,6 @@
-# Files-first plan
+# Durable plan meaning and source ownership
 
-A durable plan should survive runtime/tool changes and a fresh session.
+A plan must survive runtime/tool changes and a fresh session **through its authoritative project source**. A file is a good source when the project uses files; an issue/spec/Notion plan can be the authority when the team already works there. Choose the canonical owner before creating artifacts. A portable Skill must not make a duplicate `plan.md` into a second competing source of truth.
 
 ## Minimum semantic structure
 
@@ -21,7 +21,7 @@ Record:
 - unresolved decisions;
 - progress state when the plan is used for active execution.
 
-A database/dashboard may index the plan but must not be the only place where the plan meaning exists.
+An index/dashboard is not automatically the owner of plan meaning. If an issue or document system owns it, retain the decisive reasons and acceptance evidence there (or in stable linked documents), rather than assuming a parallel local file outranks it.
 
 ## Phase quality
 
@@ -46,7 +46,7 @@ Carry a compact handoff:
 - goal;
 - approved scope/non-goals;
 - decisive evidence/decisions;
-- artifact path;
+- authoritative artifact/provider pointer;
 - acceptance criteria;
 - open risks/blockers;
 - authority granted for the next stage.

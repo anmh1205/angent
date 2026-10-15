@@ -2,14 +2,14 @@
 
 ## Hydration
 
-When an active plan has unfinished work and a live task surface exists:
+When an active plan has unfinished work and a **different** optional operational task surface exists:
 
 1. read unfinished plan items/phases;
 2. create or map operational tasks with enough identity to trace them back;
 3. preserve dependency and ownership information;
 4. avoid duplicating tasks already representing the same work.
 
-Hydration is a projection, not a second plan authoring process.
+Hydration is a projection, not a second plan authoring process. If the live issue/plan provider **already owns the authoritative work items**, there is nothing to hydrate from a second file plan: use that source directly.
 
 ## During work
 
@@ -21,11 +21,11 @@ A task marked “done” is not enough when acceptance evidence is missing.
 
 Before claiming a plan/project complete:
 
-1. sweep every relevant plan phase/item;
-2. map verified operational completions back to their source plan items;
-3. backfill stale earlier items;
-4. update aggregate plan progress from reconciled evidence;
-5. report completed work that cannot be mapped instead of silently dropping it.
+1. identify the authoritative plan/issue owner and its relevant phases/items;
+2. match completed operational work with exact acceptance evidence and owning items;
+3. reconcile predecessor and dependent items whose status has become stale;
+4. derive aggregate completion only if the whole requested scope was inspected and reconciled;
+5. report completed work with no trustworthy source mapping instead of inventing one.
 
 ## Resume
 

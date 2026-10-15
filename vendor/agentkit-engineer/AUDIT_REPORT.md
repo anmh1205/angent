@@ -56,6 +56,12 @@ The follow-up inspected all 102 Engineer fallback Skill entrypoints for residual
 
 Operational acceptance requires representative user-goal cases for each **distinct capability family**, including a counter-case that should block, reroute or preserve prior state. Check the agent's decision and observable effects, not the presence of headings/links, a script command equivalent or a green structural workflow. Treat `VERIFIED_ADAPTED` as an inspected semantic contract, **not** evidence of exhaustive runtime competence.
 
+## Canonical planning and reversible-decision correction — 2026-10-15
+
+A focused Plan/Issue-to-Plan/Project Management reading found that files-first implementation examples had been overgeneralized into a false project-authority rule. This could make an issue-first project create redundant `plan.md` state, then run unnecessary synchronization while still claiming one source of truth. The Skills now resolve the **actual owner** of requirements, decisions, progress and evidence before selecting a representation, and whole-plan sweeps apply to whole-plan completion claims rather than every bounded task edit. Cross-plan reconciliation remains required for real dependencies.
+
+The Plan validation/decomposition references now also teach how to locate **load-bearing, breakable assumptions**, identify early discriminating observations and choose a sufficiently reversible response to plausible assumption failure. This preserves requested scope while teaching architecture trade-off judgment, not merely listing risks. The Handoff heading was corrected to distinguish the authorized document write from forbidden implicit continuation effects. These are source-level corrections; they are not yet proven by cross-harness behavioral trials.
+
 ## Remaining runtime acceptance
 
 The 25 `VERIFIED_DEGRADED` skills are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.

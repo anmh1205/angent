@@ -12,7 +12,7 @@ Read **references/plan-task-reconciliation.md** and **references/progress-and-do
 
 ## Authorities
 
-The active implementation plan (and its phases) owns durable work intent and completion criteria; authoritative provider tasks own their live statuses/assignments; Git/tests/artifacts own observed implementation evidence. ANGENT Continuity supplies the active, interruption-safe frontier, **not** a second permanent copy of every plan item. Reconcile disagreements and mark uncertain mappings rather than accepting the newest prose status at face value.
+Determine the **actual owner for each fact before synchronization**. In a files-first project, the accepted plan owns durable work intent and acceptance criteria while provider tasks may be operational projections. In a Jira/GitHub/Notion-first project, the provider issue/spec/plan may itself own those decisions: do **not** introduce or privilege a duplicate `plan.md`. Git/tests/deployments/artifacts supply observed implementation evidence, not task-owner authority. ANGENT Continuity carries only the interruption-safe active frontier, not a second permanent project tracker. Reconcile disagreements instead of accepting the newest prose status or imposing a file convention.
 
 ## Operations
 
@@ -26,7 +26,7 @@ Discover a live task system at runtime; never infer it from a client name or his
 
 ### Verified completion and sync-back
 
-Verify observed code/artifact/test/review results against the **specific task acceptance contract**. When syncing back, scan every phase file under the target plan, reconcile completed provider items to their exact source entries, repair stale earlier checkboxes, and update aggregate plan status only from verified phase state. Report unmapped completed items and blockers; do not claim a fully completed plan with unresolved mappings. Update the **actual owning plan or task surface** using the available authorized file, document or provider tools, then read it back. Treat AgentKit's `ak plan` as an optional product-specific adapter **only if the project's authoritative plan store is really managed by AgentKit**; its binary being installed does not make it the default path. No CLI or shadow plan store is required for status reasoning.
+Verify observed code/artifact/test/review results against the **specific task acceptance contract**. When reporting a **whole-plan** endpoint, inspect all relevant phases/items in the actual source, reconcile provider and implementation evidence, repair stale predecessor states and update aggregate status only from the verified result. For a bounded issue/phase update, inspect its dependency closure and affected siblings rather than rewriting the entire project. No phase-file scan is required when the authoritative system has no phase files. Report unmapped completed items and blockers; do not claim a fully completed plan with unresolved mappings. Update the **actual owning plan or task surface** using the available authorized file, document or provider tools, then read it back. Treat AgentKit's `ak plan` as an optional product-specific adapter **only if the project's authoritative plan store is really managed by AgentKit**; its binary being installed does not make it the default path. No CLI or shadow plan store is required for status reasoning.
 
 ### Docs and communication
 

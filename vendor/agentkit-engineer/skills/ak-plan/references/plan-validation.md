@@ -27,6 +27,12 @@ For hard/deep/parallel/two-approach work, challenge:
 
 The reviewer proposes findings; Reasoning/Plan decides the repair.
 
+### Load-bearing uncertainty and reversible choice
+
+Find premises the plan **needs** and that may fail during its lifetime: schema compatibility, vendor behavior, data shape, throughput, device availability, account permissions or deployment timing. For each high-consequence premise, distinguish observed evidence, unsupported assumption, an early discriminating experiment, and the **observable signal that should trigger replanning**. Compare options by the cost of leaving them (migration, rollback, contract lock-in, irreversible writes) if the premise fails, not merely by initial implementation effort.
+
+When no option dominates and evidence cannot yet settle the fork, prefer an approach with a safer escape path *if it still meets the accepted requirements*. Record the trade-off and its boundary; this is not blanket avoidance of ambitious architecture or permission to weaken requested capabilities. A plan that names a risk but has no observation or feasible response does not manage that risk.
+
 ## Decision validation
 
 Ask the user only about genuine choices whose answer changes implementation, authority, or accepted trade-offs.
