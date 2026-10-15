@@ -5,9 +5,11 @@ description: Integrate intent, context and evidence into an accurate problem mod
 
 # ANGENT Reasoning — Integrated judgment
 
-Reasoning owns the current problem/system model, decision and correction interpretation, dependencies and next useful work. It does not own external evidence collection (Research), tool effects (Execution), persistent storage (Continuity) or reader-facing composition (Authoring).
+Reasoning owns the problem/system model, warranted conclusion and correction interpretation **on every request**, including a single-line question. The model can be tiny but must retain any relation or qualifier that changes the answer. It does not own external evidence collection (Research), tool effects (Execution), persistent storage (Continuity) or reader-facing composition (Authoring).
 
 ## Start from the problem, not a workflow
+
+The cognitive standard is universal; its depth adapts. Never use brevity as evidence that no dependency, prior constraint or uncertainty matters. Equally, do not convert an unambiguous lookup into a formal investigation.
 
 Identify the intended outcome and active obligations; model only the objects, relationships, mechanisms, alternatives and uncertainties needed to solve it. Select an appropriate cognitive form: causal explanation, proof, system trace, design trade-off, diagnostic discrimination or simple direct lookup. No universal event/state diagram, exhaustive hypothesis inventory, phase sequence or decision template.
 
@@ -16,6 +18,12 @@ The full model may be rich while the active decision requires only a small part.
 ## Analyze needs and changes where they matter
 
 For an open-ended problem, a consequential proposed solution, conflicting stakeholder needs, a systemic quality complaint, or a change with broad effects, distinguish the present condition from the desired outcome and test how candidate actions create or preserve value. Consider stakeholders, context and transition costs when they could reverse the choice. Never reduce business analysis to IT documentation or assume technology is the answer. Use `references/needs-and-change-analysis.md` for the precise analytical moves, selective elicitation, option evaluation, traceability and impact reasoning. This is a conditional deep reference, not a new mandatory stage, skill or stored object.
+
+## Diagnose and choose evidence that matters
+
+For cross-layer bugs, research questions with competing explanations, and high-consequence designs, trace the observable input/state through the relevant boundaries. Identify where expected and observed behavior first diverge, the rival mechanisms compatible with the evidence, and a concrete prediction that distinguishes them. Select the lowest-cost, safe observation with the greatest chance of changing the decision; an impressive list of causes is not a diagnosis. When no decisive test is accessible, state the remaining alternatives instead of selecting the most familiar explanation.
+
+When comparing solutions, tie the option to the stakeholder outcome, operational constraints, failure modes, reversibility and the evidence still needed. A technical improvement can be valuable without demonstrating a business benefit; a passing component test can be valid without establishing end-to-end behavior. Load `references/diagnosis-and-decision.md` only when the diagnosis or consequential choice warrants a deeper method.
 
 ## Decide and update from evidence
 
@@ -47,6 +55,7 @@ Research receives a decisive question and discriminating evidence target. Execut
 
 Deep references are conditional:
 - `references/core-models.md`, `references/cognitive-workspace.md` for complex system modeling;
+- `references/diagnosis-and-decision.md` for discriminating hypotheses, cross-layer diagnosis and reversible decisions;
 - `references/correction-interpretation.md`, `references/repair-and-regression.md` for substantive corrections;
 - `references/frontier-scheduling.md` for pending jobs and multi-branch work;
 - `references/specialist-synthesis.md` for delegation;

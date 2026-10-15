@@ -1,26 +1,28 @@
 # ANGENT Engineer extension
 
-Independent ANGENT engineering extension, with portable fallback semantics adapted from the AgentKit Engineer stable catalog. The directory is an ANGENT-owned package, not an upstream AgentKit repository or a raw source mirror.
+ANGENT-owned engineering **source module**, with portable fallback semantics adapted from the AgentKit Engineer stable catalog. This directory is not a second user-facing plugin installation, an upstream AgentKit repository or a raw source mirror.
 
 ANGENT uses **native-first / portable-fallback** engineering capability.
 
-## Two independent plugin roots
+## One plugin, separate source module
 
-ANGENT core and Engineer fallback are intentionally separate package roots:
+The released ANGENT plugin is assembled by `scripts/package_unified.py` from Core's `skills/` and this module's `skills/`.
 
 ```text
-<repo>/
-├── plugin.json
-├── skills/                     # ANGENT cognitive owners
-└── extensions/angent-engineer/
-    ├── plugin.json             # portable Agent Plugins manifest
-    ├── .codex-plugin/plugin.json # ChatGPT/Codex companion manifest
-    ├── skills/                 # 103 portable Engineer Skill identities
-    ├── agents/                 # 16 portable role definitions
-    └── scripts/select_engineer.py
+angent (Git repository)
+├── plugin.json                         # one public plugin identity
+├── skills/                             # 12 Core Skills in source
+├── extensions/angent-engineer/
+│   ├── skills/                         # 103 maintained Engineer Skills
+│   ├── agents/                         # 16 role contracts
+│   ├── scripts/                        # selector and structural checks
+│   └── plugin.json                     # legacy source/verification metadata
+└── scripts/package_unified.py          # builds one installable ZIP
 ```
 
-Agent Plugins v1 uses a fixed `skills/` discovery root and does not provide a portable conditional second Skill root. Keeping the fallback as its own plugin prevents the 103 fallback Skills from always colliding with native AgentKit Engineer.
+The installable ZIP contains **115 discoverable Skills under one root**, the 16 role contracts, the existing Engineer support tree and **only ANGENT's root installable manifests**. Nested Engineer plugin metadata becomes `source-manifest.json` for selector compatibility and is not installable. Original source copies are retained within the package to keep relative references and scripts intact; they are not another discovery root.
+
+Native AgentKit remains preferred **per task**, not via automatic unloading of packaged Skills. Agent Plugins v1 lacks conditional static discovery; the host may show both native and fallback catalogs, so selection must avoid combining them.
 
 ## Native path
 
@@ -43,7 +45,7 @@ AgentKit `--global` means user scope for the selected runtime target; it is not 
 
 ## Fallback path
 
-If native AgentKit Engineer is absent, unusable or not proven usable, activate the plugin rooted at this directory.
+If native AgentKit Engineer is absent, unusable or not proven usable, route to the `ak-*` Skills **already included** in the installed ANGENT plugin. Do not install this source module as a second plugin.
 
 Coverage:
 
@@ -119,17 +121,14 @@ Examples:
 
 Do not add a raw `upstream/` source mirror here.
 
-This directory contains ANGENT's fallback plugin, portable role library and native-use documentation.
+This directory contains ANGENT's maintained fallback Skill source, portable role library and native-use documentation.
 
 
 ## ChatGPT / Codex packaging
 
-ChatGPT and Codex use the package manifest at `.codex-plugin/plugin.json`.
+Install the **single** `angent-chatgpt.zip` artifact. The root `plugin.json` and `.codex-plugin/plugin.json` describe one plugin with one discoverable `skills/` tree. Engineer files here are maintained source and non-discoverable support, not a second package.
 
-The fallback companion points that manifest at the same `./skills/` tree used by the portable package. No Skill content is duplicated.
-
-Installing/enabling this companion is a client-level action. It should be enabled only when native AgentKit Engineer is not the selected source.
-
+The portable native-first behavior is guidance and runtime routing, **not** a claim that static Skill discovery can be switched off from inside a plugin manifest.
 
 ## Portable Skill identity
 

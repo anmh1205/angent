@@ -37,15 +37,15 @@ The adapter reports:
 
 Use `yes` only when the active harness can actually discover/invoke native AgentKit Engineer.
 
-- `yes` → use native Engineer;
-- `no` or `unknown` → activate/project the ANGENT Engineer fallback;
-- do not expose both complete catalogs by default.
+- `yes` → route engineering work to native Engineer;
+- `no` or `unknown` → route to the portable `ak-*` Skills inside the same ANGENT plugin;
+- never mix native and fallback implementations in one task. The portable v1 manifest cannot conditionally hide statically discoverable fallback Skills; the host may still expose both catalogs if native is installed separately.
 
 The selection semantics live with Execution. The adapter only supplies current runtime evidence and performs package activation through the client's supported mechanism.
 
 ## Skill/plugin loading
 
-When the harness supports Agent Plugins or another Skill standard, load ANGENT and the selected Engineer source through that mechanism.
+When the harness supports Agent Plugins or another Skill standard, install the one assembled ANGENT plugin and select the appropriate Engineer **capability** at task time. A standalone Engineer plugin is no longer part of the supported distribution.
 
 When it does not, an adapter may project the same Skill files into its native Skill/prompt surface.
 

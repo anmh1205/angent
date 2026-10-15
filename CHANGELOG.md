@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.3.0 — Unified cognition and Engineer capabilities
+
+- Integrated full cognitive fidelity from 1.2.3: simple prompts still receive intent/context/evidence/accuracy checks without unnecessary tool or output overhead.
+- Strengthened Root/Reasoning/Research with discriminating diagnosis, reversible probes, decision-reversing evidence and cross-layer causal tracing.
+- Improved Execution and Quality endpoint verification, Authoring-to-Format transfer of long-form reader understanding, and Learning activation at the controlling decision point.
+- Added diagnostic, endpoint, learning and writing regression fixtures I–N plus the universal-cognition calibration cases. Structural validation is not evidence of live-model superiority.
+- Built one deterministic `angent` plugin combining 12 Core and 103 portable Engineer Skills with 16 role definitions, preserving original source/support paths.
+- Removed standalone Engineer artifact publication. Verified exact catalog, collision and missing-skill safety, native/fallback selector, reproducible packaging, and CI on both Core and Engineer.
+- Native AgentKit remains the preferred task route when usable; static plugin discovery may still show the bundled fallback catalog, so workflow selection must avoid mixing implementations.
+
+## 1.2.3 — Universal cognitive fidelity (integrated baseline)
+
+- Applied one integrated cognitive baseline to every request, including apparently simple lookups; direct output stays compact without reduced reasoning or forgotten active constraints.
+- Clarified universal responsibility across Root, Contract, Context, Reasoning, Authoring and silent Quality checks, while retaining conditional research, tools, formal evaluation and durable state.
+- Updated architecture, AGENTS.md, README and both plugin bootstrap prompts; preserved separate Engineer plugin ownership and unmerged 1.3.0 work.
+- Added paired positive/counter-case scenarios for qualified short prompts, follow-up constraints, document parity, recurrence, polling, synthesis, endpoint truth and release identity.
+- Defined behavioral acceptance as distinct from static source checks; actual activated-agent comparisons and provider/destination read-back remain required before claims of measured cognitive improvement.
+
+
 ## 1.2.2 — Engineer extension distribution
 
 - Integrated the independent ANGENT Engineer extension under `extensions/angent-engineer/` with a verified stable AgentKit Engineer 2.19.0 catalog: 103 portable Skills and 16 Agent role contracts.

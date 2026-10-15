@@ -4,6 +4,14 @@ Use this reference when changing a shared ANGENT method, root/default prompt, ro
 
 This is behavioral evidence, not a replacement for reasoning and not a return to static keyword/count tests.
 
+## Universal-cognition acceptance boundary
+
+For an always-on cognitive-standard change, validate two **independent properties** together: fidelity to intent, context, decisive relationships, evidence and accuracy; and economical use of words, tools and visible process. Direct output is a presentation shape, not a reduced cognitive mode. A valid negative control is a trivial lookup that needs no research, elaborate explanation or external skill call. A valid positive case is a short question whose hidden qualifier, prior constraint or outdated premise changes the answer.
+
+Distinguish (1) repository/skill-text consistency, (2) actual activated baseline and candidate runs with identifiable source/release and comparable model/harness, (3) externally visible answer/decision/tool trajectory, and (4) destination and provider read-back when claims cross a surface or external effect. Only the relevant observed levels support acceptance; source fixtures and static CI alone cannot certify a cognitive capability improvement. Do not claim access to hidden reasoning traces.
+
+When behavioral runs are unavailable, mark the behavioral gate **NOT YET VERIFIED**, document the executable case and actual limitation, and keep the candidate separate from an accepted/released improvement. Do not create a heavyweight new grader platform or promote subjective self-scores.
+
 ## Why calibrate
 
 A broad change can improve the reported failure while silently degrading a different accepted behavior.
@@ -320,3 +328,11 @@ Do not let the case bank grow into an unowned museum of historical complaints.
 ## Cross-domain needs and change calibration
 
 For substantial changes to problem analysis, select the adjacent cases from Root's core fixtures. Calibrate diagnosis, not vocabulary: can the agent distinguish a requested means from the need, identify the actual affected party and decision constraints, derive discriminating evidence, compare a nontechnical option when plausible, preserve authorized means, and separate verified deliverables from outcomes that require later observation? Pair consequential positive cases with direct-answer and explicit-means counter-cases. A case passes only when the selected action and its justification are valid for the evidence and authority supplied; naming BACCM concepts or writing a requirements matrix is not evidence of competence.
+
+## Causal decision and endpoint calibration
+
+Choose a small, varied set from Root fixtures I–N when a change touches diagnostic reasoning, long-task completion, cross-surface authoring or Learning activation. The decisive object is the behavior at the controlling choice: the hypothesis actually distinguished, evidence actually obtained, branch actually advanced, endpoint actually verified, or reader inference actually supported.
+
+For a consequential diagnosis, present at least two plausible causes whose predictions differ, plus a direct-repair case where no hypothesis ceremony is needed. For a cross-layer endpoint, preserve separate records for source inspection, unit/contract checks, integrated execution and real deployment; make unexercised boundaries explicit. For writing, compare matched subject relations in accepted chat prose and actual destination-rendered units at different curriculum depths, including an unseen topic. For Learning, compare a matching recurrence and a superficial but nonmatching case. These are candidate cases, not a mandatory per-task workflow or evidence that they were executed.
+
+When source-level skills or fixtures are the only material reviewed, the supported conclusion is that the method is represented coherently in source. Claim improvement in an active agent only after observing comparable activated behavior with a valid baseline and an identifiable environment. A green CI result validates what CI actually measures, not cognition, user comprehension or every target harness.

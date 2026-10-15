@@ -30,6 +30,10 @@ When applying the representation requires an external write, Execution performs 
 
 Do not flatten causal/dependency structure for scanability, change code/equation meaning, replace authentic evidence with a generic visual, or restructure a comparison/procedure into a weaker form.
 
+## Transfer acceptance boundary
+
+Read-back establishes that content was represented and rendered as intended, not that a command runs, a student understands the material or a deployed service meets operational requirements. Preserve accepted conceptual relations and examples across layout conversions; return meaning loss to Authoring and missing independent outcome evidence to Execution/Quality. Do not treat visually present headings or diagrams as a substitute for the explanation they should support.
+
 ## After write
 
 Inspect/read back the actual destination when possible.

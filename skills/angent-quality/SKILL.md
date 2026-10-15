@@ -5,7 +5,7 @@ description: Judge consequential outputs, repairs and completion claims against 
 
 # ANGENT Quality — Evidence-bound acceptance
 
-Quality evaluates when the task consequence, a broad claim, revision of accepted work, recurring defect or propagation risk makes verification materially useful. It does not rewrite the answer, decide the task, grant authority or require a gate for every routine reply.
+Every output needs a proportionate **silent self-check** for task fit, still-binding context, warranted confidence, accuracy and readability. This is not a separate Quality skill call or formal verdict. Quality owns **explicit evidence-bound evaluation** when consequence, broad claims, accepted-baseline revision, recurrence or propagation risk warrants independent verification. It does not rewrite the answer, decide the task or grant authority.
 
 ## What a valid verdict means
 
@@ -19,13 +19,17 @@ Check relevant properties rather than filling a universal rubric:
 
 For a consequential PASS or FAIL, first check that the evaluator, criteria, evidence and test environment can support the judgment. Distinguish solution defect, evaluator defect, environment confound and unresolved attribution. Use BLOCKED if evidence cannot discriminate an important cause; do not force a binary verdict.
 
-A required PASS supports only the dependent transition and its evidenced scope. Required FAIL/BLOCKED prevents accepting/publishing that candidate on the affected path; independent runnable work is not frozen. A low-risk direct answer does not need a ceremony merely because Quality exists.
+A required PASS supports only the dependent transition and its evidenced scope. Required FAIL/BLOCKED prevents accepting/publishing that candidate on the affected path; independent runnable work is not frozen. A low-risk direct answer still receives its implicit accuracy/fit check but needs no visible Quality ceremony.
 
 ## Evidence of value is not the same as a finished artifact
 
 For value-oriented change, discriminate (1) authorized work completed, (2) solution characteristics met, and (3) benefit realized in the relevant stakeholder/context. A passed test, published document, visually polished design or completed ticket does not by itself establish operational impact. Choose the level of verification the Contract actually requires and the available evidence can establish. If benefits can only be observed after deployment, adoption or passage of time, state that separately; do not fail a sound artifact merely because post-adoption data do not yet exist, and do not invent an outcome metric or claim realized value. Assess competing stakeholder criteria using their real authority and requirements, not an averaged score invented by the evaluator.
 
 For substantive response-authoring changes, compare what a reader understands from the opening alone, the opening with the ending, and the full explanation. Verify that closure integrates supported evidence rather than repeats the lead; preserve short-answer economy, depth, uncertainty, and chat-to-document parity. Use Authoring's `reader-orientation-and-closure.md` positive and negative cases as inputs, not a fixed-format checklist.
+
+## Test the decisive claim at its proper boundary
+
+A credible evaluation identifies the exact claim being accepted, the observation that would falsify it, and the scope in which the observation applies. For a proposed cross-layer repair, assess whether evidence separates the competing failure causes and whether the requested behavior passes the necessary integration boundaries; a source diff or passing isolated test cannot certify an unexercised device-to-service path. For a design choice, check whether the choice still stands under plausible decision-reversing assumptions, not just whether a pros/cons table exists. For an educational artifact, check an inference the reader should now be able to make, not how many concepts were named. Report source inspection, simulated prompts, live activated runs, destination read-back and real-user outcomes as distinct evidence levels.
 
 ## Calibrate changes, not arbitrary counts
 

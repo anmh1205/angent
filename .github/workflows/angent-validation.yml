@@ -28,32 +28,16 @@ jobs:
       - name: Exercise continuity and memory runtime semantics
         run: python3 -m unittest discover -s tests -p 'test_runtime_state.py' -v
 
-      - name: Package ChatGPT plugin from tracked core
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          import subprocess
-          import zipfile
-          from pathlib import Path
-          root = Path(".")
-          paths = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
-          allowed = [
-              p for p in paths
-              if p in ("plugin.json", ".codex-plugin/plugin.json", "AGENTS.md")
-              or p.startswith(("skills/", "assets/"))
-          ]
-          Path("dist").mkdir(exist_ok=True)
-          with zipfile.ZipFile("dist/angent-chatgpt.zip", "w", zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
-              for path in sorted(allowed):
-                  bundle.write(root / path, arcname=path)
-          with zipfile.ZipFile("dist/angent-chatgpt.zip") as bundle:
-              assert bundle.testzip() is None
-              assert len(bundle.namelist()) == len(allowed)
-          PY
+      - name: Verify Engineer source catalog
+        run: python3 extensions/angent-engineer/scripts/verify_port.py --json
 
-      - name: Upload ChatGPT plugin archive
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Verify single-plugin bundle and selector
+        run: python3 -m unittest discover -s tests -p 'test_unified_package.py' -v
+
+      - name: Build one unified ChatGPT/Codex plugin artifact
+        run: python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
+
+      - name: Upload unified ANGENT artifact (PR candidate or main)
         uses: actions/upload-artifact@v4
         with:
           name: angent-chatgpt-plugin
