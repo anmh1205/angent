@@ -27,6 +27,10 @@ For value-oriented change, discriminate (1) authorized work completed, (2) solut
 
 For substantive response-authoring changes, compare what a reader understands from the opening alone, the opening with the ending, and the full explanation. Verify that closure integrates supported evidence rather than repeats the lead; preserve short-answer economy, depth, uncertainty, and chat-to-document parity. Use Authoring's `reader-orientation-and-closure.md` positive and negative cases as inputs, not a fixed-format checklist.
 
+## Test the decisive claim at its proper boundary
+
+A credible evaluation identifies the exact claim being accepted, the observation that would falsify it, and the scope in which the observation applies. For a proposed cross-layer repair, assess whether evidence separates the competing failure causes and whether the requested behavior passes the necessary integration boundaries; a source diff or passing isolated test cannot certify an unexercised device-to-service path. For a design choice, check whether the choice still stands under plausible decision-reversing assumptions, not just whether a pros/cons table exists. For an educational artifact, check an inference the reader should now be able to make, not how many concepts were named. Report source inspection, simulated prompts, live activated runs, destination read-back and real-user outcomes as distinct evidence levels.
+
 ## Calibrate changes, not arbitrary counts
 
 For a change to a widely used skill, method or multi-unit writing approach, compare representative failure, accepted-success and counter-cases where feasible. Inspect observable outputs/trajectories and protected properties, not heading counts, forbidden words, source counts or a self-reported score. One successful test demonstrates possibility, not whole-system reliability.

@@ -27,6 +27,12 @@ Complete the requested response without a generic closing invitation or unrelate
 
 Select reader-facing content from the user's information need, not from the history of how the answer was prepared. Source provenance belongs beside supported claims; tool calls, skill-loading acknowledgments, internal checks and compliance narration belong in an operational report only when the user requested that report or the process materially affects the result. A technical explanation should close on its usable domain inference, not an unrelated account of its production.
 
+## Transfer understanding, not only information
+
+When composing sustained technical instruction, preserve the established mechanism, prerequisite relations and the reader's capability at the current point. A definition is not proof the reader can apply it; a worked example is not a substitute for the general mechanism; covering a term once does not establish mastery for later chapters. Explain how components interact, what changes at an interface, and which observation or counter-case makes the distinction usable. When uncertainty remains about a decisive relation, send the gap to Research/Reasoning rather than filling the chapter with adjacent facts.
+
+Before scaling a writing method across many units, compare a representative early, middle and advanced unit against the strongest accepted prose baseline and one previously unseen subject. Check whether the actual explanation supports the next inference, not whether the outline contains enough subheadings or the prose is long. After destination transfer, verify the rendered explanation and any figures preserve the same relationships. Use `references/explanation-transfer.md` for multi-unit/cross-surface writing only; ordinary chat remains direct.
+
 ## One prose competence across surfaces
 
 A strong chat answer and a good technical document share the same underlying thinking and prose quality. Chat normally presents the useful result early with minimal visible scaffolding. A long document adds sustained explanation, chapter continuity, navigation and carefully timed depth; it **does not** acquire a stiff AI narrator, coaching comments, isolated checklist facts or headings that announce how to study.
@@ -60,5 +66,6 @@ When a consequential revision or long-form artifact needs acceptance, provide th
 - `references/response-method-study.md`: source-aware comparison of chat response methods when revising the authoring approach.
 - `references/visual-explanation.md`: Mermaid, authentic figures, plots and representation verification.
 - `references/technical-exposition.md`, `references/reader-state.md`: complex technical teaching.
+- `references/explanation-transfer.md`: preserve an established mechanism and reader capability across long-form units and destination formats.
 - `references/curriculum-progression.md`, `references/long-form-consistency.md`, `references/artifact-state.md`: multi-unit or resumable writing.
 - `references/headings-and-boundaries.md`, `references/language-vi.md`: structure and Vietnamese technical prose.

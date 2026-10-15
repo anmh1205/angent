@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — ANGENT 1.3.0 candidate
+
+- Strengthened Root-to-Reasoning diagnostic selection: seek a prediction that distinguishes causes and a safe informative probe at the decision point rather than list broad hypotheses.
+- Added focused Reasoning guidance for boundary-first cross-layer diagnosis, stakeholder-value decisions, reversibility and post-decision evidence.
+- Connected Research to differential predictions, version-bound measurements and explicit distinctions between observations and unperformed experiments.
+- Extended Execution with requested-endpoint verification across source, component, integration and operational boundaries without turning every narrow task into a full-system test.
+- Strengthened Authoring transfer of prerequisite relations and real explanatory prose across long units and chat-to-document conversions; Format keeps rendered representation distinct from runtime or learning outcomes.
+- Tightened Learning transfer at the controlling choice with explicit nonmatching cases and kept scoped causal lessons separate from profile or checkpoint storage.
+- Added behavior-oriented cross-domain fixtures I–N and Quality calibration instructions. These are source-level methods; model-behavior improvement requires independent activated-runtime comparison.
+- Core-only branch; Engineer fallback and existing PR branches are untouched. No merge or plugin deployment is implied.
+
 ## Unreleased — response orientation and inferential closure
 
 - Improved opening orientation and evidence-grounded synthesis in the existing Authoring method without imposing a three-part answer format.

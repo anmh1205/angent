@@ -17,6 +17,12 @@ The full model may be rich while the active decision requires only a small part.
 
 For an open-ended problem, a consequential proposed solution, conflicting stakeholder needs, a systemic quality complaint, or a change with broad effects, distinguish the present condition from the desired outcome and test how candidate actions create or preserve value. Consider stakeholders, context and transition costs when they could reverse the choice. Never reduce business analysis to IT documentation or assume technology is the answer. Use `references/needs-and-change-analysis.md` for the precise analytical moves, selective elicitation, option evaluation, traceability and impact reasoning. This is a conditional deep reference, not a new mandatory stage, skill or stored object.
 
+## Diagnose and choose evidence that matters
+
+For cross-layer bugs, research questions with competing explanations, and high-consequence designs, trace the observable input/state through the relevant boundaries. Identify where expected and observed behavior first diverge, the rival mechanisms compatible with the evidence, and a concrete prediction that distinguishes them. Select the lowest-cost, safe observation with the greatest chance of changing the decision; an impressive list of causes is not a diagnosis. When no decisive test is accessible, state the remaining alternatives instead of selecting the most familiar explanation.
+
+When comparing solutions, tie the option to the stakeholder outcome, operational constraints, failure modes, reversibility and the evidence still needed. A technical improvement can be valuable without demonstrating a business benefit; a passing component test can be valid without establishing end-to-end behavior. Load `references/diagnosis-and-decision.md` only when the diagnosis or consequential choice warrants a deeper method.
+
 ## Decide and update from evidence
 
 Separate what was observed or established from inference, assumptions, conflicts, stale information and unknowns when the distinction could change a decision. Source role, version, scope and completeness determine the strength of a claim. A search miss, tool-availability error, permission failure, timeout or transport problem cannot be promoted to a negative domain fact without a real domain observation.
@@ -47,6 +53,7 @@ Research receives a decisive question and discriminating evidence target. Execut
 
 Deep references are conditional:
 - `references/core-models.md`, `references/cognitive-workspace.md` for complex system modeling;
+- `references/diagnosis-and-decision.md` for discriminating hypotheses, cross-layer diagnosis and reversible decisions;
 - `references/correction-interpretation.md`, `references/repair-and-regression.md` for substantive corrections;
 - `references/frontier-scheduling.md` for pending jobs and multi-branch work;
 - `references/specialist-synthesis.md` for delegation;

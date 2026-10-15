@@ -37,6 +37,12 @@ The two supported plugin manifests are plugin.json and .codex-plugin/plugin.json
 
 This repository does not store private plugin release identifiers, past branch HEADs or live next-action pointers as project instructions. Check the running plugin or Git branch directly when that identity matters.
 
+## ANGENT 1.3.0 candidate — capability boundaries
+
+The 1.3.0 branch sharpens diagnostic discrimination, choice of reversible evidence, requested-endpoint verification and transfer of conceptual understanding across long documents. It extends existing Reasoning, Execution, Authoring, Research, Quality and Learning responsibilities rather than creating another router, workflow engine or separate evaluation service. Root fixtures I–N are calibration prompts and counter-cases; they are not automatically executed behavioral proof.
+
+The candidate source version is distinct from an installed ChatGPT plugin release. Verify the packaged source and live runtime separately before claiming deployment or measured improvement.
+
 ## Validation
 
 The repository checks deterministic structure and manifest consistency, and exercises Memory/Continuity filesystem races, process-exit lock release, revision conflicts and interrupted pointer recovery on CI. For cognitive method changes, use evidence-backed behavioral cases and counter-cases appropriate to the actual consequence. Green structural and runtime CI checks cannot establish that a model's reasoning, writing or cross-session Learning activation improved.

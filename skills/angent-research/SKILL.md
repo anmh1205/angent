@@ -27,6 +27,10 @@ Prefer a question from Reasoning:
 
 For a simple factual task, Root may route directly to Research.
 
+## Evidence that can reverse a conclusion
+
+When several explanations remain plausible, request or retrieve evidence with an explicit contrasting prediction: what would be observed under explanation A but not B? Prefer the earliest trustworthy boundary observation that divides them. If an experiment, field measurement or runtime trace is inaccessible, preserve it as an unperformed proposal, not a claimed finding. For technical faults connect evidence to the actual device/firmware/transport/service version and test conditions; do not transfer results from a convenient but nonrepresentative setup without marking the limit. For value or user-need claims, distinguish customer reports, measured behavior and hypothetical benefit.
+
 ## Search for information value
 
 Prefer evidence that:
