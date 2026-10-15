@@ -6,24 +6,15 @@ metadata: {port: angent-fallback, mode: degraded}
 
 # Plans Kanban — Portable Fallback
 
-Stable Engineer 2.19.0 Plans Kanban launches the AgentKit product dashboard, but the **user-facing task of viewing and understanding phase progress does not require that dashboard**. For ordinary plan-board requests, use the read-only portable projection below first, built from actual plan artifacts and the host's available rendering surface. When the user explicitly asks for the AgentKit-branded live dashboard or provider-specific views, treat that separately as native-only.
+The transferable capability is reasoning about work state and dependencies so the user can decide **what to act on next**. A visual board is one representation. Do not default to launching a server just to understand progress. When the user specifically requests the proprietary AgentKit dashboard, treat that separately as a native-product feature.
 
-## Portable board: standard route without `ak`
+## Progress reasoning and representation
 
 1. Discover actual plan source: active `plan.md`/phase files, authorized Jira/Notion/issue board or project-native plan owner; if none, ask for the missing plan **only if material**.
 2. Inspect current phase/task states and dependencies without mutation. Separate user-marked `[x]` from evidence-backed verified complete, and blocked from merely pending.
-3. Build a task/phase board in the **actually supported** output medium: a table, native provider board, or an HTML/app visualization only if the user requested that medium and the host can really create/render it.
-4. Label source revisions and inspection freshness; show dependency order, blockers and the next actionable phase. Do not promise interactive drag/drop or history when no backend implements them.
+3. Identify the **next feasible work** from dependencies and available evidence; avoid treating percentages/checked items as completion proof. Present a board only if it clarifies ownership, blocked state or next action, using the rendering medium the host genuinely supports.
+4. Preserve source revision and freshness; expose contradictions between plan and live issue/task state rather than forcing a single invented status. Do not promise interactive drag/drop or history when no backend implements them.
 5. For a status change, use `ak-plan` or the actual provider task editor under explicit update authority, then read back. Viewing alone is read-only.
-
-## Native dashboard path
-
-1. Discover the actual installed AgentKit CLI and `ak config --help` / `ak config status --json`. Use a packaged `scripts/open-dashboard.cjs` only if it genuinely exists in that installation.
-2. Reuse an existing compatible dashboard URL when available. The stable default is `http://127.0.0.1:8766/plans`, **but the actual port is read from the CLI**; do not hard-code it when the service moved.
-3. Probe compatibility before opening: stable launcher accepts either `/api/health` whose features include `plans-dashboard`, or a successful `/api/plans` response. If incompatible, report the missing feature; don't open a misleading route.
-4. Starting a persistent local server, opening a browser, changing its host/port, stopping processes or upgrading CLI is a real effect subject to runtime support and authorization. Upstream `ak config start --port 8766 --no-open --no-interactive` is an example, not implicit permission.
-5. Project dashboard must show project-scoped plans; global dashboard global-scoped plans. Deprecated launch flags are compatibility inputs owned by the actual launcher, not a stable fallback contract.
-6. For plan status/dependency mutations, route to `ak-plan` or the authorized project manager; native `ak plan` is **not** required to update an ordinary project plan. This Skill remains visualization/navigation-only.
 
 ## Portable visualization
 

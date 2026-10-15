@@ -21,7 +21,9 @@ Check what is really available now:
 - harness-native tools/agents;
 - connected provider/plugin capabilities.
 
-A cached file or remembered tool name is not proof the capability is callable.
+A cached file or remembered tool name is not proof the capability is callable. Conversely, a missing `ak` executable is not evidence that an Engineer **working method** is unavailable: Skills teach the agent to inspect, plan, analyze, review and coordinate using whatever real tools the current harness offers.
+
+When a user mentions an `ak` verb, extract the intended outcome and its reasoning obligations rather than dispatching one-to-one to a simulated CLI. Load `outcome-routing.md` for task-level decisions. `ak-ak` is reserved for actual AgentKit product administration.
 
 If a needed capability is absent:
 - choose a semantically adequate replacement when the owning workflow allows degradation;

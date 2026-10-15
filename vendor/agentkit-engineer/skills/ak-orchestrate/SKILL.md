@@ -16,9 +16,9 @@ Use when several jobs are independent enough that parallelism, context isolation
 - `references/capture-recovery.md` — durable job state, interruption and retry.
 - `references/safety-arbiter.md` — effect boundaries and independent synthesis.
 
-## Without `ak orchestrate`
+## Working without an orchestration CLI
 
-Read `references/cli-free-dispatch.md` for the verb-to-capability map. Plan reasoning and task decomposition never require the `ak` executable. Runtime process dispatch, status, events, cancellation and replay safety depend on a verified host mechanism and ANGENT Continuity; do not implement a shadow AgentKit coordinator just to preserve command names.
+Read `references/coordination-judgement.md` when the decision to split, delegate, persist or reconcile work is consequential. The core competence is constructing and revising a sound dependency/ownership model, not calling a process supervisor. Actual worker launch, output, cancellation and resume still require live provider capabilities; do not pretend a job is running when only a plan exists.
 
 ## Core rule
 

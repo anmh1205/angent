@@ -10,7 +10,7 @@ This Skill provides Engineer routing when native AgentKit is unavailable.
 
 It does not replace ANGENT Root or Reasoning.
 
-Read `references/routing-protocol.md` for the full selection/delegation policy. Requests written as `ak run engineer/<skill>` are routed to the installed `ak-<skill>` Skill (or exact available identity in the selected harness), **not** passed through a missing `ak` CLI. For other CLI verbs use `../ak-ak/references/cli-workflow-crosswalk.md`.
+Read `references/routing-protocol.md` for selection/delegation. For tasks described using AgentKit command vocabulary, read `references/outcome-routing.md`: identify the useful **decision or work capability** before choosing a Skill. Do not replicate the command tree or create wrapper programs.
 
 ## Core rule
 
@@ -27,9 +27,9 @@ Do not build a chain merely because several Skills exist.
 - long continuation → Continuity/Handoff;
 - independent parallel jobs → Orchestrate or Team only when parallelism/isolation is worth its coordination cost.
 
-## CLI-free skill invocation
+## Using the selected Skill
 
-Resolve requested Skill identity, supported arguments and actual installed Skills/roles in this session. Load the selected Skill instructions, invoke available host tools within the user's authority, capture evidence and respect timeout/cancellation where supported. A Skill file alone is not an agent process: do not claim stdout/stderr, adapter selection, `--json` NDJSON or independent worker state without an actual runtime. Report unsupported native process/adapter options separately from the usable task outcome.
+A Skill communicates what the agent should notice, decide and verify; it is not a terminal command or a process. Read the smallest relevant Skill/reference, apply its working method to the actual project evidence and act using the tools the current harness genuinely exposes. A command name may signal an intent, but it does not prescribe the runtime, file layout or tool chain. When a task needs executable or durable effects, authorize and verify those effects separately. Do not claim a worker, event stream or adapter exists merely because a Skill describes the workflow.
 
 ## Native boundary
 
