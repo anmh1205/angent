@@ -4,7 +4,7 @@ Upstream packaged baseline: **AgentKit Engineer stable 2.19.0**.
 
 Verified identity surface: **102/102 Skill directories + 16/16 Agent role identities** are present in the ANGENT fallback.
 
-Identity coverage is complete at the first-pass workflow level (102/102 Skills, 16/16 Agent roles). **It is not runtime equivalence**: 25 Skills retain explicit degraded capabilities, and full support-asset/runtime/provider acceptance remains open. Per-Skill verdicts below describe the portable contract, not a guarantee that every mode runs in every harness.
+Identity coverage is complete at the first-pass workflow level (102/102 Skills, 16/16 Agent roles). **It is not runtime equivalence**: 24 Skills retain explicit degraded capabilities, and full support-asset/runtime/provider acceptance remains open. Per-Skill verdicts below describe the portable contract, not a guarantee that every mode runs in every harness.
 
 Native AgentKit remains preferred when usable and is installed/managed from the official AgentKit distribution. This manifest tracks ANGENT's portable fallback only.
 
