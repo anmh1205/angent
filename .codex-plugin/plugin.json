@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.2.2",
-  "description": "ANGENT is An's cognitive layer for agents: model the problem, reason from evidence, decide, act, verify, communicate, and learn.",
+  "version": "1.3.0",
+  "description": "ANGENT cognitive layer and portable Engineer capabilities in one agent plugin.",
   "author": {
     "name": "An"
   },
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "ANGENT",
     "shortDescription": "Cognitive layer for agents",
-    "longDescription": "ANGENT gives agents a coherent cognitive loop: understand the task and collaboration, reconstruct high-signal state, build evidence-grounded models, reason and decide, schedule independent work without polling churn, act adaptively, verify outcomes, communicate clearly, preserve long-running work, and learn causal working methods.",
+    "longDescription": "ANGENT combines evidence-grounded reasoning, coherent authoring, authorized execution, quality and continuity with a bundled 103-Skill portable Engineer catalog in one plugin. Native AgentKit Engineer remains preferred when actually usable.",
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [

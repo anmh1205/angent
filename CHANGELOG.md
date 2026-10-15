@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.0 candidate — one plugin, Core + Engineer
+
+- Introduced deterministic single-archive packaging: the one `angent` plugin discovers 12 Core and 103 Engineer Skills from one root while preserving the 16 Engineer role files and original support paths.
+- Kept `extensions/angent-engineer/` as independently maintained source, not an additional installable plugin. Its nested manifest is internal catalog metadata in the generated package; standalone Engineer archive publishing is disabled.
+- Added exact-catalog, collision/missing-Skill, selector native/fallback/unknown, archive identity and byte-for-byte reproducibility checks. CI builds the unified archive on PRs and main.
+- Native-first routing remains a task-level decision; Agent Plugins v1 cannot conditionally hide statically listed fallback Skills. Do not assert native/fallback catalog isolation simply from packaging.
+- This branch changes distribution, **not** the still-unmerged cognitive-upgrade work in PR #48 or the Core 1.2.3 draft. Final release must reconcile those changes and verify the actual installed plugin.
+
+
 ## 1.2.2 — Engineer extension distribution
 
 - Integrated the independent ANGENT Engineer extension under `extensions/angent-engineer/` with a verified stable AgentKit Engineer 2.19.0 catalog: 103 portable Skills and 16 Agent role contracts.

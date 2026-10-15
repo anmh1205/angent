@@ -84,40 +84,5 @@ jobs:
           test -z "$(git status --porcelain)"
       - name: Check committed whitespace
         run: git diff --check HEAD^ HEAD
-      - name: Package independent Engineer fallback plugin
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          import json
-          import subprocess
-          import zipfile
-          from pathlib import Path
-          root = Path("extensions/angent-engineer")
-          prefix = root.as_posix() + "/"
-          paths = subprocess.check_output(["git", "ls-files", "--", prefix], text=True).splitlines()
-          paths = [p for p in paths if p.startswith(prefix) and (root / p[len(prefix):]).is_file()]
-          Path("dist").mkdir(exist_ok=True)
-          archive = Path("dist/angent-engineer-fallback.zip")
-          with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
-              for path in sorted(paths):
-                  bundle.write(path, arcname=path[len(prefix):])
-          with zipfile.ZipFile(archive) as bundle:
-              assert bundle.testzip() is None
-              names = set(bundle.namelist())
-              assert len(names) == len(paths)
-              assert "plugin.json" in names
-              assert ".codex-plugin/plugin.json" in names
-              assert any(p.startswith("agents/") for p in names)
-              assert sum(p.startswith("skills/") and p.endswith("/SKILL.md") for p in names) == 103
-              plugin = json.loads(bundle.read("plugin.json"))
-              codex = json.loads(bundle.read(".codex-plugin/plugin.json"))
-              assert plugin["name"] == codex["name"] == "angent-engineer-fallback"
-              assert plugin["version"] == codex["version"]
-          PY
-      - name: Upload Engineer fallback archive
-        uses: actions/upload-artifact@v4
-        with:
-          name: angent-engineer-fallback
-          path: dist/angent-engineer-fallback.zip
-          if-no-files-found: error
-          retention-days: 7
+      - name: Validate consolidated ANGENT distribution
+        run: python3 scripts/package_unified.py --output dist/angent-unified.zip
