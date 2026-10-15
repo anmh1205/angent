@@ -39,7 +39,7 @@ Modes change effort and interaction, not requested scope or effect authority.
 3. Research only material open questions.
 4. Select stack/architecture from the contract and evidence.
 5. Create interface/design evidence appropriate to the product surface.
-6. Produce/accept the implementation plan for the stable-2.19 workflow and hand it to Cook.
+6. Preserve the accepted product, stack and design decisions in a usable implementation contract. Let Cook plan its own bounded implementation when that is sufficient; invoke Plan separately only when architectural uncertainty, multi-phase dependencies or the user's requested review gate genuinely warrants a distinct plan artifact.
 7. Implement through Cook; do not bypass its testing/review semantics.
 8. Run independent code review and repair blocking findings.
 9. Update only documentation needed for setup, architecture/contracts and onboarding.

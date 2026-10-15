@@ -1,6 +1,6 @@
 ---
 name: ak-test
-description: Run and interpret unit, integration, end-to-end, UI, build, coverage and regression checks using project-native or harness-available testing capabilities.
+description: Validate software behavior, create missing test protection, audit deceptive or ineffective tests, and optimize suite/CI cost without weakening evidence or project-defined gates.
 license: MIT
 metadata:
   author: agentkit
@@ -18,7 +18,17 @@ This fallback does not require AgentKit browser/test Skills. Prefer project-nati
 Read:
 - `references/test-execution-workflow.md`;
 - `references/ui-testing-workflow.md`;
-- `references/report-format.md`.
+- `references/report-format.md`;
+- `references/test-suite-judgement.md` when creating, auditing or optimizing tests.
+
+## Choose the actual testing outcome
+
+- **Validate code or UI (default):** establish whether an existing change satisfies its acceptance claim, including required project checks. Treat the operation as evidence gathering; do not silently fix product code.
+- **Create or extend tests:** inspect current code/specifications and existing tests, map important behaviors and failure mechanisms to the right test layers, then add missing protection with authorized edits. A useful test must fail for the defect it is supposed to catch, not merely exercise a line.
+- **Audit tests:** find assertions that can pass while the requirement fails, disabled/skipped/xfail cases, flawed fixtures or mocks, nondeterminism, duplication and outdated expectations. Start read-only; change tests/CI only if the requested scope authorizes repair.
+- **Optimize suite or CI:** locate measured cost and test-selection overlap, then improve scheduling, fixture isolation or impact selection while preserving required checks and the ability to catch material regressions. Never claim improved speed without comparable measurements.
+
+Use `references/test-suite-judgement.md` for the distinct analysis/verification methods. CLI-shaped words such as `create`, `audit` or `optimize` identify the user's intended result, not a requirement to invoke any `ak test` command. Do not force suite creation or optimization when a simple test run is sufficient.
 
 ## Start from the acceptance question
 

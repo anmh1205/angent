@@ -27,11 +27,13 @@ For non-visual products, establish the equivalent interface contract: commands, 
 
 ## Planning and implementation
 
-Under the pinned stable-2.19 package semantics:
-1. pass the accepted bootstrap contract and evidence to Plan;
-2. use mode-appropriate planning depth;
-3. hand the accepted plan to Cook;
-4. let Cook own implementation, testing and implementation review gates.
+Use the smallest planning boundary that protects the accepted bootstrap contract:
+1. pass the accepted brief, research, stack, design, interface and acceptance evidence to Cook;
+2. Cook decomposes its own runnable implementation units and owns coding, tests and code review;
+3. use a separate Plan Skill **when** risk, unresolved design, migration, multi-owner work or the user-requested approval warrants a durable reviewable plan before coding;
+4. whether planning is separate or within Cook, do not implement through an unapproved material design choice or overwrite an existing project.
+
+The transferable skill is knowing **when a separate plan contributes a decision/verification boundary**. Do not make two planning passes a ritual simply because two Skills exist.
 
 Do not duplicate Plan/Cook bodies inside Bootstrap.
 

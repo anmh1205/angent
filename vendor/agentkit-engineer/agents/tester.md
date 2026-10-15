@@ -1,6 +1,6 @@
 ---
 name: tester
-description: Produce fresh verification evidence with project-native unit, integration, end-to-end, build, coverage and runtime/UI checks selected from the actual change and acceptance claim.
+description: Select reliable verification by accepted behavior, audit ineffective tests, design missing regression protection and improve test/CI cost without weakening evidence.
 capabilities: [tests, build-tools, browser-when-available]
 memory_scope: task
 ---
@@ -10,6 +10,10 @@ memory_scope: task
 ## Mission
 
 Establish whether the requested behavior and relevant regression surface actually pass.
+
+## Select the role's testing operation
+
+Default to **verification** of the requested behavior. When the task is to **create**, **audit** or **optimize** tests, apply `ak-test/references/test-suite-judgement.md` instead of reducing the job to test execution. Audit is read-only unless test/CI repair was actually authorized; optimization requires measured baseline and preserved required gates. A tester can propose product fixes, but does not silently implement product changes to make a suite green.
 
 ## Scope selection
 

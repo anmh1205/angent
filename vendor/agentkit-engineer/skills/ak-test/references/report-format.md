@@ -1,58 +1,26 @@
-# Test Report Format
+# Test results — evidence-based reporting
 
-Structured QA report template. Sacrifice grammar for concision.
+Choose report depth from the requested test outcome. A concise result for one module does not require a full QA dossier; a release or multi-environment audit may. Use the project's established report destination and naming convention **only when they exist and a persisted report is actually required**. Do not infer one from absent AgentKit hooks.
 
-## Template
+## Report structure, when material
 
-```markdown
-# Test Report — {date} — {scope}
+- **Acceptance claim and inspected scope:** behavior/requirement, baseline, changed area, relevant test layer(s), project/runtime identity and known environment limits.
+- **Execution evidence:** commands or provider operations that actually ran, exit/result, individual outcomes including failed and skipped cases, duration when measured, logs/artifact paths that actually exist. No invented metrics.
+- **Coverage:** measured values and critical missing behavior, with a **threshold only if supplied by current project policy or an accepted task-specific gate**. The number of executed tests is not automatically the number that meaningfully exercise the claim.
+- **Failure interpretation:** observed error and reproduction first; a suspected cause is labeled a hypothesis until established by evidence. Do not report a fix when the operation was review-only.
+- **UI and end-to-end:** exact tested URL/environment, flows, viewports, auth/test-data boundary, screenshots, console, accessibility and skipped states *when actually observed*.
+- **Decision:** PASS only for the checked claim whose required gates passed; FAIL for observed failed requirements; BLOCKED/UNVERIFIED where required evidence or provider capability was unavailable. List the smallest next discriminating check when it matters.
 
-## Test Results Overview
-- **Total**: X tests
-- **Passed**: X | **Failed**: X | **Skipped**: X
-- **Duration**: Xs
+For suite **create**, include which requirement-to-failure paths gained tests and how protection was demonstrated; for **audit**, record concrete ineffective tests and the evidence that they could pass incorrectly; for **optimize**, include baseline and resulting measurements plus the protected check groups and fallback when selection confidence is low.
 
-## Coverage Metrics
-| Metric   | Value | Threshold | Status |
-|----------|-------|-----------|--------|
-| Lines    | X%    | 80%       | PASS/FAIL |
-| Branches | X%    | 70%       | PASS/FAIL |
-| Functions| X%    | 80%       | PASS/FAIL |
+Never pre-fill an 80%/70% coverage gate, a test count, clean console, screenshot path, build success, performance result or "all dependencies resolved". If the user did not supply a report file path, a supported chat response can be the complete deliverable.
 
-## Failed Tests
-### `test/path/file.test.ts` — TestName
-- **Error**: Error message
-- **Stack**: Relevant stack trace (truncated)
-- **Cause**: Brief root cause analysis
-- **Fix**: Suggested resolution
+## Illustrative compact result (not a completed run)
 
-## UI Test Results (if applicable)
-- **Pages tested**: X
-- **Screenshots**: ./screenshots/
-- **Console errors**: none | [list]
-- **Responsive**: checked at [viewports] | skipped
-- **Performance**: LCP Xs, FID Xms, CLS X
-
-## Build Status
-- **Build**: PASS/FAIL
-- **Warnings**: none | [list]
-- **Dependencies**: all resolved | [issues]
-
-## Critical Issues
-1. [Blocking issue description + impact]
-
-## Recommendations
-1. [Actionable improvement with priority]
-
-## Unresolved Questions
-- [Any open questions, if any]
+```text
+Scope: expired session → API rejects refresh (fixture/environment identified)
+Observed: focused session tests passed; real browser flow not run
+Coverage: measured only if coverage tooling was actually executed
+Verdict: local test behavior checked; deployed auth behavior NOT VERIFIED
+Next proof if required: exercise real client ↔ deployed auth endpoint
 ```
-
-## Guidelines
-
-- Include ALL failed tests with error messages — don't summarize away details
-- Coverage: highlight specific uncovered files/functions, not just percentages
-- Screenshots: embed paths directly in report for easy access
-- Recommendations: prioritize by impact (critical > high > medium > low)
-- Keep report under 200 lines — split into sections if larger scope needed
-- Save report using naming pattern from `## Naming` section injected by hooks
