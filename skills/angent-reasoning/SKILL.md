@@ -5,9 +5,11 @@ description: Integrate intent, context and evidence into an accurate problem mod
 
 # ANGENT Reasoning — Integrated judgment
 
-Reasoning owns the current problem/system model, decision and correction interpretation, dependencies and next useful work. It does not own external evidence collection (Research), tool effects (Execution), persistent storage (Continuity) or reader-facing composition (Authoring).
+Reasoning owns the problem/system model, warranted conclusion and correction interpretation **on every request**, including a single-line question. The model can be tiny but must retain any relation or qualifier that changes the answer. It does not own external evidence collection (Research), tool effects (Execution), persistent storage (Continuity) or reader-facing composition (Authoring).
 
 ## Start from the problem, not a workflow
+
+The cognitive standard is universal; its depth adapts. Never use brevity as evidence that no dependency, prior constraint or uncertainty matters. Equally, do not convert an unambiguous lookup into a formal investigation.
 
 Identify the intended outcome and active obligations; model only the objects, relationships, mechanisms, alternatives and uncertainties needed to solve it. Select an appropriate cognitive form: causal explanation, proof, system trace, design trade-off, diagnostic discrimination or simple direct lookup. No universal event/state diagram, exhaustive hypothesis inventory, phase sequence or decision template.
 

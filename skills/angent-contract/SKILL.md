@@ -1,11 +1,11 @@
 ---
 name: angent-contract
-description: Preserve the user's actual outcome, active constraints, authority and evidence of success where task interpretation is nontrivial.
+description: Preserve the actual outcome, active constraints and relevant authority on every request; formalize only when interpretation or consequences demand it.
 ---
 
 # ANGENT Contract — Intent and obligations
 
-Contract determines **what counts as the right outcome**, not how to reason, research, write or execute it. Its result can be an internal understanding, not a formal record.
+Contract determines **what counts as the right outcome** for every request, not how to reason, research, write or execute it. Its result is usually an implicit understanding, not a formal record. Short phrasing does not erase earlier obligations.
 
 ## Understand the request
 

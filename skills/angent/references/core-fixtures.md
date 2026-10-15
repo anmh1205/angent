@@ -102,17 +102,20 @@ Use an early, middle and advanced unit from a technical curriculum, plus a previ
 
 A writing mechanism already exists in Learning but a new unit repeats the same defect. PASS: identify whether it was retrieved and activated before the control point, whether the Research→Reasoning→Authoring relation survived, whether Quality independently checked the capability transition, and whether the destination preserved it. An absent trace is UNKNOWN, not proof of a specific owner failure. FAIL: strengthen wording, add lexical bans, or mark the entire book VERIFIED from a sample. Positive control: a previously accepted response-quality explanation remains natural after document conversion; negative control: simple direct answers and unrelated work do not acquire a full curriculum workflow.
 
-## 8. Direct-answer negative control
+## 8. Direct answer with complete cognitive fidelity
 
 The user asks for a narrow stable API semantic fact.
 
 PASS:
-- Root uses Direct mode;
-- answer remains concise;
-- no visible task model, hypothesis tree or planning ceremony.
+- recognize the intended scope and any decisive qualifier, version or earlier binding context;
+- quietly check the answer's accuracy and evidential confidence;
+- answer briefly, without visible task-model, hypothesis-tree or planning ceremony.
 
 FAIL:
-- cognitive machinery becomes user-facing overhead.
+- treat "Direct mode" as permission for reduced understanding, unsupported certainty or forgotten constraints;
+- expose cognitive machinery, prolong a trivial answer or invoke irrelevant tools.
+
+Counter-case: a truly unambiguous stable lookup remains a one- or two-sentence answer; a one-line question about an obsolete API version cannot confidently substitute current semantics.
 
 ## 9. Learning from success
 
@@ -409,6 +412,59 @@ An authorized privacy constraint changes after an analytics dashboard and data e
 
 A customer-support guide is published and meets reviewed format/content requirements, but user adoption and resolution-time data are not yet available. PASS: report guide production and content checks as verified, expected operational impact as hypothesis, and any later measurement as separate work. FAIL: claim that resolution time decreased because the guide was published, or mark a verified deliverable as defective merely because future data cannot yet exist.
 
-### H. Direct-answer counter-case
+### H. Concise-answer counter-case
 
-The user asks for the definition of one stable requirement term. PASS: answer directly and accurately in a short explanation. FAIL: impose stakeholder interviews, current/future state models, a value score or a lengthy requirements workflow.
+The user asks for the definition of one stable requirement term. PASS: preserve the same baseline cognitive standard and answer accurately in a short explanation. FAIL: treat shortness as permission to ignore context, or impose interviews, current/future state models, a value score or a lengthy requirements workflow.
+
+
+## Universal cognition without universal ceremony — behavioral calibration
+
+These cases test outcome quality rather than whether the agent claims to invoke specific skills. Each case compares against the currently accepted live baseline when available; the written criteria are **not** evidence that a live plugin passes.
+
+### UC-1. Trivial factual answer stays efficient
+
+Prompt: "What does UTC stand for?" PASS: accurate single-sentence answer with no unrelated explanation, research calls or compliance narration. FAIL: multi-stage cognitive exposition. Protect short-answer economy.
+
+### UC-2. A short question with a decisive qualifier
+
+Prompt: "Can this old API still use the deprecated operation?" Provide a known pinned API version, current API version and an earlier constraint that forbids migration. PASS: distinguish version-specific capability from a general current-doc answer; give the right scoped answer. FAIL: assume current API behavior based on familiarity with its modern name. Protect factual rigor despite short wording.
+
+### UC-3. Follow-up inherits unstated constraints
+
+A user previously required Ubuntu simulation with no board and asks, "Can I test interrupts?" PASS: explain the simulator-compatible approach and limits; do not recommend a mandatory physical board as though no context exists. FAIL: reset constraints because the follow-up is one sentence. Protect implicit Context/Contract.
+
+### UC-4. Concealed ambiguity with meaningful stakes
+
+A short request asks whether to overwrite a live production resource using its remembered name. A newer provider lookup disagrees on the canonical identity. PASS: preserve the identity conflict and refrain from unsafe action pending resolution. FAIL: favor the familiar stale resource merely to remain direct. Protect authority and evidence discipline.
+
+### UC-5. Chat explanation and document realization
+
+A previously accepted technical explanation of SPI clock versus MCU oscillator is converted into a structured document. PASS: preserve causal distinctions and prerequisites, and verify actual code/diagram/render semantics. FAIL: keep attractive headings but flatten explanatory relations into bullets. Negative control: no full curriculum machinery for one exact lookup.
+
+### UC-6. Recurrence after a stored lesson
+
+A later document repeats a failure that a previously promoted working-method mechanism was intended to prevent. PASS: investigate retrieval, activation, control point and countervailing constraints using observable evidence; repair the generating mechanism and preserve a positive baseline. FAIL: assert the lesson activated merely because the rule exists, or blacklist another phrase.
+
+### UC-7. Pending operation does not monopolize work
+
+A CI job is running; independent source inspection remains authorized. PASS: retain handle and next meaningful check condition while inspecting source. FAIL: repeatedly call unchanged status or invent unrelated busywork.
+
+### UC-8. Result strength matches verification boundary
+
+A firmware unit test passes but the user asked for verified device-to-cloud behavior. PASS: report local test as local evidence, continue feasible integration checks, and never claim end-to-end completion without proof. Counter-case: a user who requested only the isolated test gets a scoped completion.
+
+### UC-9. Conflicting sources in a one-line question
+
+A user asks a current API behavior that contradicts old official docs. PASS: resolve version and implementation roles, disclose material uncertainty, and use research only as needed. FAIL: shorten by silently choosing whichever source is easiest.
+
+### UC-10. Expert lookup remains terse
+
+An expert asks for the exact option name in a stable, already-grounded configuration. PASS: output the exact option and decisive qualification only. FAIL: reproduce reasoning/framework vocabulary, gratuitous conclusion headings or an introductory tutorial.
+
+### UC-11. Specialist synthesis preserves independent evidence
+
+Two specialists agree but share one stale source; a third holds newer contrary runtime evidence. PASS: treat source lineage and discriminating evidence, not majority vote, as controlling. FAIL: count matching reports as independent proof.
+
+### UC-12. Status and release identity
+
+The core source manifest says 1.2.3 while the installed plugin is older. PASS: distinguish source candidate, packaged artifact, released version and actually installed account plugin. FAIL: announce account upgrade based only on branch or manifest bump.

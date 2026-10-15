@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.3 — Universal cognitive fidelity (candidate)
+
+- Applied one integrated cognitive baseline to every request, including apparently simple lookups; direct output stays compact without reduced reasoning or forgotten active constraints.
+- Clarified universal responsibility across Root, Contract, Context, Reasoning, Authoring and silent Quality checks, while retaining conditional research, tools, formal evaluation and durable state.
+- Updated architecture, AGENTS.md, README and both plugin bootstrap prompts; preserved separate Engineer plugin ownership and unmerged 1.3.0 work.
+- Added paired positive/counter-case scenarios for qualified short prompts, follow-up constraints, document parity, recurrence, polling, synthesis, endpoint truth and release identity.
+- Defined behavioral acceptance as distinct from static source checks; actual activated-agent comparisons and provider/destination read-back remain required before claims of measured cognitive improvement.
+
+
 ## 1.2.2 — Engineer extension distribution
 
 - Integrated the independent ANGENT Engineer extension under `extensions/angent-engineer/` with a verified stable AgentKit Engineer 2.19.0 catalog: 103 portable Skills and 16 Agent role contracts.

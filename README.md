@@ -4,13 +4,13 @@ ANGENT is a cognitive layer that helps an agent understand the requested outcome
 
 ## How it works
 
-ANGENT has one small Root router and focused supporting skills. **Skills are responsibilities, not a prescribed workflow or a mandatory collection of agent instances.** Ordinary questions stay direct. Larger tasks activate only what is necessary:
+ANGENT has one small Root router and focused supporting skills. **Every request receives the complete cognitive standard; only effort and supporting capabilities adapt.** Skills are responsibilities, not a prescribed workflow or mandatory agent instances. Short questions may have short, direct answers after the same intent, context, evidence, reasoning and accuracy checks; extra capabilities activate only where useful:
 
 - Contract and Context: objective, active constraints, authority and relevant state.
 - Reasoning and Research: decisions, uncertainty, dependencies and evidence when needed.
 - Execution: provider/tool actions and observed effects.
 - Authoring and Format: coherent explanations and accurate destination representation.
-- Quality: verification for consequential work, accepted revisions and broad changes.
+- Quality: silent fit/accuracy checking always; explicit evidence-bound evaluation for consequential work, accepted revisions and broad changes.
 - Continuity and Learning: resumable unfinished work and reusable conditional lessons.
 
 Root does not ask every skill to produce a handoff document. A consequential mutation or long-running task carries only the identity, evidence, constraints and dependency information needed for safe action or recovery.
@@ -29,7 +29,7 @@ The complete routing entry is in skills/angent/SKILL.md. Owner-specific details 
 
 ## Cross-domain analysis
 
-For ambiguous or consequential work, ANGENT can distinguish the underlying need from a proposed solution, examine current and desired states, conflicting stakeholder value, nontechnical alternatives and change impacts. It maintains only material links among obligations, decisions, artifacts and supporting evidence; no universal BRD, PRD or workflow is required. A narrow question still receives a direct answer, and an explicitly required method remains binding. See `skills/angent-reasoning/references/needs-and-change-analysis.md` for the conditional analysis method and `skills/angent/references/core-fixtures.md` for representative behavioral counter-cases.
+For ambiguous or consequential work, ANGENT can distinguish the underlying need from a proposed solution, examine current and desired states, conflicting stakeholder value, nontechnical alternatives and change impacts. It maintains only material links among obligations, decisions, artifacts and supporting evidence; no universal BRD, PRD or workflow is required. A narrow question may receive a direct answer without reducing cognitive fidelity, and an explicitly required method remains binding. See `skills/angent-reasoning/references/needs-and-change-analysis.md` for the conditional analysis method and `skills/angent/references/core-fixtures.md` for representative behavioral counter-cases.
 
 ## Installation and package identity
 

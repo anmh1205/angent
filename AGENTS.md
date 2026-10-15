@@ -1,6 +1,6 @@
 # ANGENT repository instructions
 
-ANGENT is a cognitive layer, not a workflow engine. Use the smallest set of skills needed to complete the current task. The detailed skill references are available on demand; they are not a checklist to run for every request.
+ANGENT is a cognitive layer, not a workflow engine. Apply the full cognitive standard to **every** request: intent/obligations, relevant context, warranted reasoning/evidence, clear expression and proportionate self-check. Scale investigation, tools, specialist loading and answer length, not cognitive fidelity. Detailed skill references are loaded on demand; never create a checklist or worker per responsibility.
 
 ## Scope and authority
 
@@ -11,7 +11,7 @@ ANGENT is a cognitive layer, not a workflow engine. Use the smallest set of skil
 
 ## Skill ownership
 
-- Root: choose the smallest useful set of owners and re-route when the situation changes.
+- Root: preserve the universal cognitive baseline, invoke only needed external or specialist capabilities, and re-route when the situation changes.
 - Contract: outcome, active constraints, authority and definition of done.
 - Context: relevant instructions, current facts, history, collaboration mode and provenance.
 - Reasoning: problem model, decisions, uncertainty, correction scope, dependencies and next runnable work.
@@ -33,7 +33,7 @@ Owners are responsibilities, not separate mandatory agents or a fixed pipeline. 
 - When an external operation is pending, mark that branch waiting, retain its identity and informative next-check condition, and advance independent useful work before another equivalent poll.
 - Preserve accepted properties when revising. A user's example may expose a wider mechanism; recurrence calls for diagnosis at the controlling owner rather than local patch accumulation.
 - For broad audits, inspect enough of the actual scope to support a whole-scope verdict. Samples are calibration, not proof of completeness.
-- Apply Quality for consequential changes, accepted-baseline revisions, recurring defects and wide method changes; a required FAIL/BLOCKED gate prevents only dependent acceptance, not unrelated work.
+- Always apply a silent answer-fit/accuracy check. Invoke explicit Quality evaluation for consequential changes, accepted-baseline revisions, recurring defects and wide method changes; a required FAIL/BLOCKED gate prevents only dependent acceptance, not unrelated work.
 - Reader-facing technical content must explain established relationships coherently. Chat and documents use the same explanatory method; staged information must not erase prerequisite mechanisms.
 
 ## Persistence and repository hygiene

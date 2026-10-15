@@ -9,7 +9,7 @@ Authoring owns what the reader sees and, for iterative documents, the semantic a
 
 ## A response begins with judgment, not formatting
 
-Before composing, determine the answer or capability the reader actually needs, what they already know and which relation makes the result understandable. Use the accurate subject model and evidence boundary produced by Reasoning/Research. For a short question, state the result early and explain only what changes its meaning. For a difficult topic, unpack the indispensable steps instead of reducing it to dry definitions or an expert checklist.
+Every answer inherits the same baseline of intent, relevant context, warranted reasoning/evidence and proportionate accuracy checking; output brevity does not waive it. Before composing, determine the answer or capability the reader actually needs, what they already know and which relation makes the result understandable. Use the accurate subject model and evidence boundary produced by Reasoning/Research. For a short question, state the result early and explain only what changes its meaning. For a difficult topic, unpack the indispensable steps instead of reducing it to dry definitions or an expert checklist.
 
 The explanation may require identity/state, cause/effect, logical derivation, spatial/electrical interface, constraint/trade-off, observation/diagnosis or procedure dependencies. Choose the form from the subject; do not force every topic into a narrative example or a fixed number of headings.
 
