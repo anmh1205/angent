@@ -2,9 +2,11 @@
 
 ANGENT is a compact cognitive layer for agents. It helps retain the user's objective and constraints, reason from evidence, perform authorized work, verify the outcome, recover unfinished work and learn from meaningful feedback.
 
-## One context, optional skills
+## One cognitive baseline, optional deeper capabilities
 
-The agent does not need to instantiate a new worker, workflow or persistent object for each skill. Root selects a responsibility only when the current decision benefits from it:
+Every request uses the same cognitive standard: intent and active context, warranted conceptual reasoning and evidence, accurate composition, and proportionate self-check. A one-sentence answer is not a reduced-thinking mode.
+
+The agent does not need to instantiate a worker, workflow, persistent object or distinct skill call for each responsibility. Root activates additional research, execution, specialist guidance, explicit verification or continuity only when the task needs it. Owners are responsibilities, not optional parts of sound cognition:
 
 - **Understand:** Contract captures outcome/authority; Context retrieves only relevant history, project state and obligations.
 - **Decide:** Reasoning integrates evidence and dependencies; Research resolves unknown facts or mechanisms when necessary.
@@ -12,7 +14,7 @@ The agent does not need to instantiate a new worker, workflow or persistent obje
 - **Check:** Quality evaluates material outcomes and revisions against evidence and accepted properties.
 - **Resume or improve:** Continuity preserves only unreconstructable unfinished work; Learning saves reusable, conditional causes and working methods.
 
-A straightforward question may use one skill. Complex work can revisit a skill when observations change the model. This is not a mandatory phase order or a multi-agent orchestration service.
+A straightforward question may load only Root and still satisfy the cognitive baseline. Complex work can deepen or revisit the relevant capabilities when observations change the model. This is not a mandatory phase order or a multi-agent orchestration service.
 
 ## Boundaries that protect correctness
 

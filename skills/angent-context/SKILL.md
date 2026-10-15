@@ -105,6 +105,10 @@ Examples of interaction mode include answer-only, research/report-before-edit, a
 
 If the mode also limits what may happen—for example audit-only or report-before-edit—Contract carries the binding scope/sequence obligation.
 
+## Baseline relevance on every request
+
+Before an answer or action, account for relevant current context and earlier still-binding obligations even when the new message is a single sentence. This is an implicit relevance judgment, not a mandate to search memory or reload the entire conversation. Retrieve specific history or source state when its absence could change the answer, selected action or authority. A short follow-up changes only the dimensions actually named; it does not silently reset prior requirements.
+
 ## Decision-point sufficiency
 
 A context package is not permanently sufficient. Before a consequential decision or effect, refresh only the state that could change current authority, resolved target/scope, a decisive premise, a protected property, or a dependency that makes the selected branch stale.

@@ -25,7 +25,7 @@ Prefer a question from Reasoning:
 - version/platform/time boundary;
 - evidence that would reverse the current recommendation.
 
-For a simple factual task, Root may route directly to Research.
+A short factual task may need Research when freshness, version, scope, ambiguity or source disagreement could reverse its answer. Apparent simplicity must not suppress decisive evidence. Conversely, a stable established fact does not justify needless searching.
 
 ## Search for information value
 
