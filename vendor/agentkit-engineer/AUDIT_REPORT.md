@@ -62,6 +62,12 @@ A focused Plan/Issue-to-Plan/Project Management reading found that files-first i
 
 The Plan validation/decomposition references now also teach how to locate **load-bearing, breakable assumptions**, identify early discriminating observations and choose a sufficiently reversible response to plausible assumption failure. This preserves requested scope while teaching architecture trade-off judgment, not merely listing risks. The Handoff heading was corrected to distinguish the authorized document write from forbidden implicit continuation effects. These are source-level corrections; they are not yet proven by cross-harness behavioral trials.
 
+## Cross-layer reasoning correction — 2026-10-15
+
+The Test, Cook and Code Review Skills now explain how to derive verification from an **accepted behavior's causal path**, not the names or number of available test commands. Review the producer, representation/transport, affected consumers and user/device-observed endpoint; identify which error would pass a convenient local test and what independent observation would discriminate it. Source, simulation, mocked integration, deployed and physical-device evidence remain distinct. These revisions teach task selection and proof limits; no hardware, cloud or production environment was actually exercised in this audit.
+
+Two positive calibration situations were added to Plan stewardship: an issue-first system whose Jira items already own planning, and an uncertain provider contract requiring an early discriminating probe plus an exit/rollback path. These are teaching examples and manual decision criteria, not a claim of executed model evaluation.
+
 ## Remaining runtime acceptance
 
 The 25 `VERIFIED_DEGRADED` skills are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.

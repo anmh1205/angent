@@ -81,6 +81,10 @@ Then inspect relevant quality risks:
 
 Do not flood the review with style nits that do not affect the requested quality bar.
 
+## Trace the requirement across the real boundary
+
+When a diff changes a shared interface, lifecycle or data path, review both ends of the interaction, not just whether the edited function looks correct. Identify what the producer guarantees, what the consumer assumes, when the state becomes observable and what happens on partial failure or version skew. Prefer a concrete reachability argument or discriminating check over a speculative claim of risk. A passing unit test on each module does not by itself establish compatible behavior between them.
+
 ## Scout edge cases when warranted
 
 For multi-file, shared-utility, cross-layer, stateful, async, security-sensitive, or complex bug-fix changes, inspect beyond the modified lines.

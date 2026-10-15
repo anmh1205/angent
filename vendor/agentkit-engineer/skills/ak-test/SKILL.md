@@ -33,6 +33,12 @@ Before running tests, identify what needs to be established:
 
 Do not run every available suite by default.
 
+## Reason from behavior to proof
+
+For a nontrivial behavior change, trace the acceptance claim through the actual producer, transformation, transport/storage boundary and consumers. At each boundary identify a failure that **would still pass** the nearest unit test, then choose the least expensive additional observation capable of detecting it. A mocked integration test proves behavior under the mock contract, not wire compatibility with the real peer; a build proves buildability, not runtime correctness. This reasoning selects tests from the system's failure mechanisms rather than a fixed suite count.
+
+Explicitly separate **source-level**, **simulated**, **integrated**, **deployed** and **physical-device** evidence when they imply materially different claims. If the required environment is missing, preserve the strongest verified subset and state the unavailable endpoint; do not infer physical hardware behavior from a simulator or live production health from local tests.
+
 ## Discover project-native tests
 
 Read applicable `AGENTS.md`, package/build config, CI workflow, test directories, and known-good commands.

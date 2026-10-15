@@ -56,7 +56,7 @@ The plan's decisions, dependencies and acceptance evidence matter more than its 
 9. For parallel work, prove ownership/dependency separation before marking phases concurrent.
 10. Run adversarial review and plan validation when the selected mode requires them.
 11. Reconcile any accepted validation change through every affected phase and perform a whole-plan consistency sweep.
-12. Persist the accepted roadmap in the **actual project-authoritative plan/document/task owner** using permitted tools; return its exact path or provider pointer. Do not create an independent file plan merely because the upstream CLI does.
+12. Persist the **plan candidate** in the actual project-authoritative plan/document/task owner using permitted tools; mark unresolved approvals/decisions explicitly and return its exact path or provider pointer. Do not treat saving a draft as acceptance or create an independent file plan merely because the upstream CLI does.
 
 Plan does not silently start implementation. Hand off to Cook only when the plan is accepted enough for the requested consequence level.
 

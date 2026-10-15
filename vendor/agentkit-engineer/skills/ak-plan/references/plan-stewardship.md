@@ -24,6 +24,8 @@ Close/archive only when the governing workflow's acceptance and remaining obliga
 
 ## Calibration cases
 
+- **Issue-first project:** an existing Jira epic and issues already hold the accepted scope and progress. Improve the owning records or linked decision document as authorized; do not generate a competing `plans/` hierarchy simply to satisfy a portable Skill convention. The expected result is one coherent authority with verifiable issue dependencies.
+- **Reversible architectural fork:** a cloud service depends on an external provider's unsettled retry/idempotency behavior. Before committing every consumer to one response model, identify an experiment that separates the possible behaviors and the compatibility/rollback cost of being wrong. Choose the least-regret path that still meets the requested service contract; leave explicit evidence and a replan trigger.
 - **Fast task:** a two-file low-risk fix may need an inline implementation sequence and test, not a new phase directory.
 - **Cross-service contract change:** planning must model consumer versions, rollout/rollback and live verification rather than splitting by module filenames.
 - **Stale plan:** if a phase checkbox says done but the integration test fails, report conflict and reopen verification; do not claim verified completion.

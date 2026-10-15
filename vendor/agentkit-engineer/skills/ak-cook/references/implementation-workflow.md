@@ -76,6 +76,8 @@ Use project-native checks and `ak-test` semantics:
 - regression protection;
 - build/type/lint/integration/UI checks as applicable.
 
+For a cross-layer change, reconcile the producer's contract with every affected consumer before calling it complete: data shape, error semantics, initialization/order, version compatibility, ownership and recovery may differ even when individual modules compile. Select tests based on the actual boundary where the accepted behavior must hold; consult Test's evidence-layer method rather than assuming a local green suite proves the end-to-end result.
+
 A failing test is evidence, not a license to weaken the assertion. Diagnose non-obvious failures before changing code.
 
 If tests are explicitly deferred, mark the result implemented-but-untested.
