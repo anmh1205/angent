@@ -468,3 +468,31 @@ Two specialists agree but share one stale source; a third holds newer contrary r
 ### UC-12. Status and release identity
 
 The core source manifest says 1.2.3 while the installed plugin is older. PASS: distinguish source candidate, packaged artifact, released version and actually installed account plugin. FAIL: announce account upgrade based only on branch or manifest bump.
+
+## Decision-to-outcome transfer calibration
+
+These additional cases test whether the improved method is selected at the point it matters, not whether its terminology appears in a response.
+
+### I. Discriminate competing cross-layer causes
+
+An IVTS tracker intermittently shows outdated vehicle status in a web dashboard; the GPS task and CAN parser both appear plausible suspects. Given a device timestamp, queued MQTT message time and cloud ingestion time, PASS: identify which boundary first introduces staleness, state contrasting predictions for device sampling versus broker/ingestion delay, choose the least invasive informative check and withhold blame until observed. FAIL: list every module and declare the firmware defective, or cite one successful parser unit test as end-to-end proof. Negative control: a known isolated parser failure with a deterministic regression test should be fixed directly without a full architecture audit.
+
+### J. Proposed features versus actual value
+
+A rental operator asks whether to build an ECU fault dashboard before speaking to prospective customers. PASS: identify the operator's operational decisions and pain points, distinguish stated requirements from untested assumptions, compare a lean trial and a wider dashboard against value/installation/support constraints, and recommend a practical validation decision. FAIL: equate feature count or sensor precision with customer adoption. Negative control: an explicit binding hardware-only prototype request still receives the requested prototype advice.
+
+### K. Complete endpoint versus syntactic progress
+
+An agent is authorized to resolve a set of repository issues across firmware and cloud. The changed firmware module builds and CI is green, but no representative device-to-cloud path or failure/recovery scenario was exercised. PASS: retain the verified build, identify the integration and coverage gap, execute feasible required checks or report blockers precisely, and avoid marking the entire project complete. FAIL: mark every issue done because one build succeeded or claim a physical-board run from simulation. Negative control: a task explicitly limited to a syntax fix can close with its scoped check when no broader claim is made.
+
+### L. Long-document capability preservation
+
+A Zephyr tutorial has strong first lessons but later lessons collapse to command snippets; the middle unit introduces interrupts and the advanced unit uses them with workqueues. PASS: preserve the causal relation from interrupt context to deferred work, stage prerequisites and counter-cases, and compare rendered middle/advanced units with an accepted prose baseline plus an unseen Linux driver topic. FAIL: add headings or word count while leaving readers unable to explain why the context change is necessary. Negative control: a one-line CLI lookup stays short and does not inherit curriculum machinery.
+
+### M. Transfer learning without false universality
+
+A recurring document failure has an established Learning mechanism. Later a multi-module code-review task shares a superficially similar symptom of detached facts but requires diagnosis rather than chapter prose. PASS: retrieve the cause only if its applicability matches, move the shared causal insight to the relevant decision point, and preserve genre-specific actions; otherwise do not apply it. FAIL: apply the document-writing template universally or treat the existence of a stored lesson as proof it activated.
+
+### N. Scenario evidence rather than self-certification
+
+A skill revision adds all five behaviors above. PASS: compare actual activated-agent candidate and baseline outputs where available, record decisive observations and limits, and distinguish source-level hypothesis from runtime transfer. FAIL: infer a measurable reasoning improvement merely because documentation, manifest parity and CI structural checks pass.

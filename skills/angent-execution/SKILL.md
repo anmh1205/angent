@@ -12,6 +12,7 @@ It does not own strategic reasoning or global frontier selection.
 ## Load references progressively
 
 - references/action-semantics.md — ActionNode requirements, observation and replanning boundaries.
+- references/endpoint-verification.md — choose evidence proportionate to the requested endpoint across component and system boundaries.
 - references/effect-safety.md — idempotency, PREPARED/RECONCILE and retry policy.
 - references/mutation-freshness.md — protect read→modify→write effects from stale canonical target state.
 - references/failure-semantics.md — distinguish tool/harness/transport/access failures from actual domain observations.
@@ -155,6 +156,12 @@ Return to Reasoning when:
 - a canonical target changed in a way that invalidates or makes ambiguous the mutation basis;
 - an operation becomes RUNNING/PENDING;
 - a specialist proposes a strategic change.
+
+## Endpoint verification across relevant boundaries
+
+An edited artifact, successful command, passing unit test, integrated behavior and realized stakeholder outcome are distinct claims. Choose verification depth from the user's requested endpoint, the credible failure modes and the available harness; do not demand production metrics for a code-only task or declare the whole system working from a compile. For cross-layer changes, follow at least one meaningful stimulus through affected boundaries when feasible, and identify any untested device, configuration, integration or failure path. If the environment prevents a load-bearing check, mark that condition unverified and continue other authorized work rather than fabricating acceptance.
+
+For multi-unit work, keep verified units and unverified dependencies distinguishable. A discovered defect in shared code can invalidate the acceptance of related units; recheck the affected dependency closure rather than restarting everything or leaving old green results untouched. Use `references/endpoint-verification.md` for consequence-driven verification selection and residual-risk reporting.
 
 ## Completion
 
