@@ -41,7 +41,7 @@ This repository does not store private plugin release identifiers, past branch H
 
 The 1.3.0 branch sharpens diagnostic discrimination, choice of reversible evidence, requested-endpoint verification and transfer of conceptual understanding across long documents. It extends existing Reasoning, Execution, Authoring, Research, Quality and Learning responsibilities rather than creating another router, workflow engine or separate evaluation service. Root fixtures I–N are calibration prompts and counter-cases; they are not automatically executed behavioral proof.
 
-The candidate source version is distinct from an installed ChatGPT plugin release. Verify the packaged source and live runtime separately before claiming deployment or measured improvement.
+The candidate source version is distinct from an installed ChatGPT plugin release. Verify the packaged source and live runtime separately before claiming deployment or measured improvement. The pull-request validation workflow also packages the candidate as a CI artifact without merging or installing it.
 
 ## Validation
 
