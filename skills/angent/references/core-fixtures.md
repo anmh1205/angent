@@ -413,7 +413,7 @@ A customer-support guide is published and meets reviewed format/content requirem
 
 The user asks for the definition of one stable requirement term. PASS: answer directly and accurately in a short explanation. FAIL: impose stakeholder interviews, current/future state models, a value score or a lengthy requirements workflow.
 
-## ANGENT 1.3.0 — decision-to-outcome transfer calibration
+## Decision-to-outcome transfer calibration
 
 These additional cases test whether the improved method is selected at the point it matters, not whether its terminology appears in a response.
 

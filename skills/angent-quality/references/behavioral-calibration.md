@@ -321,7 +321,7 @@ Do not let the case bank grow into an unowned museum of historical complaints.
 
 For substantial changes to problem analysis, select the adjacent cases from Root's core fixtures. Calibrate diagnosis, not vocabulary: can the agent distinguish a requested means from the need, identify the actual affected party and decision constraints, derive discriminating evidence, compare a nontechnical option when plausible, preserve authorized means, and separate verified deliverables from outcomes that require later observation? Pair consequential positive cases with direct-answer and explicit-means counter-cases. A case passes only when the selected action and its justification are valid for the evidence and authority supplied; naming BACCM concepts or writing a requirements matrix is not evidence of competence.
 
-## 1.3.0 causal decision and endpoint calibration
+## Causal decision and endpoint calibration
 
 Choose a small, varied set from Root fixtures I–N when a change touches diagnostic reasoning, long-task completion, cross-surface authoring or Learning activation. The decisive object is the behavior at the controlling choice: the hypothesis actually distinguished, evidence actually obtained, branch actually advanced, endpoint actually verified, or reader inference actually supported.
 
