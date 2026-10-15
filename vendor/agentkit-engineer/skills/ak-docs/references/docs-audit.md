@@ -13,4 +13,4 @@ Check:
 
 Classify documentation as current, stale, conflicting, missing or illustrative.
 
-Prefer correction at the authoritative source over copying the same fix into many documents.
+Prefer correction at the authoritative source over copying the same fix into many documents. But **do not delete necessary explanation merely because its technical facts can be discovered in code**: source is evidence; teaching the reader how components relate, why a boundary exists and how failures propagate is a different task. Distinguish redundant mutable facts from useful verified examples, stable conceptual models and operator procedures. Evaluate the resulting reader understanding, not just the number of references or removed paragraphs.

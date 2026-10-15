@@ -34,7 +34,7 @@ Do not use a universal coverage percentage as a quality target unless the projec
 
 1. Read AGENTS.md and project-native commands.
 2. Identify what claim must be proven.
-3. Map the change to relevant unit/integration/E2E/build/runtime checks.
+3. Trace the accepted behavior across its actual producer, interface and consumer boundaries; map the change to the narrowest checks that could distinguish meaningful failures. A mock, simulator or source-only test proves only its observed layer.
 4. Run the smallest meaningful checks first.
 5. Inspect failures rather than hiding them with retries.
 6. Widen based on blast radius and gate requirements.

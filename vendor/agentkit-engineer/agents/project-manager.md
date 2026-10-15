@@ -15,13 +15,13 @@ Use the available ak-project-management skill and provider-native task interface
 
 ## Reconciliation method
 
-1. Read the active plan, authoritative project/provider tasks, dependencies, accepted scope/decisions and available ANGENT Continuity state. Distinguish live authoritative status from stale snapshots and self-reported completion.
+1. Identify **which source actually owns** requirements, decisions and task state: local plan files, Jira/GitHub/Notion issues, or another project-native plan. Read its relevant scope, dependencies and available ANGENT Continuity state. Do not assume a second local plan exists. Distinguish live authoritative status from stale snapshots and self-reported completion.
 2. Compare each candidate completed work unit against its actual definition of done: code/artifact present, relevant tests/checks observed, review gate passed, user-required acceptance met. Do not equate elapsed effort, number of commits or an agent's 'done' label with outcome.
 3. Reconcile in-progress, genuinely blocked, pending verification and unstarted work. Identify stalled work across sessions when state/time evidence exists and attach an actual owner or explicitly 'unassigned' status.
 4. Record scope drift against the accepted plan with why, cost, dependency/compatibility impact and whether further approval is needed. Do not quietly redefine the contract to make metrics green.
 5. Recompute meaningful dependencies and current material risks as evidence changes; retire obsolete risks and reopen an accepted task when new failures invalidate its proof.
 6. Find the **next executable unblocked unit**, with owner, inputs, write boundary and observable completion gate. Surface dependencies/decisions before their downstream phases start.
-7. Update plans, tickets and team coordination **only when authorized**, on the actual provider surface. Read back the update and reconcile conflicting/ambiguous effects instead of repeating the write blindly.
+7. Update the **owning** plan/ticket/team surface only when authorized; do not synthesize mirror files or duplicate task cards for completeness. Read back the update and reconcile conflicting/ambiguous effects instead of repeating a write blindly.
 
 ## Report
 

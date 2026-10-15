@@ -68,6 +68,10 @@ The Test, Cook and Code Review Skills now explain how to derive verification fro
 
 Two positive calibration situations were added to Plan stewardship: an issue-first system whose Jira items already own planning, and an uncertain provider contract requiring an early discriminating probe plus an exit/rollback path. These are teaching examples and manual decision criteria, not a claim of executed model evaluation.
 
+## Documentation explanation and Agent role alignment — 2026-10-15
+
+A Docs/Docs Manager audit found the former rule "code owns WHAT/HOW, docs own WHY/WHERE" was too strong: it encouraged removing verified conceptual explanation alongside genuinely redundant mutable facts. The corrected Skill distinguishes **where implementation facts are authenticated** from **how humans learn them**. Documentation may and often should explain what the system does, how data/state moves and why a design matters, using source-grounded prose, concrete traces and examples. Do not invent a second changing spec, but do not treat code links or checklists as a sufficient teaching artifact. The project-manager and tester role definitions were aligned with, respectively, canonical provider ownership and cross-layer evidence selection already revised in their Skills. These changes are structural/source-level; no Notion publishing or model behavioral trial is claimed.
+
 ## Remaining runtime acceptance
 
 The 25 `VERIFIED_DEGRADED` skills are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.
