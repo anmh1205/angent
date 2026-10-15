@@ -48,6 +48,14 @@ The initial conversion attempted command-by-command crosswalking and added stand
 
 Original Repomix, Watzup and GKG local tools remain optional aids to deterministic observation, not Skill substitutes. No CLI simulator, new plan database, shadow runner, fake job ID or enforced per-task scripting convention is part of the fallback. This revision has structural CI evidence and source-level reasoning examples, **not** measured end-to-end model behavioral parity with upstream.
 
+## Whole-entrypoint follow-up and remaining acceptance gaps — 2026-10-15
+
+The follow-up inspected all 102 Engineer fallback Skill entrypoints for residual AgentKit-CLI-first instructions and mismatch with the user's **Skill-as-transferable-thinking** requirement. The prior Plan/Journal command-layer emulation is gone, while real product administration remains scoped to `ak-ak`. One specific inconsistency survived: `ak-project-management` told agents to prefer `ak plan --help` whenever a native CLI happened to be installed during sync-back. That is now corrected: select the project's actual plan/task owner and use its existing tools; native AgentKit is considered only when it owns that store.
+
+**This is not full-quality certification.** The CI covers structure, available local deterministic helper tests and repository hygiene. It does not execute and comparatively evaluate model behavior for all 102 Skill workflows, 16 role lifecycles or real users' target environments. The ledger still identifies 24 genuinely degraded identities. Cross-harness side effects, browser/provider/editor outputs, and multi-agent coordination remain to be observed on real hosts. The original upstream support-asset gap is a research signal; exact file-path mismatches cannot establish knowledge equivalence or loss without comparing the corresponding decisions, examples and failure modes.
+
+Operational acceptance requires representative user-goal cases for each **distinct capability family**, including a counter-case that should block, reroute or preserve prior state. Check the agent's decision and observable effects, not the presence of headings/links, a script command equivalent or a green structural workflow. Treat `VERIFIED_ADAPTED` as an inspected semantic contract, **not** evidence of exhaustive runtime competence.
+
 ## Remaining runtime acceptance
 
 The 25 `VERIFIED_DEGRADED` skills are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.

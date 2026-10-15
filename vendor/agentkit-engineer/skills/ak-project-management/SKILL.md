@@ -26,7 +26,7 @@ Discover a live task system at runtime; never infer it from a client name or his
 
 ### Verified completion and sync-back
 
-Verify observed code/artifact/test/review results against the **specific task acceptance contract**. When syncing back, scan every phase file under the target plan, reconcile completed provider items to their exact source entries, repair stale earlier checkboxes, and update aggregate plan status only from verified phase state. Report unmapped completed items and blockers; do not claim a fully completed plan with unresolved mappings. If native AgentKit plan CLI is installed, discover current `ak plan --help` semantics; otherwise make the smallest plan-file edit authorized by this project.
+Verify observed code/artifact/test/review results against the **specific task acceptance contract**. When syncing back, scan every phase file under the target plan, reconcile completed provider items to their exact source entries, repair stale earlier checkboxes, and update aggregate plan status only from verified phase state. Report unmapped completed items and blockers; do not claim a fully completed plan with unresolved mappings. Update the **actual owning plan or task surface** using the available authorized file, document or provider tools, then read it back. Treat AgentKit's `ak plan` as an optional product-specific adapter **only if the project's authoritative plan store is really managed by AgentKit**; its binary being installed does not make it the default path. No CLI or shadow plan store is required for status reasoning.
 
 ### Docs and communication
 
