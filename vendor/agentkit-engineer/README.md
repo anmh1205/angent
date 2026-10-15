@@ -51,23 +51,23 @@ Coverage:
 
 Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger, `AUDIT_REPORT.md` for dated verification evidence and remaining runtime gates, and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
 
-The fallback is an independent ANGENT implementation, not an upstream mirror. [CLI-to-Skill crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) documents which `ak` commands are replaced by actual portable outcomes and which native administration/service effects remain unavailable.
+The fallback is an independent ANGENT implementation, not an upstream mirror. [Outcome routing](skills/ak-agentkit/references/outcome-routing.md) describes how agent capabilities are selected by the actual engineering problem, not by reproducing CLI commands. Native product administration remains under `ak-ak`.
 
-## CLI-independent workflows and optional local tools
+## Agent-led engineering
 
-`ak` is **not required** to perform ordinary fallback Plan, Journal, Skill routing, board summarization or task orchestration reasoning. For CLI-shaped requests, use the [crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) and call the owning Skill with real host file/agent/provider tools. Native AgentKit lifecycle, authentication, licensed kits, analytics and installed services remain native-only when requested explicitly.
+Engineer Skills transmit **the way an agent should think and work**: how to inspect and question evidence, select a method, plan dependencies, act with bounded authority, detect contradictions and verify real outcomes. The portable contract is not a map of `ak` subcommands to replacement scripts. Normal planning, journaling, testing and coordination do not require the AgentKit binary.
 
-## Executable offline fallback subsets
+Apply the [outcome routing](skills/ak-agentkit/references/outcome-routing.md), [plan stewardship](skills/ak-plan/references/plan-stewardship.md), [journal judgment](skills/ak-journal/references/journal-judgement.md) and [coordination judgment](skills/ak-orchestrate/references/coordination-judgement.md). A Skill should teach the reasoning and decision criteria; tools are invoked only when the task actually needs an effect.
 
-Some DEGRADED Skills still provide a **tested runnable local subset**, not just instructions:
+## Optional deterministic helpers
 
-- `skills/ak-repomix/scripts/pack_local.py`: bounded Git context export; use `--dry-run` before explicitly emitting source or creating an output.
-- `skills/ak-watzup/scripts/scan_local.py`: read-only local Git/worktree/plan inventory; use `--json` for structured status.
-- `skills/ak-gkg/scripts/search_python_ast.py`: read-only Python AST definition and candidate-reference locations; requires `--symbol`.
-- `skills/ak-plan/scripts/plan_files.py`: local plan.md and phase scaffold/list/status/validation/add-phase; scaffolds are not accepted plans.
-- `skills/ak-journal/scripts/journal_files.py`: collision-safe dated Markdown creation, read-only history/list/show/validation.
+The following helpers remain subordinate to Skill-based judgment, for repeatable local inspections that genuinely benefit from code:
 
-Repomix, Watzup and GKG require Git and an accessible local worktree. Plan and Journal use scoped project files and Python 3.12-compatible runtime, and can also be performed through the environment's native file/connected document editor. None of the five helpers enables the full upstream CLI or provider service. The [audit report](AUDIT_REPORT.md) records exactly what CI has tested.
+- `skills/ak-repomix/scripts/pack_local.py` — bounded local Git source export, with sensitive-file safeguards and completeness reporting.
+- `skills/ak-watzup/scripts/scan_local.py` — read-only Git/worktree and project-plan status observations.
+- `skills/ak-gkg/scripts/search_python_ast.py` — Python AST symbol definitions and candidate references.
+
+They require Git, Python and an accessible local worktree. The previously introduced `ak-plan` and `ak-journal` file-lifecycle CLI substitutes were removed as unnecessary: these are first and foremost **agent reasoning methods** applied using existing project file/document tools. External AgentKit account/licensing/kit/service effects still require the real product.
 
 ## Selection
 
