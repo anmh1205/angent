@@ -1,4 +1,6 @@
-# AgentKit Engineer integration
+# ANGENT Engineer extension
+
+Independent ANGENT engineering extension, with portable fallback semantics adapted from the AgentKit Engineer stable catalog. The directory is an ANGENT-owned package, not an upstream AgentKit repository or a raw source mirror.
 
 ANGENT uses **native-first / portable-fallback** engineering capability.
 
@@ -10,7 +12,7 @@ ANGENT core and Engineer fallback are intentionally separate package roots:
 <repo>/
 ├── plugin.json
 ├── skills/                     # ANGENT cognitive owners
-└── vendor/agentkit-engineer/
+└── extensions/angent-engineer/
     ├── plugin.json             # portable Agent Plugins manifest
     ├── .codex-plugin/plugin.json # ChatGPT/Codex companion manifest
     ├── skills/                 # 103 portable Engineer Skill identities

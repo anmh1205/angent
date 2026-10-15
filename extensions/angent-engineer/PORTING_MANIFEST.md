@@ -341,7 +341,7 @@ Earlier Plan/Journal CLI-like scripts and their tests were removed because they 
 
 ## Agents — 16 identities
 
-All 16 role identities are present under `vendor/agentkit-engineer/agents/`. In the portable AgentKit export, agents are inert sidecar role references rather than active runtime agents. ANGENT therefore evaluates transferable role behavior, not live teammate scheduling parity.
+All 16 role identities are present under `extensions/angent-engineer/agents/`. In the portable AgentKit export, agents are inert sidecar role references rather than active runtime agents. ANGENT therefore evaluates transferable role behavior, not live teammate scheduling parity.
 
 Current role-semantic review: **16/16 VERIFIED_ADAPTED; 0/16 REVIEW_PENDING**. Live team claims, permissions and agent memory remain host-specific.
 
