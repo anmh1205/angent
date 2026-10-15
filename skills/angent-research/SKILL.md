@@ -27,6 +27,10 @@ Prefer a question from Reasoning:
 
 A short factual task may need Research when freshness, version, scope, ambiguity or source disagreement could reverse its answer. Apparent simplicity must not suppress decisive evidence. Conversely, a stable established fact does not justify needless searching.
 
+## Evidence that can reverse a conclusion
+
+When several explanations remain plausible, request or retrieve evidence with an explicit contrasting prediction: what would be observed under explanation A but not B? Prefer the earliest trustworthy boundary observation that divides them. If an experiment, field measurement or runtime trace is inaccessible, preserve it as an unperformed proposal, not a claimed finding. For technical faults connect evidence to the actual device/firmware/transport/service version and test conditions; do not transfer results from a convenient but nonrepresentative setup without marking the limit. For value or user-need claims, distinguish customer reports, measured behavior and hypothetical benefit.
+
 ## Search for information value
 
 Prefer evidence that:
