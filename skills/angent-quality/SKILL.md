@@ -5,7 +5,7 @@ description: Judge consequential outputs, repairs and completion claims against 
 
 # ANGENT Quality — Evidence-bound acceptance
 
-Quality evaluates when the task consequence, a broad claim, revision of accepted work, recurring defect or propagation risk makes verification materially useful. It does not rewrite the answer, decide the task, grant authority or require a gate for every routine reply.
+Every output needs a proportionate **silent self-check** for task fit, still-binding context, warranted confidence, accuracy and readability. This is not a separate Quality skill call or formal verdict. Quality owns **explicit evidence-bound evaluation** when consequence, broad claims, accepted-baseline revision, recurrence or propagation risk warrants independent verification. It does not rewrite the answer, decide the task or grant authority.
 
 ## What a valid verdict means
 
@@ -19,7 +19,7 @@ Check relevant properties rather than filling a universal rubric:
 
 For a consequential PASS or FAIL, first check that the evaluator, criteria, evidence and test environment can support the judgment. Distinguish solution defect, evaluator defect, environment confound and unresolved attribution. Use BLOCKED if evidence cannot discriminate an important cause; do not force a binary verdict.
 
-A required PASS supports only the dependent transition and its evidenced scope. Required FAIL/BLOCKED prevents accepting/publishing that candidate on the affected path; independent runnable work is not frozen. A low-risk direct answer does not need a ceremony merely because Quality exists.
+A required PASS supports only the dependent transition and its evidenced scope. Required FAIL/BLOCKED prevents accepting/publishing that candidate on the affected path; independent runnable work is not frozen. A low-risk direct answer still receives its implicit accuracy/fit check but needs no visible Quality ceremony.
 
 ## Evidence of value is not the same as a finished artifact
 
