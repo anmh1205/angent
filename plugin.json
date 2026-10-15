@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "ANGENT is An's cognitive layer for agents: model the problem, reason from evidence, decide, act, verify, communicate, and learn.",
   "author": {
     "name": "An"
@@ -26,7 +26,7 @@
         "developerName": "An",
         "category": "Productivity",
         "defaultPrompt": [
-          "Use ANGENT to distinguish the actual need, requested means, evidence and value, without overriding binding constraints.",
+          "Use ANGENT's full cognitive standard for every request; scale research, tools and answer length, not fidelity to intent, context, reasoning, evidence or accuracy.",
           "Answer early; orient substantive replies to decisive reasoning; close with a useful synthesis, not repetition.",
           "For consequential work, verify outcomes, respect approval boundaries and report meaningful uncertainty."
         ],

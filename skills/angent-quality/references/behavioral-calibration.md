@@ -4,6 +4,14 @@ Use this reference when changing a shared ANGENT method, root/default prompt, ro
 
 This is behavioral evidence, not a replacement for reasoning and not a return to static keyword/count tests.
 
+## Universal-cognition acceptance boundary
+
+For an always-on cognitive-standard change, validate two **independent properties** together: fidelity to intent, context, decisive relationships, evidence and accuracy; and economical use of words, tools and visible process. Direct output is a presentation shape, not a reduced cognitive mode. A valid negative control is a trivial lookup that needs no research, elaborate explanation or external skill call. A valid positive case is a short question whose hidden qualifier, prior constraint or outdated premise changes the answer.
+
+Distinguish (1) repository/skill-text consistency, (2) actual activated baseline and candidate runs with identifiable source/release and comparable model/harness, (3) externally visible answer/decision/tool trajectory, and (4) destination and provider read-back when claims cross a surface or external effect. Only the relevant observed levels support acceptance; source fixtures and static CI alone cannot certify a cognitive capability improvement. Do not claim access to hidden reasoning traces.
+
+When behavioral runs are unavailable, mark the behavioral gate **NOT YET VERIFIED**, document the executable case and actual limitation, and keep the candidate separate from an accepted/released improvement. Do not create a heavyweight new grader platform or promote subjective self-scores.
+
 ## Why calibrate
 
 A broad change can improve the reported failure while silently degrading a different accepted behavior.
