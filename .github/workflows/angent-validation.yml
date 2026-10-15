@@ -35,12 +35,12 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_unified_package.py' -v
 
       - name: Build one unified ChatGPT/Codex plugin artifact
-        run: python3 scripts/package_unified.py --output dist/angent-unified.zip
+        run: python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
 
       - name: Upload unified ANGENT artifact (PR candidate or main)
         uses: actions/upload-artifact@v4
         with:
-          name: angent-unified-plugin
-          path: dist/angent-unified.zip
+          name: angent-chatgpt-plugin
+          path: dist/angent-chatgpt.zip
           if-no-files-found: error
           retention-days: 7

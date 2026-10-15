@@ -28,4 +28,4 @@ The bundled `ak-*` identities avoid replacing ANGENT Core Skills. A deliberate c
 
 The 16 files in `extensions/angent-engineer/agents/` are portable role contracts, not 16 automatically spawned agents. A harness may project them into supported native agents, one-shot delegation or sequential reasoning. No generic broker or separate AgentKit CLI requirement is introduced.
 
-Source installation from a raw repository checkout is **not** equivalent to installing the assembled plugin: the canonical consumer artifact is `dist/angent-unified.zip`. To test installed behavior, inspect that artifact and the active host's actual discovery state.
+Source installation from a raw repository checkout is **not** equivalent to installing the assembled plugin: the canonical consumer artifact is `dist/angent-chatgpt.zip`. To test installed behavior, inspect that artifact and the active host's actual discovery state.

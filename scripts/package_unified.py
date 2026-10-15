@@ -153,7 +153,7 @@ def build(repo: Path, output: Path) -> dict[str, object]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--output", type=Path, default=Path("dist/angent-unified.zip"))
+    parser.add_argument("--output", type=Path, default=Path("dist/angent-chatgpt.zip"))
     args = parser.parse_args()
     repo = args.repo.resolve()
     output = args.output if args.output.is_absolute() else repo / args.output

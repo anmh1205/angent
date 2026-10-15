@@ -126,7 +126,7 @@ This directory contains ANGENT's maintained fallback Skill source, portable role
 
 ## ChatGPT / Codex packaging
 
-Install the **single** `angent-unified.zip` artifact. The root `plugin.json` and `.codex-plugin/plugin.json` describe one plugin with one discoverable `skills/` tree. Engineer files here are maintained source and non-discoverable support, not a second package.
+Install the **single** `angent-chatgpt.zip` artifact. The root `plugin.json` and `.codex-plugin/plugin.json` describe one plugin with one discoverable `skills/` tree. Engineer files here are maintained source and non-discoverable support, not a second package.
 
 The portable native-first behavior is guidance and runtime routing, **not** a claim that static Skill discovery can be switched off from inside a plugin manifest.
 
