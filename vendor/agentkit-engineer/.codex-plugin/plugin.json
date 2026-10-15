@@ -16,7 +16,7 @@
   "interface": {
     "displayName": "ANGENT Engineer Fallback",
     "shortDescription": "Portable Engineer Skills for ANGENT",
-    "longDescription": "Provides ANGENT's portable 102-Skill Engineer fallback when official native AgentKit Engineer is not usable in the active environment.",
+    "longDescription": "Provides ANGENT's portable 103-Skill Engineer fallback when official native AgentKit Engineer is not usable in the active environment.",
     "developerName": "An",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],

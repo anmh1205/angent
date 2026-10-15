@@ -108,7 +108,7 @@ jobs:
               assert "plugin.json" in names
               assert ".codex-plugin/plugin.json" in names
               assert any(p.startswith("agents/") for p in names)
-              assert sum(p.startswith("skills/") and p.endswith("/SKILL.md") for p in names) == 102
+              assert sum(p.startswith("skills/") and p.endswith("/SKILL.md") for p in names) == 103
               plugin = json.loads(bundle.read("plugin.json"))
               codex = json.loads(bundle.read(".codex-plugin/plugin.json"))
               assert plugin["name"] == codex["name"] == "angent-engineer-fallback"

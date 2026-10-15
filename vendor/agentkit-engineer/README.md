@@ -13,12 +13,12 @@ ANGENT core and Engineer fallback are intentionally separate package roots:
 └── vendor/agentkit-engineer/
     ├── plugin.json             # portable Agent Plugins manifest
     ├── .codex-plugin/plugin.json # ChatGPT/Codex companion manifest
-    ├── skills/                 # 102 portable Engineer Skill identities
+    ├── skills/                 # 103 portable Engineer Skill identities
     ├── agents/                 # 16 portable role definitions
     └── scripts/select_engineer.py
 ```
 
-Agent Plugins v1 uses a fixed `skills/` discovery root and does not provide a portable conditional second Skill root. Keeping the fallback as its own plugin prevents the 102 fallback Skills from always colliding with native AgentKit Engineer.
+Agent Plugins v1 uses a fixed `skills/` discovery root and does not provide a portable conditional second Skill root. Keeping the fallback as its own plugin prevents the 103 fallback Skills from always colliding with native AgentKit Engineer.
 
 ## Native path
 
@@ -45,13 +45,15 @@ If native AgentKit Engineer is absent, unusable or not proven usable, activate t
 
 Coverage:
 
-- **102/102 stable 2.19.0 Skill identities present**
+- **103/103 stable 2.19.0 public Skill identities present**
 - **16/16 Agent role identities present**
 - **current per-Skill semantic status and explicit runtime degradations are tracked only in [PORTING_MANIFEST.md](PORTING_MANIFEST.md); do not duplicate mutable progress counts here**
 
 Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger, `AUDIT_REPORT.md` for dated verification evidence and remaining runtime gates, and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
 
 The fallback is an independent ANGENT implementation, not an upstream mirror. [Outcome routing](skills/ak-agentkit/references/outcome-routing.md) describes how agent capabilities are selected by the actual engineering problem, not by reproducing CLI commands. Native product administration remains under `ak-ak`.
+
+The six retired workflow names are documented under `retired-routes/`, and internal `ak-common` support lives outside public discovery in `internal/`. Neither is an installable public Skill. Source-level completeness is not full runtime equivalence.
 
 ## Agent-led engineering
 
@@ -95,7 +97,7 @@ Do not create separate Claude/Codex/Cursor reasoning forks.
 
 ## Pinned upstream baseline
 
-The current fallback audit baseline is the signed **AgentKit Engineer stable 2.19.0** package resolved through the official registry. The stable docs Skill guide is used for routing/capability context, but not as packaged-inventory authority.
+The current fallback catalog is the authenticated **AgentKit Engineer stable 2.19.0** package re-exported on 2026-10-15 (103 public Skills, 16 roles). The stable docs Skill guide is used for routing/capability context, but not as packaged-inventory authority.
 
 Raw upstream source/export content is not stored here. Audit evidence and source boundaries are recorded in `UPSTREAM_BASELINE.md`.
 

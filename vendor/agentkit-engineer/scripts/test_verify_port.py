@@ -27,7 +27,7 @@ class PortAuditTests(unittest.TestCase):
             "---\nname: example\ndescription: Example\n---\n# Example\n", encoding="utf-8"
         )
         (self.root / "PORTING_MANIFEST.md").write_text(
-            "## Skills — 102 identities\n"
+            "## Skills — 103 identities\n"
             "| `ak-example` | VERIFIED_ADAPTED | example |\n"
             "## Agents — 16 identities\n"
             "| `example` | VERIFIED_ADAPTED | example |\n"

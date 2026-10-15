@@ -2,9 +2,9 @@
 
 Upstream packaged baseline: **AgentKit Engineer stable 2.19.0**.
 
-Verified identity surface: **102/102 Skill directories + 16/16 Agent role identities** are present in the ANGENT fallback.
+Verified identity surface: **103/103 Skill directories + 16/16 Agent role identities** are present in the ANGENT fallback.
 
-Identity coverage is complete at the first-pass workflow level (102/102 Skills, 16/16 Agent roles). **It is not runtime equivalence**: 24 Skills retain explicit degraded capabilities, and full support-asset/runtime/provider acceptance remains open. Per-Skill verdicts below describe the portable contract, not a guarantee that every mode runs in every harness.
+Identity coverage is complete at the source-level workflow review (103/103 Skills, 16/16 Agent roles). **It is not runtime equivalence**: 24 Skills retain explicit degraded capabilities, and full support-asset/runtime/provider acceptance remains open. Per-Skill verdicts below describe the portable contract, not a guarantee that every mode runs in every harness.
 
 Native AgentKit remains preferred when usable and is installed/managed from the official AgentKit distribution. This manifest tracks ANGENT's portable fallback only.
 
@@ -17,26 +17,25 @@ Native AgentKit remains preferred when usable and is installed/managed from the 
 
 A shorter fallback can be better than a literal source copy, but size reduction is not evidence of parity. Acceptance is based on behavior and knowledge required for the workflow outcome.
 
-No Skill/Agent is removed merely because upstream depends on AgentKit CLI, Claude/Codex, hooks, browser tooling, or another runtime-specific surface. Runtime mechanics are adapted; load-bearing workflow/domain semantics are not silently discarded.
+A public identity is removed from discovery only when the current package catalog retires it; successor routes preserve transferable semantics and limitations. CLI, browser, provider and runtime dependencies alone do not justify deleting live packaged Skills. Runtime mechanics are adapted; load-bearing workflow/domain semantics are not silently discarded.
 
 ## Current audit evidence
 
-- Signed stable changelog resolves Engineer **2.19.0** as the current stable package.
-- A fresh stable 2.19.0 portable export resolves **102 Skills** and **16 Agent sidecar roles**.
-- Fallback identity diff is exact: no upstream-only or fallback-only Skill directory.
+- Authenticated AgentKit CLI `ak 2.19.0` successfully exported the explicit stable `--version 2.19.0` portable package on 2026-10-15: **103 top-level Skills**, **16 Agent sidecar roles**, and 1,758 emitted files. The resolved canonical identity SHA-256 is `439bc625174a6e9e780f8f464b0129ccf9bfcb4ba5b63d7fa3734d0e05541ddc`.
+- The fallback's intended 103/16 identity set matches that current registry export; structural and runtime validation remain separate.
 - At the initial inventory baseline, the upstream portable Skill tree contained about **1428 support files** versus **236** in the fallback; only **112** same relative paths overlap.
 - At that initial baseline, upstream SKILL.md surfaces contained about **20,150 lines / 545 direct support references** versus fallback **3,632 lines / 136 direct support references**.
 - These size/path figures are triage signals only; they do not prove that an independently adapted shorter workflow is wrong.
 
-The old docs-derived assumption of 103 public Skills with eight missing/new identities is superseded by signed package evidence. The stable “choose a Skill” page is a usage guide, not the packaged-identity inventory.
+The earlier 102-directory package inventory was a historical snapshot and is superseded by this authenticated 103-Skill registry export. Stable documentation is a usage guide; the explicit exported package is the identity authority. Six retired routes and the internal `ak-common` convention are not public Skills.
 
 ## Semantic review progress
 
-Current accepted coverage: **102 / 102 Skill identities reviewed semantically**.
+Current accepted source-level coverage: **103 / 103 Skill identities reviewed** (95 carried-over semantics and 8 newly reviewed contracts; this is not operational parity).
 
-- **75 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-fable-thinking`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-google-adk-python`, `ak-handoff`, `ak-handover`, `ak-help`, `ak-html-video`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-journal`, `ak-llms`, `ak-loop`, `ak-mcp-builder`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-security-scan`, `ak-sequential-thinking`, `ak-shader`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-use-mcp`, `ak-vibe`, `ak-web-design-guidelines`, `ak-web-frameworks`, `ak-web-testing`, `ak-worktree`, `ak-xia`.
-- **24 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-hyperframes`, `ak-markdown-novel-viewer`, `ak-mintlify`, `ak-plans-kanban`, `ak-preview`, `ak-remotion`, `ak-repomix`, `ak-show-off`, `ak-stitch`, `ak-team`, `ak-threejs`, `ak-ui-ux-pro-max`, `ak-watzup`.
-- **3 VERIFIED_PORTABLE**: `ak-ask`, `ak-common`, `ak-problem-solving`.
+- **73 VERIFIED_ADAPTED**: `ak-advise`, `ak-agentize`, `ak-agentkit`, `ak-autoresearch`, `ak-backend-development`, `ak-better-auth`, `ak-bootstrap`, `ak-brainstorm`, `ak-code-review`, `ak-codex-goal`, `ak-coding-level`, `ak-context-engineering`, `ak-cook`, `ak-copywriting`, `ak-databases`, `ak-debug`, `ak-deploy`, `ak-devops`, `ak-diagram`, `ak-docs`, `ak-docs-seeker`, `ak-document-skills`, `ak-enhance-ux-ax`, `ak-fable-thinking`, `ak-find-skills`, `ak-fix`, `ak-folder-context`, `ak-frontend-design`, `ak-frontend-development`, `ak-git`, `ak-github`, `ak-goal-warmup`, `ak-google-adk-python`, `ak-handoff`, `ak-help`, `ak-interview-docs`, `ak-issue-to-plan`, `ak-journal`, `ak-llms`, `ak-loop`, `ak-mcp-builder`, `ak-media-processing`, `ak-mermaidjs-v11`, `ak-mobile-development`, `ak-orchestrate`, `ak-page-builder`, `ak-payment-integration`, `ak-plan`, `ak-predict`, `ak-project-management`, `ak-project-organization`, `ak-react-best-practices`, `ak-research`, `ak-research-prompt`, `ak-retro`, `ak-review-pr`, `ak-scenario`, `ak-scout`, `ak-security`, `ak-shader`, `ak-ship`, `ak-shopify`, `ak-skill-creator`, `ak-tanstack`, `ak-tech-graph`, `ak-test`, `ak-ui-styling`, `ak-vibe`, `ak-web-frameworks`, `ak-web-testing`, `ak-webmcp`, `ak-worktree`, `ak-xia`
+- **24 VERIFIED_DEGRADED**: `ak-agent-browser`, `ak-ai-artist`, `ak-ai-multimodal`, `ak-ak`, `ak-chrome-profile`, `ak-cti-expert`, `ak-deep-swe`, `ak-design`, `ak-excalidraw`, `ak-gkg`, `ak-graphify`, `ak-hyperframes`, `ak-markdown-novel-viewer`, `ak-mintlify`, `ak-plans-kanban`, `ak-preview`, `ak-remotion`, `ak-repomix`, `ak-show-off`, `ak-stitch`, `ak-team`, `ak-threejs`, `ak-ui-ux-pro-max`, `ak-watzup`
+- **6 VERIFIED_PORTABLE**: `ak-ask`, `ak-bro`, `ak-explain`, `ak-problem-solving`, `ak-sowat`, `ak-sumup`
 - **0 REVIEW_PENDING**: no identities await first-pass workflow review; runtime acceptance remains separate.
 
 This batch was judged by primary outcome, materially distinct modes, critical gates, reusable support/domain knowledge, runtime assumptions and the explicit portable replacement. Same-path support-file absence remains an audit lead rather than an automatic failure: several accepted portable Skills intentionally reorganize upstream knowledge into smaller harness-neutral references.
@@ -232,112 +231,113 @@ The user clarified that porting aims to **teach an agent how to reason and work 
 
 Earlier Plan/Journal CLI-like scripts and their tests were removed because they introduced redundant file conventions, not needed reasoning capability. The existing three optional local Repomix, Watzup and GKG programs serve bounded deterministic evidence-gathering only; they are not prerequisites for the agent's decisions. The ledger still records **75 adapted, 24 degraded, 3 portable Skills**, with runtime/provider availability explicitly separate from Skill semantics.
 
-## Skills — 102 identities
+## Skills — 103 identities
 
 | Skill | Status | Note |
 |---|---|---|
-| `ak-advise` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-agent-browser` | VERIFIED_DEGRADED | stable 2.19.0 session/snapshot/browser effect semantics; external CLI/specialized provider absent |
-| `ak-agentize` | VERIFIED_ADAPTED | stable 2.19.0 agent tool CLI/MCP design, effect safety and consumer verification preserved |
-| `ak-agentkit` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-ai-artist` | VERIFIED_DEGRADED | native 129-prompt catalog/BM25/provider modes mapped, backend and catalog unavailable |
-| `ak-ai-multimodal` | VERIFIED_DEGRADED | pinned Multix 0.2.0 modality/provider contracts, evidence/privacy and native substitutes; CLI unavailable |
-| `ak-ak` | VERIFIED_DEGRADED | stable 2.19.0 native AgentKit CLI control-plane without emulated lifecycle |
-| `ak-ask` | VERIFIED_PORTABLE | stable 2.19.0 one-question, evidence-led, four-perspective consultation with no implementation |
-| `ak-autoresearch` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-backend-development` | VERIFIED_ADAPTED | stable 2.19.0 bounded backend/API/data-access workflow reviewed; migration/deploy and runtime verification boundaries preserved |
-| `ak-better-auth` | VERIFIED_ADAPTED | stable 2.19.0 Better Auth workflow reviewed; credentials, schema/migration, session/provider and production rollout boundaries preserved |
-| `ak-bootstrap` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-brainstorm` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-chrome-profile` | VERIFIED_DEGRADED | stable 2.19.0 profile-identity/sensitive-state safeguards; real Chrome attachment runtime-dependent |
-| `ak-code-review` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-codex-goal` | VERIFIED_ADAPTED | stable 2.19.0 goal frontier, stop criteria and honest harness-independent execution bounds |
-| `ak-coding-level` | VERIFIED_ADAPTED | stable 2.19.0 explicit 0–5 reader levels and runtime-specific style/persistence limits retained |
-| `ak-common` | VERIFIED_PORTABLE | stable 2.19.0 internal-only shared support role; no phantom scripts or user invocation |
-| `ak-context-engineering` | VERIFIED_ADAPTED | stable 2.19.0 Measured context/runtime boundaries, four-bucket lifecycle and decision-quality evaluation retained; no fabricated provider telemetry |
-| `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-copywriting` | VERIFIED_ADAPTED | stable 2.19.0 conversion patterns, channel composition, evidence and style boundaries reviewed |
-| `ak-cti-expert` | VERIFIED_DEGRADED | AEAD cases, provenance, scope/privacy and defensive reporting; specialist 113-file support pack not ported |
-| `ak-databases` | VERIFIED_ADAPTED | stable 2.19.0 data-model/query/migration workflow reviewed with least-privilege, recovery and production-mutation gates |
-| `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-deep-swe` | VERIFIED_DEGRADED | stable 2.19.0 Pier/OpenRouter one-task/subset/full-cost gates and confidential benchmark evidence; native runner absent |
-| `ak-deploy` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-design` | VERIFIED_DEGRADED | stable 2.19.0 design workflow reviewed; bundled generator/search datasets are an explicit portable capability boundary |
-| `ak-devops` | VERIFIED_ADAPTED | stable 2.19.0 infrastructure/CI/CD/GitOps workflow reviewed with plan/apply/delete/replace and readiness/recovery gates |
-| `ak-docs` | VERIFIED_ADAPTED | stable 2.19.0 Init/update/summarize/agent-context modes plus drift-resistant ownership and verification restored |
-| `ak-docs-seeker` | VERIFIED_ADAPTED | stable 2.19.0 Versioned canonical docs and llms.txt discovery preserved; unbundled Node scripts explicitly non-operative |
-| `ak-document-skills` | VERIFIED_ADAPTED | format-specific native Word/PDF/Slides/Sheets capability dispatch, source and render gates |
-| `ak-excalidraw` | VERIFIED_DEGRADED | native MCP canvas and editable JSON/Playwright modes, semantic maps and render QA; backend not bundled |
-| `ak-fable-thinking` | VERIFIED_ADAPTED | floor/proportional FRAME-GROUND-REASON-ATTACK-DELIVER, strict exact-output checks and truthful evidence |
-| `ak-find-skills` | VERIFIED_ADAPTED | stable 2.19.0 local domain routing versus external Skills CLI discovery/install authority retained |
-| `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-folder-context` | VERIFIED_ADAPTED | stable 2.19.0 Subtree-only sanity/approval gate and canonical AGENTS.md compatibility restored |
-| `ak-frontend-design` | VERIFIED_ADAPTED | stable 2.19.0 visual-direction/state/render-verification semantics preserved with harness-native implementation/render tools |
-| `ak-frontend-development` | VERIFIED_ADAPTED | stable 2.19.0 frontend implementation semantics preserved while project-specific libraries are derived from the current codebase |
-| `ak-git` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-github` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-gkg` | VERIFIED_DEGRADED | executable offline Python AST definition/candidate-usage search with tests; upstream multi-language graph/index/MCP absent |
-| `ak-goal-warmup` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-google-adk-python` | VERIFIED_ADAPTED | ADK package entrypoint, workflows, state/memory, MCP/A2A, eval and deployed-runtime gates |
-| `ak-graphify` | VERIFIED_DEGRADED | stable 2.19.0 graph build/query, provenance, media privacy and MCP/native capability boundaries restored; external Graphify runtime not bundled |
-| `ak-handoff` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-handover` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-help` | VERIFIED_ADAPTED | stable 2.19.0 outcome based routing and true native/fallback capability boundaries |
-| `ak-html-video` | VERIFIED_ADAPTED | stable 2.19.0 html-video template/project/preview/render workflow restored; renderer/toolchain mechanics remain harness-dependent |
-| `ak-hyperframes` | VERIFIED_DEGRADED | pinned HyperFrames HTML timing/preflight/lint/MP4/cloud workflow; CLI unavailable |
-| `ak-interview-docs` | VERIFIED_ADAPTED | stable 2.19.0 Vision versus structured-doc modes, user-owned decisions and per-answer read-back restored |
-| `ak-issue-to-plan` | VERIFIED_ADAPTED | stable 2.19.0 issue evidence, implementation-ready plan and stop-before-code decision gate |
-| `ak-journal` | VERIFIED_ADAPTED | create/list/show/validate as direct collision-safe Markdown document actions; publication provider and native store remain separate |
-| `ak-llms` | VERIFIED_ADAPTED | stable 2.19.0 llms.txt/llms-full.txt sources, URL scope, optional sections, generator preflight and validation |
-| `ak-loop` | VERIFIED_ADAPTED | stable 2.19.0 sequential atomic, numeric/guard/noise-aware optimization, Git experiment history and safe rollback bounds |
-| `ak-markdown-novel-viewer` | VERIFIED_DEGRADED | Node HTTP reader/file-dir/theme/Mermaid/plan routing with localhost and path safety; server absent |
-| `ak-mcp-builder` | VERIFIED_ADAPTED | four-phase research/typed implementation/client handshake and evaluation workflow, effect semantics |
-| `ak-media-processing` | VERIFIED_ADAPTED | stable 2.19.0 FFmpeg/ImageMagick/RMBG routes, codec/batch/stream quality and output verification restored |
-| `ak-mermaidjs-v11` | VERIFIED_ADAPTED | stable 2.19.0 diagram families, v11 syntax, CLI/JS/Markdown targets, security, accessibility and rendered-result gates restored |
-| `ak-mintlify` | VERIFIED_DEGRADED | stable 2.19.0 docs.json/MDX/navigation/OpenAPI/AI/CLI/deployment flows retained; full refs/native CLI absent |
-| `ak-mobile-development` | VERIFIED_ADAPTED | stable 2.19.0 React Native/Flutter/native mobile workflow preserved while stale adoption/performance figures are excluded from architectural decisions |
-| `ak-orchestrate` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-payment-integration` | VERIFIED_ADAPTED | stable 2.19.0 SePay/Polar/Stripe and multi-provider payment semantics reviewed; volatile provider APIs are refreshed from current docs and internal/provider state reconciliation is preserved |
-| `ak-plan` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-plans-kanban` | VERIFIED_DEGRADED | stable 2.19.0 integrated CLI plans dashboard feature-probe/launcher contract; fallback cannot run native UI |
-| `ak-predict` | VERIFIED_ADAPTED | stable 2.19.0 five-perspective debate, worst-case GO/CAUTION/STOP verdict and reason/probe follow-on modes |
-| `ak-preview` | VERIFIED_DEGRADED | view versus explain/diagram/slides/HTML diff/plan-review/recap modes; template/viewer runtime absent |
-| `ak-problem-solving` | VERIFIED_PORTABLE | stable 2.19.0 six technique families restored with diagnosis, concrete probes and no runtime dependency |
-| `ak-project-management` | VERIFIED_ADAPTED | stable 2.19.0 durable plan hydration, all-phase sync-back, verified progress and docs-impact routing retained |
-| `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored |
-| `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates |
-| `ak-remotion` | VERIFIED_DEGRADED | stable 2.19.0 33-rule React frame timeline, media, captions and render QA; rule pack/runtime absent |
-| `ak-repomix` | VERIFIED_DEGRADED | runnable local Git Markdown/JSON/XML snapshot subset and security/limit fixtures; full remote/token/batch/Secretlint unavailable |
-| `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-research-prompt` | VERIFIED_ADAPTED | stable 2.19.0 Research-assignment-only boundary and one-paragraph evidence brief contract restored |
-| `ak-retro` | VERIFIED_ADAPTED | stable 2.19.0 period/team comparisons, raw Git metrics, evidence caveats and Markdown/HTML reporting restored |
-| `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-scenario` | VERIFIED_ADAPTED | stable 2.19.0 12-dimension one-shot and bounded/saturation novelty modes with test-oracle output |
-| `ak-scout` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly |
-| `ak-security` | VERIFIED_ADAPTED | stable 2.19.0 comprehensive/fast/red-team/fix semantics reviewed; runtime scanners and advisory access remain harness-dependent |
-| `ak-security-scan` | VERIFIED_ADAPTED | stable 2.19.0 packaged standalone read-only security-scan semantics restored from artifact truth; not collapsed into ak-security |
-| `ak-sequential-thinking` | VERIFIED_ADAPTED | stable 2.19.0 revision/branch/hypothesis/uncertainty semantics preserved while private chain-of-thought exposure is intentionally omitted |
-| `ak-shader` | VERIFIED_ADAPTED | GLSL version-aware fragment/SDF/noise/coordinate pipeline with compile/visual/GPU QA |
-| `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-shopify` | VERIFIED_ADAPTED | stable 2.19.0 app/extension/theme lifecycle reviewed with current GraphQL-first API, scope/webhook/version and deploy/publish boundaries |
-| `ak-show-off` | VERIFIED_DEGRADED | stable 2.19.0 prefs/plan/bilingual HTML/screenshots/publishing gates; capture/helper/AgentWiki unavailable |
-| `ak-skill-creator` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-stitch` | VERIFIED_DEGRADED | Stitch quota/generate/edit/export and per-project identity with design-to-code handoff; provider absent |
-| `ak-tanstack` | VERIFIED_ADAPTED | stable 2.19.0 Start/Router/Form/AI scope restored; unrelated TanStack Query/Table/Virtual expansion removed and volatile package APIs bound to current installed docs |
-| `ak-team` | VERIFIED_DEGRADED | true live-team lifecycle is load-bearing; hard-stop/route elsewhere when harness lacks it |
-| `ak-tech-graph` | VERIFIED_ADAPTED | stable 2.19.0 diagram views, seven style families, SVG/PNG workflow, routing/label/layout and rendered QA retained with runtime tool substitution |
-| `ak-test` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit |
-| `ak-threejs` | VERIFIED_DEGRADED | Three.js scene/WebGL-WebGPU/runtime QA; upstream 556-example search corpus absent |
-| `ak-ui-styling` | VERIFIED_ADAPTED | stable 2.19.0 component/tokens/shadcn-Tailwind mutation and rendered-accessibility gates preserved |
-| `ak-ui-ux-pro-max` | VERIFIED_DEGRADED | stable 2.19.0 product UX decision workflow preserved; packaged recommendation dataset/search engine is not reproduced |
-| `ak-use-mcp` | VERIFIED_ADAPTED | stable 2.19.0 runtime-native/direct-client discovery and MCP config/protocol/effect semantics preserved without vendoring upstream scripts |
-| `ak-vibe` | VERIFIED_ADAPTED | issue-to-worktree-plan-implement-review-PR with optional explicitly authorized beta/stable shipping and CI |
-| `ak-watzup` | VERIFIED_DEGRADED | executable read-only local Git/worktree/plan scanner with fixture tests; native cross-worktree state/scoring/fetch absent |
-| `ak-web-design-guidelines` | VERIFIED_ADAPTED | stable 2.19.0 fresh canonical-guideline retrieval and source-evidence review contract preserved |
-| `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved |
-| `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved |
-| `ak-worktree` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly |
-| `ak-xia` | VERIFIED_ADAPTED | stable 2.19.0 compare/copy/improve/port modes, source challenge and Plan/Cook handoff, no direct Xia implementation |
+| `ak-advise` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly | |
+| `ak-agent-browser` | VERIFIED_DEGRADED | stable 2.19.0 session/snapshot/browser effect semantics; external CLI/specialized provider absent | |
+| `ak-agentize` | VERIFIED_ADAPTED | stable 2.19.0 agent tool CLI/MCP design, effect safety and consumer verification preserved | |
+| `ak-agentkit` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-ai-artist` | VERIFIED_DEGRADED | native 129-prompt catalog/BM25/provider modes mapped, backend and catalog unavailable | |
+| `ak-ai-multimodal` | VERIFIED_DEGRADED | pinned Multix 0.2.0 modality/provider contracts, evidence/privacy and native substitutes; CLI unavailable | |
+| `ak-ak` | VERIFIED_DEGRADED | stable 2.19.0 native AgentKit CLI control-plane without emulated lifecycle | |
+| `ak-ask` | VERIFIED_PORTABLE | stable 2.19.0 one-question, evidence-led, four-perspective consultation with no implementation | |
+| `ak-autoresearch` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly | |
+| `ak-backend-development` | VERIFIED_ADAPTED | stable 2.19.0 bounded backend/API/data-access workflow reviewed; migration/deploy and runtime verification boundaries preserved | |
+| `ak-better-auth` | VERIFIED_ADAPTED | stable 2.19.0 Better Auth workflow reviewed; credentials, schema/migration, session/provider and production rollout boundaries preserved | |
+| `ak-bootstrap` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-brainstorm` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly | |
+| `ak-bro` | VERIFIED_PORTABLE | new stable 2.19.0 plain-language restatement preserves claims, warnings and authority; source-level portable contract |
+| `ak-chrome-profile` | VERIFIED_DEGRADED | stable 2.19.0 profile-identity/sensitive-state safeguards; real Chrome attachment runtime-dependent | |
+| `ak-code-review` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-codex-goal` | VERIFIED_ADAPTED | stable 2.19.0 goal frontier, stop criteria and honest harness-independent execution bounds | |
+| `ak-coding-level` | VERIFIED_ADAPTED | stable 2.19.0 explicit 0–5 reader levels and runtime-specific style/persistence limits retained | |
+| `ak-context-engineering` | VERIFIED_ADAPTED | stable 2.19.0 Measured context/runtime boundaries, four-bucket lifecycle and decision-quality evaluation retained; no fabricated provider telemetry | |
+| `ak-cook` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-copywriting` | VERIFIED_ADAPTED | stable 2.19.0 conversion patterns, channel composition, evidence and style boundaries reviewed | |
+| `ak-cti-expert` | VERIFIED_DEGRADED | AEAD cases, provenance, scope/privacy and defensive reporting; specialist 113-file support pack not ported | |
+| `ak-databases` | VERIFIED_ADAPTED | stable 2.19.0 data-model/query/migration workflow reviewed with least-privilege, recovery and production-mutation gates | |
+| `ak-debug` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-deep-swe` | VERIFIED_DEGRADED | stable 2.19.0 Pier/OpenRouter one-task/subset/full-cost gates and confidential benchmark evidence; native runner absent | |
+| `ak-deploy` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly | |
+| `ak-design` | VERIFIED_DEGRADED | stable 2.19.0 design workflow reviewed; bundled generator/search datasets are an explicit portable capability boundary | |
+| `ak-devops` | VERIFIED_ADAPTED | stable 2.19.0 infrastructure/CI/CD/GitOps workflow reviewed with plan/apply/delete/replace and readiness/recovery gates | |
+| `ak-diagram` | VERIFIED_ADAPTED | new stable 2.19.0 diagram compilation/render route with explicit renderer capability and visual acceptance limits |
+| `ak-docs` | VERIFIED_ADAPTED | stable 2.19.0 Init/update/summarize/agent-context modes plus drift-resistant ownership and verification restored | |
+| `ak-docs-seeker` | VERIFIED_ADAPTED | stable 2.19.0 Versioned canonical docs and llms.txt discovery preserved; unbundled Node scripts explicitly non-operative | |
+| `ak-document-skills` | VERIFIED_ADAPTED | format-specific native Word/PDF/Slides/Sheets capability dispatch, source and render gates | |
+| `ak-enhance-ux-ax` | VERIFIED_ADAPTED | new stable 2.19.0 UX/agent-accessibility review and authorized repair modes with live-render evidence boundary |
+| `ak-excalidraw` | VERIFIED_DEGRADED | native MCP canvas and editable JSON/Playwright modes, semantic maps and render QA; backend not bundled | |
+| `ak-explain` | VERIFIED_PORTABLE | new stable 2.19.0 explanatory knowledge-transfer workflow, Markdown/HTML routes and no unrequested implementation |
+| `ak-fable-thinking` | VERIFIED_ADAPTED | floor/proportional FRAME-GROUND-REASON-ATTACK-DELIVER, strict exact-output checks and truthful evidence | |
+| `ak-find-skills` | VERIFIED_ADAPTED | stable 2.19.0 local domain routing versus external Skills CLI discovery/install authority retained | |
+| `ak-fix` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly | |
+| `ak-folder-context` | VERIFIED_ADAPTED | stable 2.19.0 Subtree-only sanity/approval gate and canonical AGENTS.md compatibility restored | |
+| `ak-frontend-design` | VERIFIED_ADAPTED | stable 2.19.0 visual-direction/state/render-verification semantics preserved with harness-native implementation/render tools | |
+| `ak-frontend-development` | VERIFIED_ADAPTED | stable 2.19.0 frontend implementation semantics preserved while project-specific libraries are derived from the current codebase | |
+| `ak-git` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly | |
+| `ak-github` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly | |
+| `ak-gkg` | VERIFIED_DEGRADED | executable offline Python AST definition/candidate-usage search with tests; upstream multi-language graph/index/MCP absent | |
+| `ak-goal-warmup` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-google-adk-python` | VERIFIED_ADAPTED | ADK package entrypoint, workflows, state/memory, MCP/A2A, eval and deployed-runtime gates | |
+| `ak-graphify` | VERIFIED_DEGRADED | stable 2.19.0 graph build/query, provenance, media privacy and MCP/native capability boundaries restored; external Graphify runtime not bundled | |
+| `ak-handoff` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-help` | VERIFIED_ADAPTED | stable 2.19.0 outcome based routing and true native/fallback capability boundaries | |
+| `ak-hyperframes` | VERIFIED_DEGRADED | pinned HyperFrames HTML timing/preflight/lint/MP4/cloud workflow; CLI unavailable | |
+| `ak-interview-docs` | VERIFIED_ADAPTED | stable 2.19.0 Vision versus structured-doc modes, user-owned decisions and per-answer read-back restored | |
+| `ak-issue-to-plan` | VERIFIED_ADAPTED | stable 2.19.0 issue evidence, implementation-ready plan and stop-before-code decision gate | |
+| `ak-journal` | VERIFIED_ADAPTED | create/list/show/validate as direct collision-safe Markdown document actions; publication provider and native store remain separate | |
+| `ak-llms` | VERIFIED_ADAPTED | stable 2.19.0 llms.txt/llms-full.txt sources, URL scope, optional sections, generator preflight and validation | |
+| `ak-loop` | VERIFIED_ADAPTED | stable 2.19.0 sequential atomic, numeric/guard/noise-aware optimization, Git experiment history and safe rollback bounds | |
+| `ak-markdown-novel-viewer` | VERIFIED_DEGRADED | Node HTTP reader/file-dir/theme/Mermaid/plan routing with localhost and path safety; server absent | |
+| `ak-mcp-builder` | VERIFIED_ADAPTED | four-phase research/typed implementation/client handshake and evaluation workflow, effect semantics | |
+| `ak-media-processing` | VERIFIED_ADAPTED | stable 2.19.0 FFmpeg/ImageMagick/RMBG routes, codec/batch/stream quality and output verification restored | |
+| `ak-mermaidjs-v11` | VERIFIED_ADAPTED | stable 2.19.0 diagram families, v11 syntax, CLI/JS/Markdown targets, security, accessibility and rendered-result gates restored | |
+| `ak-mintlify` | VERIFIED_DEGRADED | stable 2.19.0 docs.json/MDX/navigation/OpenAPI/AI/CLI/deployment flows retained; full refs/native CLI absent | |
+| `ak-mobile-development` | VERIFIED_ADAPTED | stable 2.19.0 React Native/Flutter/native mobile workflow preserved while stale adoption/performance figures are excluded from architectural decisions | |
+| `ak-orchestrate` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-page-builder` | VERIFIED_ADAPTED | new stable 2.19.0 builder setup/update/operate semantics with draft, preview and publication authority |
+| `ak-payment-integration` | VERIFIED_ADAPTED | stable 2.19.0 SePay/Polar/Stripe and multi-provider payment semantics reviewed; volatile provider APIs are refreshed from current docs and internal/provider state reconciliation is preserved | |
+| `ak-plan` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-plans-kanban` | VERIFIED_DEGRADED | stable 2.19.0 integrated CLI plans dashboard feature-probe/launcher contract; fallback cannot run native UI | |
+| `ak-predict` | VERIFIED_ADAPTED | stable 2.19.0 five-perspective debate, worst-case GO/CAUTION/STOP verdict and reason/probe follow-on modes | |
+| `ak-preview` | VERIFIED_DEGRADED | view versus explain/diagram/slides/HTML diff/plan-review/recap modes; template/viewer runtime absent | |
+| `ak-problem-solving` | VERIFIED_PORTABLE | stable 2.19.0 six technique families restored with diagnosis, concrete probes and no runtime dependency | |
+| `ak-project-management` | VERIFIED_ADAPTED | stable 2.19.0 durable plan hydration, all-phase sync-back, verified progress and docs-impact routing retained | |
+| `ak-project-organization` | VERIFIED_ADAPTED | stable 2.19.0 Advisory versus organize modes, move approval, collision protection and project naming conventions restored | |
+| `ak-react-best-practices` | VERIFIED_ADAPTED | stable 2.19.0 evidence-led React/Next performance workflow reviewed with compatible-version and comparable-measurement gates | |
+| `ak-remotion` | VERIFIED_DEGRADED | stable 2.19.0 33-rule React frame timeline, media, captions and render QA; rule pack/runtime absent | |
+| `ak-repomix` | VERIFIED_DEGRADED | runnable local Git Markdown/JSON/XML snapshot subset and security/limit fixtures; full remote/token/batch/Secretlint unavailable | |
+| `ak-research` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-research-prompt` | VERIFIED_ADAPTED | stable 2.19.0 Research-assignment-only boundary and one-paragraph evidence brief contract restored | |
+| `ak-retro` | VERIFIED_ADAPTED | stable 2.19.0 period/team comparisons, raw Git metrics, evidence caveats and Markdown/HTML reporting restored | |
+| `ak-review-pr` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-scenario` | VERIFIED_ADAPTED | stable 2.19.0 12-dimension one-shot and bounded/saturation novelty modes with test-oracle output | |
+| `ak-scout` | VERIFIED_ADAPTED | stable 2.19.0 decision/discovery/repair semantics reviewed; runtime mechanics adapted explicitly | |
+| `ak-security` | VERIFIED_ADAPTED | stable 2.19.0 comprehensive/fast/red-team/fix semantics reviewed; runtime scanners and advisory access remain harness-dependent | |
+| `ak-shader` | VERIFIED_ADAPTED | GLSL version-aware fragment/SDF/noise/coordinate pipeline with compile/visual/GPU QA | |
+| `ak-ship` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly | |
+| `ak-shopify` | VERIFIED_ADAPTED | stable 2.19.0 app/extension/theme lifecycle reviewed with current GraphQL-first API, scope/webhook/version and deploy/publish boundaries | |
+| `ak-show-off` | VERIFIED_DEGRADED | stable 2.19.0 prefs/plan/bilingual HTML/screenshots/publishing gates; capture/helper/AgentWiki unavailable | |
+| `ak-skill-creator` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-sowat` | VERIFIED_PORTABLE | new stable 2.19.0 outcome/impact review using verified changes and bounded next-step recommendations |
+| `ak-stitch` | VERIFIED_DEGRADED | Stitch quota/generate/edit/export and per-project identity with design-to-code handoff; provider absent | |
+| `ak-sumup` | VERIFIED_PORTABLE | new stable 2.19.0 evidence-bounded implementation summary with explicit verified/unverified states |
+| `ak-tanstack` | VERIFIED_ADAPTED | stable 2.19.0 Start/Router/Form/AI scope restored; unrelated TanStack Query/Table/Virtual expansion removed and volatile package APIs bound to current installed docs | |
+| `ak-team` | VERIFIED_DEGRADED | true live-team lifecycle is load-bearing; hard-stop/route elsewhere when harness lacks it | |
+| `ak-tech-graph` | VERIFIED_ADAPTED | stable 2.19.0 diagram views, seven style families, SVG/PNG workflow, routing/label/layout and rendered QA retained with runtime tool substitution | |
+| `ak-test` | VERIFIED_ADAPTED | stable 2.19.0 workflow semantics reviewed; portable runtime substitution explicit | |
+| `ak-threejs` | VERIFIED_DEGRADED | Three.js scene/WebGL-WebGPU/runtime QA; upstream 556-example search corpus absent | |
+| `ak-ui-styling` | VERIFIED_ADAPTED | stable 2.19.0 component/tokens/shadcn-Tailwind mutation and rendered-accessibility gates preserved | |
+| `ak-ui-ux-pro-max` | VERIFIED_DEGRADED | stable 2.19.0 product UX decision workflow preserved; packaged recommendation dataset/search engine is not reproduced | |
+| `ak-vibe` | VERIFIED_ADAPTED | issue-to-worktree-plan-implement-review-PR with optional explicitly authorized beta/stable shipping and CI | |
+| `ak-watzup` | VERIFIED_DEGRADED | executable read-only local Git/worktree/plan scanner with fixture tests; native cross-worktree state/scoring/fetch absent | |
+| `ak-web-frameworks` | VERIFIED_ADAPTED | stable 2.19.0 Next.js/Turborepo workflow reviewed; version, render/cache/build, SEO-GEO and deployment boundaries preserved | |
+| `ak-web-testing` | VERIFIED_ADAPTED | stable 2.19.0 layered web-test/environment/data/flakiness/browser evidence semantics preserved | |
+| `ak-webmcp` | VERIFIED_ADAPTED | new stable 2.19.0 page-level in-browser WebMCP route; browser/spec availability required for live claims |
+| `ak-worktree` | VERIFIED_ADAPTED | stable 2.19.0 delivery/runtime semantics reviewed; provider/harness mechanics adapted explicitly | |
+| `ak-xia` | VERIFIED_ADAPTED | stable 2.19.0 compare/copy/improve/port modes, source challenge and Plan/Cook handoff, no direct Xia implementation | |
 
 ## Agents — 16 identities
 

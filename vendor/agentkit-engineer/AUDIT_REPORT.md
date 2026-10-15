@@ -1,3 +1,9 @@
+# Catalog reconciliation note — 2026-10-15
+
+A fresh authenticated `ak 2.19.0` stable portable registry export verified **103 Skills and 16 Agent sidecars**, and its identity digest matches `UPSTREAM_BASELINE.md` and the stable catalog PR. The previous 102-Skill second-pass audit preserved below is **historical**: it remains evidence for the old workflow review, not the current catalog count or complete 103-Skill runtime acceptance. The new public identities are tracked in `PORTING_MANIFEST.md`. Retired names are no longer discoverable Skills. Source-level structural checks do not prove browser/media/provider/runtime behavioral parity.
+
+---
+
 # Engineer portable fallback — second-pass audit
 
 Audit date: **2026-10-15**. Baseline: signed AgentKit Engineer **stable 2.19.0**. GitHub branch: **`engineer-semantic-parity-2.19.0`**. This report is a dated evidence snapshot; the living per-identity statuses remain in [PORTING_MANIFEST.md](PORTING_MANIFEST.md).

@@ -1,67 +1,35 @@
-# AgentKit Engineer upstream baseline
+# AgentKit Engineer stable package baseline
 
-## Canonical package baseline
+## Authoritative recheck (2026-10-15)
 
-ANGENT's portable fallback is currently audited against **AgentKit Engineer stable 2.19.0**.
+On the authenticated AgentKit 2.19.0 CLI with an active Engineer license, an explicit remote registry export completed:
 
-Evidence observed on 2026-10-14:
+```sh
+ak kit init engineer --target portable --channel stable --version 2.19.0 --out <isolated-temp-dir> --json --no-interactive
+```
 
-- AgentKit CLI: `ak 2.19.0`, authenticated, stable channel.
-- Signed `ak changelog --channel stable --target engineer --json` reports Engineer `2.19.0` as the latest stable release, published 2026-09-28.
-- A fresh remote-registry portable export of Engineer stable resolves **102 Skills**.
-- The same export preserves **16 Agent** definitions under `.agentkit/agents/` as sidecar reference content.
-- Exact Skill-directory comparison against the ANGENT fallback is **102 ↔ 102**, with no upstream-only or fallback-only identities.
+The returned `kit.init` result had `success: true`, `skillsSelected: 103`, `skillsAvailable: 103` and `filesWritten: 1758`. Direct inspection of the exported `agentkit-portable/skills/*/SKILL.md` files confirmed **103 public Skill identities**, and `.agentkit/agents/*.md` confirmed **16 Agent sidecars**. A recursive count of all nested `SKILL.md` files is not the public catalog count (it includes nested guidance).
 
-The earlier docs-derived expectation of 103 public Skills is therefore not used as package truth.
+The canonical SHA-256 of the lexicographically sorted identity arrays (`agent_roles`, `skills`, compact JSON with sorted keys) was independently computed from the exported tree:
 
-## Documentation versus package inventory
+```
+439bc625174a6e9e780f8f464b0129ccf9bfcb4ba5b63d7fa3734d0e05541ddc
+```
 
-The stable “choose an Engineer Skill” documentation is a routing/usage guide and explicitly should not be treated as the packaged-identity inventory.
+That digest matches the 103/16 catalog baseline recorded by the previous stable catalog PR. This direct package observation supersedes the older 102-directory export snapshot. A successful authenticated export establishes identity/catalog provenance, not byte-identical runtime or model performance.
 
-Documentation may describe replacement routes or newer capability concepts before/without changing the currently published package directory set. ANGENT therefore uses:
+## Migration of retired and internal identities
 
-1. signed release/catalog metadata for current release identity;
-2. a freshly resolved stable package artifact for packaged Skill/Agent inventory;
-3. stable documentation for public workflow meaning, migration guidance and capability context.
+Six former workflow names are retired from public Skill discovery: `ak-security-scan`, `ak-use-mcp`, `ak-handover`, `ak-html-video`, `ak-sequential-thinking`, `ak-web-design-guidelines`. The portable replacement routes are documented in `retired-routes/README.md`; previous Git history retains their earlier guidance.
 
-A docs/package discrepancy is preserved as a discrepancy rather than “fixed” by guessing.
+The former `ak-common` entry is an internal convention, now in `internal/common.md`, not a public invocation identity.
 
-## Portable-export boundary
+Eight current public identities are included: `ak-bro`, `ak-diagram`, `ak-enhance-ux-ax`, `ak-explain`, `ak-page-builder`, `ak-sowat`, `ak-sumup`, and `ak-webmcp`.
 
-AgentKit's portable export explicitly describes itself as best-effort/non-production.
+## Porting and verification boundary
 
-It treats `skills/` and exported `AGENTS.md` as first-class portable content, while Agent/hook/command material under `.agentkit/` is preserved-only/inert reference content.
+ANGENT's fallback preserves relevant workflow outcomes and the cognitive/authorization gates, not AgentKit CLI internals, authentication state, hooks, proprietary services or background runtimes. Agent sidecars are roles, not live team processes. Skills depending on browsers, provider services, live teams, rendering or remote datasets remain adapted/degraded or explicitly blocked where necessary.
 
-ANGENT uses that export as **audit evidence and source material**, not as a verified runtime adapter and not as permission to commit a raw upstream mirror.
+The earlier 102-Skill support-path and source-line comparison belongs to the historical `AUDIT_REPORT.md` evidence and cannot prove parity for this revised catalog. Use the current `PORTING_MANIFEST.md` for per-identity source-level status, the selector for exact identity checks, and independent activated-harness acceptance for behavioral claims.
 
-## Parity objective
-
-Portable parity is evaluated by:
-
-- primary workflow outcome;
-- materially distinct modes/options;
-- critical decision, safety and validation gates;
-- reusable domain/support knowledge needed for the workflow to work;
-- assumptions and runtime-specific dependencies;
-- an explicit portable replacement for runtime-specific mechanics;
-- real limitations when equivalent behavior is impossible.
-
-Identity presence, text similarity, source-file count and directory count are evidence for audit triage. None is a parity verdict by itself.
-
-## Current evidence of semantic drift
-
-At the start of the 2.19.0 semantic refresh:
-
-- upstream portable Skill support files: approximately **1428**;
-- ANGENT fallback Skill support files: approximately **236**;
-- identical relative support paths: **112**;
-- upstream SKILL.md lines: approximately **20,150**;
-- fallback SKILL.md lines: approximately **3,632**;
-- upstream direct support references: approximately **545**;
-- fallback direct support references: approximately **136**.
-
-The fallback is intentionally independently adapted and may legitimately be much smaller. The disparity is nevertheless large enough that the old blanket “102/102 implemented” claim cannot serve as semantic acceptance evidence.
-
-## Update rule
-
-When the signed stable package changes, pin the new release evidence first, then re-run identity and semantic review. Do not migrate identities from documentation alone and do not carry old parity verdicts across an upstream release without checking their validity boundary.
+Official documentation: https://docs.agentkit.best/en/stable/kits/engineer

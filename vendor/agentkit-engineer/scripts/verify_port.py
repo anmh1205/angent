@@ -50,13 +50,13 @@ def frontmatter(path: Path, issues: list[str]) -> str:
     return "\n".join(lines[1:close])
 
 
-def audit_port(root: Path, expected_skills: int = 102, expected_agents: int = 16) -> list[str]:
+def audit_port(root: Path, expected_skills: int = 103, expected_agents: int = 16) -> list[str]:
     """Return actionable structural errors. No commands, network or mutations."""
     issues: list[str] = []
     manifest = root / "PORTING_MANIFEST.md"
     try:
         text = manifest.read_text(encoding="utf-8")
-        skills_part = text.split("## Skills — 102 identities", 1)[1]
+        skills_part = text.split("## Skills — 103 identities", 1)[1]
         skills_part, agents_part = skills_part.split("## Agents — 16 identities", 1)
         agents_part = agents_part.split("## Upstream evidence boundary", 1)[0]
     except (OSError, IndexError, ValueError):
@@ -152,14 +152,14 @@ def audit_port(root: Path, expected_skills: int = 102, expected_agents: int = 16
         if status == "REVIEW_PENDING":
             issues.append(f"agent still unreviewed: {name}")
 
-    if expected_skills == 102:
+    if expected_skills == 103:
         accepted = sum(s != "REVIEW_PENDING" for _, s in skill_rows)
         advertised = re.search(
             r"Current accepted coverage: \*\*(\d+) / (\d+) Skill identities reviewed semantically\*\*",
             text,
         )
-        if not advertised or (int(advertised.group(1)), int(advertised.group(2))) != (accepted, 102):
-            issues.append(f"coverage summary inconsistent: accepted={accepted}/102")
+        if not advertised or (int(advertised.group(1)), int(advertised.group(2))) != (accepted, 103):
+            issues.append(f"coverage summary inconsistent: accepted={accepted}/103")
         for status in (*STATUS_MODE, "REVIEW_PENDING"):
             rows = {name for name, state in skill_rows if state == status}
             summary = re.search(
@@ -182,7 +182,7 @@ def main() -> int:
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     errors = audit_port(args.root)
-    report = {"ok": not errors, "expected_skills": 102, "expected_agents": 16, "errors": errors,
+    report = {"ok": not errors, "expected_skills": 103, "expected_agents": 16, "errors": errors,
               "proof_level": "structural_only"}
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2))

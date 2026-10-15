@@ -19,7 +19,7 @@ angent/
 ├── skills/                             # ANGENT owners
 └── vendor/agentkit-engineer/
     ├── plugin.json                     # portable Engineer fallback plugin
-    ├── skills/                         # 102 fallback Skills
+    ├── skills/                         # 103 fallback Skills
     └── agents/                         # 16 portable role definitions
 ```
 
