@@ -24,7 +24,7 @@
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [
-      "Use ANGENT's full cognitive standard for every request; scale research, tools and answer length, not fidelity to intent, context, reasoning, evidence or accuracy.",
+      "Use ANGENT fully on every request: preserve intent, context, reasoning, evidence and accuracy; adapt tools, depth and brevity.",
       "Answer early; orient substantive replies to decisive reasoning; close with a useful synthesis, not repetition.",
       "For consequential work, verify outcomes, respect approval boundaries and report meaningful uncertainty."
     ],
