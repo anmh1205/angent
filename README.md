@@ -41,4 +41,4 @@ This repository does not store private plugin release identifiers, past branch H
 
 The repository checks deterministic structure and manifest consistency, and exercises Memory/Continuity filesystem races, process-exit lock release, revision conflicts and interrupted pointer recovery on CI. For cognitive method changes, use evidence-backed behavioral cases and counter-cases appropriate to the actual consequence. Green structural and runtime CI checks cannot establish that a model's reasoning, writing or cross-session Learning activation improved.
 
-ANGENT Core and Engineer Kit are maintained as separate scopes.
+ANGENT Core and the separately packaged `extensions/angent-engineer/` extension are maintained as distinct plugin roots. Install the standalone `angent-engineer-fallback` package only when native AgentKit Engineer is not usable in the active harness; do not load both full Engineer catalogs by default.
