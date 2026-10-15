@@ -315,6 +315,10 @@ def _detect_agentkit(doctor_mode: str, timeout: float) -> dict[str, Any]:
 
 def _fallback_info(plugin_root: Path) -> dict[str, Any]:
     manifest_path = plugin_root / "plugin.json"
+    if not manifest_path.is_file():
+        # In the unified ANGENT archive this internal catalog manifest is
+        # reference data, not a second installable plugin.
+        manifest_path = plugin_root / "source-manifest.json"
     skills_root = plugin_root / "skills"
     agents_root = plugin_root / "agents"
 
