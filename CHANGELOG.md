@@ -36,6 +36,7 @@ ANGENT Core remains an unreleased candidate. Core hardening and cognitive-collab
 
 ### Reliability semantics
 
+- Hardened the local Continuity frontier store so malformed persisted branch scheduling states and resume-compatibility values are rejected while schema v1 and optional-field backward compatibility remain intact.
 - Activated the cross-cutting core fixture bank from Root for broad core/method/prompt/owner-interface changes with propagation risk; relevant cases are selected progressively rather than run as a global suite.
 - Added fixtures for operational-failure/domain separation, mutation freshness, canonical-role identity drift, resume compatibility, post-dispatch authority changes and specialist evidence re-admission, each with counter-cases where over-triggering is plausible.
 - Added explicit material epistemic states: OBSERVED, ESTABLISHED, INFERRED, ASSUMED, UNKNOWN, CONFLICTED and STALE.

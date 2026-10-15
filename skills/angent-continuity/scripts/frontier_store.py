@@ -32,6 +32,8 @@ VALID_LIFECYCLES = {
     "ABANDONED",
 }
 VALID_REPAIR_STATES = {"NONE", "REPAIRING", "UNSTABLE"}
+VALID_BRANCH_STATES = {"RUNNABLE", "WAITING_EXTERNAL", "BLOCKED", "DONE"}
+VALID_RESUME_COMPATIBILITIES = {"COMPATIBLE", "REVALIDATE", "AMBIGUOUS", "INCOMPATIBLE"}
 
 
 def now_iso() -> str:
@@ -226,6 +228,24 @@ def validate_frontier(frontier: Any) -> str | None:
     for field in ("active_obligations", "verified_completed", "stale_or_recheck"):
         if field in frontier and not isinstance(frontier[field], list):
             return f"{field}_must_be_list"
+
+    branches = frontier.get("frontier_branches")
+    if branches is not None:
+        if not isinstance(branches, list):
+            return "frontier_branches_must_be_list"
+        for index, branch in enumerate(branches):
+            if not isinstance(branch, dict):
+                return f"frontier_branch_{index}_must_be_object"
+            state = branch.get("state")
+            if state is not None and state not in VALID_BRANCH_STATES:
+                return f"frontier_branch_{index}_invalid_state"
+
+    resume_compatibility = frontier.get("resume_compatibility")
+    if (
+        resume_compatibility is not None
+        and resume_compatibility not in VALID_RESUME_COMPATIBILITIES
+    ):
+        return "invalid_resume_compatibility"
 
     return None
 
