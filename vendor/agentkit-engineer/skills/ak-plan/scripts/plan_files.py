@@ -55,7 +55,7 @@ def create(project_root: Path, title: str) -> dict:
     slug = slugify(title)
     parent = root_folder(project_root)
     parent.mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dt%H%M%S")
     path = None
     for i in range(1, 1001):
         plan_id = timestamp + "-" + slug + (f"-{i}" if i > 1 else "")
