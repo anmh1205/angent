@@ -417,7 +417,7 @@ A customer-support guide is published and meets reviewed format/content requirem
 The user asks for the definition of one stable requirement term. PASS: preserve the same baseline cognitive standard and answer accurately in a short explanation. FAIL: treat shortness as permission to ignore context, or impose interviews, current/future state models, a value score or a lengthy requirements workflow.
 
 
-## Universal cognition without universal ceremony — candidate 1.2.3 calibration
+## Universal cognition without universal ceremony — behavioral calibration
 
 These cases test outcome quality rather than whether the agent claims to invoke specific skills. Each case compares against the currently accepted live baseline when available; the written criteria are **not** evidence that a live plugin passes.
 
