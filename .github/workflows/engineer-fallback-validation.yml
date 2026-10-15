@@ -1,0 +1,85 @@
+name: Engineer fallback parity structure
+
+on:
+  pull_request:
+    paths:
+      - 'vendor/agentkit-engineer/**'
+      - '.github/workflows/engineer-fallback-validation.yml'
+  push:
+    branches:
+      - integration/engineer-semantic-parity-2.19.0
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  engineer-structure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+      - name: Prepare Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Check Engineer fallback inventory and references
+        run: python3 vendor/agentkit-engineer/scripts/verify_port.py --json
+      - name: Exercise structural gate counterexamples
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/scripts -p 'test_verify_port.py' -v
+      - name: Smoke native/fallback selection without doctor side effects
+        shell: bash
+        run: |
+          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable no > /tmp/engineer-no.json
+          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable unknown > /tmp/engineer-unknown.json
+          python3 vendor/agentkit-engineer/scripts/select_engineer.py --doctor none --native-usable yes > /tmp/engineer-yes.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          base = Path("/tmp")
+          no = json.loads((base / "engineer-no.json").read_text())
+          unknown = json.loads((base / "engineer-unknown.json").read_text())
+          yes = json.loads((base / "engineer-yes.json").read_text())
+          assert no["mode"] == "fallback" and no["fallback"]["ready"], no
+          assert unknown["mode"] == "fallback" and unknown["fallback"]["ready"], unknown
+          assert yes["mode"] == "native" and not yes["policy"]["load_both"], yes
+          PY
+      - name: Exercise offline Git snapshot packer and security fixtures
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-repomix/scripts -p 'test_pack_local.py' -v
+      - name: Exercise local read-only Git status scanner fixtures
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-watzup/scripts -p 'test_scan_local.py' -v
+      - name: Smoke both tools on real Engineer branch checkout
+        shell: bash
+        run: |
+          python3 vendor/agentkit-engineer/skills/ak-repomix/scripts/pack_local.py --root . --include 'vendor/agentkit-engineer/skills/ak-repomix/SKILL.md' --format json --output /tmp/engineer-pack-smoke.json
+          python3 vendor/agentkit-engineer/skills/ak-watzup/scripts/scan_local.py --root . --json > /tmp/engineer-watzup-smoke.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          pack = json.loads(Path('/tmp/engineer-pack-smoke.json').read_text())
+          status = json.loads(Path('/tmp/engineer-watzup-smoke.json').read_text())
+          assert pack['metadata']['files_included'] == 1 and pack['metadata']['complete'], pack['metadata']
+          assert pack['files'][0]['path'] == 'vendor/agentkit-engineer/skills/ak-repomix/SKILL.md'
+          assert isinstance(status['current'].get('branch'), str), status
+          assert status['source'] == 'local_git_read_only'
+          PY
+          test -z "$(git status --porcelain)"
+      - name: Exercise local Python AST navigation and safety fixtures
+        run: python3 -m unittest discover -s vendor/agentkit-engineer/skills/ak-gkg/scripts -p 'test_search_python_ast.py' -v
+      - name: Smoke AST symbol discovery on actual ANGENT code
+        shell: bash
+        run: |
+          python3 vendor/agentkit-engineer/skills/ak-gkg/scripts/search_python_ast.py --root . --symbol audit_port > /tmp/engineer-ast-smoke.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('/tmp/engineer-ast-smoke.json').read_text())
+          assert any(x['path'] == 'vendor/agentkit-engineer/scripts/verify_port.py' for x in result['definitions']), result
+          assert result['source'] == 'local_python_ast_no_network'
+          PY
+          test -z "$(git status --porcelain)"
+      - name: Check committed whitespace
+        run: git diff --check HEAD^ HEAD

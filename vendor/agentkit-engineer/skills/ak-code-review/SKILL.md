@@ -1,11 +1,13 @@
 ---
 name: ak-code-review
-description: Review software changes independently against requirements, AGENTS.md, system behavior, edge cases, and fresh verification evidence; report only actionable findings with clear impact.
+description: Review pending changes, commits, pull requests or codebase scope independently against requirements, system behavior, edge cases and fresh verification evidence.
 license: MIT
 metadata:
   author: ANGENT fallback
   port: angent-fallback
+  mode: adapted
   inspired-by: AgentKit Engineer ak-code-review
+  baseline: "AgentKit Engineer 2.19.0"
 ---
 
 # Code Review — Portable Fallback
@@ -23,6 +25,18 @@ This fallback does not require AgentKit CLI, a dedicated reviewer subagent, or a
 - `references/finding-quality.md` — write evidence-backed, actionable findings.
 - `references/verification-and-verdict.md` — use fresh evidence and produce a defensible final verdict.
 - `references/parallel-review.md` — use multiple reviewers only when scopes are genuinely independent.
+
+## Resolve the review target
+
+Support the useful upstream target modes through whatever repository/provider capability exists:
+
+- **pending** — staged/unstaged/current workspace changes;
+- **commit** — one commit/range;
+- **pull request** — provider PR diff plus relevant full files/metadata;
+- **codebase** — bounded whole-codebase audit;
+- **parallel codebase** — independent scoped reviewers only where ownership is separable.
+
+If the target is ambiguous and cannot be inferred from the current task, ask once rather than reviewing the wrong surface.
 
 ## Establish the review contract
 
@@ -48,7 +62,10 @@ Check whether the implementation actually satisfies the intended behavior:
 - incorrect error/edge path;
 - broken authorization/security boundary;
 - stale or partial migration;
-- unhandled consumer.
+- unhandled consumer;
+- unjustified extra behavior.
+
+Requested scope is a constraint, not a finding. Do not recommend cutting requested behavior merely to simplify the implementation.
 
 ### Pass 2 — implementation quality
 
@@ -60,32 +77,27 @@ Then inspect relevant quality risks:
 - maintainability where it affects defect risk;
 - test adequacy;
 - observability/recovery;
-- performance when material.
+- performance/security when material.
 
 Do not flood the review with style nits that do not affect the requested quality bar.
 
-## Scout edge cases when the change warrants it
+## Trace the requirement across the real boundary
+
+When a diff changes a shared interface, lifecycle or data path, review both ends of the interaction, not just whether the edited function looks correct. Identify what the producer guarantees, what the consumer assumes, when the state becomes observable and what happens on partial failure or version skew. Prefer a concrete reachability argument or discriminating check over a speculative claim of risk. A passing unit test on each module does not by itself establish compatible behavior between them.
+
+## Scout edge cases when warranted
 
 For multi-file, shared-utility, cross-layer, stateful, async, security-sensitive, or complex bug-fix changes, inspect beyond the modified lines.
 
-Use the available Scout capability or direct repository search to find:
-- callers/consumers;
-- data/control flows;
-- related schema/config;
-- error paths;
-- untested boundaries;
-- analogous code paths.
+Look for callers/consumers, data/control flow, schema/config, error paths, untested boundaries and analogous implementations.
 
-A one-line isolated change may not need a separate scout ceremony.
+A one-line isolated change does not require parallel-review ceremony.
 
 ## Independent evidence
 
-Do not trust:
-- implementation author's summary;
-- specialist “done” claim;
-- passing lint as proof of runtime correctness.
+Do not trust implementation summaries, worker "done" claims, polished comments or happy-path tests as proof.
 
-Read the changed code and relevant surrounding code. Run/inspect targeted verification when it can confirm or reject a finding.
+Read the changed code and relevant surrounding code. Run/inspect targeted verification when it can confirm or reject a material finding.
 
 ## Findings
 
@@ -94,27 +106,25 @@ A finding should contain:
 - exact location;
 - mechanism;
 - concrete consequence;
-- evidence or reproduction path;
+- evidence/reproduction path;
 - remediation direction when useful.
 
 Do not report speculative defects without enough evidence to make them actionable.
 
 ## Fix authority
 
-If the task is review-only, do not silently modify code.
+Review-only is read-only.
 
-If fixes are authorized, accepted findings can be handed to Execution after the review result is established.
-
-Reviewer and fixer should remain conceptually separate even if the same model performs both sequentially.
+If fixes are authorized, establish the review result first, then hand accepted findings to Execution/Fix and re-review relevant repaired scope.
 
 ## Final verdict
 
 Return:
-- reviewed scope;
+- reviewed scope/target mode;
 - material findings;
 - rejected/uncertain findings when important;
 - verification performed;
 - coverage limitations;
 - readiness verdict relative to the requested gate.
 
-“No findings” means no material findings were established in the reviewed scope. It does not prove unreviewed scope is clean.
+"No findings" means no material findings were established in the reviewed scope. It does not certify unseen scope.

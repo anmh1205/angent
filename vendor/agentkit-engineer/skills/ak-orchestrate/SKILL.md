@@ -16,6 +16,10 @@ Use when several jobs are independent enough that parallelism, context isolation
 - `references/capture-recovery.md` — durable job state, interruption and retry.
 - `references/safety-arbiter.md` — effect boundaries and independent synthesis.
 
+## Working without an orchestration CLI
+
+Read `references/coordination-judgement.md` when the decision to split, delegate, persist or reconcile work is consequential. The core competence is constructing and revising a sound dependency/ownership model, not calling a process supervisor. Actual worker launch, output, cancellation and resume still require live provider capabilities; do not pretend a job is running when only a plan exists.
+
 ## Core rule
 
 Do not fan out when one agent can do the work with lower coordination cost.

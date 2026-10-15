@@ -2,18 +2,32 @@
 
 ## Router / Start
 
-Own routing, loaders/server functions and route error boundaries.
+Own route definitions, params/search state, loaders/beforeLoad, navigation/pending/error boundaries and Start's server/build/runtime layer.
 
-## Query
+Distinguish server functions used by the application from public server routes/endpoints.
 
-Own server-state caching, query keys, invalidation/refetch and mutation lifecycle.
+Preserve generated route-tree ownership.
 
 ## Form
 
-Own field/form state and typed validation/submission.
+Own typed field/form state, validation timing, async validation, submission and server validation.
+
+The UI components remain application-owned/headless.
 
 ## AI
 
-Own streaming/chat/tool transport behavior.
+Own the installed TanStack AI streaming/chat/tool/output contract.
 
-Keep concerns separated: Query is not local UI state management, and Router loading is not automatically a replacement for all server-state caching.
+Provider credentials remain server-side unless a documented BYOK/client mode is explicitly selected.
+
+## Not owned by this packaged Skill
+
+TanStack Query, Table, Virtual and other TanStack libraries are not silently pulled into this Skill merely because they share the TanStack brand.
+
+When present in the project, follow their current documentation/project conventions or an appropriate separate capability.
+
+## Version drift
+
+The 2.19.0 package snapshot contains APIs/maturity labels that can age quickly.
+
+Current installed package + official docs outrank memorized examples.

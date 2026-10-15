@@ -1,18 +1,52 @@
-# Files-first plan
+# Durable plan meaning and source ownership
 
-A durable plan should survive runtime/tool changes.
+A plan must survive runtime/tool changes and a fresh session **through its authoritative project source**. A file is a good source when the project uses files; an issue/spec/Notion plan can be the authority when the team already works there. Choose the canonical owner before creating artifacts. A portable Skill must not make a duplicate `plan.md` into a second competing source of truth.
 
-Suggested structure:
+## Minimum semantic structure
+
+Record:
 - objective;
+- requested scope and non-goals;
 - constraints/invariants;
-- current-state summary;
-- decisions and assumptions;
+- current-state summary with evidence pointers;
+- accepted decisions;
+- load-bearing assumptions and refresh/replan triggers;
+- architecture/solution shape;
 - phase/work-unit list;
 - dependency graph/order;
-- files/modules/interfaces involved;
+- files/modules/interfaces/state involved;
+- migration/rollback/compatibility state when material;
 - acceptance/verification per phase;
-- risk/replan triggers;
+- risks and mitigations;
 - unresolved decisions;
-- progress markers when used for active work.
+- progress state when the plan is used for active execution.
 
-A database/dashboard may index the plan but must not be the only place where the plan meaning exists.
+An index/dashboard is not automatically the owner of plan meaning. If an issue or document system owns it, retain the decisive reasons and acceptance evidence there (or in stable linked documents), rather than assuming a parallel local file outranks it.
+
+## Phase quality
+
+Each phase should answer:
+
+- what capability/state becomes true;
+- why this phase exists now;
+- what it depends on;
+- what it owns/touches;
+- what must not change;
+- how to implement the change;
+- what evidence proves completion;
+- what observation invalidates the phase/plan.
+
+Avoid phase files that are merely filenames or TODO inventories.
+
+## Handoff
+
+A successor should be able to execute the plan without replaying the planning conversation.
+
+Carry a compact handoff:
+- goal;
+- approved scope/non-goals;
+- decisive evidence/decisions;
+- authoritative artifact/provider pointer;
+- acceptance criteria;
+- open risks/blockers;
+- authority granted for the next stage.

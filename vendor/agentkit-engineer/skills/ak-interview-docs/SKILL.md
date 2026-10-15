@@ -1,24 +1,27 @@
 ---
 name: ak-interview-docs
-description: Extract a user's vision, constraints and decisions through a focused interview and turn them into durable project documentation.
+description: Elicit user-owned project vision and structured decisions through incremental, evidence-preserving document updates.
 license: MIT
-metadata: {port: angent-fallback, mode: portable}
+metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Interview Docs — Portable Fallback
 
-Use for README, ADR, principles, strategy, architecture intent or other durable documents when critical knowledge exists mainly in the user's head.
+Use when user knowledge and explicit decisions—not code inspection or assistant proposals—are the document's authority. Use `ak-docs` for code-derived documentation and `ak-brainstorm` for generating options.
 
-## Workflow
+## Mode and ownership
 
-1. Identify the document's audience and decision purpose.
-2. Read existing project docs/source to avoid asking known facts.
-3. Ask one focused question at a time only when the answer changes the document materially.
-4. Separate explicit decision from tentative preference.
-5. Resolve contradictions before writing.
-6. Draft the document in the project's existing information architecture.
-7. Read back for missing assumptions and stale statements.
+- **Vision/decision:** inspect existing README and decision documents; record vision in its owner and only accepted decisions in project-approved ADR/decision format.
+- **Structured document:** inspect nearby artifacts; build one user-authored principles, strategy, review or similar document without imposing rank or priority on unordered lists.
+- If modes would change ownership, clarify only the material ambiguity. Do not create a new docs tree by default.
 
-Do not turn the interview into a generic questionnaire.
+## Interview and write cycle
 
-Do not store transient task chatter in durable project docs.
+1. Recover prior answers and current docs; never repeat settled questions.
+2. Ask focused questions singly for scoped documents, or in manageable groups for broad vision when the user permits. Avoid generic surveys.
+3. Separate accepted decisions, tentative preferences and suggestions; preserve the user's language and intended order.
+4. After each answer or complete decision, re-read the affected section and patch only authorized content, then read back before dependent questioning.
+5. Keep unanswered topics explicit; do not invent content, constraints, architecture or priorities.
+6. Continue until the user ends the interview. Preserve existing edits and never persist credentials or private data.
+
+An interview is not an excuse to block an already-specified writing task with redundant questions.

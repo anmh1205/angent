@@ -5,6 +5,7 @@ license: MIT
 metadata:
   author: agentkit
   port: angent-fallback
+  mode: adapted
   upstream: "handoff@ce70edaa26247b84c2b9491a0cdb4964f65cf3a5"
 ---
 
@@ -79,6 +80,6 @@ A successor should:
 
 Handoff context does not create authorization for deploy/publish/delete or other effects.
 
-## No side effects
+## No implicit continuation effects
 
-Creating a handoff must not launch a coding runtime, spawn workers, mutate the project beyond the handoff artifact, or silently execute the next step.
+Saving an authorized handoff is itself a document write; this Skill does not authorize any **other** project/provider changes. Creating it must not launch a coding runtime, spawn workers, silently change project status or execute the next step.

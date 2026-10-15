@@ -1,65 +1,85 @@
 ---
 name: ak-team
-description: Coordinate a small team of independent specialist agents for research, implementation, review or debugging when parallelism or context isolation adds real value.
-metadata: {port: angent-fallback, mode: adapted}
+description: Coordinate live teammate sessions with shared work, direct communication, ownership, verification and cleanup when the active runtime exposes a real team lifecycle.
+metadata: {port: angent-fallback, mode: degraded, baseline: "AgentKit Engineer 2.19.0"}
 ---
 
 # Team — Portable Fallback
 
-Use only when multiple independent teammates improve quality or elapsed time enough to justify coordination.
+Use only when the active harness exposes the **live team lifecycle** required for real multi-session teammate collaboration.
 
 Read `references/team-protocol.md`.
 
-## Runtime capability
+## CLI independence
 
-Discover what the active harness actually supports:
-- persistent team/teammate sessions;
-- one-shot subagents;
-- isolated worktrees/files;
-- messaging/task surfaces;
-- no delegation.
+A live Team does not require the `ak` executable when the host itself provides persistent teammates, shared task state, direct messaging, joining and shutdown. Conversely, a Markdown Skill cannot supply these live capabilities on its own. For a requested *result* rather than a persistent Team, `ak-orchestrate` or sequential specialist Skills are the correct portable routes; keep Team's own lifecycle boundary intact.
 
-If true teams are unavailable, execute the same role assignments through one-shot workers or sequential role isolation.
+## Required runtime capability
 
-Do not pretend sequential execution is parallel.
+Before starting, verify the live runtime can provide the semantics this workflow depends on:
+
+- create independent teammate sessions;
+- maintain shared work/task state;
+- send/receive direct messages or equivalent coordination;
+- wait/join on teammate progress;
+- shut down teammates;
+- clean up team/session state.
+
+If any required lifecycle capability is absent, **do not silently substitute ordinary one-shot subagents or sequential role simulation and still call it Team**.
+
+Instead:
+- use `ak-orchestrate` for independent one-shot/headless jobs when appropriate;
+- use Cook/Reasoning for sequential work;
+- otherwise return the exact capability blocker.
+
+This explicit degraded boundary is part of portable correctness.
+
+## When Team is justified
+
+Use when:
+- several independent workstreams need persistent context;
+- teammates benefit from direct coordination during the run;
+- shared state/ownership must evolve while work proceeds;
+- lead-mediated integration is materially better than separate one-shot jobs.
+
+Do not use Team merely to obtain more opinions or to parallelize tightly coupled work.
 
 ## Lifecycle
 
-1. Define the parent outcome and why a team is useful.
-2. Partition independent jobs with explicit dependencies.
-3. Give each teammate a narrow context contract: role, job, inputs, ownership, allowed effects, acceptance evidence and return format.
-4. Isolate concurrent writers and avoid overlapping ownership.
-5. Track blocked/completed jobs durably enough to recover from interruption.
-6. Join evidence/artifacts, not full transcripts.
-7. Preserve disagreement until ANGENT Reasoning resolves it.
-8. Reconcile integrated results and update Continuity.
+1. Define parent outcome, accepted scope and why live-team semantics are useful.
+2. Decompose independent jobs and shared dependencies.
+3. Give each teammate a narrow context contract: role, work unit, inputs, ownership, allowed effects, acceptance evidence and return format.
+4. Establish shared work/task state and explicit ownership.
+5. Isolate concurrent writers where required.
+6. Coordinate through live messages/state rather than duplicated full-context prompts.
+7. Join evidence/artifacts after prerequisites settle.
+8. Preserve disagreement until Reasoning resolves it.
+9. Verify the integrated result; teammate completion messages are not endpoint proof.
+10. Shut down teammates and clean up team state.
 
 ## Lead responsibilities
 
-The lead/synthesizer owns:
-- job decomposition;
-- dependency order;
+The lead owns:
+- decomposition/dependency order;
 - authority propagation;
-- conflict/integration handling;
-- checking that worker claims match artifacts/evidence.
+- plan approval when the workflow requires it;
+- ownership conflict handling;
+- synthesis/integration;
+- checking worker claims against artifacts/evidence;
+- shutdown and cleanup.
 
-Workers do not become independent strategic owners.
+Teammates do not become independent strategic owners.
 
 ## Failure handling
 
-- blocked worker → re-scope or supply missing context; do not resend unchanged;
-- worker failure → keep useful partial evidence and reassess routing;
-- overlapping writes → stop/sequence or isolate before continuing;
-- conflicting conclusions → compare evidence or use independent arbiter; do not majority-vote.
-
-## Resource policy
-
-Use the smallest team that creates real value.
-
-Do not duplicate the same context across many agents only to obtain more opinions.
+- blocked teammate → resolve missing context/dependency or re-scope; do not resend unchanged;
+- unavailable lifecycle capability → hard-stop Team and route to another workflow;
+- overlapping writes → sequence/isolate before continuing;
+- conflicting conclusions → compare evidence or use an independent arbiter; never majority-vote;
+- teammate failure → preserve useful partial evidence and reassess the remaining graph.
 
 ## Boundary
 
-Team does not create new authority.
+Team does not create effect authority.
 
-ANGENT Reasoning remains the strategic owner and Continuity remains the active-work state owner.
+ANGENT Reasoning remains strategic owner; Continuity remains durable task-state owner.

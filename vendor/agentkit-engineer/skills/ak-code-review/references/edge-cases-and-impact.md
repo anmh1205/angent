@@ -18,6 +18,12 @@ Consider only what fits the code:
 - locale/timezone/encoding;
 - UI loading/error/empty/auth states.
 
+## Cross-boundary causality
+
+For a change spanning layers, reconstruct one real input through producer → representation/transport → consumer → observed result. Check whether each layer agrees on units, data shape, optionality, ordering, version, error handling and recovery. A defect at the final consumer may originate at the first producer that violated an invariant. Conversely, correcting a producer can break a legitimate older consumer. Trace actual call sites, protocol schemas and tests before deciding which owner should change.
+
+Ask which passing tests might conceal the bug. Mock-driven unit tests can certify an invented peer contract; a green build cannot certify hardware timing; a reviewed cloud handler cannot establish that field devices transmit valid payloads. Report these as unverified boundaries unless there is an observable failure mechanism and enough evidence for a finding. Propose the smallest discriminating test at the **missing** boundary, not a blanket demand for more tests.
+
 ## Indirect consumers
 
 Search callers/importers/schema consumers when a shared contract changes.

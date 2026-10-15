@@ -8,6 +8,10 @@ metadata: {port: angent-fallback, mode: adapted}
 
 Use when the user asks what Engineer/ANGENT can do or which workflow to run.
 
+## Questions phrased as `ak` commands
+
+Interpret the user's desired capability and explain the relevant Skill's **working method**, rather than translating each CLI verb into a substitute command. Load `../ak-agentkit/references/outcome-routing.md` when needed. Typical owners include Plan for implementation reasoning, Journal for historical engineering evidence, Scout for repository investigation, Test for validation and Orchestrate for meaningful multi-job coordination. Native installation guidance is relevant only when the user wants to administer the AgentKit product itself.
+
 ## Native AgentKit
 
 When native AgentKit is usable, point to:
@@ -26,3 +30,8 @@ Use `PORTING_MANIFEST.md` and active fallback catalog to explain:
 - recommended workflow for the user's outcome.
 
 Prefer task-oriented help over dumping a list of 102 names.
+
+## Stable 2.19.0 outcome router
+Select by result rather than dumping every installed name: `ak-ask` for a narrow architecture answer; `ak-advise` for guided problem reframing; `ak-brainstorm` for choices; `ak-scout`/`ak-research` for evidence; `ak-plan`/`ak-issue-to-plan` for planning; `ak-cook` for authorized implementation; `ak-debug` for cause; `ak-fix` for proven repair; `ak-test`/`ak-code-review` for validation; `ak-ship`/`ak-deploy` for delivery.
+
+Prefer actually installed native AgentKit help and its live CLI/catalog when usable. In fallback, `PORTING_MANIFEST.md` gives semantic review and degraded boundaries: a packaged directory or sidecar agent name never establishes browser/CLI/worker availability. Return an actionable shortest supported workflow, relevant invocation and honest limitations, rather than generic skill advertising.

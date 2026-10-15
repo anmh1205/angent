@@ -5,6 +5,7 @@ license: MIT
 metadata:
   author: ANGENT fallback
   port: angent-fallback
+  mode: adapted
   inspired-by: AgentKit Engineer ak-debug
 ---
 

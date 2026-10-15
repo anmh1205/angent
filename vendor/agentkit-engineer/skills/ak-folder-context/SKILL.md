@@ -1,23 +1,21 @@
 ---
 name: ak-folder-context
-description: Create or refine a nested AGENTS.md that adds durable conventions for one project subtree without duplicating the root instructions.
+description: Create minimal subfolder AGENTS.md instructions only when durable subtree-specific constraints merit their cost.
 license: MIT
 metadata: {port: angent-fallback, mode: adapted}
 ---
 
 # Folder Context — Portable Fallback
 
-Use when a subfolder has conventions, commands, architecture or constraints that differ meaningfully from the project root.
+This skill is for subfolders, not root instructions or project documentation. Route root agent instruction to `ak-docs agent-context` and human docs to `ak-docs`.
 
 ## Workflow
 
-1. Read root and intermediate AGENTS.md files.
-2. Inspect the target subtree.
-3. Identify only durable instructions specific to that subtree.
-4. Create/update the nearest nested AGENTS.md.
-5. Avoid repeating root guidance unless needed to clarify an exception.
-6. Verify the file does not contain task progress, secrets or transient memory.
+1. Confirm the target is a subtree; read root and intermediate AGENTS.md, local files, source/config and any existing CLAUDE.md.
+2. Apply a creation gate: static reference folders and discoverable conventions do not need instruction files.
+3. Identify only durable scoped commands, constraints, locked decisions and non-obvious differences from parent rules. Never write secrets or transient task progress.
+4. For a new file, conflicting authority or material rewrite, propose a grouped outline/diff before writing unless that specific change is already authorized.
+5. Write nested AGENTS.md as the canonical portable source. If a runtime needs CLAUDE.md, use a symlink/generated alias or a clear pointer; never maintain independent conflicting copies.
+6. Read back, verify ancestor consistency and preserve user edits. Re-read after subsequent user modifications; never revert them silently.
 
-Do not create harness-specific instruction files as independent sources of truth.
-
-If a harness needs another filename, project/generate it from AGENTS.md through compatibility tooling.
+Do not invent policies or create files outside the approved subtree.

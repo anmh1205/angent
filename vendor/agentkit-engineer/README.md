@@ -13,7 +13,7 @@ ANGENT core and Engineer fallback are intentionally separate package roots:
 └── vendor/agentkit-engineer/
     ├── plugin.json             # portable Agent Plugins manifest
     ├── .codex-plugin/plugin.json # ChatGPT/Codex companion manifest
-    ├── skills/                 # 102 portable Engineer Skills
+    ├── skills/                 # 102 portable Engineer Skill identities
     ├── agents/                 # 16 portable role definitions
     └── scripts/select_engineer.py
 ```
@@ -22,7 +22,7 @@ Agent Plugins v1 uses a fixed `skills/` discovery root and does not provide a po
 
 ## Native path
 
-If official AgentKit Engineer is usable in the active environment, use native.
+If official AgentKit Engineer is usable in the active environment, use native. **Installing the `ak` binary is not a prerequisite for normal fallback engineering work:** Plans, Journal, Skill routing, status boards and orchestration reasoning are independently routed to Skills and available host file/agent capabilities.
 
 Do not vendor or mirror native AgentKit source in this repository.
 
@@ -45,12 +45,29 @@ If native AgentKit Engineer is absent, unusable or not proven usable, activate t
 
 Coverage:
 
-- **102/102 Skills implemented**
-- **16/16 portable Agent roles implemented**
+- **102/102 stable 2.19.0 Skill identities present**
+- **16/16 Agent role identities present**
+- **current per-Skill semantic status and explicit runtime degradations are tracked only in [PORTING_MANIFEST.md](PORTING_MANIFEST.md); do not duplicate mutable progress counts here**
 
-See `PORTING_MANIFEST.md` for the Skill inventory and portability modes.
+Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md` for the live semantic-review ledger, `AUDIT_REPORT.md` for dated verification evidence and remaining runtime gates, and `UPSTREAM_BASELINE.md` for pinned upstream evidence.
 
-The fallback is an independent ANGENT implementation, not an upstream mirror.
+The fallback is an independent ANGENT implementation, not an upstream mirror. [Outcome routing](skills/ak-agentkit/references/outcome-routing.md) describes how agent capabilities are selected by the actual engineering problem, not by reproducing CLI commands. Native product administration remains under `ak-ak`.
+
+## Agent-led engineering
+
+Engineer Skills transmit **the way an agent should think and work**: how to inspect and question evidence, select a method, plan dependencies, act with bounded authority, detect contradictions and verify real outcomes. The portable contract is not a map of `ak` subcommands to replacement scripts. Normal planning, journaling, testing and coordination do not require the AgentKit binary.
+
+Apply the [outcome routing](skills/ak-agentkit/references/outcome-routing.md), [plan stewardship](skills/ak-plan/references/plan-stewardship.md), [journal judgment](skills/ak-journal/references/journal-judgement.md) and [coordination judgment](skills/ak-orchestrate/references/coordination-judgement.md). A Skill should teach the reasoning and decision criteria; tools are invoked only when the task actually needs an effect.
+
+## Optional deterministic helpers
+
+The following helpers remain subordinate to Skill-based judgment, for repeatable local inspections that genuinely benefit from code:
+
+- `skills/ak-repomix/scripts/pack_local.py` — bounded local Git source export, with sensitive-file safeguards and completeness reporting.
+- `skills/ak-watzup/scripts/scan_local.py` — read-only Git/worktree and project-plan status observations.
+- `skills/ak-gkg/scripts/search_python_ast.py` — Python AST symbol definitions and candidate references.
+
+They require Git, Python and an accessible local worktree. The previously introduced `ak-plan` and `ak-journal` file-lifecycle CLI substitutes were removed as unnecessary: these are first and foremost **agent reasoning methods** applied using existing project file/document tools. External AgentKit account/licensing/kit/service effects still require the real product.
 
 ## Selection
 
@@ -76,9 +93,15 @@ The files under `agents/` are therefore role semantics for adapters/workflows:
 
 Do not create separate Claude/Codex/Cursor reasoning forks.
 
+## Pinned upstream baseline
+
+The current fallback audit baseline is the signed **AgentKit Engineer stable 2.19.0** package resolved through the official registry. The stable docs Skill guide is used for routing/capability context, but not as packaged-inventory authority.
+
+Raw upstream source/export content is not stored here. Audit evidence and source boundaries are recorded in `UPSTREAM_BASELINE.md`.
+
 ## Porting principle
 
-Preserve the useful workflow outcome, not AgentKit implementation mechanics.
+Preserve the useful workflow outcome, critical gates, reusable domain/support knowledge and safety boundaries—not AgentKit implementation mechanics.
 
 Examples:
 
