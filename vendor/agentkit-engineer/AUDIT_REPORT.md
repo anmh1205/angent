@@ -46,6 +46,14 @@ Direct stable 2.19.0 help inspection established that `ak plan create` scaffolds
 
 The [CLI-to-Skill crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) and [orchestration dispatch contracts](skills/ak-orchestrate/references/cli-free-dispatch.md) distinguish files-first workflows and actual host-tool dispatch from native-only signed-kit, authentication, license, proprietary telemetry, dashboard/server, durable process-supervisor or provider effects. This is a **workflow-source migration**; it does not demonstrate execution of every host file/provider operation on every harness. Runtime and cross-harness acceptance remain open.
 
+## CLI-independent file and workflow execution — 2026-10-15
+
+Reviewing native AgentKit 2.19.0 help established that `ak plan create/validate` are ordinary local plan file operations, `ak journal create` creates a collision-safe Markdown file, `ak run` resolves a Skill through an adapter, and `ak orchestrate` has distinct process-observation and effectful supervision modes. We corrected the earlier *binary-as-prerequisite* fallacy by adding an explicit [command-to-Skill crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) and corresponding routing in Plan, Journal, Engineer Router, Help, Orchestrate, Plans Kanban and Team.
+
+Unlike a documentation-only remap, the bounded local fallback now has `ak-plan/scripts/plan_files.py` (create/list/status/validate/add-phase of plan.md and phase files) and `ak-journal/scripts/journal_files.py` (collision-safe create/list/show/validate). Both use project-scoped standard files, independent of `ak`, avoid overwrites, and separate source-state markers from verified acceptance. CLI-administration-specific product behaviors and live process supervision still require a real provider.
+
+The branch CI [run 38657510858](https://github.com/anmh1205/angent/actions/runs/38657510858), commit `d9c5c768b881b2a746a04e0f32374ddae11b5b3f`, **PASS**: structural inventory and selector, 8 structural fixture tests, 10 Repomix tests, 6 Watzup tests, 7 GKG AST tests, 6 Journal tests and 8 Plan tests, plus actual-checkout smoke checks. This establishes behavior of these local deterministic subsets under GitHub Ubuntu/Python 3.12. It does not establish multi-harness proprietary AgentKit control-plane parity, provider services, native dashboard, live teams or background job control.
+
 ## Remaining runtime acceptance
 
 The 25 `VERIFIED_DEGRADED` skills are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.

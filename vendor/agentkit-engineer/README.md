@@ -53,6 +53,10 @@ Identity presence is not accepted as capability parity. See `PORTING_MANIFEST.md
 
 The fallback is an independent ANGENT implementation, not an upstream mirror. [CLI-to-Skill crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) documents which `ak` commands are replaced by actual portable outcomes and which native administration/service effects remain unavailable.
 
+## CLI-independent workflows and optional local tools
+
+`ak` is **not required** to perform ordinary fallback Plan, Journal, Skill routing, board summarization or task orchestration reasoning. For CLI-shaped requests, use the [crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) and call the owning Skill with real host file/agent/provider tools. Native AgentKit lifecycle, authentication, licensed kits, analytics and installed services remain native-only when requested explicitly.
+
 ## Executable offline fallback subsets
 
 Some DEGRADED Skills still provide a **tested runnable local subset**, not just instructions:
@@ -60,8 +64,10 @@ Some DEGRADED Skills still provide a **tested runnable local subset**, not just 
 - `skills/ak-repomix/scripts/pack_local.py`: bounded Git context export; use `--dry-run` before explicitly emitting source or creating an output.
 - `skills/ak-watzup/scripts/scan_local.py`: read-only local Git/worktree/plan inventory; use `--json` for structured status.
 - `skills/ak-gkg/scripts/search_python_ast.py`: read-only Python AST definition and candidate-reference locations; requires `--symbol`.
+- `skills/ak-plan/scripts/plan_files.py`: local plan.md and phase scaffold/list/status/validation/add-phase; scaffolds are not accepted plans.
+- `skills/ak-journal/scripts/journal_files.py`: collision-safe dated Markdown creation, read-only history/list/show/validation.
 
-All three need Git, a Python 3.12-compatible runtime and an accessible local worktree. None enables the full upstream native CLI or provider service. The [audit report](AUDIT_REPORT.md) records exactly what CI has tested.
+Repomix, Watzup and GKG require Git and an accessible local worktree. Plan and Journal use scoped project files and Python 3.12-compatible runtime, and can also be performed through the environment's native file/connected document editor. None of the five helpers enables the full upstream CLI or provider service. The [audit report](AUDIT_REPORT.md) records exactly what CI has tested.
 
 ## Selection
 

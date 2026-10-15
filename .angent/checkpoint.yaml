@@ -59,7 +59,7 @@ frontier:
       progress_ledger: vendor/agentkit-engineer/PORTING_MANIFEST.md
 
   verified_units:
-    - "Engineer fallback first-pass covers 102 Skills and 16 Agent roles; 25 Skills remain degraded. Offline Repomix, Watzup and Python AST/GKG subset scripts pass branch-only GitHub Actions unit/security and real checkout smoke tests at Engineer commit c3ab16d8517505b51b10881e266ed91a3ad713bb."
+    - "Engineer fallback first-pass covers 102 Skills and 16 Agent roles; 24 Skills remain degraded after CLI-free journal adaptation. Repomix, Watzup, GKG/Python AST, Plan and Journal local subsets pass GitHub Actions fixture/smoke tests on Engineer commit d9c5c768b881b2a746a04e0f32374ddae11b5b3f."
     - "Reliability/state-evaluation integrity PR #36 is canonical on main."
     - "Persisted-state trust distinguishes coherent serialized state from authenticated/owned resume state; calibration isolation, fixture satisfiability and composite endpoint semantics are integrated."
     - "Canonical semantic version remains 1.0.0; no public release/tag has been made."
@@ -74,7 +74,7 @@ frontier:
 
   unresolved:
     - "Run representative cross-harness end-to-end tests before asserting native equivalence: branch CI now proves package structure, selector behavior and three bounded offline source utilities on Ubuntu, not external provider/browser/graphics runtimes."
-    - "Continue resolving native-specific gaps for 25 VERIFIED_DEGRADED Skills by value and executable evidence; Repomix/Watzup/Python AST local subsets run, but original remote, cross-language, browser/graphics and provider modes remain unavailable."
+    - "Continue resolving genuine native/product-specific gaps for 24 VERIFIED_DEGRADED Skills; core plan/journal/Skill routing now works without ak, while AgentKit auth/kit/lifecycle, external provider and unavailable live worker/browser/graphics modes remain bounded."
     - "Validate representative Agent role invocation on a genuinely supported harness; sidecars remain inert role contracts absent an adapter."
     - "Keep the fallback README free of duplicated progress counters; use PORTING_MANIFEST.md and AUDIT_REPORT.md as live ledger and dated evidence."
     - "Resolve private plugin version-policy versus Plugin Creator auto-patch behavior before synchronizing runtime beyond source commit 59f04f4."
@@ -86,4 +86,4 @@ frontier:
     - "Portable export is evidence/source material for audit, not a verified runtime adapter and not permission to vendor a raw upstream mirror."
     - "File-count/text-similarity metrics alone cannot accept or reject a fallback capability."
 
-next_action: "Continue runtime acceptance from latest branch engineer-semantic-parity-2.19.0 HEAD, not this dated evidence SHA. Recheck GitHub Actions and AUDIT_REPORT; prioritize real adapters or safe tested capability subsets for the remaining degraded provider/browser/graphics Skills. Preserve 102/16 inventory and never merge, publish or mutate main without separate authority."
+next_action: "Continue on latest engineer-semantic-parity-2.19.0 only. Native ak CLI is no longer required for Plan/Journal/Skill routing; check current manifest, CLI crosswalk, CI and runtime acceptance. Prioritize genuine remaining product/backend gaps and improve representative cross-harness execution, never merge, publish, install or mutate main without explicit separate authority."

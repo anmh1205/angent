@@ -226,6 +226,12 @@ Security/quality regressions exercised include secret and binary/symlink omissio
 
 GitLab Knowledge Graph remains an external AST/graph server, but its fallback now has a real bounded, read-only Python AST search route, with independent code, source-location evidence, missing-file diagnostics and validation fixtures. This does **not** infer transitive reachability or resolve semantic callers, and must not be represented as native GKG. CI exercises it on an actual Python function in the ANGENT repository.
 
+### Native `ak` command outcomes replaced with tested Skill/file operations
+
+A stable 2.19.0 CLI help audit categorized commands into (1) Skills and standard project/provider tools that preserve the result and (2) genuine AgentKit product-control mechanisms. The [CLI-to-Skill crosswalk](skills/ak-ak/references/cli-workflow-crosswalk.md) makes this separation explicit. Regular Plan/Journal/Skill dispatch/status-board/orchestration **do not require `ak`**. A standalone local Plan helper now creates and validates project-scoped plan.md/phase files without overwrites; a standalone Journal helper creates collision-safe dated Markdown and implements read-only list/show/validate. Their respective Skill entrypoints own the higher-level judgment and project authority.
+
+All 102 Skill and 16 Agent identities remain reviewed. `ak-journal` is now **adapted**, reducing the explicitly degraded set from 25 to 24. Native AgentKit account/kit/license/service/update, third-party provider and live worker controls remain unavailable absent a real backend. GitHub Actions [run 38657510858](https://github.com/anmh1205/angent/actions/runs/38657510858) passed the full structural and runnable-subset suite, including Plan/Journal fixtures. This is evidence for the tested local functionality, not full upstream CLI emulation.
+
 ## Skills — 102 identities
 
 | Skill | Status | Note |
