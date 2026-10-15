@@ -35,4 +35,4 @@ On a runtime without compatible persistent settings, apply the level to the curr
 
 ## Output
 
-Honor user requested detail/format, technical correctness and authorial coherence first. Use examples, vocabulary explanations, code and diagrams when they advance understanding; avoid mechanical checklists or ritual 'key takeaways'. 
+Honor user requested detail/format, technical correctness and authorial coherence first. Use examples, vocabulary explanations, code and diagrams when they advance understanding; avoid mechanical checklists or ritual 'key takeaways'.

@@ -63,7 +63,7 @@ jobs:
           status = json.loads(Path('/tmp/engineer-watzup-smoke.json').read_text())
           assert pack['metadata']['files_included'] == 1 and pack['metadata']['complete'], pack['metadata']
           assert pack['files'][0]['path'] == 'vendor/agentkit-engineer/skills/ak-repomix/SKILL.md'
-          assert isinstance(status['current'].get('branch'), str), status
+          assert status['current']['head'] and not status['current']['dirty'], status
           assert status['source'] == 'local_git_read_only'
           PY
           test -z "$(git status --porcelain)"
