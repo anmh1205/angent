@@ -104,9 +104,15 @@ def inspect(graph: Any, *, require_known_handoffs: bool = False) -> dict[str, An
                         "meaning":"structural provenance only; not semantically validated"})
     unapproved = sorted(entry["id"] for entry in graph["artifacts"]
                         if str(entry.get("status","unverified")).lower() in ("draft","unverified","proposed"))
-    unexecuted = sorted(entry["id"] for entry in graph["artifacts"]
-                        if canonical(entry["kind"])=="TEST" and
-                        str(entry.get("verification_status","not-executed")).lower() not in ("executed","passed"))
+    # Graph self-assertions of "passed" do NOT establish a run: this command
+    # has no execution receipt, independently checked result or provider.
+    tests = [entry for entry in graph["artifacts"] if canonical(entry["kind"])=="TEST"]
+    unexecuted = sorted(entry["id"] for entry in tests)
+    claimed_executed = sorted(entry["id"] for entry in tests
+                              if str(entry.get("verification_status","not-executed")).lower()
+                              in ("executed","passed","success"))
+    unversioned_sources = sorted(source["id"] for source in graph["sources"]
+                                 if not str(source.get("revision","")).strip())
     return {
         "ok": not (require_known_handoffs and all_gaps),
         "mode":"read-only-structural-assurance",
@@ -117,6 +123,8 @@ def inspect(graph: Any, *, require_known_handoffs: bool = False) -> dict[str, An
         "not_inspected_stages":not_inspected,
         "unapproved_or_draft_artifact_ids":unapproved,
         "test_artifacts_without_execution_evidence":unexecuted,
+        "test_artifacts_claimed_executed_but_unverified":claimed_executed,
+        "source_revision_not_established":unversioned_sources,
         "confidence":"structural links only; no assertion of business validity, test execution or provider writes",
         "writes_performed":False,
     }

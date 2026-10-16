@@ -69,6 +69,16 @@ class BAHandoffAssurance(unittest.TestCase):
         result=inspect(graph)
         self.assertFalse(result["ok"])  # Invalid reverse typed link, fail closed.
 
+    def test_self_reported_pass_is_not_runtime_execution_evidence(self):
+        graph=deepcopy(self.atlas)
+        test=next(item for item in graph["artifacts"] if item["kind"]=="TEST")
+        test["verification_status"]="passed"
+        report=inspect(graph)
+        self.assertTrue(report["ok"], report)
+        self.assertIn(test["id"],report["test_artifacts_claimed_executed_but_unverified"])
+        self.assertIn(test["id"],report["test_artifacts_without_execution_evidence"])
+        self.assertFalse(report["writes_performed"])
+
     def test_missing_source_graph_fails_closed(self):
         bad=deepcopy(self.fleet)
         bad["artifacts"][0]["depends_on"]=["FR-NO-SOURCE"]
