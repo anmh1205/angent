@@ -1,6 +1,6 @@
-# ANGENT 1.6.x — platform installation
+# ANGENT 2.0 — platform installation
 
-ANGENT has one maintained Core (`skills/`), an Engineer fallback source (`extensions/angent-engineer/`) and a visual frontend extension (`extensions/angent-frontend/`). `platforms/` contains host-specific bootstrap templates; `packages/` and `dist/` are generated, Git-ignored release outputs. Build from a Git checkout (or download the ready-made platform ZIPs and `SHA256SUMS` from the matching GitHub Release once published):
+ANGENT has one maintained Core (`skills/`) and a manifest-driven Hub (`hub/`). Engineer and Frontend are registered kit sources in `extensions/`, with more kits addable through validated `extension.json` manifests and optional adapters. `platforms/` contains host-specific bootstrap templates; `packages/` and `dist/` are generated, Git-ignored release outputs. Build from a Git checkout (or download the ready-made platform ZIPs and `SHA256SUMS` from the matching GitHub Release once published):
 
 ```bash
 python3 scripts/build_packages.py --all
@@ -70,6 +70,10 @@ Official reference: https://code.claude.com/docs/en/plugins
 Use `packages/openai-plugin/` or `dist/angent-openai-plugin.zip`. The compatibility builder `scripts/package_unified.py` produces `dist/angent-chatgpt.zip` with the same **single public `skills/angent/SKILL.md`**. The other eleven Core specialists, 102 Engineer fallback methods and one Frontend art-direction method are stored under `skills/angent/references/catalog/`, not as directly discoverable `skills/ak-*/SKILL.md` entries.
 
 This package layout prevents ChatGPT from discovering bundled Engineer methods as independent plugin Skills. It does not force ChatGPT to select ANGENT in every conversation, and it does not suppress other installed plugins. Installing a new ZIP is separate from updating an already installed plugin; verify the actual provider catalog (exactly one public `skills/angent/SKILL.md`) with `scripts/verify_activation.py` and an actual provider observation.
+
+## Extension onboarding
+
+Register maintained kit source under `extensions/<id>/`, add `extension.json` according to `hub/extension.schema.json`, then build. `hub/registry.json` is produced inside each distribution and contains the complete derived capability inventory. Do not manually edit generated registry or expose nested kit plugins as independent installs. The count of specialist Skills will grow with added kits; the sole OpenAI Root remains unchanged.
 
 ## Package design and safety
 

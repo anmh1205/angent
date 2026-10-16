@@ -20,6 +20,10 @@ The OpenAI plugin exposes one discoverable Skill: `angent`. Other Core methods a
 
 `extensions/angent-frontend/` adds visual frontend art direction informed by [ClaudeKit's frontend demo](https://github.com/claudekit/frontend-design-pro-demo): coherent style selection, composition, typography, imagery and rendered verification. Product-level UI/UX diagnosis remains with the existing Engineer capability.
 
+## ANGENT 2.0 Hub and extension contract
+
+`hub/` defines capability identity, selection and authority boundaries. New specialist kits register in `extensions/<id>/extension.json`, optionally adding a kit-specific `adapter/`. Packaging generates a deterministic registry and projects skill sources into supported hosts. ANGENT Core remains the single cognitive authority; Kit Adapters map methods and Host Adapters handle runtime mechanisms. See [Hub onboarding](hub/README.md) and [routing contract](hub/routing.md).
+
 ## How it works
 
 ANGENT has one small Root router and focused supporting skills. **Every request receives the complete cognitive standard; only effort and supporting capabilities adapt.** Skills are responsibilities, not a prescribed workflow or mandatory agent instances. Short questions may have short, direct answers after the same intent, context, evidence, reasoning and accuracy checks; extra capabilities activate only where useful:

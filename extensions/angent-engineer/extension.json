@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "id": "angent-engineer",
+  "name": "ANGENT Engineer",
+  "kind": "mapped",
+  "authority": "specialist",
+  "description": "Software engineering specialist methods, portable AgentKit semantics and optional native AgentKit.",
+  "source": {
+    "origin": "https://agentkit.best",
+    "type": "maintained-port",
+    "license": "Consult the maintained source attribution"
+  },
+  "skills": {
+    "directory": "skills",
+    "expose": "all",
+    "exclude": [
+      "ak-explain"
+    ],
+    "expected_source_count": 103
+  },
+  "roles": {
+    "directory": "agents",
+    "expected_count": 16
+  },
+  "runtime": {
+    "native": "agentkit",
+    "fallback": "portable",
+    "selection": "native-when-proven-invocable",
+    "exclusive": true
+  },
+  "capabilities": [
+    {
+      "id": "code.review",
+      "entry": "ak-code-review",
+      "when": "Evidence-based code review and regression diagnosis"
+    },
+    {
+      "id": "code.debug",
+      "entry": "ak-debug",
+      "when": "Investigating a concrete implementation failure"
+    },
+    {
+      "id": "software.test",
+      "entry": "ak-test",
+      "when": "Test design, execution and verification"
+    },
+    {
+      "id": "software.implementation",
+      "entry": "ak-cook",
+      "when": "Bounded implementation in authorized source"
+    },
+    {
+      "id": "software.architecture",
+      "entry": "ak-advise",
+      "when": "Deliberate specialist design consultation"
+    },
+    {
+      "id": "product.ux",
+      "entry": "ak-ui-ux-pro-max",
+      "when": "User journeys, accessibility and systemic product UX"
+    },
+    {
+      "id": "software.deployment",
+      "entry": "ak-deploy",
+      "when": "Deployment with actual runtime and verification"
+    },
+    {
+      "id": "software.orchestration",
+      "entry": "ak-orchestrate",
+      "when": "Independent work units with real delegation or isolation"
+    }
+  ]
+}

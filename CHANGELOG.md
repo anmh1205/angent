@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0 — ANGENT Hub and Kit Adapter contract (breaking)
+
+- Introduced ANGENT Hub with schema-validated kit manifests, semantic capability routing, derived build-time registry and explicit Core/Kit/Host authority boundaries.
+- Standardized Engineer and Frontend as registered extensions with adapters; native AgentKit and portable Engineer remain mutually exclusive.
+- Replaced fixed Engineer/Frontend packing assumptions with registry-derived projection and extensible skill catalog checks; each target retains its supported discovery behavior.
+- Kept OpenAI's single discoverable ANGENT Root and internal specialist catalogue; updated project and platform bootstraps.
+- Breaking: extension onboarding and package inventory now require validated `extensions/<id>/extension.json`; generated registry is a build product, not a committed file. Existing third-party extension bundles must add manifests and retest package layouts.
+
 ## 1.6.0 — ANGENT ChatGPT gateway and Frontend extension (candidate)
 
 - ChatGPT/OpenAI packages expose one top-level ANGENT Skill. Specialist Core, Engineer fallback and Frontend capabilities are nested as internal references, preventing direct discovery of bundled ak-* names.

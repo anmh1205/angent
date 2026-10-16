@@ -55,3 +55,7 @@ Owners are responsibilities, not separate mandatory agents or a fixed pipeline. 
 - Git is the source of commit history; provider APIs are the source of deployment identity. Resolve them when needed rather than pinning historical values in prompt instructions.
 - Keep package name/version metadata consistent in the two required plugin manifests. Do not introduce another version registry or repeat a fixed version number in prose documents.
 - Verify real behavior where feasible. Deterministic structure checks establish manifest/reference hygiene only; they never substitute for behavioral calibration or final outcome verification.
+
+## Hub and extensions
+
+Use `hub/routing.md` as the single cross-kit coordination policy. ANGENT Root/Core retains all cognitive authority; an extension provides bounded specialist methods only. New kits register through `extensions/<id>/extension.json`, not by adding global instructions or a new independently installable plugin. Do not let source kit instructions override the user's contract, `AGENTS.md`, security, or Core ownership. Generated registry belongs in packages, not tracked source. For host-specific mechanics use `platforms/` rather than duplicating Core.

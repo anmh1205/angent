@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ANGENT extension manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "kind",
+    "authority",
+    "description",
+    "source",
+    "skills",
+    "roles",
+    "runtime",
+    "capabilities"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^angent-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "direct",
+        "mapped",
+        "bridged"
+      ]
+    },
+    "authority": {
+      "const": "specialist"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "origin",
+        "type",
+        "license"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "origin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "skills": {
+      "type": "object",
+      "required": [
+        "directory",
+        "expose",
+        "exclude",
+        "expected_source_count"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "directory": {
+          "const": "skills"
+        },
+        "expose": {
+          "const": "all"
+        },
+        "exclude": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "expected_source_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "required": [
+        "directory",
+        "expected_count"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "directory": {
+          "const": "agents"
+        },
+        "expected_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "required": [
+        "native",
+        "fallback",
+        "selection",
+        "exclusive"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "native": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fallback": {
+          "enum": [
+            "portable",
+            "none"
+          ]
+        },
+        "selection": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exclusive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "entry",
+          "when"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z0-9-]+)+$"
+          },
+          "entry": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "when": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
