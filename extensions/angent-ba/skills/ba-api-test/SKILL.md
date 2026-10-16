@@ -36,3 +36,17 @@ The example fleet suite is **synthetic** and tests only an in-process localhost 
 ## Review failures
 
 Generated tests without real execution evidence, invented response fields, hard-coded secrets, unchecked external write effects, false security assurances, and a simplistic positive-only suite all fail the task's intended quality.
+
+## Optional OpenAPI contract gate (implemented)
+
+Before creating Bruno files, inspect the actual accepted OpenAPI 3.1 **JSON** document. Compare the proposed request model against it:
+
+    python extensions/angent-ba/scripts/audit_api_contract.py CONTRACT.json TEST_MODEL.json
+
+Or enforce the check during collection generation:
+
+    python extensions/angent-ba/scripts/build_bruno.py TEST_MODEL.json --openapi CONTRACT.json --output out/verified-bruno
+
+The checker resolves declared paths and methods, exact HTTP statuses, scalar JSON assertions (including nested properties), required JSON request body fields and declared bearer security. It can resolve **bounded local** JSON-pointer references to schema/response/requestBody components and rejects remote references, reference cycles and unsupported oneOf/anyOf/allOf composition rather than manufacturing a pass. It does not make HTTP requests or validate server behavior.
+
+A synthetic example is provided in extensions/angent-ba/examples/synthetic-fleet-openapi.json, paired with the local four-request fleet tests. The checker is a deliberately conservative *subset* of OpenAPI 3.1, not a general-purpose validator or implementation verifier; JSON Schema constraints beyond supported type/const/enum/required need a fuller parser and independent review. Generated files still require an actual Bruno CLI run against an authorized sandbox or loopback target to report test success.

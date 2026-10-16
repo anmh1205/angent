@@ -38,6 +38,8 @@ A renderer is required for the SVG; a generated .d2 file alone is not rendering 
 
 - Revision impact comparison: extensions/angent-ba/scripts/compare_artifact_revisions.py compares two validated graph snapshots, reports added/removed/modified/source-revised claims and computes candidate downstream reviews without performing writes. This is **document revision drift**, not proof of code/production drift.
 
+- API test contract audit: extensions/angent-ba/scripts/audit_api_contract.py checks generated Bruno case expectations against source OpenAPI 3.1 JSON paths, response schemas, inline/local-$ref types, required request bodies and security declarations. It rejects unsupported remote/composed schemas, then Bruno CLI is used separately for actual execution.
+
 ## How to operate
 
 A typical path is ba-brainstorm to ba-srs to ba-userstory/ba-ac to ba-test-checklist/ba-test-cases. Each method must consume accepted project evidence and may execute only in a host with the relevant tools. Do not impose file paths from the upstream Claude plugin onto an existing project. The feature-specific templates are under skills/ba-kg/references/templates; their double-brace variables are expected in templates but must be filled in a completed artifact. The full MIT citation and license appear in THIRD_PARTY_NOTICES.md.
