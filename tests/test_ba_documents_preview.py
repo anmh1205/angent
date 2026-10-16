@@ -43,18 +43,18 @@ class TestDocuments(unittest.TestCase):
                     parent=root/folder
                     parent.mkdir()
                     body=parent/filename
-                    body.write_text("# Reviewed source body\\n\\nDetails.\\n",encoding="utf8")
+                    body.write_text("# Reviewed source body\n\nDetails.\n",encoding="utf8")
                     self.assertFalse(inspect(body,root)["ok"])
                     index=parent/index_name
-                    index.write_text("---\\ntype: "+index_type+"\\nstatus: draft\\n---\\n"
-                                     "# Feature index\\n",encoding="utf8")
+                    index.write_text("---\ntype: "+index_type+"\nstatus: draft\n---\n"
+                                     "# Feature index\n",encoding="utf8")
                     result=inspect(body,root)
                     self.assertTrue(result["ok"],result)
                     self.assertTrue(any("Index-managed" in x for x in result["warnings"]))
-                    index.write_text("---\\ntype: incorrect\\n---\\n# Invalid index\\n",encoding="utf8")
+                    index.write_text("---\ntype: incorrect\n---\n# Invalid index\n",encoding="utf8")
                     self.assertFalse(inspect(body,root)["ok"])
             unrelated=root/"untracked.md"
-            unrelated.write_text("# Untracked\\n",encoding="utf8")
+            unrelated.write_text("# Untracked\n",encoding="utf8")
             self.assertFalse(inspect(unrelated,root)["ok"])
 
     def test_invalid_content_and_bad_links(self):

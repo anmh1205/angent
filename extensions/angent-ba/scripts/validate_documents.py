@@ -15,9 +15,9 @@ VALID_STATES = {"draft","in-review","revisions","approved","shipped","captured",
 # and revisions in a sibling index. This is a bounded documented exception,
 # not general permission to silently omit provenance on arbitrary files.
 INDEXED_BODIES = {
-    "usecases": (r"^uc-[a-z0-9][a-z0-9-]*\\.md$", "*-usecase-index.md", "usecase-index"),
-    "userstories": (r"^us-[a-z0-9][a-z0-9-]*\\.md$", "*-story-index.md", "userstory-index"),
-    "ascii-wireframe": (r"^(?!.*-wireframe-index\\.md$)[a-z0-9][a-z0-9-]*\\.md$",
+    "usecases": (r"^uc-[a-z0-9][a-z0-9-]*\.md$", "*-usecase-index.md", "usecase-index"),
+    "userstories": (r"^us-[a-z0-9][a-z0-9-]*\.md$", "*-story-index.md", "userstory-index"),
+    "ascii-wireframe": (r"^(?!.*-wireframe-index\.md$)[a-z0-9][a-z0-9-]*\.md$",
                          "*-wireframe-index.md", "screen-index"),
 }
 
@@ -30,12 +30,12 @@ def indexed_body(path, root):
     if len(index_files)!=1:
         return False
     data=index_files[0].read_text(encoding="utf-8")
-    if not data.startswith("---\\n"):
+    if not data.startswith("---\n"):
         return False
-    end=data.find("\\n---\\n",4)
+    end=data.find("\n---\n",4)
     if end < 0:
         return False
-    return any(re.fullmatch(r"type:\\s*"+re.escape(contract[2])+r"\\s*", line.strip())
+    return any(re.fullmatch(r"type:\s*"+re.escape(contract[2])+r"\s*", line.strip())
                for line in data[4:end].splitlines())
 
 def inspect(path, root):
