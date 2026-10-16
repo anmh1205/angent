@@ -19,8 +19,9 @@ def audit(model: Any) -> dict[str, Any]:
     if not isinstance(model, dict):
         return {"ok": False, "errors": ["Diagram must be an object"], "warnings": []}
     kind = model.get("type")
-    if kind not in TYPES:
+    if not isinstance(kind, str) or kind not in TYPES:
         errors.append("Unsupported type")
+        kind = "unknown"
     nodes, edges = model.get("nodes"), model.get("edges")
     if not isinstance(nodes, list) or not isinstance(edges, list):
         return {"ok": False, "errors": errors + ["nodes and edges must be arrays"], "warnings": warnings}
@@ -30,6 +31,8 @@ def audit(model: Any) -> dict[str, Any]:
             errors.append(f"nodes[{i}]: missing ID")
             continue
         key = node["id"]
+        if any(ch.isspace() for ch in key):
+            errors.append(f"nodes[{i}]: ID cannot contain whitespace")
         if key in by_id:
             errors.append(f"nodes[{i}]: duplicate ID {key}")
         by_id[key] = node
