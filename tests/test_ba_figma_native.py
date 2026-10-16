@@ -45,9 +45,9 @@ class NativeFigmaGeneratorTests(unittest.TestCase):
     def test_requirement_ids_and_invalid_screen_fail_closed(self):
         modified=copy.deepcopy(self.model)
         modified["screens"][0]["controls"][0]["requirements"]=["FR-AUTH-001"]
-        files(modified,evidence_ids={"FR-AUTH-001"})
+        files(modified,evidence_ids={"FR-AUTH-001","FR-AUTH-002","BR-AUTH-001"})
         with self.assertRaisesRegex(ValueError,"Unresolved BA evidence"):
-            files(modified,evidence_ids={"FR-OTHER"})
+            files(modified,evidence_ids={"FR-OTHER","FR-AUTH-002","BR-AUTH-001"})
         invalid=copy.deepcopy(self.model)
         invalid["screens"][0]["controls"][0]["id"]=invalid["screens"][0]["controls"][1]["id"]
         with self.assertRaisesRegex(ValueError,"Invalid BA screen"):
