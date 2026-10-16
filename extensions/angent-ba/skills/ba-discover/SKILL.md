@@ -37,10 +37,10 @@ Repository-overview content (full entity fields, service-responsibility tables, 
 - **Fixed output** `docs/_shared/` (project-level, no feature). No `CLAUDE.md` touch.
 - **2 mandatory phases, HARD STOP between them:** Phase 1 scan + interview → `.discover-plan.md` → **user confirms (L1)** → only then Phase 2 writes the context set. Do NOT write `project-context.md` before confirmation.
 - **Read code via subagents (Task)** to keep the main context lean — subagents RETURN findings; the main thread synthesizes and Writes (per `approval-gate.md`).
-- **60-line cap on Tier 1 is enforced** by `scripts/doc-validate.ts` — if your draft exceeds 60 lines of content, **cut or move to Tier 2 and re-summarize**; do not ship a 61-line file.
+- **60-line cap on Tier 1 is enforced** by `scripts/BA Markdown validation.ts` — if your draft exceeds 60 lines of content, **cut or move to Tier 2 and re-summarize**; do not ship a 61-line file.
 - **Provenance + confidence on every claim. Do NOT fabricate:** cannot read it → 🟡 + note, never invent names/rules.
 - **Bilingual labels/report** (mirror input — `rules/language.md`); real technical identifiers (service/table/module) kept AS-IS.
-- **Idempotent** — re-run = update mode (L2 diff per file; never overwrite `human_edited` sections).
+- **Idempotent** — re-run = update mode (versioned diff per file; never overwrite `human_edited` sections).
 
 ## Inputs
 
@@ -121,12 +121,12 @@ Priority order (highest-value-non-derivable first); skip any the scan already an
 ## Modes
 
 - **Greenfield (Group C, no code):** Phase 1 is **interview-led** (manifest sniff returns nothing) and still writes a valid Tier 1 from the answers. Tier 2 files are **omitted** (not stubbed empty) until there is something to point at.
-- **`--update`:** read existing files fully first; **never re-ask** answered questions; produce an **L2 diff**; **never touch sections listed in `human_edited`** (propose changes to them in the Sync Impact Report only); bump `version` per semver (MAJOR if domain understanding changed, MINOR for new facts, PATCH for fixes). Emit a **Sync Impact Report**: what changed, what stayed, which consuming skills may need attention.
+- **`--update`:** read existing files fully first; **never re-ask** answered questions; produce an **versioned diff**; **never touch sections listed in `human_edited`** (propose changes to them in the Sync Impact Report only); bump `version` per semver (MAJOR if domain understanding changed, MINOR for new facts, PATCH for fixes). Emit a **Sync Impact Report**: what changed, what stayed, which consuming skills may need attention.
 - **`--tier1-only`:** refresh just the always-loaded Tier 1 (the common maintenance path); do not regenerate Tier 2.
 
 ## Gotchas
 
-- **Tier 1 over 60 lines** → `doc-validate` fails it. Cut anything `grep` can answer; move depth to `context/*.md`.
+- **Tier 1 over 60 lines** → `BA Markdown validation` fails it. Cut anything `grep` can answer; move depth to `context/*.md`.
 - **Don't fabricate** a business purpose/rule the scan didn't find → mark 🟡 + ask in the interview.
 - **No code (greenfield)** → interview-led Tier 1 only; don't stub empty Tier-2 files.
 - **`human_edited` sections** (e.g. glossary, gotchas the user hand-tuned) → `--update` must NOT overwrite them; propose, don't replace.

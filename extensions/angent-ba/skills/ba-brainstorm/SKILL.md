@@ -26,8 +26,8 @@ Turn ONE raw idea into a structured brainstorm document — problem, affected us
 - **L3 iterate allowed** — the doc is prose + ASCII sketches, it renders in chat; iterate on the sketch before L1 if the user engages.
 - **OQs are first-class** — anything the user can't answer becomes an `- [ ] OQ-n:` item, never a guess. The OQ section format must match `resolve-oqs.md` (checkbox list, `[ ]`/`[~]`/`[x]`).
 - **No-re-ask (`ba-conventions.md` §2)** — scan the idea seed + previous answers before each question round.
-- **Idempotent** — same idea-slug re-run → update mode (L2 diff).
-- **Validate before done** — run doc-validate (step 9); exit 1 = fix before reporting.
+- **Idempotent** — same idea-slug re-run → update mode (versioned diff).
+- **Validate before done** — run BA Markdown validation (step 9); exit 1 = fix before reporting.
 
 ## Inputs
 
@@ -44,7 +44,7 @@ Turn ONE raw idea into a structured brainstorm document — problem, affected us
 3. **Interview — round 2 (exploration):** pick 1-2 elicitation angles that fit the idea (what-if flips, persona role-play, "what breaks at 10× scale", constraint removal). Offer the menu; the user picks or skips.
 4. **Fact-list** — every answer + its origin (user round 1/2); unanswered items become OQ candidates.
 5. **Draft sections** per the template: problem, affected users (table), idea sketch (prose or ASCII), success, explorations, decisions (table with rationale), out-of-scope, Open Questions.
-6. **L1 plan preview** — feature + idea slug + section fill summary + OQ count.
+6. **scoped change preview** — feature + idea slug + section fill summary + OQ count.
 7. **Write** — create `docs/{feature}/brainstorms/` on first Write.
 10. **Output report** — OQ count called out + the next step in the chain (`/urd {feature}`).
 

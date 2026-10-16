@@ -27,7 +27,7 @@ Define WHAT we'll build for one feature — capabilities prioritized P0/P1/P2 th
 - **Capability ≠ implementation** — "user can retry a failed payment" (capability), not "add a retry queue" (design). P0 = the feature is pointless without it.
 - **The discovery question set** — when interviewing: problem recap · target users · what must be true at launch (P0 probe) · nice-to-have (P1/P2 probe) · explicit non-goals · sequencing constraints. One batched round.
 - **Inherit OQs** — from BRD/URD (`resolve-oqs.md` Phase E).
-- **Validate before done** — doc-validate (step 9).
+- **Validate before done** — BA Markdown validation (step 9).
 
 ## Inputs
 
@@ -43,7 +43,7 @@ Define WHAT we'll build for one feature — capabilities prioritized P0/P1/P2 th
 3. **Fact-list** — every capability candidate + its origin + the BO it serves.
 4. **Assign IDs + priorities** — `CAP-{feature}-{NN}`; challenge every P0 ("is the feature truly pointless without this?").
 5. **Draft** per the template — goals/non-goals first (they fence the capability list), then the capabilities table, user types (from personas), OOS, release plan (phases reference CAP IDs), dependencies, OQs.
-6. **L1 plan preview** — CAP count by priority + BO coverage + any uncovered BO- called out.
+6. **scoped change preview** — CAP count by priority + BO coverage + any uncovered BO- called out.
 7. **Write** — `links:` → BRD (+ URD).
 11. **Output report** — priority breakdown + next step (`/srs {feature}`).
 

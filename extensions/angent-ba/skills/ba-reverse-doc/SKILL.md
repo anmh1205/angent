@@ -27,7 +27,7 @@ Read legacy sources (docx/pdf/images/code/emails) and reconstruct the business l
 - **Provenance per section** — Section 0 records which source(s) fed which section, so an auditor can trace back.
 - **Alongside, not replacing** — `reverse-{feature}.md` is a reconstruction; the official `urd/brd/srs` (if they exist) stay untouched. The user may later promote reverse content into them via `/cr` or manual edit.
 - **Temp convert files** under `docs/.reverse-convert/` are scratch (gitignored/cleaned); only the reverse docs + plan persist.
-- **Validate before done** — doc-validate (step 9).
+- **Validate before done** — BA Markdown validation (step 9).
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Read legacy sources (docx/pdf/images/code/emails) and reconstruct the business l
 2. **Cluster → features** — group source content by business domain; propose feature slugs (from the source, not invented). Write `docs/.reverse-plan.md`: the feature list + per-feature source map + the clarifying questions for gaps. **HARD STOP** — confirm the plan before generating.
 3. **On confirm → per feature** draft `reverse-{feature}.md`: Section 0 (source map + confidence legend) + the 12 sections (problem/users/objectives/scope/rules/data/flows/states/errors/screens/OQs/…), every claim tagged ✅/🔵/🟡.
 4. **Gap interview** — only the 🟡 items the source can't resolve; one batched round; unresolved → OQ in the doc.
-5. **L1 plan preview** (per feature) — section coverage + confidence mix (✅/🔵/🟡 counts) + OQ count.
+5. **scoped change preview** (per feature) — section coverage + confidence mix (✅/🔵/🟡 counts) + OQ count.
 7. **If a gap blocks a section** → HARD STOP, ask; never fill with a guess.
 9. **Output report** — features reconstructed + confidence mix + next (`/srs` to formalize from the reverse view; `/scan-project` if code needs architecture diagrams).
 

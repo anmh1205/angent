@@ -26,8 +26,8 @@ Make the business case — objectives with measurable success criteria that mint
 - **Mint `BO-` IDs** — `BO-{feature}-{NN}` (2-digit ok), max+1. Every objective row: measurable success measure + target + the `UN-` needs it covers.
 - **Money altitude, no fabricated figures** — cost/benefit estimates carry a `basis` column; no basis from the user → OQ, never an invented number (`ba-conventions.md` §3).
 - **Inherit OQs** — from the URD + brainstorms (`resolve-oqs.md` Phase E); mark origins.
-- **Idempotent** — re-run → L2 diff update.
-- **Validate before done** — doc-validate (step 9).
+- **Idempotent** — re-run → versioned diff update.
+- **Validate before done** — BA Markdown validation (step 9).
 
 ## Inputs
 
@@ -43,7 +43,7 @@ Make the business case — objectives with measurable success criteria that mint
 3. **Fact-list** — every objective/figure/rule + its origin; inherited OQs.
 4. **Assign IDs** — `BO-{feature}-{NN}`, covering `UN-` refs per row.
 5. **Draft** per the template — the six load-bearing sections + OQs.
-6. **L1 plan preview** — BO count + UN coverage + risk count + any uncovered UN- called out.
+6. **scoped change preview** — BO count + UN coverage + risk count + any uncovered UN- called out.
 7. **Write** — `links:` → the URD + brainstorm(s).
 11. **Output report** — coverage summary + next step (`/prd-epic {feature}`).
 

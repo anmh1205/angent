@@ -26,8 +26,8 @@ Capture WHO the users are and WHAT they need — personas, context of use, and a
 - **Mint `UN-` IDs** — `UN-{feature}-{NNN}`, 3-digit, max+1, never reused. Every need row cites its source (brainstorm section, interview answer, research doc).
 - **User altitude** — needs are phrased from the user's world ("needs to see the refund status without calling support"), NOT solution language ("needs a status API"). Solutioning belongs downstream.
 - **No fabricated personas** — no source + no answer → OQ, not an invented persona.
-- **Idempotent** — re-run → update mode (L2 diff); new needs append with the next `UN-` number.
-- **Validate before done** — doc-validate (step 9).
+- **Idempotent** — re-run → update mode (versioned diff); new needs append with the next `UN-` number.
+- **Validate before done** — BA Markdown validation (step 9).
 
 ## Inputs
 
@@ -43,7 +43,7 @@ Capture WHO the users are and WHAT they need — personas, context of use, and a
 3. **Fact-list** — every persona + need + its source; unresolved upstream OQs to inherit.
 4. **Assign IDs** — `UN-{feature}-{NNN}` per need, scanning the existing URD for max.
 5. **Draft** per the template: personas table · context of use · needs table (ID/persona/statement/priority/source) · environment & constraints · assumptions · OQs (own + inherited, marked with origin).
-6. **L1 plan preview** — persona count + need count + inherited OQ count.
+6. **scoped change preview** — persona count + need count + inherited OQ count.
 7. **Write** — with frontmatter `links:` pointing at the source brainstorm(s).
 10. **Output report** — needs minted + next step (`/brd {feature}`).
 

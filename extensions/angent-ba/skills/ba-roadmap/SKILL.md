@@ -20,13 +20,13 @@ Turn the Feature Map into a prioritized plan — RICE-lite scores per feature (R
 
 ## Constraints
 
-- **Singleton** — `docs/_product/roadmap.md`; re-run = update mode (L2 diff). Frontmatter `format:` records the chosen shape.
+- **Singleton** — `docs/_product/roadmap.md`; re-run = update mode (versioned diff). Frontmatter `format:` records the chosen shape.
 - **Group C** (`feature-bootstrap.md`) — no product PRD yet → friendly message: "No Feature Map yet — run `/prd` first, or list your features now and I'll score them" (a Map-less roadmap from a live list is valid).
 - **One-way read** — consumes `docs/_product/prd.md`'s Feature Map (+ each feature's `CAP-` priorities if PRDs exist). Never edits the PRD; PRD changes → re-run `/roadmap` to sync (`resolve-oqs.md`: no OQ cascade into this file).
 - **RICE-lite discipline** — Reach/Impact/Confidence on the agreed scale (1-5 or %), Effort in relative units; **every score's basis comes from the user or a doc** — no invented scores. Score = (R×I×C)/E, computed, shown per row.
 - **Now means committed** — "Now" items should have (or be about to get) a `/prd-epic`; flag "Now" features with no PRD.
 - **Dependencies are typed** — tech / data / team / vendor, per row.
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -41,7 +41,7 @@ Turn the Feature Map into a prioritized plan — RICE-lite scores per feature (R
 2. **Score interview (one batched round per gap):** per feature — Reach basis · Impact on which product goal · Confidence + why · Effort relative to a named anchor feature. Skip rows the user already scored.
 3. **Fact-list** — every score + basis; sequencing constraints; dependency claims.
 4. **Compute + draft** per the template — RICE table sorted by score · the plan (Now/Next/Later or quarters; note where the plan order deviates from score order and why) · dependency map (typed) · decisions log (append-mode across runs).
-5. **L1 plan preview** — top-3 by score + any score-vs-plan deviations + "Now without PRD" flags.
+5. **scoped change preview** — top-3 by score + any score-vs-plan deviations + "Now without PRD" flags.
 6. **Write.**
 9. **Output report** — the plan summary + suggested next (`/prd-epic` for un-specced "Now" items, `/timeline` for a visual).
 

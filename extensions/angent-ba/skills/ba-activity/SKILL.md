@@ -38,7 +38,7 @@ Produce a mermaid `flowchart` for a business process — show decisions, paralle
 /activity "<new feature process description>"       # feature doesn't exist → derive slug + interview + create feature (group A)
 ```
 
-Want horizontal instead of the default top-bottom → say "draw horizontally". A section already exists for that process → call the skill again with the changed description; the skill enters update mode automatically (match slug) + L2 diff.
+Want horizontal instead of the default top-bottom → say "draw horizontally". A section already exists for that process → call the skill again with the changed description; the skill enters update mode automatically (match slug) + versioned diff.
 
 ## Approach
 
@@ -47,7 +47,7 @@ Want horizontal instead of the default top-bottom → say "draw horizontally". A
    - **Business source:** feature already has UC/SRS/flows → read them for steps/decisions/lanes, do not re-ask what already exists (no-re-ask). **New feature (or old one lacking a source)** → **interview EXACTLY the scope the activity needs** (per `feature-bootstrap.md` group A step 3), asking in one business-language batch (do NOT ask about DB/SDK): **sequential steps** · **decision points** (question + yes/no branches) · **lanes** if multi-role (who does which step) · **loops** (retry/go back) if any. Do NOT fabricate — ask about whatever is missing. Clarify just enough to draw correctly, not exhaustively like `/brainstorm`.
    - **Ambiguous description even though the feature has a source** (e.g. process description too short, decision points/roles unclear, or the readable UC/SRS also lacks detail) → **MUST ask clarifying questions before generating**, do NOT guess and generate right away. Minimum questions: "Are there any decision points (yes/no) to represent?", "How many roles participate in the process?". This is not a bootstrap interview (the feature exists) — just 1-2 short questions to fill the gaps.
 2. **Validate target** `docs/{feature}/srs/{feature}-flows.md`:
-   - Exists + matching slug → enter update mode automatically (L2 diff for that section).
+   - Exists + matching slug → enter update mode automatically (versioned diff for that section).
    - Exists, new slug → append a `## Flow: {title}` section.
    - Missing → create new: slim frontmatter (`type: srs-flows`, `feature`, `updated`) + bare heading `# {Feature title} — Flows`, then append the first `## Flow:` section directly. Do NOT insert an intro sentence/blockquote describing "what this file contains / where the source is / writing rules" (meta-text — violates `ba-conventions.md` Section 0). The doc contains only real business content.
 3. **Auto-detect lanes/roles** from the description prose (scan role keywords). If ambiguous, ask clarifying questions (see step 1).
@@ -63,7 +63,7 @@ Want horizontal instead of the default top-bottom → say "draw horizontally". A
    - Node shapes: `[]` rectangle (process), `{}` diamond (decision), `(())` circle (start/end), `[/...\]` parallelogram (input/output).
    - Subgraph for lanes if there are ≥2 roles.
    - Edge labels for decision branches: `-->|yes|`, `-->|no|`.
-6. **L1 plan preview** — BA-friendly prose: "I will append a flowchart for process {name} to docs/{feature}/srs/{feature}-flows.md with N decisions + M lanes. Apply? (Y / edit)".
+6. **scoped change preview** — BA-friendly prose: "I will append a flowchart for process {name} to docs/{feature}/srs/{feature}-flows.md with N decisions + M lanes. Apply? (Y / edit)".
 7. **Write** — Read flows.md, append the section after the last `## Flow:`. Each section format:
    ```markdown
    ## Flow: {Title} (Activity)
@@ -78,7 +78,7 @@ Want horizontal instead of the default top-bottom → say "draw horizontally". A
    \`\`\`
    ```
    > **Full-form IDs mandatory** in the 3 Related lines — always `FR-{feature}-NNN` / `E-{feature}-NNN`, NOT short-form `FR-001` (edge source for the KG; short-form causes phantom features + lost traces).
-8. **Call again with a matching slug** (automatic update mode) → L2 diff for that section.
+8. **Call again with a matching slug** (automatic update mode) → versioned diff for that section.
    - **Pass** → continue to step 10, the report includes a "compile OK" line.
    - **Fail** (usually nested quotes inside `[...]`/`{}` — see Mermaid syntax safety in `diagram-selection.md`) → read the line/column error the script returns, fix the just-appended section (do NOT touch other sections), re-verify. Up to 2 self-fix attempts.
    - **Still failing after 2 attempts** → report the specific error + the mermaid snippet to the user, suggest pasting into mermaid.live to debug manually. Do NOT silently leave a broken file and report "done" as usual.

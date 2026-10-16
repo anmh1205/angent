@@ -20,19 +20,19 @@ Define the WHOLE product once — pitch, problem, users, value, goals, themes, t
 
 ## Constraints
 
-- **Singleton** — `docs/_product/prd.md`; a second run = update mode (L2 diff), never a second file.
+- **Singleton** — `docs/_product/prd.md`; a second run = update mode (versioned diff), never a second file.
 - **Group C** (`feature-bootstrap.md`) — runs BEFORE any feature exists; an empty vault is a valid starting state, no routing needed.
 - **Product altitude** — themes and the Feature Map, not capability detail. One line per feature in the Map; detail belongs to that feature's `/prd-epic`.
 - **The Feature Map is the contract** — slug (kebab-case, per `naming-conventions.md`) + theme + one-line purpose + status. `/roadmap` reads it one-way; feature folders adopt these slugs.
 - **Own OQs only** — Section 11; the product PRD is the product-level root, nothing cascades in (`resolve-oqs.md`). Cascade scans stay within this file.
 - **No fabricated market claims** — metrics targets and user segments need a stated basis or become OQs.
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
 ```
 /prd                # create (interview) or open update mode if it exists
-/prd --update       # explicit update mode (L2 diff per section)
+/prd --update       # explicit update mode (versioned diff per section)
 ```
 
 ## Approach
@@ -41,7 +41,7 @@ Define the WHOLE product once — pitch, problem, users, value, goals, themes, t
 2. **Interview (one batched round):** the pitch in one sentence · the problem + who has it · segments + their core job · what makes this valuable · product goals · theme candidates · known features (seed the Map — include existing `docs/*/` folders) · metrics + basis · constraints/risks.
 3. **Fact-list** — every claim + origin.
 4. **Draft** per the template — Sections 1-11; Feature Map rows get valid slugs (existing folders keep theirs).
-5. **L1 plan preview** — theme + Feature Map summary.
+5. **scoped change preview** — theme + Feature Map summary.
 6. **Write** — no `feature:` in frontmatter; `links: []` or pointers to research docs.
 10. **Output report** — Feature Map + next steps (`/roadmap`, `/prd-epic {slug}`).
 

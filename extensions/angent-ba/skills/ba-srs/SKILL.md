@@ -28,7 +28,7 @@ Specify EXACTLY what the system must do — Section 2 Functional Requirements (`
 - **Error Matrix is first-class** — every FR with a failure mode gets an `E-` row (condition · system behavior · user sees · related FR). An SRS with 12 FRs and 1 error row is under-specified.
 - **PRD missing → soft note** (Covers column empty until `/prd-epic` runs); feature missing → group A.
 - **Inherit OQs** (`resolve-oqs.md` Phase E) — from PRD/BRD/URD chain; own OQs in the "Open Questions" section.
-- **Validate before done** — doc-validate (step 9).
+- **Validate before done** — BA Markdown validation (step 9).
 
 ## Inputs
 
@@ -45,7 +45,7 @@ Specify EXACTLY what the system must do — Section 2 Functional Requirements (`
 3. **Fact-list** — every behavior/rule/error + origin (PRD/BRD/interview); each CAP → its FR candidates.
 4. **Assign IDs** — FR/NFR/BR/E per section, scanning the existing spec for max.
 5. **Draft** per the template — Overview + actors · Section 2 FRs (testable, Covers CAP-) · Section 3 NFRs (category + measure) · Section 4 BRs (formalized from BRD + interview) · Section 5 Error Matrix (linked to FRs) · data notes · diagram links · OQs.
-6. **L1 plan preview** — per-section counts + CAP coverage + uncovered CAPs called out. `--section` mode → preview only that section's diff.
+6. **scoped change preview** — per-section counts + CAP coverage + uncovered CAPs called out. `--section` mode → preview only that section's diff.
 7. **Write** — `links:` → PRD (+ BRD/URD).
 11. **Diagram menu** — offer per `doc-selection.md`/`diagram-selection.md`: flows (`/sequence`, `/activity-swimlane`), lifecycle (`/state`), data (`/erd`, `/dbdiagram`), screens (`/user-flow`, wave 2). Each item runs as its own skill with this spec as source.
 12. **Output report.**

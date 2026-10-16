@@ -21,7 +21,7 @@ Create a Mermaid `sequenceDiagram` block for one flow in one feature. **Single o
 ## Constraints
 
 - **1 fixed output** — `docs/{feature}/srs/{feature}-flows.md`, append mode. NO `--uc`, `--standalone`, `--system-flow` flags. Too many flows → the user splits manually.
-- **NO L3 iteration** — Mermaid cannot render in chat. Go straight from L1 plan → Write. The user reviews the rendered diagram from the file (IDE/Obsidian/GitHub) → to change it, call the skill again and say what needs to change (the skill enters update mode + L2 diff).
+- **NO L3 iteration** — Mermaid cannot render in chat. Go straight from L1 plan → Write. The user reviews the rendered diagram from the file (IDE/Obsidian/GitHub) → to change it, call the skill again and say what needs to change (the skill enters update mode + versioned diff).
 - **L1 approval** before Write.
 - **`--feature` optional** — auto-detect if there is only 1 in-progress feature; only ask when ambiguous. **Feature does not exist + arg is a flow description → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.
 - **Auto-detect actors** from the description prose.
@@ -36,7 +36,7 @@ Create a Mermaid `sequenceDiagram` block for one flow in one feature. **Single o
 /sequence "<flow description of a new feature>"   # feature does not exist → derive slug + interview + create feature (group A)
 ```
 
-To use another source instead of typing the description directly → tag `@file` or paste the content in chat. A section for that flow already exists → call the skill again with the changed description; the skill enters update mode (matched by slug) + L2 diff.
+To use another source instead of typing the description directly → tag `@file` or paste the content in chat. A section for that flow already exists → call the skill again with the changed description; the skill enters update mode (matched by slug) + versioned diff.
 
 ## Approach
 
@@ -52,8 +52,8 @@ To use another source instead of typing the description directly → tag `@file`
    This fact-list is used as the reconciliation checklist in step 9.6.
 3. **Derive the flow slug** from the description (verb-object kebab-case, max 40 chars).
 4. **Validate the target** `docs/{feature}/srs/{feature}-flows.md`:
-   - Exists + slug matches → enter update mode (L2 diff for that section).
-   - Exists, new slug → **do NOT blindly append**. A slug re-derived from a changed description may drift from the old section's slug (e.g. first time `guest-checkout-momo`, later the description "fix the customer payment flow" → `guest-payment`) — appending would create a duplicate-content section instead of editing. Handling: list the **near-matching** `## Flow:` sections (same actor/topic) for the user to choose "edit which section" OR "create a new flow"; user picks edit → enter update mode for that section (L2 diff), picks new → append. Only append directly when the description is clearly a completely different flow (no section is a near match).
+   - Exists + slug matches → enter update mode (versioned diff for that section).
+   - Exists, new slug → **do NOT blindly append**. A slug re-derived from a changed description may drift from the old section's slug (e.g. first time `guest-checkout-momo`, later the description "fix the customer payment flow" → `guest-payment`) — appending would create a duplicate-content section instead of editing. Handling: list the **near-matching** `## Flow:` sections (same actor/topic) for the user to choose "edit which section" OR "create a new flow"; user picks edit → enter update mode for that section (versioned diff), picks new → append. Only append directly when the description is clearly a completely different flow (no section is a near match).
    - Missing → create new: slim frontmatter (`type: srs-flows`, `feature`, `updated`) + a bare heading `# {Feature title} — Flows`, then directly append the first `## Flow:` section. Do NOT insert an intro sentence/blockquote describing "what this file contains / where the source is / writing rules" (meta-text — violates `ba-conventions.md` Section 0). The doc contains only real business content.
 5. **Auto-detect actors** from the description: scan capitalized nouns + common roles (User, FE/Client, BE/Backend, DB, third-party like Stripe/Momo). Person names → generalize to "User".
 6. **Generate Mermaid `sequenceDiagram`:**
@@ -66,7 +66,7 @@ To use another source instead of typing the description directly → tag `@file`
    - **`Note over`/`Note right of`**: for a business rule / SLA / assumption / FR-BR-E reference (e.g. "After 30s with no result"). Must NOT contain secrets or implementation details (keys, algorithms, endpoints).
    - **Do NOT use `ref`** — Mermaid sequence has no reliable standard `ref` fragment; to link another flow, note it in the "Related flows" metadata (Markdown), not in the diagram.
    - Concise; complex flows >15 steps, OR >8 participants, OR nesting >2 levels → warn, suggest splitting into 2-3 flows.
-7. **L1 plan preview** — show path + action (append/update) + actors + step count + related UC (if detected).
+7. **scoped change preview** — show path + action (append/update) + actors + step count + related UC (if detected).
 8. **Write** — Read flows.md, append the section after the last `## Flow:`. Each section format:
    ```markdown
    ## Flow: {Title}

@@ -36,7 +36,7 @@ Draw a multi-role business process as an activity diagram with **true swimlanes*
 - **L1 approval** before Write — BA-friendly prose (see `ba-conventions.md` Section 5), in business terms (steps / branches / roles), do NOT dump the PlantUML source.
 - **NO L3 iterate** — PlantUML does not render in chat; the user reviews from the `.svg`. (The skill reviews via the PNG image itself in step 7 on the user's behalf.)
 - **`--feature` optional** — auto-detect from context; only ask when ambiguous. **Feature does not exist + arg is a process description → auto-derive slug + create feature** (entry point, `feature-bootstrap.md` group A).
-- **Idempotent** — slug already exists → enter update mode automatically (L2 diff for the .puml + the flows.md section), re-render.
+- **Idempotent** — slug already exists → enter update mode automatically (versioned diff for the .puml + the flows.md section), re-render.
 
 ## Standard formula (mandatory requirements for every diagram — distilled from the standard IT-BA prompt)
 
@@ -61,7 +61,7 @@ Every swimlane diagram the skill produces MUST satisfy:
 /activity-swimlane "<new feature process description>"        # feature doesn't exist → derive slug + interview + create (entry point)
 ```
 
-Matching existing slug → the skill enters update mode automatically (L2 diff), no extra typing needed.
+Matching existing slug → the skill enters update mode automatically (versioned diff), no extra typing needed.
 
 ## Flow runtime (how the skill runs)
 
@@ -91,7 +91,7 @@ User calls /activity-swimlane "<description>" --feature X
    ▼
 5. Write the .puml source (formula below) — the AI describes structure, NO coordinates. Follow the 10 "Standard formula" points.
    ▼
-6. L1 plan preview (BA-friendly prose: N steps, M decisions, K lanes). User Y → continue.
+6. scoped change preview (BA-friendly prose: N steps, M decisions, K lanes). User Y → continue.
    ▼
 7. Write .puml → render.sh --png → SVG + PNG.
    │  compile/syntax fail? → read the error, fix the source, re-render (up to 2 times).
@@ -206,7 +206,7 @@ Any item fails → fix `.puml`, re-render `--png`, re-inspect. Up to 2 rounds. S
 - **Don't lock in lanes from the heuristic** — step 3.5 mandatorily asks the user to confirm lanes before drawing.
 - **Don't over-engineer** — a linear 3-4 step, 1-lane flow does not need swimlanes; `/activity` or numbered steps suffice. Swimlanes shine with ≥2 lanes + many cross-lane edges.
 - **Don't mix/delete other versions** — if the feature already has `/activity` (Mermaid) or `/d2-activity` in flows.md/d2, this skill adds a separate section, does NOT delete the other version. Multiple views of the same flow are valid.
-- **Update mode (slug exists)** → Read the old .puml, L2 diff the changed part, re-render after user Y, and update the flows.md section too.
+- **Update mode (slug exists)** → Read the old .puml, versioned diff the changed part, re-render after user Y, and update the flows.md section too.
 - **Image path in flows.md** — write it relative to the flows.md location (in `srs/`), i.e. `![...](./{feature}-{slug}-swimlane.svg)` (same folder). `/preview` and `/export` handle this image AUTOMATICALLY:
   - `/preview` + `/export --format html`: inline the SVG into HTML (self-contained, path-proof, with a zoom modal). The SVG is normalized (removing `preserveAspectRatio="none"` + hard width/height, keeping viewBox) so it does NOT distort when displayed inline.
   - `/export --format pdf|docx`: convert `.svg` → `.png` in assets (prefer an existing PNG next to the .svg — so do NOT delete the .png after render; else convert via Chrome). pandoc embeds the PNG into PDF/DOCX.
