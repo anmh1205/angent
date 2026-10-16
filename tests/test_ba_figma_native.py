@@ -66,6 +66,8 @@ class NativeFigmaGeneratorTests(unittest.TestCase):
             self.assertTrue(obj["ok"],obj)
             self.assertEqual(obj["unchanged_on_retry"],3)
             self.assertTrue(obj["title_collision_blocked"])
+            self.assertTrue(obj["heading_conflict_blocked"])
+            self.assertTrue(obj["text_write_orphans_rolled_back"])
             self.assertTrue(obj["partial_creation_rolled_back"])
             self.assertEqual(obj["live_figma_writes"],0)
 

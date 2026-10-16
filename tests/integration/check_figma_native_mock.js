@@ -9,7 +9,7 @@ const source=fs.readFileSync(file,'utf8');
 let counter=0;
 function mock() {
   const page={type:'PAGE',id:'page-1',children:[],async loadAsync(){}};
-  let fontLoaded=false,failReadback=false;
+  let fontLoaded=false,failReadback=false,failTextWrite=false;
   const nodes = new Map();
   const make = type => {
     const node={type,id:'node-'+(++counter),name:'',children:[],parent:page,removed:false,
@@ -25,7 +25,11 @@ function mock() {
       }};
     Object.defineProperty(node,'characters',{
       get(){return this._characters},
-      set(s){if(!fontLoaded)throw Error('Font not loaded');this._characters=s}
+      set(s){
+        if(!fontLoaded)throw Error('Font not loaded');
+        if(failTextWrite)throw Error('Simulated text mutation failure');
+        this._characters=s
+      }
     });
     page.children.push(node); nodes.set(node.id,node);return node;
   };
@@ -39,7 +43,8 @@ function mock() {
     },
     async getNodeByIdAsync(id) {return failReadback?null:nodes.get(id)||null}
   };
-  return {figma,page,setFailReadback:v=>{failReadback=v}};
+  return {figma,page,setFailReadback:v=>{failReadback=v},
+          setFailTextWrite:v=>{failTextWrite=v}};
 }
 const context=mock();
 const logs=[];
@@ -67,6 +72,16 @@ async function run() {
   const root=context.page.children.find(x=>x.name===out.receipts[0].screen_id?false:true);
   const first=context.page.children.find(x=>x.name.startsWith('ANGENT BA / login /'));
   if(!first)throw Error('Cannot find created login frame');
+  const heading=first.children.find(x=>x.name==='screen:title');
+  const originalTitle=heading.characters;
+  heading.characters='STALE HEADING EDIT';
+  let headingBlocked=false;
+  try {await executor(context.figma,{log:s=>logs.push(s)})}
+  catch(e){headingBlocked=/title text differs/.test(String(e))}
+  if(!headingBlocked || context.page.children.filter(x=>x.type==='FRAME').length!==3) {
+    throw Error('Changed heading must be detected without canvas mutation');
+  }
+  heading.characters=originalTitle;
   const label=first.children.find(x=>x.name.startsWith('control:')).children.find(x=>x.type==='TEXT');
   label.characters='STALE CUSTOM EDIT';
   let blocked=false;
@@ -79,8 +94,17 @@ async function run() {
   let failed=false;
   try {await executor(fresh.figma,{log:s=>logs.push(s)})}catch(e){failed=/read-back/.test(String(e))}
   if(!failed||fresh.page.children.length!==0)throw Error('Failed native read-back must rollback fresh nodes');
+  const textFailure=mock(); textFailure.setFailTextWrite(true);
+  let textRejected=false;
+  try {await executor(textFailure.figma,{log:s=>logs.push(s)})}
+  catch(e){textRejected=/text mutation failure/.test(String(e))}
+  if(!textRejected || textFailure.page.children.length!==0) {
+    throw Error('Failed TextNode write left an orphan or incomplete frame on canvas');
+  }
   return {ok:true,native_plugin_api_mock_only:true,created:3,unchanged_on_retry:3,
-          conflict_blocked:true,title_collision_blocked:true,partial_creation_rolled_back:true,
+          conflict_blocked:true,title_collision_blocked:true,
+          heading_conflict_blocked:true,text_write_orphans_rolled_back:true,
+          partial_creation_rolled_back:true,
           live_figma_writes:0};
 }
 run().then(value=>console.log(JSON.stringify(value))).catch(err=>{console.error(String(err.stack||err));process.exitCode=1});

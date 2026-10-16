@@ -21,6 +21,10 @@ const angentApply = async (figma) => {
       throw new Error('Existing frame title conflicts with source screen ID: ' + s.id);
     }
     if (existing) {
+      const headings = existing.children.filter(n => n.type === 'TEXT' && n.name === 'screen:title');
+      if (headings.length !== 1 || headings[0].characters !== s.title) {
+        throw new Error('Existing frame title text differs from source: ' + s.id);
+      }
       const controls = existing.children.filter(n => n.name.startsWith('control:'));
       if (controls.length !== s.controls.length || controls.some((n,i) =>
           n.type !== 'FRAME' || n.name !== nameOf(s.controls[i]) ||
@@ -35,14 +39,21 @@ const angentApply = async (figma) => {
   await figma.loadFontAsync({family:'Inter', style:'Regular'});
   const paint = (r,g,b) => [{type:'SOLID',color:{r,g,b}}];
   const textNode = (name,characters,fontSize) => {
+    // Figma creates TextNodes on the current page immediately. If setting
+    // text fails before adoption by the target frame, remove that orphan.
     const t=figma.createText();
-    t.autoRename=false;
-    t.name=name;
-    t.fontName={family:'Inter',style:'Regular'};
-    t.fontSize=fontSize;
-    t.characters=characters;
-    t.fills=paint(0.13,0.18,0.25);
-    return t;
+    try {
+      t.autoRename=false;
+      t.name=name;
+      t.fontName={family:'Inter',style:'Regular'};
+      t.fontSize=fontSize;
+      t.characters=characters;
+      t.fills=paint(0.13,0.18,0.25);
+      return t;
+    } catch (error) {
+      try { t.remove(); } catch (ignored) {}
+      throw error;
+    }
   };
   const created=[];
   const receipts=[];
@@ -82,6 +93,10 @@ const angentApply = async (figma) => {
           : page.children.find(n => n.id === root.id);
       if (!found || found.type!=='FRAME' || found.name!==s.name) {
         throw new Error('Figma frame read-back failed: '+s.id);
+      }
+      const headingNodes=found.children.filter(n=>n.type==='TEXT' && n.name==='screen:title');
+      if (headingNodes.length!==1 || headingNodes[0].characters!==s.title) {
+        throw new Error('Figma title read-back failed: '+s.id);
       }
       const actual=found.children.filter(n=>n.name.startsWith('control:'));
       if (actual.length!==s.controls.length || actual.some((n,j)=>
