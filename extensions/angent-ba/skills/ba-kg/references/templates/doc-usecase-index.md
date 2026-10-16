@@ -3,49 +3,43 @@ type: usecase-index
 feature: {{feature_slug}}
 status: draft
 updated: {{date}}
-links:
-  - docs/{{feature_slug}}/srs/{{feature}}-spec.md
+links: []
 ---
 
-# {{feature_name}} — Use Cases Index
+# {{feature_name}} — use case inventory
+
+Use stable actor-goal identities that are already accepted in the project. A use-case index is a *source mapping*, not proof an actor flow has been tested or implemented.
 
 ## Use cases
 
-> This table is a **per-feature traceability matrix** (UC↔FR↔Screen↔Error↔OQ) and also metadata/lifecycle — a single source, not split into a separate file. Only `/gap` checks cross-doc orphans/broken links (→ `docs/_shared/traceability.md`).
+| Slug | Status | Primary actor | Covers FR | Screens | Related errors | Open decisions | Source |
+|---|---|---|---|---|---|---|---|
+| [uc-{{id}}]({{existing_relative_usecase_path}}) | draft | {{actor}} | FR-{{feature}}-001 | {{screen_ids}} | E-{{feature}}-001 | {{question_or_none}} | {{source_revision}} |
 
-| # | Slug | Level | Status | Actor primary | Covers FR | Screens | Errors (E-*) | OQ ref | Priority | Updated |
-|---|------|-------|--------|---------------|-----------|---------|--------------|--------|----------|---------|
-| 1 | [{{uc_slug_1}}]({{uc_slug_1}}.md) | sea | draft | {{actor}} | FR-{{feature}}-001 | login, success | E-{{feature}}-001 | — | P0 | {{date}} |
+## Data access and responsibility
 
-## CRUD matrix
-
-> Which use case operates on which entity (C=Create, R=Read, U=Update, D=Delete). Empty cell = no interaction. Source of the UC→entity edge (OPERATES_ON) — the classic BA CRUD table, cross-checked against the ERD (`srs/{{feature}}-erd.md`). Entities named in CamelCase matching the ERD.
-
-| UC \ Entity | {{Entity1}} | {{Entity2}} |
-|---|---|---|
-| [{{uc_slug_1}}]({{uc_slug_1}}.md) | CRUD | R |
-
-## Actors
-
-| Actor | Type | Description | Source |
-|---|---|---|---|
-| {{actor_1}} | primary / secondary / system | {{description}} | {{source}} |
-
-## Diagram
-
-<img src="{{feature}}-usecase-diagram.svg" alt="Use case diagram: {{feature}}">
-
-*The real source is `{{feature}}-usecase-diagram.puml` (PlantUML native), rendered to `.svg` via `render.sh`. To change content → edit the `.puml` then re-run `/usecase-diagram`, do NOT hand-edit the `.svg`.*
+| Use case ID | Entity | Interaction: C / R / U / D | Business authorization | Evidence |
+|---|---|---|---|---|
+| UC-{{id}} | {{entity}} | {{C_or_R_or_U_or_D}} | {{guard_or_unknown}} | {{source}} |
 
 ## Relationships
 
-| Type | From | To | Rationale |
+| Type | From | To | Why this relationship holds |
 |---|---|---|---|
-| include | {{base_uc}} | {{included_uc}} | {{included_uc}} is always needed for {{base_uc}} to complete |
-| extend | {{extending_uc}} | {{base_uc}} | {{extending_uc}} augments {{base_uc}} when {{condition}} (base is still sufficient if it does not occur) |
+| include / extend / generalization | {{usecase_id}} | {{usecase_id}} | {{source_aligned_rationale}} |
 
-## Data sources
+## Diagram (optional, only after actual rendering)
 
-- FR + Error Matrix: [[../srs/{{feature}}-spec.md|SRS spec]]
-- Screens: [[../ascii-wireframe/{{feature}}-wireframe-index.md|Screens index]]
-- Open Questions: `srs/{{feature}}-spec.md` Open Questions section (canonical — the table above only points to ref `spec.md#OQ-N`)
+- Editable source: {{verified_local_diagram_source_or_not_produced}}
+- SVG: {{existing_rendered_svg_or_not_produced}}
+- Renderer and check: {{actual_local_tool_command_or_unverified}}
+
+Do not embed an SVG or claim a viewable image until a real renderer produced it. The BA use-case method may emit PlantUML source, but ANGENT does not bundle the original Claude render.sh or a PlantUML runtime. For Figma, confirm a live capable provider and read back editable nodes.
+
+## Linked sources and unresolved gaps
+
+- Requirements and error matrix: {{real_relative_SRS_path}}
+- Screen inventory: {{real_relative_screen_model_or_wireframe_path}}
+- Unresolved cross-document references: {{ids_or_none}}
+
+A source graph or gap audit can check **explicit IDs**, not invent a separate globally canonical docs/_shared/traceability.md. Handle missing FR and error references as review items rather than inserting invented requirements.

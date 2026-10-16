@@ -1,90 +1,44 @@
-# BPMN Template — IR-driven (2-layer architecture)
+# BPMN process model — ANGENT portable input and verification
 
-## Principles
+This is a **bounded BPMN 2.0** source model for an observed or accepted business process, not a general-purpose workflow engine. The ANGENT compiler implements one **non-executable acyclic process**, task nodes, start/end events, exclusive split/join gateways and optional lanes. Loops, parallel forks, timers, compensations, subprocesses and cross-pool messages are not currently supported.
 
-## IR schema (`{slug}.ir.json`)
+## Evidence prerequisites
 
-```jsonc
-{
-  "process": { "id": "Process_{slug}", "title": "Display process name" },
-  "lanes": [                                  // order = order of horizontal bands (top→bottom)
-    { "id": "Lane_learner", "name": "Learner" },
-    { "id": "Lane_system",  "name": "Auth system" }
-  ],
-  "nodes": [
-    { "id": "Start_1",  "kind": "start",   "lane": "Lane_learner", "name": "Start trigger" },
-    { "id": "Task_a",   "kind": "task",    "lane": "Lane_system",  "name": "Verb + business object" },
-    { "id": "GW_a",     "kind": "gateway", "lane": "Lane_system",  "name": "Decision question?" },
-    { "id": "End_ok",   "kind": "end",     "lane": "Lane_learner", "name": "Success outcome" },
-    { "id": "End_err",  "kind": "end",     "lane": "Lane_system",  "name": "Error outcome" }
-  ],
-  "flows": [
-    { "id": "Flow_1", "src": "Start_1", "tgt": "Task_a" },
-    { "id": "Flow_2", "src": "GW_a", "tgt": "End_ok",  "name": "Pass" },     // name REQUIRED for gateway branch
-    { "id": "Flow_3", "src": "GW_a", "tgt": "End_err", "name": "Fail" }
-  ]
-}
-```
+- Accepted SRS/BRD or use-case source/revision: {{actual_source}}
+- Actors and business owners: {{source_backed_actors}}
+- Complete decision table, including guards and alternatives: {{accepted_decisions}}
+- Required exception, cancellation or retry semantics: {{required_behavior_or_explicitly_unmodeled}}
 
-## Source facts (`{slug}.src.json`) — for semcheck to cross-check the source
+If a required behavior needs unsupported BPMN semantics, stop and report the gap; do not substitute a superficially similar shape and claim the process is equivalent.
 
-```json
-{
-  "actors":   ["Learner", "Auth system", "Email service"],
-  "branches": ["Fail", "Email exists", "Token expired"],
-  "errors":   ["Email already registered", "Link expired"]
-}
-```
+## Source IR
 
-- `actors` = every actor in UC Section b → semcheck verifies each one has a lane.
-- `branches` = every branch in UC Section d → semcheck verifies a corresponding gateway-branch exists.
-- `errors` = related E-codes → semcheck verifies an end/handling branch exists.
-- Semcheck matches approximately (strip accents, lowercase) → warns if the IR is missing something, does NOT block (final judgment is business).
+Use the compiler's existing input structure with process (id/title), optional lanes (id/name), nodes (id/kind/name/optional lane) and flows (id/src/tgt/optional name). Node kinds: start, end, task and gateway. For diverging exclusive gateways, every outgoing branch needs a **distinct nonempty name**.
 
-## How to infer IR from a UC (gap-driven, no invention)
+Reference a complete, compiled fixture rather than an incomplete JSON-with-comments snippet:
 
-| Source in the UC | → IR |
-|---|---|
-| Section b Actors (primary + supporting) | `lanes[]` |
-| Section a/c trigger | `start` node |
-| Each step in Section d Expected result | `task` node (lane = the actor doing that step) |
-| Each "If... then..." in Section d Branches | `gateway` + `flow`s whose `name` = the condition |
-| Main result + each error-path | `end` node (one per outcome) |
-| Section g Related FR / Error Matrix | cross-check errors in src.json |
+    extensions/angent-ba/examples/atlas-re/bpmn/claim-approval.ir.json
 
-**Set the lane for a node** = whoever is responsible for that step (learner enters, system validates, email service sends...). Column/coordinate NOT declared — the longest-path engine computes it automatically.
+Make a reviewed copy with stable process, lane, node and flow IDs and actual source-backed transitions. The compiler validates one start, reachable termination, branch guards, globally unique identifiers and no cycles.
 
-## IR rules (semcheck-enforced — structural, MUST pass)
+## Executable verification
 
-- Exactly 1 `start`; ≥1 `end`.
-- `gateway` has ≥2 outgoing; each outgoing has a `name`.
-- Every node reachable from start + can reach an end.
-- No self-loop; unique id; lane/src/tgt references valid.
-- Loop (e.g. revise→draft, retry) is valid — the engine accepts a back-edge and routes it around an empty band.
+Check the concrete IR without writing a BPMN file:
 
-## Pipeline (the engine handles it, the AI only runs commands)
+    python extensions/angent-ba/scripts/build_bpmn.py INPUT.ir.json --check
 
-```
-bash "${CLAUDE_PLUGIN_ROOT:-.claude}/scripts/tsrun.sh" skills/bpmn/engine/bpmn-build.ts  # every .ir.json → semcheck → layout → .bpmn → _viewer.html
-bash "${CLAUDE_PLUGIN_ROOT:-.claude}/scripts/tsrun.sh" skills/bpmn/engine/bpmn-build.ts --verify  # semcheck (structural+coverage) + validate layout of every .bpmn
-```
+Generate BPMN XML and basic diagram interchange:
 
-## File `bpmn/{feature}-bpmn-index.md`
+    python extensions/angent-ba/scripts/build_bpmn.py INPUT.ir.json --output OUTPUT.bpmn
 
-```yaml
----
-type: bpmn-index
-feature: {{feature}}
-status: draft
-updated: {{date}}
----
-# {{feature}} — BPMN Index
-| Process | File | Lanes | Gateways | Viewer |
-|---|---|---|---|---|
-| {{title}} | `{{slug}}.bpmn` | {{n}} | {{k}} | `_viewer.html#{{slug}}` |
-```
+For a test environment containing **original OMG normative XSD files**, check true BPMN schema compliance:
 
-## Cross-ref
+    python tests/integration/check_bpmn_official_xsd.py --schema-dir PATH_TO_OFFICIAL_XSD
 
-- `srs/{{feature}}-flows.md` — Mermaid activity (lightweight, renders in Obsidian). BPMN for the OMG standard + import into BPM tools.
-- `.claude/rules/diagram-selection.md` — when to use `/activity` vs `/bpmn`.
+The last integration test validates the included Atlas fixture; it does not automatically validate arbitrary OUTPUT.bpmn. Validate each project result separately against the normative schema when required.
+
+## Acceptance
+
+Record the inspected IR, accepted process revision, actual compiler exit status, evidence for each branch, generated XML file, rendered image/modeler inspection if available and unsupported behavior. XML parsing or XSD validation alone is not proof that the process can be imported, executed or faithfully rendered in a particular BPMN product.
+
+No Claude-specific scripts, auto-generation of viewer.html, hidden semcheck or fixed .claude paths are available or required.

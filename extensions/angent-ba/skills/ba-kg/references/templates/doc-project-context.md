@@ -1,45 +1,41 @@
 ---
 type: project-context
 status: draft
-version: 0.1.0
 updated: {{date}}
-profile_hash: {{sha_of_scanned_inputs}}
-source_watermark: {{git_head_sha_at_scan}}
-staleness_budget_commits: 200
-human_edited: []
 links: []
 ---
 
-# Project context — {{project_name}}
+# {{project_name}} — project context
 
-> Tier 1 — ALWAYS loaded. **Hard cap 60 lines of content** (excl. frontmatter); `doc-validate` fails a 61-line file. If `grep` answers it in 2 seconds, it doesn't belong here. Tag every claim: ✅ read · 🔵 inferred · 🟡 guessed (+ `file:path`).
+## Product and intended value
 
-## 1. What it does & who pays (2–3 sentences)
+{{what_the_product_does_who_buys_it_and_which_problem_it_solves}}
 
-{{what_the_system_does_and_who_pays}} ✅ `file:path`
+## Actors and authorization
 
-## 2. Stack (one line)
+| Actor | Business responsibility | Actual system permission | Source / revision |
+|---|---|---|---|
+| {{actor}} | {{responsibility}} | {{verified_or_proposed_permission}} | {{source}} |
 
-{{stack_oneliner}} ✅ `file:path`
+## Business terms and conflicts
 
-## 3. Actors (comma-separated; detail → `context/actors.md`)
+| Term | Meaning in this project | Conflicting term/code identifier | Source |
+|---|---|---|---|
+| {{term}} | {{meaning}} | {{identifier_or_none}} | {{source}} |
 
-{{actor_roles}}
+## Current technology (only when relevant)
 
-## 4. Glossary — collisions only (business word ≠ code identifier)
+{{observed_runtime_stack_and_its_evidence_or_unknown}}
 
-| Business term | Code / model | Note |
-|---|---|---|
-| {{Booking}} | {{reservations.tbl_res}} | ✅ `file:path` |
+## Decisions and unknowns
 
-## 5. Gotchas (max 5)
+| Question or decision | Status: approved / proposed / observed / unknown | Owner | Source |
+|---|---|---|---|
+| {{question}} | {{status}} | {{owner}} | {{source}} |
 
-- {{non_obvious_trap}} ✅/🔵/🟡 `file:path`
+## Authoritative documents
 
-## 6. Pointers (Tier 2 — read on demand)
+- {{accepted_product_or_requirements_link}}
+- {{actual_repository_revision_or_provider_record}}
 
-- `context/glossary.md` — full glossary; read when naming/terms are ambiguous.
-- `context/domain-rules.md` — business rules/invariants not visible in code; read when drafting specs/rules.
-- `context/actors.md` — actor detail + real-world authority; read for stories/use cases.
-- `context/entities.md` — entity pointers (defers to ERD); read for `/erd`.
-- `context/architecture.md` — architecture pointers (defers to `/scan-project` output); read for `/system-design`.
+This is a source-backed project summary, **not** a new memory database, required auto-loaded file, or a release gate. Use the existing project documentation location when authorized. An older saved summary does not override current evidence. Claims should distinguish approved business decisions, source-observed implementation and unverified proposals.

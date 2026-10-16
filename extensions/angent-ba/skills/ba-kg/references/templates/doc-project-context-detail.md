@@ -1,31 +1,36 @@
 ---
 type: project-context-detail
 status: draft
-version: 0.1.0
 updated: {{date}}
-profile_hash: {{sha_of_scanned_inputs}}
-source_watermark: {{git_head_sha_at_scan}}
-staleness_budget_commits: 200
-human_edited: []
 links: []
 ---
 
-# {{glossary | domain-rules | actors | entities | architecture}} — {{project_name}}
+# {{subject}} — {{project_name}}
 
-> Tier 2 — ON-DEMAND detail (one file per aspect under `docs/_shared/context/`). No line cap, but keep **pointer-heavy** where depth lives elsewhere (ERD / architecture diagrams) — duplicated structure is drift waiting to happen. Tag every claim: ✅ read · 🔵 inferred · 🟡 guessed (+ `file:path`).
+## Scope
 
-## Detail
+{{why_this_business_area_needs_more_detail_than_the_existing_project_context}}
 
-{{content_with_confidence_and_provenance}}
+## Source inventory
 
-- {{claim}} ✅ `file:path`
-- {{claim}} 🔵 `file:path` (inferred from …)
-- {{claim}} 🟡 `file:path` (→ OQ)
+| Evidence | Exact location and revision | Observation type | Reliability limit |
+|---|---|---|---|
+| {{source}} | {{path_or_provider_version}} | accepted decision / observed code / runtime / inference | {{limit}} |
 
-## Pointers (where the canonical depth lives)
+## Verified behavior and business rules
 
-- {{erd_or_architecture_path}} — {{what it holds}}
+| ID or topic | Condition | Expected/observed behavior | Source |
+|---|---|---|---|
+| {{identifier}} | {{precondition}} | {{outcome}} | {{source}} |
 
-## Open Questions
+## Conflicts and questions
 
-- [ ] OQ-1: {{gap}}
+| Issue | Competing evidence | Consequence | Next verification |
+|---|---|---|---|
+| {{issue}} | {{source_A_and_B}} | {{consequence}} | {{next_action}} |
+
+## Related accepted artifacts
+
+- {{existing_SRS_ERD_architecture_or_actor_reference}}
+
+Keep detail in the document already approved for this domain; do not impose an extra docs/_shared/context tree, mandatory checksum, automatic commit-based expiry or a separate synchronization store. Report missing sources explicitly.

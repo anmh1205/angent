@@ -4,18 +4,34 @@ updated: {{date}}
 links: []
 ---
 
-# {{scope}} — stakeholder package
+# {{scope}} — stakeholder delivery
 
-> Generated {{date}} · Format: {{format}} · Scope: {{scope}}
+## Source inventory and precedence
 
-## Contents
+| Document | Exact source path | Revision or SHA-256 | Approval state |
+|---|---|---|---|
+| {{doc}} | {{path}} | {{verified_source_revision}} | {{approved_or_draft}} |
 
-1. {{doc_in_reading_order}}
+## Delivered artifact
 
-## Change history
+| Format | Actual output file | Generator and runtime | Validation evidence |
+|---|---|---|---|
+| {{md_html_docx_or_pdf}} | {{existing_output_path}} | {{command_and_version}} | {{opened_and_checked_or_not_run}} |
 
-> Rendered from `docs/_shared/activity.log` (filtered by scope). Do not hand-edit — re-run `/export` to refresh.
+For reviewed Markdown files, use the real ANGENT exporter:
 
-```
-{{date}} | {skill} | {@author} | {path} | {note}
-```
+    python extensions/angent-ba/scripts/build_export.py DOC.md --root PATH_TO_DOC_ROOT --output OUTPUT.md --format md --title "Stakeholder review"
+
+DOCX/HTML and PDF are available only when their actual dependencies succeed. Do not claim to have generated a PDF without a real PDF engine and reader check; do not automatically download remote fonts/images or overwrite an accepted previous export.
+
+## Changes included
+
+| Decision or section | Previous source | Current source | Actual change | Evidence |
+|---|---|---|---|---|
+| {{item}} | {{revision}} | {{revision}} | {{difference}} | {{source}} |
+
+This history comes from inspected source revisions or real provider records, **not** a non-existent activity.log, automatic history file or guessed timestamp.
+
+## Review outcome
+
+{{audience_check_accessibility_sensitive_data_and_missing_evidence}}
