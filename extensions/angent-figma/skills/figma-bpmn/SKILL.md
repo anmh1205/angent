@@ -22,6 +22,10 @@ Specify process ID, pools/participants, lanes and owners, start events, task typ
 ## Distinctions to preserve
 Sequence flow does not cross pools; message flow connects participating pools. A gateway does not represent the approval task itself. A timer boundary event and a timer in the normal task flow do different things. End event semantics must match the intended interruption or completion.
 
+## Implemented BA XML handoff
+
+For acyclic single-process models using start/end tasks and exclusive gateway branches, the BA extension provides a real BPMN XML+DI compiler at extensions/angent-ba/scripts/build_bpmn.py, with fixture extensions/angent-ba/examples/atlas-re/bpmn/claim-approval.ir.json. Treat this as a semantic file-generation stage, NOT as editable Figma canvas output. Require a live authorized Figma tool, native object creation, read-back, and layout inspection before claiming a Figma mutation. For collaboration, loops, parallelism or timers, the portable compiler intentionally fails; use a verified advanced renderer or report unsupported scope.
+
 ## Deliverables
 One semantic BPMN IR, BPMN 2.0 XML with validation evidence when generated, editable Figma diagram when supported, and a source-to-node traceability table. Never claim executable process automation without verified engine/runtime behavior.
 
