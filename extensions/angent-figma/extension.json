@@ -8,7 +8,7 @@
   "source": {
     "origin": "Independent ANGENT implementation informed by public Reqwise features (https://ai4ba.com/figma-mcp) and MIT OSS reference",
     "type": "original-implementation",
-    "license": "ANGENT repository license; no commercial Reqwise Pro code included"
+    "license": "No repository-level license is presently declared; permission to redistribute is not implied"
   },
   "skills": {
     "directory": "skills",

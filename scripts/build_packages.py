@@ -212,7 +212,7 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
 def _assemble_gemini_web(source: dict[str, bytes]) -> dict[str, bytes]:
     """One browser Skill with a registry-guided, non-discoverable method library."""
     registry = json.loads(source["hub/registry.json"])
-    original = source["skills/angent/SKILL.md"].decode("utf-8")
+    original = source["skills/angent/SKILL.md"].decode("utf-8").replace("\r\n", "\n")
     header = re.match(r"\A(---\r?\n.*?\r?\n---\r?\n)", original, re.S)
     if header is None or re.search(r"^name:\s*angent\s*$", header.group(1), re.M) is None:
         raise PackagingError("Gemini Web requires ANGENT root metadata")
