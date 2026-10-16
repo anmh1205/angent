@@ -25,6 +25,17 @@ At the repository root, use extensions/angent-ba/examples/d2-activity.json, d2-e
 
 A renderer is required for the SVG; a generated .d2 file alone is not rendering evidence. Review the actual picture and source business relationships before using it. Local/Claude/Gemini CLI/OpenAI plugin packages include the Python scripts; **Gemini Web is reference-only** and does not bundle CLI scripts.
 
+
+- Playwright test generator: extensions/angent-ba/scripts/build_playwright.py creates runnable Python Playwright test files and traceability from a reviewed screen model; 7/7 generated Chrome cases passed for the synthetic Authentication fixture. This is **local HTML only**, not production end-to-end.
+
+## Generate and run browser tests
+
+    python extensions/angent-ba/scripts/build_playwright.py extensions/angent-ba/examples/authentication-screen-model.json --output out/playwright-suite
+
+    python out/playwright-suite/test_prototype.py --prototype out/auth-prototype.html --chrome PATH_TO_CHROME
+
+    python tests/integration/check_generated_playwright.py --chrome PATH_TO_CHROME
+
 ## How to operate
 
 A typical path is ba-brainstorm to ba-srs to ba-userstory/ba-ac to ba-test-checklist/ba-test-cases. Each method must consume accepted project evidence and may execute only in a host with the relevant tools. Do not impose file paths from the upstream Claude plugin onto an existing project. The feature-specific templates are under skills/ba-kg/references/templates; their double-brace variables are expected in templates but must be filled in a completed artifact. The full MIT citation and license appear in THIRD_PARTY_NOTICES.md.

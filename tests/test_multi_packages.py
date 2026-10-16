@@ -64,6 +64,7 @@ class MultiPackageTests(unittest.TestCase):
             "extensions/angent-ba/scripts/build_bpmn.py",
             "extensions/angent-ba/scripts/build_bruno.py",
             "extensions/angent-ba/scripts/build_wireframe.py",
+            "extensions/angent-ba/scripts/build_playwright.py",
             "extensions/angent-ba/scripts/validate_artifacts.py",
             "extensions/angent-figma/scripts/to_reqwise_payload.py",
         )
