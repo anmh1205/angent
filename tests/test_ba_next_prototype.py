@@ -36,7 +36,7 @@ class NextBAPrototypeTests(unittest.TestCase):
         self.assertIn("disabled={!hydrated}",app)
         self.assertIn("heading.current?.focus()",app)
         self.assertIn("reportValidity()",app)
-        self.assertIn("role=\\"alert\\"",app)
+        self.assertIn('role="alert"',app)
 
     def test_script_does_not_interpolate_untrusted_model_into_js(self):
         model=copy.deepcopy(self.model)
