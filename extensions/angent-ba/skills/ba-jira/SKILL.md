@@ -1,57 +1,36 @@
 ---
 name: ba-jira
-description: Business analysis jira specialist.
+description: ANGENT BA specialist for jira with source evidence, host authorization and real tool boundaries.
 ---
 
-# ANGENT BA: jira
-
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/jira/SKILL.md
-
-## Portability and authority
-
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
+# Jira synchronization of accepted BA user stories
+**Source:** Maintained adaptation of the MIT Dev BA Kit by Edward Ngo (2026), https://github.com/nv-minh/dev-ba-kit/blob/main/skills/jira/SKILL.md. ANGENT Root/Core retains final authority.
 
 
-# /jira — Push/sync user stories to Jira
 
-## Goal
+## What is authoritative
 
-Sync the feature's user stories ↔ Jira issues bidirectionally: push stories as issues (one `US-` → one issue), write the returned key into `{feature}-story-index.md`'s `jira-key` column, and pull issue status back into the index. Mapping state in `.claude/state/atlassian/sync-state.yaml` `mappings.jira`.
+Requirements, business rules and accepted user stories are project product decisions; Jira is an execution and collaboration system. ANGENT Root owns intent, source selection and permissions. BA resolves the FR/BR/AC-to-US mapping. Execution performs actual provider writes; Quality reads them back.
 
-## Constraints
+## Source-driven workflow
 
-- **External-write — hard HITL** (`atlassian-sync.md` §1): preview every issue + target project, explicit **Y** per write. `--dry-run` runs to the diff, writes nothing.
-- **Jira MCP must be authenticated** — not connected → STOP with connect instructions; never fabricate keys.
-- **Group B** (`feature-bootstrap.md`): needs `userstories/us-*.md` + the story index; missing → refuse + route `/userstory`.
-- **One issue per story** (`atlassian-sync.md` Jira-specific); the story-index `jira-key` column is the canonical pointer.
-- **Refuse `status: stale` stories** (`approval-gate.md` named hard gate) — route to `/userstory` to refresh first; a stale story pushed propagates outdated scope.
-- **Watermark by story hash** — re-push only changed stories (no full-backlog re-push every run).
-- **Bidirectional status map** — Jira statuses → our lifecycle (`draft`/`in-review`/`approved`/`shipped`); ambiguous mappings → ask, never guess.
-- **No local doc output** — only the story-index `jira-key`/`status` columns + sync-state are edited.
-- **Idempotent** — re-run updates existing issues (keys stable).
+1. Read the current accepted story index, US, AC and linked FR/BR with their source revision. Do not push unreviewed drafts or assume every story needs a Jira issue.
+2. Discover the actual accessible Jira site/project, issue types, field requirements and permissions using the connected Atlassian provider. Never hardcode tenant IDs or invent keys.
+3. Map each US to an existing issue using an authoritative Jira key or a stable US ID in issue metadata/description. Search provider issues first; a matching title alone does not establish identity.
+4. Compare the existing Jira issue and accepted story line by line. Prepare a scoped create/update/no-op proposal with source IDs, actual issue keys, role/access restrictions, clear acceptance criteria and changed text only.
+5. If stakeholder requirements and Jira disagree, preserve both witnesses, report their revisions and request a resolution rather than making Jira override the SRS.
+6. Check current authorization and provider permissions before writing. An explicit user instruction to implement/sync an approved scope authorizes its relevant writes; do not add arbitrary ceremony, but never expand scope silently.
+7. Execute only verified create/update actions. Before retrying uncertain writes, search/read Jira to avoid creating duplicate tickets. Never fabricate a successful key.
+8. Read the provider result back: project, key, summary, AC, scope and status. Record confirmed versus uncertain effects. Where a project already maintains a story index, use the authorized file workflow to add returned keys without rewriting unrelated rows.
+9. For pulling issue status, distinguish engineering progress from requirement approval. Resolve local status labels against the actual Jira workflow, never guess "In Progress" equals accepted.
+10. Summarize counts and direct issue links, source revision, omissions, conflicts and remaining decisions.
 
-## Inputs
+## Idempotency and state
 
-```
-/jira <feature> --push              # push changed stories (default)
-/jira <feature> --pull              # pull issue status into the index
-/jira <feature> --push --dry-run    # preview, write nothing
-```
+Use the existing story-index jira-key column or Jira issue metadata as a stable mapping; no hidden .claude/state/atlassian/sync-state.yaml, checkpoint or second sync database. Compare live issue versions before concurrent edits; fail safely if the provider lacks the ability to preserve changes or read back.
 
-## Approach
+## Example
 
-1. **Gate.** No stories → refuse + route `/userstory`. Verify Jira MCP auth; probe project access.
-2. **Diff vs watermark** — read sync-state `mappings.jira`; compute changed stories (hash ≠ stored `source_hash`). Stale-status stories → BLOCKING, route to `/userstory`.
-3. **Push preview** — per changed story: the issue title/summary/desc (from the story), the target project, the expected key (new vs update). `--pull` instead → the issues whose status changed.
-4. **L1 hard-gate preview** — list every issue write + "this writes to Jira"; get explicit **Y** (or stop at `--dry-run`).
-5. **On Y → MCP writes** — create/update each issue; collect returned keys.
-6. **Edit the story index** — write keys into `jira-key` (push) or status from the pull map (pull); tick `updated`.
-7. **Update sync-state** — `mappings.jira` per story (key/url/last_synced/source_hash).
-9. **Output report** — pushed/pulled counts + any stale-refused + coverage (`jira-key` filled / total).
+US-FLEET-012 may require a rental operator to see only authorized vehicles. Jira can carry approved FR/AC and implementation work, but an issue marked Done does not prove that all live authorization paths were tested. This is an illustrative story, not a real Jira key.
 
-## Gotchas
-
-- **Never invent a key** — a write that returns nothing leaves the cell empty + reported, not faked.
-- **Stale = hard stop** — it's the named gate for a reason; pushing a story whose FRs changed silently corrupts the backlog.
-- **Status map ambiguity** — Jira's "In Progress" could be our `draft` or `in-review`; ask once, record the mapping, don't guess per run.
-- **One issue per story** — don't bundle stories into an epic issue; the `jira-key` column is 1:1 (epics are a Jira-side grouping, not a story-side one).
+When Atlassian access is unavailable, return a reviewable issue mapping and report zero confirmed external writes.
