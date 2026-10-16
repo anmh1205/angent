@@ -81,6 +81,32 @@ class MarkdownTraceabilityTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"Duplicate"):
                 collect({"srs":srs},directory)
 
+    def test_examples_inside_markdown_fences_do_not_become_requirements(self):
+        tick=chr(96)*3
+        doc="\n".join([
+            "---","type: srs","status: draft","---","# Source evidence",
+            tick+"markdown",
+            "| ID | Requirement | Covers |","| --- | --- | --- |",
+            "| FR-FAKE-01 | This is an example, not a requirement | CAP-DEMO-01 |",
+            tick,
+            "~~~md",
+            "| ID | Requirement | Covers |","| --- | --- | --- |",
+            "| FR-FAKE-02 | Another syntax-only example | CAP-DEMO-02 |",
+            "~~~",
+            "| ID | Requirement | Covers |","| --- | --- | --- |",
+            "| FR-REAL-03 | Authorized users can read the status | CAP-REAL-01 |",
+            ""
+        ])
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp)
+            source=base/"srs.md"
+            source.write_text(doc,encoding="utf8")
+            result=collect({"srs":source},base)
+            self.assertEqual(result["counts"]["FR"],1)
+            item=result["graph"]["artifacts"][0]
+            self.assertEqual(item["id"],"FR-REAL-03")
+            self.assertIn("FR-REAL-03",doc.splitlines()[item["source_location"]["line"]-1])
+
     def test_unrelated_source_directory_is_not_read(self):
         with tempfile.TemporaryDirectory() as temp:
             with self.assertRaisesRegex(ValueError,"outside project root"):
