@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.0 — Portable multi-platform distributions
+
+- Added `platforms/` adapters and one deterministic `scripts/build_packages.py` for copy-ready local-agent, Gemini Skills, Gemini Extension, Claude Code and OpenAI Plugin packages.
+- Preserved canonical Core (12 Skills) and portable Engineer (103 Skills, 16 role contracts); packaged resource files and scripts along with Skill folders, without introducing a second Engineer plugin.
+- Added minimal host-aware persistent bootstrap with non-overwrite guidance for existing project AGENTS.md/GEMINI.md/CLAUDE.md.
+- Projected portable Engineer roles to Gemini Extension and Claude Code subagent metadata without claiming native runtime availability.
+- Retained the legacy `angent-chatgpt.zip` packaging path; added reproducibility, exact catalog, isolation and error-case tests for all five packages, with CI artifacts.
+- Source checks are structural evidence only; actual Gemini/Claude/ChatGPT runtime activation and cognitive-behavior validation require separate observed sessions.
+
+
 ## 1.4.0 — Evidence-grounded chat, reports and behavioral calibration (candidate)
 
 - Strengthened response and whole-report argument structure, reader orientation, inferential closure and information density without imposing fixed prose templates.

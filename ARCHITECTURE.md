@@ -61,3 +61,9 @@ See skills/angent/references/harness-contract.md for conditional adapter details
 ## Package identity
 
 Plugin manifests hold package metadata. The Git repository holds source history. Runtime provider identifiers and live task checkpoints are obtained from the relevant runtime/store when needed, not copied into documentation or committed source.
+
+## Multi-platform packaging
+
+The maintained cognitive source stays in `skills/`, with portable Engineer source and role contracts in `extensions/angent-engineer/`. Host-specific bootstraps live under `platforms/`. The generated, ignored `packages/` outputs are independent installations, not additional sources of truth. `scripts/build_packages.py` projects identical Skill bytes and necessary support materials into local agent, Gemini CLI, Claude Code and OpenAI layouts.
+
+Runtime discovery and activation differ by host: project `AGENTS.md` / `GEMINI.md` are persistent context in their supported runtimes, while Claude Code does not load plugin-root `CLAUDE.md` by itself. Its project bootstrap is explicit and optional. Native subagent role projections only use fields supported by target metadata and cannot attest live delegation. Verifying a complete ZIP proves structure, not activation or model behavior.

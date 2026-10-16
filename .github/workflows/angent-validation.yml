@@ -46,6 +46,20 @@ jobs:
       - name: Verify single-plugin bundle and selector
         run: python3 -m unittest discover -s tests -p 'test_unified_package.py' -v
 
+      - name: Verify all five platform package projections
+        run: python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
+
+      - name: Build all platform distributions
+        run: python3 scripts/build_packages.py --all
+
+      - name: Upload platform release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: angent-platform-packages
+          path: dist/angent-*.zip
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Build one unified ChatGPT/Codex plugin artifact
         run: python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
 
