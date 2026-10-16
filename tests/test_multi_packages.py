@@ -58,6 +58,27 @@ class MultiPackageTests(unittest.TestCase):
                 else:
                     self.assertFalse(any(p.startswith("agents/") for p in files))
 
+    def test_specialist_execution_scripts_are_physically_bundled(self):
+        scripts = (
+            "extensions/angent-ba/scripts/build_d2.py",
+            "extensions/angent-ba/scripts/build_bpmn.py",
+            "extensions/angent-ba/scripts/build_bruno.py",
+            "extensions/angent-ba/scripts/build_wireframe.py",
+            "extensions/angent-ba/scripts/validate_artifacts.py",
+            "extensions/angent-figma/scripts/to_reqwise_payload.py",
+        )
+        for name in ("local-agent", "claude-code", "gemini-extension", "gemini-skills", "openai-plugin"):
+            with self.subTest(package=name):
+                content=packs.assemble(ROOT,name,self.source)
+                for path in scripts:
+                    self.assertIn(path,content)
+                    self.assertEqual(content[path],self.source[path])
+        # Browser-only Gemini package has the reference library, not a
+        # filesystem/CLI runner: do not report native script execution there.
+        browser=packs.assemble(ROOT,"gemini-web",self.source)
+        for path in scripts:
+            self.assertNotIn(path,browser)
+
     def test_platform_bootstrap_and_manifests(self):
         local = packs.assemble(ROOT, "local-agent", self.source)
         self.assertIn("AGENTS.md", local)

@@ -12,7 +12,18 @@
 - Actual Markdown review: extensions/angent-ba/scripts/validate_documents.py (unfilled template markers, broken local links, IDs and metadata; heuristic, not a full semantic reviewer).
 - Safe self-contained HTML evidence preview: extensions/angent-ba/scripts/render_preview.py, tested for escaping and non-HTTP URL rejection.
 - HTML screen renderer: extensions/angent-ba/scripts/build_wireframe.py generates JS-free static wireframes or self-contained mock prototypes from an explicit screen model. Browser-level verification covers required/email validation, four simulated outcomes, navigation/focus, XSS and zero external requests.
+- **D2 compiler:** extensions/angent-ba/scripts/build_d2.py now generates validated activity/swimlane, sql_table ERD and logical architecture diagrams. The official D2 0.9.0 CLI rendered 3/3 SVGs; XML geometry/labels and PNGs were inspected. The output models remain synthetic fixtures, not proof of a user's project design.
 - Bruno generator: extensions/angent-ba/scripts/build_bruno.py generates HTTP collections with status and nested JSON tests, write-safe auth references, plus a requirement traceability manifest with optional read-only evidence-ID checking. The optional loopback-only Bruno CLI 4.2.1 fixture verified four requests, ten passing test assertions and one mock diagnostic ACK side effect.
+
+## Verify D2 sources and rendered diagrams
+
+At the repository root, use extensions/angent-ba/examples/d2-activity.json, d2-erd.json or d2-architecture.json. Run:
+
+    python extensions/angent-ba/scripts/build_d2.py extensions/angent-ba/examples/d2-erd.json --output out/erd.d2 --svg out/erd.svg --d2 PATH_TO_D2
+
+    python tests/integration/check_d2_cli.py --d2 PATH_TO_D2
+
+A renderer is required for the SVG; a generated .d2 file alone is not rendering evidence. Review the actual picture and source business relationships before using it. Local/Claude/Gemini CLI/OpenAI plugin packages include the Python scripts; **Gemini Web is reference-only** and does not bundle CLI scripts.
 
 ## How to operate
 
