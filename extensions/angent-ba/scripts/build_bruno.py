@@ -15,7 +15,9 @@ IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 TEST_ID = re.compile(r"^TC-[A-Za-z0-9][A-Za-z0-9-]*$")
 NAME = re.compile(r"^[A-Za-z0-9 _.,:/()\-]{1,100}$")
 METHODS = {"GET", "POST", "PUT", "PATCH", "DELETE"}
-FIELD = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+FIELD = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$")
+SENSITIVE_KEY = re.compile(r"(?:password|secret|token|api[_-]?key|credential)", re.I)
+FORBIDDEN_PROPERTY = {"__proto__", "constructor", "prototype"}
 PLACEHOLDER = re.compile(r"\{\{([A-Za-z_][A-Za-z0-9_]*)\}\}")
 
 
@@ -35,6 +37,8 @@ def validate(model: Any) -> dict[str, Any]:
             errors.append("Invalid environment variable name")
         if not isinstance(value, str) or not value or "\n" in value or "\r" in value or "{" in value or "}" in value:
             errors.append(f"Invalid environment value for {key}")
+        if isinstance(key,str) and SENSITIVE_KEY.search(key):
+            errors.append(f"Secret-like environment key {key} cannot be written to a collection")
     if "baseUrl" not in environ or not environ.get("baseUrl", "").startswith(("http://","https://")):
         errors.append("environment.baseUrl must be a declared HTTP(S) target")
     requests = model.get("requests")
@@ -74,10 +78,13 @@ def validate(model: Any) -> dict[str, Any]:
             errors.append(f"{testid}: expected_json must be an object")
         else:
             for field, value in fields.items():
-                if not isinstance(field, str) or not FIELD.fullmatch(field):
+                if (not isinstance(field, str) or not FIELD.fullmatch(field)
+                        or any(segment in FORBIDDEN_PROPERTY for segment in field.split("."))):
                     errors.append(f"{testid}: invalid assertion field")
                 if not (value is None or isinstance(value,(str,int,float,bool))):
                     errors.append(f"{testid}: assertion values must be JSON scalars")
+        if request.get("auth","none") not in ("none","bearer"):
+            errors.append(f"{testid}: auth must be none or bearer")
         headers = request.get("headers",{})
         if not isinstance(headers, dict):
             errors.append(f"{testid}: headers must be an object")
@@ -87,6 +94,8 @@ def validate(model: Any) -> dict[str, Any]:
                     errors.append(f"{testid}: invalid header name")
                 if not isinstance(value,str) or "\r" in value or "\n" in value or "{" in PLACEHOLDER.sub("",value):
                     errors.append(f"{testid}: invalid header value")
+                if isinstance(key,str) and key.lower() in ("authorization","x-api-key"):
+                    errors.append(f"{testid}: secrets must be supplied through runtime auth, not persisted headers")
         body = request.get("body_json")
         if body is not None and method not in ("POST","PUT","PATCH","DELETE"):
             errors.append(f"{testid}: GET cannot have JSON body in this generator")
@@ -104,7 +113,9 @@ def render_request(request: dict, seq: int) -> str:
              method.lower()+" {",
              "  url: {{baseUrl}}"+request["path"],
              "  body: "+"json" if request.get("body_json") is not None else "  body: none",
-             "  auth: none", "}", ""]
+             "  auth: "+request.get("auth","none"), "}", ""]
+    if request.get("auth")=="bearer":
+        lines.extend(["auth:bearer {","  token: {{authToken}}","}",""])
     headers = request.get("headers") or {}
     if headers or request.get("body_json") is not None:
         lines.append("headers {")
@@ -122,8 +133,9 @@ def render_request(request: dict, seq: int) -> str:
                   "    expect(res.getStatus()).to.eql("+str(expected)+");",
                   "  });"])
     for field, value in sorted((request.get("expected_json") or {}).items()):
+        expression="res.getBody()"+"".join("["+json.dumps(part)+"]" for part in field.split("."))
         lines.extend(["  test("+json.dumps(request["id"]+" "+field,ensure_ascii=False)+", function () {",
-                      "    expect(res.body["+json.dumps(field)+"]).to.eql("+json.dumps(value,ensure_ascii=False)+");",
+                      "    expect("+expression+").to.deep.equal("+json.dumps(value,ensure_ascii=False,allow_nan=False)+");",
                       "  });"])
     lines.extend(["}",""])
     return "\n".join(lines)
