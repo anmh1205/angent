@@ -195,6 +195,59 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
         if meaningful: traced.append(fr["id"])
     tested=set(requirement["id"] for requirement in requirements)-set(report["coverage"]["uncovered"])
     complete=sorted(tested&set(traced))
+    # A per-FR witness is more useful than a single coverage percentage.
+    # Only edges explicit in inspected source tables may appear in a proof.
+    from collections import defaultdict, deque
+    backlinks: dict[str, list[str]] = defaultdict(list)
+    for child,parents in ancestry.items():
+        for parent in parents:
+            backlinks[parent].append(child)
+    for values in backlinks.values():
+        values.sort()
+    byid={entry["id"]:entry for entry in artifacts}
+    def upstream_proof(fr_id: str) -> list[str] | None:
+        for cap in sorted(ancestry.get(fr_id,[])):
+            if origins.get(cap)!="CAPABILITY":
+                continue
+            for bo in sorted(ancestry.get(cap,[])):
+                if origins.get(bo)!="BUSINESS_OBJECTIVE":
+                    continue
+                for un in sorted(ancestry.get(bo,[])):
+                    if origins.get(un)=="NEED":
+                        return [un,bo,cap,fr_id]
+        return None
+    def test_proof(fr_id: str) -> list[str] | None:
+        follow={"ERROR","E","AC","ACCEPTANCE","CHECKLIST","CHK","TEST","TC"}
+        q=deque([(fr_id,[fr_id])])
+        seen={fr_id}
+        while q:
+            current,path=q.popleft()
+            for dependent in backlinks.get(current,[]):
+                if dependent in seen or origins.get(dependent) not in follow:
+                    continue
+                witness=path+[dependent]
+                if origins[dependent] in ("TEST","TC"):
+                    return witness
+                seen.add(dependent)
+                q.append((dependent,witness))
+        return None
+    fr_witnesses=[]
+    for fr in requirements:
+        fid=fr["id"]
+        up=upstream_proof(fid)
+        down=test_proof(fid)
+        test_artifact=byid[down[-1]] if down else None
+        fr_witnesses.append({
+            "id":fid,
+            "source":fr.get("source_location"),
+            "upstream_path":up,
+            "test_path":down,
+            "upstream_chain_present":up is not None,
+            "test_artifact_linked":down is not None,
+            "complete_structural_chain":up is not None and down is not None,
+            "test_execution_status":test_artifact.get("verification_status","not-proven") if test_artifact else "no-test-artifact",
+            "unresolved_references":fr.get("external_refs",[]),
+        })
     lifecycle={"user_needs":counts.get("NEED",0),
                "business_objectives":counts.get("BUSINESS_OBJECTIVE",0),
                "capabilities":counts.get("CAPABILITY",0),
@@ -205,6 +258,7 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
                "complete_fr_ids":complete,
                "missing_upstream_chain":sorted(set(x["id"] for x in requirements)-set(traced)),
                "missing_test_artifact":report["coverage"]["uncovered"],
+               "per_requirement":fr_witnesses,
                "verification":"links only; no stakeholder or production evidence"}
     return {"graph":graph,"coverage":report["coverage"],"lifecycle":lifecycle,"counts":counts,
             "unresolved_external_refs":unresolved,
