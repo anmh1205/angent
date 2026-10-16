@@ -11,7 +11,8 @@ from typing import Any
 ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9-]+$")
 
 
-def audit(data: Any, require_tests: bool = False) -> dict[str, Any]:
+def audit(data: Any, require_tests: bool = False,
+          source_root: Path | None = None) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
     if not isinstance(data, dict):
@@ -28,6 +29,17 @@ def audit(data: Any, require_tests: bool = False) -> dict[str, Any]:
         if src["id"] in source_ids:
             errors.append(f"sources[{pos}]: duplicate source ID {src['id']}")
         source_ids.add(src["id"])
+        if source_root is not None:
+            uri = src["uri"]
+            if "://" in uri or uri.startswith("#"):
+                warnings.append(f"sources[{pos}]: external or in-document reference needs provider verification: {uri}")
+            else:
+                root = source_root.resolve()
+                candidate = (root / uri).resolve()
+                if not candidate.is_relative_to(root):
+                    errors.append(f"sources[{pos}]: local evidence path escapes allowed root")
+                elif not candidate.is_file():
+                    errors.append(f"sources[{pos}]: source evidence file missing: {uri}")
     for pos, obj in enumerate(artifacts):
         if not isinstance(obj, dict):
             errors.append(f"artifacts[{pos}]: expected object")
@@ -121,13 +133,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", type=Path)
     parser.add_argument("--require-tests", action="store_true")
+    parser.add_argument("--source-root",type=Path,help="Optional base for checking local source file existence; external URIs only warn")
     args = parser.parse_args()
     try:
         data = json.loads(args.input.read_text(encoding="utf-8"))
     except (OSError, ValueError) as exc:
         print(json.dumps({"ok": False, "errors": [str(exc)]}))
         return 2
-    result = audit(data, require_tests=args.require_tests)
+    result = audit(data, require_tests=args.require_tests,source_root=args.source_root)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result["ok"] else 1
 
