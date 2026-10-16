@@ -30,12 +30,16 @@ class UnifiedPackageTests(unittest.TestCase):
 
     def test_one_plugin_and_exact_catalog(self):
         self.assertEqual(self.report["plugin_name"], "angent")
-        self.assertEqual(self.report["discoverable_skills"], 115)
+        self.assertEqual(self.report["discoverable_skills"], 114)
+        self.assertEqual(self.report["engineer_skills"], 103)
+        self.assertEqual(self.report["discoverable_engineer_skills"], 102)
         self.assertEqual(self.report["engineer_roles"], 16)
         with zipfile.ZipFile(self.first) as z:
             self.assertNotIn("extensions/angent-engineer/plugin.json", z.namelist())
             self.assertNotIn("extensions/angent-engineer/.codex-plugin/plugin.json", z.namelist())
             self.assertIn("extensions/angent-engineer/source-manifest.json", z.namelist())
+            self.assertIn("extensions/angent-engineer/skills/ak-explain/SKILL.md", z.namelist())
+            self.assertNotIn("skills/ak-explain/SKILL.md", z.namelist())
             self.assertEqual(json.loads(z.read("plugin.json"))["version"],
                              json.loads(z.read(".codex-plugin/plugin.json"))["version"])
             self.assertEqual(z.read("skills/ak-agentkit/SKILL.md"),
@@ -66,6 +70,11 @@ class UnifiedPackageTests(unittest.TestCase):
         paths = module._tracked(ROOT)
         with self.assertRaises(module.PackagingError):
             module.collect_entries(ROOT, paths + ["extensions/angent-engineer/skills/ak-agentkit/SKILL.md"])
+
+    def test_missing_hidden_source_skill_fails_closed(self):
+        paths = [p for p in module._tracked(ROOT) if p != "extensions/angent-engineer/skills/ak-explain/SKILL.md"]
+        with self.assertRaises(module.PackagingError):
+            module.collect_entries(ROOT, paths)
 
     def test_missing_skill_fails_closed(self):
         paths = [p for p in module._tracked(ROOT) if p != "extensions/angent-engineer/skills/ak-agentkit/SKILL.md"]

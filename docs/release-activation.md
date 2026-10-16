@@ -1,6 +1,6 @@
 # Provider release and activation evidence
 
-The two source manifests are package identity, not proof of the plugin installed in a ChatGPT, Codex or other host. The unified ANGENT distribution contains 12 Core and 103 portable Engineer skill identities; the separate Engineer fallback should not also be active for the same workflow.
+The two source manifests are package identity, not proof of the plugin installed in a ChatGPT, Codex or other host. The unified ANGENT distribution exposes 12 Core + 102 Engineer Skills, while keeping 103 portable Engineer source identities (including `ak-explain`); the separate Engineer fallback should not also be active for the same workflow.
 
 Run source-only check:
 

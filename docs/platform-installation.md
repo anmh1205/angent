@@ -7,7 +7,7 @@ python3 scripts/build_packages.py --all
 python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
 ```
 
-The five CLI/plugin bundles contain the same 115 discoverable Skills, including their `references/`, `scripts/` and portable Engineer support tree. Do not use the raw root `skills/` checkout alone as the full ANGENT distribution: it contains only the 12 Core Skills.
+The five CLI/plugin bundles contain the same 114 discoverable Skills (12 Core + 102 Engineer), including their `references/`, `scripts/` and portable Engineer support tree. Do not use the raw root `skills/` checkout alone as the full ANGENT distribution: it contains only the 12 Core Skills.
 
 ## Local coding agents
 
@@ -18,11 +18,11 @@ Copy the **contents** of `packages/local-agent/` into the target project root. T
 Download `angent-gemini-web.zip` from the GitHub Release. On
 `gemini.google.com`, open Customize > Skills > Upload and select that ZIP
 directly. The ZIP has exactly one top-level `SKILL.md`, plus a generated
-`references/INDEX.md`, the original 12 Core and 103 Engineer Skill texts,
+`references/INDEX.md`, the 12 Core and 102 discoverable Engineer Skill texts,
 and 16 role definitions as *references*.
 
 Gemini Web imports **one Skill** from this package. The nested library does
-not become 115 separately discoverable Skills or 16 running subagents. You must
+not become 114 separately discoverable Skills or 16 running subagents. You must
 select/use the uploaded ANGENT Skill in Gemini Apps. The browser does not gain
 filesystem persistence, native AgentKit, remote shell or external-action
 scripting merely by importing reference files. Keep the original CLI targets

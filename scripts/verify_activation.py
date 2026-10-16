@@ -10,6 +10,10 @@ import hashlib
 import json
 from pathlib import Path
 from typing import Any
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from package_unified import SUPPRESSED_PUBLIC_ENGINEER, EXPECTED_DISCOVERABLE
 
 ROOT = Path(__file__).resolve().parents[1]
 PROBED_FILES = ("skills/angent/SKILL.md", "skills/angent-authoring/SKILL.md", "skills/angent-quality/SKILL.md")
@@ -32,7 +36,9 @@ def source_identity(root: Path = ROOT) -> dict[str, Any]:
     engineer = {p.parent.name for p in (root / "extensions/angent-engineer/skills").glob("*/SKILL.md")}
     if len(core) != 12 or len(engineer) != 103 or core & engineer:
         raise ActivationError("unexpected source catalog")
-    expected = sorted("skills/" + name + "/SKILL.md" for name in (core | engineer))
+    expected = sorted("skills/" + name + "/SKILL.md" for name in (core | (engineer - SUPPRESSED_PUBLIC_ENGINEER)))
+    if len(expected) != EXPECTED_DISCOVERABLE or not SUPPRESSED_PUBLIC_ENGINEER <= engineer:
+        raise ActivationError("inconsistent discoverable Engineer catalog")
     fingerprints = {}
     for name in PROBED_FILES:
         fingerprints[name] = hashlib.sha256((root / name).read_bytes()).hexdigest()

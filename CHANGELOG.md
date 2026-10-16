@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.2 — Core and Engineer discovery boundaries
+
+- Made Core Reasoning and Authoring the sole default owner of conceptual explanations. Suppressed `ak-explain` from ANGENT's public Skill discovery without removing it from the maintained 103-Skill Engineer source.
+- Exposed 12 Core and 102 Engineer Skills in local agent, Gemini CLI, Claude Code and OpenAI packages. Gemini Web remains one root Skill with 114 reference Skill texts.
+- Narrowed `ak-ask` to deliberate architecture consultation and `ak-sumup` to implementation handoff reports; `ak-bro` retains its distinct previous-message restatement scope.
+- Added regression checks for non-discovery, source completeness, unchanged native AgentKit fallback selection and exact provider inventory.
+- Previous-version ChatGPT plugin updates must explicitly delete omitted `skills/ak-explain/` files because plugin updates otherwise preserve absent paths.
+
+
 ## 1.5.1 — Gemini Apps Web Skill packaging
 
 - Added dedicated `gemini-web` target with a top-level `SKILL.md` for the Gemini Apps browser uploader.

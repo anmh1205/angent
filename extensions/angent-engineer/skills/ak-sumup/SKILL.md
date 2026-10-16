@@ -1,12 +1,12 @@
 ---
 name: ak-sumup
-description: Produce an evidence-bounded recap of completed implementation, verification, failures, decisions, behavior, usage, and unresolved work without replaying the whole session.
+description: Provide a requested post-implementation handoff recap grounded in actual artifacts, test evidence, delivery status and unresolved risks.
 metadata: {port: angent-fallback, mode: portable}
 ---
 
 # Sum Up — Portable Fallback
 
-Use after implementation or when a concise technical recap is needed.
+Use for a requested delivery/handoff recap after implementation, especially when fresh artifact, test and release evidence matters. General conversational summaries remain owned by ANGENT Authoring.
 
 ## Evidence
 

@@ -20,7 +20,7 @@ angent (Git repository)
 └── scripts/package_unified.py          # builds one installable ZIP
 ```
 
-The installable ZIP contains **115 discoverable Skills under one root**, the 16 role contracts, the existing Engineer support tree and **only ANGENT's root installable manifests**. Nested Engineer plugin metadata becomes `source-manifest.json` for selector compatibility and is not installable. Original source copies are retained within the package to keep relative references and scripts intact; they are not another discovery root.
+The installable ZIP contains **114 discoverable Skills under one root** (12 Core + 102 Engineer), the 16 role contracts, the existing Engineer support tree and **only ANGENT's root installable manifests**. Nested Engineer plugin metadata becomes `source-manifest.json` for selector compatibility and is not installable. Original source copies are retained within the package to keep relative references and scripts intact; they are not another discovery root. All 103 Engineer identities remain maintained, but `ak-explain` is not projected to the public ANGENT discovery root because Core Reasoning and Authoring already own explanation. The original 103-Skill Engineer source and native-first selector are preserved.
 
 Native AgentKit remains preferred **per task**, not via automatic unloading of packaged Skills. Agent Plugins v1 lacks conditional static discovery; the host may show both native and fallback catalogs, so selection must avoid combining them.
 

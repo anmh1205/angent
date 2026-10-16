@@ -58,7 +58,7 @@ Core fixtures are calibration prompts and counter-cases, not automatically execu
 
 The repository checks deterministic structure and manifest consistency, and exercises Memory/Continuity filesystem races, process-exit lock release, revision conflicts and interrupted pointer recovery on CI. For cognitive method changes, use evidence-backed behavioral cases and counter-cases appropriate to the actual consequence. Green structural and runtime CI checks cannot establish that a model's reasoning, writing or cross-session Learning activation improved.
 
-ANGENT continues to ship **one OpenAI plugin identity**, not one plugin per platform. The compatibility builder `python3 scripts/package_unified.py --output dist/angent-chatgpt.zip` remains available, combining 12 Core and 103 Engineer Skills under one discoverable `skills/` root.
+ANGENT continues to ship **one OpenAI plugin identity**, not one plugin per platform. The compatibility builder `python3 scripts/package_unified.py --output dist/angent-chatgpt.zip` remains available. ANGENT exposes **12 Core and 102 discoverable Engineer Skills**. All 103 Engineer source identities are preserved under `extensions/angent-engineer/`; the overlapping `ak-explain` is no longer a separately discoverable Skill. Reasoning and Authoring own ordinary explanations.
 
 For the multi-platform release run:
 
@@ -69,7 +69,7 @@ python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
 
 This creates copy-ready `packages/local-agent/`, `packages/gemini-web/`, `packages/gemini-skills/`, `packages/gemini-extension/`, `packages/claude-code/` and `packages/openai-plugin/`, alongside deterministic ZIPs in `dist/`. Both output directories are generated and Git-ignored. Download the matching [GitHub Release](https://github.com/anmh1205/angent/releases) ZIPs when no build environment is available. Each release provides individual target ZIPs and one `angent-all-targets.zip` containing all seven distributions, plus checksums. Personal ChatGPT plugin updates require a separate upload. Tagged releases use the guarded publication workflow and include SHA256 checksums; ordinary CI artifacts are short-lived candidates.
 
-**Gemini Web:** upload `angent-gemini-web.zip` to Gemini Apps → Customize → Skills → Upload. It has one top-level `SKILL.md` and references for all 115 Core/Engineer skill texts; unlike Gemini CLI it does not import 115 independently callable Skills. See the Gemini Apps installation section for limitations.
+**Gemini Web:** upload `angent-gemini-web.zip` to Gemini Apps → Customize → Skills → Upload. It has one top-level `SKILL.md` and references for all 114 discoverable Core/Engineer skill texts; unlike Gemini CLI it does not import 115 independently callable Skills. See the Gemini Apps installation section for limitations.
 
 Core Skills remain canonical under `skills/`; the maintained Engineer fallback remains under `extensions/angent-engineer/`. `platforms/` owns only native bootstrap/manifest projections. Do **not** edit generated packages or maintain separate copies of core reasoning per host. See [Installation and platform differences](docs/platform-installation.md).
 
