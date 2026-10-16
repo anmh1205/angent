@@ -1,13 +1,21 @@
-# ANGENT Business Analysis Kit
+# ANGENT Business Analysis — maintained specialist extension
 
-Independent implementation of **55 portable specialist Skills** matching the publicly described *categories of work* in AI4BA BA-Kit. No proprietary AI4BA skill source, templates or licensing rights are claimed. These are original ANGENT instructions, not a rebranded BA-Kit distribution.
+**Scope:** 55 ANGENT BA skills, 48 structured artifact templates, 19 ANGENT-specific review probes, 21 MIT reference rule documents and four Python helpers for graph/document checking, change impact and HTML preview. The source material is **45 maintained adaptations of MIT [Dev BA Kit](https://github.com/nv-minh/dev-ba-kit)** and **10 independently authored specialist methods**. Forty templates are adapted from the same MIT project; eight are original. This is not a reproduction of proprietary AI4BA BA-Kit source, which was not available.
 
-ANGENT 2.0 Hub discovers all methods through `extension.json`. On OpenAI/Gemini Web the methods appear under the single ANGENT Root reference library; other targets project portable Skills into their own discovery paths.
+## What actually works
 
-The source methods are backed by a canonical evidence/traceability model in `skills/ba-kg/references/operating-model.md`, individually authored template starters and a constraint/rules library. Stronger artifact integrity checks live in `scripts/validate_artifacts.py` and `scripts/change_impact.py`; host environments without filesystem/CLI cannot claim to run them.
+- ANGENT Hub manifest resolves each specialist capability while Core retains intent, reasoning, authority and final Quality.
+- Project evidence graph: extensions/angent-ba/scripts/validate_artifacts.py (refs, cycles, requirement-to-test reachability).
+- Read-only change impact: extensions/angent-ba/scripts/change_impact.py (reverse dependencies and paths).
+- Actual Markdown review: extensions/angent-ba/scripts/validate_documents.py (unfilled template markers, broken local links, IDs and metadata; heuristic, not a full semantic reviewer).
+- Safe self-contained HTML evidence preview: extensions/angent-ba/scripts/render_preview.py, tested for escaping and non-HTTP URL rejection.
 
-Scope: discovery; requirements; eleven modeling formats; backlog; interactive design; API analysis; testing; QA; handoff. The exact output format and real provider side effects require the relevant native tools. These instructions are *methods*, not assertions that Bruno/Figma/Jira/Confluence ran.
+## How to operate
 
-## Example path
+A typical path is ba-brainstorm to ba-srs to ba-userstory/ba-ac to ba-test-checklist/ba-test-cases. Each method must consume accepted project evidence and may execute only in a host with the relevant tools. Do not impose file paths from the upstream Claude plugin onto an existing project. The feature-specific templates are under skills/ba-kg/references/templates; their double-brace variables are expected in templates but must be filled in a completed artifact. The full MIT citation and license appear in THIRD_PARTY_NOTICES.md.
 
-`ba-brainstorm` → `ba-srs` → `ba-user-flow` / `ba-sequence` → `ba-userstory` / `ba-ac` → `ba-test-checklist` → `ba-test-cases` → `ba-gap`. Skip steps when the accepted artifact already exists. Scope changes go through `ba-cr` and provider writes through ANGENT Execution.
+## Limits and improvement boundaries
+
+The imported methods preserve meaningful rules, examples and procedures but **do not automatically port the original Claude hooks, TypeScript validators, custom BPMN/D2/render engines or install scripts**. Those require deliberate dependencies, host adapter verification and end-to-end tests. Native Jira/Confluence/Figma writes, Bruno/Playwright execution and design rendering must not be claimed solely from the existence of skill instructions. A current source tree can guide a specialist; it is not itself proof of product or runtime quality.
+
+See RESEARCH_AND_PARITY.md for feature evidence, mapped source and remaining acceptance checks.

@@ -6,9 +6,9 @@
   "authority": "specialist",
   "description": "Business analysis, traceable requirements, API contracts, process modeling, release handoff and impact review",
   "source": {
-    "origin": "Independent implementation informed by public BA practices and ai4ba.com/ba-kit feature list",
-    "type": "original-implementation",
-    "license": "No repository-level license is presently declared; permission to redistribute is not implied"
+    "origin": "https://github.com/nv-minh/dev-ba-kit (MIT) and original ANGENT BA work; ai4ba.com/ba-kit public features were a research reference",
+    "type": "maintained-mit-adaptations-and-original",
+    "license": "MIT source method/template portions (THIRD_PARTY_NOTICES.md); ANGENT originals have no declared repository-level license"
   },
   "skills": {
     "directory": "skills",

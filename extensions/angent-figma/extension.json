@@ -6,9 +6,9 @@
   "authority": "specialist",
   "description": "Domain diagram models, editable Figma construction, prototype and design system reviews through available runtime tools",
   "source": {
-    "origin": "Independent ANGENT implementation informed by public Reqwise features (https://ai4ba.com/figma-mcp) and MIT OSS reference",
-    "type": "original-implementation",
-    "license": "No repository-level license is presently declared; permission to redistribute is not implied"
+    "origin": "https://github.com/hoangpm96/reqwise-figma-mcp (MIT) and original ANGENT Figma work",
+    "type": "maintained-mit-adaptations-and-original",
+    "license": "MIT OSS specialist portions (THIRD_PARTY_NOTICES.md); Pro features independently specified, not implemented from proprietary source"
   },
   "skills": {
     "directory": "skills",
