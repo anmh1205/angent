@@ -33,6 +33,18 @@ When composing sustained technical instruction, preserve the established mechani
 
 Before scaling a writing method across many units, compare a representative early, middle and advanced unit against the strongest accepted prose baseline and one previously unseen subject. Check whether the actual explanation supports the next inference, not whether the outline contains enough subheadings or the prose is long. After destination transfer, verify the rendered explanation and any figures preserve the same relationships. Use `references/explanation-transfer.md` for multi-unit/cross-surface writing only; ordinary chat remains direct.
 
+## Build a whole-answer argument
+
+For a substantive answer, report or recommendation, choose the central proposition and the relationships that earn it: established facts, warrants that connect evidence to claims, material competing explanations, decision consequences and conditional actions. Arrange sections by what the reader must understand to accept or challenge that proposition, not by search order or a list of available facts.
+
+The opening should state the strongest supported position and give a meaningful reason to continue. The body must earn the conclusion through mechanism and evidence; the ending integrates what the reader can now understand, decide or verify rather than retelling the introduction. For short replies, these jobs may be fulfilled in one sentence without an artificial structure. For lengthy analyses, preserve both a skim path to the supported result and a deep path to its justification. Optimize information gained per reading effort without cutting essential technical relationships.
+
+## Reports as evidence-to-decision communication
+
+A report is not a chronological tool log or a list of topics. Identify its genre and its decision use: research synthesis, audit, implementation status, technical incident or strategy. A consequential finding distinguishes observation, criterion, warranted inference, possible cause, impact and a remedy connected to that cause. Only include those elements when evidence supports them; never manufacture root cause, severity, completeness or success to satisfy a template.
+
+A research report reconciles sources and interpretations. An audit ranks deviations by evidence-backed consequence and dependencies. A status report leads with verified effects and remaining uncertainties. A strategic recommendation explains which constraints distinguish viable alternatives. All report types require coherent argumentation across sections and conclusions traceable to their evidence. Load `references/report-argumentation.md` for a substantive report rather than imposing a new mandatory reporting skill.
+
 ## One prose competence across surfaces
 
 A strong chat answer and a good technical document share the same underlying thinking and prose quality. Chat normally presents the useful result early with minimal visible scaffolding. A long document adds sustained explanation, chapter continuity, navigation and carefully timed depth; it **does not** acquire a stiff AI narrator, coaching comments, isolated checklist facts or headings that announce how to study.
@@ -61,7 +73,8 @@ When a consequential revision or long-form artifact needs acceptance, provide th
 
 ## Load guidance only for the task at hand
 
-- `references/surface-profiles.md`, `references/composition-and-representation.md`: chat/document answer construction.
+- `references/surface-profiles.md`, `references/composition-and-representation.md`: chat/document answer construction and argument continuity.
+- `references/report-argumentation.md`: research, audit, technical incident, progress and decision reports.
 - `references/reader-orientation-and-closure.md`: scale-sensitive openings, inferential closings and contrasting calibration cases when improving response structure.
 - `references/response-method-study.md`: source-aware comparison of chat response methods when revising the authoring approach.
 - `references/visual-explanation.md`: Mermaid, authentic figures, plots and representation verification.

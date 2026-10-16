@@ -190,6 +190,28 @@ Symptoms:
 
 Return to the Chat surface profile and compress visible structure, not reasoning quality.
 
+## Report and response architecture cases
+
+### Facts are cited but the recommendation is unsupported
+
+A report contains accurate, sourced statements and recommends a consequential intervention with no demonstrated relation from condition to cause, impact and chosen action. Find the missing warrant; return it to Reasoning/Research or narrow the recommendation. Citations alone do not establish causation.
+
+### A persuasive summary conceals an inventory-only body
+
+The opening makes a strong claim, but middle sections merely list sources, features or tool steps. Test whether a knowledgeable reader can reconstruct the claimed mechanism and decision. If not, recompose the entire argument rather than polishing the summary.
+
+### Severity or coverage exceeds evidence
+
+An audit labels a system-wide defect or complete remediation from one sample, test or file. Separate directly inspected facts, inferred risks and untested boundaries. A bounded audit is a valid negative control and should not turn into whole-system certification.
+
+### Chat prose is long without information gain
+
+The response repeats its opening, splits linked facts into one-sentence blocks or adds headings without changing the reader's understanding. Diagnose the missing conceptual link or surplus commentary rather than applying a blanket length target.
+
+### Genre collapse
+
+A research report becomes a search log, a status report becomes unverified reassurance, or a teaching chapter becomes a checklist. Repair the genre's information purpose while retaining a shared coherent prose baseline.
+
 ## Calibration questions
 
 For reader-facing technical output ask:

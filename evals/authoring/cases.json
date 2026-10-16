@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "chat-short",
+      "genre": "chat",
+      "negative_control": true,
+      "prompt": "GPIO là gì? Trả lời ngắn.",
+      "criteria": {
+        "correct": "Định nghĩa GPIO chính xác và có phạm vi rõ",
+        "economy": "Không thêm mở đầu, kết luận, cấu trúc hay công cụ thừa"
+      }
+    },
+    {
+      "id": "chat-explanation",
+      "genre": "chat",
+      "negative_control": false,
+      "prompt": "Giải thích Buildroot và Yocto khác nhau ở đâu cho người mới chưa hiểu.",
+      "criteria": {
+        "mental_model": "Giải thích mô hình build và vai trò metadata/package từ cơ chế",
+        "choice": "Liên hệ khác biệt với lựa chọn sản phẩm thực",
+        "coherence": "Đoạn văn liên kết, không chỉ bảng liệt kê"
+      }
+    },
+    {
+      "id": "chat-confusion",
+      "genre": "chat",
+      "negative_control": false,
+      "prompt": "Sau câu trả lời so sánh Buildroot và Yocto, người dùng nói: 'Tôi vẫn chưa hiểu'.",
+      "criteria": {
+        "repair": "Chẩn đoán và giải thích lại quan hệ khó hiểu bằng hướng mới",
+        "continuity": "Không tái dạy từ đầu hoặc lặp y nguyên các tiêu chí"
+      }
+    },
+    {
+      "id": "cross-layer",
+      "genre": "technical",
+      "negative_control": false,
+      "prompt": "Giải thích đường truyền từ CAN interrupt của MCP2515 sang xử lý của ứng dụng Linux.",
+      "criteria": {
+        "mechanism": "Lần theo một sự kiện, vai trò và ranh giới các lớp",
+        "accuracy": "Không gán trách nhiệm giả cho driver, scheduler hoặc phần cứng",
+        "reader": "Kiến thức đủ để người đọc suy luận hoặc debug"
+      }
+    },
+    {
+      "id": "audit-scope",
+      "genre": "audit",
+      "negative_control": false,
+      "prompt": "Một hệ thống có 120 module. Chỉ kiểm tra 2 module và CI trên main xanh. Viết báo cáo audit hiện trạng và kiến nghị.",
+      "criteria": {
+        "boundary": "Phân biệt phạm vi kiểm tra với kết luận toàn hệ thống",
+        "claim_evidence": "Phát hiện gắn với tiêu chí và bằng chứng thực",
+        "action": "Kiến nghị phù hợp mức độ xác minh"
+      }
+    },
+    {
+      "id": "audit-version",
+      "genre": "audit",
+      "negative_control": false,
+      "prompt": "Source repository khai báo plugin 1.4.0; provider trả về phiên bản đang cài 1.3.0. Viết phát hiện audit ngắn.",
+      "criteria": {
+        "facts": "Phân biệt version source và provider",
+        "impact": "Giải thích rủi ro đo sai phiên bản, không khẳng định source lỗi",
+        "repair": "Đề xuất kiểm tra release và activation"
+      }
+    },
+    {
+      "id": "research-disagreement",
+      "genre": "research",
+      "negative_control": false,
+      "prompt": "Hai tài liệu chính thức mô tả hai hành vi API khác nhau, thuộc phiên bản 2 và 3. Hãy báo cáo kết quả nghiên cứu.",
+      "criteria": {
+        "provenance": "Phân biệt phạm vi phiên bản và tính chuẩn tắc",
+        "synthesis": "Đưa ra mô hình thống nhất hoặc xung đột còn mở, không trung bình hóa",
+        "uncertainty": "Xác định phép xác minh thay đổi kết luận"
+      }
+    },
+    {
+      "id": "report-recommendation",
+      "genre": "recommendation",
+      "negative_control": false,
+      "prompt": "Đơn vị cho thuê xe tự lái muốn biết vị trí, cảnh báo, vận hành, bảo trì. Đánh giá hướng xây đủ sản phẩm trước tìm khách hàng.",
+      "criteria": {
+        "need": "Phân biệt nhu cầu người vận hành với giải pháp kỹ thuật",
+        "options": "So sánh hướng tiếp cận có quyết định và đánh đổi",
+        "evidence": "Đánh dấu giả thuyết nhu cầu chưa xác minh"
+      }
+    },
+    {
+      "id": "operational-status",
+      "genre": "status",
+      "negative_control": false,
+      "prompt": "PR firmware đã merge, lint và unit tests pass; thiết bị thật chưa chạy, cloud staging chưa thử. Viết báo cáo tiến độ.",
+      "criteria": {
+        "status": "Báo cáo đúng phần đã xác nhận và phần chưa xác nhận",
+        "endpoint": "Không tuyên bố hoàn thành tích hợp device-to-cloud",
+        "next": "Đưa bước kiểm chứng tiếp theo có ý nghĩa"
+      }
+    },
+    {
+      "id": "late-chapter",
+      "genre": "education",
+      "negative_control": false,
+      "prompt": "Viết phần giữa của giáo trình Zephyr RTOS về ISR, workqueue và scheduler, cho người học Linux không có board.",
+      "criteria": {
+        "depth": "Giải thích cơ chế, bối cảnh và ví dụ mô phỏng thích hợp",
+        "prerequisite": "Không giả định người mới đã biết các chi tiết chuyên sâu",
+        "prose": "Không trở thành checklist API"
+      }
+    },
+    {
+      "id": "render-transfer",
+      "genre": "publication",
+      "negative_control": false,
+      "prompt": "Chuyển lời giải thích chat đã được duyệt về Zephyr interrupt/workqueue sang Notion. Kiểm tra bản đã render.",
+      "criteria": {
+        "semantic": "Giữ nguyên quan hệ nhân quả, ví dụ và mức độ chắc chắn",
+        "render": "Code/diagram/heading xuất bản đúng và đọc được",
+        "coverage": "Không mất hoặc lặp nội dung"
+      }
+    },
+    {
+      "id": "long-report",
+      "genre": "research",
+      "negative_control": false,
+      "prompt": "Báo cáo chuyên sâu 8 mục. Nội dung nửa sau hiện chỉ còn các checklist và câu giới thiệu sáo rỗng. Hãy sửa.",
+      "criteria": {
+        "depth": "Nửa sau giữ được bằng chứng và phân tích tương xứng",
+        "cohesion": "Mỗi phần phát triển lập luận chính, không nhảy chủ đề",
+        "repair": "Sửa nguyên nhân mất mạch, giữ lại các phần đã đúng"
+      }
+    },
+    {
+      "id": "feedback-transfer",
+      "genre": "writing-repair",
+      "negative_control": false,
+      "prompt": "Người dùng phàn nàn báo cáo rời rạc và một câu chứa lời bình thừa. Sửa cả phương pháp gây lỗi, không chỉ câu đó.",
+      "criteria": {
+        "causal": "Xác định mạch lập luận/owner đã làm phát sinh lỗi",
+        "preserve": "Bảo toàn nội dung chính xác đã được duyệt",
+        "transfer": "Không áp dụng cấm cụm từ cứng cho mọi thể loại"
+      }
+    },
+    {
+      "id": "routing-negative",
+      "genre": "routing",
+      "negative_control": true,
+      "prompt": "Một câu tra cứu ngắn đã đủ rõ. Có cần kích hoạt thêm research, report, diagram, multi-agent workflow hay không?",
+      "criteria": {
+        "relevance": "Chọn năng lực theo nhu cầu thực",
+        "economy": "Không đưa checklist, tool hoặc visual không cần thiết"
+      }
+    }
+  ]
+}

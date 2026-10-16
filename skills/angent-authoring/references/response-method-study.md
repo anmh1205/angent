@@ -35,3 +35,15 @@ Three beginner Zephyr chapters on a structured document surface illustrate a pot
 The repair is at the active reader/authoring method and destination conversion boundary: preserve the local reader-state delta, introduce mechanisms before using them, add working traces where they unlock understanding, and read back destination blocks independently. Treat the published artifact as the real outcome, not a successful write acknowledgement. A useful regression comparison needs a *previously understandable chat explanation* of the same subject relation and one actual published chapter; a source-only policy update is not an observed behavioral win.
 
 The destination must also retain code-language identity and separate logical correctness of source from whether Mermaid renders as a figure. The code language mismatch is an observable formatting defect, not a reason to add more Mermaid.
+
+## External writing-method crosschecks — 1.4.0
+
+These are **design sources**, not proof that ANGENT has achieved the behavior.
+
+- [Google Technical Writing: Paragraphs](https://developers.google.com/tech-writing/one/paragraphs) emphasizes logical dependency order and a coherent topic per paragraph. Apply the semantic connection principle, not a mechanical sentence-count target.
+- [GAO Government Auditing Standards](https://www.gao.gov/assets/a76947.html) describes criteria, condition, cause and effect for relevant audit findings, and recommends action grounded in the finding. The applicable elements depend on the audit objective; do not fabricate an unsupported cause or force all reports into this framework.
+- [Diátaxis](https://diataxis.fr/) distinguishes tutorial, how-to, reference and explanation by reader purpose. Use it to diagnose genre confusion, not to generate empty templates or prohibit legitimate mixtures of explanation and procedure.
+- [Nielsen Norman Group: How Users Read on the Web](https://www.nngroup.com/articles/how-users-read-on-the-web/) supports early meaning and scannable navigation. Do not apply its word-count suggestions as a reason to delete a load-bearing mechanism in technical teaching.
+- [Anthropic: Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) and [Skills for enterprise](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise) distinguish trigger accuracy, skill coexistence and output quality. A benchmark catalog and passing schema/structure CI do not establish improved answers; compare actual activated outputs with appropriate baselines.
+
+ANGENT's generalization is to make the report or answer's decisive **claim → warranted explanation/evidence → inference/decision** understandable at appropriate reading depths. This is not a mandatory formatting pipeline. When source guidance conflicts with the actual task, preserve correctness and user intent rather than copying a vendor-specific stylistic heuristic.
