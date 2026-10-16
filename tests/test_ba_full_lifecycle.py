@@ -51,6 +51,28 @@ class FullLifecycleSourceTests(unittest.TestCase):
         self.assertEqual(byid["UN-atlas-re-005"]["source_refs"],["SOURCE-URD"])
         self.assertEqual(byid["FR-atlas-re-006"]["source_refs"],["SOURCE-SRS"])
 
+    def test_requirement_proofs_are_true_graph_edges(self):
+        proofs={item["id"]:item for item in self.report["lifecycle"]["per_requirement"]}
+        self.assertEqual(len(proofs),8)
+        actual=proofs["FR-atlas-re-006"]
+        self.assertEqual(actual["upstream_path"],[
+            "UN-atlas-re-005","BO-atlas-re-03","CAP-atlas-re-04","FR-atlas-re-006"
+        ])
+        self.assertTrue(actual["complete_structural_chain"])
+        self.assertEqual(actual["test_execution_status"],"not-executed")
+        self.assertTrue(actual["test_path"][-1].startswith("TC-"))
+        self.assertEqual(actual["source"]["uri"],"docs/atlas-re/srs/atlas-re-spec.md")
+        without_test=[row for row in proofs.values() if row["test_path"] is None]
+        self.assertEqual(len(without_test),4)
+        self.assertTrue(all(row["test_execution_status"]=="no-test-artifact" for row in without_test))
+        byid={item["id"]:item for item in self.report["graph"]["artifacts"]}
+        for item in proofs.values():
+            for path in (item["upstream_path"],item["test_path"]):
+                if not path:
+                    continue
+                for idx in range(1,len(path)):
+                    self.assertIn(path[idx-1],byid[path[idx]]["depends_on"])
+
     def test_no_fake_full_coverage_when_parent_removed(self):
         # Presence of correct IDs alone is not proof the ancestry is linked.
         files={key:val for key,val in self.files.items() if key not in ("urd","brd","prd")}
