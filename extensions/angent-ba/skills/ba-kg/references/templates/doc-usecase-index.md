@@ -34,7 +34,7 @@ Use stable actor-goal identities that are already accepted in the project. A use
 - SVG: {{existing_rendered_svg_or_not_produced}}
 - Renderer and check: {{actual_local_tool_command_or_unverified}}
 
-Do not embed an SVG or claim a viewable image until a real renderer produced it. The BA use-case method may emit PlantUML source, but ANGENT does not bundle the original Claude render.sh or a PlantUML runtime. For Figma, confirm a live capable provider and read back editable nodes.
+Do not embed an SVG or claim a viewable image until a real renderer produced it. The BA use-case method may emit PlantUML source, but ANGENT does not bundle a native PlantUML renderer or the source kit's own render helper. For Figma, confirm a live capable provider and read back editable nodes.
 
 ## Linked sources and unresolved gaps
 
@@ -42,4 +42,4 @@ Do not embed an SVG or claim a viewable image until a real renderer produced it.
 - Screen inventory: {{real_relative_screen_model_or_wireframe_path}}
 - Unresolved cross-document references: {{ids_or_none}}
 
-A source graph or gap audit can check **explicit IDs**, not invent a separate globally canonical docs/_shared/traceability.md. Handle missing FR and error references as review items rather than inserting invented requirements.
+A source graph or gap audit can check **explicit IDs**, not invent a mandatory project-global traceability file. Handle missing FR and error references as review items rather than inserting invented requirements.

@@ -33,4 +33,4 @@ links: []
 
 - {{existing_SRS_ERD_architecture_or_actor_reference}}
 
-Keep detail in the document already approved for this domain; do not impose an extra docs/_shared/context tree, mandatory checksum, automatic commit-based expiry or a separate synchronization store. Report missing sources explicitly.
+Keep detail in the document already approved for this domain; do not impose an extra mandatory shared-context tree, mandatory checksum, automatic commit-based expiry or a separate synchronization store. Report missing sources explicitly.

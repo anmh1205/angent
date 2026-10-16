@@ -30,7 +30,7 @@ DOCX/HTML and PDF are available only when their actual dependencies succeed. Do 
 |---|---|---|---|---|
 | {{item}} | {{revision}} | {{revision}} | {{difference}} | {{source}} |
 
-This history comes from inspected source revisions or real provider records, **not** a non-existent activity.log, automatic history file or guessed timestamp.
+This history comes from inspected source revisions or real provider records, **not** an imaginary central history file, an automatic log or a guessed timestamp.
 
 ## Review outcome
 
