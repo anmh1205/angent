@@ -52,16 +52,22 @@ jobs:
       - name: Build all platform distributions
         run: python3 scripts/build_packages.py --all
 
+      - name: Build compatible OpenAI ZIP and all-target bundle
+        run: |
+          python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
+          python3 scripts/package_all_targets.py --dist dist
+          (cd dist && sha256sum angent-*.zip > SHA256SUMS)
+          python3 -m unittest discover -s tests -p 'test_all_targets.py' -v
+
       - name: Upload platform release artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: angent-platform-packages
-          path: dist/angent-*.zip
+          name: angent-all-targets
+          path: |
+            dist/angent-*.zip
+            dist/SHA256SUMS
           if-no-files-found: error
           retention-days: 7
-
-      - name: Build one unified ChatGPT/Codex plugin artifact
-        run: python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
 
       - name: Upload unified ANGENT artifact (PR candidate or main)
         uses: actions/upload-artifact@v4

@@ -1,71 +1,136 @@
 name: Publish ANGENT platform release
 
 on:
+  push:
+    branches: [main]
+    tags: ['v*']
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag matching plugin.json, for example v1.5.0
+        description: Optional existing tag (leave empty to use main's version)
         type: string
-        required: true
-  push:
-    tags:
-      - 'v*'
+        required: false
 
 permissions:
   contents: read
 
+concurrency:
+  group: angent-release
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     permissions:
       contents: write
     steps:
-      - name: Checkout release source
+      - name: Checkout exact release source
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ inputs.tag || github.ref }}
 
-      - name: Match tag with source manifests
-        shell: bash
+      - name: Resolve version and previously published tag
+        id: identity
         env:
-          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUESTED_TAG: ${{ inputs.tag }}
+          EVENT_REF: ${{ github.ref }}
+        shell: bash
         run: |
           set -euo pipefail
           expected="$(python3 -c 'import json; print("v" + json.load(open("plugin.json"))["version"])')"
           second="$(python3 -c 'import json; print("v" + json.load(open(".codex-plugin/plugin.json"))["version"])')"
-          if [[ "$RELEASE_TAG" != "$expected" || "$RELEASE_TAG" != "$second" ]]; then
-            echo "Release tag and manifests disagree: $RELEASE_TAG != $expected / $second" >&2
+          if [[ "$expected" != "$second" ]]; then
+            echo "Manifest versions disagree" >&2
             exit 1
           fi
+          tag="${REQUESTED_TAG:-$expected}"
+          if [[ "$EVENT_REF" == refs/tags/* ]]; then
+            tag="${EVENT_REF#refs/tags/}"
+          fi
+          if [[ "$tag" != "$expected" ]]; then
+            echo "Tag $tag does not match source manifests ($expected)" >&2
+            exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            git fetch --quiet origin "refs/tags/$tag:refs/tags/$tag" || true
+            tagged="$(git rev-list -n 1 "$tag")"
+            current="$(git rev-parse HEAD)"
+            if [[ "$tagged" != "$current" ]]; then
+              if [[ "$EVENT_REF" == "refs/heads/main" ]]; then
+                echo "Already tagged $tag at $tagged; skipping new main revision $current"
+                echo "skip=true" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
+              echo "Refuses mismatched existing release tag: $tag" >&2
+              exit 1
+            fi
+            if gh release view "$tag" >/dev/null 2>&1; then
+              echo "Release $tag already exists and will not be overwritten"
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+            fi
+          fi
 
-      - name: Validate source and platform packages
+      - name: Verify ANGENT source and all distributions
+        if: steps.identity.outputs.skip != 'true'
         run: |
           python3 scripts/validate_core.py
           python3 extensions/angent-engineer/scripts/verify_port.py --json
           python3 -m unittest discover -s tests -p 'test_unified_package.py' -v
           python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
+          python3 -m unittest discover -s tests -p 'test_all_targets.py' -v
 
-      - name: Build copy-ready ZIP archives
-        run: |
-          python3 scripts/build_packages.py --all
-          python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
-          cd dist
-          sha256sum angent-*.zip > SHA256SUMS
-
-      - name: Publish exact validated assets
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+      - name: Build all target ZIPs and checksums
+        if: steps.identity.outputs.skip != 'true'
         shell: bash
         run: |
           set -euo pipefail
+          python3 scripts/build_packages.py --all
+          python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
+          python3 scripts/package_all_targets.py --dist dist
+          cd dist
+          sha256sum angent-*.zip > SHA256SUMS
+
+      - name: Upload combined and individual ZIPs as Actions artifact
+        if: steps.identity.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: angent-all-targets
+          path: |
+            dist/angent-*.zip
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Create tag from exact validated commit
+        if: steps.identity.outputs.skip != 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.identity.outputs.tag }}
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Existing matching tag: $RELEASE_TAG"
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/git/refs" \
+              -f "ref=refs/tags/$RELEASE_TAG" -f "sha=$(git rev-parse HEAD)" >/dev/null
+          fi
+
+      - name: Publish separate ZIPs plus all-target bundle on GitHub Release
+        if: steps.identity.outputs.skip != 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.identity.outputs.tag }}
+        run: |
+          set -euo pipefail
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            echo "Release already exists; refusing to overwrite published assets" >&2
+            echo "Release already published; refusing to overwrite" >&2
             exit 1
           fi
           gh release create "$RELEASE_TAG" dist/angent-*.zip dist/SHA256SUMS \
-            --verify-tag \
-            --title "ANGENT ${RELEASE_TAG#v}" \
-            --generate-notes
+            --verify-tag --title "ANGENT ${RELEASE_TAG#v}" --generate-notes

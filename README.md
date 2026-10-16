@@ -67,7 +67,7 @@ python3 scripts/build_packages.py --all
 python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
 ```
 
-This creates copy-ready `packages/local-agent/`, `packages/gemini-skills/`, `packages/gemini-extension/`, `packages/claude-code/` and `packages/openai-plugin/`, alongside deterministic ZIPs in `dist/`. Both output directories are generated and Git-ignored. Download the matching [GitHub Release](https://github.com/anmh1205/angent/releases) ZIPs when no build environment is available. Tagged releases use the guarded publication workflow and include SHA256 checksums; ordinary CI artifacts are short-lived candidates.
+This creates copy-ready `packages/local-agent/`, `packages/gemini-skills/`, `packages/gemini-extension/`, `packages/claude-code/` and `packages/openai-plugin/`, alongside deterministic ZIPs in `dist/`. Both output directories are generated and Git-ignored. Download the matching [GitHub Release](https://github.com/anmh1205/angent/releases) ZIPs when no build environment is available. Each release provides individual target ZIPs and one `angent-all-targets.zip` containing all six distributions, plus checksums. Personal ChatGPT plugin updates require a separate upload. Tagged releases use the guarded publication workflow and include SHA256 checksums; ordinary CI artifacts are short-lived candidates.
 
 Core Skills remain canonical under `skills/`; the maintained Engineer fallback remains under `extensions/angent-engineer/`. `platforms/` owns only native bootstrap/manifest projections. Do **not** edit generated packages or maintain separate copies of core reasoning per host. See [Installation and platform differences](docs/platform-installation.md).
 

@@ -26,15 +26,20 @@
         "developerName": "An",
         "category": "Productivity",
         "defaultPrompt": [
-          "Use ANGENT fully: preserve intent, context, evidence and accuracy; scale effort and tools, not cognitive fidelity.",
-          "Answer early, develop the decisive relations, then close with a useful inference instead of repetition.",
-          "For reports connect findings to evidence, consequences and justified actions; do not confuse activity with results.",
-          "Verify consequential effects and protect accepted strengths when learning from recurring failures."
+          "Use ANGENT fully: preserve intent, context, reasoning, evidence and accuracy; scale effort, not fidelity.",
+          "Answer early, explain decisive relationships and finish with a useful synthesis, without repetitive filler.",
+          "For consequential work, verify effects, report uncertainty and preserve accepted strengths."
         ],
         "brandColor": "#F6611C",
         "composerIcon": "./assets/logo.png",
-        "logo": "./assets/logo.png"
+        "logo": "./assets/logo.png",
+        "websiteURL": "https://github.com/anmh1205/angent",
+        "brandColorDark": "#F6611C",
+        "composerIconDark": "./assets/logo.png",
+        "logoDark": "./assets/logo.png"
       }
     }
-  }
+  },
+  "homepage": "https://github.com/anmh1205/angent/releases",
+  "repository": "https://github.com/anmh1205/angent"
 }
