@@ -42,7 +42,7 @@ def _control(control:dict)->dict:
             "fill":"#f3f5f7" if kind in ("submit","button") else "#ffffff",
             "children":children}
 
-def compile_screens(model:Any)->dict[str,Any]:
+def compile_screens(model:Any, evidence_ids:set[str]|None=None)->dict[str,Any]:
     checked=check_model(model)
     if not checked["ok"]:
         raise ValueError("Invalid BA screen model: "+"; ".join(checked["errors"]))
@@ -50,6 +50,14 @@ def compile_screens(model:Any)->dict[str,Any]:
     for screen in model["screens"]:
         sid=screen["id"]
         controls=screen["controls"]
+        for control in controls:
+            refs=control.get("requirements",[])
+            if len(set(refs))!=len(refs):
+                raise ValueError("Duplicate requirement references: "+sid+"."+control["id"])
+            if evidence_ids is not None:
+                for ref in refs:
+                    if ref not in evidence_ids:
+                        raise ValueError("Unresolved BA evidence requirement: "+sid+"."+control["id"]+" -> "+ref)
         name="ANGENT BA / "+sid+" / "+screen["title"]
         children=[_text("screen:title",screen["title"],20)]
         if screen.get("description"):
@@ -72,6 +80,7 @@ def compile_screens(model:Any)->dict[str,Any]:
         })
     return {"format":"angent-ba-figma-screen-tree-v1","scope":"editable source-screen low-fidelity frames",
             "runtime_status":"not-run","writes_performed":False,
+            "source_link_check":"ids-resolved-only" if evidence_ids is not None else "not-performed",
             "sources":{"model_title":model["title"],"screen_count":len(screens)},
             "screens":screens,
             "limitations":["No real canvas edit or Figma URL until native provider call and read-back",
@@ -106,8 +115,8 @@ console.log(JSON.stringify({ok:true,writes:output,
   next:"figma_read get_nodes + layout_audit + screenshot; compare labels"}));
 """
 
-def files(model:dict[str,Any])->dict[str,str]:
-    compiled=compile_screens(model)
+def files(model:dict[str,Any], evidence_ids:set[str]|None=None)->dict[str,str]:
+    compiled=compile_screens(model,evidence_ids=evidence_ids)
     return {"figma-screen-plan.json":json.dumps(compiled,ensure_ascii=False,indent=2)+"\n",
             "figma-write.js":generate_js(compiled)}
 
@@ -115,10 +124,19 @@ def main()->int:
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("input",type=Path)
     p.add_argument("--output",type=Path,required=True)
+    p.add_argument("--evidence-graph",type=Path,help="Optional validated BA graph; checks requirement ID existence only")
     args=p.parse_args()
     try:
         input_model=json.loads(args.input.read_text(encoding="utf8"))
-        outputs=files(input_model)
+        ids=None
+        if args.evidence_graph:
+            from validate_artifacts import audit
+            graph=json.loads(args.evidence_graph.read_text(encoding="utf8"))
+            report=audit(graph)
+            if not report["ok"]:
+                raise ValueError("Invalid BA evidence graph: "+"; ".join(report["errors"]))
+            ids={item["id"] for item in graph["artifacts"]}
+        outputs=files(input_model,evidence_ids=ids)
         if args.output.exists() and any(args.output.iterdir()):
             raise ValueError("Refusing to overwrite existing output directory")
         args.output.mkdir(parents=True,exist_ok=True)
@@ -128,7 +146,8 @@ def main()->int:
         print(json.dumps({"ok":True,"screens":len(plan["screens"]),
                           "controls":sum(len(x["controls"]) for x in plan["screens"]),
                           "files":list(outputs),
-                          "provider_writes":0,"runtime_status":"not-run"},ensure_ascii=False))
+                          "provider_writes":0,"runtime_status":"not-run",
+                          "source_link_check":"ids-resolved-only" if ids is not None else "not-performed"},ensure_ascii=False))
         return 0
     except (OSError,TypeError,ValueError) as exc:
         print(json.dumps({"ok":False,"error":str(exc)},ensure_ascii=False))
