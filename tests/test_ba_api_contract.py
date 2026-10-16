@@ -145,6 +145,26 @@ class APIContractTests(unittest.TestCase):
         schema["properties"]["operator"]={"type":"string","minLength":20}
         self.assertFalse(audit_contract(spec,ok_model)["ok"])
 
+    def test_rejects_unreflected_2020_12_constraints_instead_of_false_green(self):
+        spec=copy.deepcopy(self.spec)
+        schema=spec["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]
+        schema["minProperties"]=4
+        errors=audit_contract(spec,self.model)["errors"]
+        self.assertTrue(any("Unsupported object JSON Schema constraints" in e for e in errors),errors)
+        spec=copy.deepcopy(self.spec)
+        schema=spec["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]
+        schema["properties"]["state"]={"$ref":"#/components/schemas/State","maxLength":2}
+        spec["components"]={"schemas":{"State":{"type":"string"}}}
+        self.assertTrue(any("$ref sibling" in e for e in audit_contract(spec,self.model)["errors"]))
+        spec=copy.deepcopy(self.spec)
+        schema=spec["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]
+        schema["properties"]["state"]={"type":"string","pattern":"^off"}
+        self.assertFalse(audit_contract(spec,self.model)["ok"])
+        spec=copy.deepcopy(self.spec)
+        body=spec["paths"]["/vehicles/{vehicleId}/diagnostics/ack"]["post"]["requestBody"]["content"]["application/json"]["schema"]
+        body["dependentRequired"]={"code":["approvedBy"]}
+        self.assertFalse(audit_contract(spec,self.model)["ok"])
+
     def test_auth_contract_mismatch_blocks_generation(self):
         a=copy.deepcopy(self.spec)
         a["paths"]["/vehicles/{vehicleId}/status"]["get"]["security"]=[{"bearerAuth":[]}]
