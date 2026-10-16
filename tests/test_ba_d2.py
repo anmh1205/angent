@@ -3,6 +3,7 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import sys
+import xml.etree.ElementTree as ET
 import tempfile
 import unittest
 
@@ -84,6 +85,20 @@ class D2BuildTests(unittest.TestCase):
         self.assertFalse(validate(invalid, evidence_ids=evidence_ids)["ok"])
         invalid["source_refs"] = ["FR-IVTS-01", "FR-IVTS-01"]
         self.assertFalse(validate(invalid, evidence_ids=evidence_ids)["ok"])
+
+    def test_published_examples_match_current_source_and_valid_svg(self):
+        for kind,model in self.examples.items():
+            with self.subTest(kind=kind):
+                base = BA / "examples/d2-rendered"
+                published = (base/(kind+".d2")).read_text(encoding="utf8").replace("\\r\\n","\\n")
+                self.assertEqual(published,compile_source(model),
+                                 "Checked-in D2 became stale after a source model change")
+                svg=(base/(kind+".svg"))
+                self.assertTrue(svg.is_file())
+                root=ET.parse(svg).getroot()
+                self.assertEqual(root.tag,"{http://www.w3.org/2000/svg}svg")
+                self.assertEqual(len(root.attrib["viewBox"].split()),4)
+                self.assertGreater(svg.stat().st_size,100)
 
     def test_missing_renderer_fails_explicitly(self):
         with tempfile.TemporaryDirectory() as tmp:
