@@ -51,6 +51,38 @@ class APIContractTests(unittest.TestCase):
         a["openapi"]="3.0.3"
         self.assertFalse(audit_contract(a,self.model)["ok"])
 
+    def test_resolves_local_response_body_and_property_references(self):
+        spec=copy.deepcopy(self.spec)
+        components=spec.setdefault("components",{})
+        schemas=components.setdefault("schemas",{})
+        schemas["Vehicle"]={"type":"object","properties":{
+            "vehicleId":{"type":"string"},"state":{"$ref":"#/components/schemas/VehicleState"}}}
+        schemas["VehicleState"]={"type":"string","enum":["online","offline"]}
+        response=spec["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]
+        response["content"]["application/json"]["schema"]={"$ref":"#/components/schemas/Vehicle"}
+        reqbody=spec["paths"]["/vehicles/{vehicleId}/diagnostics/ack"]["post"]["requestBody"]
+        schemas["DTC"]={"type":"string"}
+        schemas["AckBody"]={"type":"object","properties":{
+            "code":{"$ref":"#/components/schemas/DTC"},"operator":{"type":"string"}},
+            "required":["code","operator"],"additionalProperties":False}
+        reqbody["content"]["application/json"]["schema"]={"$ref":"#/components/schemas/AckBody"}
+        self.assertTrue(audit_contract(spec,self.model)["ok"],audit_contract(spec,self.model))
+        generated=compile_collection(self.model,api_contract=spec)
+        self.assertIn("requests/TC-FLEET-004.bru",generated)
+
+    def test_rejects_remote_recursive_and_composed_refs(self):
+        a=copy.deepcopy(self.spec)
+        response=a["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]
+        response["content"]["application/json"]["schema"]={"$ref":"https://example.com/schema.json"}
+        self.assertTrue(any("Only local" in x for x in audit_contract(a,self.model)["errors"]))
+        a=copy.deepcopy(self.spec)
+        a["components"]={"schemas":{"Recursive":{"$ref":"#/components/schemas/Recursive"}}}
+        a["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]={"$ref":"#/components/schemas/Recursive"}
+        self.assertTrue(any("Recursive" in x for x in audit_contract(a,self.model)["errors"]))
+        a=copy.deepcopy(self.spec)
+        a["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]={"oneOf":[]}
+        self.assertTrue(any("composition" in x for x in audit_contract(a,self.model)["errors"]))
+
     def test_auth_contract_mismatch_blocks_generation(self):
         a=copy.deepcopy(self.spec)
         a["paths"]["/vehicles/{vehicleId}/status"]["get"]["security"]=[{"bearerAuth":[]}]
