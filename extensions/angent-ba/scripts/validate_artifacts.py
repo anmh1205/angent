@@ -112,25 +112,36 @@ def audit(data: Any, require_tests: bool = False,
                     errors.append(f"{key}: missing source {ref}")
         if not refs:
             warnings.append(f"{key}: no evidence sources")
+    # Iterative DFS: real projects can have thousands of requirements. Recursive
+    # traversal would crash on a legitimate long lineage before reporting a
+    # semantic or structural verdict.
     state: dict[str, int] = {}
-    stack: list[str] = []
-    def visit(key: str) -> None:
-        if state.get(key) == 2:
-            return
-        if state.get(key) == 1:
-            i = stack.index(key)
-            errors.append("dependency cycle: " + " -> ".join(stack[i:] + [key]))
-            return
-        state[key] = 1
-        stack.append(key)
-        for nxt in sorted(outgoing.get(key, [])):
-            if nxt in nodes and state.get(nxt) != 2:
-                visit(nxt)
-        stack.pop()
-        state[key] = 2
-    for key in sorted(nodes):
-        if state.get(key) != 2:
-            visit(key)
+    for root in sorted(nodes):
+        if state.get(root) == 2:
+            continue
+        state[root] = 1
+        active = [root]
+        positions = {root: 0}
+        frames = [(root, iter(sorted(outgoing.get(root, []))))]
+        while frames:
+            key, neighbors = frames[-1]
+            nxt = next(neighbors, None)
+            if nxt is None:
+                frames.pop()
+                active.pop()
+                positions.pop(key)
+                state[key] = 2
+                continue
+            if nxt not in nodes or state.get(nxt) == 2:
+                continue
+            if nxt in positions:
+                errors.append("dependency cycle: " +
+                              " -> ".join(active[positions[nxt]:] + [nxt]))
+                continue
+            state[nxt] = 1
+            positions[nxt] = len(active)
+            active.append(nxt)
+            frames.append((nxt, iter(sorted(outgoing.get(nxt, [])))))
     requirements = sorted(k for k, obj in nodes.items() if str(obj.get("kind", "")).upper() == "FR")
     tested: list[str] = []
     for fr in requirements:

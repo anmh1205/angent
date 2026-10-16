@@ -137,17 +137,27 @@ def audit(model: Any) -> dict[str, Any]:
         if len(roots) != 1:
             errors.append("sitemap: expected one hierarchy root")
         visited: set[str] = set()
-        def walk(k: str, visiting: set[str]):
-            if k in visiting:
-                errors.append(f"sitemap: cycle involving {k}")
-                return
-            if k in visited:
-                return
-            visited.add(k)
-            for nxt in sorted(adj[k]):
-                walk(nxt, visiting | {k})
         for root in roots:
-            walk(root, set())
+            if root in visited:
+                continue
+            visited.add(root)
+            active = {root}
+            frames = [(root, iter(sorted(adj[root])))]
+            while frames:
+                node, children = frames[-1]
+                child = next(children, None)
+                if child is None:
+                    frames.pop()
+                    active.remove(node)
+                    continue
+                if child in active:
+                    errors.append(f"sitemap: cycle involving {child}")
+                    continue
+                if child in visited:
+                    continue
+                visited.add(child)
+                active.add(child)
+                frames.append((child, iter(sorted(adj[child]))))
         for key in sorted(by_id.keys() - visited):
             errors.append(f"sitemap: unreachable node {key}")
     if kind == "erd":
