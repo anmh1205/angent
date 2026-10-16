@@ -48,6 +48,8 @@ def main()->int:
                     expect(page.get_by_role("heading",name="Atlas decision review")).to_be_visible()
                     if "Business Objectives" not in page.locator("body").inner_text():
                         raise ValueError("Business goals missing from rendered stakeholder HTML")
+                    if "30–50" not in page.locator("body").inner_text():
+                        raise ValueError("UTF-8 en dash lost in Pandoc HTML export")
                     if requests or errors:
                         raise ValueError("External requests or script errors: "+str((requests,errors)))
                 finally:browser.close()

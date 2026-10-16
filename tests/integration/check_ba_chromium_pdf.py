@@ -41,6 +41,10 @@ def check(chrome:str,pandoc:str)->dict:
                 raise ValueError("Missing actual PDF text: "+essential)
         if len(text)<1000:
             raise ValueError("Suspiciously empty PDF extracted text")
+        if "30–50" not in text or "—" not in text:
+            raise ValueError("Unicode punctuation corrupted in actual PDF export")
+        if any(bad in text for bad in ("â€”","â€“","Â—")):
+            raise ValueError("Mojibake detected in PDF text")
         return {"ok":True,"engine":"real Chromium + Pandoc HTML",
                 "page_count":len(reader.pages),"text_characters":len(text),
                 "source_files":len(source),"pdf_bytes":len(data),
