@@ -16,19 +16,24 @@ from typing import Any
 
 from validate_artifacts import audit
 
-ID = re.compile(r"^(?:FR|NFR|BR|E|CHK|TC)-[A-Za-z0-9][A-Za-z0-9-]*$")
+ID = re.compile(r"^(?:FR|NFR|BR|E|CHK|TC|US|UC)-[A-Za-z0-9][A-Za-z0-9-]*$")
+LINKED_ID = re.compile(r"^\[([A-Za-z0-9-]+)\]\([^)]+\)$")
 REF = re.compile(r"\b(?:CAP|BO|UN|FR|NFR|BR|E|UC|US|AC|CHK|TC)-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\b")
 HEADERS = {"FR":("Requirement","Covers"),
            "NFR":("Requirement",),
            "BR":("Rule","Applies to"),
            "E":("Condition","Related FR"),
            "CHK":("What to test","Covers","TC"),
-           "TC":("Title","Expands CHK")}
-KIND = {"FR":"FR","NFR":"NFR","BR":"BR","E":"ERROR","CHK":"CHECKLIST","TC":"TEST"}
+           "TC":("Title","Expands CHK"),
+           "US":("Title","FR"),"UC":("Slug","Covers FR") }
+KIND = {"FR":"FR","NFR":"NFR","BR":"BR","E":"ERROR","CHK":"CHECKLIST","TC":"TEST",
+        "US":"STORY","UC":"USECASE"}
 LINK_CELLS = {"FR":["Covers"], "BR":["Applies to"], "E":["Related FR"],
-              "CHK":["Covers"], "TC":["Expands CHK"]}
+              "CHK":["Covers"], "TC":["Expands CHK"],
+              "US":["FR"],"UC":["Covers FR"]}
 DISPLAY_CELLS = {"FR":"Requirement","NFR":"Requirement","BR":"Rule","E":"Condition",
-                 "CHK":"What to test","TC":"Title"}
+                 "CHK":"What to test","TC":"Title",
+                 "US":"Title","UC":"Slug"}
 
 
 def _cells(line: str) -> list[str]:
@@ -96,10 +101,17 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
                         **({"revision":meta["updated"]} if meta.get("updated") else {})})
         seen_role=0
         for table in markdown_tables(raw):
-            if not table or "ID" not in table[0]:
+            if not table or ("ID" not in table[0] and not (role=="usecases" and "Slug" in table[0])):
                 continue
             for row in table:
                 item_id=row.get("ID","").strip()
+                if role=="usecases" and "Slug" in row:
+                    item_id=row["Slug"].strip()
+                linked=LINKED_ID.fullmatch(item_id)
+                if linked:
+                    item_id=linked.group(1)
+                if role=="usecases" and item_id.startswith("uc-"):
+                    item_id="UC-"+item_id[3:]
                 if not ID.fullmatch(item_id):
                     continue
                 kind=item_id.split("-",1)[0]
@@ -109,9 +121,15 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
                     continue
                 if role=="cases" and kind!="TC":
                     continue
+                if role=="stories" and kind!="US":
+                    continue
+                if role=="usecases" and kind!="UC":
+                    continue
                 if not all(key in row for key in HEADERS[kind]):
                     raise ValueError(f"{item_id}: missing necessary columns {HEADERS[kind]}")
                 title=row.get(DISPLAY_CELLS[kind],"").strip()
+                if kind=="UC":
+                    title=item_id[3:].replace("-"," ").capitalize()
                 if not title:
                     raise ValueError(f"{item_id}: missing concrete statement/title")
                 refs=[]
@@ -162,12 +180,16 @@ def main() -> int:
     p.add_argument("--srs",required=True,type=Path)
     p.add_argument("--checklist",type=Path)
     p.add_argument("--cases",type=Path)
+    p.add_argument("--stories",type=Path,help="User story index table, when present")
+    p.add_argument("--usecases",type=Path,help="Use-case index table, when present")
     p.add_argument("--root",type=Path,default=Path("."))
     p.add_argument("--output",type=Path,required=True)
     opts=p.parse_args()
     paths={"srs":opts.srs}
     if opts.checklist: paths["checklist"]=opts.checklist
     if opts.cases: paths["cases"]=opts.cases
+    if opts.stories: paths["stories"]=opts.stories
+    if opts.usecases: paths["usecases"]=opts.usecases
     try:
         report=collect(paths,opts.root)
         opts.output.parent.mkdir(parents=True,exist_ok=True)
