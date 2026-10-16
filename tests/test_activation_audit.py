@@ -21,8 +21,11 @@ class ActivationTests(unittest.TestCase):
                 "sha256_by_path": dict(self.source["probed_sha256"])}
 
     def test_source_counts(self):
-        self.assertEqual(len(self.source["expected_paths"]), 114)
-        self.assertNotIn("skills/ak-explain/SKILL.md", self.source["expected_paths"])
+        self.assertEqual(len(self.source["expected_paths"]), 1)
+        self.assertEqual(self.source["expected_paths"], ["skills/angent/SKILL.md"])
+        self.assertNotIn("skills/ak-agentkit/SKILL.md", self.source["expected_paths"])
+        self.assertIn("skills/angent/references/catalog/ak-agentkit/SKILL.md", self.source["probed_sha256"])
+        self.assertIn("skills/angent/references/catalog/angent-frontend-design/SKILL.md", self.source["probed_sha256"])
 
     def test_no_provider_is_not_verified(self):
         self.assertEqual(module.verify_provider(self.source, None)["status"], "PROVIDER_NOT_CHECKED")
@@ -44,7 +47,7 @@ class ActivationTests(unittest.TestCase):
 
     def test_suppressed_skill_cannot_be_reintroduced_by_provider(self):
         observed = self.provider()
-        observed["paths"].append("skills/ak-explain/SKILL.md")
+        observed["paths"].append("skills/ak-agentkit/SKILL.md")
         self.assertEqual(module.verify_provider(self.source, observed)["status"], "CATALOG_MISMATCH")
 
     def test_partial_inventory_detected(self):
