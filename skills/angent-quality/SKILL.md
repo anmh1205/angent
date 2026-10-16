@@ -31,6 +31,14 @@ For substantive response-authoring changes, compare what a reader understands fr
 
 A credible evaluation identifies the exact claim being accepted, the observation that would falsify it, and the scope in which the observation applies. For a proposed cross-layer repair, assess whether evidence separates the competing failure causes and whether the requested behavior passes the necessary integration boundaries; a source diff or passing isolated test cannot certify an unexercised device-to-service path. For a design choice, check whether the choice still stands under plausible decision-reversing assumptions, not just whether a pros/cons table exists. For an educational artifact, check an inference the reader should now be able to make, not how many concepts were named. Report source inspection, simulated prompts, live activated runs, destination read-back and real-user outcomes as distinct evidence levels.
 
+## Validate relevance and useful method transfer
+
+Before accepting an answer that studies one source **to improve another target**, identify the user's intended improvement and ask whether each major finding changes the target's mechanism, decision, behavior or explanation. Facts that describe the source accurately but do not support a target improvement are out of scope unless explicitly requested. An exhaustive survey does not offset missing causal recommendations. A correction that says the work is outside scope is a task-fit failure, not a formatting request.
+
+For each substantive proposed improvement, seek an operative mechanism, its current target equivalent, the claimed gap, a bounded adjustment and evidence capable of distinguishing improvement from regression. Check that an already-present capability has not been repackaged as a new skill and that a specialist has not duplicated Core ownership. Compare with a relevant accepted baseline and a negative control; structural checks and self-scoring do not demonstrate behavioral gains.
+
+Do not manufacture a PASS from unexecuted fixtures. A source-grounded design change may be verified as present in repository text while its actual impact on activated answers remains untested. State these evidence levels separately.
+
 ## Evaluate report and answer arguments
 
 A well-formed paragraph does not guarantee that the report's overall conclusion is warranted. For analytic work, verify that the opening matches the observed state and scope; central claims have direct support or explicitly bounded inference; alternative explanations are considered when decisive; severity is supported; and recommendations address an established cause or constraint. An executive summary cannot be more confident than the evidence-bearing body.
