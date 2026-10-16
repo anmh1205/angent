@@ -33,13 +33,16 @@ For ambiguous or consequential work, ANGENT can distinguish the underlying need 
 
 ## Authoring and reporting evidence
 
-Version 1.4.0 deepens whole-answer argumentation, coherent chat responses and decision-oriented research/audit/status reports without another agent or mandatory writing pipeline. Authoring composes a supported explanation; Quality checks whether claims, evidence, impacts and recommended actions actually align; Format preserves meaning in Notion, Docs and other destinations.
+Version 1.4.0 established whole-answer argumentation, coherent chat responses and decision-oriented research/audit/status reports without another agent or mandatory writing pipeline. Authoring composes a supported explanation; Quality checks whether claims, evidence, impacts and recommended actions actually align; Format preserves meaning in Notion, Docs and other destinations.
 
 Behavioral case definitions and the reviewed-output comparator are under `evals/authoring/` and `scripts/evaluate_authoring.py`. Tests can validate schemas and comparator mechanics but cannot replace running actual baseline/candidate model outputs with human or evidence-backed review. The release identity and provider activation must also be verified separately.
 
 For current provider activation, use `scripts/verify_activation.py` with a complete live observation; see `docs/release-activation.md`. Source CI, an archive build and a provider-installed release are distinct proof levels.
 
 ## Installation and package identity
+
+Version 1.5.0 adds separate install-ready platform bundles without duplicating ANGENT's maintained Skills or introducing another canonical plugin identity. `platforms/` holds runtime adapters and `packages/` is generated. See the supported targets and safe installation instructions in [docs/platform-installation.md](docs/platform-installation.md).
+
 
 The two supported plugin manifests are plugin.json and .codex-plugin/plugin.json. Their package identity and prompt must be consistent. Version strings are package metadata, not a task checkpoint or a substitute for checking the actual source/runtime.
 
@@ -55,6 +58,17 @@ Core fixtures are calibration prompts and counter-cases, not automatically execu
 
 The repository checks deterministic structure and manifest consistency, and exercises Memory/Continuity filesystem races, process-exit lock release, revision conflicts and interrupted pointer recovery on CI. For cognitive method changes, use evidence-backed behavioral cases and counter-cases appropriate to the actual consequence. Green structural and runtime CI checks cannot establish that a model's reasoning, writing or cross-session Learning activation improved.
 
-ANGENT 1.3.0 is built as **one installable plugin**. Run `python3 scripts/package_unified.py --output dist/angent-chatgpt.zip`; this deterministic artifact combines 12 Core and 103 Engineer Skills in one discoverable `skills/` root. The Engineer source and 16 role contracts remain under `extensions/angent-engineer/` for maintainability. The archive includes its support material but contains **no second installable Engineer manifest**. Tests check the exact catalog, runtime selector, stable bytes and missing/colliding skill failures. A raw source checkout is not the unified distribution artifact.
+ANGENT continues to ship **one OpenAI plugin identity**, not one plugin per platform. The compatibility builder `python3 scripts/package_unified.py --output dist/angent-chatgpt.zip` remains available, combining 12 Core and 103 Engineer Skills under one discoverable `skills/` root.
 
-When native AgentKit Engineer is usable, route the task to native; otherwise use the bundled portable `ak-*` Skills. Agent Plugins v1 cannot conditionally hide these Skills if another native catalog is visible, so do not claim automatic catalog exclusivity. Do not install the former `angent-engineer-fallback` package alongside ANGENT.
+For the multi-platform release run:
+
+```bash
+python3 scripts/build_packages.py --all
+python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
+```
+
+This creates copy-ready `packages/local-agent/`, `packages/gemini-skills/`, `packages/gemini-extension/`, `packages/claude-code/` and `packages/openai-plugin/`, alongside deterministic ZIPs in `dist/`. Both output directories are generated and Git-ignored. Download the prepared release archive when no build environment is available.
+
+Core Skills remain canonical under `skills/`; the maintained Engineer fallback remains under `extensions/angent-engineer/`. `platforms/` owns only native bootstrap/manifest projections. Do **not** edit generated packages or maintain separate copies of core reasoning per host. See [Installation and platform differences](docs/platform-installation.md).
+
+When native AgentKit Engineer is usable, route the task to native; otherwise use the portable `ak-*` Skills. No package claims it can automatically hide its bundled fallback Skills when a native catalog is installed. The source tree and generated packages are not evidence that a particular runtime has activated ANGENT.

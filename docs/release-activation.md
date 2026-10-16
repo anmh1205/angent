@@ -12,7 +12,7 @@ After the provider has an installed release, collect a current observation from 
 
     {
       "name": "angent",
-      "version": "1.4.0",
+      "version": "<observed-installed-version>",
       "complete_listing": true,
       "paths": ["skills/angent/SKILL.md", "... all installed paths ..."],
       "other_active_plugins": [],
