@@ -151,6 +151,30 @@
         "relevance": "Chọn năng lực theo nhu cầu thực",
         "economy": "Không đưa checklist, tool hoặc visual không cần thiết"
       }
+    },
+    {
+      "id": "external-method-study-report",
+      "genre": "research",
+      "negative_control": false,
+      "prompt": "Sau khi đọc ClaudeKit, hãy viết báo cáo cho ANGENT: nên học phương pháp nào để cải thiện khả năng suy luận và truyền đạt, cái gì ANGENT đã có, cái gì cần thay đổi? Không làm báo cáo ClaudeKit.",
+      "criteria": {
+        "answer": "Mở đầu và kết luận tập trung vào mục tiêu nâng cấp ANGENT",
+        "evidence": "Mỗi đề xuất có cơ chế nguồn và mối liên hệ rõ với thành phần ANGENT",
+        "prioritization": "Ưu tiên giá trị hành vi, phân biệt năng lực đã có và khoảng trống kích hoạt, không liệt kê repo/CI/giấy phép không liên quan",
+        "prose": "Lập luận mạch lạc, không thay hiểu biết bằng checklist hoặc kỹ thuật kể tên"
+      }
+    },
+    {
+      "id": "exemplar-explanation-transfer",
+      "genre": "education",
+      "negative_control": false,
+      "prompt": "Đọc một lời giải thích chat rất dễ hiểu về Linux stack/heap và viết lại thành đoạn tài liệu Embedded Linux cho người mới. Giữ nguyên cơ chế, thay đổi bố cục theo thể loại tài liệu, thêm hình chỉ khi nó giúp nắm cơ chế.",
+      "criteria": {
+        "reader": "Giữ được mô hình kiến thức đầu vào và khái niệm cần phân biệt",
+        "mechanism": "Lý giải đúng vòng đời và vai trò của stack/heap, có quan hệ nguyên nhân và ví dụ có ý nghĩa",
+        "prose": "Liên kết đoạn văn, thứ tự tiên quyết, không sao chép giọng nói chuyện hoặc chuyển thành bullet outline",
+        "visual": "Đồ họa chỉ xuất hiện khi làm rõ quan hệ riêng, không mặc định Mermaid"
+      }
     }
   ]
 }
