@@ -130,7 +130,7 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 
 1. BA graph historically omitted the early UN/BO/CAP levels; this was repaired to read URD, BRD and PRD, with actual Atlas cross-document regression.
 2. `ba-discover` had inherited the Dev BA Kit's repository investigation, not AI4BA's business opportunity and competitor discovery. Both modes now have distinct methods.
-3. `ba-figma` previously implied the Reqwise OSS diagram API could deliver arbitrary editable screen frames; that is not the same capability. Screen delivery now requires actual Figma frame/node provider actions and read-back.
+3. `ba-figma` previously implied the Reqwise OSS diagram API could deliver arbitrary editable screen frames; that is not the same capability. Screen delivery now requires actual Figma frame/node provider actions and read-back. A separate official Plugin API candidate now exists, tested with a Node mock for idempotency/conflict/rollback; this is not live canvas proof.
 4. Synthetic D2, Bruno, Playwright and BPMN checks verify local implementations, NOT real customers, production backends or provider writes.
 5. Local Next.js App Router generation and Chrome execution, scoped stakeholder MD/HTML/DOCX export and a reverse-preview browser demonstration now have independent test evidence. PDF and all live Atlassian/Figma mutation/read-back paths still need separate proof; never mix these evidence tiers.
 

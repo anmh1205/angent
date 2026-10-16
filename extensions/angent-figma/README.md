@@ -25,3 +25,19 @@ This returns source_link_check=ids-resolved-only and writes_performed=false. It 
 The BA extension now includes extensions/angent-ba/scripts/build_figma_screens.py, which converts its source screen model to a proposed Reqwise figma_write editable FRAME/TEXT scene tree. It is a local generator tested against the real control inventory. It DOES NOT invoke a live Figma bridge, wire prototype interactions, preserve existing frames automatically, or prove visual layout until real canvas read-back. It complements, rather than duplicates, the six OSS figma_diagram adapters.
 
 Use ANGENT Root/Execution to confirm target file/page, read existing nodes, obtain required permission and invoke the actual provider. Report the exact node IDs and screenshot/layout audit afterward; otherwise report no Figma edits.
+
+## Native Figma Plugin API target (separate from Reqwise)
+
+The BA kit now provides **two distinct executable-code candidates** from the same accepted screen model:
+
+- Reqwise sandbox: build_figma_screens.py emits figma_write code using Reqwise's proprietary-to-it sandbox proxy figma.create(tree).
+- Official Figma Plugin API: build_figma_native.py emits figma-native-plugin.js using **figma.createFrame(), figma.createText(), await figma.loadFontAsync() and native node read-back**. This is suitable for an authorized Figma host supporting direct asynchronous Plugin API JS, including an available Figma use_figma-style interface.
+
+Generate a native candidate from the accepted screen model:
+
+    python extensions/angent-ba/scripts/build_figma_native.py extensions/angent-ba/examples/authentication-screen-model.json --output out/figma-native
+
+The generated script is deliberately **not run** by Python. Choose and inspect the correct Figma file/page first, check the actual connected tool's code contract and permissions, then invoke authorized JS in its supported context. Its preflight checks all existing screen names and control labels before making changes. Exact matching frames are left unchanged; conflicting frames prevent all new changes. Newly created frames are read back by native ID and rolled back on a detected write/read-back failure where possible. Node names serve as a conservative handoff identity; they are not guaranteed unique across unrelated Figma files.
+
+A Node.js API-shaped mock regression at tests/test_ba_figma_native.py checks creation, idempotency, conflict detection and best-effort rollback. **Mock success is not evidence of real Figma compatibility, successful typography, visual fidelity or a verified customer canvas**; an authorized real Figma run with screenshot and read-back is still the acceptance criterion. Official references: https://developers.figma.com/docs/plugins/api/properties/figma-createframe/ and https://developers.figma.com/docs/plugins/api/properties/figma-loadfontasync/.
+
