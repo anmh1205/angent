@@ -51,7 +51,7 @@ class BAReferencePortabilityTests(unittest.TestCase):
     def test_template_index_links_resolve_to_all_real_template_files(self):
         import re
         index=REF/"template-index.md"
-        targets=re.findall(r"\\]\\((templates/[A-Za-z0-9_-]+\\.md)\\)",
+        targets=re.findall(r"\]\((templates/[A-Za-z0-9_-]+\.md)\)",
                            index.read_text(encoding="utf8"))
         self.assertEqual(len(targets),48)
         self.assertEqual(len(set(targets)),48)
