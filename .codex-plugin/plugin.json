@@ -24,7 +24,7 @@
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [
-      "Use ANGENT Root/Core first; choose any Kit capability through ANGENT Hub, preserving intent, evidence, authorization and quality.",
+      "Use ANGENT Core first; select kit methods via Hub, preserving user intent, evidence, authority and quality.",
       "Answer early, explain decisive relationships and finish with a useful synthesis, without repetitive filler.",
       "For consequential work, verify effects, report uncertainty and preserve accepted strengths."
     ],
