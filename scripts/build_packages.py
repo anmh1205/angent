@@ -37,56 +37,56 @@ TEMPLATES = {
 DOCS = {
     "local-agent": """# ANGENT — local agent workspace bundle
 
-Copy this bundle's contents (including the hidden \`.agents\` directory) into
-a project root that does **not** already contain \`AGENTS.md\`. For existing
-projects, copy \`.agents/\` and merge \`AGENTS.md\` into your existing project
+Copy this bundle's contents (including the hidden `.agents` directory) into
+a project root that does **not** already contain `AGENTS.md`. For existing
+projects, copy `.agents/` and merge `AGENTS.md` into your existing project
 rules manually. Never overwrite project instructions.
 
 The target agent must actually support the Agent Skills standard and
-\`.agents/skills\` discovery. The \`ak-*\` fallback is already bundled;
-16 role contracts under \`extensions/\` are not automatically spawned agents.
+`.agents/skills` discovery. The `ak-*` fallback is already bundled;
+16 role contracts under `extensions/` are not automatically spawned agents.
 """,
     "gemini-skills": """# ANGENT — Gemini CLI workspace Skills
 
-Copy \`.gemini/\` into the workspace root, then **merge** the provided
-\`GEMINI.md\` into the project's own root \`GEMINI.md\` (or put it there only
-if there is no existing file). Do not copy this file into \`.gemini/GEMINI.md\`
+Copy `.gemini/` into the workspace root, then **merge** the provided
+`GEMINI.md` into the project's own root `GEMINI.md` (or put it there only
+if there is no existing file). Do not copy this file into `.gemini/GEMINI.md`
 and assume that Gemini will treat it as a project-root context file.
 
-Gemini CLI discovers workspace \`.gemini/skills\` or the interoperable
-\`.agents/skills\`. Use \`/skills list\` and \`/memory show\` to check
+Gemini CLI discovers workspace `.gemini/skills` or the interoperable
+`.agents/skills`. Use `/skills list` and `/memory show` to check
 discovery and persistent-context loading.
 """,
     "gemini-extension": """# ANGENT — Gemini CLI extension
 
-Install the directory containing \`gemini-extension.json\`:
-\`gemini extensions install /absolute/path/to/packages/gemini-extension\`.
+Install the directory containing `gemini-extension.json`:
+`gemini extensions install /absolute/path/to/packages/gemini-extension`.
 
-Extension \`GEMINI.md\` is loaded through \`contextFileName\`. Verify
-Skills with \`/skills list\` and agents with the installed CLI's available
+Extension `GEMINI.md` is loaded through `contextFileName`. Verify
+Skills with `/skills list` and agents with the installed CLI's available
 preview features. Engineer role projections do not promise native
 subagent support in every Gemini version.
 """,
     "claude-code": """# ANGENT — Claude Code plugin
 
-Use \`claude --plugin-dir /absolute/path/to/packages/claude-code\`
+Use `claude --plugin-dir /absolute/path/to/packages/claude-code`
 or register this directory in a supported plugin marketplace.
 
 The plugin installs Skills and projected agents. **Claude Code does not
 automatically load a CLAUDE.md from the plugin root.** For the always-on
-ANGENT baseline, merge \`bootstrap/CLAUDE.md\` with the *project's existing*
-\`CLAUDE.md\`, preserving its instructions; do not overwrite that file.
+ANGENT baseline, merge `bootstrap/CLAUDE.md` with the *project's existing*
+`CLAUDE.md`, preserving its instructions; do not overwrite that file.
 No hooks or ambient auto-activation are implied by installing Skills alone.
 """,
     "openai-plugin": """# ANGENT — single OpenAI Agent Plugin
 
 Use this assembled plugin root (or its ZIP release) in the supported
-ChatGPT/Codex plugin installation flow. It has one \`angent\` identity,
-12 Core and 103 portable Engineer Skills in \`skills/\`, and 16 Engineer
-role contracts retained in \`extensions/\`.
+ChatGPT/Codex plugin installation flow. It has one `angent` identity,
+12 Core and 103 portable Engineer Skills in `skills/`, and 16 Engineer
+role contracts retained in `extensions/`.
 
 Installing the package and verifying live provider activation are separate
-steps. Use \`scripts/verify_activation.py\` with an actual observation
+steps. Use `scripts/verify_activation.py` with an actual observation
 rather than assuming source version equals installed version.
 """,
 }
