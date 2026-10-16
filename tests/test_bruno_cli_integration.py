@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import shlex
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -62,6 +63,10 @@ class BrunoCliIntegration(unittest.TestCase):
                     path.parent.mkdir(parents=True,exist_ok=True)
                     path.write_text(source,encoding="utf8")
                 cmd=shlex.split(os.environ["BRUNO_CLI_COMMAND"])+["run","requests","--env","Mock"]
+                resolved=shutil.which(cmd[0])
+                if resolved is None:
+                    self.fail("Configured Bruno CLI executable not found: "+cmd[0])
+                cmd[0]=resolved
                 result=subprocess.run(cmd,cwd=root,capture_output=True,text=True,timeout=180,encoding="utf8",errors="replace")
                 self.assertEqual(result.returncode,0,"Bruno CLI execution failed:\n"+result.stdout[-3000:]+"\n"+result.stderr[-2000:])
         finally:
