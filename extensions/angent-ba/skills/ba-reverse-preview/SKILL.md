@@ -1,33 +1,34 @@
 ---
 name: ba-reverse-preview
-description: Specialized ANGENT business analysis reverse-preview method.
+description: Present reconstructed business claims with provenance, uncertainty and contradictions in an actual safe read-only HTML viewer.
 ---
 
-# Reverse-engineering preview with source confidence
+# Reverse-specification preview with visible evidence classes
 
 ## Purpose
 
-Present reconstructed requirements without laundering hypotheses into facts. Every material assertion from legacy documents or code must carry an evidence class and version: SOURCE-OBSERVED, INFERRED, UNCONFIRMED, CONTRADICTORY, or APPROVED-DECISION (only with real approval).
+Legacy code and archives frequently disagree. A reverse preview must let stakeholders distinguish a direct inspected witness, a plausible inference, an unresolved statement, a conflict and a genuinely approved decision. A polished HTML page must not silently promote hypotheses to approved requirements.
 
-## Reader model
+## Build a claim ledger from actual sources
 
-For each claim, show (1) reconstructed behavior in plain language, (2) the supporting file/page or code symbol and revision, (3) confidence rationale, (4) conflicting witnesses, (5) impact if wrong, and (6) next validation action. Do not replace this with a single document-level percentage.
+1. Read the relevant reverse-doc/code-to-SRS evidence, pinned commit or original document revision, affected actor and known conflicts. Do not pull private records outside the user's authorized scope.
+2. For each claim assign a unique ID, a concrete business-behavior statement, an explicit class: SOURCE-OBSERVED, INFERRED, UNCONFIRMED, CONTRADICTORY or APPROVED-DECISION, and inspected source IDs. Contradictions require *at least two* distinct source witnesses and a verification action.
+3. An APPROVED-DECISION requires an actual decision ID and cited approval source; a code method name or model interpretation alone is not approval.
+4. State the impact if wrong, next source or runtime check, and any contradictory text. Do not collapse uncertainty into an arbitrary global confidence percentage.
+5. Pass the reviewed ledger JSON to the **actual** ANGENT reverse-preview renderer. It validates references, rejects unsupported status/invalid approvals, escapes source HTML, and never embeds scripts or fetches third-party assets.
 
-## Method
+## Commands
 
-1. Confirm the exact historical system/release/repository and scope; distinguish source snapshots from deployed runtime.
-2. Consume source ledger from reverse-doc or code-to-srs. Reject requirements without a traceable source path, except clearly labeled proposals from stakeholders.
-3. Group content into actors/roles, features/FR, policy/BR, NFR, error behavior, state machine, data entities, open questions and disagreements.
-4. Keep inferred claims visually distinct even when fluent prose is used; maintain source links and explanatory uncertainty.
-5. For contradictions, display both versions with timestamp/commit, not a fabricated resolution. Provide decision or targeted runtime-test pathways.
-6. Escape all raw source content in HTML; do not embed executable fragments captured from legacy systems.
-7. Reopen and validate navigation, source references and confidence labels. Never mark external verification successful without tool evidence.
+    python extensions/angent-ba/scripts/render_reverse_preview.py extensions/angent-ba/examples/reverse-evidence-synthetic.json --output out/reverse-review.html --title "Reconstructed evidence"
 
-## Acceptance
+The example JSON is deliberately synthetic; replace its source URLs and claims with evidence actually inspected for the user's project. The exporter refuses to overwrite an existing output file.
 
-The reviewer can answer: 'Which requirements come from inspected code? Which were guessed? Which disagree? What should be tested next?' If the preview hides those distinctions, it fails regardless of styling.
+Run a real Chrome smoke:
 
+    python tests/integration/check_reverse_preview_browser.py --chrome PATH_TO_CHROME
 
-## Ownership
+The browser test exercises three source classes including conflicting witnesses, claim-index navigation, no external HTTP requests and absence of JavaScript runtime errors.
 
-ANGENT Root/Core retains reasoning, stakeholder intent, source authority and final Quality. This method is a task-specific support skill and does not create a second runtime, memory system or autonomous scheduler.
+## Review and limits
+
+Open the HTML and verify every source link is correct for the reader's permissions. Only HTTP(S) URLs become clickable; local and untrusted schemes remain text. The output is an **evidence review**, not a validated SRS, Figma asset or production status report. ANGENT Root owns interpretation, Execution handles any authorized publication and Quality compares the finished page to the actual source ledger.

@@ -338,9 +338,9 @@
   {
     "stage": "Handoff",
     "skill": "ba-export",
-    "evidence": "unverified",
+    "evidence": "runtime-mock",
     "deliverable": "Markdown HTML PDF or DOCX stakeholder package",
-    "remaining": "No tested Pandoc/PDF/DOCX export path"
+    "remaining": "Pandoc MD HTML DOCX tested with Chrome; PDF requires real TeX engine and viewer validation"
   },
   {
     "stage": "Handoff",
@@ -352,9 +352,9 @@
   {
     "stage": "Handoff",
     "skill": "ba-reverse-preview",
-    "evidence": "unverified",
+    "evidence": "runtime-mock",
     "deliverable": "Provenance-aware reverse spec HTML preview",
-    "remaining": "Distinct runnable reverse preview not proven"
+    "remaining": "Three synthetic confidence classes rendered in Chrome; source provenance must be independently checked"
   },
   {
     "stage": "Handoff",
