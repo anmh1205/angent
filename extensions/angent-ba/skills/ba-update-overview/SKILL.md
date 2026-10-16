@@ -31,3 +31,12 @@ A newly approved authentication recovery path affects the SRS error matrix, user
 ## Ownership
 
 ANGENT Root/Core retains reasoning, stakeholder intent, source authority and final Quality. This method is a task-specific support skill and does not create a second runtime, memory system or autonomous scheduler.
+
+
+## Actual impact input
+
+For two validated revisions of project requirements, derive an evidence-bound update scope using the portable read-only comparator:
+
+    python extensions/angent-ba/scripts/compare_artifact_revisions.py BEFORE.json AFTER.json
+
+Use direct_review and dependent_review to find the *candidate* overview sections that need checking. Preserve all other overview paragraphs. Even when an artifact ID exists in both versions, its title, status, dependencies and source provenance may change. The comparator does not infer current Jira, deployment or customer approval; reconcile such facts with the actual provider and an authorized read-back. Never interpret a source revision change as proof of production behavior or unilaterally update the overview.

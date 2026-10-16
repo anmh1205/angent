@@ -55,3 +55,14 @@ Record a scope change as a self-contained Change Request — `docs/cr/CR-{YYYYMM
 - **Apply ≠ record** — a recorded CR with no apply is a normal "logged but not done yet" state; don't auto-apply.
 - **Stale impact is the killer** — if a target doc changed after the CR was recorded, the Apply order's diffs are wrong; HARD STOP and re-assess rather than apply a stale diff.
 - **Rollback or don't ship** — an irreversible change with no rollback path must be called out at record time, not discovered at apply.
+
+
+## Actual revision comparison (portable)
+
+For an approved change involving previously captured requirements, take two versioned **validated BA graph snapshots**. The original ANGENT adapter can compare them and compute transitive review impact without rewriting files:
+
+    python extensions/angent-ba/scripts/compare_artifact_revisions.py BEFORE.json AFTER.json --output out/requirement-change-review.json
+
+The tool reports added/removed artifact IDs, changed fields, source-provenance changes and downstream dependents in both revisions. This informs the CR Impact Matrix and the order of document review, but it neither approves the change nor executes any edit. Do not claim implementation drift; source code must be inspected separately. A source revision change alone triggers review, not an assertion that behavior changed.
+
+Before applying a CR, inspect the accepted documents and current provider versions, obtain the user's authorization, construct a reversible target-by-target diff, and read back every provider change. An invalid graph or stale source must halt automation.
