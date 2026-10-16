@@ -227,10 +227,16 @@ def verify_zip(path: Path) -> dict[str, object]:
         if len(names) != len(set(names)):
             raise PackagingError("Duplicate ZIP entry")
         discovered = [p for p in names if re.fullmatch(r"skills/[^/]+/SKILL\.md", p)]
-        if len(discovered) != EXPECTED_DISCOVERABLE or any(
-            f"skills/{name}/SKILL.md" in names for name in SUPPRESSED_PUBLIC_ENGINEER
-        ):
-            raise PackagingError(f"Wrong discoverable Skill count: {len(discovered)}")
+        if discovered != ["skills/angent/SKILL.md"]:
+            raise PackagingError(f"OpenAI requires one ANGENT gateway, got {discovered}")
+        required_methods = (
+            "skills/angent/references/INDEX.md",
+            "skills/angent/references/catalog/ak-agentkit/SKILL.md",
+            "skills/angent/references/catalog/angent-reasoning/SKILL.md",
+            "skills/angent/references/catalog/angent-frontend-design/SKILL.md",
+        )
+        if any(path not in names for path in required_methods):
+            raise PackagingError("OpenAI internal methods incomplete")
         if ENGINEER_PACKAGE_MANIFEST in names or ENGINEER_CODEX_MANIFEST in names:
             raise PackagingError("Two separately installable manifests found")
         if not all(x in names for x in CORE_FILES | {ENGINEER_SOURCE_MANIFEST}):
@@ -244,7 +250,9 @@ def verify_zip(path: Path) -> dict[str, object]:
             "plugin_name": json.loads(archive.read("plugin.json"))["name"],
             "core_skills": EXPECTED_CORE,
             "engineer_skills": EXPECTED_ENGINEER,
-            "discoverable_engineer_skills": EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER),
+            "discoverable_engineer_skills": 0,
+            "internal_engineer_methods": EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER),
+            "internal_frontend_methods": len(FRONTEND_NAMES),
             "discoverable_skills": len(discovered),
             "engineer_roles": EXPECTED_ROLES,
             "zip_entries": len(names),
@@ -253,7 +261,7 @@ def verify_zip(path: Path) -> dict[str, object]:
 
 
 def build(repo: Path, output: Path) -> dict[str, object]:
-    entries = collect_entries(repo)
+    entries = gateway_entries(collect_entries(repo))
     output.parent.mkdir(parents=True, exist_ok=True)
     # Deterministic, host-independent archive byte order, timestamps and permissions.
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
