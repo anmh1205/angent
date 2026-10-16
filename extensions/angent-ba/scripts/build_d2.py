@@ -183,8 +183,6 @@ def compile_source(model: dict[str,Any]) -> str:
     lines=["# ANGENT BA D2 diagram: "+str(kind),
            "# Source is independent and proposed; SVG requires a separately checked D2 CLI.",
            "direction: "+model.get("direction","right")]
-    if kind=="activity":
-        lines.append("style.fill: transparent") if False else None
     for group,ident in sorted(groups.items()):
         lines.extend([ident+": "+_text(group)+" {", "  shape: rectangle", "}"])
     paths={}
@@ -208,7 +206,6 @@ def compile_source(model: dict[str,Any]) -> str:
             lines.append("}")
         else:
             shape=SHAPE[node["kind"]]
-            prefix="  " if group in groups else ""
             if group in groups:
                 # Define children via qualified paths, not by re-opening groups.
                 lines.append(full+": "+_text(node["label"])+" {")
