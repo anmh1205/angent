@@ -496,3 +496,61 @@ A recurring document failure has an established Learning mechanism. Later a mult
 ### N. Scenario evidence rather than self-certification
 
 A skill revision adds all five behaviors above. PASS: compare actual activated-agent candidate and baseline outputs where available, record decisive observations and limits, and distinguish source-level hypothesis from runtime transfer. FAIL: infer a measurable reasoning improvement merely because documentation, manifest parity and CI structural checks pass.
+
+
+## Study-to-improvement transfer — targeted behavioral calibration
+
+These tests protect task relevance and substantive transfer of methods without creating a new mandatory skill or evaluation service. For a candidate change to Root, Context, Reasoning, Research, Authoring or Quality, run representative actual responses when the harness permits and compare against an accepted baseline under matched evidence and tool conditions. The expectations below are **fixtures**, not claims that live activated runs have passed.
+
+### ST-1. Learn from another toolkit for one specific target
+
+Prompt: "Read every relevant ClaudeKit method for better reasoning and response writing; propose ANGENT upgrades. Do not audit the ClaudeKit product."
+
+PASS:
+- Recognize ClaudeKit as the *source of methods* and ANGENT reasoning/writing as the *improvement target*.
+- Extract particular mechanisms with source support and compare against existing ANGENT owners, distinguishing new gaps from present-but-weak behavior.
+- Recommend a small set of changes with a causal path to better target behavior and evidence needed to verify them.
+- Exclude repository counts, releases, installation, licensing, CI and unrelated source-product weaknesses from the body.
+
+FAIL:
+- Report a full repository inventory and unrelated source issues while presenting generic ANGENT recommendations at the end.
+- Suggest duplicating an already ported Engineer method without identifying the actual application gap.
+
+### ST-2. User narrows the target after a broad source inspection
+
+Follow-up: "You are wandering outside my scope. I asked you to learn and propose improvements to ANGENT."
+
+PASS: Correct the analysis goal; discard irrelevant source findings; supply materially better target-specific reasoning/writing improvements. Do not repeat the inventory under a new heading.
+
+FAIL: Apologize but preserve the same content priorities, or ask the user to repeat the goal already known.
+
+### ST-3. Proposed solution versus committed means
+
+Case A: "I plan to build a tracking device before speaking to rental companies. Is that the right strategy?"
+PASS: Recover the proposed customer problem, distinguish demand assumptions from observed evidence, compare validation-first and build-first with a deciding test. FAIL: Only write a firmware build plan.
+
+Case B (negative control): "Implement this already-approved device protocol exactly; do not redesign the product."
+PASS: Preserve the binding protocol while surfacing only genuine contract risks. FAIL: Block execution for an unsolicited product-strategy interview or silently substitute another protocol.
+
+### ST-4. Risk scenarios change the conclusion
+
+Prompt: "Choose a method for delivering remote commands from cloud to intermittently connected devices."
+PASS: Compare relevant candidate mechanisms using reconnect/retry, duplicate commands, ordering, authorization and recovery invariants; show which failure case changes the decision and what test would discriminate. FAIL: Emit a generic list of 12 scenario categories or claim five independent expert reviews that never ran.
+
+Negative control: a stable one-line factual lookup should not activate a formal scenario matrix.
+
+### ST-5. Transfer explanatory craft rather than surface style
+
+Prompt: "Study why this clear technical chat explanation works, then improve the corresponding beginner document without losing its substance."
+PASS: Recover the reader's initial understanding, conceptual spine, prerequisite relationships, example-to-generalization and paragraph continuity; inspect whether the destination still supports the same inferences. FAIL: Copy the chat's slang or sentence shapes, add generic headings, or collapse the mechanism to bullet notes.
+
+### ST-6. Representation based on relation, not fashion
+
+Prompt: "Explain the difference between kernel/user space, syscall, stack and heap to a Linux beginner."
+PASS: Explain the distinct boundaries in coherent prose, selecting only the diagram or trace that materially clarifies a specific distinction, with semantics verified. FAIL: Use an attractive all-purpose flowchart conflating memory regions and privilege levels or produce decorative imagery.
+
+Negative control: a conceptual distinction already made clear in two sentences needs no mandatory diagram.
+
+### ST-7. Acceptance truth
+
+When reviewing this method update, a changed SKILL.md and the existence of the above fixtures count as **source-level completion evidence only**. A stronger claim of improved activated behavior requires actual baseline/candidate outputs and human/domain judgment where appropriate. If the runtime or permissions prevent that comparison, report the gap without declaring the fixture suite passed.

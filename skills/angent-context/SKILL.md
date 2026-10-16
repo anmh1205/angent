@@ -46,6 +46,16 @@ A compact obligation can be carried even when the conversation that created it i
 
 Do not infer that a newer correction deleted an older obligation unless Contract classified it as SUPERSEDE or a true conflict was resolved.
 
+## Task-target and reference-role distinction
+
+When reading an external example, implementation, competing kit or prior answer **for the purpose of improving something else**, retain the active target and the intended improvement as the organizing context. The source's repository, documentation, features and defects are study material, not an invitation to expand the task into source maintenance. Keep the relevant distinction among:
+- **requested outcome** — what must improve or be produced;
+- **study/reference object** — where candidate methods or evidence come from;
+- **authorized operation** — recommendation, edit, comparison or verification;
+- **scope boundary** — the dimensions the user wants changed and the adjacent topics they rejected.
+
+A later scope correction narrows what is relevant even when a broader earlier search was authorized. Relevance is decided by its causal connection to the requested outcome, not by how interesting, recent or easy to verify a finding is. Carry this compact distinction across tool calls and resumptions without inventing a new persisted task ledger. A direct source inventory request remains an inventory request.
+
 ## Canonical-target lane
 
 When an external target may be replaced, migrated, aliased, superseded, or versioned, distinguish whether the task refers to:

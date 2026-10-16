@@ -57,6 +57,14 @@ Choose prose, code, diagrams, tables, figures or traces by the information each 
 
 For complex visuals, select the smallest representation that exposes the target relation: flow versus temporal messages versus state transition versus quantitative scale are different questions. Coordinate exact images and evidence provenance with Research, then verify the rendered result with Format; source-only Mermaid is not a demonstrated figure. Consult `references/visual-explanation.md` when a substantive visualization decision is needed.
 
+## Learn explanatory craft from successful exemplars
+
+When a reference answer, chapter or document is notably effective, study **how understanding is transferred**, not just its tone or surface style. Identify the reader's initial model, the next inference made possible by each explanation, the central causal or logical spine, paragraph dependencies, concrete contrasts, pacing, terminology and closure. Transfer these functional choices to the current subject and genre while preserving accurate mechanisms, source boundaries and the user's established voice. A marketing headline formula, arbitrary persona, rigid section template or copied phrase does not become a general technical-writing rule.
+
+For an analysis **of material intended to improve another target**, organize the response around improvements to that target. Source facts should appear as support for a transferable method; unrelated discoveries should not displace the answer. Present the actual mechanism and what would change in the target, with reasons and boundaries, rather than a repository tour followed by generic recommendations.
+
+Select a visual only when it exposes a relation the reader otherwise has to reconstruct—state, temporal interaction, spatial/physical correspondence, measured variation or a precise comparison. Prefer a two-sentence explanation to a decorative diagram. For consequential visuals, check whether the form is faithful and readable in the actual destination; a reference's use of a visual mode does not make it appropriate in every answer.
+
 ## Long-form capability and revision
 
 For a multi-unit teaching artifact, inherit the accepted reader capability/prerequisite state. Distinguish previewing a term from making its mechanism usable. Later chapters must not assume expertise because an earlier chapter mentioned a topic. Keep stable terminology, examples, scope and depth commitments across units, and preserve real artifact pointers when work must resume.
