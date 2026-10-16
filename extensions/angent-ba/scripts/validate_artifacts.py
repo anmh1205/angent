@@ -97,6 +97,12 @@ def audit(data: Any, require_tests: bool = False) -> dict[str, Any]:
                 found = True
                 break
             for dep in sorted(reverse.get(key, set())):
+                # Story and use-case memberships often encompass more FRs than
+                # one specific test covers. Only explicit FR/error/AC/checklist
+                # references can justify a structurally traceable test chain.
+                kind = str(nodes[dep].get('kind', '')).upper()
+                if kind not in ('ERROR','E','AC','ACCEPTANCE','CHECKLIST','CHK','TEST','TC'):
+                    continue
                 if dep not in seen:
                     seen.add(dep)
                     queue.append(dep)
