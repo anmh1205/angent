@@ -32,3 +32,13 @@ Prepare a precise screen-to-node mapping, list provider prerequisites and retain
 For each screen: correct actor permission, one stable frame mapping, source-equivalent content/control count, interaction and error states, usable type sizes and contrast, no clipped content at target width, editable node read-back and preservation of unrelated existing frames. A successful write message alone is not enough.
 
 **ANGENT ownership:** Root chooses scope and retains user approval, BA owns requirement-to-screen semantics, Frontend owns visual design when needed, Figma specialist handles real diagram/model-specific construction, Execution controls external effects and Quality verifies.
+
+## Tested source-screen-to-Figma candidate generator
+
+ANGENT can now translate the SAME accepted BA screen JSON used by HTML/Next prototypes to a Reqwise OSS figma_write candidate containing one editable FRAME tree per screen and text/field layers for every control:
+
+    python extensions/angent-ba/scripts/build_figma_screens.py extensions/angent-ba/examples/authentication-screen-model.json --output out/figma-frames
+
+This creates figma-screen-plan.json (source control IDs, names, actions and requirements, expected Figma node names) and figma-write.js (documented Reqwise sandbox code using figma.create). The plan is an evidence manifest; source actions are NOT wired Figma prototype reactions. No password values or test credentials are included.
+
+Execute native Figma writes ONLY after reading figma_status, figma_rules and the existing target canvas with figma_read. Existing frames must be identified before reruns, otherwise this creation-only candidate may duplicate frames. After authorized figma_write, inspect returned node IDs with figma_read get_nodes, run layout_audit and review screenshots. Without actual provider evidence, state explicitly: candidate generated, zero provider writes. Figma screen creation is distinct from the six OSS figma_diagram kinds.

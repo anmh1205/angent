@@ -19,3 +19,9 @@ The Reqwise OSS request compiler can verify a diagram model's source_refs agains
     python extensions/angent-figma/scripts/to_reqwise_payload.py extensions/angent-figma/examples/rental-fleet-activity.json --evidence-graph extensions/angent-ba/examples/rental-fleet-traceability.json
 
 This returns source_link_check=ids-resolved-only and writes_performed=false. It neither verifies business-semantic correspondence nor calls Figma. Before claiming a canvas edit, check actual MCP availability and perform authorized provider read-back. Cross-kit reference integrity is tested in tests/test_ba_figma_trace_chain.py.
+
+## Editable application screens versus diagram models
+
+The BA extension now includes extensions/angent-ba/scripts/build_figma_screens.py, which converts its source screen model to a proposed Reqwise figma_write editable FRAME/TEXT scene tree. It is a local generator tested against the real control inventory. It DOES NOT invoke a live Figma bridge, wire prototype interactions, preserve existing frames automatically, or prove visual layout until real canvas read-back. It complements, rather than duplicates, the six OSS figma_diagram adapters.
+
+Use ANGENT Root/Execution to confirm target file/page, read existing nodes, obtain required permission and invoke the actual provider. Report the exact node IDs and screenshot/layout audit afterward; otherwise report no Figma edits.

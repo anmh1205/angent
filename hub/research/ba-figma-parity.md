@@ -70,3 +70,7 @@ The ANGENT specialist sources are **adaptations**, not a copy of a closed AI4BA 
 5. **Figma plugin API** — https://developers.figma.com/docs/plugins/working-with-text/ : editable text-node changes require actual plugin context and font loading. The ANGENT OSS adapter generates candidate figma_diagram arguments only, without a Figma read-back/write. Reqwise's actual native server/plugin session must be available before any editable result is claimed.
 
 These are independent, evidence-scoped checks for **Atlas BA requirements, a synthetic fleet API and a synthetic Authentication prototype**. They are not a single deployed product; passing them does not establish end-to-end production fidelity or paid AI4BA/Reqwise Pro parity.
+
+## Screen-to-Figma handoff built separately from diagram support
+
+The source-driven low-fidelity BA screen model can now be compiled to a candidate Reqwise figma_write scene-tree program by extensions/angent-ba/scripts/build_figma_screens.py. Tests compare every generated control label/name with the source and check JavaScript syntax in Node. This is a genuine editable-FRAME candidate, not another figma_diagram type. Native Figma creation, idempotent frame reconciliation, prototype interactions, token/component reuse and canvas/screenshot read-back remain unverified. No commercial Reqwise Pro capability is implied.
