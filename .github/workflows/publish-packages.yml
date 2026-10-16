@@ -69,4 +69,3 @@ jobs:
             --verify-tag \
             --title "ANGENT ${RELEASE_TAG#v}" \
             --generate-notes
-
