@@ -83,6 +83,67 @@ class APIContractTests(unittest.TestCase):
         a["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]={"oneOf":[]}
         self.assertTrue(any("composition" in x for x in audit_contract(a,self.model)["errors"]))
 
+    def test_openapi_response_range_and_default_are_valid(self):
+        spec=copy.deepcopy(self.spec)
+        responses=spec["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]
+        responses["2XX"]=responses.pop("200")
+        responses["default"]=responses.pop("403")
+        responses["5XX"]=responses.pop("503")
+        result=audit_contract(spec,self.model)
+        self.assertTrue(result["ok"],result)
+        self.assertEqual(result["requests_checked"],4)
+        self.assertIn("requests/TC-FLEET-002.bru",compile_collection(self.model,api_contract=spec))
+        # Explicit status must win over a general range, even when the schema differs.
+        responses["403"]={"description":"conflicting specific 403","content":{
+            "application/json":{"schema":{"type":"object","properties":{"other":{"type":"string"}}}}}}
+        self.assertFalse(audit_contract(spec,self.model)["ok"])
+
+    def test_security_is_or_of_and_requirements_not_a_truthy_list(self):
+        original=copy.deepcopy(self.spec)
+        op=original["paths"]["/vehicles/{vehicleId}/status"]["get"]
+        original["components"]={"securitySchemes":{
+            "bearerAuth":{"type":"http","scheme":"bearer"},
+            "keyAuth":{"type":"apiKey","in":"header","name":"X-API-Key"}}}
+        original["security"]=[{"bearerAuth":[]}]
+        self.assertFalse(audit_contract(original,self.model)["ok"])
+        op["security"]=[{"bearerAuth":[]},{}]
+        self.assertTrue(audit_contract(original,self.model)["ok"],audit_contract(original,self.model))
+        op["security"]=[{"bearerAuth":[]},{"keyAuth":[]}]
+        request=copy.deepcopy(self.model)
+        for test in request["requests"][:3]:
+            test["auth"]="bearer"
+        # The fourth POST is still anonymous because its operation has no override.
+        request["requests"][3]["auth"]="bearer"
+        self.assertTrue(audit_contract(original,request)["ok"],audit_contract(original,request))
+        op["security"]=[{"bearerAuth":[],"keyAuth":[]}]
+        self.assertFalse(audit_contract(original,request)["ok"])
+        self.assertTrue(any("bearer-only" in msg for msg in audit_contract(original,request)["errors"]))
+        op["security"]=[]
+        for test in request["requests"]:
+            test["auth"]="none"
+        self.assertTrue(audit_contract(original,request)["ok"],audit_contract(original,request))
+
+    def test_json_schema_nullable_and_value_boundaries(self):
+        spec=copy.deepcopy(self.spec)
+        ok_model=copy.deepcopy(self.model)
+        op=spec["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]
+        fields=op["content"]["application/json"]["schema"]["properties"]
+        fields["state"]={"type":["string","null"],"minLength":3,"maxLength":10}
+        self.assertTrue(audit_contract(spec,ok_model)["ok"],audit_contract(spec,ok_model))
+        ok_model["requests"][0]["expected_json"]["state"]="ab"
+        self.assertFalse(audit_contract(spec,ok_model)["ok"])
+        ok_model["requests"][0]["expected_json"]["state"]=None
+        self.assertTrue(audit_contract(spec,ok_model)["ok"],audit_contract(spec,ok_model))
+        fields["vehicleId"]={"type":"string","pattern":"^[0-9]+$"}
+        self.assertFalse(audit_contract(spec,ok_model)["ok"])
+        fields.pop("vehicleId")
+        fields["vehicleId"]={"type":"string"}
+        fields["state"]={"type":"string","enum":["online","offline"]}
+        ok_model["requests"][0]["expected_json"]["state"]="online"
+        schema=spec["paths"]["/vehicles/{vehicleId}/diagnostics/ack"]["post"]["requestBody"]["content"]["application/json"]["schema"]
+        schema["properties"]["operator"]={"type":"string","minLength":20}
+        self.assertFalse(audit_contract(spec,ok_model)["ok"])
+
     def test_auth_contract_mismatch_blocks_generation(self):
         a=copy.deepcopy(self.spec)
         a["paths"]["/vehicles/{vehicleId}/status"]["get"]["security"]=[{"bearerAuth":[]}]
