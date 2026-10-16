@@ -2,6 +2,7 @@
 """Run a generated Playwright case file against the actual offline HTML prototype."""
 from __future__ import annotations
 import argparse
+from copy import deepcopy
 import json
 from pathlib import Path
 import subprocess
@@ -35,7 +36,27 @@ def main():
             actual=outcome.get("cases")
             good=(result.returncode==0 and outcome.get("ok") and actual==7
                   and outcome.get("passed")==7 and outcome.get("external_requests")==[])
+            # Mutation test: the *same* generated test must reject an HTML
+            # implementation whose invalid-credentials message is wrong.
+            broken=deepcopy(original)
+            broken["screens"][0]["controls"][2]["outcomes"]["invalid"]["message"]="INCORRECT MOCK ERROR"
+            bad_html=base/"mutated.html"
+            bad_html.write_text(render(broken,"prototype"),encoding="utf8")
+            broken_command=[sys.executable,str(runner),"--prototype",str(bad_html)]
+            if args.chrome:
+                broken_command.extend(["--chrome",str(args.chrome)])
+            mutation=subprocess.run(broken_command,capture_output=True,text=True,
+                                    errors="replace",timeout=150)
+            mutation_lines=mutation.stdout.strip().splitlines()
+            detected=json.loads(mutation_lines[-1]) if mutation_lines else {}
+            mutation_caught=(mutation.returncode!=0 and not detected.get("ok") and
+                             len(detected.get("failed",[]))==1 and
+                             detected["failed"][0]["id"]=="TC-PROT-0002" and
+                             detected.get("external_requests")==[])
+            good=good and mutation_caught
             print(json.dumps({"ok":good,"exit":result.returncode,"cases":actual,
+                              "mutation_detected":mutation_caught,
+                              "mutation_failed_cases":detected.get("failed",[]),
                               "passed":outcome.get("passed"),"failures":outcome.get("failed"),
                               "stderr":result.stderr[-1200:],"scoped_to":"offline authentication mock"},
                              ensure_ascii=False))
