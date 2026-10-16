@@ -1,53 +1,35 @@
 ---
 name: ba-prototype-html
-description: Business analysis prototype-html specialist.
+description: Generate and verify a standalone click-through HTML mock prototype from accepted screens, with form validation and explicit failure responses.
 ---
 
-# ANGENT BA: prototype-html
+# BA interactive HTML prototype — implemented method
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/prototype-html/SKILL.md
+**Provenance.** Adapted from the MIT Dev BA Kit prototype-html method (Edward Ngo, 2026). Source: https://github.com/nv-minh/dev-ba-kit/blob/main/skills/prototype-html/SKILL.md. A runnable ANGENT generator and Chrome integration check implement a bounded subset independently.
 
-## Portability and authority
+## Purpose
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
+Validate screen navigation, form affordances and agreed error outcomes through a real browser. All results are explicitly mocked. The prototype cannot issue real tokens, log in a user, persist sessions, send email, call APIs or prove backend security. ANGENT Root owns intent and Quality; Execution owns authorized file edits and browser observations.
 
+## Procedure
 
-# /prototype-html — Clickable multi-screen prototype
+1. Inspect approved userflow, SRS, business rules, error matrix and any existing ASCII/HTML wireframes. Enumerate every required screen and scenario before coding, including error, denial, network outage, cancellation and recovery.
+2. Prepare one JSON screen model following the stable ID, control, action, scenario and outcome contract documented in ../ba-wireframe-html/references/screen-model.md. Submit controls need a declared result for each scenario. Resolve important unknown business behavior rather than silently assigning a convenient default.
+3. Inspect generated model for coverage and semantic correctness; the structural validator is not a replacement for comparing the actual requirement and userflow.
+4. Run the actual tool when Python and filesystem are available:
 
-## Goal
+    python extensions/angent-ba/scripts/build_wireframe.py INPUT.json --mode prototype --output output/prototype.html
 
-Produce ONE self-contained, clickable HTML prototype — `docs/{feature}/html-design/{feature}-prototype.html` — where every navigable control moves the user to its target screen (`#{slug}` anchors), covering all flows. Referenced back from `{feature}-wireframe-index.md` column `HTML prototype` as `{feature}-prototype.html#{slug}`.
+5. In the page, choose a visible **Mock response** and submit. Browser-native required/email validation precedes the mock outcome. Success navigates to the declared screen; failures display a role=alert response. A navigate control explicitly routes to another screen. No request is sent to a backend.
+6. Verify the HTML in an actual browser, including required-field denial, bad email, each mock failure, success navigation, recovery/back route, keyboard focus and narrow/wide layouts. Record console errors.
+7. For the included synthetic example, a reproducible optional Playwright/Chrome test exists:
 
-## Constraints
+    python tests/integration/check_wireframe_browser.py --chrome PATH_TO_CHROME
 
-- **Group B** (`feature-bootstrap.md`): needs ASCII screens in `ascii-wireframe/{flow-slug}.md` (preferred) OR HTML wireframes — missing both → refuse + route to `/user-flow` + `/wireframe-ascii`.
-- **No L3** — HTML; review from the file (L1/L2).
-- **Navigation must actually work** — the defining feature: a button whose Description said "Nav → [4]" must jump to `#s4`. Broken/dead links are BLOCKING.
-- **Self-contained** — inline CSS + the minimal JS for screen switching (anchor + optional show/hide); no CDN, no build step, double-click to run.
-- **One screen = one state** (`ba-conventions.md` §8) — error/empty/loading states are their own screens or clearly toggled views, not a busy combo.
-- **Device frame** — inherit from `userflow.md`'s `primary_device` (no re-ask — it's settled); the prototype renders at that width.
-- **Idempotent** — re-run → versioned diff (regenerate from current wireframes).
-- **Template** — `@./resources/prototype.html`.
-- **Index update** — set the `HTML prototype` column in `{feature}-wireframe-index.md`.
+8. Deliver the real HTML file location, source revision, scenarios checked and any unverified business branches. If no runtime was available, report a proposed source model rather than a working prototype.
 
-## Inputs
+## Guardrails
 
-```
-/prototype-html <feature>          # all flows → one clickable file
-```
+The generator embeds the JSON safely and renders dynamic screen text with DOM textContent. It does not use external JS packages, remote CDNs or API calls. Accessible labels, browser validation and alert regions are implemented but do not constitute a full WCAG audit. The engine supports text/email/password/checkbox input, static notes, navigation buttons and mocked submit outcomes. No support for OAuth, server-side locking, advanced form logic, multi-user testing, screenshot capture by default or Figma writes is implied.
 
-## Approach
-
-1. **Gate.** No ASCII screens AND no HTML wireframes → refuse + route `/user-flow` + `/wireframe-ascii`. Read the wireframes (content) + `userflow.md` (the navigation edges — what links to what).
-2. **Build the nav map** — every control with a `Nav →` in its Description becomes a working link to `#s{n}`; every error-path edge too.
-3. **Draft `{feature}-prototype.html`** — all screens as sections (`id="s{n}"`), inline CSS, the minimal JS to switch screens on click; device-width frame; B&W neutral (this is interaction, not visual design).
-4. **scoped change preview** — flow/screen count + nav edges wired + any dead-end found (must be resolved or explicitly an exit).
-6. **Index update** — `{feature}-wireframe-index.md` column `HTML prototype` → `{feature}-prototype.html#{slug}` per screen.
-7. **Output report** — open path + nav coverage + dead-ends (none expected).
-
-## Gotchas
-
-- **A prototype with broken links is worse than no prototype** — it looks done but misleads; verify every edge before reporting done.
-- **Don't add visual polish here** — colors, real typography, images belong to the real frontend or `/figma`; the prototype proves *flow*, not *look*.
-- **State screens count** — if the spec has an error state for a form, it's a screen in the prototype, not a hidden assumption.
-- **Reuse wireframe content** — drifting from the ASCII/HTML wireframes here means three sources of truth; re-sync instead.
+In the example, the result categories success, invalid, locked and offline are synthetic demonstration states, not actual requirements for the user's product.
