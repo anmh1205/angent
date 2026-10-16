@@ -1,28 +1,32 @@
 ---
 name: figma-journey
-description: Show end-to-end user experience and friction.
+description: Specialized journey analysis and editable Figma presentation when actual host tools permit.
 ---
 
-# figma-journey: Show end-to-end user experience and friction
+# Evidence-grounded journey map with service and user perspectives
 
-## Applicability and context
+## Boundary
+Journey maps describe a real or hypothesized user experience over time: user goals, contexts, actions, touchpoints, pain, perceived effort and opportunities. Userflow describes navigational states; service blueprint describes frontstage and backstage service responsibilities. These are related but not interchangeable.
 
-Use this specialist when a requested Figma deliverable needs **show end-to-end user experience and friction**. Gather only the context that changes the output: persona backed by evidence, touchpoints, outcomes and feedback. Preserve project-approved semantics and styles. ANGENT Root retains task intent, user authority, tool selection, reasoning, and completion checks.
+## Research first
+1. Name the user segment and end-to-end job, timeframe and exact beginning and ending conditions. Check actual research/interview/analytics evidence and avoid invented behavior.
+2. Split the journey into meaningful stages and record entry, action, motivation, expectation, touchpoint, system/service response and outcome.
+3. Record evidence references for each observed pain, quote or emotion. Inferred opportunities get hypotheses and validation experiments, never fabricated certainty or emotional scores.
+4. Incorporate failure and recovery stages, interruptions, cross-device transitions, accessibility barriers and handoffs to support teams or third parties when relevant.
+5. Evaluate which opportunities have demonstrated frequency/severity and which are low-confidence ideas. Avoid using numerical priority or satisfaction without source data.
+6. Translate stage cards to Figma using existing typography, spacing and approved visual tokens when an authorized Figma writing tool exists. Use editable frames/text nodes and preserve stable stage IDs.
+7. Read back node inventory and view at stakeholder width; check text truncation, mobile readability and source footnotes.
 
-## Diagram/design method
+## Output schema
+Journey ID; actor or segment; stage ID; stage goal; observed action; touchpoint; evidence and confidence; user pain/positive outcome; service response; opportunity; testable next decision.
 
-Map journey stages, jobs, emotions only when evidenced, breakpoints, opportunities and product responses. Model semantic entities and relationships **before** canvas geometry. Prefer stable node/edge identifiers and update-in-place semantics where the actual native tool supports them. Work on only the approved document/selection; preserve existing user edits and component identity.
+## Quality checks
+Do not duplicate a userflow box-per-screen. Do not assume every stage feels frustrating. A support escalation may be a major interaction even if there is no app screen. Journey output must expose unknowns and research gaps.
 
-## Target deliverable
+## Figma execution
+There is no journey kind in the public Reqwise OSS figma_diagram API. Do not call a fictional Pro tool; construct only if actual native Figma capabilities are available and permission granted, otherwise deliver the structured map and alternate HTML/diagram specification.
 
-Produce **journey map with confidence and source markers**. If live Figma tools are available and permission confirmed, create or edit actual editable objects and read back the changed target state. Otherwise provide a structured model and clear unsupported-operations section rather than pretending to have made canvas changes.
 
-## Review gate
+## ANGENT authority
 
-- Do not invent research findings or emotional intensity.
-- Check role ownership, meaningful labels, accessible names, off-canvas/clipped nodes, edges without endpoints, rendering clarity and contradiction with accepted BA requirements where applicable.
-- Distinguish structural validation from rendered visual QA; inspect native Figma result if tool exists.
-
-## References
-
-For portable graph data shape see `../figma-activity/references/diagram-model.md`; for authorized tool boundaries consult `extensions/angent-figma/adapter/routing.md` when available in your host. No proprietary Reqwise source is included.
+Root selects capabilities; BA owns source business decisions, Frontend supports art direction when necessary, Execution performs authorized Figma calls and read-back, Quality verifies semantics and rendering.

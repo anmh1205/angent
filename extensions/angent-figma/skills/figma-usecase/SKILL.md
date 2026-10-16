@@ -1,28 +1,31 @@
 ---
 name: figma-usecase
-description: Define editable actors, use cases and system boundary.
+description: Specialized usecase analysis and editable Figma presentation when actual host tools permit.
 ---
 
-# figma-usecase: Define editable actors, use cases and system boundary
+# Use case model in Figma, not a renamed userflow
 
-## Applicability and context
+## Semantics before geometry
+The system boundary encloses services the product promises. Human or external actors remain outside. Each ellipse names an actor-visible goal at the correct level of abstraction, not a UI click. Association expresses actor participation. Include is mandatory reused sub-behavior; extend is optional or conditional addition with an explicit extension point. Generalization requires real substitutability.
 
-Use this specialist when a requested Figma deliverable needs **define editable actors, use cases and system boundary**. Gather only the context that changes the output: business actors, permissions, candidate use cases. Preserve project-approved semantics and styles. ANGENT Root retains task intent, user authority, tool selection, reasoning, and completion checks.
+## Construct
+1. Use current actor, use-case and scope inventory from BA usecase/SRS. Separate primary actor from external authorization/payment services.
+2. Create actor IDs and use-case IDs with accepted project names. Record trigger, result, preconditions and minimal guarantee for each.
+3. Build association, include, extend and inheritance edge tables. Every include and extend edge needs a defensible semantic reason. The system boundary must not include an externally owned service.
+4. Audit completeness: every P0 capability has at least one actor goal; every actor has a justified interaction; no goal is a decorative screen label.
+5. For Figma, inspect target file, existing page and diagram tool availability. A Pro-style use-case diagram is not supported by Reqwise OSS six-kind figma_diagram. Use an actually available native Figma write tool with explicit frame/shape primitives only when authorized; otherwise provide a verified model and renderable UML source.
+6. Arrange actors outside, use cases inside, relation labels readable; preserve editing and stable IDs. After a native write, read back and check missing edges and clipping.
 
-## Diagram/design method
+## Deliverable
+A machine-readable actor/usecase/relationship list and a reviewable diagram or renderable fallback; source SRS references and outstanding business boundary questions.
 
-Normalize actor goals; mark include/extend only with correct semantics; label boundary and external actors; cross-check SRS and AC. Model semantic entities and relationships **before** canvas geometry. Prefer stable node/edge identifiers and update-in-place semantics where the actual native tool supports them. Work on only the approved document/selection; preserve existing user edits and component identity.
+## Quality failure examples
+A login button is not a goal. Password reset is a standalone goal when the user wishes to recover access. Sending an email may be an included service step, not necessarily an actor goal. Do not fabricate regulatory actors or assume a relationship exists merely because two diagrams share a noun.
 
-## Target deliverable
+## Reference
+OMG UML use-case semantics; source of system/actor decisions must be from the approved BA artifact, not from diagram aesthetics.
 
-Produce **use case graph with actor links and exclusions**. If live Figma tools are available and permission confirmed, create or edit actual editable objects and read back the changed target state. Otherwise provide a structured model and clear unsupported-operations section rather than pretending to have made canvas changes.
 
-## Review gate
+## ANGENT authority
 
-- Use cases denote business capabilities, not single UI buttons.
-- Check role ownership, meaningful labels, accessible names, off-canvas/clipped nodes, edges without endpoints, rendering clarity and contradiction with accepted BA requirements where applicable.
-- Distinguish structural validation from rendered visual QA; inspect native Figma result if tool exists.
-
-## References
-
-For portable graph data shape see `../figma-activity/references/diagram-model.md`; for authorized tool boundaries consult `extensions/angent-figma/adapter/routing.md` when available in your host. No proprietary Reqwise source is included.
+Root selects capabilities; BA owns source business decisions, Frontend supports art direction when necessary, Execution performs authorized Figma calls and read-back, Quality verifies semantics and rendering.

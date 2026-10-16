@@ -1,28 +1,34 @@
 ---
 name: figma-bpmn
-description: Create importable BPMN 2.0 process model.
+description: Specialized bpmn analysis and editable Figma presentation when actual host tools permit.
 ---
 
-# figma-bpmn: Create importable BPMN 2.0 process model
+# BPMN 2.0.2 model and editable Figma process visualization
 
-## Applicability and context
+## What BPMN means
+A BPMN process models operational work, decisions, events, collaborations and their consequences. A Figma drawing is a visualization; an importable BPMN 2.0 XML model carries process semantics. Do not confuse image quality with Camunda/Bizagi importability or execution compatibility.
 
-Use this specialist when a requested Figma deliverable needs **create importable bpmn 2.0 process model**. Gather only the context that changes the output: participants, pools/lanes, events, tasks and boundary exceptions. Preserve project-approved semantics and styles. ANGENT Root retains task intent, user authority, tool selection, reasoning, and completion checks.
+## Required source model
+Specify process ID, pools/participants, lanes and owners, start events, task types, exclusive/parallel/inclusive gateways, intermediate events, end events, sequence flows, message flows across pools, data objects and exception handling. For every gateway define its decision semantics; for split concurrency supply a justified join or explain deliberately independent branches.
 
-## Diagram/design method
+## Generation and review
+1. Extract the accepted process and actor interactions from BA SRS and use case; record every success and recovery path, deadline and compensation requirement.
+2. Normalize the semantic model: valid node types, unique IDs, actor ownership, branch guards, event/message correlation, correlation keys and permissible terminal states.
+3. Run reachability checks before layout. A process with a missing end, orphan gateway branch or unhandled error event is not complete, however elegant its diagram.
+4. Generate BPMN 2.0 XML using an actual compliant writer. Validate well-formedness and schema against the normative OMG XSD; import with a compatible modeler for interoperability evidence. BPMN XML without BPMNDI coordinates may import but will not have a useful layout.
+5. For a separate Figma visualization, map the validated model to editable pools, lanes, tasks, events, gateways and connectors. Only use native tools that exist in the host. Reqwise OSS does NOT support BPMN as one of its six figma_diagram kinds.
+6. Read back the edited Figma canvas and compare node/edge inventory, lane ownership and layout against the semantic model. Report independent XML and Figma verification results.
 
-Distinguish sequence flow and message flow; model interrupting boundary events; validate gateway types and XML schema; attach business semantics. Model semantic entities and relationships **before** canvas geometry. Prefer stable node/edge identifiers and update-in-place semantics where the actual native tool supports them. Work on only the approved document/selection; preserve existing user edits and component identity.
+## Distinctions to preserve
+Sequence flow does not cross pools; message flow connects participating pools. A gateway does not represent the approval task itself. A timer boundary event and a timer in the normal task flow do different things. End event semantics must match the intended interruption or completion.
 
-## Target deliverable
+## Deliverables
+One semantic BPMN IR, BPMN 2.0 XML with validation evidence when generated, editable Figma diagram when supported, and a source-to-node traceability table. Never claim executable process automation without verified engine/runtime behavior.
 
-Produce **BPMN source plus editable Figma representation**. If live Figma tools are available and permission confirmed, create or edit actual editable objects and read back the changed target state. Otherwise provide a structured model and clear unsupported-operations section rather than pretending to have made canvas changes.
+## Standard
+OMG BPMN 2.0.2: https://www.omg.org/spec/BPMN/2.0.2/
 
-## Review gate
 
-- Figma visual arrangement is not proof BPMN XML imports successfully.
-- Check role ownership, meaningful labels, accessible names, off-canvas/clipped nodes, edges without endpoints, rendering clarity and contradiction with accepted BA requirements where applicable.
-- Distinguish structural validation from rendered visual QA; inspect native Figma result if tool exists.
+## ANGENT authority
 
-## References
-
-For portable graph data shape see `../figma-activity/references/diagram-model.md`; for authorized tool boundaries consult `extensions/angent-figma/adapter/routing.md` when available in your host. No proprietary Reqwise source is included.
+Root selects capabilities; BA owns source business decisions, Frontend supports art direction when necessary, Execution performs authorized Figma calls and read-back, Quality verifies semantics and rendering.
