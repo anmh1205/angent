@@ -26,6 +26,15 @@ Never invent graph links from co-occurring words. External references without in
 | FR linked to downstream TC | | | |
 | FR with complete structural chain | | | |
 
+## Graph integrity
+
+| Integrity check | Finding and affected IDs | Source witness | Resolution or remaining uncertainty |
+|---|---|---|---|
+| Missing referenced node | | | |
+| Dependency cycle | | | |
+| Duplicate artifact ID | | | |
+| Stale or inaccessible source | | | |
+
 ## Verification
 
 Check duplicates, missing dependencies, cycles, source file revisions and invalid local paths. When running inside the ANGENT source tree, use extract_markdown_graph.py with optional --urd, --brd, --prd and mandatory --srs plus existing test files; validate output using validate_artifacts.py.
