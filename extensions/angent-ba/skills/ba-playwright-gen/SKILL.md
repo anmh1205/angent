@@ -52,3 +52,7 @@ The generated file has no dependency on ANGENT source code at runtime. It loads 
 ## Boundaries
 
 The actual implementation is a **Python Playwright** test generator for the bounded ANGENT prototype screen model, not a general TypeScript Playwright generator, production E2E suite or test-result certification service. A wider application needs repo-native test development, accepted fixtures and authorized browser execution. ANGENT Root and Quality own the final decision; Execution handles code changes and real test read-back.
+
+## Playwright quality regression
+
+The generated Python suite uses Playwright's built-in web-first, auto-retrying locator assertions for screen appearance, exact mock-error text and focus transition. See https://playwright.dev/python/docs/test-assertions. The repository's real-browser integration deliberately mutates the invalid-credentials response; the original suite must detect this and fail TC-PROT-0002. This confirms a targeted assertion catches a regression, not just that a fixture succeeds. Other unmodeled business failures remain out of scope.

@@ -65,3 +65,11 @@ If the requirements need unsupported elements, use a real advanced BPMN generato
 | Runtime | Deployment tested independently | Parser success claimed as execution |
 
 This method prioritizes true process semantics over document volume or attractive but unverified drawings. Do not claim editors, native Figma writes, or BPMN automation from instructions alone.
+
+## Official BPMN schema acceptance, optional independent check
+
+The portable BPMN compiler covers a **limited, single, non-executable, acyclic process** with start/end events, tasks, exclusive gateways and optional lanes. For genuine XML interoperability evidence, download the OMG 2.0.2 XSD files locally, install lxml on the test host and run:
+
+    python tests/integration/check_bpmn_official_xsd.py --schema-dir PATH_TO_OFFICIAL_SCHEMAS
+
+This validates the emitted XML+DI against the normative BPMN schema and requires that a deliberately broken sequence flow be rejected. It does not check import/export fidelity with Camunda, Bizagi or other modelers, and must not be used to claim that event/parallel/collaboration process semantics are supported.

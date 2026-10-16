@@ -27,3 +27,17 @@ D2 is not bundled with ANGENT. Review/install the official D2 CLI independently 
 The test compiles three synthetic source models and checks D2 process exit status, SVG root/viewBox, real node labels and unexpected active elements. The SVG and PNG were also visually inspected in a separate test session. This cannot certify production architecture or an unreviewed business data model.
 
 Source: https://d2lang.com/tour/man/ and https://d2lang.com/tour/sql-tables/.
+
+## Official BPMN 2.0.2 XSD acceptance
+
+The generated BPMN file is checked against OMG's **actual five-file normative XSD package**, not just ElementTree XML well-formedness. For an authorized test host, download BPMN20.xsd, Semantic.xsd, BPMNDI.xsd, DC.xsd and DI.xsd from https://www.omg.org/spec/BPMN/20100501/ into a single private local directory (the files are **not** redistributed in ANGENT). Install the optional Python lxml package only on the test host, then run:
+
+    python tests/integration/check_bpmn_official_xsd.py --schema-dir PATH_TO_OFFICIAL_SCHEMAS
+
+The test rejects missing schema files, validates the real synthetic Atlas XML/DI and proves that deletion of a required sequenceFlow sourceRef causes a schema failure. A schema pass is not evidence of an import into Camunda or any particular BPMN modeler.
+
+## Generated browser-test negative control
+
+    python tests/integration/check_generated_playwright.py --chrome PATH_TO_CHROME
+
+The integration test runs all generated review-only Authentication cases on Chrome, then intentionally changes one mock error message and requires precisely the corresponding test case to fail. Network requests are blocked. It does not test production login or user credentials.
