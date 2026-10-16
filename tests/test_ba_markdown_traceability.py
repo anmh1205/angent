@@ -86,5 +86,35 @@ class MarkdownTraceabilityTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"outside project root"):
                 collect({"srs":SRS},Path(temp))
 
+
+    def test_user_stories_and_usecases_extend_graph_without_making_up_ac(self):
+        stories=FEATURE/"userstories/atlas-re-story-index.md"
+        usecases=FEATURE/"usecases/atlas-re-usecase-index.md"
+        result=collect({"srs":SRS,"checklist":CHECKLIST,"cases":CASES,
+                        "stories":stories,"usecases":usecases},PROJECT)
+        self.assertEqual(result["counts"]["STORY"],3)
+        self.assertEqual(result["counts"]["USECASE"],1)
+        self.assertEqual(len(result["graph"]["artifacts"]),42)
+        by_id={a["id"]:a for a in result["graph"]["artifacts"]}
+        self.assertEqual(by_id["US-001"]["depends_on"],["FR-atlas-re-006","FR-atlas-re-007"])
+        self.assertEqual(by_id["UC-approve-claim"]["depends_on"],
+                         ["FR-atlas-re-006","FR-atlas-re-007"])
+        self.assertTrue(result["coverage"]["traced_to_test"]==4)
+        self.assertNotIn("AC-001",by_id)
+        self.assertEqual(by_id["US-001"]["source_location"]["uri"],
+                         "docs/atlas-re/userstories/atlas-re-story-index.md")
+        self.assertTrue(audit(result["graph"])["ok"])
+
+    def test_new_sources_increase_change_impact_without_false_passes(self):
+        from change_impact import impact
+        result=collect({"srs":SRS,"checklist":CHECKLIST,"cases":CASES,
+                        "stories":FEATURE/"userstories/atlas-re-story-index.md",
+                        "usecases":FEATURE/"usecases/atlas-re-usecase-index.md"},PROJECT)
+        changed=impact(result["graph"],["FR-atlas-re-006"])
+        self.assertTrue(changed["ok"],changed)
+        self.assertIn("US-001",changed["affected"])
+        self.assertIn("UC-approve-claim",changed["affected"])
+        self.assertFalse(changed["writes_performed"])
+
 if __name__=="__main__":
     unittest.main()
