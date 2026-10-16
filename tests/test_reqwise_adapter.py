@@ -92,6 +92,34 @@ class ReqwisePayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "both columns"):
             compile_model(base)
 
+    def test_erd_rejects_fake_external_ownership_and_invalid_columns(self):
+        base = {"type": "erd", "nodes": [
+            {"id": "external", "kind": "entity", "label": "External",
+             "attributes": [{"name": "id", "type": "uuid"}]}], "edges": []}
+        for value in ("false", 1, None):
+            with self.subTest(external=value):
+                altered = deepcopy(base)
+                altered["nodes"][0]["external"] = value
+                with self.assertRaisesRegex(ValueError, "external must be a boolean"):
+                    compile_model(altered)
+        good = deepcopy(base)
+        good["nodes"][0]["external"] = True
+        self.assertTrue(compile_model(good)["dry_run"])
+        for attribute, message in [
+            ({"name": "id", "key": "primary"}, "unsupported column key"),
+            ({"name": "id", "required": "false"}, "required flag must be boolean"),
+            ({"name": "id", "type": 0}, "invalid column type"),
+        ]:
+            changed = deepcopy(good)
+            changed["nodes"][0]["attributes"] = [attribute]
+            with self.subTest(attribute=attribute):
+                with self.assertRaisesRegex(ValueError, message):
+                    compile_model(changed)
+        duplicates = deepcopy(good)
+        duplicates["nodes"][0]["attributes"].append({"name": "id"})
+        with self.assertRaisesRegex(ValueError, "duplicate column"):
+            compile_model(duplicates)
+
     def test_unsupported_pro_diagram_not_claimed(self):
         bad = {"type":"bpmn","nodes":[{"id":"start","kind":"start","label":"Start"}],"edges":[]}
         with self.assertRaisesRegex(ValueError,"does not support"):

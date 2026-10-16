@@ -104,13 +104,27 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
     elif kind == "erd":
         entities = []
         for n in nodes:
+            if "external" in n and not isinstance(n["external"], bool):
+                raise ValueError(f"ERD entity {n['id']} external must be a boolean")
             attributes = n.get("attributes")
             if not isinstance(attributes, list) or not attributes:
                 raise ValueError(f"ERD entity {n['id']} needs actual column definitions")
+            names = set()
             for attr in attributes:
-                if not isinstance(attr, dict) or not attr.get("name"):
+                if (not isinstance(attr, dict) or not isinstance(attr.get("name"), str)
+                        or not attr["name"].strip()):
                     raise ValueError(f"ERD entity {n['id']} has an unnamed column")
-            if not n.get("external") and not any(a.get("key") in ("pk","pfk") for a in attributes):
+                name = attr["name"]
+                if name in names:
+                    raise ValueError(f"ERD entity {n['id']} has duplicate column {name}")
+                names.add(name)
+                if "key" in attr and attr["key"] not in ("pk", "fk", "pfk"):
+                    raise ValueError(f"ERD entity {n['id']} has unsupported column key")
+                if "type" in attr and (not isinstance(attr["type"], str) or not attr["type"].strip()):
+                    raise ValueError(f"ERD entity {n['id']} has invalid column type")
+                if "required" in attr and not isinstance(attr["required"], bool):
+                    raise ValueError(f"ERD entity {n['id']} required flag must be boolean")
+            if not n.get("external", False) and not any(a.get("key") in ("pk","pfk") for a in attributes):
                 raise ValueError(f"ERD entity {n['id']} needs a primary key or external=true")
             entities.append({"id": n["id"], "name": n["label"], "attributes": attributes,
                              **({"external": True} if n.get("external") else {})})
