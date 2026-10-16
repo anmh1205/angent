@@ -74,7 +74,8 @@ def validate(plan: Any) -> list[dict]:
         if not isinstance(checks,dict):
             fail(f"{key}: body_checks must be object")
         for field,expected in checks.items():
-            if not isinstance(field,str) or not FIELD.fullmatch(field):
+            if (not isinstance(field,str) or not FIELD.fullmatch(field)
+                    or any(x in {"__proto__", "constructor", "prototype"} for x in field.split("."))):
                 fail(f"{key}: unsupported JSON property expression {field!r}")
             if not (expected is None or type(expected) in SCALAR):
                 fail(f"{key}: body check must compare scalar or null")
