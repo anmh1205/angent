@@ -119,6 +119,18 @@ class TestDocuments(unittest.TestCase):
             result=inspect(target,root)
             self.assertTrue(any("broken local reference" in x for x in result["errors"]))
 
+    def test_unresolved_frontmatter_values_are_not_ignored_by_code_masking(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            target=root/"doc.md"
+            target.write_text(
+                "---\ntype: srs\nfeature: {{unknown_feature}}\nstatus: draft\n---\n"
+                "# Complete body\n",encoding="utf8"
+            )
+            report=inspect(target,root)
+            self.assertFalse(report["ok"])
+            self.assertIn("unresolved template variables",report["errors"])
+
     def test_invalid_content_and_bad_links(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

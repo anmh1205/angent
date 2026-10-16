@@ -84,6 +84,7 @@ def _outside_fences(markdown):
 def inspect(path, root):
     errors, warnings = [], []
     raw = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    frontmatter_source = ""
     if not raw.startswith("---\n"):
         if indexed_body(path, root):
             warnings.append("Index-managed content: approval, source status and index row membership need separate verification")
@@ -97,6 +98,7 @@ def inspect(path, root):
             content, front = raw, {}
         else:
             content, front = raw[stop+5:], {}
+            frontmatter_source = raw[:stop+5]
             for line in raw[4:stop].splitlines():
                 if line and not line[0].isspace() and ":" in line:
                     k,v=line.split(":",1)
@@ -104,7 +106,7 @@ def inspect(path, root):
     if not content.strip():
         errors.append("empty document")
     inspected,unclosed=_outside_fences(content)
-    if TEMPLATE.search(inspected):
+    if TEMPLATE.search(inspected) or TEMPLATE.search(frontmatter_source):
         errors.append("unresolved template variables")
     if unclosed:
         errors.append("unclosed code fence")
