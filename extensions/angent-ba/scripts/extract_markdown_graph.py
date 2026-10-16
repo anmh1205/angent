@@ -178,7 +178,35 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
     if not report["ok"]:
         raise ValueError("Constructed graph invalid: "+"; ".join(report["errors"]))
     counts=dict(sorted(Counter(x["kind"] for x in artifacts).items()))
-    return {"graph":graph,"coverage":report["coverage"],"counts":counts,
+    ancestry={item["id"]:set(item["depends_on"]) for item in artifacts}
+    origins={item["id"]:item["kind"] for item in artifacts}
+    requirements=sorted(x for x in artifacts if x["kind"]=="FR",key=lambda x:x["id"])
+    # Only a complete FR -> CAP -> BO -> UN ancestry chain counts.
+    traced=[]
+    for fr in requirements:
+        caps=[cid for cid in ancestry[fr["id"]] if origins.get(cid)=="CAPABILITY"]
+        meaningful=False
+        for cap in caps:
+            for bo in [bid for bid in ancestry.get(cap,set()) if origins.get(bid)=="BUSINESS_OBJECTIVE"]:
+                if any(origins.get(u)=="NEED" for u in ancestry.get(bo,set())):
+                    meaningful=True
+                    break
+            if meaningful: break
+        if meaningful: traced.append(fr["id"])
+    tested=set(requirement["id"] for requirement in requirements)-set(report["coverage"]["uncovered"])
+    complete=sorted(tested&set(traced))
+    lifecycle={"user_needs":counts.get("NEED",0),
+               "business_objectives":counts.get("BUSINESS_OBJECTIVE",0),
+               "capabilities":counts.get("CAPABILITY",0),
+               "functional_requirements":len(requirements),
+               "fr_traced_via_capability_objective_need":len(traced),
+               "fr_linked_to_test_artifact":len(tested),
+               "fr_with_complete_structural_chain":len(complete),
+               "complete_fr_ids":complete,
+               "missing_upstream_chain":sorted(set(x["id"] for x in requirements)-set(traced)),
+               "missing_test_artifact":report["coverage"]["uncovered"],
+               "verification":"links only; no stakeholder or production evidence"}
+    return {"graph":graph,"coverage":report["coverage"],"lifecycle":lifecycle,"counts":counts,
             "unresolved_external_refs":unresolved,
             "caveats":["A linked test artifact is not an executed test result.",
                        "A source status marked approved is not proof of deployed behavior.",
@@ -201,6 +229,8 @@ def main() -> int:
     p.add_argument("--output",type=Path,required=True)
     opts=p.parse_args()
     paths={"srs":opts.srs}
+    for source_role in ("urd","brd","prd","criteria"):
+        if getattr(opts,source_role): paths[source_role]=getattr(opts,source_role)
     if opts.checklist: paths["checklist"]=opts.checklist
     if opts.cases: paths["cases"]=opts.cases
     if opts.stories: paths["stories"]=opts.stories
@@ -210,7 +240,7 @@ def main() -> int:
         opts.output.parent.mkdir(parents=True,exist_ok=True)
         opts.output.write_text(json.dumps(report["graph"],ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         print(json.dumps({"ok":True,"output":str(opts.output),
-                          "counts":report["counts"],"coverage":report["coverage"],
+                          "counts":report["counts"],"coverage":report["coverage"],"lifecycle":report["lifecycle"],
                           "unresolved_external_refs":report["unresolved_external_refs"],
                           "caveats":report["caveats"]},ensure_ascii=False,indent=2))
         return 0
