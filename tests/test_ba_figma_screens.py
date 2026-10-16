@@ -70,7 +70,7 @@ class EditableFigmaScreenTests(unittest.TestCase):
         self.assertEqual([x["source_id"] for x in candidate["screens"]],["fleet-status","diagnostics"])
         self.assertEqual(sum(len(x["controls"]) for x in candidate["screens"]),5)
         self.assertEqual(json.loads(next_files(model)["model.json"]),model)
-        self.assertIn("Connectivity state: simulated",html_preview(model,"static"))
+        self.assertIn("Connectivity state: simulated",html_preview(model,"wireframe"))
         invalid=copy.deepcopy(model)
         invalid["screens"][0]["controls"][1]["requirements"]=["FR-NOT-IN-SOURCE"]
         with self.assertRaisesRegex(ValueError,"Unresolved BA evidence"):
