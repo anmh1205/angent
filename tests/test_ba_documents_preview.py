@@ -30,6 +30,33 @@ class TestDocuments(unittest.TestCase):
             self.assertTrue(result["ok"],result)
             self.assertIn("FR-AUTH-001",result["table_ids"])
 
+    def test_index_managed_body_files_keep_metadata_in_sibling_index(self):
+        cases=(
+            ("usecases", "uc-approve.md", "atlas-usecase-index.md", "usecase-index"),
+            ("userstories", "us-001.md", "atlas-story-index.md", "userstory-index"),
+            ("ascii-wireframe", "approval.md", "atlas-wireframe-index.md", "screen-index"),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for folder,filename,index_name,index_type in cases:
+                with self.subTest(folder=folder):
+                    parent=root/folder
+                    parent.mkdir()
+                    body=parent/filename
+                    body.write_text("# Reviewed source body\\n\\nDetails.\\n",encoding="utf8")
+                    self.assertFalse(inspect(body,root)["ok"])
+                    index=parent/index_name
+                    index.write_text("---\\ntype: "+index_type+"\\nstatus: draft\\n---\\n"
+                                     "# Feature index\\n",encoding="utf8")
+                    result=inspect(body,root)
+                    self.assertTrue(result["ok"],result)
+                    self.assertTrue(any("Index-managed" in x for x in result["warnings"]))
+                    index.write_text("---\\ntype: incorrect\\n---\\n# Invalid index\\n",encoding="utf8")
+                    self.assertFalse(inspect(body,root)["ok"])
+            unrelated=root/"untracked.md"
+            unrelated.write_text("# Untracked\\n",encoding="utf8")
+            self.assertFalse(inspect(unrelated,root)["ok"])
+
     def test_invalid_content_and_bad_links(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

@@ -11,11 +11,41 @@ WIKILINK = re.compile(r"\[\[([^\]|#]+)(?:#[^|\]]+)?(?:\|[^\]]+)?\]\]")
 ID_ROW = re.compile(r"^\|\s*((?:FR|NFR|BR|E|TC|AC)-[\w-]+)\s*\|", re.I)
 VALID_STATES = {"draft","in-review","revisions","approved","shipped","captured","processed","proposed"}
 
+# The source BA kit stores per-item content in body-only Markdown, with status
+# and revisions in a sibling index. This is a bounded documented exception,
+# not general permission to silently omit provenance on arbitrary files.
+INDEXED_BODIES = {
+    "usecases": (r"^uc-[a-z0-9][a-z0-9-]*\\.md$", "*-usecase-index.md", "usecase-index"),
+    "userstories": (r"^us-[a-z0-9][a-z0-9-]*\\.md$", "*-story-index.md", "userstory-index"),
+    "ascii-wireframe": (r"^(?!.*-wireframe-index\\.md$)[a-z0-9][a-z0-9-]*\\.md$",
+                         "*-wireframe-index.md", "screen-index"),
+}
+
+def indexed_body(path, root):
+    contract=INDEXED_BODIES.get(path.parent.name)
+    if not contract or not re.fullmatch(contract[0], path.name, flags=re.I):
+        return False
+    index_files=[p for p in path.parent.glob(contract[1]) if p.is_file()
+                 and p.resolve().is_relative_to(root.resolve())]
+    if len(index_files)!=1:
+        return False
+    data=index_files[0].read_text(encoding="utf-8")
+    if not data.startswith("---\\n"):
+        return False
+    end=data.find("\\n---\\n",4)
+    if end < 0:
+        return False
+    return any(re.fullmatch(r"type:\\s*"+re.escape(contract[2])+r"\\s*", line.strip())
+               for line in data[4:end].splitlines())
+
 def inspect(path, root):
     errors, warnings = [], []
     raw = path.read_text(encoding="utf-8").replace("\r\n", "\n")
     if not raw.startswith("---\n"):
-        errors.append("missing document frontmatter")
+        if indexed_body(path, root):
+            warnings.append("Index-managed content: approval, source status and index row membership need separate verification")
+        else:
+            errors.append("missing document frontmatter")
         content, front = raw, {}
     else:
         stop = raw.find("\n---\n", 4)
