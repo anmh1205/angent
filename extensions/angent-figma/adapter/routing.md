@@ -1,5 +1,8 @@
 # Figma Kit Adapter (ANGENT Hub)
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 Choose these capabilities only when diagram modeling, editable Figma objects or a stakeholder prototype truly adds value. `figma-activity`, `figma-erd`, etc. provide Figma-target method-specific semantics, not replacement for BA or Engineer's general diagram/code methods.
 
 ## Live host verification

@@ -3,6 +3,9 @@ name: ba-prototype-next
 description: Generate and test an isolated real Next.js App Router mock from approved BA screen models, preserving navigation, error states and accessible labels.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # BA Next.js prototype — a built and browser-verified review app
 
 The source-aligned executable is \`extensions/angent-ba/scripts/build_next_prototype.py\`. This implements a narrow but genuine Next.js App Router application with generated page routes, native form validation, explicit mock outcomes and a visible simulation boundary. It is **not** a production login, real API integration or modification of an existing app without authorization.

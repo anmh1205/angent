@@ -1,5 +1,8 @@
 # Portable screen-model contract
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 This is independently authored ANGENT JSON input for both static wireframe and interactive mock prototype modes. It is not extracted from paid AI4BA files.
 
 ## Required structure
