@@ -57,8 +57,8 @@ class MultiPackageTests(unittest.TestCase):
         self.assertIn("bootstrap/CLAUDE.md", claude)
         self.assertNotIn("CLAUDE.md", claude)
         openai = packs.assemble(ROOT, "openai-plugin", self.source)
-        self.assertEqual(json.loads(openai["plugin.json"])["version"], "1.5.1")
-        self.assertEqual(json.loads(openai[".codex-plugin/plugin.json"])["version"], "1.5.1")
+        self.assertEqual(json.loads(openai["plugin.json"])["version"], json.loads(self.source["plugin.json"])["version"])
+        self.assertEqual(json.loads(openai[".codex-plugin/plugin.json"])["version"], json.loads(self.source["plugin.json"])["version"])
         self.assertEqual(openai["skills/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
 
     def test_negative_agent_frontmatter(self):
