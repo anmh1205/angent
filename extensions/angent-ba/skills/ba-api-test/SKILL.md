@@ -1,53 +1,38 @@
 ---
 name: ba-api-test
-description: Business analysis api-test specialist.
+description: Build real Bruno API test collections from approved endpoint contracts, with explicit assertions and optional authorized sandbox/loopback execution.
 ---
 
-# ANGENT BA: api-test
+# BA API tests — executable Bruno artifacts
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-test/SKILL.md
+**Provenance.** Method adapted from the MIT Dev BA Kit api-test skill, copyright (c) 2026 Edward Ngo: https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-test/SKILL.md. ANGENT adds an independently written collection generator and optional local integration fixture. No paid AI4BA source code is included.
 
-## Portability and authority
+## Contract and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
+API testing should verify exact effects implied by accepted FR/BR/AC and endpoint contracts, not merely produce a list of HTTP requests. ANGENT Root decides scope, Execution owns generated files and any real call, Quality checks actual assertions and side effects.
 
+1. Read approved API checklist, versioned contract/OpenAPI, environment boundaries, endpoint method/path, authentication scopes, expected error states and stable test-case IDs.
+2. Build one request per actual automatable scenario. Assign exact expected HTTP status and **observable response fields**; include negative authorization, duplicate request, validation and transient provider failure where required. The current minimal generator supports exact top-level JSON scalar assertions, not comprehensive nested JSON Schema or side-effect reconciliation.
+3. Reject guesses about response schema or business thresholds. Ask for missing consequential contracts or label the test draft unverified.
+4. Define a reviewed JSON request model analogous to the synthetic example at extensions/angent-ba/examples/synthetic-fleet-api-tests.json. It includes collection name, environment values and requests containing id, name, method, path, expected_status and expected_json. A request can optionally declare headers and body_json for POST/PUT/PATCH/DELETE.
+5. Generate an actual Bruno v1 collection with a separate environment file and .bru tests using a Python runtime:
 
-# /api-test — Bruno collection + API test table (API chain [5])
+    python extensions/angent-ba/scripts/build_bruno.py INPUT.json --output output/bruno-collection
 
-## Goal
+6. Inspect the output and ensure credentials are never committed. Use an explicit environment variable/secret store for tokens; never treat synthetic host/user values as real. The generator only writes files. Its successful exit proves neither connectivity nor test success.
+7. Only with an authorized **sandbox or loopback** endpoint and a real Bruno CLI, execute the collection. Never run destructive, external or production endpoints by default. A loopback-only integration fixture is available:
 
-Expand each `CHK-` in the integration checklist into a Bruno request (`.bru`) + a row in the test table (request summary + expected response: status + the key field to assert). **Outputs**: `docs/{feature}/test/api/api-tests.md` (type `api-tests`) + `docs/{feature}/bruno/` (one collection per provider).
+    python tests/integration/check_bruno_cli.py --cli PATH_TO_BRU
 
-## Constraints
+8. Verify the CLI exit code and executed request count, expected statuses and response-field assertions. When an operation mutates state, additionally read back actual side effects and perform cleanup. Record skipped/blocked tests separately.
+9. Provide generated paths, stable case IDs, run environment, actual test output and unresolved contract gaps. Do not claim green production readiness from an isolated mock service.
 
-- **Step [5]** (`api-integration.md`): needs `test/api/api-checklist.md`. Checklist missing → refuse + route `/api-checklist`.
-- **Back-fill the checklist's `TC` column** — each generated request links back to its `CHK-`.
-- **One collection per provider** — mirrors the `api-summary-{provider}.md` split; environment variables for base URL/auth, never hardcode secrets in `.bru`.
-- **`.bru` only for automatable rows** — `test_layer: own` rows that test only our code may stay as unit tests outside Bruno; `3rd`/`mixed` rows become Bruno requests hitting the sandbox.
-- **Expected = status + key field** — not the whole body; the one field that proves the call (e.g. `200 + response.claim_id`), plus the error-case expectations.
-- **No live production calls** — sandbox/test environment only; flag if the only environment is prod.
-- **Migration on rerun** — legacy test files still under `integration/` move to `test/api/` (naming-conventions line 60).
-- **Validate before done** — BA Markdown validation (step 8).
+## Current capability limits
 
-## Inputs
+Supported: GET, POST, PUT, PATCH and DELETE collection definitions; explicit environment variables; optional JSON bodies/headers; exact status and top-level JSON scalar comparisons. Every generated request includes runnable Bruno tests. It does **not** currently implement full schema validation, chained request variables, idempotency verification, timeouts, side-effect assertions, authorization provisioning or live provider synchronization. Bruno CLI must be installed separately.
 
-```
-/api-test <feature>          # expand every api-checklist CHK- with no TC yet
-```
+The example fleet suite is **synthetic** and tests only an in-process localhost mock: one successful vehicle status, one forbidden access and one unavailable telemetry response. It neither authenticates a real device nor validates production fleet authorization.
 
-## Approach
+## Review failures
 
-1. **Gate.** No api-checklist → refuse + route `/api-checklist`. Read it (every `CHK-`, its layer/direction, what it covers) + the summary (request shapes/auth).
-2. **Per `CHK-` → a request plan** — method/path, the env vars, the body, the expected status + key assertion field. `own`-only rows → note as unit-test, no `.bru`.
-3. **Fact-list** — per request: the endpoint, the assertion, the provider, the env.
-4. **Generate Bruno** — one collection per provider; one `.bru` per automatable row; env vars for base URL + auth (placeholders, never secrets).
-5. **Draft `api-tests.md`** — the table (CHK · title · `.bru` · method/path · expected status · key assertion · provider).
-6. **scoped change preview** — request count by provider + the assertions + any `own`-row skipped-as-unit.
-9. **Output report** — requests generated + next (`/api-readiness`).
-
-## Gotchas
-
-- **Secrets never in `.bru`** — env var placeholders only; a committed token is a security incident.
-- **Sandbox ≠ prod behavior** — some providers' sandboxes differ from prod (rate limits, webhook delivery); note where you can't prove prod parity.
-- **Don't run against prod** — the skill generates requests; running them against prod from the doc is the user's explicit, careful choice.
-- **Assertion economy** — assert the one field that proves success; asserting the whole brittle body makes the test fail on every cosmetic provider change.
+Generated tests without real execution evidence, invented response fields, hard-coded secrets, unchecked external write effects, false security assurances, and a simplistic positive-only suite all fail the task's intended quality.
