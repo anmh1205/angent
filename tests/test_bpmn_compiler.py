@@ -108,6 +108,20 @@ class BPMNCompilerTests(unittest.TestCase):
         ir["nodes"][0]["id"]="not valid id"
         self.assertFalse(audit_ir(ir)["ok"])
 
+    def test_invalid_container_types_fail_with_diagnostics_not_exceptions(self):
+        mutations=[]
+        a=deepcopy(self.ir);a["nodes"][0]["kind"]=["start"];mutations.append(a)
+        a=deepcopy(self.ir);a["nodes"][0]["lane"]=["first"];mutations.append(a)
+        a=deepcopy(self.ir);a["flows"][0]["src"]=["Node_unknown"];mutations.append(a)
+        a=deepcopy(self.ir);a["flows"][0]["tgt"]={"invalid":"end"};mutations.append(a)
+        for model in mutations:
+            with self.subTest(model=model):
+                outcome=audit_ir(model)
+                self.assertFalse(outcome["ok"],outcome)
+                self.assertTrue(outcome["errors"])
+                with self.assertRaises(ValueError):
+                    compile_bpmn(model)
+
     def test_xml_escape_for_untrusted_names(self):
         ir=deepcopy(self.ir)
         ir["nodes"][1]["name"]='Register <claim> & check "status"'
