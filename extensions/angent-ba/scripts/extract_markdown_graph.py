@@ -48,6 +48,7 @@ def markdown_tables(text: str) -> list[list[dict[str,str]]]:
         if not lines[i].strip().startswith("|"):
             i+=1
             continue
+        block_start=i+1
         block=[]
         while i<len(lines) and lines[i].strip().startswith("|"):
             block.append(_cells(lines[i]))
@@ -58,10 +59,10 @@ def markdown_tables(text: str) -> list[list[dict[str,str]]]:
         if len(set(keys))!=len(keys):
             raise ValueError("Duplicate Markdown table headers")
         rows=[]
-        for row in block[2:]:
+        for offset,row in enumerate(block[2:]):
             if len(row)!=len(keys):
                 raise ValueError("Malformed Markdown table: inconsistent column count")
-            rows.append(dict(zip(keys,row)))
+            rows.append({**dict(zip(keys,row)),"__source_line":str(block_start+2+offset)})
         result.append(rows)
     return result
 
@@ -120,7 +121,8 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
                     "id":item_id,"kind":KIND[kind],"title":title,
                     "status":row.get("Status",meta.get("status","unverified")),
                     "source_refs":[source_id],"potential_links":list(dict.fromkeys(refs)),
-                    "properties":{k:v for k,v in row.items() if k!="ID"},
+                    "source_location":{"uri":path.relative_to(root).as_posix(),"line":int(row["__source_line"])},
+                    "properties":{k:v for k,v in row.items() if k not in ("ID","__source_line")},
                     **({"verification_status":"not-executed"} if kind=="TC" else {})
                 })
                 seen_role+=1

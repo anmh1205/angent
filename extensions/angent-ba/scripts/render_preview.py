@@ -31,7 +31,9 @@ def render(graph,title="BA evidence"):
         for sid in obj.get("source_refs",[]):
             source=sources[sid]
             url=safe_link(source["uri"])
-            label=escape(sid+": "+source["uri"])
+            location=obj.get("source_location",{})
+            line_label=":L"+str(location["line"]) if location.get("uri")==source["uri"] and isinstance(location.get("line"),int) else ""
+            label=escape(sid+": "+source["uri"]+line_label)
             refitems.append("<a rel='noopener noreferrer' href='"+escape(url)+"'>"+label+"</a>" if url else label)
         deps=" ".join("<a href='#"+escape(x)+"'>"+escape(x)+"</a>" for x in obj.get("depends_on",[])) or "none"
         status=escape(obj.get("status","unknown"))

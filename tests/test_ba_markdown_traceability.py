@@ -43,6 +43,17 @@ class MarkdownTraceabilityTests(unittest.TestCase):
         self.assertTrue(any(x["artifact"]=="FR-atlas-re-001" and
                             "CAP-atlas-re-01" in x["referenced_ids"] for x in refs))
 
+    def test_each_extracted_claim_has_a_real_source_line(self):
+        graph=self.result["graph"]
+        for node in graph["artifacts"]:
+            with self.subTest(node=node["id"]):
+                loc=node["source_location"]
+                source=next(x for x in graph["sources"] if x["uri"]==loc["uri"])
+                line=(PROJECT/loc["uri"]).read_text(encoding="utf-8").splitlines()[loc["line"]-1]
+                self.assertIn(node["id"],line)
+        page=render(graph)
+        self.assertIn("srs/atlas-re-spec.md:L",page)
+
     def test_test_approval_not_execution(self):
         cases=[x for x in self.result["graph"]["artifacts"] if x["kind"]=="TEST"]
         self.assertEqual(len(cases),11)
