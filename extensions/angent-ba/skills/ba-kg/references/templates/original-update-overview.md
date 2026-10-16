@@ -1,8 +1,8 @@
 # Scoped project overview update
 
-**Current accepted overview and revision:**  
-**Requested change / source baseline:**  
-**Target document/provider and last-observed version:**  
+**Current accepted overview and revision:**
+**Requested change / source baseline:**
+**Target document/provider and last-observed version:**
 
 ## 1. Actual change candidates
 

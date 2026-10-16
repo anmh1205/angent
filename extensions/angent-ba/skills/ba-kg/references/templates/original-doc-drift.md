@@ -1,8 +1,8 @@
 # Accepted requirements versus inspected implementation
 
-**Accepted SRS revision:**  
-**Repository / pinned commit and environment:**  
-**Scope and actor:**  
+**Accepted SRS revision:**
+**Repository / pinned commit and environment:**
+**Scope and actor:**
 
 ## Line-level comparison
 

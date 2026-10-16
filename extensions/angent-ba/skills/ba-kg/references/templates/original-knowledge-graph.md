@@ -1,7 +1,7 @@
 # Project artifact knowledge graph
 
-**Project and source revisions:**  
-**Included: URD, BRD, PRD, SRS, use cases/stories, AC, checklist, tests:**  
+**Project and source revisions:**
+**Included: URD, BRD, PRD, SRS, use cases/stories, AC, checklist, tests:**
 
 ## Source-indexed nodes
 

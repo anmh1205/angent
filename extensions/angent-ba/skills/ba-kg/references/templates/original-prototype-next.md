@@ -1,8 +1,8 @@
 # Next.js prototype build and verification record
 
-**Existing app or new isolated sandbox:**  
-**Source screen / SRS / user-flow revision:**  
-**Framework version, router and component library:**  
+**Existing app or new isolated sandbox:**
+**Source screen / SRS / user-flow revision:**
+**Framework version, router and component library:**
 
 ## 1. Screen-to-route model
 

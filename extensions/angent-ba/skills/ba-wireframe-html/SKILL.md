@@ -47,4 +47,3 @@ For interactive mock navigation using the same accepted source, select ba-protot
 - **Review update:** compare new JSON with the previously approved model; inspect which screens and business rules changed rather than regenerating unrelated pages.
 - **Verification evidence:** run the generator, open the resulting HTML and record a real file path or browser result; never equate a CLI zero exit code with visual correctness.
 - **Boundary:** use \`ba-prototype-html\` for simulated navigation, and actual product/frontend implementation for persistent state or integration; never imply this static page is executable application logic.
-

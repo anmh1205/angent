@@ -1,8 +1,8 @@
 # Reverse specification preview — provenance and uncertainty first
 
-**System / commit or archival release:**  
-**Sources inspected, versions and disclosure scope:**  
-**Reader and decision needed:**  
+**System / commit or archival release:**
+**Sources inspected, versions and disclosure scope:**
+**Reader and decision needed:**
 
 ## Source claim register
 

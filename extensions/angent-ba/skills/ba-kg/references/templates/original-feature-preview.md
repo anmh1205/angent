@@ -1,8 +1,8 @@
 # Feature preview for stakeholder decisions
 
-**Feature, scope and accepted source revision:**  
-**Audience and decision expected:**  
-**Inspection date:**  
+**Feature, scope and accepted source revision:**
+**Audience and decision expected:**
+**Inspection date:**
 
 ## Reader orientation
 

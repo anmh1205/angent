@@ -1,8 +1,8 @@
 # Source-derived browser test generation and execution
 
-**Accepted screen model, requirement revision and target:**  
-**Fixture namespace and test-only origin:**  
-**Browser, Playwright runtime and project test baseline:**  
+**Accepted screen model, requirement revision and target:**
+**Fixture namespace and test-only origin:**
+**Browser, Playwright runtime and project test baseline:**
 
 ## Source to test mapping
 
