@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/"extensions/angent-ba/scripts"))
-from build_bpmn import audit_ir, compile_bpmn, BPMN, BPMNDI, DC, DI
+from build_bpmn import audit_ir, compile_bpmn, audit_geometry, BPMN, BPMNDI, DC, DI
 
 CASE = ROOT/"extensions/angent-ba/examples/atlas-re/bpmn/claim-approval.ir.json"
 Q = lambda ns, name: "{"+ns+"}"+name
@@ -51,6 +51,25 @@ class BPMNCompilerTests(unittest.TestCase):
             self.assertGreater(float(bounds.attrib["width"]),0)
             self.assertGreater(float(bounds.attrib["height"]),0)
         self.assertEqual(xml,compile_bpmn(self.ir))
+
+    def test_no_shape_or_connector_collisions_in_real_fixture(self):
+        xml = compile_bpmn(self.ir)
+        result = audit_geometry(xml)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["checked_nodes"], 13)
+        self.assertEqual(result["checked_flows"], 12)
+
+    def test_layout_collisions_are_detected_by_negative_mutation(self):
+        root=ET.fromstring(compile_bpmn(self.ir))
+        plane=root.find(Q(BPMNDI,"BPMNDiagram")).find(Q(BPMNDI,"BPMNPlane"))
+        shapes={shape.get("bpmnElement"):shape for shape in plane.findall(Q(BPMNDI,"BPMNShape"))}
+        first=shapes["End_decline"].find(Q(DC,"Bounds"))
+        second=shapes["Task_progress"].find(Q(DC,"Bounds"))
+        first.set("x",second.get("x"))
+        first.set("y",second.get("y"))
+        outcome=audit_geometry(ET.tostring(root))
+        self.assertFalse(outcome["ok"])
+        self.assertTrue(any("overlaps" in e for e in outcome["errors"]))
 
     def test_single_lane_free_process(self):
         ir = deepcopy(self.ir)
