@@ -32,6 +32,8 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p 'test_authoring_eval.py' -v
           python3 scripts/evaluate_authoring.py
+          python3 -m unittest discover -s tests -p 'test_core_eval.py' -v
+          python3 scripts/evaluate_authoring.py --cases evals/core/cases.json
 
       - name: Exercise release identity checks
         run: |
