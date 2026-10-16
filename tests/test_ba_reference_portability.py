@@ -48,6 +48,19 @@ class BAReferencePortabilityTests(unittest.TestCase):
                 with self.subTest(file=file.name,legacy=pattern):
                     self.assertNotIn(pattern.lower(),text.lower())
 
+    def test_template_index_links_resolve_to_all_real_template_files(self):
+        import re
+        index=REF/"template-index.md"
+        targets=re.findall(r"\\]\\((templates/[A-Za-z0-9_-]+\\.md)\\)",
+                           index.read_text(encoding="utf8"))
+        self.assertEqual(len(targets),48)
+        self.assertEqual(len(set(targets)),48)
+        self.assertEqual(
+            {REF/path for path in targets},
+            set(self.templates),
+            "Every referenced template must exist, with no missing or orphan file"
+        )
+
     def test_supported_ba_template_tables_can_enter_actual_extractor(self):
         requirements={
             "doc-urd.md":["UN"],
