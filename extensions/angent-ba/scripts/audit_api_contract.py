@@ -55,15 +55,46 @@ def _kind(value:Any)->str:
 def _match_scalar(value:Any,schema:dict,document:dict)->bool:
     schema=_resolve_local(document,schema)
     kind=schema.get("type")
-    if not isinstance(kind,str):
-        return False
-    if kind=="number":
-        matched=_kind(value) in ("integer","number")
-    else:
-        matched=_kind(value)==kind
+    allowed=[kind] if isinstance(kind,str) else kind
+    if not isinstance(allowed,list) or not allowed or any(
+        not isinstance(x,str) or x not in ("string","integer","number","boolean","null")
+        for x in allowed):
+        raise ValueError("Unsupported scalar JSON Schema type")
+    actual=_kind(value)
+    matched=any(
+        actual==option or (option=="number" and actual in ("integer","number")) or
+        (option=="integer" and actual=="number" and float(value).is_integer())
+        for option in allowed
+    )
     if not matched:return False
-    if "const" in schema and value!=schema["const"]:return False
-    if "enum" in schema and value not in schema["enum"]:return False
+    if not matched:return False
+    if "const" in schema and (type(value) is not type(schema["const"]) or value!=schema["const"]):
+        return False
+    if "enum" in schema and not any(type(value) is type(x) and value==x for x in schema["enum"]):
+        return False
+    if kind in ("integer","number"):
+        # JSON Schema: bool is not numeric, an integral float is an integer.
+        for prop in ("minimum","maximum","exclusiveMinimum","exclusiveMaximum"):
+            if prop in schema:
+                limit=schema[prop]
+                if isinstance(limit,bool) or not isinstance(limit,(int,float)):
+                    raise ValueError("Invalid numeric schema bound")
+                if prop=="minimum" and value<limit:return False
+                if prop=="maximum" and value>limit:return False
+                if prop=="exclusiveMinimum" and value<=limit:return False
+                if prop=="exclusiveMaximum" and value>=limit:return False
+    if kind=="string":
+        for prop in ("minLength","maxLength"):
+            if prop in schema:
+                limit=schema[prop]
+                if isinstance(limit,bool) or not isinstance(limit,int) or limit<0:
+                    raise ValueError("Invalid string schema length bound")
+                if prop=="minLength" and len(value)<limit:return False
+                if prop=="maxLength" and len(value)>limit:return False
+    # Explicitly reject constraints not evaluated by this conservative subset.
+    unknown=set(schema)&{"pattern","format","multipleOf","not","if","then","else","dependentSchemas","contentEncoding","contentMediaType"}
+    if unknown:
+        raise ValueError("Unsupported scalar JSON Schema constraint: "+", ".join(sorted(unknown)))
     return True
 
 
@@ -76,14 +107,26 @@ def _schema_property(document:dict,schema:dict,path:list[str])->tuple[dict|None,
         if not isinstance(props,dict) or key not in props:
             return None,"property "+key+" is not declared"
         current=_resolve_local(document,props[key])
-    if current.get("type") not in ("string","integer","number","boolean","null"):
+    type_value=current.get("type")
+    allowed=[type_value] if isinstance(type_value,str) else type_value
+    if not isinstance(allowed,list) or not allowed or any(
+        not isinstance(k,str) or k not in ("string","integer","number","boolean","null")
+        for k in allowed):
         return None,"property is not a supported scalar type"
     return current,""
 
 
 def _response_schema(document:dict,operation:dict,status:int)->dict|None:
     responses=operation.get("responses",{})
-    response=_resolve_local(document,responses.get(str(status)))
+    if not isinstance(responses,dict):
+        raise ValueError("operation.responses must be an object")
+    key=str(status)
+    if key not in responses:
+        wildcard=str(status//100)+"XX"
+        key=wildcard if wildcard in responses else "default"
+    if key not in responses:
+        raise ValueError("expected HTTP "+str(status)+" is not in operation.responses (exact, range or default)")
+    response=_resolve_local(document,responses[key])
     content=response.get("content",{})
     if not isinstance(content,dict):
         return None
@@ -118,24 +161,38 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
             errors.append(ident+": "+item["method"]+" "+route+" is not declared")
             continue
         security=operation.get("security",declared_security)
-        if not isinstance(security,list):
-            errors.append(ident+": invalid security definition")
-            security=[]
-        if security and item.get("auth","none")=="none":
+        if not isinstance(security,list) or any(not isinstance(x,dict) for x in security):
+            errors.append(ident+": invalid security alternatives")
+            continue
+        # OpenAPI: OR between alternatives; AND between schemes in one entry.
+        # [] or an empty alternative {} permits anonymous access.
+        anonymous=not security or any(not option for option in security)
+        specs=contract.get("components",{}).get("securitySchemes",{})
+        if not isinstance(specs,dict):
+            errors.append(ident+": invalid securitySchemes object")
+            continue
+        bearer_possible=False
+        for alternative in security:
+            if not alternative:
+                continue
+            if any(not isinstance(name,str) or name not in specs or
+                   not isinstance(scopes,list) for name,scopes in alternative.items()):
+                errors.append(ident+": security references undeclared schemes or invalid scopes")
+                continue
+            if len(alternative)==1:
+                key=next(iter(alternative))
+                scheme=specs[key]
+                if isinstance(scheme,dict) and scheme.get("type")=="http" and scheme.get("scheme")=="bearer":
+                    bearer_possible=True
+        if item.get("auth","none")=="none" and not anonymous:
             errors.append(ident+": contract requires auth but the Bruno test has auth none")
-        if item.get("auth")=="bearer":
-            specs=contract.get("components",{}).get("securitySchemes",{})
-            if not any(isinstance(v,dict) and v.get("type")=="http" and v.get("scheme")=="bearer"
-                       for v in specs.values()):
-                errors.append(ident+": bearer auth is not defined in the OpenAPI security schemes")
+        if item.get("auth")=="bearer" and not bearer_possible:
+            errors.append(ident+": bearer-only auth is not a valid OpenAPI security alternative")
         expected=item["expected_status"]
         try:
             schema=_response_schema(contract,operation,expected)
         except ValueError as exc:
             errors.append(ident+": "+str(exc))
-            continue
-        if str(expected) not in operation.get("responses",{}):
-            errors.append(ident+": expected HTTP "+str(expected)+" is not in operation.responses")
             continue
         expected_fields=item.get("expected_json",{})
         if expected_fields and (not isinstance(schema,dict) or schema.get("type")!="object"):
@@ -188,7 +245,7 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
             warnings.append(ident+": no BA source requirement linked")
     return {"ok":not errors,"errors":sorted(set(errors)),"warnings":sorted(set(warnings)),
             "requests_checked":len(model["requests"]),"contract_version":contract["openapi"],
-            "source_contract_check":"static-openapi-subset-with-local-refs",
+            "source_contract_check":"static-openapi-subset-with-local-refs-security-and-status",
             "execution_status":"not-run","writes_performed":False}
 
 
