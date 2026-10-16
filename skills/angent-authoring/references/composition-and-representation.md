@@ -19,6 +19,12 @@ Do not let source order, note order or the full subject graph become section ord
 
 If several unrelated relations remain equally primary, create a real section boundary or stage one after the other. “Everything is relevant” is not an explanatory spine.
 
+## Whole-answer argument and reading cost
+
+An individual paragraph can be accurate while the overall report fails to justify its conclusion. Before composing a substantial analysis, connect the central answer to its material evidence, warranted inferences, conditions, alternatives and recommended actions. Do not use source order or an issue list as the document's argument. If an important action cannot be justified by a demonstrated cause or decision constraint, revise the conclusion or return the missing relation to Reasoning/Research.
+
+For chat, build a short reading path to the supported answer and a longer path to the mechanism and evidence without repeating the same summary. A concise response still carries all decisive qualifiers; a long explanation must keep creating useful distinctions, not only new headings. Information density concerns knowledge gained per reading effort, not word count.
+
 ## Paragraph jobs
 
 A paragraph may:

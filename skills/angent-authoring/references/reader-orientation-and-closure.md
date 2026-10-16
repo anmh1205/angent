@@ -27,6 +27,12 @@ Do not merely repeat the introduction using synonyms; do not summarize the table
 - Confusion follow-up: begin at the newly identified conceptual gap, explain through a new contrast/trace and close the repaired inference without restarting the prior tutorial.
 - Notion or other long-form destination: preserve the same explanatory substance as chat, not an attractive framing around an outline-only body.
 
+## Report and decision reading paths
+
+For a substantive report, a skim of its opening should convey the supported state and stakes. The evidence-bearing body must justify those claims and their relative priority. The closing should give the action, inference or remaining decision condition earned by the findings. An activity summary does not substitute for an observed result; a source inventory does not substitute for a synthesis. When only the opening or closing sounds convincing, inspect the absent warrants rather than polishing those paragraphs.
+
+These are reader functions, not required headings or three mandatory output blocks. Even with a long report, avoid assigning every finding identical space if supported impact differs.
+
 ## Behavioral calibration
 
 Use matched previous accepted responses and inspect actual reader-facing candidates, not token counts or required headings. Check these distinct cases:

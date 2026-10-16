@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 — Evidence-grounded chat, reports and behavioral calibration (candidate)
+
+- Strengthened response and whole-report argument structure, reader orientation, inferential closure and information density without imposing fixed prose templates.
+- Added genre-aware methods for research, audit, progress, incidents and strategic recommendations; claims, evidence, cause, impact and action must be aligned and within inspected scope.
+- Added quality calibration for misleading executive summaries, unjustified severity, genre collapse and chat-to-document regressions.
+- Added a reviewed real-output evaluation protocol and release/activation verification boundaries; static CI alone is not evidence of model-quality gains.
+- Preserved the unified Core and Engineer distribution with no new mandatory agent or runtime.
+
 ## 1.3.0 — Unified cognition and Engineer capabilities
 
 - Integrated full cognitive fidelity from 1.2.3: simple prompts still receive intent/context/evidence/accuracy checks without unnecessary tool or output overhead.

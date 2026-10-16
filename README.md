@@ -31,6 +31,12 @@ The complete routing entry is in skills/angent/SKILL.md. Owner-specific details 
 
 For ambiguous or consequential work, ANGENT can distinguish the underlying need from a proposed solution, examine current and desired states, conflicting stakeholder value, nontechnical alternatives and change impacts. It maintains only material links among obligations, decisions, artifacts and supporting evidence; no universal BRD, PRD or workflow is required. A narrow question may receive a direct answer without reducing cognitive fidelity, and an explicitly required method remains binding. See `skills/angent-reasoning/references/needs-and-change-analysis.md` for the conditional analysis method and `skills/angent/references/core-fixtures.md` for representative behavioral counter-cases.
 
+## Authoring and reporting evidence
+
+Version 1.4.0 deepens whole-answer argumentation, coherent chat responses and decision-oriented research/audit/status reports without another agent or mandatory writing pipeline. Authoring composes a supported explanation; Quality checks whether claims, evidence, impacts and recommended actions actually align; Format preserves meaning in Notion, Docs and other destinations.
+
+Behavioral case definitions and the reviewed-output comparator are under `evals/authoring/` and `scripts/evaluate_authoring.py`. Tests can validate schemas and comparator mechanics but cannot replace running actual baseline/candidate model outputs with human or evidence-backed review. The release identity and provider activation must also be verified separately.
+
 ## Installation and package identity
 
 The two supported plugin manifests are plugin.json and .codex-plugin/plugin.json. Their package identity and prompt must be consistent. Version strings are package metadata, not a task checkpoint or a substitute for checking the actual source/runtime.

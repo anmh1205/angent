@@ -31,6 +31,12 @@ For substantive response-authoring changes, compare what a reader understands fr
 
 A credible evaluation identifies the exact claim being accepted, the observation that would falsify it, and the scope in which the observation applies. For a proposed cross-layer repair, assess whether evidence separates the competing failure causes and whether the requested behavior passes the necessary integration boundaries; a source diff or passing isolated test cannot certify an unexercised device-to-service path. For a design choice, check whether the choice still stands under plausible decision-reversing assumptions, not just whether a pros/cons table exists. For an educational artifact, check an inference the reader should now be able to make, not how many concepts were named. Report source inspection, simulated prompts, live activated runs, destination read-back and real-user outcomes as distinct evidence levels.
 
+## Evaluate report and answer arguments
+
+A well-formed paragraph does not guarantee that the report's overall conclusion is warranted. For analytic work, verify that the opening matches the observed state and scope; central claims have direct support or explicitly bounded inference; alternative explanations are considered when decisive; severity is supported; and recommendations address an established cause or constraint. An executive summary cannot be more confident than the evidence-bearing body.
+
+For chat, evaluate accessibility of the answer, continuity of the underlying mechanism and a genuine conclusion without rewarding verbosity. For long-form reports and teaching materials, inspect early, middle and late units and the destination render when relevant. Identify concrete missing or misleading relations rather than grading a fixed heading formula. Use `references/report-evaluation.md` for claim-to-decision checks.
+
 ## Calibrate changes, not arbitrary counts
 
 For a change to a widely used skill, method or multi-unit writing approach, compare representative failure, accepted-success and counter-cases where feasible. Inspect observable outputs/trajectories and protected properties, not heading counts, forbidden words, source counts or a self-reported score. One successful test demonstrates possibility, not whole-system reliability.
@@ -43,5 +49,5 @@ Store a reproducible pointer to materially reused behavioral acceptance evidence
 
 - `references/quality-rubric.md`, `references/verdict-validity.md` — consequential verdicts.
 - `references/coverage-and-endpoints.md` — whole-scope audits or endpoint proof.
-- `references/comparative-gates.md`, `references/authoring-calibration.md` — revisions and technical writing.
+- `references/comparative-gates.md`, `references/authoring-calibration.md`, `references/report-evaluation.md` — revisions, technical writing and reports.
 - `references/behavioral-calibration.md` — broad method/skill changes.

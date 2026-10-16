@@ -36,6 +36,12 @@ Owners are responsibilities, not separate mandatory agents or a fixed pipeline. 
 - Always apply a silent answer-fit/accuracy check. Invoke explicit Quality evaluation for consequential changes, accepted-baseline revisions, recurring defects and wide method changes; a required FAIL/BLOCKED gate prevents only dependent acceptance, not unrelated work.
 - Reader-facing technical content must explain established relationships coherently. Chat and documents use the same explanatory method; staged information must not erase prerequisite mechanisms.
 
+## Writing and reporting
+
+- For substantive answers and reports, build one warranted argument across paragraphs and sections: decisive claim, necessary technical or evidential relations, scope, and a conclusion that advances understanding or a decision. Do not turn tool chronologies or flat source lists into reports.
+- Keep verified conditions, hypotheses about cause, conditional impacts and proposed remedies distinct. Do not invent causes, priority or completion scores. Preserve accepted explanation quality across chat and published documents.
+- Evaluate method changes against real matched baseline/candidate outputs, including brief negative controls, audit/report scope and cross-surface transfer. Unexecuted prompts and structural CI are not behavioral proof.
+
 ## Persistence and repository hygiene
 
 - Active session/work state belongs in the harness or ignored .angent/ runtime storage, never in tracked repository files. In particular, do not commit a live checkpoint, provider release ID, branch HEAD, pending operation handle or task-next-action into source.

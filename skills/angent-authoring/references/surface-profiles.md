@@ -62,13 +62,11 @@ The problem is not those exact phrases. The problem is meta-commentary replacing
 
 ## Research/report
 
-Separate:
-- verified fact;
-- interpretation;
-- uncertainty;
-- recommendation/decision.
+Determine what the reader will use the report to decide. Research writing synthesizes conflicting evidence; audit writing evaluates observed conditions against applicable criteria and supported impacts; work-status writing distinguishes attempted, verified, pending and blocked effects; strategic writing compares options against deciding constraints. These distinctions change argument structure, not the quality standard for prose.
 
-Use citations near supported claims without making the prose read like a source list.
+Lead with a bounded supported finding or direction, not an investigation chronology. Connect the decisive claim to its evidence and scope, warranted interpretation, consequence and justified action. Do not assign severity or causation beyond observed support, and do not use sampled evidence to certify an entire system. Close with a usable inference or prioritized decision rather than a second inventory of sections. Place citations near the specific claims they support.
+
+For deeper reporting mechanics and countercases, use the report-argumentation reference.
 
 ## Tool-work progress update
 
