@@ -2,8 +2,8 @@
 """Conservatively compare explicit Bruno tests to a scoped OpenAPI 3.1 JSON contract.
 
 This is a subset implementation: inline JSON object response bodies, simple
-properties/required/enum/const and bearer security. Unsupported $ref, oneOf,
-anyOf, nullable composition etc fail closed instead of asserting parity.
+properties/required/enum/const, local JSON-pointer $ref and bearer security.
+Unsupported oneOf/anyOf/allOf and remote references fail closed.
 """
 from __future__ import annotations
 import argparse
@@ -17,6 +17,30 @@ URI_VARIABLE=re.compile(r"\{\{([A-Za-z_][A-Za-z0-9_]*)\}\}")
 VERSION=re.compile(r"^3\.1(?:\.\d+)?$")
 
 
+def _resolve_local(document:dict, value:Any, seen:frozenset[str] = frozenset())->dict:
+    """Resolve bounded local OpenAPI $refs, rejecting cycles and remote fetches."""
+    if not isinstance(value,dict):
+        raise ValueError("Expected OpenAPI schema/response object")
+    if any(k in value for k in ("allOf","oneOf","anyOf")):
+        raise ValueError("Schema composition is unsupported; explicit review required")
+    if "$ref" not in value:
+        return value
+    ref=value["$ref"]
+    if not isinstance(ref,str) or not ref.startswith("#/") or ref.startswith("#//"):
+        raise ValueError("Only local #/ JSON-pointer references are supported")
+    if ref in seen or len(seen)>=12:
+        raise ValueError("Recursive or excessively deep OpenAPI $ref: "+ref)
+    target=document
+    for raw in ref[2:].split("/"):
+        if re.search(r"~(?![01])",raw):
+            raise ValueError("Invalid JSON-pointer escape")
+        part=raw.replace("~1","/").replace("~0","~")
+        if not isinstance(target,dict) or part not in target:
+            raise ValueError("Unresolved local OpenAPI $ref: "+ref)
+        target=target[part]
+    return _resolve_local(document,target,seen|{ref})
+
+
 def _kind(value:Any)->str:
     if value is None:return "null"
     if isinstance(value,bool):return "boolean"
@@ -28,7 +52,8 @@ def _kind(value:Any)->str:
     return "unsupported"
 
 
-def _match_scalar(value:Any,schema:dict)->bool:
+def _match_scalar(value:Any,schema:dict,document:dict)->bool:
+    schema=_resolve_local(document,schema)
     kind=schema.get("type")
     if not isinstance(kind,str):
         return False
@@ -42,33 +67,31 @@ def _match_scalar(value:Any,schema:dict)->bool:
     return True
 
 
-def _schema_property(schema:dict,path:list[str])->tuple[dict|None,str]:
-    current=schema
+def _schema_property(document:dict,schema:dict,path:list[str])->tuple[dict|None,str]:
+    current=_resolve_local(document,schema)
     for key in path:
-        if not isinstance(current,dict) or "allOf" in current or "oneOf" in current or "anyOf" in current or "$ref" in current:
-            return None,"unsupported composition"
         if current.get("type")!="object":
-            return None,"parent is not an inline object"
-        current=(current.get("properties") or {}).get(key)
-        if current is None:
+            return None,"parent is not a resolved object"
+        props=current.get("properties")
+        if not isinstance(props,dict) or key not in props:
             return None,"property "+key+" is not declared"
-    if not isinstance(current,dict) or "$ref" in current or "allOf" in current or "oneOf" in current or "anyOf" in current:
-        return None,"unsupported scalar schema"
+        current=_resolve_local(document,props[key])
+    if current.get("type") not in ("string","integer","number","boolean","null"):
+        return None,"property is not a supported scalar type"
     return current,""
 
 
-def _response_schema(operation:dict,status:int)->dict|None:
+def _response_schema(document:dict,operation:dict,status:int)->dict|None:
     responses=operation.get("responses",{})
-    response=responses.get(str(status))
-    if not isinstance(response,dict) or "$ref" in response:
-        return None
+    response=_resolve_local(document,responses.get(str(status)))
     content=response.get("content",{})
     if not isinstance(content,dict):
         return None
     app=content.get("application/json")
     if not isinstance(app,dict):
         return None
-    return app.get("schema")
+    return _resolve_local(document,app.get("schema"))
+
 
 
 def audit_contract(contract:Any,model:Any)->dict[str,Any]:
@@ -106,30 +129,45 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
                        for v in specs.values()):
                 errors.append(ident+": bearer auth is not defined in the OpenAPI security schemes")
         expected=item["expected_status"]
-        schema=_response_schema(operation,expected)
+        try:
+            schema=_response_schema(contract,operation,expected)
+        except ValueError as exc:
+            errors.append(ident+": "+str(exc))
+            continue
         if str(expected) not in operation.get("responses",{}):
             errors.append(ident+": expected HTTP "+str(expected)+" is not in operation.responses")
             continue
         expected_fields=item.get("expected_json",{})
         if expected_fields and (not isinstance(schema,dict) or schema.get("type")!="object"):
-            errors.append(ident+": expected JSON fields require an inline object response schema")
+            errors.append(ident+": expected JSON fields require a supported object response schema")
             continue
         for field,value in expected_fields.items():
-            property_schema,why=_schema_property(schema,field.split("."))
-            if property_schema is None:
-                errors.append(ident+": "+field+" "+why)
-            elif not _match_scalar(value,property_schema):
-                errors.append(ident+": "+field+" value contradicts declared type, const or enum")
-        requestbody=operation.get("requestBody")
+            try:
+                property_schema,why=_schema_property(contract,schema,field.split("."))
+                if property_schema is None:
+                    errors.append(ident+": "+field+" "+why)
+                elif not _match_scalar(value,property_schema,contract):
+                    errors.append(ident+": "+field+" value contradicts declared type, const or enum")
+            except ValueError as exc:
+                errors.append(ident+": "+field+" "+str(exc))
+        try:
+            requestbody=_resolve_local(contract,operation["requestBody"]) if "requestBody" in operation else None
+        except ValueError as exc:
+            errors.append(ident+": "+str(exc))
+            continue
         body=item.get("body_json")
         if requestbody is None and body is not None:
             errors.append(ident+": test sends a JSON body but OpenAPI has no requestBody")
         if isinstance(requestbody,dict) and requestbody.get("required") and body is None:
             errors.append(ident+": missing required JSON requestBody")
         if body is not None and isinstance(requestbody,dict):
-            schema_in=requestbody.get("content",{}).get("application/json",{}).get("schema")
-            if not isinstance(schema_in,dict) or schema_in.get("type")!="object" or not isinstance(body,dict):
-                errors.append(ident+": only inline JSON object requestBody schemas are supported")
+            try:
+                schema_in=_resolve_local(contract,requestbody.get("content",{}).get("application/json",{}).get("schema"))
+            except ValueError as exc:
+                errors.append(ident+": "+str(exc))
+                continue
+            if schema_in.get("type")!="object" or not isinstance(body,dict):
+                errors.append(ident+": only supported JSON object requestBody schemas are accepted")
             else:
                 for key in schema_in.get("required",[]):
                     if key not in body:errors.append(ident+": missing required body property "+str(key))
@@ -140,13 +178,17 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
                             errors.append(ident+": undeclared body property "+key)
                         else:
                             warnings.append(ident+": body property "+key+" is not explicitly modeled")
-                    elif not isinstance(declared,dict) or not _match_scalar(value,declared):
-                        errors.append(ident+": body property "+key+" contradicts type/enum/const")
+                    else:
+                        try:
+                            if not isinstance(declared,dict) or not _match_scalar(value,declared,contract):
+                                errors.append(ident+": body property "+key+" contradicts type/enum/const")
+                        except ValueError as exc:
+                            errors.append(ident+": body property "+key+" "+str(exc))
         if not item.get("requirements"):
             warnings.append(ident+": no BA source requirement linked")
     return {"ok":not errors,"errors":sorted(set(errors)),"warnings":sorted(set(warnings)),
             "requests_checked":len(model["requests"]),"contract_version":contract["openapi"],
-            "source_contract_check":"static-inline-openapi-subset",
+            "source_contract_check":"static-openapi-subset-with-local-refs",
             "execution_status":"not-run","writes_performed":False}
 
 
