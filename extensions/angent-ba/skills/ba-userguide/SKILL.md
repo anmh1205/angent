@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
 
 
 # /userguide — End-user manual
@@ -28,7 +28,7 @@ Produce an end-user manual: one externally-exposed entry `docs/userguide/{featur
 - **Self-contained entry** — no CDN; inline CSS + the `data.js` content; double-click to run.
 - **Source = the vault** — task guidance from the SRS/use cases/wireframes; screenshots from `images/` if provided. No fabricated steps.
 - **Resolve-oqs Phase E** — the userguide is a downstream doc; inherit unresolved OQs from the chain (`resolve-oqs.md` globs `skills/userguide/**`).
-- **Validate before done** — doc-validate on the bundle index (step 8).
+- **Validate before done** — BA Markdown validation on the bundle index (step 8).
 
 ## Inputs
 
@@ -43,7 +43,7 @@ Produce an end-user manual: one externally-exposed entry `docs/userguide/{featur
 1. **Scope + scan** — whole product or `--feature`. Read the docs (SRS/use cases), wireframes (screen purposes → manual sections), URD personas (audience → altitude).
 2. **Outline (Phase 1)** — the manual's sections + the page list per section + which screens/screenshots each needs. **HARD STOP** — confirm before generating.
 3. **Generate (Phase 2)** — per confirmed page: task-oriented prose (how to do X, not how the system works), zero-frontmatter, image refs. Build `data.js` (content embedded) + the entry `.html` (light, self-contained, sidebar TOC).
-4. **L1 plan preview** (post-outline) — section/page count + audience altitude + screenshot gaps.
+4. **scoped change preview** (post-outline) — section/page count + audience altitude + screenshot gaps.
 7. **Output report** — entry path + page count + screenshot gaps.
 
 ## Gotchas

@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
 
 
 # /dashboard — Vault status (one-file HTML)
@@ -26,8 +26,8 @@ Scan the vault and render one self-contained HTML status page — features and t
 - **`dashboard.html` path** — `docs/_shared/dashboard.html` (a `_shared/` singleton like `traceability.md`).
 - **Feature-list regeneration** — `docs/feature-list.md` from each feature's docs' `status:` (the status-lifecycle `* → approved` transition triggers this; `/dashboard` does it on demand too).
 - **OQ debt** — count unresolved OQs per feature (parse the checkbox lists); a feature with 5 open OQs is visibly riskier.
-- **Idempotent** — re-run regenerates (L2 diff).
-- **Validate before done** — doc-validate doesn't cover `.html`/`feature-list.md` (excluded types); self-check the HTML is well-formed.
+- **Idempotent** — re-run regenerates (versioned diff).
+- **Validate before done** — BA Markdown validation doesn't cover `.html`/`feature-list.md` (excluded types); self-check the HTML is well-formed.
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Scan the vault and render one self-contained HTML status page — features and t
 2. **Aggregate** — feature statuses (how many approved/in-review/draft), OQ debt per feature, stale docs, last-activity per feature.
 3. **Render `dashboard.html`** — self-contained: a top-of-page **Project context: fresh / stale (N commits since scan)** callout (when a `/discover` profile exists) + a feature table (status pills, OQ count, last-updated, stale flag) + an activity feed (recent N events) + an OQ-debt callout. Light, no CDN.
 4. **Regenerate `docs/feature-list.md`** — one row per feature: slug + status + doc count + OQ count + updated.
-5. **L1 plan preview** — feature count + status mix + OQ debt + stale count + project-context fresh/stale flag.
+5. **scoped change preview** — feature count + status mix + OQ debt + stale count + project-context fresh/stale flag.
 7. **Output report** — the dashboard path + the status mix + the riskiest feature (most OQs/stale) + next.
 
 ## Gotchas

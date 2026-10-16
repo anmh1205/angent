@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
 
 
 # /meeting — Meeting notes (structured)
@@ -25,8 +25,8 @@ Capture a meeting as structured notes — attendees, agenda, discussion, and thr
 - **Two states** (`status-lifecycle.md`): `captured` (raw, just written) → `processed` (tables structured + action items have owners/deadlines). Default to `processed` when the skill runs from a transcription/notes; `captured` for a quick raw dump.
 - **Action items have owner + deadline** — an action with no owner is a wish, not an action; flag it.
 - **Link to docs** — a decision touching `FR-`/`CAP-`/a feature doc links it (wikilink), so `/gap`/`/dashboard` see the connection.
-- **Idempotent** — re-run on the same date+title → L2 diff (append new items).
-- **Validate before done** — doc-validate (step 7).
+- **Idempotent** — re-run on the same date+title → versioned diff (append new items).
+- **Validate before done** — BA Markdown validation (step 7).
 
 ## Inputs
 
@@ -41,7 +41,7 @@ Capture a meeting as structured notes — attendees, agenda, discussion, and thr
 1. **Resolve title + type + slug** — from the arg; type defaults to `review` if ambiguous.
 2. **Gather** — from a transcript/notes the user pastes, or a short interview: attendees · agenda · the decisions · blockers · action items (owner + deadline each). No-re-ask.
 3. **Draft** per the template — attendees, agenda, discussion summary, then the three tables; link any doc-touching decision.
-4. **L1 plan preview** — decision/blocker/action counts + any ownerless action flagged.
+4. **scoped change preview** — decision/blocker/action counts + any ownerless action flagged.
 6. **Flag ownerless actions** in the report (so they get an owner before the meeting's value leaks).
 8. **Output report** — counts + ownerless actions + next (route an action to a doc via `/cr` if it's a scope change).
 

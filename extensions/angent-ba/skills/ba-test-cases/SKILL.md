@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
 
 
 # /test-cases — Full test cases (steps/data/expected)
@@ -27,7 +27,7 @@ Expand each `CHK-` row into one or more `TC-{NNN}` test cases — numbered steps
 - **One action per step** — numbered steps, each a single click/enter/submit; no prose padding.
 - **Expected = observable** — the outcome a tester sees + the exact error wording/code where applicable.
 - **Fill the checklist's `TC` column** — after generating, write the `TC-` back into the checklist row (the reverse pointer `/gap` joins on).
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -44,7 +44,7 @@ Expand each `CHK-` row into one or more `TC-{NNN}` test cases — numbered steps
 4. **Ask data gaps** — any value the spec/AC doesn't pin (one batched round); "skip" → mark the case `data: TBD`.
 5. **Assign `TC-` IDs** — scan the existing testcase index for max.
 6. **Draft** per the template — rows with Title / Expands CHK / Steps / Test data / Expected / Status.
-7. **L1 plan preview** — TC count + per-CHK expansion breakdown + data-gaps flagged.
+7. **scoped change preview** — TC count + per-CHK expansion breakdown + data-gaps flagged.
 10. **Output report** — TC generated + data-gaps + next (`/gap` to prove AC→CHK→TC coverage).
 
 ## Gotchas

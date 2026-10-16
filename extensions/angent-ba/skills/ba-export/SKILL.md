@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
 
 
 # /export — Stakeholder package
@@ -26,7 +26,7 @@ Bundle a feature's (or the whole vault's) BA documents into one stakeholder-faci
 - **Formats** — md (always); html (single self-contained file); pdf/docx need `pandoc` (doctor checks it; missing → degrade to md+html, report).
 - **Scope** — `--scope all` (every feature, project-level docs last) or `--scope <feature>` (that feature's set).
 - **Idempotent** — re-run regenerates (a new dated package); old packages stay (they're snapshots).
-- **Validate before done** — doc-validate on the package (step 7, md format only).
+- **Validate before done** — BA Markdown validation on the package (step 7, md format only).
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Bundle a feature's (or the whole vault's) BA documents into one stakeholder-faci
 2. **Collect the docs** — the scope's docs in reading order (URD → BRD → PRD → SRS → use cases → stories → tests).
 3. **Render change history** — grep `activity.log` for the scope's paths; format per `changelog.md` (date · skill · @author · path · note).
 4. **Assemble** — the docs concatenated (md) or converted (html/pdf/docx via pandoc) + the change-history section + a cover/TOC.
-5. **L1 plan preview** — doc count + format + change-history entry count.
+5. **scoped change preview** — doc count + format + change-history entry count.
 6. **Write** the package. **Activity log** — NOT set for the export itself (excluded), but the env is set if any source doc is touched (it isn't — read-only over sources).
 8. **Output report** — the package path + format + degraded (if pandoc missing) + next.
 
