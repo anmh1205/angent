@@ -35,6 +35,21 @@
       "expected_json": {
         "error": "TELEMETRY_UNAVAILABLE"
       }
+    },
+    {
+      "id": "TC-FLEET-004",
+      "name": "Acknowledge diagnostic trouble code",
+      "method": "POST",
+      "path": "/vehicles/{{vehicleId}}/diagnostics/ack",
+      "body_json": {
+        "code": "P0100",
+        "operator": "synthetic-test"
+      },
+      "expected_status": 201,
+      "expected_json": {
+        "vehicleId": "demo-001",
+        "ack": "recorded"
+      }
     }
   ]
 }

@@ -17,7 +17,7 @@ class BrunoGeneratorTests(unittest.TestCase):
 
     def test_real_collection_and_assertions(self):
         files=compile_collection(self.fixture)
-        self.assertEqual(len(files),5)
+        self.assertEqual(len(files),6)
         self.assertIn("bruno.json",files)
         self.assertIn("environments/Mock.bru",files)
         self.assertEqual(json.loads(files["bruno.json"])["name"],"Synthetic Fleet Access Tests")

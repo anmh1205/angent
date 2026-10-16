@@ -22,6 +22,7 @@ from build_bruno import compile_collection
 
 class MockFleet(BaseHTTPRequestHandler):
     calls=[]
+    ack_events=[]
     def log_message(self,*args):
         return
     def do_GET(self):
@@ -44,6 +45,26 @@ class MockFleet(BaseHTTPRequestHandler):
         self.send_header("Content-Length",str(len(bodybytes)))
         self.end_headers()
         self.wfile.write(bodybytes)
+    def do_POST(self):
+        p=urlsplit(self.path)
+        length=int(self.headers.get("Content-Length","0"))
+        raw=self.rfile.read(length)
+        try:
+            payload=json.loads(raw)
+        except ValueError:
+            payload=None
+        self.__class__.calls.append((self.command,p.path,"ack"))
+        if p.path=="/vehicles/demo-001/diagnostics/ack" and payload=={"code":"P0100","operator":"synthetic-test"}:
+            self.__class__.ack_events.append(payload)
+            status,body=201,{"vehicleId":"demo-001","ack":"recorded"}
+        else:
+            status,body=422,{"error":"INVALID_ACK"}
+        message=json.dumps(body).encode("utf8")
+        self.send_response(status)
+        self.send_header("Content-Type","application/json")
+        self.send_header("Content-Length",str(len(message)))
+        self.end_headers()
+        self.wfile.write(message)
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
@@ -54,6 +75,7 @@ def main():
         print(json.dumps({"ok":False,"test_executed":False,"reason":"Bruno CLI is not installed: "+args.cli}))
         return 2
     MockFleet.calls=[]
+    MockFleet.ack_events=[]
     server=ThreadingHTTPServer(("127.0.0.1",0),MockFleet)
     thread=Thread(target=server.serve_forever,daemon=True)
     thread.start()
@@ -73,10 +95,15 @@ def main():
                 print(json.dumps({"ok":False,"reason":str(exc)}))
                 return 1
             visited=sorted(set(MockFleet.calls))
-            expected=sorted([("GET","/vehicles/demo-001/status",s) for s in ("ok","denied","offline")])
-            ok=result.returncode==0 and visited==expected and len(MockFleet.calls)==3
+            expected=sorted([("GET","/vehicles/demo-001/status",s) for s in ("ok","denied","offline")] +
+                            [("POST","/vehicles/demo-001/diagnostics/ack","ack")])
+            expected_tests=sum(1+len(req.get("expected_json",{})) for req in model["requests"])
+            expected_marker=str(expected_tests)+"/"+str(expected_tests)
+            ok=(result.returncode==0 and visited==expected and len(MockFleet.calls)==4 and
+                len(MockFleet.ack_events)==1 and expected_marker in result.stdout)
             print(json.dumps({"ok":ok,"test_executed":True,"cli_exit":result.returncode,
-                              "calls":visited,"requested":len(MockFleet.calls),
+                              "calls":visited,"requested":len(MockFleet.calls),"mock_side_effects":len(MockFleet.ack_events),
+                              "passing_tests_expected":expected_tests,
                               "stdout_tail":result.stdout[-2800:],"stderr_tail":result.stderr[-1800:]},ensure_ascii=False))
             return 0 if ok else 1
     finally:
