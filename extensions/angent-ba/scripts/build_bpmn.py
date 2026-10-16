@@ -71,13 +71,13 @@ def audit_ir(ir: Any) -> dict[str, Any]:
             continue
         key = _id(node.get("id"), f"nodes[{i}].id", errors)
         kind = node.get("kind")
-        if kind not in NODE_TAGS:
+        if not isinstance(kind,str) or kind not in NODE_TAGS:
             errors.append(f"nodes[{i}]: unsupported kind {kind!r}")
         if not isinstance(node.get("name"), str) or not node["name"].strip():
             errors.append(f"nodes[{i}]: name required")
-        if lanes and node.get("lane") not in lanes:
+        if lanes and (not isinstance(node.get("lane"),str) or node["lane"] not in lanes):
             errors.append(f"nodes[{i}]: lane unknown or missing")
-        if not lanes and node.get("lane"):
+        if not lanes and node.get("lane") is not None:
             errors.append(f"nodes[{i}]: lane specified without lanes list")
         if key in nodes:
             errors.append(f"duplicate node ID {key}")
@@ -98,7 +98,7 @@ def audit_ir(ir: Any) -> dict[str, Any]:
             continue
         key = _id(flow.get("id"), f"flows[{i}].id", errors)
         src, dest = flow.get("src"), flow.get("tgt")
-        if src not in nodes or dest not in nodes:
+        if not isinstance(src,str) or not isinstance(dest,str) or src not in nodes or dest not in nodes:
             errors.append(f"flows[{i}]: unknown source or target")
             continue
         if src == dest:
