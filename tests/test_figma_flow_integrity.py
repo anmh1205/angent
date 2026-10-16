@@ -80,6 +80,22 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         compiled = compile_model(m)
         self.assertEqual(compiled["arguments"]["spec"]["edges"][1]["label"], "yes")
 
+    def test_nontextual_edge_conditions_are_rejected_without_coercion(self):
+        for kind, model, edge_index, field in [
+            ("activity", self.activity, 1, "guard"),
+            ("userflow", self.userflow, 2, "guard"),
+            ("state", self.state, 1, "label"),
+        ]:
+            for value in (False, 42, {"statement": "unverified"}):
+                with self.subTest(kind=kind, field=field, value=value):
+                    changed=deepcopy(model)
+                    changed["edges"][edge_index][field]=value
+                    result=audit(changed)
+                    self.assertFalse(result["ok"])
+                    self.assertTrue(any("must be a nonempty string" in e for e in result["errors"]))
+                    with self.assertRaisesRegex(ValueError, "nonempty string"):
+                        compile_model(changed)
+
     def test_decision_guard_collision_is_rejected(self):
         m = deepcopy(self.activity)
         m["edges"][-1]["guard"] = "yes"

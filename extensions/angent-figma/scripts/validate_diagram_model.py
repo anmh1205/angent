@@ -67,6 +67,13 @@ def audit(model: Any) -> dict[str, Any]:
             errors.append(f"edges[{i}]: not an object")
             continue
         a, b = edge.get("from"), edge.get("to")
+        # Do not silently stringify booleans/objects/numbers into a seemingly
+        # meaningful business guard, event or message on the Figma canvas.
+        for field in ("guard", "label"):
+            if field in edge and (
+                not isinstance(edge[field], str) or not edge[field].strip()
+            ):
+                errors.append(f"edges[{i}]: {field} must be a nonempty string")
         if not isinstance(a, str) or not isinstance(b, str) or a not in by_id or b not in by_id:
             errors.append(f"edges[{i}]: unknown endpoint")
             continue
