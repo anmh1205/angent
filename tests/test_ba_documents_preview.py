@@ -53,14 +53,14 @@ class TestDocuments(unittest.TestCase):
             root=Path(tmp)
             (root/"source.md").write_text("# Evidence\n\n## Section\n",encoding="utf8")
             target=root/"spec.md"
-            target.write_text("---\\nstatus: draft\\n---\\n# Spec\\n"
-                              "[Evidence](source.md#section)\\n"
-                              "[Local](#spec)\\n",encoding="utf8")
+            target.write_text("---\nstatus: draft\n---\n# Spec\n"
+                              "[Evidence](source.md#section)\n"
+                              "[Local](#spec)\n",encoding="utf8")
             report=inspect(target,root)
             self.assertTrue(report["ok"],report)
-            target.write_text("---\\nstatus: draft\\n---\\n# Spec\\n"
-                              "[Missing](absent.md#section)\\n"
-                              "[Escape](../hidden.md#section)\\n",encoding="utf8")
+            target.write_text("---\nstatus: draft\n---\n# Spec\n"
+                              "[Missing](absent.md#section)\n"
+                              "[Escape](../hidden.md#section)\n",encoding="utf8")
             bad=inspect(target,root)
             self.assertFalse(bad["ok"])
             self.assertTrue(any("broken" in e for e in bad["errors"]))

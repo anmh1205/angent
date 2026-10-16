@@ -63,7 +63,7 @@ class BAAndFigmaTests(unittest.TestCase):
         out = audit_figma(model)
         self.assertFalse(out["ok"])
         self.assertTrue(any("unknown endpoint" in e for e in out["errors"]))
-        self.assertTrue(any("unlabeled guard" in e for e in out["errors"]))
+        self.assertTrue(any("unlabeled branch" in e for e in out["errors"]))
 
     def test_sitemap_cycle_fails(self):
         diagram = {"type":"sitemap", "nodes":[{"id":"a","label":"A"},{"id":"b","label":"B"}],
