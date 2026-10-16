@@ -132,6 +132,20 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
                 if role=="usecases" and item_id.startswith("uc-"):
                     item_id="UC-"+item_id[3:]
                 if not ID.fullmatch(item_id):
+                    # A broken ID in a recognized artifact table must never
+                    # disappear silently from computed requirement coverage.
+                    accepted={
+                        "urd":{"UN"}, "brd":{"BO"}, "prd":{"CAP"},
+                        "criteria":{"AC"}, "srs":{"FR","NFR","BR","E"},
+                        "checklist":{"CHK"}, "cases":{"TC"},
+                        "stories":{"US"}, "usecases":{"UC"}
+                    }.get(role,set())
+                    prefix=re.match(r"^(UN|BO|CAP|FR|NFR|BR|E|AC|CHK|TC|US|UC)(?=[-:\\s]|$)",
+                                    item_id,re.I)
+                    if prefix and prefix.group(1).upper() in accepted:
+                        raise ValueError(
+                            f"{role}: malformed artifact ID {item_id!r} on source line {row['__source_line']}"
+                        )
                     continue
                 kind=item_id.split("-",1)[0]
                 if role=="urd" and kind!="UN":

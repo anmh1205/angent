@@ -81,6 +81,39 @@ class MarkdownTraceabilityTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"Duplicate"):
                 collect({"srs":srs},directory)
 
+    def test_malformed_recognized_id_cannot_silently_reduce_coverage(self):
+        document=(
+            "---\\ntype: srs\\nstatus: draft\\n---\\n"
+            "| ID | Requirement | Covers |\\n| --- | --- | --- |\\n"
+            "| FR-good-001 | First accepted requirement | CAP-demo-01 |\\n"
+            "| FR-bad-002? | This obligation cannot simply vanish | CAP-demo-01 |\\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp)
+            source=base/"srs.md"
+            source.write_text(document,encoding="utf8")
+            with self.assertRaisesRegex(ValueError,"malformed artifact ID"):
+                collect({"srs":source},base)
+            source.write_text(
+                document.replace("| FR-bad-002? |","| FR-bad-002 |"),
+                encoding="utf8"
+            )
+            result=collect({"srs":source},base)
+            self.assertEqual(result["counts"]["FR"],2)
+
+    def test_unrelated_markdown_ids_are_not_misclassified_as_requirements(self):
+        document=(
+            "---\\ntype: srs\\nstatus: draft\\n---\\n"
+            "| ID | Requirement | Covers |\\n| --- | --- | --- |\\n"
+            "| FR-good-001 | Real requirement | CAP-demo-01 |\\n"
+            "| NOTE-002 | An explanatory item, not a requirement | |\\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp)
+            source=base/"srs.md"
+            source.write_text(document,encoding="utf8")
+            self.assertEqual(collect({"srs":source},base)["counts"]["FR"],1)
+
     def test_examples_inside_markdown_fences_do_not_become_requirements(self):
         tick=chr(96)*3
         doc="\n".join([
