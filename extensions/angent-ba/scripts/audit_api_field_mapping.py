@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 import re
 from typing import Any
-from audit_api_contract import _response_schema, _schema_property, _match_scalar, _kind
+from audit_api_contract import _response_schema, _schema_property, _match_scalar, _kind, VERSION
 
 IDENT=re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 REF=re.compile(r"^(?:FR|BR|AC|NFR|CAP)-[A-Za-z0-9][A-Za-z0-9-]*$")
@@ -45,7 +45,8 @@ def place(data:dict,parts:list[str],value:Any)->None:
     current[parts[-1]]=value
 
 def perform(contract:Any,mapping:Any,evidence_ids:set[str]|None=None)->dict[str,Any]:
-    if not isinstance(contract,dict) or not str(contract.get("openapi","")).startswith("3.1"):
+    if (not isinstance(contract,dict) or not isinstance(contract.get("openapi"),str)
+            or not VERSION.fullmatch(contract["openapi"])):
         raise ValueError("An inspected OpenAPI 3.1 JSON contract is required")
     if not isinstance(mapping,dict) or not isinstance(mapping.get("operation"),dict):
         raise ValueError("Mapping needs an explicit operation")
@@ -55,7 +56,13 @@ def perform(contract:Any,mapping:Any,evidence_ids:set[str]|None=None)->dict[str,
         raise ValueError("Operation path and method must be exact OpenAPI fields")
     if isinstance(status,bool) or not isinstance(status,int) or status<100 or status>599:
         raise ValueError("Expected HTTP status must be integer")
-    operation=(contract.get("paths",{}).get(path) or {}).get(method.lower())
+    paths=contract.get("paths")
+    if not isinstance(paths,dict):
+        raise ValueError("OpenAPI paths must be an object")
+    path_item=paths.get(path)
+    if path_item is not None and not isinstance(path_item,dict):
+        raise ValueError("OpenAPI path item must be an object")
+    operation=(path_item or {}).get(method.lower())
     if not isinstance(operation,dict):
         raise ValueError("No such OpenAPI operation "+method+" "+path)
     schema=_response_schema(contract,operation,status)

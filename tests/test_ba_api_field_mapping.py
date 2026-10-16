@@ -84,6 +84,24 @@ class FieldMappingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"Unresolved"):
             perform(self.contract,m,self.refs)
 
+    def test_invalid_openapi_version_and_malformed_paths_fail_closed(self):
+        for bad_version in ("3.1evil", "3.10.0", "3.0.3", True, None):
+            with self.subTest(version=bad_version):
+                contract=copy.deepcopy(self.contract)
+                contract["openapi"]=bad_version
+                with self.assertRaisesRegex(ValueError,"OpenAPI 3.1"):
+                    perform(contract,self.mapping)
+        for bad_paths in ([], "routes", None):
+            with self.subTest(paths=bad_paths):
+                contract=copy.deepcopy(self.contract)
+                contract["paths"]=bad_paths
+                with self.assertRaisesRegex(ValueError,"paths must be an object"):
+                    perform(contract,self.mapping)
+        contract=copy.deepcopy(self.contract)
+        contract["paths"][self.mapping["operation"]["path"]]=["invalid-path-item"]
+        with self.assertRaisesRegex(ValueError,"path item must be an object"):
+            perform(contract,self.mapping)
+
     def test_unsupported_transform_is_a_failure(self):
         m=copy.deepcopy(self.mapping)
         m["fields"][1]["transform"]="evaluate-javascript"
