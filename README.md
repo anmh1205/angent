@@ -1,6 +1,18 @@
 # ANGENT
 
-ANGENT is a cognitive layer that helps an agent understand the requested outcome, reason from evidence, act with permission, verify results, preserve unfinished work and learn from recurring successes or failures.
+ANGENT is a portable cognitive layer for AI agents. It helps an agent understand user intent, reason from evidence, execute authorized actions, verify outcomes, carry unfinished work forward, and improve from reusable lessons. The repository combines Core cognitive skills with portable Engineer capabilities in one plugin distribution.
+
+## Explore and use ANGENT
+
+**Start with the source:** [Root skill](skills/angent/SKILL.md) explains how ANGENT selects its capabilities, while [AGENTS.md](AGENTS.md) describes repository-level working instructions and [ARCHITECTURE.md](ARCHITECTURE.md) provides the architecture. [CHANGELOG.md](CHANGELOG.md) records the evolution of the project.
+
+**Package the unified plugin:** with Python 3 available in a checkout of this repository, run:
+
+```sh
+python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
+```
+
+This produces a distribution archive from the source. Integration and installation depend on the agent host and plugin support; a Git clone by itself is not an installed ChatGPT plugin. See the installation and package-identity notes below before distributing a build.
 
 ## How it works
 
