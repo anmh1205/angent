@@ -48,6 +48,10 @@ def main() -> int:
             page.get_by_role("button",name="Sign in").click()
             assert page.locator('[data-screen-id="login"]').count()==1
             assert page.get_by_label("Email address").evaluate("(el)=>el.validity.valueMissing")
+            page.get_by_label("Email address").fill("not-an-email")
+            page.get_by_label("Password").fill("fixture-only")
+            page.get_by_role("button",name="Sign in").click()
+            assert page.get_by_label("Email address").evaluate("(el) => el.validity.typeMismatch")
             page.get_by_label("Email address").fill("tester@example.test")
             page.get_by_label("Password").fill("not-a-real-password")
             outcomes={"invalid":"Invalid credentials (mock).",
@@ -62,6 +66,7 @@ def main() -> int:
             page.get_by_role("button",name="Sign in").click()
             assert page.locator('[data-screen-id="home"]').count()==1
             assert "no authentication token" in page.locator("#app").inner_text()
+            assert page.locator("h2").evaluate("(el) => document.activeElement === el"), "Screen heading should receive focus after navigation"
             if args.screenshot_dir:
                 page.screenshot(path=str(args.screenshot_dir/"authenticated-mock.png"))
             page.get_by_role("button",name="Return to sign in").click()
@@ -82,7 +87,7 @@ def main() -> int:
             assert not errors,errors
             browser.close()
     print(json.dumps({"ok":True,"engine":"Chrome/Playwright",
-                      "tested":["required validation","invalid","locked","offline","success",
+                      "tested":["required and email-format validation","screen heading focus","invalid","locked","offline","success",
                                 "home navigation","recovery navigation","no external requests","HTML injection"],
                       "authentication_calls":0,"screenshots":str(args.screenshot_dir) if args.screenshot_dir else None}))
     return 0
