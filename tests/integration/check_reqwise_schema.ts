@@ -8,6 +8,7 @@ if (!payloadFile || !upstreamDir) {
   console.error('Usage: npx tsx tests/integration/check_reqwise_schema.ts payloads.json path-to-reqwise-checkout');
   process.exit(2);
 }
+async function main() {
 const source = pathToFileURL(resolve(upstreamDir, 'src/server/validate.ts')).href;
 const validators = await import(source);
 const methods: Record<string, string> = {
@@ -43,3 +44,5 @@ for (const p of payloads) {
 }
 console.log('Reqwise upstream schema:',payloads.length-failures,'/',payloads.length);
 if (failures) process.exitCode=1;
+}
+main().catch(err=>{ console.error(err); process.exitCode=1; });
