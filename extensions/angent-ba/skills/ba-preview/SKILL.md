@@ -1,28 +1,33 @@
 ---
 name: ba-preview
-description: Offer a navigable view of a scoped artifact set.
+description: Specialized ANGENT business analysis preview method.
 ---
 
-# ba-preview: Offer a navigable view of a scoped artifact set
+# Navigable feature-preview artifact
 
-## Trigger and necessary evidence
+## Input and responsibility
 
-Use this method when the user needs **offer a navigable view of a scoped artifact set**, not because a generic question merely mentions the subject. Required inputs to look for: validated document index, links and renderable diagrams. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+A preview is a **read-only stakeholder view** of an already inspected and versioned feature set: goals, approved SRS, business rules, diagrams, screen flow, story coverage and test state. It does not silently write back to Jira, modify docs or infer approval.
 
-## Specialist method
+## Build method
 
-Assemble navigation, requirement anchors, diagram previews and evidence references; expose gaps clearly. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
+1. Identify feature ID, language, accepted artifact list and current revision. Validate actual links and prevent path traversal from untrusted document references.
+2. Establish an information architecture that follows reader questions: what problem is solved, who uses it, expected behavior, failure/recovery, screens, contract, testing and unresolved decisions.
+3. Reuse source artifact IDs as anchors and link back to original files. Provide search/filter by artifact type and confidence; group error codes by the FR/BR they constrain.
+4. Render diagrams from verified sources, using actual SVG or browser-renderable content; if source diagrams fail to render, present the original text with an explicit failure notice. Do not replace a broken diagram with an invented screenshot.
+5. Escape all untrusted content when generating HTML. No external CDN, hidden network call, dynamic evaluation of uploaded code or arbitrary scripts; keep CSP conservative.
+6. Check keyboard navigation, focus, contrast, small-screen layout, table overflow and linked IDs.
+7. Reopen the finished HTML and verify its reference count, navigation anchors and sample screen viewport. Report missing source assets separately.
 
-## Deliverable
+## Suggested sections
 
-Produce **Read-only HTML feature preview**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+Overview (objective, scope, users) → requirements (FR/NFR/BR) → main and alternate process → screens/wireframes → API integration → traceability/coverage → open questions/decision log. Each section links to the authoritative revision.
 
-## Acceptance checks
+## Acceptance
 
-- Preview does not imply acceptance or backend implementation.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+A consumer can reach the original evidence for every material claim. Preview does not imply runtime testing or implementation completeness. If only a subset was indexed, state its exact boundaries. The portable renderer in the BA extension can produce HTML from a validated exchange graph; it is a *feature index*, not a full SRS parser.
 
-## ANGENT boundary
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Ownership
+
+ANGENT Root/Core retains reasoning, stakeholder intent, source authority and final Quality. This method is a task-specific support skill and does not create a second runtime, memory system or autonomous scheduler.

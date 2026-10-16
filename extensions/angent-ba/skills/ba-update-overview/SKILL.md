@@ -1,28 +1,33 @@
 ---
 name: ba-update-overview
-description: Safely refresh cross-project summary after approved changes.
+description: Specialized ANGENT business analysis update-overview method.
 ---
 
-# ba-update-overview: Safely refresh cross-project summary after approved changes
+# Scoped update of a project-wide overview
 
-## Trigger and necessary evidence
+## Purpose
 
-Use this method when the user needs **safely refresh cross-project summary after approved changes**, not because a generic question merely mentions the subject. Required inputs to look for: approved artifact changes, current overview, status provider facts. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+After approved changes to a feature, recompute only the overview sections that depend on altered source facts. The overview is a read model, not the repository of decisions. Do not regenerate an entire project history from an isolated feature or overwrite manual stakeholder narrative.
 
-## Specialist method
+## Reconciliation
 
-Recompute impacted sections from source; preserve unaffected manual information; show diff and verify references. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
+1. Read current overview and capture revision/ETag if a remote provider is involved. Determine authoritative source for each section (PRD, SRS, provider issue state, deployment, customer decision).
+2. Collect accepted change set with stable artifact IDs and exact source revisions; calculate reverse dependencies and affected overview statements.
+3. Compare baseline to candidate statement by statement. Classify unchanged, updated, removed, new and blocked-by-uncertainty. Keep unaffected prose and links byte-for-byte where practical.
+4. Check whether status counts are real: use actual project issue data and explicit filters, not fabricated percentages. Unknown/awaiting-approval must be distinct from done.
+5. Present a reviewable diff and reasons, especially for business objective, roadmap, scope, release, actor role or risk changes.
+6. Perform an external write only with current permission and an authoritative latest revision. For Confluence/Google Docs read after writing and compare the changed sections, safeguarding concurrent edits.
+7. Report changed IDs, skipped or conflicting sections, final provider version if confirmed and remaining actions.
 
-## Deliverable
+## Failures to catch
 
-Produce **Updated overview with provenance and stale-source warnings**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+Stale release dates, duplicated feature counts, broken section anchors, unrelated content removed by regeneration, optimistic completion labels and silent edits to a different project or environment.
 
-## Acceptance checks
+## Example
 
-- No blanket rewrite of unrelated project narrative.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+A newly approved authentication recovery path affects the SRS error matrix, userflow, checklist and 'Capabilities' summary; it does not justify rewriting the vehicle telemetry section or inventing a released status.
 
-## ANGENT boundary
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Ownership
+
+ANGENT Root/Core retains reasoning, stakeholder intent, source authority and final Quality. This method is a task-specific support skill and does not create a second runtime, memory system or autonomous scheduler.

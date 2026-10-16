@@ -1,28 +1,33 @@
 ---
 name: ba-reverse-preview
-description: Review reverse-engineered documents with uncertainty visible.
+description: Specialized ANGENT business analysis reverse-preview method.
 ---
 
-# ba-reverse-preview: Review reverse-engineered documents with uncertainty visible
+# Reverse-engineering preview with source confidence
 
-## Trigger and necessary evidence
+## Purpose
 
-Use this method when the user needs **review reverse-engineered documents with uncertainty visible**, not because a generic question merely mentions the subject. Required inputs to look for: reconstructed spec, source citations, inferred claims and conflicts. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+Present reconstructed requirements without laundering hypotheses into facts. Every material assertion from legacy documents or code must carry an evidence class and version: SOURCE-OBSERVED, INFERRED, UNCONFIRMED, CONTRADICTORY, or APPROVED-DECISION (only with real approval).
 
-## Specialist method
+## Reader model
 
-Display confidence and original code/source paths alongside claims; visually separate facts, inferences and unknowns. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
+For each claim, show (1) reconstructed behavior in plain language, (2) the supporting file/page or code symbol and revision, (3) confidence rationale, (4) conflicting witnesses, (5) impact if wrong, and (6) next validation action. Do not replace this with a single document-level percentage.
 
-## Deliverable
+## Method
 
-Produce **Read-only reverse SRS viewer**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+1. Confirm the exact historical system/release/repository and scope; distinguish source snapshots from deployed runtime.
+2. Consume source ledger from reverse-doc or code-to-srs. Reject requirements without a traceable source path, except clearly labeled proposals from stakeholders.
+3. Group content into actors/roles, features/FR, policy/BR, NFR, error behavior, state machine, data entities, open questions and disagreements.
+4. Keep inferred claims visually distinct even when fluent prose is used; maintain source links and explanatory uncertainty.
+5. For contradictions, display both versions with timestamp/commit, not a fabricated resolution. Provide decision or targeted runtime-test pathways.
+6. Escape all raw source content in HTML; do not embed executable fragments captured from legacy systems.
+7. Reopen and validate navigation, source references and confidence labels. Never mark external verification successful without tool evidence.
 
-## Acceptance checks
+## Acceptance
 
-- Never hide low confidence behind polished prose.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+The reviewer can answer: 'Which requirements come from inspected code? Which were guessed? Which disagree? What should be tested next?' If the preview hides those distinctions, it fails regardless of styling.
 
-## ANGENT boundary
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Ownership
+
+ANGENT Root/Core retains reasoning, stakeholder intent, source authority and final Quality. This method is a task-specific support skill and does not create a second runtime, memory system or autonomous scheduler.
