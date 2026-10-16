@@ -51,3 +51,7 @@ Figma variables and component properties: https://developers.figma.com/docs/plug
 W3C WCAG 2.2: https://www.w3.org/TR/WCAG22/
 
 Bruno CLI: https://github.com/usebruno/bruno/blob/main/packages/bruno-cli/readme.md
+
+## Verified cross-kit evidence reference handling
+
+D2 generation and Reqwise OSS payload compilation now optionally resolve source_refs using the **same validated BA artifact graph**. A shared FR identity can be retained without a duplicated memory service or new Hub runtime. Missing/duplicate references fail before output. The checked result is only ID existence; meaningful semantic alignment, reviewed changes, actual Figma canvas mutation and production behavior still require their independent sources and verification. Executable tests: tests/test_ba_d2.py, tests/test_reqwise_adapter.py, tests/test_ba_figma_trace_chain.py.

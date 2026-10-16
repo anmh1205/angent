@@ -62,3 +62,11 @@ Generate Bruno HTTP tests against reviewed evidence and run the optional localho
     python tests/integration/check_bruno_cli.py --cli PATH_TO_BRUNO_CLI
 
 The schema-to-UI and spec-to-API mappings still need actual project stakeholder verification: the models in this repository are deliberately synthetic. The Bruno manifest lists linked ID validation separately from test execution.
+
+## Evidence-connected diagram generation
+
+Three D2 families now compile and render through the official D2 0.9.0 CLI, with actual PNG visual review of synthetic Activity, ERD and Architecture examples. To check SRS/traceability IDs while compiling, pass an **already validated evidence graph**:
+
+    python extensions/angent-ba/scripts/build_d2.py extensions/angent-ba/examples/d2-activity.json --evidence-graph extensions/angent-ba/examples/rental-fleet-traceability.json --output out/verified-activity.d2
+
+The report explicitly says source_link_check=ids-resolved-only. An accepted ID proves that a reference exists, not that a diagram embodies its semantics or that its implementation was tested. The Figma Reqwise payload adapter accepts the same optional evidence graph and applies this boundary separately.

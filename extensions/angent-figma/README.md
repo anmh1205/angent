@@ -11,3 +11,11 @@ For actual Figma operations, follow mcp/SETUP.md; inspect figma_status for live 
 Pro-only capabilities are not in Reqwise's public MIT runtime. Their six ANGENT methods specify semantics, quality gates and authorized tooling options. They **do not** currently constitute a proprietary-equivalent Pro server, screen generator, component library, BPMN DI engine or video recorder. Do not report them as such. Art direction belongs to angent-frontend; UX and code specialization may come from Engineer; Root retains decisions and permission checks.
 
 See ../../hub/research/ba-figma-parity.md for the actual capability limits and verified source.
+
+## Source-to-Figma identity integrity
+
+The Reqwise OSS request compiler can verify a diagram model's source_refs against an existing BA artifact graph, without importing a second project-memory system:
+
+    python extensions/angent-figma/scripts/to_reqwise_payload.py extensions/angent-figma/examples/rental-fleet-activity.json --evidence-graph extensions/angent-ba/examples/rental-fleet-traceability.json
+
+This returns source_link_check=ids-resolved-only and writes_performed=false. It neither verifies business-semantic correspondence nor calls Figma. Before claiming a canvas edit, check actual MCP availability and perform authorized provider read-back. Cross-kit reference integrity is tested in tests/test_ba_figma_trace_chain.py.
