@@ -52,8 +52,9 @@ def _shortest_path(start: str, target_kind: str, nodes: dict[str, dict],
     return None
 
 
-def inspect(graph: Any, *, require_known_handoffs: bool = False) -> dict[str, Any]:
-    validated = audit(graph)
+def inspect(graph: Any, *, require_known_handoffs: bool = False,
+            source_root: Path | None = None) -> dict[str, Any]:
+    validated = audit(graph, source_root=source_root)
     if not validated["ok"]:
         return {"ok": False, "errors": validated["errors"], "warnings": validated.get("warnings", []),
                 "scope": "invalid evidence graph", "writes_performed": False}
@@ -121,6 +122,8 @@ def inspect(graph: Any, *, require_known_handoffs: bool = False) -> dict[str, An
         "stages":results,
         "known_handoff_gaps":all_gaps,
         "not_inspected_stages":not_inspected,
+        "source_location_check":"local-files-checked" if source_root is not None else "not-performed",
+        "source_location_warnings":validated.get("warnings",[]),
         "unapproved_or_draft_artifact_ids":unapproved,
         "test_artifacts_without_execution_evidence":unexecuted,
         "test_artifacts_claimed_executed_but_unverified":claimed_executed,
@@ -136,10 +139,12 @@ def main()->int:
     p.add_argument("--require-known-handoffs",action="store_true",
                    help="Exit nonzero if a link is missing where BOTH artifact kinds were inspected")
     p.add_argument("--output",type=Path,help="Write report to a NEW file, never overwrite")
+    p.add_argument("--source-root",type=Path,help="Optional project root to verify local evidence files and reject escapes")
     args=p.parse_args()
     try:
         graph=json.loads(args.graph.read_text(encoding="utf-8"))
-        result=inspect(graph,require_known_handoffs=args.require_known_handoffs)
+        result=inspect(graph,require_known_handoffs=args.require_known_handoffs,
+                       source_root=args.source_root)
         content=json.dumps(result,ensure_ascii=False,indent=2)+"\n"
         if args.output:
             if args.output.exists():

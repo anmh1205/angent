@@ -79,6 +79,22 @@ class BAHandoffAssurance(unittest.TestCase):
         self.assertIn(test["id"],report["test_artifacts_without_execution_evidence"])
         self.assertFalse(report["writes_performed"])
 
+    def test_real_source_root_and_missing_local_claim(self):
+        root=BA
+        original=inspect(self.fleet,source_root=root)
+        self.assertTrue(original["ok"],original)
+        self.assertEqual(original["source_location_check"],"local-files-checked")
+        bad=deepcopy(self.fleet)
+        bad["sources"][0]["uri"]="examples/not-a-real-source.md"
+        result=inspect(bad,source_root=root)
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("source evidence file missing" in line
+                            for line in result["errors"]))
+        bad["sources"][0]["uri"]="../../../../private"
+        result=inspect(bad,source_root=root)
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("escapes allowed root" in line for line in result["errors"]))
+
     def test_missing_source_graph_fails_closed(self):
         bad=deepcopy(self.fleet)
         bad["artifacts"][0]["depends_on"]=["FR-NO-SOURCE"]
