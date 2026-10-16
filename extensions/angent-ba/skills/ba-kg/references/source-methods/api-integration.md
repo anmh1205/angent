@@ -1,62 +1,33 @@
-# MIT source reference — use under ANGENT authority
+# An evidence-based external API integration chain
 
-Maintained reference from https://github.com/nv-minh/dev-ba-kit/blob/main/rules/api-integration.md (Edward Ngo, 2026, MIT). Original Claude plugin roots, hooks, slash commands and agent roles are **not** native ANGENT runtime capabilities. ANGENT Hub routing and current host authority take precedence.
+**Provenance:** Adapted from MIT Dev BA Kit / rules/api-integration.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit. ANGENT exposes specialist methods, not a compulsory seven-stage workflow.
 
-# API Integration — the 7-step chain contract
+## When each method matters
 
-> Shared rule for the integration family: `/api-assess → /api-doc → /api-design → /api-map → /api-checklist → /api-test → /api-readiness`. Referenced by `naming-conventions.md` (Integration family note) and `doc-selection.md`. Every skill in the family MUST reference this file in Constraints + References.
+| Decision | ANGENT BA method | Required concrete evidence |
+|---|---|---|
+| Build, buy or choose a provider | ba-api-assess | Current provider terms, feasibility, security and commercial comparison |
+| Understand an external interface | ba-api-doc | Real versioned provider API docs, schemas and actual endpoint/error contracts |
+| Define business and technical orchestration | ba-api-design | Authoritative field ownership, normal/failure flow, retries, timeout, recovery |
+| Map provider fields into domain and UI | ba-api-map | Versioned provider schema, transform types, example payloads and ownership |
+| Find missing integration tests | ba-api-checklist | Accepted FR/BR/API failures, inbound/outbound directions and test layer |
+| Exercise authorized request/response assertions | ba-api-test | Real sandbox/loopback target, keys provisioned outside artifacts and test results |
+| Make an enable/rollback decision | ba-api-readiness | Measured rollout, access control, monitoring, support and cutover evidence |
 
-## The chain
+A fixed provider need not be reassessed without reason. A webhook-only integration may have no data transform. If live API access is unavailable, tests can be specified without claiming execution.
 
-| Step | Skill | Question it answers | Skip when |
-|---|---|---|---|
-| [0] | `/api-assess` | Build vs buy? Which provider? | The provider is already fixed (contract signed, internal mandate) |
-| [1] | `/api-doc` | What does THEIR contract actually offer? | — (never skip; refuses to fabricate a contract) |
-| [2] | `/api-design` | How do WE orchestrate it? (state-map, source-of-truth, webhook, retry, reconciliation, degraded-UX) | — |
-| [3] | `/api-map` | Which field maps to which? (provider ↔ our model ↔ UI) | No data mapping (pure trigger/webhook integration) |
-| [4] | `/api-checklist` | What must be tested? (`test_layer` own/3rd/mixed + `direction` out/in) | — |
-| [5] | `/api-test` | Do the calls actually work? (Bruno collection) | No API access in this environment (document why) |
-| [6] | `/api-readiness` | Go / no-go? (cutover, flags, monitoring, rollback, SLA) | — (the gate before enabling in production) |
+## Critical integration semantics
 
-The chain has a strict order with two skip points ([0] when the provider is fixed, [3] when there's no data mapping). Every later step reads the upstream — `/api-design` reads the summary, `/api-checklist` reads the design + map, `/api-readiness` reads everything.
+Specify upstream source of truth, local domain ownership, which side may mutate each field, mappings of provider-specific error/status values, durable idempotency keys, retry/backoff and reconciliation. A webhook can be delivered twice or out of order; a field transform can lose nullable information or enum meaning.
 
-## File conventions (from `naming-conventions.md`)
+Separate test_layer: own system, third-party provider or mixed end-to-end; direction: outbound request, inbound event or bidirectional. The test environment must be named and secrets must never be committed to generated Bruno files.
 
-- Fixed-name files use a **bare name** (no `{feature}-` prefix): `integration/api-assess.md`, `api-summary.md`, `api-design.md`, `api-map.md`, `api-readiness.md`; `test/api/api-checklist.md`, `api-tests.md` + `bruno/`.
-- **Multi-provider**: suffix the summary — `api-summary-{provider}.md`; other files stay single (the blueprint orchestrates all providers in one file).
-- Legacy test files still under `integration/` migrate to `test/api/` on the next `/api-test` rerun.
+## Existing executable checks
 
-## Shared semantics
+The portable BA adapter can check a bounded OpenAPI 3.1 JSON schema with audit_api_contract.py, verify source-linked UI field transforms via audit_api_field_mapping.py and generate Bruno collections with build_bruno.py. Unsupported schema constructs fail closed. A passing mock API proves only the fixture and expected assertions in that environment.
 
-- **`test_layer` column** (in `api-checklist.md`): `own` (our side only — our orchestration, our error handling) / `3rd` (their side only — sandbox availability, their rate limit, their error response) / `mixed` (end-to-end through both — a real request that our code sends and their service answers). Every row carries exactly one layer.
-- **`direction` column**: `out` (we call them — a request we initiate) / `in` (they call us — webhooks, callbacks, polling notifications). A webhook integration has `in` rows; a lookup integration has `out` rows; most have both.
-- **Provider suffix rule**: when a feature integrates more than one provider, each provider gets its own summary (`api-summary-{provider}.md`) and its own Bruno collection; the design (`api-design.md`) and map (`api-map.md`) stay single files that orchestrate all providers (the blueprint is one integration story, not one per provider).
-- **No fabrication**: `/api-doc` summarizes ONLY what the provider docs/OpenAPI actually state, with provenance (which doc page / which spec version). Unknowns become OQs, never guesses — a guessed endpoint or a guessed rate limit is the most dangerous fabrication in the kit.
-- **Checklist IDs**: `CHK-{NNN}`, path-scoped under `test/api/` (the feature-wide checklist lives in `test/checklist/` — different folder, no collision, per `test-conventions.md`). The `TC` column stays empty until `/api-test` runs.
-- **Source-of-truth ownership**: every mapped field in `api-map.md` declares which side owns the canonical value — ours, theirs, or derived. A field with no owner is a drift bug waiting to happen; flag it.
-- **Webhook rows always pair**: every webhook (`direction: in`) row in the checklist has a retry + reconciliation partner — "if the webhook is missed, we reconcile by polling {endpoint} every {interval}". A webhook with no reconciliation is a silent data-loss path.
+Before claiming readiness, confirm the target actually processed requests and side effects, plus actor authorization, release flag, rollback and real provider error scenarios. A conforming OpenAPI document is not evidence of a deployed service.
 
-## Bruno layout
+## Handoff and limits
 
-`/api-test` produces a Bruno collection under `docs/{feature}/bruno/` (or migrates a legacy one from `integration/`):
-
-- One **collection per provider** (named `{provider}`), mirroring the `api-summary-{provider}.md` split.
-- One `.bru` (request) **per `CHK-` row that is automatable** — `test_layer: own` rows that only test our code may be unit tests outside Bruno; `3rd`/`mixed` rows become Bruno requests hitting the sandbox.
-- Environment variables for base URL / auth — never hardcode secrets into the `.bru` files.
-- The `api-tests.md` table lists each `CHK-` → its `.bru` file + the expected response (status + the key field to assert).
-
-## Go/no-go (`api-readiness.md`)
-
-`/api-readiness` hard-refuses to issue a "go" if `/api-test` results are absent — the go-live gate is downstream of proof the calls work. Its go/no-go table covers:
-
-- **Cutover** — the enablement sequence (flag order, who flips what, the moment the integration goes live).
-- **Feature flags** — kill switch name + who can flip it + the off-state behavior (degraded UX).
-- **Monitoring** — the alerts (error rate, latency, their-status-page subscription) + the runbook link.
-- **Rollback** — the disable sequence + how to back out partial data already written.
-- **SLA / deprecation** — their SLA we depend on + any provider sunset date + our deprecation notice to consumers.
-
-## References
-
-- `rules/naming-conventions.md` — paths + `type:` values for the 7 outputs
-- `rules/doc-selection.md` — routing into the chain (provider open → `/api-assess`; provider fixed → `/api-doc`)
-- `rules/test-conventions.md` — the `CHK-` anatomy (path-scoped, same under `test/api/`)
+Use accepted actual project paths and stable FR/BR/TC IDs. Do not impose a single fixed integration file or mandatory provider-specific filename. ANGENT Root chooses method depth; Execution controls API/provider writes; Quality verifies source, output and running behavior.

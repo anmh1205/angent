@@ -1,69 +1,27 @@
-# MIT source reference — use under ANGENT authority
+# Icons in technical diagrams: opt-in and source-safe
 
-Maintained reference from https://github.com/nv-minh/dev-ba-kit/blob/main/rules/icon-map.md (Edward Ngo, 2026, MIT). Original Claude plugin roots, hooks, slash commands and agent roles are **not** native ANGENT runtime capabilities. ANGENT Hub routing and current host authority take precedence.
+**Provenance:** Adapted from MIT Dev BA Kit / rules/icon-map.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit. The original shell icon resolver and automatic CDN fallback are not part of the portable ANGENT kit.
 
-# Icon map — insert technology/vendor icons into diagrams (D2)
+## When an icon helps
 
-> Shared rule for architecture-drawing skills (`/d2-architect`, `/system-design`, `/scan-project`). Attach icons (Redis, PostgreSQL, Kafka, AWS, nginx, React...) to infra/tech nodes so the stack is "recognizable at a glance". Skills reference this file in Constraints + References.
+An icon may clarify a **verified technology-specific** node (PostgreSQL, MQTT broker, an actual service provider). Do not assign vendor logos to generic business actors, abstract capabilities or inferred implementation components. A wrong icon is worse than no icon.
 
-## How to use (1 command)
+Node type and connections carry the meaning first. In a logical architecture, a database cylinder, queue shape and clear protocol label are normally sufficient.
 
-Call the shared resolver — it handles bundle-vs-CDN + absolute path automatically:
+## Safe source and licensing
 
-```bash
-ICON="$("${CLAUDE_PLUGIN_ROOT:-.claude}/scripts/icon-path.sh" redis)"
-```
+Prefer local, reviewed icon resources with known license and correct attribution if needed. Never pull arbitrary assets from a remote CDN during rendering without explicit permission—business diagrams may contain confidential identities and external dependencies.
 
-Then attach to the D2 node (keep box + label, icon shows inside the shape). D2 **embeds base64 at compile time** → SVG/PNG/HTML gallery are all self-contained:
+Do not promise the ANGENT D2 generator automatically embeds technology icons: its current executable subset represents typed nodes and labels without a general icon-path resolver.
 
-```
-Cache: Redis        { icon: "<ICON>" }
-DB:    PostgreSQL   { shape: cylinder; icon: "<ICON postgres>" }
-Queue: Kafka        { shape: queue;    icon: "<ICON kafka>" }
-Pay:   Stripe       { icon: "<ICON stripe>" }   # external system
-```
+## Accessibility and maintenance
 
-- **Bundle present** → `icon-path.sh` prints the **absolute path** to `assets/icons/<name>.svg` (absolute is required — render pipeline cwd = project root, `.d2` sits deep under `docs/…`).
-- **No bundle** → prints a **CDN URL** (Devicon/Simple Icons); D2 fetches at render time (needs net) then embeds — output stays self-contained.
-- **Keyword not recognized** → prints empty → **skip the icon** (diagram still renders normally).
+Icons must not replace readable text labels; use consistent size and meaningful alternative descriptions for exported documents. Update/retire an icon when the source technology changes rather than trusting an outdated dependency scan.
 
-## Rules (right altitude — don't overuse)
+## Fallback
 
-- **Only attach icons to infra/technology/external-system nodes** (DB, cache, queue, cloud, tech-specific service, 3rd-party). Do **NOT** attach to abstract business boxes (actor, use case, generic logic block) — wrong altitude, adds noise.
-- **Auto on match:** node whose name/tech matches a keyword → icon added automatically. User types `--no-icons` → **disable everything** (plain drawing).
-- `/scan-project`: map **tech detected from code** (deps/SDK/env: `redis`, `pg`, `kafka`, `@aws-sdk`...) → corresponding icon; record in `scan-plan.md` which tech has an icon.
+If the appropriate licensed icon is missing, render the diagram without it. This is an acceptable, truthful output. Do not block a functional process or data diagram for decoration.
 
-## Keyword → icon (~600 bundled — full Devicon catalogue + curated Simple Icons)
+## Review
 
-The bundle ships the **entire Devicon set**, so most technologies resolve **by exact name** with no alias (e.g. `typescript`, `terraform`, `kotlin`, `oracle`, `apachecassandra`, `tensorflow`). The table below lists only the handy short aliases defined in `icon-path.sh`:
-
-| Group | Keyword (alias) → icon |
-|---|---|
-| **DB/store** | postgres/pg → postgresql · mysql · mariadb · mongo → mongodb · redis · sqlite · elastic/es → elasticsearch · cassandra → apachecassandra · mssql/sqlserver → microsoftsqlserver · oracle |
-| **Messaging** | kafka → apachekafka · rabbit/amqp → rabbitmq · nats |
-| **Cloud/infra** | aws/s3/lambda/sqs/... → amazonwebservices · gcp/gcs → googlecloud · azure · docker · k8s/kube → kubernetes · nginx · apache · tf → terraform · ansible |
-| **Runtime/lang** | node → nodejs · py → python · ts → typescript · js → javascript · java · go/golang · rust · dotnet → dotnetcore · cs/csharp → csharp · cpp/c++ → cplusplus · php · ruby |
-| **Framework** | react · vue → vuejs · angular · next → nextjs · django · spring/springboot · express · rails/ror · laravel · fastapi |
-| **Other** | graphql · grafana · prometheus · stripe · sendgrid · cloudflare · vercel · datadog |
-
-Unknown names fall back to the Devicon CDN; not found → skip icon (the diagram still renders). To add a non-obvious keyword permanently, add an alias in `icon-path.sh`.
-
-## Sources + license
-
-- **Devicon** (multi-color, full catalogue bundled) — **MIT** — `cdn.jsdelivr.net/gh/devicons/devicon`.
-- **Simple Icons** (mono, for infra/SaaS brands not in Devicon: stripe, sendgrid, cloudflare, vercel, datadog, …) — **CC0** — `cdn.jsdelivr.net/npm/simple-icons`.
-- Files are licensed (MIT/CC0); logos are trademarks of their owners — using them to *identify technologies* in diagrams is legitimate. Attribute sources in `NOTICE`.
-
-## Icon support by engine (phase 2)
-
-The D2 path above (Devicon bundle via `icon-path.sh`) is the kit's **primary** icon mechanism — base64-embedded, self-contained, ~600 icons. The other engines, in honest terms:
-
-- **Mermaid — `architecture-beta` built-in icons (reliable, no config).** Use for Mermaid architecture diagrams: `service api(server)[API]`, `service db(database)[Database]`, plus `disk`, `internet`, `cdn`, `queue`. Verified to render in `mmdc` with zero setup. These are the only Mermaid icons that work out of the box.
-- **Mermaid — flowchart `@{icon}` (iconify) is advanced.** `A["Label"]@{icon: "fa:icon-server"}` needs an icon-pack config passed to mmdc (registering `iconPacks` via `-c config.json`) and is fragile across versions — NOT the default. Prefer `architecture-beta` built-ins, or use the D2 family if you need real tech logos.
-- **PlantUML — tupadr3 is NOT usable with the bundled jar.** `!include <tupadr3/devicons2>` (and `font-awesome-5`, `material`) error out — the jar's tupadr3 stdlib (SPM format) exposes only `tupadr3/common`, not the icon sprite sets. **For tech icons, use the D2 family** (Devicon bundle), not PlantUML. If you genuinely need icons inside a PlantUML diagram, add the tupadr3 icon-set `.iuml` files yourself and `!include` them by path.
-
-> Net: tech icons "just work" on **D2** (Devicon bundle) and as **Mermaid `architecture-beta` built-ins**. PlantUML + Mermaid-flowchart iconify need extra setup and are not wired as defaults.
-
-## One-line summary
-
-> **`icon-path.sh <tech>` → `icon:` value (bundle abs / CDN). Only infra/tech nodes, auto on match, `--no-icons` to disable. D2 embeds base64 → self-contained.**
+Check technology matches source evidence, visual layout, label readability and whether the assets are embedded safely for offline distribution. A generated SVG is not a license grant to redistribute the icons it might reference.

@@ -1,49 +1,31 @@
-# MIT source reference — use under ANGENT authority
+# Correctness gates for diagrams and visual artifacts
 
-Maintained reference from https://github.com/nv-minh/dev-ba-kit/blob/main/rules/diagram-principles.md (Edward Ngo, 2026, MIT). Original Claude plugin roots, hooks, slash commands and agent roles are **not** native ANGENT runtime capabilities. ANGENT Hub routing and current host authority take precedence.
+**Provenance:** Adapted from MIT Dev BA Kit / rules/diagram-principles.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit. There is no universal ANGENT diagram validator for every language.
 
-# diagram-principles.md — what "valid" means for a diagram (the `diagram-validate` gate)
+## Four independent levels of correctness
 
-Every diagram a skill ships MUST pass `scripts/diagram-validate.ts` before reporting done. This rule
-is the spec for what that gate checks, per engine. Run it as the last step:
+1. **Source fidelity:** every actor, rule, state, table and protocol label comes from accepted source evidence or is identified as a proposal.
+2. **Model semantics:** validate identity, ownership, directed edges, branch guards, reachability, cardinality, state rules or time-ordered messages as appropriate to the diagram type.
+3. **Format/render:** actual D2 CLI, BPMN XML/XSD, Mermaid renderer, local PlantUML or connected Figma tool must succeed before claiming a rendered/editable artifact.
+4. **Visual and operational quality:** open the image/canvas, inspect clipped labels and edges, contrast, readable text and relationship direction; read back editable node structure where a Figma operation was requested.
 
-```bash
-bash "${CLAUDE_PLUGIN_ROOT:-.claude}/scripts/tsrun.sh" scripts/diagram-validate.ts docs/{feature}/<file-or-dir>
-```
+A format parser cannot establish level 1 or 2. A successful SVG export alone cannot establish Figma editability. Never call an image a genuine device/cloud diagram if its nodes came from a hypothetical example.
 
-- **exit 0** → clean. Ship it.
-- **exit 2** → only warnings/advice (no errors). Ship, but surface the advice to the user.
-- **exit 1** → ERRORS. Do NOT report done — fix the source and rerun.
+## What the portable kit actually runs
 
-## Shared principles (every engine)
+- build_d2.py: validated activity/swimlanes, ERD SQL tables and bounded logical architecture; optional D2 CLI renders SVG.
+- build_bpmn.py: one acyclic non-executable process with exclusive gateways and lanes; optional independent OMG XSD integration verifies supported XML.
+- build_wireframe.py: static or mock-interactive HTML screens, not a generic UML renderer.
+- to_reqwise_payload.py: checks candidate models for six Reqwise OSS types but performs **zero live Figma writes**.
 
-These apply regardless of engine, where the source is parseable:
+Mermaid and PlantUML content may be produced as source, but no universal renderer is bundled. If not actually rendered, report source and limitations instead of an imagined screenshot.
 
-- **Compiles / renders.** The #1 audit — a diagram that doesn't render is broken. The validator runs
-  the engine's compiler (mmdc / d2 / plantuml / bpmn-moddle / draw.io parse).
-- **No placeholder labels.** `TODO`, `FIXME`, `xxx`, `…`, `TBD` left in a node/edge → warning. Fill in
-  real text before delivering.
-- **No unbalanced quotes.** A label with an unescaped `"` breaks rendering → error.
-- **No empty node labels** (where detectable). A node with no text adds nothing.
-- **Bilingual labels** (per `language.md`) when the doc is bilingual — the label mirror is the
-  reviewer's job (auto-detection is unreliable; not machine-enforced).
+## Domain checks
 
-## Per-engine depth (what the gate actually checks)
+Activity: single trigger, guarded alternatives, responsible actors and valid terminal paths. ERD: concrete entity IDs/keys, foreign endpoints, optionality and business cardinality. Sequence: lifeline identity, message order and failure/timeout behavior. State: stable entity and events, forbidden transitions and conflicting guards. BPMN: supported event/gateway semantics and real XML validity.
 
-| Engine | Compile | Stencil/id integrity | Graph structure | Design principles |
-|---|---|---|---|---|
-| **draw.io** (`/drawio-*`) | parse `mxGraphModel` | stencil refs exist in catalog · duplicate cell id · dangling edge ref | full (via `parseCells`) | AWS nesting order · Well-Architected (DB in public subnet, single NAT across AZs) · palette ≤8 · font ≤4 sizes · icon-size consistency · edge routing/crossings/through-node · floating arrowheads |
-| **BPMN** (`/bpmn`) | bpmn-moddle parse + `<BPMNDiagram>` | — | start/end reachability · gateway ≥2 branches · no orphan · actor↔lane coverage | swimlane membership · overlapping lines · task clipping |
-| **Mermaid** (`/sequence /activity /state /erd /mindmap /journey /timeline`) | mmdc compile | — | — *(graph checks are NOT enforced on sequence/journey/mindmap/timeline — no node-graph semantics, would false-positive)* | placeholder/quote lint only |
-| **D2** (`/d2-* /system-design /dfd`) | d2 compile | — | — | placeholder/quote lint only |
-| **PlantUML** (`/activity-swimlane /usecase-diagram`) | plantuml compile (local jar) | — | — | placeholder/quote lint only |
+## Security and reproducibility
 
-## Why graph checks (orphan / undefined-ref) are full only for draw.io + BPMN
+Prefer offline rendering for confidential business rules, customer identities and schemas. Do not silently call public rendering websites or download remote icons. Preserve source model revision and renderer version; for supported examples run integration checks, then compare images with the actual source.
 
-Orphan-node and undefined-edge-ref checks need a RELIABLE parse of the node/edge graph. draw.io
-(`parseCells`) and BPMN (bpmn-moddle) give that. Mermaid flowchart/state/ER *could* be regex-parsed,
-but the payoff is low (those engines already fail to compile on a dangling ref) and the false-positive
-risk on sequence/journey/mindmap/timeline/plantuml is high — a diagram-time tool can't read intent,
-and false positives erode trust faster than misses. So the gate enforces compile + lint there, and
-relies on the skill's L1 review + the diagram-reviewer agent for content correctness. (See
-`@./diagram-style.md` for the visual tokens, `@./diagram-selection.md` for which diagram to use.)
+A failed prerequisite is an explicit blocker for that output mode, not permission to substitute an unrelated diagram while calling it equivalent.
