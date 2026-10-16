@@ -41,6 +41,13 @@ class TestDocuments(unittest.TestCase):
             self.assertTrue(any("path traversal" in e for e in result["errors"]))
             self.assertTrue(any("broken" in e for e in result["errors"]))
 
+    def test_real_mit_sample_srs_uses_resolvable_docs_layout(self):
+        root=ROOT / "extensions/angent-ba/examples"
+        sample=root / "docs/atlas-re/srs/atlas-re-spec.md"
+        outcome=inspect(sample,root)
+        self.assertTrue(outcome["ok"],outcome)
+        self.assertGreaterEqual(len(outcome["table_ids"]),10)
+
     def test_source_template_is_not_a_completed_document(self):
         path=ROOT/"extensions/angent-ba/skills/ba-kg/references/templates/doc-srs.md"
         result=inspect(path,ROOT)
