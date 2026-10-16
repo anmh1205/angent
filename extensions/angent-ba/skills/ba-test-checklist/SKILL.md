@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /test-checklist — Test coverage outline
@@ -27,7 +27,7 @@ Derive the test-coverage outline from `srs/{feature}-spec.md` (FR/BR/E), the sto
 - **Boundary awareness** — a BR threshold (e.g. ≤ 50k) → one boundary `CHK-` that `/test-cases` will expand to the at/below/above triple.
 - **Error coverage** — every `E-` code → at least one `CHK-` (error layer).
 - **The `TC` column starts empty** — `/test-cases` fills it; this skill owns the outline, not the steps.
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Derive the test-coverage outline from `srs/{feature}-spec.md` (FR/BR/E), the sto
 3. **Fact-list** — every candidate + its source (FR/BR/E/AC) + its layer.
 4. **Assign `CHK-` IDs** — scan the existing checklist for max; classify each row's layer.
 5. **Draft** the checklist per the template — rows grouped by layer, `Covers` filled, `TC` empty, `Status: draft`.
-6. **L1 plan preview** — row count by layer + coverage map (which FRs/ACs/E- are covered, which aren't).
+6. **scoped change preview** — row count by layer + coverage map (which FRs/ACs/E- are covered, which aren't).
 9. **Output report** — layer breakdown + uncovered FR/E/AC (so the user knows the outline's edges) + next (`/test-cases`).
 
 ## Gotchas

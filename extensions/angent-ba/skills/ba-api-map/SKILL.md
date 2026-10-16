@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /api-map — 3-layer field mapping (API chain [3])
@@ -26,7 +26,7 @@ Map every field end to end across three layers — the **provider payload** (the
 - **Source-of-truth owner is mandatory** — every row declares ours / theirs / derived (+ the derivation if derived). No owner → flag (a drift field).
 - **Direction per row** — `out` (we send) / `in` (we receive) / `bi` (both, e.g. an id we send and they echo back).
 - **Transforms explicit** — unit conversion, date format, enum mapping, currency rounding: name the transform, don't hide it.
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Map every field end to end across three layers — the **provider payload** (the
 3. **Owner + transform interview** — only the gaps (owners the design didn't decide, transforms the ERD/types imply); one batched round.
 4. **Fact-list** — every mapping + owner + transform + source.
 5. **Draft** the 3-layer table per the template; flag ownerless + name-mismatch rows.
-6. **L1 plan preview** — field count + ownerless flags + name-mismatches + transforms.
+6. **scoped change preview** — field count + ownerless flags + name-mismatches + transforms.
 9. **Output report** — coverage + ownerless/mismatch flags + next (`/api-checklist`).
 
 ## Gotchas

@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /api-checklist — Integration test outline (API chain [4])
@@ -27,7 +27,7 @@ Derive the integration test outline from the design (orchestration/webhook/retry
 - **Degraded-UX coverage** — the design's degraded paths get `test_layer: own` rows (we can test our fallback without the provider).
 - **Every row Covers a design/map decision** — a row with no source is fabrication.
 - **The `TC` column starts empty** — `/api-test` fills it.
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Derive the integration test outline from the design (orchestration/webhook/retry
 3. **Classify** — assign `test_layer` + `direction` per row.
 4. **Assign `CHK-` IDs** — scan the existing api-checklist for max (path-scoped, independent of the feature-wide checklist's max).
 5. **Draft** per the template — rows with test_layer/direction, `Covers` filled, `TC` empty.
-6. **L1 plan preview** — row count by layer + direction + the webhook⇄reconciliation pairs + degraded coverage.
+6. **scoped change preview** — row count by layer + direction + the webhook⇄reconciliation pairs + degraded coverage.
 9. **Output report** — layer/direction breakdown + next (`/api-test`).
 
 ## Gotchas

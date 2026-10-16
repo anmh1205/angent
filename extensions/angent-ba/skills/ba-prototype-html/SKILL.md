@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /prototype-html — Clickable multi-screen prototype
@@ -26,7 +26,7 @@ Produce ONE self-contained, clickable HTML prototype — `docs/{feature}/html-de
 - **Self-contained** — inline CSS + the minimal JS for screen switching (anchor + optional show/hide); no CDN, no build step, double-click to run.
 - **One screen = one state** (`ba-conventions.md` §8) — error/empty/loading states are their own screens or clearly toggled views, not a busy combo.
 - **Device frame** — inherit from `userflow.md`'s `primary_device` (no re-ask — it's settled); the prototype renders at that width.
-- **Idempotent** — re-run → L2 diff (regenerate from current wireframes).
+- **Idempotent** — re-run → versioned diff (regenerate from current wireframes).
 - **Template** — `@./resources/prototype.html`.
 - **Index update** — set the `HTML prototype` column in `{feature}-wireframe-index.md`.
 
@@ -41,7 +41,7 @@ Produce ONE self-contained, clickable HTML prototype — `docs/{feature}/html-de
 1. **Gate.** No ASCII screens AND no HTML wireframes → refuse + route `/user-flow` + `/wireframe-ascii`. Read the wireframes (content) + `userflow.md` (the navigation edges — what links to what).
 2. **Build the nav map** — every control with a `Nav →` in its Description becomes a working link to `#s{n}`; every error-path edge too.
 3. **Draft `{feature}-prototype.html`** — all screens as sections (`id="s{n}"`), inline CSS, the minimal JS to switch screens on click; device-width frame; B&W neutral (this is interaction, not visual design).
-4. **L1 plan preview** — flow/screen count + nav edges wired + any dead-end found (must be resolved or explicitly an exit).
+4. **scoped change preview** — flow/screen count + nav edges wired + any dead-end found (must be resolved or explicitly an exit).
 6. **Index update** — `{feature}-wireframe-index.md` column `HTML prototype` → `{feature}-prototype.html#{slug}` per screen.
 7. **Output report** — open path + nav coverage + dead-ends (none expected).
 

@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /wireframe-ascii — ASCII wireframes + 5-column descriptions
@@ -27,8 +27,8 @@ Draw one ASCII frame per screen in a flow + the **5-column screen-description ta
 - **Description depth is the value** (`ba-conventions.md` §6) — 6 layers (purpose · validation/constraints · states · navigation · error+wording · edge/security). Source ONLY from `srs/{feature}-spec.md` (FR/BR/NFR/E-), UC branches, URD — **never fabricate**; gaps → ask the user one element at a time (no-re-ask), or mark clearly where filling is needed.
 - **Device question first** (`ba-conventions.md` §7) — pre-suggest from `userflow.md`'s `primary_device`; never decide silently. Confirm via AskUserQuestion (Mobile 375 / Tablet 768 / Desktop 1024 / Responsive). Write `primary_device` back if missing.
 - **Screens numbered `[n]` from the userflow** — reuse the userflow's numbers; the `id="s{n}"` deep-links match the HTML skills.
-- **Idempotent** — same flow re-run → L2 diff; the screen index `updated` column ticks.
-- **Validate before done** — doc-validate on the ascii-wireframe dir (step 9).
+- **Idempotent** — same flow re-run → versioned diff; the screen index `updated` column ticks.
+- **Validate before done** — BA Markdown validation on the ascii-wireframe dir (step 9).
 
 ## Inputs
 
@@ -45,7 +45,7 @@ Draw one ASCII frame per screen in a flow + the **5-column screen-description ta
 4. **Ask the gaps** (one element at a time, no-re-ask) — every control whose validation/error/state the sources don't pin down; "skip" → mark the row shallow with a clear fill-needed note.
 5. **Draft per screen** — ASCII frame (boxed, label `[n] Name`, the controls as ASCII) + the 5-column table beneath it. Iterate the frame at **L3** in chat until the user is happy with the layout.
 6. **Update the index** — ensure each screen has a `## Descriptions` H3 row (1-2 sentence purpose) + the Screens table row (status / owning flow / used-by / Figma+HTML / updated).
-7. **L1 plan preview** — flow + screen count + device + per-screen fill-level (filled / marked-needs-fill).
+7. **scoped change preview** — flow + screen count + device + per-screen fill-level (filled / marked-needs-fill).
 10. **Output report** — screens drawn + marked-needs-fill count + next (`/wireframe-html` same flow, or `/ac`/`/prototype-html`).
 
 ## ASCII shape reference (Claude composes it, do NOT hard-paste)

@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /api-doc — Digest the 3rd-party contract (API chain [1])
@@ -25,7 +25,7 @@ Read the provider's OpenAPI/spec/docs and write an internal summary of what THEY
 - **Provenance on every row** — endpoint / auth / webhook / limit cites the spec page or version it came from; a row with no provenance is a guess.
 - **Unknowns → OQ** — the spec doesn't say X → OQ, never a confident entry. (Same discipline as `/reverse-doc`'s confidence markers.)
 - **Multi-provider** — one summary file per provider; the design + map stay single.
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -41,7 +41,7 @@ Read the provider's OpenAPI/spec/docs and write an internal summary of what THEY
 2. **Extract** — endpoints (method/path/purpose), auth model, webhooks (if any), rate limits, pagination, error response shape.
 3. **Provenance + gaps** — every entry cites its source; anything absent from the spec → OQ (e.g. "rate limit not documented → OQ: ask provider").
 4. **Draft** the summary per the template — sections per concern, each row provenance-tagged, an OQ section for the gaps.
-5. **L1 plan preview** — endpoint count + auth model + webhook presence + provenance coverage + gap count.
+5. **scoped change preview** — endpoint count + auth model + webhook presence + provenance coverage + gap count.
 7. **If a section can't be sourced** → OQ, never a guess; HARD STOP only if the whole contract is missing.
 9. **Output report** — coverage + gaps + next (`/api-design`).
 

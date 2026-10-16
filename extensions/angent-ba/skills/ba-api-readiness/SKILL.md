@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /api-readiness — Go-live gate (API chain [6])
@@ -25,7 +25,7 @@ Produce the go-live gate for the integration — cutover sequence, feature flags
 - **Five mandatory concerns** — cutover (enablement sequence + who flips what), feature flags (kill switch name + owner + off-state = degraded UX), monitoring (alerts: error rate/latency/their-status-page + runbook link), rollback (disable sequence + partial-data back-out), SLA/deprecation (their SLA we depend on + sunset date + our deprecation notice).
 - **No fabrication** — flag names, alert thresholds, SLA figures cite the design/SRS/provider docs; unknowns → OQ or a `blocked` row.
 - **Degraded-UX is the flag's off-state** — the kill switch doesn't just turn the feature off, it routes to the degraded path the design specified.
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -39,7 +39,7 @@ Produce the go-live gate for the integration — cutover sequence, feature flags
 2. **Interview gaps** (one batched round): the cutover sequence + who flips each step · the kill-switch flag name + owner · the monitoring alerts + thresholds + runbook · the rollback sequence · the provider SLA + any sunset.
 3. **Fact-list** — every gate item + its evidence/owner; the unknowns → `blocked` rows or OQs.
 4. **Draft** per the template — the five concerns + the go/no-go table (each gate item: ready/blocked + evidence).
-5. **L1 plan preview** — go/no-go verdict + the blocked items (if any) + the cutover summary.
+5. **scoped change preview** — go/no-go verdict + the blocked items (if any) + the cutover summary.
 7. **Self-check** — a "go" requires every gate item `ready`; any `blocked` → verdict stays `no-go`.
 9. **Output report** — the verdict + the blocked items (the path to "go") + next (flip the flags on "go").
 

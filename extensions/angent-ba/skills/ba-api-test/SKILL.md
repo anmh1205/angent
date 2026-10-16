@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /api-test — Bruno collection + API test table (API chain [5])
@@ -27,7 +27,7 @@ Expand each `CHK-` in the integration checklist into a Bruno request (`.bru`) + 
 - **Expected = status + key field** — not the whole body; the one field that proves the call (e.g. `200 + response.claim_id`), plus the error-case expectations.
 - **No live production calls** — sandbox/test environment only; flag if the only environment is prod.
 - **Migration on rerun** — legacy test files still under `integration/` move to `test/api/` (naming-conventions line 60).
-- **Validate before done** — doc-validate (step 8).
+- **Validate before done** — BA Markdown validation (step 8).
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Expand each `CHK-` in the integration checklist into a Bruno request (`.bru`) + 
 3. **Fact-list** — per request: the endpoint, the assertion, the provider, the env.
 4. **Generate Bruno** — one collection per provider; one `.bru` per automatable row; env vars for base URL + auth (placeholders, never secrets).
 5. **Draft `api-tests.md`** — the table (CHK · title · `.bru` · method/path · expected status · key assertion · provider).
-6. **L1 plan preview** — request count by provider + the assertions + any `own`-row skipped-as-unit.
+6. **scoped change preview** — request count by provider + the assertions + any `own`-row skipped-as-unit.
 9. **Output report** — requests generated + next (`/api-readiness`).
 
 ## Gotchas

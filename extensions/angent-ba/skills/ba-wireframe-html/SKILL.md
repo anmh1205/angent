@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
 
 
 # /wireframe-html — B&W static HTML wireframes
@@ -26,8 +26,8 @@ Render each flow as a standalone B&W static HTML file (`docs/{feature}/html-wire
 - **Device width = frame width** — mobile 375 / tablet 768 / desktop 1024; `responsive` only if the user chose it AND you emit real breakpoints. Confirm the device (AskUserQuestion, pre-suggest from `primary_device`) — never guess.
 - **Renderer on par with `/wireframe-ascii`** — same screens, same `[n]`, same 5-column description intent; the ASCII content is the source of truth, HTML is the fidelity pass.
 - **Self-contained** — no CDN, inline CSS; opens by double-click. Each screen `id="s{n}"` matches the ASCII deep-links.
-- **Idempotent** — re-run → L2 diff; entry + index regenerated.
-- **Validate before done** — doc-validate on the metadata index (step 9).
+- **Idempotent** — re-run → versioned diff; entry + index regenerated.
+- **Validate before done** — BA Markdown validation on the metadata index (step 9).
 
 ## Inputs
 
@@ -43,7 +43,7 @@ Render each flow as a standalone B&W static HTML file (`docs/{feature}/html-wire
 3. **Per flow → `{flow-slug}.html`** — device-width frame per screen, the controls as neutral B&W boxes/labels, `id="s{n}"`, wrap screens vertically. Reuse ASCII content exactly; this is fidelity, not redesign.
 4. **Entry `{feature}-wireframe.html`** (Phase G.5) — sidebar TOC (flow → screen), Overview tab = clickable flow map (anchors to each `id="s{n}"`), iframe loading each flow file. Self-contained.
 5. **Index `{feature}-wireframe-html-index.md`** — Flows table (flow / file / screens / device / updated).
-6. **L1 plan preview** — flows + screens + device + entry created.
+6. **scoped change preview** — flows + screens + device + entry created.
 9. **Output report** — entry path (double-click to open) + next (`/prototype-html` for click-through, `/figma` to push frames).
 
 ## Gotchas
