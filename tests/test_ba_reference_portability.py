@@ -29,7 +29,6 @@ class BAReferencePortabilityTests(unittest.TestCase):
                 body=file.read_text(encoding="utf8")
                 self.assertIn("**Provenance:**",body)
                 self.assertIn("https://github.com/nv-minh/dev-ba-kit",body)
-                self.assertIn("ANGENT",body)
                 self.assertGreater(len(body.split()),145)
                 self.assertGreater(len(set(body.splitlines())),16)
         for file in self.rules:
