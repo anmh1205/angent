@@ -1,53 +1,28 @@
 ---
 name: ba-dashboard
-description: Business analysis dashboard specialist.
+description: Source-driven BA dashboard method with independent decision evidence, output validation and safe provider boundaries.
 ---
 
-# ANGENT BA: dashboard
+# BA evidence dashboard: what is known, blocked and changing
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/dashboard/SKILL.md
+**Source background:** Independent adaptation of MIT Dev BA Kit's dashboard method (Edward Ngo, 2026): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/dashboard/SKILL.md. The dashboard is a *read model* of actual documents and provider evidence, not a lifecycle controller or a new authoritative database.
 
-## Portability and authority
+## Establish provenance before metrics
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
+1. Scope the question: feature readiness, document completeness, open business decisions, requirement/test coverage or observed delivery status. Choose only indicators that help the user's next decision; avoid decorative charts and false precision.
+2. Read the accepted source set and revisions, current BA evidence graph if present and actual Jira/release/provider data **only if connected and authorized**. Do not assume \`activity.log\`, \`staleness.log\`, \`docs/feature-list.md\` or \`source_watermark\` exist.
+3. Compute denominators from the documents actually inspected. Distinguish a missing artifact, an uninspected artifact, an accepted deferral and a broken source reference. A dashboard with a perfect 4/4 score based on four selected examples must not imply a project's remaining requirements were covered.
+4. Present structural coverage across UN→BO→CAP→FR→AC/CHK/TC separately from execution evidence. A linked TC is **not** a passed test; a Jira issue closed is **not** a deployed capability; a mock CLI or prototype demonstration is **not** a production service.
+5. List consequential open questions and source conflicts with owner, affected decision and next evidence. Never fabricate status transitions from dates or automatically mark a user question as resolved because a generated file exists.
+6. Use current source/provider timestamps where available. When estimating staleness, state the actual method (document revision divergence, Git SHA or observed provider updated_at) rather than inventing a "fresh/stale" rule based on undocumented logs.
+7. Where helpful, display a compact per-feature table: goal, source revision, FR total, explicit test links, *executed* test count, open policy decisions, provider/deployment status and material risk. Leave unmeasured cells as "unknown", not zero.
+8. If HTML is requested, use a real authorized artifact renderer, with semantic headings, usable contrast and a local/no-external-resource policy for private data. The existing source graph has a tested offline HTML preview at \`extensions/angent-ba/scripts/render_preview.py\`; it does not independently implement a full multi-provider operations dashboard.
+9. Read back the actual output where files/providers were modified, and preserve existing manual status notes. Regenerate only the authorized view, not the whole project index or accepted documentation.
 
+## Representative evidence interpretation
 
-# /dashboard — Vault status (one-file HTML)
+The Atlas example has 58 source-linked BA artifact rows including six UN, four BO, six CAP and eight FR. The parser can prove four of eight FRs have explicit downstream test artifacts, but no production test execution or customer approval. Display **4/8 structurally linked** and **executed: unknown/not-proven**, not "50% quality" or "50% of the system works."
 
-## Goal
+## Outcome
 
-Scan the vault and render one self-contained HTML status page — features and their doc statuses, staleness (from `staleness.log`), recent activity (from `activity.log`), and Open-Question debt (unresolved OQs across the chain) — plus regenerate `docs/feature-list.md` (the status-lifecycle `* → approved` automation). **Outputs**: `docs/_shared/dashboard.html` + `docs/feature-list.md`.
-
-## Constraints
-
-- **Group C** (`feature-bootstrap.md`): empty vault → write a placeholder dashboard ("nothing yet — start with `/brainstorm` or `/urd`").
-- **Read-only over sources** — scans docs; the ONLY writes are `dashboard.html` + `feature-list.md` (L1-gated; `approval-gate.md` notes dashboard is NOT exempt — it writes an HTML file).
-- **Self-contained HTML** — inline CSS, no CDN; the gallery skill's self-contained pattern.
-- **`dashboard.html` path** — `docs/_shared/dashboard.html` (a `_shared/` singleton like `traceability.md`).
-- **Feature-list regeneration** — `docs/feature-list.md` from each feature's docs' `status:` (the status-lifecycle `* → approved` transition triggers this; `/dashboard` does it on demand too).
-- **OQ debt** — count unresolved OQs per feature (parse the checkbox lists); a feature with 5 open OQs is visibly riskier.
-- **Idempotent** — re-run regenerates (versioned diff).
-- **Validate before done** — BA Markdown validation doesn't cover `.html`/`feature-list.md` (excluded types); self-check the HTML is well-formed.
-
-## Inputs
-
-```
-/dashboard              # render + regenerate feature-list
-/dashboard --open       # render, then open in browser
-```
-
-## Approach
-
-1. **Scan the vault** — per feature: its docs + statuses + `updated:` dates; count OQs; recent activity from `activity.log`; staleness from `staleness.log` if present. Also read `docs/_shared/project-context.md` frontmatter (`source_watermark` + `staleness_budget_commits`) → compute commit drift (commits since the watermark vs the budget) for a project-context fresh/stale flag.
-2. **Aggregate** — feature statuses (how many approved/in-review/draft), OQ debt per feature, stale docs, last-activity per feature.
-3. **Render `dashboard.html`** — self-contained: a top-of-page **Project context: fresh / stale (N commits since scan)** callout (when a `/discover` profile exists) + a feature table (status pills, OQ count, last-updated, stale flag) + an activity feed (recent N events) + an OQ-debt callout. Light, no CDN.
-4. **Regenerate `docs/feature-list.md`** — one row per feature: slug + status + doc count + OQ count + updated.
-5. **scoped change preview** — feature count + status mix + OQ debt + stale count + project-context fresh/stale flag.
-7. **Output report** — the dashboard path + the status mix + the riskiest feature (most OQs/stale) + next.
-
-## Gotchas
-
-- **Status, not coverage** — the dashboard answers "where are we?" (statuses, staleness, debt); `/gap` answers "what's missing in the chain?". Both, different jobs.
-- **OQ debt is the leading indicator** — a feature with growing OQ debt is drifting from its sources; surface it, don't hide the count.
-- **feature-list.md is auto-gen** — never hand-edit it; it's regenerated from the docs' statuses. (Excluded from the activity log like other auto-gen files.)
-- **Self-contained matters** — a dashboard that fetches a CDN breaks offline/on intranet; inline everything.
+Deliver the smallest understandable view that answers what is complete, what is only proposed, what is blocked, why it matters and what action is next. State source scope, timestamps/revisions, uncovered requirements and limits. ANGENT Root keeps continuity and final recommendations; BA supplies disciplined indicators; Execution owns authorized writes and provider read-back. There is no compulsory singleton \`docs/_shared/dashboard.html\` or auto-regeneration of \`feature-list.md\`.

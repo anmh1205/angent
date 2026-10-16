@@ -1,51 +1,31 @@
 ---
 name: ba-api-readiness
-description: Business analysis api-readiness specialist.
+description: Source-driven BA api-readiness method with independent decision evidence, output validation and safe provider boundaries.
 ---
 
-# ANGENT BA: api-readiness
+# API readiness: evidence gates for a safe integration rollout
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-readiness/SKILL.md
+**Method background:** Maintained independent adaptation of MIT Dev BA Kit \`api-readiness\` by Edward Ngo (2026): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-readiness/SKILL.md. This method advises launch decisions; ANGENT Root and authorized operators control production deployment.
 
-## Portability and authority
+## Establish the exact release unit
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
+1. Identify the integration, target environment, provider/API version, intended users, owning team, release scope and consequences of failure. Check accepted FR/BR/NFR and the provider's current contract/terms before proposing a cutover.
+2. Read actually performed tests and the environments in which they ran. Distinguish generated Bruno/Playwright files, loopback mocks, sandbox/provider integration and production canary probes. A file named \`api-tests.md\` is **not evidence** merely because it exists, and its absence is not proof that no tests ran.
+3. Verify contract shape against the actual OpenAPI/provider docs; note OAuth/API key scopes, tenant separation, secrets handling, expiration, throttling/rate limits, error behavior, idempotency and webhook authenticity where applicable.
+4. Define the enablement sequence with owners and a **verified** off/degraded state: feature flag or runtime configuration, rollback switch, migration compatibility and safe behavior if an upstream provider is unavailable.
+5. Establish operational monitoring: user-impacting latency/errors, provider health signals, queue/retry backlog, key business outcomes, actionable alerts, runbook owner and realistic detection/response criteria. Unknown thresholds are release risks, not numbers to invent.
+6. Check downstream data effects and reconciliation: retries, duplicate webhooks, partial writes, compensating operations, irreversible provider actions and what happens to already-written data after disabling a flag. A kill switch alone is not rollback.
+7. Check provider reliability/deprecation, key rotation and contractual boundaries from current supported sources, not stale marketing. Distinguish vendor commitments from your own SLA/SLO.
+8. Assess test coverage of negative cases at the *actual* required level: access denial, invalid payload, provider timeout, partial response, duplicate delivery, transient rate limit, expired authorization and recovery. A local mock pass only demonstrates the mock behavior.
+9. Build a clear gate matrix for **contract**, **authorization**, **test evidence**, **data safety**, **observability**, **operational ownership**, **cutover**, **rollback** and **provider dependencies**. For each gate record current evidence, environment, verified/unverified status, risk and exact owner.
+10. Recommend GO only when every *material* release gate is supported by the required environment and approved risk owner. Otherwise explicitly recommend HOLD/NO-GO and name the smallest next observation required to lift each blocker. Do not automatically flip a flag or submit a release.
 
+## Useful tooling already present
 
-# /api-readiness — Go-live gate (API chain [6])
+\`ba-api-test\` can generate real Bruno requests and execute them in an authorized sandbox. \`extensions/angent-ba/scripts/audit_api_contract.py\` checks a conservative OpenAPI 3.1 subset, and \`extensions/angent-ba/scripts/audit_api_field_mapping.py\` verifies source-to-UI mappings using a supplied fixture. None of these establish a successful real provider rollout. For a high-risk integration, provider-level results, deployment health and rollback rehearsals remain necessary.
 
-## Goal
+## Deliverable and acceptance
 
-Produce the go-live gate for the integration — cutover sequence, feature flags (kill switch), monitoring + runbook, rollback, SLA/deprecation, and a go/no-go table that hard-refuses "go" if `/api-test` results are absent. **Single output**: `docs/{feature}/integration/api-readiness.md` (type `api-readiness`).
+Produce the current release recommendation, concise evidence-backed gate table, blocked/unknown items, owners, cutover and rollback plan, failure handling and recheck triggers. Show the difference between "not required", "not measured" and "failed"; never hide a risk by merging these categories.
 
-## Constraints
-
-- **Step [6], the gate** (`api-integration.md`): reads the whole chain — summary, design, map, checklist, **tests**. `api-tests.md` missing → **hard-refuse "go"** (can't enable what you haven't proven works); still write the readiness doc with status `blocked`.
-- **Go/no-go is evidence-based** — the table's "go" requires: tests present + monitoring defined + rollback defined + flags named. A "go" with any of these absent is BLOCKING.
-- **Five mandatory concerns** — cutover (enablement sequence + who flips what), feature flags (kill switch name + owner + off-state = degraded UX), monitoring (alerts: error rate/latency/their-status-page + runbook link), rollback (disable sequence + partial-data back-out), SLA/deprecation (their SLA we depend on + sunset date + our deprecation notice).
-- **No fabrication** — flag names, alert thresholds, SLA figures cite the design/SRS/provider docs; unknowns → OQ or a `blocked` row.
-- **Degraded-UX is the flag's off-state** — the kill switch doesn't just turn the feature off, it routes to the degraded path the design specified.
-- **Validate before done** — BA Markdown validation (step 8).
-
-## Inputs
-
-```
-/api-readiness <feature>          # reads the whole chain, assesses go/no-go
-```
-
-## Approach
-
-1. **Gate.** Read the whole chain. `api-tests.md` absent → write readiness with go/no-go = **blocked (no test evidence)**; refuse to issue "go".
-2. **Interview gaps** (one batched round): the cutover sequence + who flips each step · the kill-switch flag name + owner · the monitoring alerts + thresholds + runbook · the rollback sequence · the provider SLA + any sunset.
-3. **Fact-list** — every gate item + its evidence/owner; the unknowns → `blocked` rows or OQs.
-4. **Draft** per the template — the five concerns + the go/no-go table (each gate item: ready/blocked + evidence).
-5. **scoped change preview** — go/no-go verdict + the blocked items (if any) + the cutover summary.
-7. **Self-check** — a "go" requires every gate item `ready`; any `blocked` → verdict stays `no-go`.
-9. **Output report** — the verdict + the blocked items (the path to "go") + next (flip the flags on "go").
-
-## Gotchas
-
-- **"Go" is a verb with consequences** — a soft "looks ready" is not a go; the table forces each gate item to declare ready/blocked with evidence.
-- **Rollback must be real** — "disable the flag" is half a rollback; the other half is backing out data already written to our DB / sent to the provider.
-- **Their SLA is our dependency** — if the provider's SLA is worse than our NFR availability, that's a `blocked` row, not a hope.
-- **Sunset dates bite** — a provider EOL in the cutover window is a hard block; record the date.
+For a hypothetical vehicle telemetry provider, a 4/4 Bruno test result against localhost is useful contract regression evidence, **not** proof of live GPS device ownership or cloud authorization. ANGENT Root owns the final decision and permission scope; BA documents readiness criteria, Engineer/Operations supplies deployment evidence and Execution verifies consequential changes.

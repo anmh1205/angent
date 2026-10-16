@@ -1,53 +1,31 @@
 ---
 name: ba-meet
-description: Business analysis meet specialist.
+description: Source-driven BA meet method with independent decision evidence, output validation and safe provider boundaries.
 ---
 
-# ANGENT BA: meet
+# Meeting evidence, decisions and accountable follow-up
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/meeting/SKILL.md
+**Method origin:** An independent adaptation of MIT Dev BA Kit's meeting method by Edward Ngo (2026): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/meeting/SKILL.md. Recorded human decisions remain authoritative only to the extent supported by the actual meeting evidence and stakeholder approval.
 
-## Portability and authority
+## Before writing minutes
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
+1. Identify whether the user wants notes, decision extraction, action tracking or a meeting preparation brief. Read provided transcript/notes, actual calendar details if connected and relevant earlier decisions. Do not invent a meeting date, attendee, quote or speaker assignment.
+2. Distinguish direct statements from paraphrases, analyst inferences and decisions confirmed by an authorized owner. A participant saying "we could" is not the same as approving a budget, a policy or a product change.
+3. If the transcript is incomplete or contains unclear attribution, preserve uncertainty and quote only short decisive phrases where necessary. Keep confidential meeting details within their authorized project/provider context.
+4. Identify the underlying business issue, decisions and rationale, competing options, blocked dependencies, unanswered questions, risks and follow-ups. Avoid dumping a chronological chat transcript when a coherent written record is needed.
+5. Give every decision a stable local ID where useful, its source/time anchor, decision owner, affected CAP/FR/BR and explicit status (**proposed, confirmed, superseded or disputed**). A decision about vehicle-control permission may require safety/privacy review before it becomes a BR.
+6. Turn follow-ups into action records with outcome, responsible owner, requested date/deadline if **actually specified**, dependencies and completion evidence. If no owner or deadline was agreed, mark it **unassigned/undated**, not secretly assign one.
+7. For already recorded minutes, compare with their current version, avoid duplicate decisions and preserve participant corrections. Do not overwrite an approved decision history or create a hidden \`activity.log\` as a side effect.
+8. Route approved changes to the relevant source document or provider only when authorized. A meeting decision affecting an FR may require SRS/AC/TC review, but a meeting note by itself does not establish code implementation or deployment.
 
+## Deliverable
 
-# /meeting — Meeting notes (structured)
+Write a readable summary of purpose and discussion, then explicit **confirmed decisions, contested/proposed decisions, actions, blockers and unresolved questions**, with evidence/source anchors and responsible owners where known. Existing project style governs the artifact; no compulsory \`docs/meetings/YYYY-MM-DD-...\` path, artificial "captured→processed" status or date-inventing file name.
 
-## Goal
+## Example distinction
 
-Capture a meeting as structured notes — attendees, agenda, discussion, and three tables WITHIN the file: **Decisions**, **Blockers**, **Action items** (with owner + deadline). **Single output**: `docs/meetings/YYYY-MM-DD-{type}-{slug}.md` (type `meeting`). Statuses `captured → processed`.
+A participant says "We should probably warn the rental operator if telemetry has not arrived recently." Record that as a **proposal** and an open policy decision about acceptable freshness. If the authorized operator later confirms a precise value and behavior, record the approved rule with its evidence and downstream effects. Do not add a five-minute threshold from common intuition.
 
-## Constraints
+## Verification
 
-- **Group C** (`feature-bootstrap.md`): project-level; no feature needed.
-- **Tables WITHIN the file** (`naming-conventions.md` line 77) — decisions/blockers/actions live as tables inside the note, NOT in separate files. One note = one self-contained file.
-- **Two states** (`status-lifecycle.md`): `captured` (raw, just written) → `processed` (tables structured + action items have owners/deadlines). Default to `processed` when the skill runs from a transcription/notes; `captured` for a quick raw dump.
-- **Action items have owner + deadline** — an action with no owner is a wish, not an action; flag it.
-- **Link to docs** — a decision touching `FR-`/`CAP-`/a feature doc links it (wikilink), so `/gap`/`/dashboard` see the connection.
-- **Idempotent** — re-run on the same date+title → versioned diff (append new items).
-- **Validate before done** — BA Markdown validation (step 7).
-
-## Inputs
-
-```
-/meeting "Sprint 14 review" --type review
-/meeting "Claim approval kickoff" --type kickoff
-/meeting "Standup" --type standup
-```
-
-## Approach
-
-1. **Resolve title + type + slug** — from the arg; type defaults to `review` if ambiguous.
-2. **Gather** — from a transcript/notes the user pastes, or a short interview: attendees · agenda · the decisions · blockers · action items (owner + deadline each). No-re-ask.
-3. **Draft** per the template — attendees, agenda, discussion summary, then the three tables; link any doc-touching decision.
-4. **scoped change preview** — decision/blocker/action counts + any ownerless action flagged.
-6. **Flag ownerless actions** in the report (so they get an owner before the meeting's value leaks).
-8. **Output report** — counts + ownerless actions + next (route an action to a doc via `/cr` if it's a scope change).
-
-## Gotchas
-
-- **Tables, not prose** — "we decided X" buried in discussion is lost; the Decisions table is the searchable record.
-- **Ownerless = flagged** — an action without an owner never happens; surface it rather than silently assigning a guess.
-- **Don't fork files** — one note holds everything; a "decisions.md" + "actions.md" split drifts the moment one updates.
-- **Link, don't duplicate** — a decision about `FR-atlas-re-006` links the spec; it doesn't restate the FR.
+Check traceability of named decisions, explicit actor ownership, absent/fabricated dates, competing proposals, confidentiality, and whether follow-up work is genuinely authorized. A plan to create Jira tasks is not proof tasks were created. ANGENT Core owns interpretation and editorial quality; BA supplies accountability structure, Execution performs permitted provider actions and Quality reads back any actual changes.

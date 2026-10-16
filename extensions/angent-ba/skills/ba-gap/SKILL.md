@@ -1,63 +1,32 @@
 ---
 name: ba-gap
-description: Business analysis gap specialist.
+description: Source-driven BA gap method with independent decision evidence, output validation and safe provider boundaries.
 ---
 
-# ANGENT BA: gap
+# Evidence-based BA coverage and gap analysis
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/gap/SKILL.md
+**Method origin:** Independently adapted from MIT Dev BA Kit \`gap\` by Edward Ngo (2026): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/gap/SKILL.md. Source-of-truth and document naming follow the actual product, not a required Claude vault.
 
-## Portability and authority
+## Coverage is not correctness
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Validate completed Markdown with extensions/angent-ba/scripts/validate_documents.py when applicable. Jira and Confluence writes require current provider versions, granted permissions, idempotency review and read-back. Original agent-specific lifecycle or helper scripts are not assumed installed; report any validation that could not run.
+A gap audit identifies absent or weak relationships among stakeholder needs (UN), objectives (BO), capabilities (CAP), verifiable requirements (FR/NFR/BR), use cases/stories, acceptance (AC), checklist (CHK), test cases (TC) and business decisions. A mathematically complete graph cannot show whether the underlying business assumptions are correct. Conversely, a deliberate product deferral is not necessarily a defect.
 
+## Choose the inspection boundary
 
-# /gap — Cross-doc traceability matrix + coverage report
+1. Confirm the requested feature/product scope and accepted source revisions. Inspect current URD/BRD/PRD/SRS, user stories/use cases, acceptance, test cases and relevant provider issue data **only when accessible**. Avoid a whole-repo scan for a single decision.
+2. Collect explicit stable IDs, source files, document links and provenance. Distinguish named sources that were not inspected from documents that truly do not exist. Do not create missing FR/CAP/TC IDs to improve a score.
+3. Use the existing BA source graph, if available, without inventing a second registry. The portable extractor supports real Markdown index tables and reports unresolved references. For example:
 
-## Goal
+    python extensions/angent-ba/scripts/extract_markdown_graph.py --urd extensions/angent-ba/examples/docs/atlas-re/atlas-re-urd.md --brd extensions/angent-ba/examples/docs/atlas-re/atlas-re-brd.md --prd extensions/angent-ba/examples/docs/atlas-re/atlas-re-prd.md --srs extensions/angent-ba/examples/docs/atlas-re/srs/atlas-re-spec.md --checklist extensions/angent-ba/examples/docs/atlas-re/test/checklist/atlas-re-checklist-index.md --cases extensions/angent-ba/examples/docs/atlas-re/test/testcases/atlas-re-testcase-index.md --root extensions/angent-ba/examples --output out/atlas-evidence.json
 
-Walk the entire ID spine across the vault, compute coverage, and write one report: `docs/_shared/traceability.md` (type `traceability`) — the gaps, orphans, uncited error codes, and stale chains. Read-only analysis; the **only** write is that report (L1-gated per `approval-gate.md`'s named exception).
+4. Validate graph direction and existence with \`extensions/angent-ba/scripts/validate_artifacts.py\`. Test artifacts point upstream to requirements, not the reverse; a story covering a group of FRs does not prove every individual FR has a corresponding tested behavior.
+5. Assess gaps **per relationship**, not from a single global percentage: UN with no BO; BO with no CAP; CAP with no FR; FR with no explicit behavior/test witness; important rule/error without an acceptance or failure case; missing actor/permission; stale source; orphaned decision; changing implementation without review.
+6. Verify source content where a relationship matters. A TC that mentions an FR identifier but tests an unrelated status can be a *semantic mismatch*, even though the graph edge is valid. Do not auto-declare compliance from ID matching.
+7. Assign finding severity by actual consequence: safety/privacy/financial exposure, business decision block, release dependency or documentation usability. Separate "not reviewed", "not implemented", "deliberately deferred" and "uncertain evidence".
+8. Derive a small, actionable reconciliation plan: affected IDs, current vs expected relation, exact source/revision, owner, decision needed and next verification. Preserve existing source material and report contradictions without unapproved mutation.
 
-## Constraints
+## How to report
 
-- **Group C** (`feature-bootstrap.md`): empty vault → friendly abort ("Start with `/brainstorm` or `/urd`"). `--feature <slug>` scopes the walk to one feature.
-- **Read-only on the docs it scans** — never edits URDs/SRSes/stories; it reports gaps, the owning skill fills them.
-- **Parse the 3 surfaces** (`traceability.md`): frontmatter `links:`, body wikilinks, and index tables (usecase-index, story-index, wireframe-index) — content files are zero-frontmatter, so the join goes via indexes + body.
-- **Emit exactly the coverage rules** in `traceability.md` §"Coverage rules": UN-without-BO, BO-without-CAP, CAP-without-FR, FR-without-UC/US, US-without-AC, US-without-≥2-AC, AC-without-CHK/TC, E-uncited, orphan-doc, stale-chain, CR-apply-order-gap.
-- **No fabrication** — every finding cites the concrete ID/path; never invent a "missing" ID that doesn't exist upstream (only report breaks in the *declared* chain).
-- **Idempotent** — re-run regenerates the report (versioned diff).
-- **Validate before done** — BA Markdown validation on the report (step 7).
+Give the inspected scope and source inventory, a stage-by-stage structural coverage summary, decisive risks, explicit broken chains with shortest proof path, and prioritized next actions. For the shipped Atlas worked example, eight FRs trace upstream through CAP/BO/UN, while only **four** reach a TC artifact. These are declared link counts, not passing test results. A missing TC link must not be silently recast as a release blocker if the FR was intentionally deferred.
 
-## Inputs
-
-```
-/gap                          # whole vault
-/gap --feature atlas-re       # one feature
-```
-
-## Approach
-
-1. **Scope.** Empty vault → friendly abort. `--feature` → that folder; else every `docs/{feature}/`.
-2. **Index the IDs** — scan each doc for its IDs (UN/BO/CAP/FR/NFR/BR/E/UC/US/AC/CHK/TC/CR) and its `links:` + body wikilinks + index-table rows. Build the graph.
-3. **Run the coverage rules** (`traceability.md`) — for each, collect the violations with their concrete IDs.
-4. **Stale check** — compare `links:` target `updated:` vs the doc's own (via `staleness.log` if present).
-5. **Draft `traceability.md`** — the spine diagram + a findings table per rule (ID + where + suggested owner skill) + an orphan-doc list + a CR-apply-order check.
-6. **scoped change preview** — finding counts per rule + the worst gaps called out.
-9. **Output report** — the gap summary + the single highest-leverage fix per category.
-
-## Gotchas
-
-- **Coverage ≠ quality** — `/gap` proves the chain is *complete*, not that it's *correct*; correctness is `/doc-review`'s job.
-- **Don't chase 100%** — a deliberately deferred need (UN with no BO, phased out) is a finding, not a defect; the report lists it, the user decides.
-- **E-uncited is the sneaky one** — error codes defined in the SRS but referenced nowhere are the most common real gap; they're why this skill exists.
-- **The index tables are the cheap join** — prefer them over re-parsing every zero-frontmatter content file; body wikilinks are the fallback.
-
-## Whole-lifecycle evidence instead of SRS-only statistics
-
-When accepted URD, BRD and PRD documents exist, use the same source-backed graph extractor across all stages rather than treating CAP/BO/UN references as external guesses:
-
-    python extensions/angent-ba/scripts/extract_markdown_graph.py --urd extensions/angent-ba/examples/docs/atlas-re/atlas-re-urd.md --brd extensions/angent-ba/examples/docs/atlas-re/atlas-re-brd.md --prd extensions/angent-ba/examples/docs/atlas-re/atlas-re-prd.md --srs extensions/angent-ba/examples/docs/atlas-re/srs/atlas-re-spec.md --checklist extensions/angent-ba/examples/docs/atlas-re/test/checklist/atlas-re-checklist-index.md --cases extensions/angent-ba/examples/docs/atlas-re/test/testcases/atlas-re-testcase-index.md --root extensions/angent-ba/examples --output out/atlas-full-lifecycle.json
-
-The real Atlas regression verifies 6 UN, 4 BO, 6 CAP and 8 FR. **8/8 FR have explicit FR→CAP→BO→UN ancestry, but only 4/8 FR link downstream to a TC artifact.** Four source-to-test gaps remain visible; structural reference existence does not prove execution or business approval. Do not change test counts or fabricate CHK/TC artifacts to satisfy a release threshold.
-
-Some real projects have no complete URD/BRD/PRD sequence. In those cases, mark upstream coverage unknown/uninspected rather than insisting the user create redundant documents. ANGENT Root decides the appropriate evidence depth and which missing links genuinely matter.
+ANGENT Root decides whether to run this specialist; Quality compares the report to the actual user's goals. The method performs read-only analysis unless a specific target artifact is requested and authorized. It does not require \`docs/_shared/traceability.md\`, invented \`staleness.log\` files or a fixed Claude L1 gate.
