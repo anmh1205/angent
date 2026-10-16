@@ -13,10 +13,15 @@ from typing import Any
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from package_unified import SUPPRESSED_PUBLIC_ENGINEER, EXPECTED_DISCOVERABLE
+from package_unified import collect_entries, gateway_entries, FRONTEND_NAMES
 
 ROOT = Path(__file__).resolve().parents[1]
-PROBED_FILES = ("skills/angent/SKILL.md", "skills/angent-authoring/SKILL.md", "skills/angent-quality/SKILL.md")
+PROBED_FILES = (
+    "skills/angent/SKILL.md",
+    "skills/angent/references/catalog/angent-authoring/SKILL.md",
+    "skills/angent/references/catalog/ak-agentkit/SKILL.md",
+    "skills/angent/references/catalog/angent-frontend-design/SKILL.md",
+)
 
 
 class ActivationError(ValueError):
@@ -34,15 +39,14 @@ def source_identity(root: Path = ROOT) -> dict[str, Any]:
         raise ActivationError("bootstrap prompt mismatch")
     core = {p.parent.name for p in (root / "skills").glob("*/SKILL.md")}
     engineer = {p.parent.name for p in (root / "extensions/angent-engineer/skills").glob("*/SKILL.md")}
-    if len(core) != 12 or len(engineer) != 103 or core & engineer:
+    frontend = {p.parent.name for p in (root / "extensions/angent-frontend/skills").glob("*/SKILL.md")}
+    if len(core) != 12 or len(engineer) != 103 or frontend != FRONTEND_NAMES or core & engineer or core & frontend:
         raise ActivationError("unexpected source catalog")
-    expected = sorted("skills/" + name + "/SKILL.md" for name in (core | (engineer - SUPPRESSED_PUBLIC_ENGINEER)))
-    if len(expected) != EXPECTED_DISCOVERABLE or not SUPPRESSED_PUBLIC_ENGINEER <= engineer:
-        raise ActivationError("inconsistent discoverable Engineer catalog")
-    fingerprints = {}
-    for name in PROBED_FILES:
-        fingerprints[name] = hashlib.sha256((root / name).read_bytes()).hexdigest()
-    return {"name": "angent", "version": primary["version"], "expected_paths": expected, "probed_sha256": fingerprints}
+    compiled = gateway_entries(collect_entries(root))
+    expected = ["skills/angent/SKILL.md"]
+    fingerprints = {name: hashlib.sha256(compiled[name]).hexdigest() for name in PROBED_FILES}
+    return {"name": "angent", "version": primary["version"],
+            "expected_paths": expected, "probed_sha256": fingerprints}
 
 
 def verify_provider(source: dict[str, Any], observed: dict[str, Any] | None) -> dict[str, Any]:
@@ -71,7 +75,7 @@ def verify_provider(source: dict[str, Any], observed: dict[str, Any] | None) -> 
     if any(fingerprints.get(path) != sha for path, sha in source["probed_sha256"].items()):
         return {**result, "status": "SOURCE_CONTENT_MISMATCH", "evidence_level": "provider_content"}
     return {**result, "status": "MATCHED_PROBED_CONTENT",
-            "evidence_level": "provider_inventory_and_three_skill_hashes",
+            "evidence_level": "provider_inventory_and_four_skill_hashes",
             "note": "Not proof of every skill file or behavioral activation."}
 
 
