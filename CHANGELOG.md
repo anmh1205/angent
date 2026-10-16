@@ -8,6 +8,7 @@
 - Projected portable Engineer roles to Gemini Extension and Claude Code subagent metadata without claiming native runtime availability.
 - Retained the legacy `angent-chatgpt.zip` packaging path; added reproducibility, exact catalog, isolation and error-case tests for all five packages, with CI artifacts.
 - Added a tag-matched guarded GitHub Releases workflow to publish permanent platform ZIP assets and SHA256 checksums without overwriting existing releases.
+- Added permanent individual/all-target ZIP release assets and matching checksum distribution through GitHub Actions, with source-release links and light/dark icon metadata in the OpenAI manifests.
 - Source checks are structural evidence only; actual Gemini/Claude/ChatGPT runtime activation and cognitive-behavior validation require separate observed sessions.
 
 

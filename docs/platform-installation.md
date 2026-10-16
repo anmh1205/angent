@@ -61,6 +61,8 @@ Use `packages/openai-plugin/` or `dist/angent-openai-plugin.zip`. The existing `
 - Do not blindly overlay bundles across an existing project. A project-specific `AGENTS.md`, `GEMINI.md` or `CLAUDE.md` must be preserved and merged.
 - Structural validation cannot prove platform-specific model behavior, actual provider activation, native AgentKit availability or live subagent delegation. Run targeted live checks on each runtime before asserting those outcomes.
 
+On each validated `main` push, the publish workflow creates a matching version tag and GitHub Release if that version has not already been tagged. The Release provides five platform-specific ZIPs, the compatible `angent-chatgpt.zip`, the single combined `angent-all-targets.zip`, and SHA256SUMS. The Actions artifact `angent-all-targets` includes the same outputs for inspection/download (30-day retention). Changes to `main` without a version bump do not replace a published tag. A personal ChatGPT plugin is not automatically updated when the GitHub Release changes; use its separately authorized plugin updater with `angent-openai-plugin.zip` and verify the installed version. Workspace GitHub marketplace sync is a different administration feature.
+
 Tagged releases are published by `.github/workflows/publish-packages.yml`: the tag must exactly match the version in both OpenAI manifests, the full packaging checks run, and the workflow refuses to overwrite an existing release. Branch CI ZIP artifacts are short-lived candidates rather than a permanent distribution channel.
 
 Versions and provider release IDs are obtained from active manifests/providers, not pinned in runtime instructions.
