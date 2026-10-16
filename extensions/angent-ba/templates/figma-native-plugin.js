@@ -12,9 +12,14 @@ const angentApply = async (figma) => {
   const nameOf = c => 'control:' + c.type + ':' + c.id;
   const plan = [];
   for (const s of angentScreens) {
-    const matches = page.children.filter(n => n.type === 'FRAME' && n.name === s.name);
-    if (matches.length > 1) throw new Error('Duplicate target frame: ' + s.name);
+    // Stable screen ID, not a mutable title, is the Figma handoff identity.
+    const prefix = 'ANGENT BA / ' + s.id + ' / ';
+    const matches = page.children.filter(n => n.type === 'FRAME' && n.name.startsWith(prefix));
+    if (matches.length > 1) throw new Error('Duplicate target screen ID: ' + s.id);
     const existing = matches[0] || null;
+    if (existing && existing.name !== s.name) {
+      throw new Error('Existing frame title conflicts with source screen ID: ' + s.id);
+    }
     if (existing) {
       const controls = existing.children.filter(n => n.name.startsWith('control:'));
       if (controls.length !== s.controls.length || controls.some((n,i) =>

@@ -53,6 +53,17 @@ async function run() {
   if(context.page.children.filter(x=>x.type==='FRAME').length!==3)throw Error('Wrong root count');
   const twice=await executor(context.figma,{log:s=>logs.push(s)});
   if(twice.created!==0||twice.unchanged!==3)throw Error('Retry is not idempotent');
+  // Same ID, revised display title: refuse a duplicate before any canvas write.
+  const retitledSource=source.replace('ANGENT BA / login / Sign in',
+                                      'ANGENT BA / login / Sign in (revised)');
+  if(retitledSource===source)throw Error('Expected source fixture missing');
+  const renamed=new AsyncFunction('figma','console',retitledSource+'\nreturn angentReceipt;');
+  let titleConflict=false;
+  try {await renamed(context.figma,{log:s=>logs.push(s)})}
+  catch(error){titleConflict=/title conflicts/.test(String(error))}
+  if(!titleConflict||context.page.children.filter(x=>x.type==='FRAME').length!==3) {
+    throw Error('Stable screen ID was duplicated after a display title change');
+  }
   const root=context.page.children.find(x=>x.name===out.receipts[0].screen_id?false:true);
   const first=context.page.children.find(x=>x.name.startsWith('ANGENT BA / login /'));
   if(!first)throw Error('Cannot find created login frame');
@@ -69,7 +80,7 @@ async function run() {
   try {await executor(fresh.figma,{log:s=>logs.push(s)})}catch(e){failed=/read-back/.test(String(e))}
   if(!failed||fresh.page.children.length!==0)throw Error('Failed native read-back must rollback fresh nodes');
   return {ok:true,native_plugin_api_mock_only:true,created:3,unchanged_on_retry:3,
-          conflict_blocked:true,partial_creation_rolled_back:true,
+          conflict_blocked:true,title_collision_blocked:true,partial_creation_rolled_back:true,
           live_figma_writes:0};
 }
 run().then(value=>console.log(JSON.stringify(value))).catch(err=>{console.error(String(err.stack||err));process.exitCode=1});
