@@ -233,9 +233,9 @@
   {
     "stage": "API",
     "skill": "ba-api-map",
-    "evidence": "method",
+    "evidence": "source-validated",
     "deliverable": "Provider domain UI field mappings",
-    "remaining": "Field transformations need schema and test evidence"
+    "remaining": "OpenAPI/sample fixture and transforms verified; real provider and frontend binding unverified"
   },
   {
     "stage": "API",
