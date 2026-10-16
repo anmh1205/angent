@@ -1,0 +1,69 @@
+{
+  "type": "userflow",
+  "metadata": {
+    "title": "Vehicle status screen flow",
+    "status": "synthetic-fixture"
+  },
+  "source_refs": [
+    "FR-IVTS-01"
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "kind": "start",
+      "label": "Open fleet portal"
+    },
+    {
+      "id": "vehicle_list",
+      "kind": "screen",
+      "label": "Vehicle list",
+      "screenId": "fleet-list"
+    },
+    {
+      "id": "authorized",
+      "kind": "decision",
+      "label": "Can access selected vehicle?"
+    },
+    {
+      "id": "status",
+      "kind": "screen",
+      "label": "Vehicle status",
+      "screenId": "vehicle-status"
+    },
+    {
+      "id": "done",
+      "kind": "end",
+      "label": "Status viewed"
+    },
+    {
+      "id": "denied",
+      "kind": "end",
+      "label": "Access denied"
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "vehicle_list"
+    },
+    {
+      "from": "vehicle_list",
+      "to": "authorized",
+      "label": "Select vehicle"
+    },
+    {
+      "from": "authorized",
+      "to": "status",
+      "guard": "Authorized"
+    },
+    {
+      "from": "authorized",
+      "to": "denied",
+      "guard": "Not authorized"
+    },
+    {
+      "from": "status",
+      "to": "done"
+    }
+  ]
+}

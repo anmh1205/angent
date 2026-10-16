@@ -1,0 +1,55 @@
+{
+  "type": "sitemap",
+  "metadata": {
+    "title": "Fleet operator information architecture",
+    "status": "synthetic-fixture"
+  },
+  "source_refs": [
+    "FR-IVTS-01"
+  ],
+  "nodes": [
+    {
+      "id": "portal",
+      "kind": "section",
+      "label": "Fleet portal"
+    },
+    {
+      "id": "vehicles",
+      "kind": "page",
+      "label": "Vehicles"
+    },
+    {
+      "id": "vehicle_detail",
+      "kind": "page",
+      "label": "Vehicle detail"
+    },
+    {
+      "id": "alerts",
+      "kind": "page",
+      "label": "Alerts"
+    },
+    {
+      "id": "account",
+      "kind": "page",
+      "label": "Account settings"
+    }
+  ],
+  "edges": [
+    {
+      "from": "portal",
+      "to": "vehicles"
+    },
+    {
+      "from": "vehicles",
+      "to": "vehicle_detail"
+    },
+    {
+      "from": "portal",
+      "to": "alerts"
+    },
+    {
+      "from": "portal",
+      "to": "account"
+    }
+  ]
+}

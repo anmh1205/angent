@@ -1,0 +1,59 @@
+{
+  "type": "state",
+  "metadata": {
+    "title": "Vehicle connectivity lifecycle",
+    "status": "synthetic-fixture"
+  },
+  "source_refs": [
+    "FR-IVTS-02"
+  ],
+  "nodes": [
+    {
+      "id": "initial",
+      "kind": "start",
+      "label": "Device initialized"
+    },
+    {
+      "id": "connected",
+      "kind": "state",
+      "label": "Connected"
+    },
+    {
+      "id": "offline",
+      "kind": "state",
+      "label": "Offline"
+    },
+    {
+      "id": "decommissioned",
+      "kind": "end",
+      "label": "Decommissioned"
+    }
+  ],
+  "edges": [
+    {
+      "from": "initial",
+      "to": "connected",
+      "label": "Connection established"
+    },
+    {
+      "from": "connected",
+      "to": "offline",
+      "label": "Heartbeat timeout"
+    },
+    {
+      "from": "offline",
+      "to": "connected",
+      "label": "Reconnected"
+    },
+    {
+      "from": "connected",
+      "to": "decommissioned",
+      "label": "Authorized retirement"
+    },
+    {
+      "from": "offline",
+      "to": "decommissioned",
+      "label": "Authorized retirement"
+    }
+  ]
+}
