@@ -41,7 +41,7 @@ For current provider activation, use `scripts/verify_activation.py` with a compl
 
 ## Installation and package identity
 
-Version 1.5.0 adds separate install-ready platform bundles without duplicating ANGENT's maintained Skills or introducing another canonical plugin identity. `platforms/` holds runtime adapters and `packages/` is generated. See the supported targets and safe installation instructions in [docs/platform-installation.md](docs/platform-installation.md).
+Version 1.5.x adds separate install-ready platform bundles without duplicating ANGENT's maintained Skills or introducing another canonical plugin identity. `platforms/` holds runtime adapters and `packages/` is generated. See the supported targets and safe installation instructions in [docs/platform-installation.md](docs/platform-installation.md).
 
 
 The two supported plugin manifests are plugin.json and .codex-plugin/plugin.json. Their package identity and prompt must be consistent. Version strings are package metadata, not a task checkpoint or a substitute for checking the actual source/runtime.
@@ -67,7 +67,9 @@ python3 scripts/build_packages.py --all
 python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
 ```
 
-This creates copy-ready `packages/local-agent/`, `packages/gemini-skills/`, `packages/gemini-extension/`, `packages/claude-code/` and `packages/openai-plugin/`, alongside deterministic ZIPs in `dist/`. Both output directories are generated and Git-ignored. Download the matching [GitHub Release](https://github.com/anmh1205/angent/releases) ZIPs when no build environment is available. Each release provides individual target ZIPs and one `angent-all-targets.zip` containing all six distributions, plus checksums. Personal ChatGPT plugin updates require a separate upload. Tagged releases use the guarded publication workflow and include SHA256 checksums; ordinary CI artifacts are short-lived candidates.
+This creates copy-ready `packages/local-agent/`, `packages/gemini-web/`, `packages/gemini-skills/`, `packages/gemini-extension/`, `packages/claude-code/` and `packages/openai-plugin/`, alongside deterministic ZIPs in `dist/`. Both output directories are generated and Git-ignored. Download the matching [GitHub Release](https://github.com/anmh1205/angent/releases) ZIPs when no build environment is available. Each release provides individual target ZIPs and one `angent-all-targets.zip` containing all seven distributions, plus checksums. Personal ChatGPT plugin updates require a separate upload. Tagged releases use the guarded publication workflow and include SHA256 checksums; ordinary CI artifacts are short-lived candidates.
+
+**Gemini Web:** upload `angent-gemini-web.zip` to Gemini Apps → Customize → Skills → Upload. It has one top-level `SKILL.md` and references for all 115 Core/Engineer skill texts; unlike Gemini CLI it does not import 115 independently callable Skills. See the Gemini Apps installation section for limitations.
 
 Core Skills remain canonical under `skills/`; the maintained Engineer fallback remains under `extensions/angent-engineer/`. `platforms/` owns only native bootstrap/manifest projections. Do **not** edit generated packages or maintain separate copies of core reasoning per host. See [Installation and platform differences](docs/platform-installation.md).
 

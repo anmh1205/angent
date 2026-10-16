@@ -19,7 +19,7 @@ import zipfile
 from package_unified import collect_entries, PackagingError, FIXED_TIMESTAMP
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGES = ("local-agent", "gemini-skills", "gemini-extension", "claude-code", "openai-plugin")
+PACKAGES = ("local-agent", "gemini-web", "gemini-skills", "gemini-extension", "claude-code", "openai-plugin")
 SKILL_PREFIX = {
     "local-agent": ".agents/skills/",
     "gemini-skills": ".gemini/skills/",
@@ -139,6 +139,8 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
     if package not in PACKAGES:
         raise PackagingError(f"Unknown package: {package}")
     source = collect_entries(repo) if source is None else source
+    if package == "gemini-web":
+        return _assemble_gemini_web(source)
     primary = json.loads(source["plugin.json"])
     secondary = json.loads(source[".codex-plugin/plugin.json"])
     version = primary["version"]
@@ -181,6 +183,75 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
         assert "extensions/angent-engineer/source-manifest.json" in files
         assert "plugin.json" in files and ".codex-plugin/plugin.json" in files
     files["INSTALL.md"] = DOCS[package].encode()
+    return files
+
+
+def _assemble_gemini_web(source: dict[str, bytes]) -> dict[str, bytes]:
+    """Gemini Apps Web imports one root Skill, with reference texts inside it."""
+    original = source["skills/angent/SKILL.md"].decode("utf-8")
+    header = re.match(r"\A(---\n.*?\n---\n)", original, re.S)
+    if header is None or re.search(r"^name:\s*angent\s*$", header.group(1), re.M) is None:
+        raise PackagingError("Gemini Web requires ANGENT metadata in the root SKILL.md")
+    intro = """
+## Gemini Apps Web: one imported Skill
+
+Gemini Apps imports one root ANGENT Skill. The 115 Core and Engineer Skill
+texts packaged under references/catalog are reference material, not 115
+independently discoverable Gemini Skills. Load selected sections according to
+the task using references/INDEX.md. Sixteen Engineer role definitions are
+reference instructions, not running subagents.
+
+Apply the complete ANGENT cognitive standard within the current conversation.
+Use only tools provided by Gemini in this session. Do not claim that local
+scripts, AgentKit CLI, durable files, delegation or network actions are
+available just because their documentation is packaged here. Gemini Apps
+does not support internet-dependent Skill scripts. The user must activate
+ANGENT through Gemini Apps Skills when relevant; uploading the ZIP does not
+guarantee automatic application to every conversation.
+
+"""
+    files: dict[str, bytes] = {"SKILL.md": (header.group(1) + intro + original[header.end():]).encode("utf-8")}
+    names: set[str] = set()
+    for path, payload in sorted(source.items()):
+        if path.startswith("skills/"):
+            if PurePosixPath(path).suffix.lower() not in {".md", ".py", ".json", ".yaml", ".yml", ".txt", ".sh", ".csv"}:
+                continue
+            relative = path[len("skills/"):]
+            files["references/catalog/" + relative] = payload
+            if re.fullmatch(r"[^/]+/SKILL\.md", relative):
+                names.add(relative.split("/")[0])
+            if path.startswith("skills/angent/references/"):
+                files["references/" + path[len("skills/angent/references/"):]] = payload
+        elif re.fullmatch(r"extensions/angent-engineer/agents/[a-z0-9-]+\.md", path):
+            files["references/roles/" + PurePosixPath(path).name] = payload
+    core = sorted(n for n in names if n.startswith("angent"))
+    engineer = sorted(n for n in names if n.startswith("ak-"))
+    roles = sorted(p for p in files if re.fullmatch(r"references/roles/[a-z0-9-]+\.md", p))
+    if len(core) != 12 or len(engineer) != 103 or len(roles) != 16:
+        raise PackagingError(f"Gemini Web library incomplete: {len(core)} Core, {len(engineer)} Engineer, {len(roles)} roles")
+    index = ["# ANGENT reference library", "",
+             "This is ONE imported Skill. Listed files are supporting reference",
+             "instructions, not independently activated Gemini Web Skills.", "",
+             "## Core", ""]
+    index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in core]
+    index += ["", "## Engineer", ""]
+    index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in engineer]
+    index += ["", "## Roles", ""]
+    index += [f"- [{PurePosixPath(p).stem}]({p.removeprefix('references/')})" for p in roles]
+    index += ["", "Detailed references are beside the relevant skill files.", ""]
+    files["references/INDEX.md"] = "\n".join(index).encode("utf-8")
+    files["INSTALL.md"] = (
+        "# Gemini Web upload instructions\n\n"
+        "In gemini.google.com open Customize > Skills > Upload, and select\n"
+        "angent-gemini-web.zip directly. Review the new ANGENT Skill and click\n"
+        "Create. The ZIP has a root SKILL.md and reference material in\n"
+        "references/. This does NOT load 115 separate Skills. To use ANGENT,\n"
+        "select it from Gemini Apps Skills in a conversation. Do not upload\n"
+        "angent-gemini-skills.zip; that is the Gemini CLI workspace package.\n"
+        "Official guide: https://support.google.com/gemini/answer/17094296\n"
+    ).encode("utf-8")
+    if sum(len(value) for value in files.values()) > 100_000_000:
+        raise PackagingError("Gemini Apps upload exceeds 100 MB")
     return files
 
 
@@ -229,7 +300,7 @@ def build(repo: Path, package_root: Path, dist_root: Path, selected: tuple[str, 
             if target.is_symlink():
                 raise PackagingError(f"Refusing symlink output: {target}")
             if target.exists():
-                # Only the five known generated package directories are owned.
+                # Only named generated package directories are owned.
                 if not target.is_dir():
                     raise PackagingError(f"Not a generated directory: {target}")
                 shutil.rmtree(target)
@@ -244,7 +315,7 @@ def build(repo: Path, package_root: Path, dist_root: Path, selected: tuple[str, 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--all", action="store_true", help="Build all five platform packages")
+    parser.add_argument("--all", action="store_true", help="Build all six platform packages")
     parser.add_argument("--only", choices=PACKAGES, help="Build one package")
     args = parser.parse_args()
     if args.only and args.all:

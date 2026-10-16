@@ -20,7 +20,7 @@ class MultiPackageTests(unittest.TestCase):
         cls.source = legacy.collect_entries(ROOT)
 
     def test_five_complete_independent_packages(self):
-        for package in packs.PACKAGES:
+        for package in (p for p in packs.PACKAGES if p != 'gemini-web'):
             with self.subTest(package=package):
                 files = packs.assemble(ROOT, package, self.source)
                 prefix = packs.SKILL_PREFIX[package]
@@ -55,8 +55,8 @@ class MultiPackageTests(unittest.TestCase):
         self.assertIn("bootstrap/CLAUDE.md", claude)
         self.assertNotIn("CLAUDE.md", claude)
         openai = packs.assemble(ROOT, "openai-plugin", self.source)
-        self.assertEqual(json.loads(openai["plugin.json"])["version"], "1.5.0")
-        self.assertEqual(json.loads(openai[".codex-plugin/plugin.json"])["version"], "1.5.0")
+        self.assertEqual(json.loads(openai["plugin.json"])["version"], "1.5.1")
+        self.assertEqual(json.loads(openai[".codex-plugin/plugin.json"])["version"], "1.5.1")
         self.assertEqual(openai["skills/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
 
     def test_negative_agent_frontmatter(self):
@@ -84,13 +84,26 @@ class MultiPackageTests(unittest.TestCase):
     def test_complete_skill_and_support_byte_fidelity(self):
         source_skills = {p: data for p, data in self.source.items() if p.startswith("skills/")}
         source_support = {p: data for p, data in self.source.items() if p.startswith("extensions/")}
-        for package in packs.PACKAGES:
+        for package in (p for p in packs.PACKAGES if p != 'gemini-web'):
             with self.subTest(package=package):
                 files = packs.assemble(ROOT, package, self.source)
                 for path, data in source_skills.items():
                     self.assertEqual(files[packs.SKILL_PREFIX[package] + path[len("skills/"):]], data, path)
                 for path, data in source_support.items():
                     self.assertEqual(files[path], data, path)
+
+    def test_gemini_web_one_root_skill_with_full_reference_library(self):
+        files = packs.assemble(ROOT, "gemini-web", self.source)
+        self.assertTrue(files["SKILL.md"].startswith(b"---\nname: angent\n"))
+        self.assertIn("references/INDEX.md", files)
+        self.assertEqual(files["references/catalog/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
+        self.assertEqual(files["references/catalog/ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
+        self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), 115)
+        self.assertEqual(len([p for p in files if p.startswith("references/roles/") and p.endswith(".md")]), 16)
+        self.assertNotIn(".gemini/skills/angent/SKILL.md", files)
+        self.assertNotIn("plugin.json", files)
+        self.assertNotIn("gemini-extension.json", files)
+        self.assertLess(sum(map(len, files.values())), 100_000_000)
 
     def test_legacy_openai_builder_still_works(self):
         with tempfile.TemporaryDirectory() as tmp:

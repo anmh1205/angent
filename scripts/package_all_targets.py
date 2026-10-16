@@ -12,6 +12,7 @@ import zipfile
 FILES = (
     "angent-claude-code.zip",
     "angent-gemini-extension.zip",
+    "angent-gemini-web.zip",
     "angent-gemini-skills.zip",
     "angent-local-agent.zip",
     "angent-openai-plugin.zip",
