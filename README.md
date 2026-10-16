@@ -14,6 +14,12 @@ python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
 
 This produces a distribution archive from the source. Integration and installation depend on the agent host and plugin support; a Git clone by itself is not an installed ChatGPT plugin. See the installation and package-identity notes below before distributing a build.
 
+## ANGENT Root gateway for ChatGPT
+
+The OpenAI plugin exposes one discoverable Skill: `angent`. Other Core methods and Engineer/Frontend extensions live in its internal reference catalogue and are chosen by ANGENT, preventing independent discovery of bundled `ak-*` as peers. The platform can still select another separately installed plugin, and installation does not imply ANGENT will run automatically on every message.
+
+`extensions/angent-frontend/` adds visual frontend art direction informed by [ClaudeKit's frontend demo](https://github.com/claudekit/frontend-design-pro-demo): coherent style selection, composition, typography, imagery and rendered verification. Product-level UI/UX diagnosis remains with the existing Engineer capability.
+
 ## How it works
 
 ANGENT has one small Root router and focused supporting skills. **Every request receives the complete cognitive standard; only effort and supporting capabilities adapt.** Skills are responsibilities, not a prescribed workflow or mandatory agent instances. Short questions may have short, direct answers after the same intent, context, evidence, reasoning and accuracy checks; extra capabilities activate only where useful:
