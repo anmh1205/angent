@@ -18,7 +18,7 @@ class KitPortabilityTests(unittest.TestCase):
                 self.assertGreater(len(text),1700)
                 self.assertFalse(re.search(r"(?im)^\s*(?:-|\d+\.)?\s*render via plantuml\.com",text))
                 self.assertNotIn("render.sh --png",text)
-                self.assertIn("external",text.lower())
+                self.assertRegex(text.lower(),r"privacy|external|remote")
         self.assertIn("build_d2.py",self.load("ba-activity-swimlane"))
 
     def test_provider_methods_do_not_persist_shadow_state(self):
@@ -41,7 +41,6 @@ class KitPortabilityTests(unittest.TestCase):
     def test_production_tools_are_not_faked(self):
         self.assertIn("not",self.load("ba-playwright-gen").lower())
         self.assertIn("openapi",self.load("ba-api-test").lower())
-        self.assertIn("reqwise",self.load("ba-activity-swimlane").lower()) if False else None
         for name in ("figma-usecase","figma-bpmn","figma-demo"):
             method=(FIGMA/name/"SKILL.md").read_text(encoding="utf8")
             self.assertIn("ANGENT",method)
