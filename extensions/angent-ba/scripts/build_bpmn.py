@@ -219,18 +219,33 @@ def compile_bpmn(ir: dict[str, Any]) -> bytes:
                           id="Plane_" + ir["process"]["id"],
                           bpmnElement=ir["process"]["id"])
     lane_ids = [l["id"] for l in ir.get("lanes", [])]
-    cols = lane_ids if lane_ids else ["_default"]
-    maxrank = max(report["ranks"].values()) if nodes else 0
     col_width = 280
     row_height = 156
     top = 80
     left = 60
+    # Topological longest-path ranks alone put sibling nodes in the SAME lane
+    # at the same coordinates (a split into decline and continue, for example).
+    # Reserve each lane/rank cell, then propagate any displacement downstream.
+    predecessor: dict[str, list[str]] = defaultdict(list)
+    for flow in ir["flows"]:
+        predecessor[flow["tgt"]].append(flow["src"])
+    assigned: dict[str, int] = {}
+    occupancy: dict[str, set[int]] = defaultdict(set)
+    for node_id in report["order"]:
+        lane = nodes[node_id].get("lane", "_default")
+        rank = max([report["ranks"][node_id]] +
+                   [assigned[source] + 1 for source in predecessor[node_id]])
+        while rank in occupancy[lane]:
+            rank += 1
+        assigned[node_id] = rank
+        occupancy[lane].add(rank)
+    maxrank = max(assigned.values()) if nodes else 0
     bounds: dict[str, tuple[int, int, int, int]] = {}
     for node in ir["nodes"]:
         width, height = SHAPES[node["kind"]]
         index = lane_ids.index(node["lane"]) if lane_ids else 0
         x = left + index * col_width + (col_width - width) // 2
-        y = top + report["ranks"][node["id"]] * row_height + (72-height)//2
+        y = top + assigned[node["id"]] * row_height + (72-height)//2
         bounds[node["id"]] = (x, y, width, height)
     if lane_ids:
         for i, lane in enumerate(ir["lanes"]):
@@ -252,8 +267,24 @@ def compile_bpmn(ir: dict[str, Any]) -> bytes:
         dx, dy, dw, dh = bounds[flow["tgt"]]
         ax, ay = sx+sw//2, sy+sh
         bx, by = dx+dw//2, dy
-        halfway = (ay+by)//2
-        points = [(ax,ay), (ax,halfway), (bx,halfway), (bx,by)]
+        # Route using a narrow gutter NEXT TO the destination lane. A
+        # mid-point horizontal segment can cut through another branching task
+        # placed on an intervening row; the gutter avoids that collision.
+        src_lane = lane_ids.index(nodes[flow["src"]]["lane"]) if lane_ids else 0
+        dst_lane = lane_ids.index(nodes[flow["tgt"]]["lane"]) if lane_ids else 0
+        destination_left = left + dst_lane * col_width
+        if dst_lane < src_lane:
+            gutter_x = destination_left + col_width - 18
+        elif dst_lane > src_lane:
+            gutter_x = destination_left + 18
+        else:
+            gutter_x = destination_left + col_width - 18
+        from_gap = ay + 18
+        to_gap = by - 18
+        if to_gap <= from_gap:
+            raise ValueError("Layout row spacing insufficient for safe routing")
+        points = [(ax, ay), (ax, from_gap), (gutter_x, from_gap),
+                  (gutter_x, to_gap), (bx, to_gap), (bx, by)]
         edge = ET.SubElement(plane, q(BPMNDI, "BPMNEdge"),
                              id=flow["id"]+"_di", bpmnElement=flow["id"])
         last = None
@@ -262,8 +293,64 @@ def compile_bpmn(ir: dict[str, Any]) -> bytes:
                 ET.SubElement(edge, q(DI, "waypoint"), x=str(x), y=str(y))
                 last = (x,y)
     ET.indent(defs, space="  ")
-    return ET.tostring(defs, encoding="utf-8", xml_declaration=True)
+    output = ET.tostring(defs, encoding="utf-8", xml_declaration=True)
+    geometry = audit_geometry(output)
+    if not geometry["ok"]:
+        raise ValueError("BPMN layout has collisions: " + "; ".join(geometry["errors"]))
+    return output
 
+
+
+
+def audit_geometry(xml: bytes) -> dict[str, Any]:
+    """Reject BPMN DI shape overlaps and connectors cutting through other nodes."""
+    root = ET.fromstring(xml)
+    q = lambda ns, tag: "{" + ns + "}" + tag
+    lane_ids = {n.get("id") for n in root.iter(q(BPMN, "lane"))}
+    boxes: dict[str, tuple[float,float,float,float]] = {}
+    for shape in root.iter(q(BPMNDI, "BPMNShape")):
+        key = shape.get("bpmnElement")
+        if key in lane_ids:
+            continue
+        bounds = shape.find(q(DC, "Bounds"))
+        if bounds is None or not key:
+            continue
+        boxes[key] = tuple(float(bounds.get(k, "0")) for k in ("x","y","width","height"))
+    problems: list[str] = []
+    keys = sorted(boxes)
+    for i,key in enumerate(keys):
+        ax,ay,aw,ah = boxes[key]
+        if aw <= 0 or ah <= 0:
+            problems.append(key + ": nonpositive bounding box")
+        for other in keys[i+1:]:
+            bx,by,bw,bh = boxes[other]
+            if min(ax+aw,bx+bw) > max(ax,bx) and min(ay+ah,by+bh) > max(ay,by):
+                problems.append(key + " overlaps " + other)
+    flow_refs = {f.get("id"): (f.get("sourceRef"), f.get("targetRef"))
+                 for f in root.iter(q(BPMN, "sequenceFlow"))}
+    for edge in root.iter(q(BPMNDI, "BPMNEdge")):
+        flow_id = edge.get("bpmnElement", "")
+        endpoints = flow_refs.get(flow_id, ())
+        points = [(float(p.get("x","0")),float(p.get("y","0")))
+                  for p in edge.findall(q(DI,"waypoint"))]
+        if len(points) < 2:
+            problems.append(flow_id + ": fewer than two waypoints")
+        for a,b in zip(points, points[1:]):
+            (x1,y1),(x2,y2) = a,b
+            if x1 != x2 and y1 != y2:
+                problems.append(flow_id + ": nonorthogonal segment")
+                continue
+            for node,(x,y,w,h) in boxes.items():
+                if node in endpoints:
+                    continue
+                if x1 == x2:
+                    hit = x < x1 < x+w and max(min(y1,y2),y) < min(max(y1,y2),y+h)
+                else:
+                    hit = y < y1 < y+h and max(min(x1,x2),x) < min(max(x1,x2),x+w)
+                if hit:
+                    problems.append(flow_id + ": connector intersects " + node)
+    return {"ok": not problems, "errors": sorted(set(problems)),
+            "checked_nodes": len(boxes), "checked_flows": len(flow_refs)}
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
