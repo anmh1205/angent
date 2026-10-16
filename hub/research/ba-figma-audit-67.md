@@ -132,7 +132,7 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 2. `ba-discover` had inherited the Dev BA Kit's repository investigation, not AI4BA's business opportunity and competitor discovery. Both modes now have distinct methods.
 3. `ba-figma` previously implied the Reqwise OSS diagram API could deliver arbitrary editable screen frames; that is not the same capability. Screen delivery now requires actual Figma frame/node provider actions and read-back.
 4. Synthetic D2, Bruno, Playwright and BPMN checks verify local implementations, NOT real customers, production backends or provider writes.
-5. Live Jira/Confluence/Figma, Next.js generation, full export and reverse-preview need independent proof rather than a successful packaging check.
+5. Local Next.js App Router generation and Chrome execution, scoped stakeholder MD/HTML/DOCX export and a reverse-preview browser demonstration now have independent test evidence. PDF and all live Atlassian/Figma mutation/read-back paths still need separate proof; never mix these evidence tiers.
 
 ## Core evidence
 
@@ -140,5 +140,9 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 `tests/integration/check_bpmn_official_xsd.py` uses actual OMG 2.0.2 XSD; `tests/integration/check_d2_cli.py` renders actual SVG.
 `tests/integration/check_generated_playwright.py` uses Chrome with a deliberate failing mutation; `tests/integration/check_bruno_cli.py` checks four mock HTTP calls.
 `tests/test_reqwise_adapter.py` checks Reqwise OSS semantics without claiming Figma canvas edits.
+
+`tests/test_ba_figma_screens.py` checks a real common screen model across HTML, Next and Reqwise editable frame candidates, including accepted source IDs in the synthetic fleet example. The script only prepares `figma_write` node trees: it has not created or verified live Figma canvas elements. `tests/integration/check_kits_acceptance.py` checks 58 real Atlas artifact rows across URD/BRD/PRD/SRS/TC and 4/8 FR structural test links, plus separate local UI/API/Figma candidates. Example coverage is not stakeholder approval or production verification.
+
+The BA Markdown extractor excludes fenced code examples to avoid promoting tutorial requirements into actual source graph nodes; its negative test is in `tests/test_ba_markdown_traceability.py`.
 
 **Branch policy:** No merge into main. Individual open acceptance criteria must be resolved, constrained or explicitly disclosed before any release.
