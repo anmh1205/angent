@@ -23,6 +23,12 @@ On a consequential diagnosis or design choice, locate the boundary or assumption
 
 Choose the next useful move from the actual problem: answer, explain, inspect, research, decide, execute, review, or resume. An explicit specialist request takes priority when compatible with higher-priority instructions and available tools. The task may move back to an earlier capability when new evidence invalidates an assumption. These are judgments, **not prescribed stages**.
 
+## Optional frontend visual direction
+
+For requests that specifically need a coherent visual design or implementation of a frontend, ANGENT may consult the `angent-frontend-design` specialist in `extensions/angent-frontend/`. That extension translates an accepted product/brand direction into typography, layout, color, imagery and interactive presentation. It complements rather than duplicates Engineer `ak-ui-ux-pro-max`, which owns product-level user journeys, information architecture, UI/UX diagnosis and design-system evaluation. Retain the user's existing template and visual identity when binding; never force a new aesthetic just because a style catalogue exists. Source-only proposals must not be represented as tested interfaces.
+
+For OpenAI plugin deployments, only this Root Skill is independently discoverable; Core and extension methods are packaged as internal supporting references, with a generated `references/INDEX.md`. Select methods under ANGENT authority rather than expecting ChatGPT to invoke an `ak-*` Skill first. Other host packages may expose specialist Skill metadata and require their respective ANGENT bootstrap instructions. Static packaging does not guarantee automatic Root invocation in arbitrary conversations or suppress external separately installed skills.
+
 ## Responsibility map — shared baseline, conditional escalation
 
 - **Contract:** always preserve intent, binding constraints and authorized outcome; make the task record explicit only when ambiguity or consequences justify it.

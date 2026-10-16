@@ -20,6 +20,9 @@ import zipfile
 CORE_ROOT = "skills/"
 ENGINEER_ROOT = "extensions/angent-engineer/"
 ENGINEER_SKILLS = ENGINEER_ROOT + "skills/"
+FRONTEND_ROOT = "extensions/angent-frontend/"
+FRONTEND_SKILLS = FRONTEND_ROOT + "skills/"
+FRONTEND_NAMES = frozenset({"angent-frontend-design"})
 CORE_FILES = {"plugin.json", ".codex-plugin/plugin.json", "AGENTS.md"}
 ENGINEER_SOURCE_MANIFEST = ENGINEER_ROOT + "source-manifest.json"
 ENGINEER_PACKAGE_MANIFEST = ENGINEER_ROOT + "plugin.json"
@@ -30,7 +33,8 @@ EXPECTED_ROLES = 16
 # Only canonical Core owns generic explanation. Keep upstream AgentKit identity
 # under extensions/ but do not project it into the ANGENT Skill discovery root.
 SUPPRESSED_PUBLIC_ENGINEER = frozenset({"ak-explain"})
-EXPECTED_DISCOVERABLE = EXPECTED_CORE + EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER)
+EXPECTED_DISCOVERABLE = EXPECTED_CORE + EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER) + len(FRONTEND_NAMES)
+EXPECTED_OPENAI_DISCOVERABLE = 1
 FIXED_TIMESTAMP = (2020, 1, 1, 0, 0, 0)
 
 
@@ -63,6 +67,7 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
     entries: dict[str, bytes] = {}
     source_core: set[str] = set()
     source_engineer: set[str] = set()
+    source_frontend: set[str] = set()
     for path in paths:
         if path in CORE_FILES or path.startswith(("assets/", CORE_ROOT)):
             target = path
@@ -75,6 +80,8 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
                 target = ENGINEER_SOURCE_MANIFEST  # internal data, not a second plugin
             else:
                 target = path
+        elif path.startswith(FRONTEND_ROOT):
+            target = path
         else:
             continue
 
@@ -91,9 +98,19 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
                 entries[projected] = data
             if re.fullmatch(r"extensions/angent-engineer/skills/[^/]+/SKILL\.md", path):
                 source_engineer.add(skill_name)
+        if path.startswith(FRONTEND_SKILLS):
+            skill_name = path[len(FRONTEND_SKILLS):].split("/", 1)[0]
+            projected = CORE_ROOT + path[len(FRONTEND_SKILLS):]
+            if projected in entries:
+                raise PackagingError(f"Frontend projection collision: {projected}")
+            entries[projected] = data
+            if path.endswith("/SKILL.md") and path.count("/") == 4:
+                source_frontend.add(skill_name)
 
     if len(source_core) != EXPECTED_CORE or len(source_engineer) != EXPECTED_ENGINEER:
         raise PackagingError(f"Unexpected Skills: core={len(source_core)}, engineer={len(source_engineer)}")
+    if source_frontend != FRONTEND_NAMES or source_frontend & (source_core | source_engineer):
+        raise PackagingError(f"Frontend source mismatch: {sorted(source_frontend)}")
     if not SUPPRESSED_PUBLIC_ENGINEER <= source_engineer:
         raise PackagingError("Suppressed Engineer Skill is missing from maintained source")
     if source_core & source_engineer:
@@ -117,6 +134,91 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
     return entries
 
 
+def gateway_entries(source: dict[str, bytes]) -> dict[str, bytes]:
+    """Package one public ANGENT entry with its subordinate reference library.
+
+    Plugin skill discovery scans immediate skills/ children, not reference
+    descendants. All specialist documents remain available inside Root.
+    """
+    root = "skills/angent/"
+    if root + "SKILL.md" not in source:
+        raise PackagingError("Missing ANGENT root Skill")
+    output: dict[str, bytes] = {}
+    names: set[str] = set()
+    for path, content in sorted(source.items()):
+        if path.startswith("skills/") and not path.startswith(root):
+            relative = path[len("skills/"):]
+            target = root + "references/catalog/" + relative
+            if relative.endswith("/SKILL.md") and relative.count("/") == 1:
+                names.add(relative.split("/")[0])
+        else:
+            target = path
+        if target in output:
+            raise PackagingError(f"Gateway collision: {target}")
+        output[target] = content
+
+    core = sorted(n for n in names if n.startswith("angent-") and n not in FRONTEND_NAMES)
+    engineer = sorted(n for n in names if n.startswith("ak-"))
+    frontend = sorted(names & FRONTEND_NAMES)
+    if (len(core) != EXPECTED_CORE - 1
+            or len(engineer) != EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER)
+            or frontend != sorted(FRONTEND_NAMES)
+            or len(names) != EXPECTED_DISCOVERABLE - 1):
+        raise PackagingError(f"Incomplete gateway library: Core={len(core)} Engineer={len(engineer)} Frontend={frontend}")
+
+    gateway = """
+## ChatGPT ANGENT gateway
+
+This is the sole discoverable Skill in the ANGENT OpenAI plugin. Apply the
+universal ANGENT cognitive standard first. Choose the relevant Core owner
+before considering a specialized method. Read references/INDEX.md only when
+another method materially helps; follow references/catalog/<name>/SKILL.md
+and its adjacent references as internal ANGENT instructions, not as a new
+independently activated Skill or a separate plugin.
+
+Core owns common reasoning, explanation, research and quality. For an
+engineering outcome, consult the internal ak-agentkit routing method if
+needed; native AgentKit is preferred only when really usable, and must not
+be mixed with its fallback. For original frontend visual direction use
+angent-frontend-design; for product workflows and systemic UI/UX audits
+use ak-ui-ux-pro-max. Match user intent, evidence and permissions throughout.
+
+Static package structure prevents direct discovery of bundled ak-* as
+ChatGPT plugin Skills. It cannot guarantee ANGENT will be selected on
+every chat turn or suppress independently installed external plugins.
+"""
+    output[root + "SKILL.md"] = source[root + "SKILL.md"] + gateway.encode("utf-8")
+
+    index = [
+        "# ANGENT internal methods", "",
+        "The only discoverable ChatGPT Skill is ANGENT. This is an internal",
+        "reference catalog consulted by ANGENT when a specialist adds value.", "",
+        "## Core responsibilities", "",
+    ]
+    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in core)
+    index += ["", "## Frontend visual design extension", ""]
+    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in frontend)
+    index += ["", "## Engineer specialist methods", "",
+              "Use the ak-agentkit routing reference when the choice is nontrivial.",
+              "Read only the required method; generic explanation stays in Core.", ""]
+    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in engineer)
+    index += ["", "## Engineer role references (not running agents)", ""]
+    for path, data in sorted(source.items()):
+        if (path.startswith("extensions/angent-engineer/agents/")
+                and path.endswith(".md") and path.count("/") == 3
+                and not path.endswith("/README.md")):
+            name = PurePosixPath(path).name
+            output[root + "references/roles/" + name] = data
+            index.append(f"- [{name}](roles/{name})")
+    output[root + "references/INDEX.md"] = ("\n".join(index) + "\n").encode("utf-8")
+
+    discovered = [p for p in output if p.startswith("skills/")
+                  and p.endswith("/SKILL.md") and p.count("/") == 2]
+    if discovered != [root + "SKILL.md"]:
+        raise PackagingError(f"Unexpected independently discoverable Skill: {discovered}")
+    return output
+
+
 def verify_zip(path: Path) -> dict[str, object]:
     with zipfile.ZipFile(path) as archive:
         if archive.testzip() is not None:
@@ -125,10 +227,16 @@ def verify_zip(path: Path) -> dict[str, object]:
         if len(names) != len(set(names)):
             raise PackagingError("Duplicate ZIP entry")
         discovered = [p for p in names if re.fullmatch(r"skills/[^/]+/SKILL\.md", p)]
-        if len(discovered) != EXPECTED_DISCOVERABLE or any(
-            f"skills/{name}/SKILL.md" in names for name in SUPPRESSED_PUBLIC_ENGINEER
-        ):
-            raise PackagingError(f"Wrong discoverable Skill count: {len(discovered)}")
+        if discovered != ["skills/angent/SKILL.md"]:
+            raise PackagingError(f"OpenAI requires one ANGENT gateway, got {discovered}")
+        required_methods = (
+            "skills/angent/references/INDEX.md",
+            "skills/angent/references/catalog/ak-agentkit/SKILL.md",
+            "skills/angent/references/catalog/angent-reasoning/SKILL.md",
+            "skills/angent/references/catalog/angent-frontend-design/SKILL.md",
+        )
+        if any(path not in names for path in required_methods):
+            raise PackagingError("OpenAI internal methods incomplete")
         if ENGINEER_PACKAGE_MANIFEST in names or ENGINEER_CODEX_MANIFEST in names:
             raise PackagingError("Two separately installable manifests found")
         if not all(x in names for x in CORE_FILES | {ENGINEER_SOURCE_MANIFEST}):
@@ -142,7 +250,9 @@ def verify_zip(path: Path) -> dict[str, object]:
             "plugin_name": json.loads(archive.read("plugin.json"))["name"],
             "core_skills": EXPECTED_CORE,
             "engineer_skills": EXPECTED_ENGINEER,
-            "discoverable_engineer_skills": EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER),
+            "discoverable_engineer_skills": 0,
+            "internal_engineer_methods": EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER),
+            "internal_frontend_methods": len(FRONTEND_NAMES),
             "discoverable_skills": len(discovered),
             "engineer_roles": EXPECTED_ROLES,
             "zip_entries": len(names),
@@ -151,7 +261,7 @@ def verify_zip(path: Path) -> dict[str, object]:
 
 
 def build(repo: Path, output: Path) -> dict[str, object]:
-    entries = collect_entries(repo)
+    entries = gateway_entries(collect_entries(repo))
     output.parent.mkdir(parents=True, exist_ok=True)
     # Deterministic, host-independent archive byte order, timestamps and permissions.
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:

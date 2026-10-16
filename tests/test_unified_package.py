@@ -30,9 +30,11 @@ class UnifiedPackageTests(unittest.TestCase):
 
     def test_one_plugin_and_exact_catalog(self):
         self.assertEqual(self.report["plugin_name"], "angent")
-        self.assertEqual(self.report["discoverable_skills"], 114)
+        self.assertEqual(self.report["discoverable_skills"], 1)
         self.assertEqual(self.report["engineer_skills"], 103)
-        self.assertEqual(self.report["discoverable_engineer_skills"], 102)
+        self.assertEqual(self.report["discoverable_engineer_skills"], 0)
+        self.assertEqual(self.report["internal_engineer_methods"], 102)
+        self.assertEqual(self.report["internal_frontend_methods"], 1)
         self.assertEqual(self.report["engineer_roles"], 16)
         with zipfile.ZipFile(self.first) as z:
             self.assertNotIn("extensions/angent-engineer/plugin.json", z.namelist())
@@ -42,8 +44,18 @@ class UnifiedPackageTests(unittest.TestCase):
             self.assertNotIn("skills/ak-explain/SKILL.md", z.namelist())
             self.assertEqual(json.loads(z.read("plugin.json"))["version"],
                              json.loads(z.read(".codex-plugin/plugin.json"))["version"])
-            self.assertEqual(z.read("skills/ak-agentkit/SKILL.md"),
+            discovery = [p for p in z.namelist() if p.startswith("skills/") and p.count("/") == 2 and p.endswith("/SKILL.md")]
+            self.assertEqual(discovery, ["skills/angent/SKILL.md"])
+            self.assertNotIn("skills/ak-agentkit/SKILL.md", z.namelist())
+            self.assertNotIn("skills/angent-frontend-design/SKILL.md", z.namelist())
+            self.assertIn("skills/angent/references/INDEX.md", z.namelist())
+            self.assertEqual(z.read("skills/angent/references/catalog/ak-agentkit/SKILL.md"),
                              z.read("extensions/angent-engineer/skills/ak-agentkit/SKILL.md"))
+            self.assertEqual(z.read("skills/angent/references/catalog/angent-frontend-design/SKILL.md"),
+                             z.read("extensions/angent-frontend/skills/angent-frontend-design/SKILL.md"))
+            inner = [p for p in z.namelist() if p.startswith("skills/angent/references/catalog/") and p.endswith("/SKILL.md")]
+            self.assertEqual(len(inner), 114)
+            self.assertNotIn(b"ak-explain", z.read("skills/angent/references/INDEX.md"))
 
     def test_reproducible_bytes(self):
         module.build(ROOT, self.second)

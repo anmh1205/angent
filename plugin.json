@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.5.2",
-  "description": "ANGENT cognitive layer and portable Engineer capabilities in one agent plugin.",
+  "version": "1.6.0",
+  "description": "ANGENT Root routes Core cognition, Engineer methods and Frontend visual design through one discoverable ChatGPT Skill.",
   "author": {
     "name": "An"
   },
@@ -22,11 +22,11 @@
       "interface": {
         "displayName": "ANGENT",
         "shortDescription": "Cognitive layer for agents",
-        "longDescription": "ANGENT combines evidence-grounded cognition, coherent writing and 102 discoverable Engineer Skills, with all 103 Engineer source identities maintained.",
+        "longDescription": "ANGENT provides one ChatGPT entry for its Core reasoning, research, authoring, quality, portable Engineer methods and optional Frontend art direction.",
         "developerName": "An",
         "category": "Productivity",
         "defaultPrompt": [
-          "Use ANGENT fully: preserve intent, context, reasoning, evidence and accuracy; scale effort, not fidelity.",
+          "Use ANGENT as the root for reasoning and specialized methods; preserve intent, context, evidence and quality.",
           "Answer early, explain decisive relationships and finish with a useful synthesis, without repetitive filler.",
           "For consequential work, verify effects, report uncertainty and preserve accepted strengths."
         ],

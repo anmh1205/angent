@@ -24,14 +24,26 @@ class MultiPackageTests(unittest.TestCase):
             with self.subTest(package=package):
                 files = packs.assemble(ROOT, package, self.source)
                 prefix = packs.SKILL_PREFIX[package]
-                paths = [p for p in files if p.startswith(prefix) and p.endswith("/SKILL.md")]
-                self.assertEqual(len(paths), 114)
+                paths = [p for p in files if p.startswith(prefix) and p.endswith("/SKILL.md") and p.count("/") == prefix.count("/") + 1]
+                expected = 1 if package == "openai-plugin" else 115
+                self.assertEqual(len(paths), expected)
                 self.assertNotIn(prefix + "ak-explain/SKILL.md", files)
                 self.assertIn("extensions/angent-engineer/skills/ak-explain/SKILL.md", files)
                 self.assertIn(prefix + "angent/SKILL.md", files)
-                self.assertIn(prefix + "ak-agentkit/SKILL.md", files)
-                self.assertEqual(files[prefix + "angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
-                self.assertEqual(files[prefix + "ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
+                if package == "openai-plugin":
+                    self.assertNotIn(prefix + "ak-agentkit/SKILL.md", files)
+                    self.assertNotIn(prefix + "angent-frontend-design/SKILL.md", files)
+                    self.assertIn(prefix + "angent/references/INDEX.md", files)
+                    self.assertEqual(files[prefix + "angent/references/catalog/ak-agentkit/SKILL.md"],
+                                     self.source["skills/ak-agentkit/SKILL.md"])
+                    self.assertEqual(files[prefix + "angent/references/catalog/angent-frontend-design/SKILL.md"],
+                                     self.source["skills/angent-frontend-design/SKILL.md"])
+                    self.assertTrue(files[prefix + "angent/SKILL.md"].startswith(self.source["skills/angent/SKILL.md"]))
+                else:
+                    self.assertIn(prefix + "ak-agentkit/SKILL.md", files)
+                    self.assertIn(prefix + "angent-frontend-design/SKILL.md", files)
+                    self.assertEqual(files[prefix + "angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
+                    self.assertEqual(files[prefix + "ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
                 self.assertNotIn("extensions/angent-engineer/plugin.json", files)
                 self.assertIn("extensions/angent-engineer/source-manifest.json", files)
                 self.assertIn("extensions/angent-engineer/scripts/select_engineer.py", files)
@@ -59,7 +71,9 @@ class MultiPackageTests(unittest.TestCase):
         openai = packs.assemble(ROOT, "openai-plugin", self.source)
         self.assertEqual(json.loads(openai["plugin.json"])["version"], json.loads(self.source["plugin.json"])["version"])
         self.assertEqual(json.loads(openai[".codex-plugin/plugin.json"])["version"], json.loads(self.source["plugin.json"])["version"])
-        self.assertEqual(openai["skills/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
+        self.assertTrue(openai["skills/angent/SKILL.md"].startswith(self.source["skills/angent/SKILL.md"]))
+        self.assertEqual({p for p in openai if p.startswith("skills/") and p.endswith("/SKILL.md") and p.count("/") == 2},
+                         {"skills/angent/SKILL.md"})
 
     def test_negative_agent_frontmatter(self):
         with self.assertRaises(legacy.PackagingError):
@@ -90,7 +104,18 @@ class MultiPackageTests(unittest.TestCase):
             with self.subTest(package=package):
                 files = packs.assemble(ROOT, package, self.source)
                 for path, data in source_skills.items():
-                    self.assertEqual(files[packs.SKILL_PREFIX[package] + path[len("skills/"):]], data, path)
+                    if package == "openai-plugin":
+                        if path == "skills/angent/SKILL.md":
+                            self.assertTrue(files[path].startswith(data))
+                        elif path == "skills/angent/references/INDEX.md":
+                            self.assertIn(b"## Engineer specialist methods", files[path])
+                        elif path.startswith("skills/angent/"):
+                            self.assertEqual(files[path], data, path)
+                        else:
+                            relative = path[len("skills/"):]
+                            self.assertEqual(files["skills/angent/references/catalog/" + relative], data, path)
+                    else:
+                        self.assertEqual(files[packs.SKILL_PREFIX[package] + path[len("skills/"):]], data, path)
                 for path, data in source_support.items():
                     self.assertEqual(files[path], data, path)
 
@@ -100,7 +125,8 @@ class MultiPackageTests(unittest.TestCase):
         self.assertIn("references/INDEX.md", files)
         self.assertEqual(files["references/catalog/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
         self.assertEqual(files["references/catalog/ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
-        self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), 114)
+        self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), 115)
+        self.assertIn("references/catalog/angent-frontend-design/SKILL.md", files)
         self.assertNotIn("references/catalog/ak-explain/SKILL.md", files)
         self.assertNotIn(b"ak-explain", files["references/INDEX.md"])
         self.assertEqual(len([p for p in files if p.startswith("references/roles/") and p.endswith(".md")]), 16)
@@ -112,7 +138,8 @@ class MultiPackageTests(unittest.TestCase):
     def test_legacy_openai_builder_still_works(self):
         with tempfile.TemporaryDirectory() as tmp:
             report = legacy.build(ROOT, Path(tmp) / "angent-chatgpt.zip")
-            self.assertEqual(report["discoverable_skills"], 114)
+            self.assertEqual(report["discoverable_skills"], 1)
+            self.assertEqual(report["internal_engineer_methods"], 102)
             self.assertEqual(report["engineer_skills"], 103)
             self.assertEqual(report["engineer_roles"], 16)
 

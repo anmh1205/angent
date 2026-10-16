@@ -126,9 +126,9 @@ This directory contains ANGENT's maintained fallback Skill source, portable role
 
 ## ChatGPT / Codex packaging
 
-Install the **single** `angent-chatgpt.zip` artifact. The root `plugin.json` and `.codex-plugin/plugin.json` describe one plugin with one discoverable `skills/` tree. Engineer files here are maintained source and non-discoverable support, not a second package.
+Install the **single** `angent-chatgpt.zip` artifact. The OpenAI distribution intentionally exposes only `skills/angent/SKILL.md` as a public discovery entry. The 102 usable portable Engineer methods remain internally available as `skills/angent/references/catalog/ak-*/SKILL.md` and as maintained source in this extension. ANGENT Root decides if and when to apply one; the host must not receive the bundled `ak-*` methods as separate discovery entries.
 
-The portable native-first behavior is guidance and runtime routing, **not** a claim that static Skill discovery can be switched off from inside a plugin manifest.
+This is structural packaging control, not a claim that a plugin can globally override ChatGPT skill selection or disable skills owned by other plugins. When updating a previously installed release, **explicitly delete** its former `skills/ak-*/` discovery files; the Plugin Creator updater retains omitted files by default. Compare the actual provider file listing with the new candidate's ZIP and use exact `delete_paths` before accepting the new release.
 
 ## Portable Skill identity
 
