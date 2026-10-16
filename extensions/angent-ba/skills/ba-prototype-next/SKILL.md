@@ -1,34 +1,47 @@
 ---
 name: ba-prototype-next
-description: Specialized ANGENT business-analysis procedure for prototype-next.
+description: Generate and test an isolated real Next.js App Router mock from approved BA screen models, preserving navigation, error states and accessible labels.
 ---
 
-# Build a reviewable Next.js prototype from accepted BA flows
+# BA Next.js prototype — a built and browser-verified review app
 
-## Distinction
+The source-aligned executable is \`extensions/angent-ba/scripts/build_next_prototype.py\`. This implements a narrow but genuine Next.js App Router application with generated page routes, native form validation, explicit mock outcomes and a visible simulation boundary. It is **not** a production login, real API integration or modification of an existing app without authorization.
 
-A prototype demonstrates decisions and user paths; it is **not** proof that backend logic, data persistence, authentication or security is production-ready. Use an authorized existing Next.js repo if one exists, rather than installing a different stack or rewriting the project's agreed UI foundation.
+## Decide what to build
 
-## Build procedure
+Read the accepted FR/BR/error matrix, userflow and screen/control inventory and pin the revision. When working in an existing Next.js project, first inspect its app router, component system, dependencies, variants, deployment and available tests. *Do not replace an established app with the isolated example generator.* Instead adapt the underlying screen-state method to the existing stack under ANGENT Execution.
 
-1. Read the accepted screen inventory, userflow, wireframe, SRS, error matrix and style constraints. Capture a screen-state matrix: route, user role, inputs, validation, loading, empty, success, error, denied and expired-session states.
-2. Inspect package.json, router type (App Router or Pages Router), TypeScript, components, tokens, styling, test tooling, images and lockfile. Respect the current project baseline; ask only if a consequential platform choice is unsettled.
-3. Define route contracts before styling. For each action record trigger, locally simulated state transition, data mutation (in-memory/mock), validation outcome and accessibility focus target. Mark real integrations as mocks visibly in the code and demo notes.
-4. Implement screen components by reusing existing primitives; avoid duplicating form validation rules across pages. Maintain explicit fixture lifecycle and a reset action so reviewers can reproduce scenarios.
-5. Implement all mapped alternate outcomes, including invalid input, authorization denial, stale session, network error, duplicate submit, interrupted flow and recovery; do not show a visual screen disconnected from any navigation.
-6. Verify keyboard labels, semantic forms, tab order, announcements, zoom and responsive widths. No fake submit success that silently accepts all inputs.
-7. Execute the existing install/build/typecheck/test commands if the host permits; inspect rendered routes in a browser at representative viewports. Record command, exit code, environment, scope and observed failure.
-8. Deliver the file diff, route map, state coverage table, screenshots or browser references where available, setup command and explicit unimplemented backend boundaries.
+For a standalone BA review artifact, prepare the independently accepted JSON screen model documented under \`ba-wireframe-html/references/screen-model.md\`. The same model can drive static HTML and generated Playwright tests. Structural checks reject broken routes and scenario outcomes, but they cannot infer a missing customer requirement.
 
-## Core acceptance
+## Generate the actual app
 
-Every route in the flow loads, required transitions are reachable, fixture reset works, no unsupported data claim is shown, no browser errors occur in tested paths, and build/runtime status is reported from actual execution. If tooling is absent, produce a design specification rather than asserting a runnable prototype.
+From the ANGENT repository root, with authorized filesystem and Python:
 
-## Example
+    python extensions/angent-ba/scripts/build_next_prototype.py extensions/angent-ba/examples/authentication-screen-model.json --output out/next-prototype
 
-An email-login prototype must expose wrong-password, locked-account, session timeout and transient network error as distinct states where the accepted SRS distinguishes them. It must not invent a threshold or reveal whether an email exists if the policy forbids account enumeration.
+This creates 8 source files, including package.json, model.json, review-manifest.json, a dynamic App Router screen and CSS. The output directory must be empty. The example uses a synthetic three-screen Authentication flow. Do not rewrite model values with real passwords, personal data or unstated security policy.
 
+The generator reports \`compile_status: not-run\` and \`browser_status: not-run\` until a real runtime test is performed. Generating files alone does not prove a functional Next.js prototype.
 
-## ANGENT cooperation
+## Compile and observe in a real browser
 
-ANGENT Root/Reasoning owns interpretation and decisions; Authoring owns narrative quality; Execution handles authorized external effects; Quality verifies the outcome. Method selection is optional and context-dependent, never a forced workflow.
+With Node.js 20.9+ and network/package installation authorized:
+
+    cd out/next-prototype
+    npm install --no-audit --no-fund
+    npm run build
+    npm run start
+
+Check \`http://localhost:3000\`, all reachable screen IDs, native required/email validation, successful submit, every declared mock error, forgotten-password navigation, reset, keyboard focus, labels and mobile/desktop scrolling. The application disables interactive controls until React hydration attaches client handlers, preventing early clicks from appearing to work when no handler exists.
+
+The repository has an isolated Chrome regression harness, which uses only localhost and can test a prebuilt project without installing dependencies:
+
+    python tests/integration/check_next_prototype_browser.py --project PATH_TO_GENERATED_BUILT_PROJECT --chrome PATH_TO_CHROME
+
+Omit \`--project\` to have the harness create, install and build a disposable fixture before browser testing. The harness checks two viewports (390×844 and 1366×850), four mock outcomes, recovery/reset, focus and accidental network calls. A passing localhost test is **not a deployed application smoke test**.
+
+## Traceability and acceptance
+
+Deliver the actual model revision, route map, generated path, \`npm run build\` result and real browser observations. Compare controls, labels, transitions, error wording and data handling with the accepted screen model and userflow. Include unresolved states such as loading, expiry, OAuth, password recovery email or server-side denial when not modeled. Do not silently invent them or imply that mock sessionStorage flags prove user authentication.
+
+ANGENT Root owns interpretation/permissions and outcome quality; BA maps requirements to screens; Frontend handles art direction; Execution builds/opens the real app; Figma Kit is only used where editable Figma nodes have a genuinely available provider.

@@ -198,9 +198,9 @@
   {
     "stage": "Screen",
     "skill": "ba-prototype-next",
-    "evidence": "unverified",
+    "evidence": "runtime-mock",
     "deliverable": "Next.js routed interactive prototype",
-    "remaining": "No reproducible generated Next.js build verified"
+    "remaining": "Actual Next 16.4.2 production build and three consecutive real Chrome passes at mobile/desktop; no real backend or deployed web app verification"
   },
   {
     "stage": "Screen",

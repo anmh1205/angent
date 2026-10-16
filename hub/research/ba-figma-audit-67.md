@@ -56,7 +56,7 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 | `ba-wireframe-ascii` | ASCII layout keyed to user flow | method | Not a functional or editable screen |
 | `ba-wireframe-html` | Standalone offline low-fidelity HTML | runtime-mock | Synthetic Chrome fixture only |
 | `ba-prototype-html` | Clickable mock HTML with errors and focus | runtime-mock | No real user backend or persistence |
-| `ba-prototype-next` | Next.js routed interactive prototype | unverified | No reproducible generated Next.js build verified |
+| `ba-prototype-next` | Next.js routed interactive prototype | runtime-mock | Real Next 16.4.2 production build and Chrome 3× at 2 viewports; production/backend unverified |
 | `ba-figma` | Screen controls as editable native Figma frames | provider-blocked | Real frame/node editing and read-back not verified |
 
 ## API
