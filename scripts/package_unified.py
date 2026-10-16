@@ -20,6 +20,9 @@ import zipfile
 CORE_ROOT = "skills/"
 ENGINEER_ROOT = "extensions/angent-engineer/"
 ENGINEER_SKILLS = ENGINEER_ROOT + "skills/"
+FRONTEND_ROOT = "extensions/angent-frontend/"
+FRONTEND_SKILLS = FRONTEND_ROOT + "skills/"
+FRONTEND_NAMES = frozenset({"angent-frontend-design"})
 CORE_FILES = {"plugin.json", ".codex-plugin/plugin.json", "AGENTS.md"}
 ENGINEER_SOURCE_MANIFEST = ENGINEER_ROOT + "source-manifest.json"
 ENGINEER_PACKAGE_MANIFEST = ENGINEER_ROOT + "plugin.json"
@@ -30,7 +33,8 @@ EXPECTED_ROLES = 16
 # Only canonical Core owns generic explanation. Keep upstream AgentKit identity
 # under extensions/ but do not project it into the ANGENT Skill discovery root.
 SUPPRESSED_PUBLIC_ENGINEER = frozenset({"ak-explain"})
-EXPECTED_DISCOVERABLE = EXPECTED_CORE + EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER)
+EXPECTED_DISCOVERABLE = EXPECTED_CORE + EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER) + len(FRONTEND_NAMES)
+EXPECTED_OPENAI_DISCOVERABLE = 1
 FIXED_TIMESTAMP = (2020, 1, 1, 0, 0, 0)
 
 
@@ -63,6 +67,7 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
     entries: dict[str, bytes] = {}
     source_core: set[str] = set()
     source_engineer: set[str] = set()
+    source_frontend: set[str] = set()
     for path in paths:
         if path in CORE_FILES or path.startswith(("assets/", CORE_ROOT)):
             target = path
@@ -75,6 +80,8 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
                 target = ENGINEER_SOURCE_MANIFEST  # internal data, not a second plugin
             else:
                 target = path
+        elif path.startswith(FRONTEND_ROOT):
+            target = path
         else:
             continue
 
@@ -91,9 +98,19 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
                 entries[projected] = data
             if re.fullmatch(r"extensions/angent-engineer/skills/[^/]+/SKILL\.md", path):
                 source_engineer.add(skill_name)
+        if path.startswith(FRONTEND_SKILLS):
+            skill_name = path[len(FRONTEND_SKILLS):].split("/", 1)[0]
+            projected = CORE_ROOT + path[len(FRONTEND_SKILLS):]
+            if projected in entries:
+                raise PackagingError(f"Frontend projection collision: {projected}")
+            entries[projected] = data
+            if path.endswith("/SKILL.md") and path.count("/") == 4:
+                source_frontend.add(skill_name)
 
     if len(source_core) != EXPECTED_CORE or len(source_engineer) != EXPECTED_ENGINEER:
         raise PackagingError(f"Unexpected Skills: core={len(source_core)}, engineer={len(source_engineer)}")
+    if source_frontend != FRONTEND_NAMES or source_frontend & (source_core | source_engineer):
+        raise PackagingError(f"Frontend source mismatch: {sorted(source_frontend)}")
     if not SUPPRESSED_PUBLIC_ENGINEER <= source_engineer:
         raise PackagingError("Suppressed Engineer Skill is missing from maintained source")
     if source_core & source_engineer:
