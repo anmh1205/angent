@@ -79,7 +79,7 @@ def check_model(data: Any) -> dict[str, Any]:
                 errors.append(f"{sid}.{cid}: required must be boolean")
             if "placeholder" in control and (
                 not isinstance(control["placeholder"], str) or
-                kind not in (INPUTS - {"checkbox"})
+                kind not in ("text", "email", "password")
             ):
                 errors.append(f"{sid}.{cid}: placeholder must be text on an input")
             refs = control.get("requirements", [])
