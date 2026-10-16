@@ -30,6 +30,8 @@ from build_d2 import compile_source
 from to_reqwise_payload import compile_model
 from build_wireframe import render as render_wireframe
 from build_playwright import generate_files
+from build_next_prototype import generate_files as generate_next
+from build_figma_screens import compile_screens
 
 
 def run_script(path:Path,arguments:list[str])->dict:
@@ -50,6 +52,9 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
     project=BA/"examples"
     feat=project/"docs/atlas-re"
     sources={
+        "urd":feat/"atlas-re-urd.md",
+        "brd":feat/"atlas-re-brd.md",
+        "prd":feat/"atlas-re-prd.md",
         "srs":feat/"srs/atlas-re-spec.md",
         "checklist":feat/"test/checklist/atlas-re-checklist-index.md",
         "cases":feat/"test/testcases/atlas-re-testcase-index.md",
@@ -57,10 +62,11 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
         "usecases":feat/"usecases/atlas-re-usecase-index.md"
     }
     atlas=collect(sources,project)
-    if not audit(atlas["graph"])["ok"] or atlas["coverage"]["traced_to_test"]!=4 or len(atlas["graph"]["artifacts"])!=42:
+    if not audit(atlas["graph"])["ok"] or atlas["coverage"]["traced_to_test"]!=4 or len(atlas["graph"]["artifacts"])!=58 or
+            atlas["lifecycle"]["fr_with_complete_structural_chain"]!=4):
         raise ValueError("Atlas source-indexed BA baseline unexpectedly changed")
     page=render_preview(atlas["graph"],"Atlas source evidence")
-    if page.count("<article ")!=42 or "4/8" not in page:
+    if page.count("<article ")!=58 or "4/8" not in page:
         raise ValueError("Atlas preview does not match actual artifact count/coverage")
     revised=deepcopy(atlas["graph"])
     original=revised["artifacts"][0]
@@ -94,6 +100,21 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
         raise ValueError("Source-driven browser test count mismatch")
     if "<script" not in render_wireframe(screen,"prototype"):
         raise ValueError("Prototype renderer unexpectedly lost script support")
+    figma_screens=compile_screens(screen)
+    next_files=generate_next(screen)
+    next_model=json.loads(next_files["model.json"])
+    if next_model!=screen:
+        raise ValueError("Next.js prototype lost source model identity")
+    if figma_screens["writes_performed"] or figma_screens["runtime_status"]!="not-run":
+        raise ValueError("Screen-to-Figma candidate cannot claim native canvas effects")
+    if [x["source_id"] for x in figma_screens["screens"]] != [x["id"] for x in screen["screens"]]:
+        raise ValueError("Figma screen ID inventory disagrees with source")
+    for source_screen,scene in zip(screen["screens"],figma_screens["screens"]):
+        actual=[c["children"][0]["characters"].removeprefix("☐ ")
+                for c in scene["figma_tree"]["children"] if c["name"].startswith("control:")]
+        expected=[control["label"] for control in source_screen["controls"]]
+        if actual!=expected:
+            raise ValueError("Figma editable text controls disagree with source labels")
     runtime={}
     if chrome:
         runtime["playwright"]=run_script(ROOT/"tests/integration/check_generated_playwright.py",
@@ -106,12 +127,18 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
     passed=all(report["ok"] for report in runtime.values())
     if require_runtime:
         passed=passed and len(runtime)==3
-    return {"ok":passed,"atlas":{"artifacts":42,"fr":8,"explicit_tc_links":4,
-                                  "preview_entries":42,"revision_diff":"observed"},
+    return {"ok":passed,"atlas":{"artifacts":58,"fr":8,"explicit_tc_links":4,
+                                  "full_upstream_chains":8,"complete_structural_chains":4,
+                                  "test_execution":"not-proven","preview_entries":58,
+                                  "revision_diff":"observed"},
             "synthetic_fleet":{"d2_source":True,"reqwise_request":"dry-run",
                                "contract_checked":True,"bruno_request_count":4,
                                "real_fleet_or_figma_writes":False},
-            "synthetic_auth":{"generated_browser_cases":7,"backend_requests":0},
+            "synthetic_auth":{"generated_browser_cases":7,"backend_requests":0,
+                              "html_prototype":True,"next_source_matches":True,
+                              "figma_candidate_screens":len(figma_screens["screens"]),
+                              "figma_candidate_controls":sum(len(x["controls"]) for x in figma_screens["screens"]),
+                              "figma_canvas_writes":False},
             "runtime":runtime,"limitations":"Two distinct example domains; no claim of semantic parity between Atlas, Fleet and Authentication",
             "merge_performed":False}
 
