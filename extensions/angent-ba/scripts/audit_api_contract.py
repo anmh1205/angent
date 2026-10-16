@@ -68,11 +68,16 @@ def _match_scalar(value:Any,schema:dict,document:dict)->bool:
     )
     if not matched:return False
     if not matched:return False
-    if "const" in schema and (type(value) is not type(schema["const"]) or value!=schema["const"]):
+    def json_equal(a,b):
+        # JSON Schema uses mathematical numeric equality, but never equates bool with 1/0.
+        if isinstance(a,bool) or isinstance(b,bool):
+            return type(a) is type(b) and a==b
+        return a==b
+    if "const" in schema and not json_equal(value,schema["const"]):
         return False
-    if "enum" in schema and not any(type(value) is type(x) and value==x for x in schema["enum"]):
+    if "enum" in schema and not any(json_equal(value,x) for x in schema["enum"]):
         return False
-    if kind in ("integer","number"):
+    if actual in ("integer","number"):
         # JSON Schema: bool is not numeric, an integral float is an integer.
         for prop in ("minimum","maximum","exclusiveMinimum","exclusiveMaximum"):
             if prop in schema:
@@ -83,7 +88,7 @@ def _match_scalar(value:Any,schema:dict,document:dict)->bool:
                 if prop=="maximum" and value>limit:return False
                 if prop=="exclusiveMinimum" and value<=limit:return False
                 if prop=="exclusiveMaximum" and value>=limit:return False
-    if kind=="string":
+    if actual=="string":
         for prop in ("minLength","maxLength"):
             if prop in schema:
                 limit=schema[prop]
