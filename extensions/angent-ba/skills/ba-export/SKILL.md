@@ -34,3 +34,14 @@ This integration currently verifies real Markdown, HTML and Word files plus a Ch
 ## What is and is not proven
 
 SHA-256 records the exact exported Markdown inputs; it does not prove stakeholder approval. A DOCX can be valid but editorially poor. HTML is a read-only document export, not an app dashboard. This helper is not a live Confluence/Jira sync, mass attachment collector or document editing backend. ANGENT Root and Quality retain final writing and format decisions; Execution controls actual file/provider effects.
+
+## Verified alternative PDF engine
+
+PDF no longer requires only a local TeX engine. Choose one **explicitly**:
+
+- \`--pdf-engine pandoc\` (default): Pandoc's configured PDF/TeX renderer, requiring an installed PDF engine.
+- \`--pdf-engine chromium\`: Pandoc creates sandboxed HTML and real, locally installed Chromium prints it with Python Playwright; no JavaScript or external resource requests.
+
+    python extensions/angent-ba/scripts/build_export.py docs/atlas-re/atlas-re-urd.md --root extensions/angent-ba/examples --format pdf --pdf-engine chromium --chrome PATH_TO_CHROME --title "Atlas stakeholder review" --output out/atlas.pdf
+
+A real host test used Chromium and pypdf to read back **seven pages and selectable text** for three synthetic Atlas source documents; see \`tests/integration/check_ba_chromium_pdf.py\` (requires the source checkout). This does not prove production document layout, user font availability, screen-reader accessibility, or semantic accuracy. Examine rendered pages before delivery and never claim success if the chosen converter is absent.

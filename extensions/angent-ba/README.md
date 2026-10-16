@@ -108,3 +108,11 @@ The new \`extensions/angent-ba/scripts/audit_lifecycle_handoffs.py\` operates on
     python extensions/angent-ba/scripts/audit_lifecycle_handoffs.py extensions/angent-ba/examples/rental-fleet-traceability.json --source-root extensions/angent-ba
 
 The same command is exercised from extracted release ZIPs by \`tests/integration/check_distributed_kits.py\`, not just from a developer source checkout. Atlas regression compares actual FR-to-TC links with an 11-test-case corpus, without reporting the 11 tests as 11 requirements covered. Project-specific approval and semantic truth still need source review.
+
+## Offline PDF export without a TeX engine
+
+The actual \`build_export.py\` CLI now supports \`--format pdf --pdf-engine chromium --chrome PATH_TO_CHROME\`. It first generates sandboxed HTML with installed Pandoc, disables JavaScript and remote HTTP resources, then uses real headless Chromium to print a PDF. The default \`--pdf-engine pandoc\` remains supported and unchanged. It never silently falls back from PDF to HTML.
+
+    python extensions/angent-ba/scripts/build_export.py docs/atlas-re/atlas-re-urd.md docs/atlas-re/atlas-re-brd.md docs/atlas-re/atlas-re-prd.md --root extensions/angent-ba/examples --format pdf --pdf-engine chromium --chrome PATH_TO_CHROME --title "Atlas decision review" --output out/atlas.pdf
+
+This optional path needs **Pandoc, Python Playwright and a real Chromium installation** in the execution host. It created a real 7-page PDF containing 7,117 selectable text characters from three synthetic Atlas documents, with no external provider writes; \`tests/integration/check_ba_chromium_pdf.py\` checks actual PDF text/pages with pypdf. The repository regression test is source-only, not distributed in release ZIPs. Review page screenshots and typography before sending any real customer document.

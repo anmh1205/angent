@@ -54,7 +54,7 @@ def main()->int:
             return_report={"ok":True,"formats":["md","html","docx"],
                            "source_files":len(manifest),"source_hashes":[m["sha256"][:16] for m in manifest],
                            "read_only_input":True,"chrome_rendered":True,"external_http_requests":0,
-                           "pdf":"not tested; requires an available PDF engine"}
+                           "pdf":"tested separately with Chromium in check_ba_chromium_pdf.py"}
             print(json.dumps(return_report))
             return 0
     except Exception as exc:

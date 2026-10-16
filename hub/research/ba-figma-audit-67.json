@@ -482,9 +482,10 @@
     "skill": "ba-export",
     "evidence": "runtime-mock",
     "deliverable": "Markdown HTML PDF or DOCX stakeholder package",
-    "remaining": "Pandoc MD HTML DOCX tested with Chrome; PDF requires real TeX engine and viewer validation",
+    "remaining": "Real Chromium PDF generated and text-read back (7 pages); production typography, PDF accessibility and source approval not yet verified",
     "proof_refs": [
-      "tests/integration/check_ba_export.py"
+      "tests/integration/check_ba_export.py",
+      "tests/integration/check_ba_chromium_pdf.py"
     ],
     "proof_scope": "synthetic-cli-browser-evidence"
   },

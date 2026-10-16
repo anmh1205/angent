@@ -41,3 +41,9 @@ The test rejects missing schema files, validates the real synthetic Atlas XML/DI
     python tests/integration/check_generated_playwright.py --chrome PATH_TO_CHROME
 
 The integration test runs all generated review-only Authentication cases on Chrome, then intentionally changes one mock error message and requires precisely the corresponding test case to fail. Network requests are blocked. It does not test production login or user credentials.
+
+## Local Chromium PDF export and actual text read-back
+
+    python tests/integration/check_ba_chromium_pdf.py --chrome PATH_TO_CHROME
+
+Requires installed Pandoc, Python Playwright, local Chromium and pypdf. The test generates an A4 PDF from three synthetic Atlas source documents via sandboxed HTML, verifies a parseable multi-page PDF, finds actual extracted headings/paragraphs and reports zero provider writes. It does not assert production typography or external host availability. The PDF generator itself ships in the BA extension; this developer regression script does not.
