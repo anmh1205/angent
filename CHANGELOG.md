@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.0 — ANGENT ChatGPT gateway and Frontend extension (candidate)
+
+- ChatGPT/OpenAI packages expose one top-level ANGENT Skill. Specialist Core, Engineer fallback and Frontend capabilities are nested as internal references, preventing direct discovery of bundled ak-* names.
+- Added ANGENT Frontend visual art-direction extension based on researched methods from ClaudeKit Frontend Design Pro Demo. Existing ak-ui-ux-pro-max retains product UX analysis ownership.
+- Added packaging, source-completeness and activation-inventory regression checks for one gateway plus complete internal library.
+- Updated installation documentation and dual plugin manifests. A plugin update and observed runtime activation are separate from passing package checks.
+
 ## 1.5.2 — Core and Engineer discovery boundaries
 
 - Made Core Reasoning and Authoring the sole default owner of conceptual explanations. Suppressed `ak-explain` from ANGENT's public Skill discovery without removing it from the maintained 103-Skill Engineer source.
