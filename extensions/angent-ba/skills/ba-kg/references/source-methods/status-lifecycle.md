@@ -1,58 +1,29 @@
-# MIT source reference — use under ANGENT authority
+# Separate status dimensions for BA artifacts and shipped behavior
 
-Maintained reference from https://github.com/nv-minh/dev-ba-kit/blob/main/rules/status-lifecycle.md (Edward Ngo, 2026, MIT). Original Claude plugin roots, hooks, slash commands and agent roles are **not** native ANGENT runtime capabilities. ANGENT Hub routing and current host authority take precedence.
+**Provenance:** Adapted from MIT Dev BA Kit / rules/status-lifecycle.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit. Status definitions must follow the actual stakeholder process and provider workflow.
 
----
-paths:
-  - "docs/**/*.md"
-  - ".claude/hooks/**"
----
+## Distinct, non-equivalent dimensions
 
-# Status Lifecycle
+- **Document readiness:** draft, under review, approved, superseded, archived or the organization's accepted labels.
+- **Decision validity:** unapproved hypothesis, accepted business decision, explicitly deferred, revoked or unknown.
+- **Implementation:** not started, in progress, merged into a specific branch, verified against a real test environment.
+- **Delivery:** deployed to a named environment, staged, enabled to users, rolled back or unknown.
+- **Test evidence:** not specified, specified but not run, executed-pass, executed-fail, blocked or not applicable.
 
-## Doc statuses
+These fields must not be collapsed into one status. An approved SRS can describe an unimplemented feature; an issue marked Done may mean a task was merged but not deployed; a generated prototype may be runnable only as a simulation.
 
-```
-draft → in-review → revisions → approved → shipped
-                       ↑           ↓
-                       └───────────┘
-```
+## Changing a status
 
-| Status | Meaning |
-|--------|---------|
-| `draft` | Initial creation, work in progress, not yet shared |
-| `in-review` | Sent for review (stakeholders or `@reviewer-agents`) |
-| `revisions` | Reviewer flagged issues, doc needs rework |
-| `approved` | Reviewer accepted, frozen for development |
-| `shipped` | Feature delivered to production |
+Require an actual event or accepted decision, source/owner and revision. An editor setting frontmatter to approved does not establish an authorized stakeholder approval. A GitHub PR merge proves repository integration, not actual production rollout.
 
-Loops:
-- `in-review → revisions → in-review` is a normal review cycle
-- After enough cycles, `revisions → approved`
+When the provider has its own workflow transitions, retrieve the allowed transitions before changing a status. Do not invent labels or auto-transition related Jira/Confluence pages because another status changed.
 
-## Transitions trigger automation
+## Review recovery
 
-| Transition | Action |
-|------------|--------|
-| `* → in-review` | (future) Notify reviewer agent specified in frontmatter `reviewers:` |
-| `* → approved` | Regenerate `docs/feature-list.md` (Stop hook or `/dashboard`) |
-| `* → shipped` | (future) Trigger `@gap-analyst` for cross-doc consistency check |
+If a review uncovers a contradictory BR or a real regression, preserve the previous accepted revision and record the new decision. Do not silently erase history or downgrade a shipped claim based only on a dated source file.
 
-## Other doc types
+## Presentation
 
-### Meeting
-```
-captured → processed
-```
-- `captured` = raw notes
-- `processed` = decisions/blockers/action items structured into tables within the meeting note itself (no separate files — see `feedback_meet_consolidated`)
+A concise table with requirements approval, implementation commit, tests and deployment is often more informative than a single green badge. Unknown observations remain unknown.
 
-## Frontmatter format
-
-```yaml
----
-status: draft               # required
-status_reason: "Awaiting input from client on payment provider"   # optional, free text
-status_changed: 2026-05-09  # optional, set by skill on transition
----
-```
+The status model informs BA reasoning; ANGENT Root/Execution own whether any provider mutation is in user scope.

@@ -1,60 +1,34 @@
-# MIT source reference — use under ANGENT authority
+# Acceptance criteria, test checklists and executable evidence
 
-Maintained reference from https://github.com/nv-minh/dev-ba-kit/blob/main/rules/test-conventions.md (Edward Ngo, 2026, MIT). Original Claude plugin roots, hooks, slash commands and agent roles are **not** native ANGENT runtime capabilities. ANGENT Hub routing and current host authority take precedence.
+**Provenance:** Adapted from MIT Dev BA Kit / rules/test-conventions.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit.
 
----
-paths:
-  - ".claude/skills/test-checklist/**"
-  - ".claude/skills/test-cases/**"
-  - ".claude/skills/api-checklist/**"
-  - "docs/**/test/**"
----
+## Relationship of AC, CHK and TC
 
-# Test Conventions — checklist → test cases
+An AC is an observable condition under which a stakeholder accepts a behavior. CHK asks which behaviors/boundaries/errors must be verified. TC provides concrete preconditions, test data, actions and expected results. Many TCs may verify one CHK; do not limit a boundary requirement to a single happy-path case.
 
-> Shared rule for `/test-checklist` and `/test-cases` (feature-wide) and `/api-checklist` (integration, wave 5). Defines the `CHK-`/`TC-` IDs, the checklist→case expansion, and the link-back to AC/FR/E.
+Preserve stable project-local identifiers and real FR/BR/E links. A TC with no genuine requirement coverage may still be valid exploratory work, but it must not be counted as FR-completion evidence.
 
-## IDs (path-scoped, like US/AC)
+## Test case quality
 
-| Type | Format | Example | Scope |
-|------|--------|-------|-------|
-| Checklist row | `CHK-{NNN}` | `CHK-001` | Per feature, in `test/checklist/{f}-checklist-index.md` |
-| Test case | `TC-{NNN}` | `TC-001` | Per feature, in `test/testcases/{f}-testcase-index.md` |
+For each case, specify precondition and role/tenant, data fixture, trigger, exact expected response or state change, cleanup, relevant environment and whether execution is possible. Include positive, denied, invalid input, boundary, upstream failure, retry and recovery states when materially required.
 
-- Path-scoped (no feature prefix) — the feature is implied by the folder (`docs/{feature}/test/…`), exactly like `US-{NNN}` and `AC-{NNN}`.
-- 3-digit zero-pad, `max+1`, never reused (same discipline as the rest of the spine).
+Security-sensitive behavior requires verifying **absence** of unauthorized data and side effects, not only an error status. A timeout should not be represented as a business denial if the contract distinguishes them.
 
-## Checklist row anatomy
+## Test artifacts versus actual results
 
-Each `CHK-` row in `{f}-checklist-index.md`:
+- Test specified means an expected outcome has been written.
+- Test generated means code or collection file exists.
+- Test executed-pass means an actual runner observed the expected state in the stated environment.
+- Mock pass means only the simulated fixture was verified; it is not automatically production pass.
 
-| ID | What to test | Covers | Layer | Priority | Status | TC |
-|---|---|---|---|---|---|---|
-| `CHK-001` | Approver within tier can approve | AC-001, FR-{f}-006 | functional | P0 | draft | TC-001 |
+No fixed number of pass rows is a universal acceptance threshold. Use exact scope and denominator.
 
-- **Covers** — the AC(s) and/or FR(s)/E-(s) this row verifies. A row with no `Covers` is a coverage gap (flag it).
-- **Layer** — `functional` / `boundary` / `error` / `non-functional` / `integration` (wave 5 adds `test_layer` own/3rd/mixed + `direction`).
-- **TC** — the `TC-` that expands this row (filled by `/test-cases`; empty until then).
+## Runnable ANGENT tools
 
-## Test case anatomy
+The portable BA Kit can compile reviewed mock screen models to HTML and generate Python Playwright cases. It can also generate Bruno collections checked against a bounded OpenAPI contract and run them only against authorized loopback/sandbox services. D2/BPMN validators cover diagram-specific structural quality.
 
-Each `TC-` row in `{f}-testcase-index.md` expands exactly one `CHK-`:
+These tools cannot invent the target application's business rules or live credentials. A generated collection is not successful test execution.
 
-| ID | Title | Expands CHK | Steps | Test data | Expected | Status |
-|---|---|---|---|---|---|---|
+## Review
 
-- **Steps** — numbered, one action each (click/enter/submit), no prose padding.
-- **Test data** — the concrete values (sourced from the spec/AC; boundary cases carry the at/below/above values).
-- **Expected** — the observable outcome + the error code/message where applicable (`E-{f}-NNN`).
-
-## Expansion rules
-
-- `/test-cases` **refuses without a checklist** (`feature-bootstrap.md` canonical group-B example) — expanding nothing = fabricating tests.
-- One `CHK-` → **one or more** `TC-`: a boundary `CHK-` (e.g. "tier boundary at 50k") expands to the at/below/above triple as separate `TC-` rows; an error `CHK-` expands to one `TC-` per `E-` code it covers.
-- Every `TC-` links back to its `CHK-` (the `Expands CHK` column) — `/gap` joins CHK→TC this way.
-- The checklist's `TC` column is the reverse pointer (filled as cases are generated).
-
-## What this rule does NOT cover
-
-- The API integration checklist (`test_layer`/`direction` columns, Bruno layout) — `rules/api-integration.md` (wave 5).
-- QA execution results / automation status — out of scope; these skills produce the *design* of the tests, not a run report.
+Report concrete missing FR/AC/CHK links, untested failure paths, data constraints, execution status, observed errors and next actions. Never mark a case passed solely because the issue was closed or the test file was created.
