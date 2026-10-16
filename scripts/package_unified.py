@@ -134,6 +134,91 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
     return entries
 
 
+def gateway_entries(source: dict[str, bytes]) -> dict[str, bytes]:
+    """Package one public ANGENT entry with its subordinate reference library.
+
+    Plugin skill discovery scans immediate skills/ children, not reference
+    descendants. All specialist documents remain available inside Root.
+    """
+    root = "skills/angent/"
+    if root + "SKILL.md" not in source:
+        raise PackagingError("Missing ANGENT root Skill")
+    output: dict[str, bytes] = {}
+    names: set[str] = set()
+    for path, content in sorted(source.items()):
+        if path.startswith("skills/") and not path.startswith(root):
+            relative = path[len("skills/"):]
+            target = root + "references/catalog/" + relative
+            if relative.endswith("/SKILL.md") and relative.count("/") == 1:
+                names.add(relative.split("/")[0])
+        else:
+            target = path
+        if target in output:
+            raise PackagingError(f"Gateway collision: {target}")
+        output[target] = content
+
+    core = sorted(n for n in names if n.startswith("angent-") and n not in FRONTEND_NAMES)
+    engineer = sorted(n for n in names if n.startswith("ak-"))
+    frontend = sorted(names & FRONTEND_NAMES)
+    if (len(core) != EXPECTED_CORE - 1
+            or len(engineer) != EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER)
+            or frontend != sorted(FRONTEND_NAMES)
+            or len(names) != EXPECTED_DISCOVERABLE - 1):
+        raise PackagingError(f"Incomplete gateway library: Core={len(core)} Engineer={len(engineer)} Frontend={frontend}")
+
+    gateway = """
+## ChatGPT ANGENT gateway
+
+This is the sole discoverable Skill in the ANGENT OpenAI plugin. Apply the
+universal ANGENT cognitive standard first. Choose the relevant Core owner
+before considering a specialized method. Read references/INDEX.md only when
+another method materially helps; follow references/catalog/<name>/SKILL.md
+and its adjacent references as internal ANGENT instructions, not as a new
+independently activated Skill or a separate plugin.
+
+Core owns common reasoning, explanation, research and quality. For an
+engineering outcome, consult the internal ak-agentkit routing method if
+needed; native AgentKit is preferred only when really usable, and must not
+be mixed with its fallback. For original frontend visual direction use
+angent-frontend-design; for product workflows and systemic UI/UX audits
+use ak-ui-ux-pro-max. Match user intent, evidence and permissions throughout.
+
+Static package structure prevents direct discovery of bundled ak-* as
+ChatGPT plugin Skills. It cannot guarantee ANGENT will be selected on
+every chat turn or suppress independently installed external plugins.
+"""
+    output[root + "SKILL.md"] = source[root + "SKILL.md"] + gateway.encode("utf-8")
+
+    index = [
+        "# ANGENT internal methods", "",
+        "The only discoverable ChatGPT Skill is ANGENT. This is an internal",
+        "reference catalog consulted by ANGENT when a specialist adds value.", "",
+        "## Core responsibilities", "",
+    ]
+    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in core)
+    index += ["", "## Frontend visual design extension", ""]
+    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in frontend)
+    index += ["", "## Engineer specialist methods", "",
+              "Use the ak-agentkit routing reference when the choice is nontrivial.",
+              "Read only the required method; generic explanation stays in Core.", ""]
+    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in engineer)
+    index += ["", "## Engineer role references (not running agents)", ""]
+    for path, data in sorted(source.items()):
+        if (path.startswith("extensions/angent-engineer/agents/")
+                and path.endswith(".md") and path.count("/") == 3
+                and not path.endswith("/README.md")):
+            name = PurePosixPath(path).name
+            output[root + "references/roles/" + name] = data
+            index.append(f"- [{name}](roles/{name})")
+    output[root + "references/INDEX.md"] = ("\n".join(index) + "\n").encode("utf-8")
+
+    discovered = [p for p in output if p.startswith("skills/")
+                  and p.endswith("/SKILL.md") and p.count("/") == 2]
+    if discovered != [root + "SKILL.md"]:
+        raise PackagingError(f"Unexpected independently discoverable Skill: {discovered}")
+    return output
+
+
 def verify_zip(path: Path) -> dict[str, object]:
     with zipfile.ZipFile(path) as archive:
         if archive.testzip() is not None:
