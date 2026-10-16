@@ -50,15 +50,31 @@ def _is_separator(row: list[str]) -> bool:
 
 def markdown_tables(text: str) -> list[list[dict[str,str]]]:
     lines=text.replace("\r\n","\n").splitlines()
+    # Exclude fenced code samples without shifting source-line references.
+    # A table demonstrating requirement syntax is not accepted evidence.
+    excluded=[False]*len(lines)
+    active=None
+    fence=re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+    for pos,line in enumerate(lines):
+        found=fence.match(line)
+        if active is not None:
+            excluded[pos]=True
+            if (found and found.group(1)[0]==active[0] and
+                    len(found.group(1))>=active[1] and not found.group(2).strip()):
+                active=None
+            continue
+        if found:
+            excluded[pos]=True
+            active=(found.group(1)[0],len(found.group(1)))
     result=[]
     i=0
     while i < len(lines):
-        if not lines[i].strip().startswith("|"):
+        if excluded[i] or not lines[i].strip().startswith("|"):
             i+=1
             continue
         block_start=i+1
         block=[]
-        while i<len(lines) and lines[i].strip().startswith("|"):
+        while i<len(lines) and not excluded[i] and lines[i].strip().startswith("|"):
             block.append(_cells(lines[i]))
             i+=1
         if len(block)<3 or not _is_separator(block[1]):
