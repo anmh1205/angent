@@ -58,7 +58,7 @@ def _pandoc(command:str,markdown:str,fmt:str,title:str)->bytes:
              "--metadata=title:"+title]
     if fmt=="html":
         args=options+["--to=html5"]
-        result=subprocess.run(args,input=markdown,text=True,capture_output=True,errors="replace",timeout=120)
+        result=subprocess.run(args,input=markdown,text=True,capture_output=True,encoding="utf-8",errors="strict",timeout=120)
         if result.returncode:
             raise ValueError("Pandoc HTML failed: "+result.stderr[-1500:])
         output=result.stdout
@@ -74,7 +74,7 @@ def _pandoc(command:str,markdown:str,fmt:str,title:str)->bytes:
     with tempfile.TemporaryDirectory() as tmp:
         target=Path(tmp)/("package."+fmt)
         args=options+["--to="+fmt,"--output="+str(target)]
-        result=subprocess.run(args,input=markdown,text=True,capture_output=True,errors="replace",timeout=180)
+        result=subprocess.run(args,input=markdown,text=True,capture_output=True,encoding="utf-8",errors="strict",timeout=180)
         if result.returncode or not target.is_file():
             raise ValueError("Pandoc "+fmt.upper()+" failed; check engine: "+result.stderr[-1700:])
         contents=target.read_bytes()
