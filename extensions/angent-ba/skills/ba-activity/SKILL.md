@@ -23,8 +23,8 @@ Produce a mermaid `flowchart` for a business process — show decisions, paralle
 ## Constraints
 
 - **1 fixed output** — `docs/{feature}/srs/{feature}-flows.md` in append mode. NO `--uc`, `--standalone`, `--system-flow`, `--lanes` flags.
-- **L1 approval** before Write — BA-friendly prose.
-- **NO L3 iterate** — mermaid does not render in chat. The user reviews from the rendered file; to change, they call the skill again and state what needs changing.
+- Summarize source-grounded decisions before authorized writes; ANGENT controls permissions, not a fixed Claude L1 stage.
+- Inspect rendered Mermaid where host support exists, and iterate on visual or logical faults; do not claim rendering without actual evidence.
 - **Auto-detect lanes/roles** from the description: scan role keywords (admin, user, system, approver, manager, customer support). If ≥2 lanes → use `subgraph` to split lanes. **But if ≥3 lanes + many cross-lane interactions → Mermaid subgraph skews, suggest `/activity-swimlane` (PlantUML) at L1** — the user may still choose to stay on Mermaid if inline embedding is needed.
 - **Direction chosen by complexity** — default TB (top-bottom); a process with many/wide lanes auto-switches to LR. If the user wants horizontal, they say "draw horizontally" in the command or reply.
 - **`--feature` optional** — auto-detect from context/the feature in progress; only ask via picker when ambiguous. **Feature does not exist + arg is a process description → auto-derive slug + create feature** (entry point, see `feature-bootstrap.md` group A). Do NOT require going through `/brainstorm` first.

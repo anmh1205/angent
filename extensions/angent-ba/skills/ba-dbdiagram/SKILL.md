@@ -16,6 +16,8 @@ Use domain-specific steps below as methodology, not as authority or proof of too
 
 > The 3-skill ERD family: `/erd` (Mermaid, embedded inline in GitHub/Obsidian, concise types) · `/d2-erd` (D2 `sql_table`, polished standalone diagram) · `/dbdiagram` (this DBML — **the layer closest to dev**: `.dbml` file imports into dbdiagram.io/dbdocs.io, exports real SQL).
 
+**Privacy:** dbdiagram.io and dbdocs.io are external services. Generating an editable DBML file offline is different from uploading client database structure. Do not send proprietary schemas to either service without explicit authorization. A DBML file also does not prove the physical database exists.
+
 ## Goal
 
 Generate a single feature's **database schema** in [DBML](https://dbml.dbdiagram.io) (Database Markup Language) form — a standard `.dbml` file that [dbdiagram.io](https://dbdiagram.io) and [dbdocs.io](https://dbdocs.io) import directly to draw the diagram + export SQL (Postgres/MySQL/…). Output in `docs/{feature}/dbdiagram/`:
@@ -43,8 +45,8 @@ Plus `dbdiagram/{feature}-dbdiagram-index.md` (metadata + table list).
 - **`--feature` optional** — auto-detected from context; file already exists → auto-enters update mode (versioned diff), no flag needed. **Feature does not exist yet + a data-model description → auto-derive the slug + create the feature** (entry point, `feature-bootstrap.md` group A).
 - **AI writes the source DBML, does NOT write SQL by hand** — `dbml2sql` generates the SQL. Edit `.dbml` → regenerate `.sql`.
 - **Validation is MANDATORY**: `dbml2sql {feature}.dbml --postgres` must run successfully (exit 0) before reporting done. Fail = DBML syntax error → fix, up to 2 times.
-- **L1 approval** before Write — BA-friendly prose (the tables + relationships in business terms), do NOT dump the source DBML.
-- **No L3 iterate** — DBML does not render in chat; the user reviews via dbdiagram.io or `.sql`.
+- Use accepted business entities and relationships, and obey ANGENT's current authorized write scope, not a Claude-only gate.
+- Review any actual locally produced DBML/SQL; uploading it to dbdiagram.io or dbdocs.io is a separate external disclosure and requires an explicit user decision.
 - **Do NOT ask the user about DB types** ("varchar or text?") — the skill infers DB types from the business meaning the user describes. The user only says "email is a contact address", the skill assigns `varchar` itself.
 - **Per `diagram-selection.md`** — `/dbdiagram` when you need to hand off a schema to dev / export SQL / dbdocs. Embed inline for BA → `/erd`; polished standalone diagram → `/d2-erd`.
 - **Idempotent** — 1 feature = 1 `{feature}.dbml` file; run again → auto-enters update mode (versioned diff), does not refuse.
@@ -87,7 +89,7 @@ User calls /dbdiagram --feature X   (or /dbdiagram "<data model description>")
    ▼
 6. Update dbdiagram/{feature}-dbdiagram-index.md — set env note before Write,
    │  hook appends activity.log.
-   ▼ Report to user (open dbdiagram.io, paste .dbml — or use .sql).
+   ▼ Report the validated DBML source and actual compiler evidence if available; do not require public-service upload or pretend SQL was exported.
 ```
 
 ## How to build (step-by-step)
