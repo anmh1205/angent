@@ -62,7 +62,7 @@ class MarkdownTraceabilityTests(unittest.TestCase):
                             "CHK-001" in x["referenced_ids"] for x in report["unresolved_external_refs"]))
 
     def test_invalid_headers_or_duplicate_ids_are_rejected(self):
-        malformed="| ID | Requirement |\n| --- | --- |\n| FR-demo-001 | One |\n| FR-demo-001 | Two |\n"
+        malformed="| ID | Requirement | Covers |\n| --- | --- | --- |\n| FR-demo-001 | One | CAP-demo-01 |\n| FR-demo-001 | Two | CAP-demo-01 |\n"
         with tempfile.TemporaryDirectory() as temp:
             directory=Path(temp)
             srs=directory/"srs.md"
