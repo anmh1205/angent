@@ -1,53 +1,36 @@
 ---
 name: ba-roadmap
-description: Business analysis roadmap specialist.
+description: Produce a decision-grounded product roadmap with source-backed priority, actual capacity constraints, alternative scenarios and dependency-aware milestones.
 ---
 
-# ANGENT BA: roadmap
+# Product roadmap: sequencing justified by evidence, not fabricated scores
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/roadmap/SKILL.md
+**Method origin:** Independently adapted from the MIT [Dev BA Kit Roadmap method](https://github.com/nv-minh/dev-ba-kit/blob/main/skills/roadmap/SKILL.md), Edward Ngo (2026). The IIBA BACCM and public product-analysis practices emphasize value for stakeholders in context, while roadmap sequencing also depends on the organization's change capacity and external dependencies.
 
-## Portability and authority
+## Input hierarchy
 
-Use domain-specific steps below as methodological guidance; do not assume the original Claude-specific scripts, hooks, subagents, slash commands, filesystem paths, and approval levels exist. ANGENT Root owns intent and routing, Execution owns all provider mutation and read-back, and Quality owns outcome verification. Never claim original tools ran if unavailable. Retain current project IDs and explicitly distinguish facts, assumptions and approvals.
+Read the accepted product vision, opportunity findings, current feature map and CAP/BO/UN decisions, existing roadmap, delivery capacity and commitments, actual blockers, release gates and provider/customer deadlines. Identify which commitments are already made; a scoring spreadsheet cannot erase legal, safety or operational prerequisites. Separate current shipped features, in-progress items, validated future opportunities and untested ideas.
 
+## Decision procedure
 
-# /roadmap — Product roadmap (RICE-lite + plan + dependencies)
+1. Build a candidate table with stable feature/CAP IDs and the actual BO/value they serve. Drop duplicates and note incompatible alternative implementations rather than ranking them as independent must-do features.
+2. Define a common scoring unit only when data supports it. For RICE, **Reach** is users/events per same time horizon, **Impact** is a declared common unit, **Confidence** a proportion 0–1, and **Effort** person-time or a consistent relative unit. Do not combine an unnormalized 1–5 "reach" with a percentage for some rows and treat the results as comparable.
+3. Compute \`(Reach × Impact × Confidence) / Effort\` only for candidates with sourced numbers and a stated horizon/unit. Missing or weakly supported inputs must remain unscored/low-confidence, not arbitrary zero or invented point estimates. Record source and uncertainty for each value.
+4. Evaluate constraints **separately from the score**: skills and team capacity, test environment, regulatory/safety/privacy requirements, integration availability, device lead time, operational support and external stakeholder readiness.
+5. Build a dependency graph with typed prerequisites (technology, data, people, vendor, compliance and validated customer needs). Detect cycles or impossible ordering before assigning dates. A dependency from a feature to its own downstream release is an error, not evidence of readiness.
+6. Construct a Now/Next/Later roadmap for uncertain planning or dated milestones when actual capacity and deadlines justify dates. "Now" is a meaningful active commitment only when owner, capacity, scope and next acceptance checkpoint are grounded; distinguish candidate from committed.
+7. For each proposed milestone define scope (CAP IDs), outcome, verifiable acceptance, owner, dependencies, status and an explicit contingency/rollback decision. Schedule uncertainty should remain visible rather than being represented as an exact delivery date.
+8. Compare at least two relevant scenarios when the business decision warrants it: earliest customer feedback versus risk reduction, or build versus integrate. Explain what priority changes under different reach/cost assumptions.
+9. On updates, reconcile actual progress from Jira/Git/deploy provider facts if connected. An issue marked Done is not automatically delivered to customers; a test in a mock environment is not release evidence. Preserve prior decision history and explain changes, rather than silently recomputing a new score order.
 
-## Goal
+## What to deliver
 
-Turn the Feature Map into a prioritized plan — RICE-lite scores per feature (Reach · Impact · Confidence · Effort), a Now/Next/Later or by-quarter plan, a dependency map, and a decisions log. **Single output**: `docs/_product/roadmap.md` (type `roadmap`, frontmatter has `format`).
+A coherent roadmap document or management summary: intended value and planning horizon; sourced scoring table or justified unscored candidates; ranked recommendations; a dependency-aware Now/Next/Later or milestone view; risks and capacity constraints; explicit decision log; major assumptions; next review trigger. Only add a diagram when its dependencies or timeline are too complex for readable prose. Retain the existing project layout instead of imposing \`docs/_product/roadmap.md\`.
 
-## Constraints
+## Example
 
-- **Singleton** — `docs/_product/roadmap.md`; re-run = update mode (versioned diff). Frontmatter `format:` records the chosen shape.
-- **Group C** (`feature-bootstrap.md`) — no product PRD yet → friendly message: "No Feature Map yet — run `/prd` first, or list your features now and I'll score them" (a Map-less roadmap from a live list is valid).
-- **One-way read** — consumes `docs/_product/prd.md`'s Feature Map (+ each feature's `CAP-` priorities if PRDs exist). Never edits the PRD; PRD changes → re-run `/roadmap` to sync (`resolve-oqs.md`: no OQ cascade into this file).
-- **RICE-lite discipline** — Reach/Impact/Confidence on the agreed scale (1-5 or %), Effort in relative units; **every score's basis comes from the user or a doc** — no invented scores. Score = (R×I×C)/E, computed, shown per row.
-- **Now means committed** — "Now" items should have (or be about to get) a `/prd-epic`; flag "Now" features with no PRD.
-- **Dependencies are typed** — tech / data / team / vendor, per row.
-- **Validate before done** — BA Markdown validation (step 8).
+For a hypothetical rental-vehicle system, an operator may value access control, telemetry freshness and ECU fault diagnostics. Customer onboarding and reliable device installation may be prerequisites before rollout, regardless of a high estimated feature score. If no verified reach/impact/capacity data exists, recommend a bounded pilot and decision gates, not fictional quarterly delivery dates.
 
-## Inputs
+## Acceptance and authority
 
-```
-/roadmap                              # default format: now-next-later
-/roadmap --format quarter             # by-quarter plan
-```
-
-## Approach
-
-1. **Load the Feature Map** from `docs/_product/prd.md` (or take a live list — group C fallback). Existing roadmap → update mode, Read fully first.
-2. **Score interview (one batched round per gap):** per feature — Reach basis · Impact on which product goal · Confidence + why · Effort relative to a named anchor feature. Skip rows the user already scored.
-3. **Fact-list** — every score + basis; sequencing constraints; dependency claims.
-4. **Compute + draft** per the template — RICE table sorted by score · the plan (Now/Next/Later or quarters; note where the plan order deviates from score order and why) · dependency map (typed) · decisions log (append-mode across runs).
-5. **scoped change preview** — top-3 by score + any score-vs-plan deviations + "Now without PRD" flags.
-6. **Write.**
-9. **Output report** — the plan summary + suggested next (`/prd-epic` for un-specced "Now" items, `/timeline` for a visual).
-
-## Gotchas
-
-- **Score ≠ plan** — dependencies and strategy legitimately reorder; the deviation note is what makes the roadmap defensible.
-- **Effort needs an anchor** — "3" means nothing; "3× the size of {shipped-feature}" survives review.
-- **Don't cascade OQs here** — this file is derived; questions belong in the PRD/feature docs, and the fix is a re-run.
-- **Decisions log is append-only across runs** — it's the "why did we demote X in July" memory; never rewrite old rows.
+Every prioritized item should have an identifiable sponsor/customer value, scored or explicitly unscored evidence, relevant dependencies, feasible ownership and a reason why that order produces better outcomes. ANGENT Root holds task and business decision authority; BA provides specialist prioritization and dependency analysis; Execution performs only authorized edits; Quality checks math/evidence and user-facing readability.
