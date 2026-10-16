@@ -1,5 +1,8 @@
 # Semantic shapes supported by ANGENT diagrams
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 **Provenance:** Adapted from MIT Dev BA Kit / rules/node-shapes.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit. Shape names below reflect current ANGENT's bounded JSON-to-D2 compiler rather than the complete D2 shape library.
 
 ## Select kind from actual meaning

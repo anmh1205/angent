@@ -3,6 +3,9 @@ name: ba-prototype-html
 description: Generate and verify a standalone click-through HTML mock prototype from accepted screens, with form validation and explicit failure responses.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # BA interactive HTML prototype — implemented method
 
 **Provenance.** Adapted from the MIT Dev BA Kit prototype-html method (Edward Ngo, 2026). Source: https://github.com/nv-minh/dev-ba-kit/blob/main/skills/prototype-html/SKILL.md. A runnable ANGENT generator and Chrome integration check implement a bounded subset independently.

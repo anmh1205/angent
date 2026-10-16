@@ -3,6 +3,9 @@ name: ba-playwright-gen
 description: Generate source-aligned, runnable Playwright tests for reviewed BA screen prototypes and validate actual browser paths.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # BA Playwright generation — from requirements to executed browser tests
 
 **Provenance:** Independently implemented bounded adaptation of the MIT Dev BA Kit Playwright methodology, copyright 2026 Edward Ngo: https://github.com/nv-minh/dev-ba-kit/blob/main/skills/playwright-gen/SKILL.md. The Python generator and runner are original ANGENT code. Attribution remains in the BA Kit notice.

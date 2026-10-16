@@ -3,6 +3,9 @@ name: ba-figma
 description: Translate accepted screen wireframes into editable Figma frames through an actual authorized provider, with verified node-level read-back.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # Wireframe-to-Figma screen handoff
 
 **Origin:** Adapted from the MIT Dev BA Kit Figma wireframe workflow by Edward Ngo (https://github.com/nv-minh/dev-ba-kit/blob/main/skills/figma/SKILL.md), supplemented with Reqwise OSS's actual Figma MCP reference (https://github.com/hoangpm96/reqwise-figma-mcp/blob/main/docs/TOOLS.md). The commercial AI4BA/Reqwise Pro binaries were not available or copied.

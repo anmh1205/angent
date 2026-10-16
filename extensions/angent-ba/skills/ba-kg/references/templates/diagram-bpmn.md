@@ -1,5 +1,8 @@
 # BPMN process model — ANGENT portable input and verification
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 This is a **bounded BPMN 2.0** source model for an observed or accepted business process, not a general-purpose workflow engine. The ANGENT compiler implements one **non-executable acyclic process**, task nodes, start/end events, exclusive split/join gateways and optional lanes. Loops, parallel forks, timers, compensations, subprocesses and cross-pool messages are not currently supported.
 
 ## Evidence prerequisites
