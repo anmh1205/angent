@@ -20,12 +20,12 @@ Draw one ASCII frame per screen in a flow + the **5-column screen-description ta
 
 ## Constraints
 
-- **Group B\*** (`feature-bootstrap.md`): `srs/{feature}-userflow.md` with `stage: approved` missing → refuse + route to `/user-flow`. The flow-slug (if passed) must exist in that file's flow list.
-- **L3 iterate IS the point** (`approval-gate.md` L3 list) — ASCII renders in chat; iterate the frame at L3 with the user before the Write. No L3 means this skill lost its reason to exist over `/wireframe-html`.
+- **Source precedence:** Prefer an approved userflow when available. If only a draft flow or a direct screen description exists, produce a visibly provisional ASCII sketch with explicit unresolved navigation/requirements rather than refusing the whole request. Do not invent approval or modify the project's source-of-truth without authorization.
+- **Preview before consequential edits:** ASCII is reviewable in chat. Reconcile the provisional frame with source and user feedback; require approval only when publishing or changing an accepted project artifact, not to answer or sketch.
 - **One screen = one state at one point in time** (`ba-conventions.md` §8) — split multi-state screens; forms don't span full width.
 - **No emoji inside the ASCII frame** — breaks the border alignment. Emoji only outside the frame, if ever.
 - **Description depth is the value** (`ba-conventions.md` §6) — 6 layers (purpose · validation/constraints · states · navigation · error+wording · edge/security). Source ONLY from `srs/{feature}-spec.md` (FR/BR/NFR/E-), UC branches, URD — **never fabricate**; gaps → ask the user one element at a time (no-re-ask), or mark clearly where filling is needed.
-- **Device question first** (`ba-conventions.md` §7) — pre-suggest from `userflow.md`'s `primary_device`; never decide silently. Confirm via AskUserQuestion (Mobile 375 / Tablet 768 / Desktop 1024 / Responsive). Write `primary_device` back if missing.
+- **Device constraint:** Reuse an explicitly specified device or existing `primary_device`. If unspecified and decisive to layout, ask a concise conversational question; otherwise state an assumed review viewport without persisting it. Never assume a host-specific `AskUserQuestion` interface.
 - **Screens numbered `[n]` from the userflow** — reuse the userflow's numbers; the `id="s{n}"` deep-links match the HTML skills.
 - **Idempotent** — same flow re-run → versioned diff; the screen index `updated` column ticks.
 - **Validate before done** — BA Markdown validation on the ascii-wireframe dir (step 9).
@@ -39,11 +39,11 @@ Draw one ASCII frame per screen in a flow + the **5-column screen-description ta
 
 ## Approach
 
-1. **Gate.** `userflow.md` missing or `stage`≠`approved` → refuse + route `/user-flow`. Read it: the target flow's screens `[n]`, device, navigation edges.
-2. **Confirm device** (AskUserQuestion, pre-suggest from `primary_device`). Write `primary_device` back into `userflow.md` if it was missing.
+1. **Source and status.** Read the actual approved userflow when present. When absent or unapproved, derive only a provisional screen inventory from available requirements or the user's description and label assumptions; an explicit user flow is needed before calling the result accepted.
+2. **Resolve device.** Use the user's current device/viewport requirement or the project's documented `primary_device`. Ask only when the choice changes the intended layout; never write missing device metadata back without authorization.
 3. **Read description sources** — `srs/{feature}-spec.md` (FR/BR/NFR/E- per screen), `usecases/uc-*.md` (branches → screens), URD personas. Build the fact-list per screen.
 4. **Ask the gaps** (one element at a time, no-re-ask) — every control whose validation/error/state the sources don't pin down; "skip" → mark the row shallow with a clear fill-needed note.
-5. **Draft per screen** — ASCII frame (boxed, label `[n] Name`, the controls as ASCII) + the 5-column table beneath it. Iterate the frame at **L3** in chat until the user is happy with the layout.
+5. **Draft per screen** — ASCII frame (boxed, label `[n] Name`, the controls as ASCII) + the 5-column table beneath it. Iterate only to resolve material design feedback and verify fit with the user's source requirements.
 6. **Update the index** — ensure each screen has a `## Descriptions` H3 row (1-2 sentence purpose) + the Screens table row (status / owning flow / used-by / Figma+HTML / updated).
 7. **scoped change preview** — flow + screen count + device + per-screen fill-level (filled / marked-needs-fill).
 10. **Output report** — screens drawn + marked-needs-fill count + next (`/wireframe-html` same flow, or `/ac`/`/prototype-html`).
