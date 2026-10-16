@@ -62,7 +62,7 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
         "usecases":feat/"usecases/atlas-re-usecase-index.md"
     }
     atlas=collect(sources,project)
-    if not audit(atlas["graph"])["ok"] or atlas["coverage"]["traced_to_test"]!=4 or len(atlas["graph"]["artifacts"])!=58 or
+    if (not audit(atlas["graph"])["ok"] or atlas["coverage"]["traced_to_test"]!=4 or len(atlas["graph"]["artifacts"])!=58 or
             atlas["lifecycle"]["fr_with_complete_structural_chain"]!=4):
         raise ValueError("Atlas source-indexed BA baseline unexpectedly changed")
     page=render_preview(atlas["graph"],"Atlas source evidence")
