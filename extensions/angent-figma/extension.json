@@ -30,7 +30,7 @@
     {
       "id": "design.figma.usecase",
       "entry": "figma-usecase",
-      "when": "Define editable actors, use cases and system boundary"
+      "when": "Prepare source-linked UML use-case semantics; editable Figma canvas creation requires an actual authorized Pro/native Figma tool"
     },
     {
       "id": "design.figma.userflow",
@@ -45,7 +45,7 @@
     {
       "id": "design.figma.bpmn",
       "entry": "figma-bpmn",
-      "when": "Create importable BPMN 2.0 process model"
+      "when": "Prepare source-linked BPMN semantics; editable Figma BPMN rendering requires an actual authorized Pro/native Figma tool"
     },
     {
       "id": "design.figma.sequence",
@@ -65,7 +65,7 @@
     {
       "id": "design.figma.journey",
       "entry": "figma-journey",
-      "when": "Show end-to-end user experience and friction"
+      "when": "Develop evidence-backed journey mapping; editable Figma journey creation requires an actual authorized Pro/native Figma tool"
     },
     {
       "id": "design.figma.sitemap",
@@ -75,17 +75,17 @@
     {
       "id": "design.figma.persona",
       "entry": "figma-persona",
-      "when": "Synthesize research-backed behavior patterns without stereotypes"
+      "when": "Document sourced personas without invention; editable Figma persona cards require an actual authorized Pro/native Figma tool"
     },
     {
       "id": "design.figma.design-system",
       "entry": "figma-design-system",
-      "when": "Create editable reusable Figma foundations from approved art direction"
+      "when": "Specify reusable design foundations; native Figma variables/styles/components require an actual authorized provider"
     },
     {
       "id": "design.figma.demo",
       "entry": "figma-demo",
-      "when": "Construct a stakeholder walkthrough using editable Figma prototype"
+      "when": "Plan a stakeholder prototype walkthrough; real Figma interactions and recording require an actually available native/Pro provider"
     }
   ]
 }

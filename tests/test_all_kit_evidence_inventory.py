@@ -27,6 +27,27 @@ class EvidenceInventory(unittest.TestCase):
                 if item["evidence"]=="provider-blocked":
                     self.assertEqual(item["proof_scope"],"live-provider-readback-required")
 
+    def test_every_audited_specialist_is_reachable_by_exactly_one_hub_capability(self):
+        entries=json.loads(AUDIT.read_text(encoding="utf8"))
+        listed={item["skill"] for item in entries}
+        capabilities=[]
+        for extension in ("angent-ba","angent-figma"):
+            path=ROOT/"extensions"/extension/"extension.json"
+            info=json.loads(path.read_text(encoding="utf8"))
+            self.assertEqual(info["authority"],"specialist")
+            self.assertIn(info["kind"],("mapped","bridged"))
+            capabilities.extend(info["capabilities"])
+        self.assertEqual(len(capabilities),67)
+        self.assertEqual({x["entry"] for x in capabilities},listed)
+        self.assertEqual(len({x["entry"] for x in capabilities}),67)
+        self.assertEqual(len({x["id"] for x in capabilities}),67)
+        for item in capabilities:
+            with self.subTest(capability=item["entry"]):
+                self.assertGreater(len(item["when"]),24)
+                if item["entry"] in ("figma-usecase","figma-bpmn","figma-journey",
+                                     "figma-persona","figma-design-system","figma-demo"):
+                    self.assertIn("actual",item["when"].lower())
+
     def test_every_skill_covered_without_fabricating_runtime_success(self):
         entries=json.loads(AUDIT.read_text(encoding="utf8"))
         names=[item["skill"] for item in entries]
