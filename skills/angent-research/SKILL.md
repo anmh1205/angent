@@ -64,6 +64,12 @@ This is a subject-model delta, not the final task decision and not a reader-faci
 
 For teaching work, preserve the **edges** that make facts explanatory: which claim depends on which prerequisite, what changes state at an interface, which observation distinguishes two mechanisms, and what is source-established versus inferred. Flag missing load-bearing relations as open research questions. Do not compensate by supplying a longer fact inventory or by prescribing chapter structure; teaching order and reader-state transitions belong to Authoring.
 
+## Transfer an external technique into an existing capability
+
+A request to learn from another agent kit, article, worked example or project is not satisfied by listing its commands, file tree or strengths. Investigate the **operative mechanism**: what situation triggers it, which observation or decision it changes, why it works in that context, where it fails, and what result would demonstrate its benefit. Compare it with the target's current method at the same behavioral boundary. Classify a candidate as already covered, covered but weakly activated/applied, genuinely missing, or unsuitable for the user's task. An impressive method name without a mechanism or distinct improvement is not a finding.
+
+Return a target-oriented synthesis: source-grounded technique → relevant target owner/capability → causal gap, if any → smallest appropriate adaptation → observable acceptance and regression risk. Source-internal details matter only where they alter that mapping. Preserve the difference between reading a method, running it successfully in its native environment, and demonstrating improved behavior in the target. Do not assume portable markdown alone reproduces runtime commands or tools.
+
 ## Source roles and claim support
 
 Classify a source by what it can establish, not by generic prestige:
