@@ -2,7 +2,9 @@
 """Black-box smoke: run BA/Figma scripts FROM each freshly built release ZIP.
 
 Unlike source-to-package byte checks, this verifies that the distributed kits
-run with only their extracted contents and Python's standard library. It does
+run from only extracted contents with Python's standard library.
+The -E runtime ignores PYTHONPATH/PYTHONHOME but preserves the script import directory,
+matching how a bundled Python CLI is normally invoked. It does
 not require or pretend to exercise production APIs, cloud providers or Figma.
 """
 from __future__ import annotations
@@ -32,7 +34,7 @@ def run(package:Path,script:str,args:list[str])->dict:
     if not file.is_file():
         raise ValueError("Missing distributed executable: "+script)
     result=subprocess.run(
-        [sys.executable,"-I",str(file)]+args,
+        [sys.executable,"-E",str(file)]+args,
         cwd=package,capture_output=True,text=True,timeout=45,errors="replace",
     )
     # Most CLI tools print compact JSON, but a few print an indented object.
