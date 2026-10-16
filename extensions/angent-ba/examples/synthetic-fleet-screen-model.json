@@ -1,0 +1,73 @@
+{
+  "title": "Synthetic rental-fleet review — no live vehicle data",
+  "start": "fleet-status",
+  "scenarios": [
+    "normal",
+    "offline"
+  ],
+  "screens": [
+    {
+      "id": "fleet-status",
+      "title": "Vehicle status",
+      "description": "Design-only fleet status. All example values are imaginary.",
+      "controls": [
+        {
+          "id": "tenant-guard",
+          "type": "note",
+          "label": "Visible only to a hypothetical authorized operator.",
+          "requirements": [
+            "BR-IVTS-01",
+            "FR-IVTS-01"
+          ]
+        },
+        {
+          "id": "connectivity",
+          "type": "note",
+          "label": "Connectivity state: simulated online/offline.",
+          "requirements": [
+            "FR-IVTS-02"
+          ]
+        },
+        {
+          "id": "diagnostics-nav",
+          "type": "button",
+          "label": "View diagnostic context",
+          "action": {
+            "type": "navigate",
+            "target": "diagnostics"
+          },
+          "requirements": [
+            "FR-IVTS-01"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "diagnostics",
+      "title": "Diagnostic context",
+      "description": "Read-only mock; no ECU or CAN bus connection is present.",
+      "controls": [
+        {
+          "id": "status-summary",
+          "type": "note",
+          "label": "The vehicle status panel is a placeholder for actual monitored values.",
+          "requirements": [
+            "FR-IVTS-02"
+          ]
+        },
+        {
+          "id": "back",
+          "type": "button",
+          "label": "Back to vehicle status",
+          "action": {
+            "type": "navigate",
+            "target": "fleet-status"
+          },
+          "requirements": [
+            "FR-IVTS-01"
+          ]
+        }
+      ]
+    }
+  ]
+}
