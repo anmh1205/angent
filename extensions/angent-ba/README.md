@@ -1,6 +1,6 @@
 # ANGENT Business Analysis — maintained specialist extension
 
-**Scope:** 55 ANGENT BA skills, 48 structured artifact templates, 19 ANGENT-specific review probes, 21 MIT reference rule documents and six runnable Python helpers for extracting/validating Markdown evidence, building BPMN XML, change impact and HTML preview. The source material is **45 maintained adaptations of MIT [Dev BA Kit](https://github.com/nv-minh/dev-ba-kit)** and **10 independently authored specialist methods**. Forty templates are adapted from the same MIT project; eight are original. This is not a reproduction of proprietary AI4BA BA-Kit source, which was not available.
+**Scope:** 55 ANGENT BA skills, 48 structured artifact templates, 19 ANGENT-specific review probes, 21 MIT reference rule documents and eight runnable Python helpers for extracting/validating Markdown evidence, building BPMN XML, change impact and HTML preview. The source material is **45 maintained adaptations of MIT [Dev BA Kit](https://github.com/nv-minh/dev-ba-kit)** and **10 independently authored specialist methods**. Forty templates are adapted from the same MIT project; eight are original. This is not a reproduction of proprietary AI4BA BA-Kit source, which was not available.
 
 ## What actually works
 
@@ -11,6 +11,8 @@
 - Read-only change impact: extensions/angent-ba/scripts/change_impact.py (reverse dependencies and paths).
 - Actual Markdown review: extensions/angent-ba/scripts/validate_documents.py (unfilled template markers, broken local links, IDs and metadata; heuristic, not a full semantic reviewer).
 - Safe self-contained HTML evidence preview: extensions/angent-ba/scripts/render_preview.py, tested for escaping and non-HTTP URL rejection.
+- HTML screen renderer: extensions/angent-ba/scripts/build_wireframe.py generates JS-free static wireframes or self-contained mock prototypes from an explicit screen model. Browser-level verification covers required/email validation, four simulated outcomes, navigation/focus, XSS and zero external requests.
+- Bruno generator: extensions/angent-ba/scripts/build_bruno.py generates HTTP collections with status and nested JSON tests, write-safe auth references, plus a requirement traceability manifest with optional read-only evidence-ID checking. The optional loopback-only Bruno CLI 4.2.1 fixture verified four requests, ten passing test assertions and one mock diagnostic ACK side effect.
 
 ## How to operate
 
@@ -18,7 +20,7 @@ A typical path is ba-brainstorm to ba-srs to ba-userstory/ba-ac to ba-test-check
 
 ## Limits and improvement boundaries
 
-The imported methods preserve meaningful rules, examples and procedures but **do not automatically port the original Claude hooks, TypeScript validators, custom BPMN/D2/render engines or install scripts**. Those require deliberate dependencies, host adapter verification and end-to-end tests. Native Jira/Confluence/Figma writes, Bruno/Playwright execution and design rendering must not be claimed solely from the existence of skill instructions. A current source tree can guide a specialist; it is not itself proof of product or runtime quality.
+The imported methods preserve meaningful rules, examples and procedures but **do not automatically port the original Claude hooks, TypeScript validators, custom BPMN/D2/render engines or install scripts**. Those require deliberate dependencies, host adapter verification and end-to-end tests. Native Jira/Confluence/Figma writes and professional diagrams still require actual provider runtime evidence. Bruno CLI and Chrome/Playwright were tested on **synthetic localhost/UI fixtures only**; this does not establish parity with real authentication, cloud systems, production APIs or device integrations. A current source tree can guide a specialist; it is not itself proof of product or runtime quality.
 
 See ../../hub/research/ba-figma-parity.md for feature evidence, mapped source and remaining acceptance checks.
 
@@ -34,3 +36,18 @@ The Atlas worked example under extensions/angent-ba/examples/docs/atlas-re/ prov
 
 In the *inspected three-file scope*, the extractor finds 38 artifacts, 8 FR and only 4 FR with explicit chains to TC. The prose summary of the original checklist says 6/8, but that relies on additional AC/US context. The extractor reports these links unresolved rather than inflating verified coverage. A reviewed test-case document is not a test execution.
 
+
+## Reproducible UI and API acceptance smoke
+
+Review-only wireframe or interactive HTML mock from the same evidence-linked screen JSON:
+
+    python extensions/angent-ba/scripts/build_wireframe.py extensions/angent-ba/examples/authentication-screen-model.json --mode wireframe --output out/auth-wireframe.html
+    python extensions/angent-ba/scripts/build_wireframe.py extensions/angent-ba/examples/authentication-screen-model.json --mode prototype --output out/auth-prototype.html
+    python tests/integration/check_wireframe_browser.py --chrome PATH_TO_CHROME
+
+Generate Bruno HTTP tests against reviewed evidence and run the optional localhost fixture when Bruno CLI is installed:
+
+    python extensions/angent-ba/scripts/build_bruno.py extensions/angent-ba/examples/synthetic-fleet-api-tests.json --evidence-graph extensions/angent-ba/examples/rental-fleet-traceability.json --output out/bruno
+    python tests/integration/check_bruno_cli.py --cli PATH_TO_BRUNO_CLI
+
+The schema-to-UI and spec-to-API mappings still need actual project stakeholder verification: the models in this repository are deliberately synthetic. The Bruno manifest lists linked ID validation separately from test execution.
