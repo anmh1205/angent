@@ -21,6 +21,7 @@ DIRECTION = {"right", "down", "left", "up"}
 ACTIVITY_KINDS = {"start", "end", "task", "decision"}
 ARCH_KINDS = {"service", "database", "queue", "user", "external", "device", "boundary"}
 FIELD_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]{0,63}$")
+REF_RE = re.compile(r"^[A-Z][A-Z0-9-]{1,99}$")
 FIELD_TYPES = re.compile(r"^[A-Za-z][A-Za-z0-9_(), .-]{0,80}$")
 CONSTRAINTS = {"pk": "primary_key", "fk": "foreign_key", "unique": "unique"}
 SHAPE = {"start": "circle", "end": "circle", "task": "rectangle",
@@ -44,7 +45,7 @@ def _id(value: str) -> str:
     return "n_" + hashlib.sha256(value.encode("utf-8")).hexdigest()[:16]
 
 
-def validate(model: Any) -> dict[str, Any]:
+def validate(model: Any, evidence_ids: set[str] | None = None) -> dict[str, Any]:
     errors: list[str] = []
     if not isinstance(model, dict):
         return {"ok": False, "errors": ["Diagram must be an object"]}
@@ -55,6 +56,18 @@ def validate(model: Any) -> dict[str, Any]:
         errors.append("Diagram title must be nonempty")
     if not isinstance(model.get("direction", "right"), str) or model.get("direction", "right") not in DIRECTION:
         errors.append("Invalid direction")
+    refs = model.get("source_refs", [])
+    if not isinstance(refs, list) or any(not isinstance(ref, str) or not REF_RE.fullmatch(ref) for ref in refs):
+        errors.append("source_refs must contain valid stable IDs")
+        refs = []
+    elif len(set(refs)) != len(refs):
+        errors.append("Duplicate source_refs")
+    if evidence_ids is not None:
+        if not refs:
+            errors.append("No source_refs supplied for evidence check")
+        for ref in refs:
+            if ref not in evidence_ids:
+                errors.append("Unresolved evidence reference: "+ref)
     nodes, edges = model.get("nodes"), model.get("edges")
     if not isinstance(nodes, list) or not nodes or not isinstance(edges, list):
         return {"ok": False, "errors": errors + ["Nonempty nodes and edges array required"]}
@@ -169,8 +182,8 @@ def validate(model: Any) -> dict[str, Any]:
             "rendered": False}
 
 
-def compile_source(model: dict[str,Any]) -> str:
-    report=validate(model)
+def compile_source(model: dict[str,Any], evidence_ids: set[str] | None = None) -> str:
+    report=validate(model, evidence_ids=evidence_ids)
     if not report["ok"]:
         raise ValueError("; ".join(report["errors"]))
     kind=model["type"]
@@ -183,6 +196,8 @@ def compile_source(model: dict[str,Any]) -> str:
     lines=["# ANGENT BA D2 diagram: "+str(kind),
            "# Source is independent and proposed; SVG requires a separately checked D2 CLI.",
            "direction: "+model.get("direction","right")]
+    if model.get("source_refs"):
+        lines.append("# Evidence IDs (existence only): "+", ".join(sorted(model["source_refs"])))
     for group,ident in sorted(groups.items()):
         lines.extend([ident+": "+_text(group)+" {", "  shape: rectangle", "}"])
     paths={}
@@ -258,10 +273,19 @@ def main()->int:
     ap.add_argument("--output",required=True,type=Path)
     ap.add_argument("--svg",type=Path,help="Render SVG using real D2 CLI")
     ap.add_argument("--d2",default="d2",help="D2 executable path")
+    ap.add_argument("--evidence-graph",type=Path,help="Optional BA evidence graph for reference-ID resolution")
     args=ap.parse_args()
     try:
         data=json.loads(args.input.read_text(encoding="utf8"))
-        output=compile_source(data)
+        ids=None
+        if args.evidence_graph:
+            from validate_artifacts import audit
+            evidence=json.loads(args.evidence_graph.read_text(encoding="utf8"))
+            verified=audit(evidence)
+            if not verified["ok"]:
+                raise ValueError("Evidence graph invalid: "+"; ".join(verified["errors"]))
+            ids={item["id"] for item in evidence["artifacts"]}
+        output=compile_source(data,evidence_ids=ids)
         if args.output.exists():
             raise ValueError("Refusing to overwrite existing D2 output")
         args.output.parent.mkdir(parents=True,exist_ok=True)
@@ -269,10 +293,12 @@ def main()->int:
     except (OSError,TypeError,ValueError) as exc:
         print(json.dumps({"ok":False,"error":str(exc)}))
         return 1
-    result={"ok":True,"d2":str(args.output),"rendered":False,"model_type":data["type"]}
+    result={"ok":True,"d2":str(args.output),"rendered":False,"model_type":data["type"],
+            "source_link_check":"ids-resolved-only" if args.evidence_graph else "not-performed"}
     if args.svg:
         result=render_svg(args.output,args.svg,args.d2)
         result["d2"]=str(args.output)
+        result["source_link_check"]="ids-resolved-only" if args.evidence_graph else "not-performed"
     print(json.dumps(result,ensure_ascii=False))
     return 0 if result["ok"] else 1
 

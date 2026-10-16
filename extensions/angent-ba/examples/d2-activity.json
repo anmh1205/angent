@@ -43,5 +43,9 @@
       "to": "denied",
       "guard": "not authorized"
     }
+  ],
+  "source_refs": [
+    "FR-IVTS-01",
+    "BR-IVTS-01"
   ]
 }

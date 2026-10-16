@@ -66,6 +66,25 @@ class D2BuildTests(unittest.TestCase):
         self.assertNotIn("\nfoo -> unauthorized",script)
         self.assertIn(r"\nfoo -> unauthorized",script)
 
+    def test_source_links_are_resolved_against_actual_artifact_inventory(self):
+        graph = json.loads((BA/"examples/rental-fleet-traceability.json").read_text(encoding="utf8"))
+        evidence_ids = {item["id"] for item in graph["artifacts"]}
+        known = self.examples["activity"].copy()
+        known["source_refs"] = ["FR-IVTS-01", "BR-IVTS-01"]
+        outcome = validate(known, evidence_ids=evidence_ids)
+        self.assertTrue(outcome["ok"], outcome)
+        text = compile_source(known, evidence_ids=evidence_ids)
+        self.assertIn("Evidence IDs (existence only)", text)
+        invalid = deepcopy(known)
+        invalid["source_refs"] = ["FR-NOT-DECLARED"]
+        self.assertFalse(validate(invalid, evidence_ids=evidence_ids)["ok"])
+        with self.assertRaisesRegex(ValueError, "Unresolved evidence"):
+            compile_source(invalid, evidence_ids=evidence_ids)
+        invalid["source_refs"] = []
+        self.assertFalse(validate(invalid, evidence_ids=evidence_ids)["ok"])
+        invalid["source_refs"] = ["FR-IVTS-01", "FR-IVTS-01"]
+        self.assertFalse(validate(invalid, evidence_ids=evidence_ids)["ok"])
+
     def test_missing_renderer_fails_explicitly(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
