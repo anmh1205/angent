@@ -76,6 +76,19 @@ class D2BuildTests(unittest.TestCase):
             self.assertFalse(outcome["rendered"])
             self.assertFalse((root/"result.svg").exists())
 
+
+    def test_malformed_nested_inputs_fail_closed(self):
+        base=deepcopy(self.examples["activity"])
+        variants=[]
+        a=deepcopy(base);a["direction"] = [];variants.append(a)
+        a=deepcopy(base);a["nodes"][0]["kind"] = [];variants.append(a)
+        a=deepcopy(base);a["edges"][0]["from"] = [];variants.append(a)
+        a=deepcopy(self.examples["erd"]);a["nodes"][0]["attributes"][0]["key"] = [];variants.append(a)
+        a=deepcopy(self.examples["architecture"]);a["nodes"][0]["kind"] = {"not":"a shape"};variants.append(a)
+        for model in variants:
+            with self.subTest(model=model):
+                self.assertFalse(validate(model)["ok"])
+
     def test_type_and_limit_checks(self):
         for bad in (None,[],{},{"type":[],"nodes":[],"edges":[]}):
             self.assertFalse(validate(bad)["ok"])

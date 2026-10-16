@@ -53,7 +53,7 @@ def validate(model: Any) -> dict[str, Any]:
         errors.append("Unsupported diagram type")
     if not _string(model.get("title")):
         errors.append("Diagram title must be nonempty")
-    if model.get("direction", "right") not in DIRECTION:
+    if not isinstance(model.get("direction", "right"), str) or model.get("direction", "right") not in DIRECTION:
         errors.append("Invalid direction")
     nodes, edges = model.get("nodes"), model.get("edges")
     if not isinstance(nodes, list) or not nodes or not isinstance(edges, list):
@@ -73,9 +73,9 @@ def validate(model: Any) -> dict[str, Any]:
         byid[key] = item
         if not _string(item.get("label")):
             errors.append(f"nodes[{i}]: missing label")
-        if kind == "activity" and item.get("kind") not in ACTIVITY_KINDS:
+        if kind == "activity" and (not isinstance(item.get("kind"), str) or item.get("kind") not in ACTIVITY_KINDS):
             errors.append(f"{key}: unsupported activity kind")
-        if kind == "architecture" and item.get("kind") not in ARCH_KINDS:
+        if kind == "architecture" and (not isinstance(item.get("kind"), str) or item.get("kind") not in ARCH_KINDS):
             errors.append(f"{key}: unsupported architecture kind")
         if kind == "erd":
             if item.get("kind") != "entity":
@@ -98,7 +98,7 @@ def validate(model: Any) -> dict[str, Any]:
                 if not isinstance(datatype, str) or not FIELD_TYPES.fullmatch(datatype):
                     errors.append(f"{key}.attributes[{j}]: invalid data type")
                 val=attr.get("key")
-                if val is not None and val not in CONSTRAINTS:
+                if val is not None and (not isinstance(val,str) or val not in CONSTRAINTS):
                     errors.append(f"{key}.attributes[{j}]: unsupported constraint")
             if not item.get("external") and not any(isinstance(a, dict) and a.get("key")=="pk" for a in attrs):
                 errors.append(f"{key}: non-external entity requires primary key")
