@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "id": "angent-figma",
+  "name": "ANGENT Figma",
+  "kind": "bridged",
+  "authority": "specialist",
+  "description": "Domain diagram models, editable Figma construction, prototype and design system reviews through available runtime tools",
+  "source": {
+    "origin": "Independent ANGENT implementation informed by public Reqwise features (https://ai4ba.com/figma-mcp) and MIT OSS reference",
+    "type": "original-implementation",
+    "license": "ANGENT repository license; no commercial Reqwise Pro code included"
+  },
+  "skills": {
+    "directory": "skills",
+    "expose": "all",
+    "exclude": [],
+    "expected_source_count": 12
+  },
+  "roles": {
+    "directory": "agents",
+    "expected_count": 0
+  },
+  "runtime": {
+    "native": "available Figma MCP or Figma plugin capability",
+    "fallback": "portable",
+    "selection": "native-for-canvas-effects-only-when-live-and-authorized",
+    "exclusive": false
+  },
+  "capabilities": [
+    {
+      "id": "design.figma.usecase",
+      "entry": "figma-usecase",
+      "when": "Define editable actors, use cases and system boundary"
+    },
+    {
+      "id": "design.figma.userflow",
+      "entry": "figma-userflow",
+      "when": "Model navigable interaction across screens and errors"
+    },
+    {
+      "id": "design.figma.activity",
+      "entry": "figma-activity",
+      "when": "Diagram business activities with responsible owners"
+    },
+    {
+      "id": "design.figma.bpmn",
+      "entry": "figma-bpmn",
+      "when": "Create importable BPMN 2.0 process model"
+    },
+    {
+      "id": "design.figma.sequence",
+      "entry": "figma-sequence",
+      "when": "Model synchronous and asynchronous cross-component messages"
+    },
+    {
+      "id": "design.figma.state",
+      "entry": "figma-state",
+      "when": "Define business object state transitions and guards"
+    },
+    {
+      "id": "design.figma.erd",
+      "entry": "figma-erd",
+      "when": "Visualize entities, keys and foreign-key relationships"
+    },
+    {
+      "id": "design.figma.journey",
+      "entry": "figma-journey",
+      "when": "Show end-to-end user experience and friction"
+    },
+    {
+      "id": "design.figma.sitemap",
+      "entry": "figma-sitemap",
+      "when": "Show information architecture and navigational hierarchy"
+    },
+    {
+      "id": "design.figma.persona",
+      "entry": "figma-persona",
+      "when": "Synthesize research-backed behavior patterns without stereotypes"
+    },
+    {
+      "id": "design.figma.design-system",
+      "entry": "figma-design-system",
+      "when": "Create editable reusable Figma foundations from approved art direction"
+    },
+    {
+      "id": "design.figma.demo",
+      "entry": "figma-demo",
+      "when": "Construct a stakeholder walkthrough using editable Figma prototype"
+    }
+  ]
+}
