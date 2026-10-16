@@ -38,7 +38,10 @@ class BAHandoffAssurance(unittest.TestCase):
         self.assertEqual(stages["functional_requirement_to_test"]["source_count"],8)
         self.assertEqual(stages["functional_requirement_to_test"]["verified_links"],4)
         self.assertEqual(len(stages["functional_requirement_to_test"]["missing"]),4)
-        self.assertEqual(len(report["test_artifacts_without_execution_evidence"]),4)
+        self.assertEqual(len(report["test_artifacts_without_execution_evidence"]),
+                         len([x for x in self.atlas["artifacts"] if x["kind"]=="TEST"]))
+        self.assertGreater(len(report["test_artifacts_without_execution_evidence"]),
+                           stages["functional_requirement_to_test"]["verified_links"])
         self.assertFalse(report["writes_performed"])
         for source,path in stages["functional_requirement_to_test"]["witness_paths"].items():
             self.assertEqual(source,path[0])
