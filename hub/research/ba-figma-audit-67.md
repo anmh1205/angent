@@ -161,3 +161,10 @@ The BA Markdown extractor excludes fenced code examples to avoid promoting tutor
 A single read-only, **distributed** graph auditor now checks stage evidence for UN→BO, BO→CAP, CAP→FR, FR/NFR/BR/error/AC/checklist→TC. It emits actual witness paths and IDs for known handoff gaps, while deliberately marking absent corpus stages as **not-inspected** rather than incorrectly declaring 0% coverage or success. This is a shared verification instrument for \`ba-kg\`, \`ba-gap\` and \`ba-dashboard\` without adding state, agents or an alternative Hub. Tests: \`tests/test_ba_lifecycle_handoffs.py\` and packaged verification in \`tests/integration/check_distributed_kits.py\`.
 
 The Atlas corpus contains more test-case records than FRs traceable to a TC; the report keeps test artifact count and FR coverage distinct. None of this establishes business validation or any runtime test success. Additional live user, provider and Figma evidence remains required before claiming full kit parity.
+
+## Independently inspectable evidence source registry
+
+The machine-readable sibling \`ba-figma-audit-67.json\` now associates each **promoted** source-validated/runtime-mock/payload-verified capability with the existing, exact test source(s) that exercise it. All 67 rows have an explicit \`proof_scope\`; method-only, unverified and provider-blocked items have **no fabricated proof refs**. The regression check \`tests/test_all_kit_evidence_inventory.py\` fails if a referenced test disappears or a promoted row lacks proof.
+
+A proof file existing is not evidence that the test was recently run. Runtime and live-provider results must additionally be obtained from an actual checked commit and execution log. Candidate Figma payload checks cannot be promoted to live canvas status.
+

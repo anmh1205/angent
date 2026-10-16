@@ -10,6 +10,23 @@ ROOT=Path(__file__).resolve().parents[1]
 AUDIT=ROOT/"hub/research/ba-figma-audit-67.json"
 
 class EvidenceInventory(unittest.TestCase):
+    def test_evidence_references_are_real_but_not_live_claims(self):
+        rows=json.loads(AUDIT.read_text(encoding="utf8"))
+        verified_tiers={"source-validated","runtime-mock","payload-verified"}
+        for item in rows:
+            with self.subTest(skill=item["skill"]):
+                refs=item["proof_refs"]
+                if item["evidence"] in verified_tiers:
+                    self.assertTrue(refs, "A promoted evidence tier requires inspectable test sources")
+                else:
+                    self.assertFalse(refs, "Method-only/unverified/provider claims must not cite invented runs")
+                for path in refs:
+                    self.assertTrue((ROOT/path).is_file(), "Missing proof source "+path)
+                if item["evidence"]=="runtime-mock":
+                    self.assertTrue(any("integration/" in ref for ref in refs))
+                if item["evidence"]=="provider-blocked":
+                    self.assertEqual(item["proof_scope"],"live-provider-readback-required")
+
     def test_every_skill_covered_without_fabricating_runtime_success(self):
         entries=json.loads(AUDIT.read_text(encoding="utf8"))
         names=[item["skill"] for item in entries]

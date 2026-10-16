@@ -4,468 +4,674 @@
     "skill": "ba-prd",
     "evidence": "method",
     "deliverable": "Product vision and sourced feature map",
-    "remaining": "Unverified buyer data and stakeholder acceptance"
+    "remaining": "Unverified buyer data and stakeholder acceptance",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Product",
     "skill": "ba-roadmap",
     "evidence": "method",
     "deliverable": "Prioritization, justified scores and release dependencies",
-    "remaining": "No verified forecasts or approved resource commitments"
+    "remaining": "No verified forecasts or approved resource commitments",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Product",
     "skill": "ba-discover",
     "evidence": "method",
     "deliverable": "Opportunity competitor buyer discovery or existing repo context",
-    "remaining": "Needs fresh actual buyer and competitor research"
+    "remaining": "Needs fresh actual buyer and competitor research",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Requirements",
     "skill": "ba-brainstorm",
     "evidence": "method",
     "deliverable": "Elicited decisions and unresolved business questions",
-    "remaining": "Only real stakeholders can approve outcomes"
+    "remaining": "Only real stakeholders can approve outcomes",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Requirements",
     "skill": "ba-urd",
     "evidence": "method",
     "deliverable": "UN needs, user context and observed jobs",
-    "remaining": "Persona/interview evidence must be sourced"
+    "remaining": "Persona/interview evidence must be sourced",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Requirements",
     "skill": "ba-brd",
     "evidence": "method",
     "deliverable": "BO business value, scope, risks and ROI",
-    "remaining": "Financial assumptions and approval unverified"
+    "remaining": "Financial assumptions and approval unverified",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Requirements",
     "skill": "ba-prd-epic",
     "evidence": "method",
     "deliverable": "CAP feature capability and priority",
-    "remaining": "Business authorization and cost basis unverified"
+    "remaining": "Business authorization and cost basis unverified",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Requirements",
     "skill": "ba-srs",
     "evidence": "source-validated",
     "deliverable": "FR/NFR/BR/error matrix with stable IDs",
-    "remaining": "Parser and syntax do not prove requirements accurate"
+    "remaining": "Parser and syntax do not prove requirements accurate",
+    "proof_refs": [
+      "tests/test_ba_documents_preview.py",
+      "tests/test_ba_full_lifecycle.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Requirements",
     "skill": "ba-reverse-doc",
     "evidence": "method",
     "deliverable": "Legacy source-linked inferred requirements",
-    "remaining": "Requires original source and conflict reconciliation"
+    "remaining": "Requires original source and conflict reconciliation",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Requirements",
     "skill": "ba-code-to-srs",
     "evidence": "source-validated",
     "deliverable": "Git-commit-pinned source code witnesses linked to BA requirement IDs",
-    "remaining": "Snippet provenance verified; behavior, deployment and semantic SRS alignment unverified"
+    "remaining": "Snippet provenance verified; behavior, deployment and semantic SRS alignment unverified",
+    "proof_refs": [
+      "tests/test_ba_code_witness.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-sequence",
     "evidence": "method",
     "deliverable": "Message ordering with error and retry fragments",
-    "remaining": "Renderer and real protocol semantics not verified"
+    "remaining": "Renderer and real protocol semantics not verified",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-activity",
     "evidence": "method",
     "deliverable": "Decision process and alternate paths",
-    "remaining": "No generic source-to-renderer parity evidence"
+    "remaining": "No generic source-to-renderer parity evidence",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-activity-swimlane",
     "evidence": "runtime-mock",
     "deliverable": "Role-owned workflow and guarded paths",
-    "remaining": "D2 sample proven; PlantUML runtime still optional"
+    "remaining": "D2 sample proven; PlantUML runtime still optional",
+    "proof_refs": [
+      "tests/integration/check_d2_cli.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-bpmn",
     "evidence": "runtime-mock",
     "deliverable": "BPMN XML with lane and gateway semantics",
-    "remaining": "OMG XSD passes; BPMN engine import untested"
+    "remaining": "OMG XSD passes; BPMN engine import untested",
+    "proof_refs": [
+      "tests/integration/check_bpmn_official_xsd.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-state",
     "evidence": "method",
     "deliverable": "Entity state transitions and guards",
-    "remaining": "No live state machine conformance evidence"
+    "remaining": "No live state machine conformance evidence",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-erd",
     "evidence": "method",
     "deliverable": "Conceptual relations and optionality",
-    "remaining": "No actual database schema or Mermaid render proof"
+    "remaining": "No actual database schema or Mermaid render proof",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-d2-erd",
     "evidence": "runtime-mock",
     "deliverable": "Typed D2 sql_table model and SVG",
-    "remaining": "Real D2 CLI passes on synthetic schema only"
+    "remaining": "Real D2 CLI passes on synthetic schema only",
+    "proof_refs": [
+      "tests/integration/check_d2_cli.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-d2-activity",
     "evidence": "runtime-mock",
     "deliverable": "D2 guarded decision flow and SVG",
-    "remaining": "Synthetic workflows not production rules"
+    "remaining": "Synthetic workflows not production rules",
+    "proof_refs": [
+      "tests/integration/check_d2_cli.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-d2-architect",
     "evidence": "runtime-mock",
     "deliverable": "D2 device/services flow and SVG",
-    "remaining": "No deployment or network traffic verification"
+    "remaining": "No deployment or network traffic verification",
+    "proof_refs": [
+      "tests/integration/check_d2_cli.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-dbdiagram",
     "evidence": "source-validated",
     "deliverable": "DBML source and relation definitions",
-    "remaining": "Real SQL migration and dbdiagram import not proven"
+    "remaining": "Real SQL migration and dbdiagram import not proven",
+    "proof_refs": [
+      "tests/test_ba_reference_portability.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Diagrams",
     "skill": "ba-usecase-diagram",
     "evidence": "method",
     "deliverable": "UML actors and goal boundaries",
-    "remaining": "Real PlantUML render and Figma Pro tools absent"
+    "remaining": "Real PlantUML render and Figma Pro tools absent",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Backlog",
     "skill": "ba-usecase",
     "evidence": "method",
     "deliverable": "Full actor goal with alternates and failures",
-    "remaining": "Stakeholder acceptance is not automatable here"
+    "remaining": "Stakeholder acceptance is not automatable here",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Backlog",
     "skill": "ba-userstory",
     "evidence": "method",
     "deliverable": "Sourced slices, outcomes and AC identifiers",
-    "remaining": "No live acceptance/backlog synchronization"
+    "remaining": "No live acceptance/backlog synchronization",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Backlog",
     "skill": "ba-ac",
     "evidence": "method",
     "deliverable": "Given When Then conditions and negative cases",
-    "remaining": "Needs actual actor and edge-case validation"
+    "remaining": "Needs actual actor and edge-case validation",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Screen",
     "skill": "ba-user-flow",
     "evidence": "source-validated",
     "deliverable": "Screen navigation and branches",
-    "remaining": "Only mock screen runtime tested"
+    "remaining": "Only mock screen runtime tested",
+    "proof_refs": [
+      "tests/test_ba_wireframe.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Screen",
     "skill": "ba-wireframe-ascii",
     "evidence": "method",
     "deliverable": "ASCII layout keyed to user flow",
-    "remaining": "Not a functional or editable screen"
+    "remaining": "Not a functional or editable screen",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Screen",
     "skill": "ba-wireframe-html",
     "evidence": "runtime-mock",
     "deliverable": "Standalone offline low-fidelity HTML",
-    "remaining": "Synthetic Chrome fixture only"
+    "remaining": "Synthetic Chrome fixture only",
+    "proof_refs": [
+      "tests/integration/check_wireframe_browser.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Screen",
     "skill": "ba-prototype-html",
     "evidence": "runtime-mock",
     "deliverable": "Clickable mock HTML with errors and focus",
-    "remaining": "No real user backend or persistence"
+    "remaining": "No real user backend or persistence",
+    "proof_refs": [
+      "tests/integration/check_wireframe_browser.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Screen",
     "skill": "ba-prototype-next",
     "evidence": "runtime-mock",
     "deliverable": "Next.js routed interactive prototype",
-    "remaining": "Actual Next 16.4.2 production build and three consecutive real Chrome passes at mobile/desktop; no real backend or deployed web app verification"
+    "remaining": "Actual Next 16.4.2 production build and three consecutive real Chrome passes at mobile/desktop; no real backend or deployed web app verification",
+    "proof_refs": [
+      "tests/integration/check_next_prototype_browser.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Screen",
     "skill": "ba-figma",
     "evidence": "provider-blocked",
     "deliverable": "Screen controls as editable native Figma frames",
-    "remaining": "Real frame/node editing and read-back not verified"
+    "remaining": "Real frame/node editing and read-back not verified",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "API",
     "skill": "ba-api-assess",
     "evidence": "method",
     "deliverable": "Vendor or build choice with business tradeoffs",
-    "remaining": "Live pricing/SLAs and providers need research"
+    "remaining": "Live pricing/SLAs and providers need research",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "API",
     "skill": "ba-api-doc",
     "evidence": "method",
     "deliverable": "Versioned source-linked API contract summary",
-    "remaining": "Requires real inspected provider specification"
+    "remaining": "Requires real inspected provider specification",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "API",
     "skill": "ba-api-design",
     "evidence": "method",
     "deliverable": "Orchestration and webhook recovery plan",
-    "remaining": "Live retries and idempotency not verified"
+    "remaining": "Live retries and idempotency not verified",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "API",
     "skill": "ba-api-map",
     "evidence": "source-validated",
     "deliverable": "Provider domain UI field mappings",
-    "remaining": "OpenAPI/sample fixture and transforms verified; real provider and frontend binding unverified"
+    "remaining": "OpenAPI/sample fixture and transforms verified; real provider and frontend binding unverified",
+    "proof_refs": [
+      "tests/test_ba_api_field_mapping.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "API",
     "skill": "ba-api-checklist",
     "evidence": "method",
     "deliverable": "Integration behavior coverage inventory",
-    "remaining": "No real integration target configured"
+    "remaining": "No real integration target configured",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "API",
     "skill": "ba-api-test",
     "evidence": "runtime-mock",
     "deliverable": "Bruno cases and status/body checks",
-    "remaining": "4/4 mock CLI calls, not provider E2E"
+    "remaining": "4/4 mock CLI calls, not provider E2E",
+    "proof_refs": [
+      "tests/integration/check_bruno_cli.py",
+      "tests/test_ba_api_contract.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "API",
     "skill": "ba-api-readiness",
     "evidence": "method",
     "deliverable": "Go-live, rollback and deployment risks",
-    "remaining": "Staging SLO and provider launch not tested"
+    "remaining": "Staging SLO and provider launch not tested",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Testing",
     "skill": "ba-test-checklist",
     "evidence": "source-validated",
     "deliverable": "CHK coverage of FR/BR/errors",
-    "remaining": "Coverage links are not executed tests"
+    "remaining": "Coverage links are not executed tests",
+    "proof_refs": [
+      "tests/test_ba_markdown_traceability.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Testing",
     "skill": "ba-test-cases",
     "evidence": "source-validated",
     "deliverable": "TC data, steps and expected results",
-    "remaining": "Execution requires target/runtime evidence"
+    "remaining": "Execution requires target/runtime evidence",
+    "proof_refs": [
+      "tests/test_ba_markdown_traceability.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Testing",
     "skill": "ba-playwright-gen",
     "evidence": "runtime-mock",
     "deliverable": "Generated browser test cases from source model",
-    "remaining": "Chrome mock 7/7, real app not tested"
+    "remaining": "Chrome mock 7/7, real app not tested",
+    "proof_refs": [
+      "tests/integration/check_generated_playwright.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Quality",
     "skill": "ba-gap",
     "evidence": "source-validated",
     "deliverable": "Requirement chain gap and coverage summary",
-    "remaining": "Full links do not establish true business correctness"
+    "remaining": "Full links do not establish true business correctness",
+    "proof_refs": [
+      "tests/test_ba_lifecycle_handoffs.py",
+      "tests/test_ba_full_lifecycle.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Quality",
     "skill": "ba-doc-drift",
     "evidence": "method",
     "deliverable": "Observed spec versus code disagreements",
-    "remaining": "No generic live repo execution provided"
+    "remaining": "No generic live repo execution provided",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Quality",
     "skill": "ba-ask",
     "evidence": "method",
     "deliverable": "Evidence-grounded business answer",
-    "remaining": "Requires current project documents and sources"
+    "remaining": "Requires current project documents and sources",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Quality",
     "skill": "ba-cr",
     "evidence": "source-validated",
     "deliverable": "Source revision impacts and dependent re-review",
-    "remaining": "Graph diff is not authorized document application"
+    "remaining": "Graph diff is not authorized document application",
+    "proof_refs": [
+      "tests/test_ba_revision_drift.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Quality",
     "skill": "ba-dashboard",
     "evidence": "source-validated",
     "deliverable": "Coverage and risk evidence rollup",
-    "remaining": "Live delivery/provider status not checked"
+    "remaining": "Live delivery/provider status not checked",
+    "proof_refs": [
+      "tests/test_ba_lifecycle_handoffs.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Quality",
     "skill": "ba-kg",
     "evidence": "source-validated",
     "deliverable": "Graph of artifacts and explicit references",
-    "remaining": "Cannot invent missing semantic source links"
+    "remaining": "Cannot invent missing semantic source links",
+    "proof_refs": [
+      "tests/test_ba_typed_lineage.py",
+      "tests/test_ba_full_lifecycle.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Handoff",
     "skill": "ba-jira",
     "evidence": "provider-blocked",
     "deliverable": "Accepted US to real Jira issues with read-back",
-    "remaining": "No actual provider write/read verification"
+    "remaining": "No actual provider write/read verification",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Handoff",
     "skill": "ba-confluence",
     "evidence": "provider-blocked",
     "deliverable": "Version-safe scope-limited page update",
-    "remaining": "No real macro-preserving page update test"
+    "remaining": "No real macro-preserving page update test",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Handoff",
     "skill": "ba-export",
     "evidence": "runtime-mock",
     "deliverable": "Markdown HTML PDF or DOCX stakeholder package",
-    "remaining": "Pandoc MD HTML DOCX tested with Chrome; PDF requires real TeX engine and viewer validation"
+    "remaining": "Pandoc MD HTML DOCX tested with Chrome; PDF requires real TeX engine and viewer validation",
+    "proof_refs": [
+      "tests/integration/check_ba_export.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Handoff",
     "skill": "ba-preview",
     "evidence": "source-validated",
     "deliverable": "Read-only HTML source evidence navigation",
-    "remaining": "Full multi-document visual fidelity not proven"
+    "remaining": "Full multi-document visual fidelity not proven",
+    "proof_refs": [
+      "tests/test_ba_documents_preview.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Handoff",
     "skill": "ba-reverse-preview",
     "evidence": "runtime-mock",
     "deliverable": "Provenance-aware reverse spec HTML preview",
-    "remaining": "Three synthetic confidence classes rendered in Chrome; source provenance must be independently checked"
+    "remaining": "Three synthetic confidence classes rendered in Chrome; source provenance must be independently checked",
+    "proof_refs": [
+      "tests/integration/check_reverse_preview_browser.py"
+    ],
+    "proof_scope": "synthetic-cli-browser-evidence"
   },
   {
     "stage": "Handoff",
     "skill": "ba-userguide",
     "evidence": "method",
     "deliverable": "Role-based operating guide with actual failures",
-    "remaining": "Actual app screens and behavior not verified"
+    "remaining": "Actual app screens and behavior not verified",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Handoff",
     "skill": "ba-meet",
     "evidence": "method",
     "deliverable": "Meeting actions decisions and provenance",
-    "remaining": "Raw transcript and stakeholder decisions unverified"
+    "remaining": "Raw transcript and stakeholder decisions unverified",
+    "proof_refs": [],
+    "proof_scope": "documented-method-only"
   },
   {
     "stage": "Handoff",
     "skill": "ba-update-overview",
     "evidence": "source-validated",
     "deliverable": "Scoped overview update based on source changes",
-    "remaining": "Real document/provider mutation requires read-back"
+    "remaining": "Real document/provider mutation requires read-back",
+    "proof_refs": [
+      "tests/test_ba_revision_drift.py"
+    ],
+    "proof_scope": "local-source-structure"
   },
   {
     "stage": "Handoff",
     "skill": "ba-delegate",
     "evidence": "provider-blocked",
     "deliverable": "Bounded independent second-opinion review",
-    "remaining": "No autonomous worker runtime can be presumed"
+    "remaining": "No autonomous worker runtime can be presumed",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Figma OSS",
     "skill": "figma-activity",
     "evidence": "payload-verified",
     "deliverable": "Activity diagram model and native candidate request",
-    "remaining": "No Figma canvas write or read-back"
+    "remaining": "No Figma canvas write or read-back",
+    "proof_refs": [
+      "tests/test_reqwise_six_kinds.py",
+      "tests/integration/check_reqwise_schema.ts"
+    ],
+    "proof_scope": "candidate-structural-and-upstream-schema"
   },
   {
     "stage": "Figma OSS",
     "skill": "figma-userflow",
     "evidence": "payload-verified",
     "deliverable": "Userflow graph and native candidate request",
-    "remaining": "No real Figma editing/read-back"
+    "remaining": "No real Figma editing/read-back",
+    "proof_refs": [
+      "tests/test_reqwise_six_kinds.py",
+      "tests/integration/check_reqwise_schema.ts"
+    ],
+    "proof_scope": "candidate-structural-and-upstream-schema"
   },
   {
     "stage": "Figma OSS",
     "skill": "figma-sequence",
     "evidence": "payload-verified",
     "deliverable": "Sequence model and native candidate request",
-    "remaining": "No live Figma sequence render"
+    "remaining": "No live Figma sequence render",
+    "proof_refs": [
+      "tests/test_reqwise_six_kinds.py",
+      "tests/integration/check_reqwise_schema.ts"
+    ],
+    "proof_scope": "candidate-structural-and-upstream-schema"
   },
   {
     "stage": "Figma OSS",
     "skill": "figma-state",
     "evidence": "payload-verified",
     "deliverable": "State machine model and native candidate request",
-    "remaining": "No Figma canvas lifecycle audit"
+    "remaining": "No Figma canvas lifecycle audit",
+    "proof_refs": [
+      "tests/test_reqwise_six_kinds.py",
+      "tests/integration/check_reqwise_schema.ts"
+    ],
+    "proof_scope": "candidate-structural-and-upstream-schema"
   },
   {
     "stage": "Figma OSS",
     "skill": "figma-erd",
     "evidence": "payload-verified",
     "deliverable": "ERD entities keys and candidate request",
-    "remaining": "No canvas node/key read-back"
+    "remaining": "No canvas node/key read-back",
+    "proof_refs": [
+      "tests/test_reqwise_six_kinds.py",
+      "tests/integration/check_reqwise_schema.ts"
+    ],
+    "proof_scope": "candidate-structural-and-upstream-schema"
   },
   {
     "stage": "Figma OSS",
     "skill": "figma-sitemap",
     "evidence": "payload-verified",
     "deliverable": "Site IA model and candidate request",
-    "remaining": "No real Figma frame hierarchy read-back"
+    "remaining": "No real Figma frame hierarchy read-back",
+    "proof_refs": [
+      "tests/test_reqwise_six_kinds.py",
+      "tests/integration/check_reqwise_schema.ts"
+    ],
+    "proof_scope": "candidate-structural-and-upstream-schema"
   },
   {
     "stage": "Figma Pro",
     "skill": "figma-usecase",
     "evidence": "provider-blocked",
     "deliverable": "Native UML usecase nodes and relationships",
-    "remaining": "Reqwise OSS does not implement Pro type"
+    "remaining": "Reqwise OSS does not implement Pro type",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Figma Pro",
     "skill": "figma-bpmn",
     "evidence": "provider-blocked",
     "deliverable": "Editable BPMN representation and event shapes",
-    "remaining": "No Figma Pro renderer; XML XSD separate"
+    "remaining": "No Figma Pro renderer; XML XSD separate",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Figma Pro",
     "skill": "figma-journey",
     "evidence": "provider-blocked",
     "deliverable": "Editable journey map and research evidence",
-    "remaining": "No OSS supported native journey type"
+    "remaining": "No OSS supported native journey type",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Figma Pro",
     "skill": "figma-persona",
     "evidence": "provider-blocked",
     "deliverable": "Editable research-grounded persona cards",
-    "remaining": "No real study source or native write"
+    "remaining": "No real study source or native write",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Figma Pro",
     "skill": "figma-design-system",
     "evidence": "provider-blocked",
     "deliverable": "Variables styles and reusable components",
-    "remaining": "No tested live library changes and read-back"
+    "remaining": "No tested live library changes and read-back",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   },
   {
     "stage": "Figma Pro",
     "skill": "figma-demo",
     "evidence": "provider-blocked",
     "deliverable": "Prototype reaction walkthrough and recording",
-    "remaining": "No verified Pro recording or interaction write"
+    "remaining": "No verified Pro recording or interaction write",
+    "proof_refs": [],
+    "proof_scope": "live-provider-readback-required"
   }
 ]
