@@ -1,0 +1,81 @@
+"""Compile portable diagrams to inspectable OSS figma_diagram payloads."""
+from copy import deepcopy
+import json
+from pathlib import Path
+import sys
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+FIGMA = ROOT / "extensions/angent-figma"
+sys.path.insert(0, str(FIGMA / "scripts"))
+from to_reqwise_payload import compile_model
+
+class ReqwisePayloadTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.activity = json.loads((FIGMA / "examples/rental-fleet-activity.json").read_text())
+
+    def test_activity_dry_run_by_default(self):
+        p = compile_model(self.activity)
+        self.assertEqual(p["tool"], "figma_diagram")
+        self.assertTrue(p["arguments"]["spec"]["options"]["dryRun"])
+        self.assertEqual(p["arguments"]["spec"]["edges"][1]["label"], "yes")
+        self.assertFalse(p["writes_performed"])
+
+    def test_write_payload_is_still_not_a_tool_call(self):
+        p = compile_model(self.activity, ready_to_write=True)
+        self.assertFalse(p["dry_run"])
+        self.assertFalse(p["writes_performed"])
+
+    def test_swimlane_requires_owner_and_orientation(self):
+        m = deepcopy(self.activity)
+        for n in m["nodes"]:
+            n["lane"] = "fleet"
+        with self.assertRaisesRegex(ValueError, "rankdir"):
+            compile_model(m)
+        m["metadata"]["rankdir"] = "LR"
+        self.assertEqual(compile_model(m)["arguments"]["spec"]["lanes"], [{"id":"fleet","label":"fleet"}])
+        del m["nodes"][2]["lane"]
+        with self.assertRaisesRegex(ValueError, "owner"):
+            compile_model(m)
+
+    def test_state_and_sequence_mapping(self):
+        state = deepcopy(self.activity)
+        state["type"] = "state"
+        p = compile_model(state)["arguments"]["spec"]
+        self.assertEqual(p["states"][0]["kind"], "initial")
+        self.assertEqual(p["transitions"][1]["guard"], "yes")
+        seq = {"type":"sequence","nodes":[{"id":"api","kind":"system","label":"API"},{"id":"db","kind":"db","label":"DB"}],
+               "edges":[{"from":"api","to":"db","label":"SELECT status"}], "metadata":{"title":"Status exchange"}}
+        p = compile_model(seq)["arguments"]["spec"]
+        self.assertEqual(p["participants"][1]["kind"], "db")
+        self.assertEqual(p["messages"][0]["label"], "SELECT status")
+        seq["edges"][0].pop("label")
+        with self.assertRaisesRegex(ValueError, "message"):
+            compile_model(seq)
+
+    def test_sitemap_single_parent(self):
+        m = {"type":"sitemap","nodes":[{"id":"root","label":"Root"},{"id":"a","label":"Page A"},{"id":"b","label":"Page B"}],
+             "edges":[{"from":"root","to":"a"},{"from":"root","to":"b"}]}
+        p = compile_model(m)["arguments"]["spec"]
+        self.assertEqual(p["pages"][1]["parent"], "root")
+
+    def test_erd_requires_column_integrity(self):
+        base = {"type":"erd","nodes":[{"id":"users","kind":"entity","label":"users",
+                    "attributes":[{"name":"id","type":"uuid","key":"pk"}]},
+                    {"id":"vehicles","kind":"entity","label":"vehicles",
+                    "attributes":[{"name":"user_id","type":"uuid","key":"fk"},{"name":"id","key":"pk"}]}],
+                "edges":[{"from":"users","to":"vehicles","fromField":"id","toField":"user_id","fromCard":"one","toCard":"zero-many"}]}
+        p = compile_model(base)["arguments"]["spec"]
+        self.assertEqual(p["relations"][0]["toField"], "user_id")
+        del base["edges"][0]["fromField"]
+        with self.assertRaisesRegex(ValueError, "both columns"):
+            compile_model(base)
+
+    def test_unsupported_pro_diagram_not_claimed(self):
+        bad = {"type":"bpmn","nodes":[{"id":"start","kind":"start","label":"Start"}],"edges":[]}
+        with self.assertRaisesRegex(ValueError,"does not support"):
+            compile_model(bad)
+
+if __name__ == "__main__":
+    unittest.main()
