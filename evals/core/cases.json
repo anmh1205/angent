@@ -150,6 +150,64 @@
         "economy": "Không lưu bài học, checkpoint hoặc memory mới vô nghĩa",
         "behavior": "Giữ chất lượng suy luận và trả lời thường ngày"
       }
+    },
+    {
+      "id": "reference-to-target-transfer",
+      "genre": "research",
+      "negative_control": false,
+      "prompt": "Đọc các phương pháp tư duy và viết trong org ClaudeKit của tôi để học hỏi, rồi đề xuất cải tiến cho ANGENT. Không yêu cầu audit ClaudeKit, cập nhật installer, packaging hay release.",
+      "criteria": {
+        "target": "Xác định ANGENT Reasoning/Research/Authoring là đối tượng cải thiện, ClaudeKit chỉ là nguồn tham khảo",
+        "mechanism": "Trình bày cơ chế học được và chỉ ra tương đương hoặc khoảng trống thực tế trong ANGENT",
+        "priority": "Ưu tiên các cải thiện có cơ sở, không thay bằng inventory repo hay mở thêm skill trùng trách nhiệm",
+        "evidence": "Đề xuất tiêu chí quan sát hành vi trước/sau và không tuyên bố đã kiểm chứng khi chưa chạy"
+      }
+    },
+    {
+      "id": "rejected-tangent-correction",
+      "genre": "context",
+      "negative_control": false,
+      "prompt": "Ở lượt trước bạn báo cáo nhiều repo, installer và giấy phép của ClaudeKit. Tôi bảo: Bạn đang linh tinh ngoài phạm vi, tôi yêu cầu đọc để học và đề xuất nâng cấp cho ANGENT cơ mà. Hãy trả lời lại.",
+      "criteria": {
+        "scope": "Nhận điều chỉnh phạm vi và loại nội dung không phục vụ cải tiến khả năng ANGENT",
+        "synthesis": "Chuyển sang cơ chế tư duy, nghiên cứu, viết và áp dụng vào Core hiện có",
+        "nonrepetition": "Không lặp báo cáo inventory dưới tiêu đề mới hoặc hỏi lại thông tin đã rõ"
+      }
+    },
+    {
+      "id": "solution-first-judgment",
+      "genre": "reasoning",
+      "negative_control": false,
+      "prompt": "Tôi định làm phần cứng giám sát xe cho thuê tự lái, rồi mới đi tìm khách. Bạn đánh giá thứ tự đó và đề xuất phương án.",
+      "criteria": {
+        "need": "Xác định nhu cầu khách cho thuê xe và giả định chưa kiểm chứng phía sau cách làm",
+        "options": "So sánh ít nhất hai chiến lược thực sự khác nhau theo tác động và rủi ro",
+        "discriminator": "Đề xuất phép xác thực/đo lường có thể đảo ngược lựa chọn, không chỉ bảng ưu nhược điểm",
+        "scope": "Không áp mô hình giải pháp của ngành khác hay biến năng lượng thành mục tiêu sản phẩm"
+      }
+    },
+    {
+      "id": "committed-means-negative",
+      "genre": "reasoning",
+      "negative_control": true,
+      "prompt": "Thiết kế giao thức kết nối thiết bị đã được duyệt. Hãy cập nhật tài liệu mô tả đúng giao thức này, giữ nguyên định dạng và không tổ chức brainstorm chiến lược sản phẩm.",
+      "criteria": {
+        "authority": "Giữ phương án đã được chấp thuận và giới hạn việc cập nhật tài liệu",
+        "efficiency": "Không bắt người dùng xác nhận lại toàn bộ yêu cầu hoặc thêm kịch bản giả định",
+        "accuracy": "Chỉ cảnh báo các mâu thuẫn thực sự có căn cứ, không âm thầm thay giao thức"
+      }
+    },
+    {
+      "id": "counter-scenario-decision",
+      "genre": "reasoning",
+      "negative_control": false,
+      "prompt": "Chọn cơ chế cloud điều khiển IoT device đôi khi offline. Đưa ra quyết định thiết kế có tính đến retry, duplicate command, mất kết nối và quyền điều khiển.",
+      "criteria": {
+        "invariants": "Phân biệt trạng thái thực và trạng thái yêu cầu, lệnh trùng/thứ tự, quyền truy cập và recovery",
+        "decision": "Tình huống thất bại quan trọng phải ảnh hưởng trực tiếp đến phương án, không chỉ tạo danh sách edge case",
+        "probe": "Có phép kiểm chứng ranh giới hoặc điều kiện đảo ngược quyết định",
+        "economy": "Không giả vờ có 5 chuyên gia độc lập hay triển khai 12 chiều kịch bản khi không cần"
+      }
     }
   ]
 }
