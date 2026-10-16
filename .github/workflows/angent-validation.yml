@@ -95,6 +95,7 @@ jobs:
       - name: Verify typed BA provenance and Figma diagram contracts
         run: |
           python3 -m unittest discover -s tests -p 'test_ba_typed_lineage.py' -v
+          python3 -m unittest discover -s tests -p 'test_ba_graph_scaling.py' -v
           python3 -m unittest discover -s tests -p 'test_ba_full_lifecycle.py' -v
           python3 -m unittest discover -s tests -p 'test_ba_lifecycle_handoffs.py' -v
           python3 -m unittest discover -s tests -p 'test_ba_figma_trace_chain.py' -v
