@@ -35,8 +35,11 @@ class SpecialistScenarioCoverage(unittest.TestCase):
             if any(x.startswith("figma-") for x in case["skills"]) or "ba-jira" in case["skills"]:
                 self.assertEqual(case["execution_status"],"not-run")
                 self.assertEqual(case["live_provider_writes"],0)
-                self.assertTrue(any("Figma" in str(case) or "provider" in str(case).lower()
-                                    for _ in (0,)))
+                self.assertIn("provider",case["scope"].lower()) if "ba-jira" in case["skills"] else self.assertTrue(
+                    "provider" in case["scope"].lower() or "figma" in case["scope"].lower())
+                self.assertTrue(any("claim" in rule.lower() or "pretend" in rule.lower()
+                                    or "report" in rule.lower() for rule in case["reject"]),
+                                "A falsifiable false-success condition is required")
 
 if __name__=="__main__":
     unittest.main()
