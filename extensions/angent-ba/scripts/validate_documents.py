@@ -48,7 +48,12 @@ def inspect(path, root):
         if value.startswith(("http://","https://","mailto:","#")):continue
         if "://" in value or value.startswith(("javascript:","data:")):
             errors.append("unsafe link: "+value);continue
-        target=(root/value if value.startswith("docs/") else path.parent/value).resolve()
+        # Fragment identifiers select headings inside the same physical file.
+        # They must not be included in filesystem existence/path checks.
+        local_path=value.split("#",1)[0]
+        if not local_path:
+            continue
+        target=(root/local_path if local_path.startswith("docs/") else path.parent/local_path).resolve()
         if not target.is_relative_to(root.resolve()):
             errors.append("path traversal: "+value)
         elif not target.is_file():

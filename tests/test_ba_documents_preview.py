@@ -48,6 +48,32 @@ class TestDocuments(unittest.TestCase):
         self.assertTrue(outcome["ok"],outcome)
         self.assertGreaterEqual(len(outcome["table_ids"]),10)
 
+    def test_markdown_fragment_links_resolve_to_files(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            (root/"source.md").write_text("# Evidence\n\n## Section\n",encoding="utf8")
+            target=root/"spec.md"
+            target.write_text("---\\nstatus: draft\\n---\\n# Spec\\n"
+                              "[Evidence](source.md#section)\\n"
+                              "[Local](#spec)\\n",encoding="utf8")
+            report=inspect(target,root)
+            self.assertTrue(report["ok"],report)
+            target.write_text("---\\nstatus: draft\\n---\\n# Spec\\n"
+                              "[Missing](absent.md#section)\\n"
+                              "[Escape](../hidden.md#section)\\n",encoding="utf8")
+            bad=inspect(target,root)
+            self.assertFalse(bad["ok"])
+            self.assertTrue(any("broken" in e for e in bad["errors"]))
+            self.assertTrue(any("path traversal" in e for e in bad["errors"]))
+
+    def test_bad_optional_source_location_never_breaks_evidence_preview(self):
+        graph=json.loads((ROOT/"extensions/angent-ba/examples/rental-fleet-traceability.json").read_text(encoding="utf8"))
+        graph["artifacts"][0]["source_location"]="not-an-object"
+        graph["artifacts"][1]["source_location"]={"uri":graph["sources"][0]["uri"],"line":True}
+        page=render(graph)
+        self.assertIn("BR-IVTS-01",page)
+        self.assertNotIn(":LTrue",page)
+
     def test_source_template_is_not_a_completed_document(self):
         path=ROOT/"extensions/angent-ba/skills/ba-kg/references/templates/doc-srs.md"
         result=inspect(path,ROOT)
