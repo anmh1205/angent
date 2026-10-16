@@ -1,6 +1,6 @@
 # ANGENT Business Analysis — maintained specialist extension
 
-**Scope:** 55 ANGENT BA skills, 48 structured artifact templates, 19 ANGENT-specific review probes, 21 MIT reference rule documents and eight runnable Python helpers for extracting/validating Markdown evidence, building BPMN XML, change impact and HTML preview. The source material is **45 maintained adaptations of MIT [Dev BA Kit](https://github.com/nv-minh/dev-ba-kit)** and **10 independently authored specialist methods**. Forty templates are adapted from the same MIT project; eight are original. This is not a reproduction of proprietary AI4BA BA-Kit source, which was not available.
+**Scope:** 55 ANGENT BA skills, 48 structured artifact templates, 19 ANGENT-specific review probes, 21 MIT reference rule documents and 14 maintained Python helper scripts for extracting/validating Markdown evidence, building BPMN XML, change impact and HTML preview. The source material is **45 maintained adaptations of MIT [Dev BA Kit](https://github.com/nv-minh/dev-ba-kit)** and **10 independently authored specialist methods**. Forty templates are adapted from the same MIT project; eight are original. This is not a reproduction of proprietary AI4BA BA-Kit source, which was not available.
 
 ## What actually works
 
@@ -85,3 +85,11 @@ Three D2 families now compile and render through the official D2 0.9.0 CLI, with
     python extensions/angent-ba/scripts/build_d2.py extensions/angent-ba/examples/d2-activity.json --evidence-graph extensions/angent-ba/examples/rental-fleet-traceability.json --output out/verified-activity.d2
 
 The report explicitly says source_link_check=ids-resolved-only. An accepted ID proves that a reference exists, not that a diagram embodies its semantics or that its implementation was tested. The Figma Reqwise payload adapter accepts the same optional evidence graph and applies this boundary separately.
+
+## Full-kit audit and stronger shared resources
+
+The all-skill evidence matrix is at ../../hub/research/ba-figma-audit-67.md (machine-readable form: .json), with concrete unresolved acceptance for all 55 BA + 12 Figma skills. The 19 ANGENT review rules now contain specific operational contracts, failure responses and examples; eight original generic reference templates have been replaced with artifact-specific evidence layouts. The 21 imported MIT source-method references remain **source citations rather than ANGENT runtime instructions**.
+
+The full Atlas URD→BRD→PRD→SRS→TC structural chain now has a dedicated test, tests/test_ba_full_lifecycle.py: 8/8 FR trace back to UN through BO/CAP, but only 4/8 trace to a test artifact. A linked test is not a passing test. Full provenance and source file paths remain required.
+
+An actual bounded Reverse Preview is now generated through scripts/render_reverse_preview.py and tested in Chrome, with visible source classes, contradictions and safe links. Real stakeholder exports are produced through scripts/build_export.py; Markdown, HTML and DOCX have passed Pandoc/Chrome or OOXML checks. PDF output is conditional on an actual Pandoc PDF engine and has not yet been runtime-qualified.

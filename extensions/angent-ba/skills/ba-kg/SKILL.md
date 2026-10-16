@@ -43,3 +43,13 @@ When the source consists of Markdown project documents rather than an already se
 Follow with validate_artifacts.py, change_impact.py for a proposed BR/FR/AC change, and render_preview.py when a reviewer needs a safe HTML artifact index. Never mark a test as executed because the source file calls its status approved. A source document's own coverage summary is commentary to reconcile, not a substitute for a verified path through the inspected graph.
 
 The MIT Atlas example deliberately produces 4/8 strictly linked FR-to-test coverage when only its SRS, checklist and cases are loaded; extending the corpus and resolving AC/US references is a separate authorized analysis step. Neither incomplete input nor ambiguous implicit links should be converted into fake nodes.
+
+## Whole-lifecycle evidence instead of SRS-only statistics
+
+When accepted URD, BRD and PRD documents exist, use the same source-backed graph extractor across all stages rather than treating CAP/BO/UN references as external guesses:
+
+    python extensions/angent-ba/scripts/extract_markdown_graph.py --urd extensions/angent-ba/examples/docs/atlas-re/atlas-re-urd.md --brd extensions/angent-ba/examples/docs/atlas-re/atlas-re-brd.md --prd extensions/angent-ba/examples/docs/atlas-re/atlas-re-prd.md --srs extensions/angent-ba/examples/docs/atlas-re/srs/atlas-re-spec.md --checklist extensions/angent-ba/examples/docs/atlas-re/test/checklist/atlas-re-checklist-index.md --cases extensions/angent-ba/examples/docs/atlas-re/test/testcases/atlas-re-testcase-index.md --root extensions/angent-ba/examples --output out/atlas-full-lifecycle.json
+
+The real Atlas regression verifies 6 UN, 4 BO, 6 CAP and 8 FR. **8/8 FR have explicit FR→CAP→BO→UN ancestry, but only 4/8 FR link downstream to a TC artifact.** Four source-to-test gaps remain visible; structural reference existence does not prove execution or business approval. Do not change test counts or fabricate CHK/TC artifacts to satisfy a release threshold.
+
+Some real projects have no complete URD/BRD/PRD sequence. In those cases, mark upstream coverage unknown/uninspected rather than insisting the user create redundant documents. ANGENT Root decides the appropriate evidence depth and which missing links genuinely matter.

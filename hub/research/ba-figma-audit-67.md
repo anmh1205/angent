@@ -96,9 +96,9 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 |---|---|---|---|
 | `ba-jira` | Accepted US to real Jira issues with read-back | provider-blocked | No actual provider write/read verification |
 | `ba-confluence` | Version-safe scope-limited page update | provider-blocked | No real macro-preserving page update test |
-| `ba-export` | Markdown HTML PDF or DOCX stakeholder package | unverified | No tested Pandoc/PDF/DOCX export path |
+| `ba-export` | Markdown HTML PDF or DOCX stakeholder package | runtime-mock | Pandoc MD HTML DOCX tested with Chrome; PDF requires real TeX engine and viewer validation |
 | `ba-preview` | Read-only HTML source evidence navigation | source-validated | Full multi-document visual fidelity not proven |
-| `ba-reverse-preview` | Provenance-aware reverse spec HTML preview | unverified | Distinct runnable reverse preview not proven |
+| `ba-reverse-preview` | Provenance-aware reverse spec HTML preview | runtime-mock | Three synthetic confidence classes rendered in Chrome; source provenance must be independently checked |
 | `ba-userguide` | Role-based operating guide with actual failures | method | Actual app screens and behavior not verified |
 | `ba-meet` | Meeting actions decisions and provenance | method | Raw transcript and stakeholder decisions unverified |
 | `ba-update-overview` | Scoped overview update based on source changes | source-validated | Real document/provider mutation requires read-back |

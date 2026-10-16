@@ -57,3 +57,13 @@ Likewise, a temporary upstream telemetry outage must not be described as invalid
 ## Acceptance and handoff
 
 Report inspected sources/revision, accepted and proposed requirement counts (computed from the actual document), unresolved questions, requirement-to-capability links, meaningful failure coverage and validation commands/results. Offer follow-on activity/state/sequence/ERD, user story, AC and test work only where it genuinely advances the user's goal. Do not claim that a standalone SRS has been approved, implemented or tested simply because the document is formatted and parsable.
+
+## Whole-lifecycle evidence instead of SRS-only statistics
+
+When accepted URD, BRD and PRD documents exist, use the same source-backed graph extractor across all stages rather than treating CAP/BO/UN references as external guesses:
+
+    python extensions/angent-ba/scripts/extract_markdown_graph.py --urd extensions/angent-ba/examples/docs/atlas-re/atlas-re-urd.md --brd extensions/angent-ba/examples/docs/atlas-re/atlas-re-brd.md --prd extensions/angent-ba/examples/docs/atlas-re/atlas-re-prd.md --srs extensions/angent-ba/examples/docs/atlas-re/srs/atlas-re-spec.md --checklist extensions/angent-ba/examples/docs/atlas-re/test/checklist/atlas-re-checklist-index.md --cases extensions/angent-ba/examples/docs/atlas-re/test/testcases/atlas-re-testcase-index.md --root extensions/angent-ba/examples --output out/atlas-full-lifecycle.json
+
+The real Atlas regression verifies 6 UN, 4 BO, 6 CAP and 8 FR. **8/8 FR have explicit FR→CAP→BO→UN ancestry, but only 4/8 FR link downstream to a TC artifact.** Four source-to-test gaps remain visible; structural reference existence does not prove execution or business approval. Do not change test counts or fabricate CHK/TC artifacts to satisfy a release threshold.
+
+Some real projects have no complete URD/BRD/PRD sequence. In those cases, mark upstream coverage unknown/uninspected rather than insisting the user create redundant documents. ANGENT Root decides the appropriate evidence depth and which missing links genuinely matter.
