@@ -55,6 +55,14 @@ def run(prototype, chrome=None):
                     page.goto(proto.as_uri())
                     for hop in case["path"]:
                         assert page.locator('[data-screen-id="'+hop["screen"]+'"]').count()==1
+                        if hop["kind"]=="submit":
+                            for field in hop["fields"]:
+                                input_el=page.get_by_label(field["label"],exact=True)
+                                if field["type"]=="checkbox":
+                                    input_el.check()
+                                else:
+                                    input_el.fill(field["value"])
+                            page.get_by_label("Mock response").select_option(hop["scenario"])
                         page.get_by_role("button",name=hop["label"],exact=True).click()
                         assert page.locator('[data-screen-id="'+hop["target"]+'"]').count()==1
                     assert page.locator('[data-screen-id="'+case["screen"]+'"]').count()==1
@@ -123,8 +131,24 @@ def generate(model: Any, evidence_ids: set[str] | None = None) -> dict[str,Any]:
     screens={s["id"]:s for s in model["screens"]}
     nav={}
     for s in model["screens"]:
-        nav[s["id"]]=[{"screen":s["id"],"label":c["label"],"target":c["action"]["target"]}
+        fields=[]
+        for f in s["controls"]:
+            if f["type"] in ("text","email","password","checkbox"):
+                default={"email":"tester@example.test","password":"fixture-not-a-secret","text":"fixture"}.get(f["type"],"")
+                if f["type"]=="password" and "test_value" in f:
+                    raise ValueError("Do not embed custom password fixtures in generated scripts")
+                val=f.get("test_value",default)
+                if f["type"]!="checkbox" and (not isinstance(val,str) or not val):
+                    raise ValueError("Invalid nonempty test_value for "+s["id"]+"."+f["id"])
+                fields.append({"label":f["label"],"type":f["type"],"value":val})
+        nav[s["id"]]=[{"screen":s["id"],"kind":"button","label":c["label"],"target":c["action"]["target"]}
                       for c in s["controls"] if c["type"]=="button"]
+        for c in s["controls"]:
+            if c["type"]=="submit":
+                for scenario,result in c["outcomes"].items():
+                    if result["type"]=="navigate":
+                        nav[s["id"]].append({"screen":s["id"],"kind":"submit","label":c["label"],
+                                            "target":result["target"],"scenario":scenario,"fields":fields})
     cases=[]
     covered=set()
     for s in model["screens"]:
@@ -147,16 +171,11 @@ def generate(model: Any, evidence_ids: set[str] | None = None) -> dict[str,Any]:
                               "requirements":refs})
                 covered.update((s["id"],c["action"]["target"]))
                 continue
-            inputs=[x for x in s["controls"] if x["type"] in ("text","email","password","checkbox")]
-            fields=[]
-            for field in inputs:
-                val=field.get("test_value",{"email":"tester@example.test","password":"fixture-not-a-secret","text":"fixture"}.get(field["type"],""))
-                if field["type"] not in ("checkbox",) and (not isinstance(val,str) or not val):
-                    raise ValueError("No safe test_value for "+s["id"]+"."+field["id"])
-                if field["type"]=="checkbox" and field.get("required") is False:
-                    # Explicitly choose checked to avoid failing browser-native validation.
-                    pass
-                fields.append({"label":field["label"],"type":field["type"],"value":val})
+            fields=next((hop["fields"] for hop in nav[s["id"]] if hop["kind"]=="submit"),[])
+            if not fields:
+                fields=[{"label":x["label"],"type":x["type"],
+                         "value": {"email":"tester@example.test","password":"fixture-not-a-secret","text":"fixture"}.get(x["type"],"")}
+                        for x in s["controls"] if x["type"] in ("text","email","password","checkbox")]
             for scenario,result in c["outcomes"].items():
                 case={"screen":s["id"],"kind":"submit","control":c["id"],
                       "label":c["label"],"scenario":scenario,"result":result["type"],
