@@ -89,7 +89,7 @@ def _test_browser(url:str,chrome:Path|None)->dict:
                     ):
                         page.get_by_label("Mock response").select_option(state)
                         page.get_by_role("button",name="Sign in",exact=True).click()
-                        expect(page.get_by_role("alert")).to_have_text(expected)
+                        expect(page.locator(".screen [role=alert]")).to_have_text(expected)
                     page.get_by_label("Mock response").select_option("success")
                     page.get_by_role("button",name="Sign in",exact=True).click()
                     expect(page.locator('[data-screen-id="home"]')).to_have_count(1)
