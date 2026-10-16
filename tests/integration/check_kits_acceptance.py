@@ -27,6 +27,7 @@ from compare_artifact_revisions import compare
 from build_bruno import compile_collection
 from audit_api_field_mapping import perform as verify_field_mapping
 from build_figma_native import files as generate_figma_native
+from verify_code_witness import inspect as verify_git_witness
 from audit_api_contract import audit_contract
 from build_d2 import compile_source
 from to_reqwise_payload import compile_model
@@ -94,6 +95,12 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
     if not contract["ok"]:
         raise ValueError("OpenAPI contract mismatch: "+str(contract["errors"]))
     mapping=json.loads((BA/"examples/synthetic-fleet-api-map.json").read_text(encoding="utf8"))
+    witness_ledger=json.loads((BA/"examples/code-evidence/synthetic-code-witness.json").read_text(encoding="utf8"))
+    current_revision=subprocess.check_output(["git","-C",str(ROOT),"rev-parse","HEAD"],text=True).strip()
+    code_evidence=verify_git_witness(ROOT,current_revision,witness_ledger,graph)
+    if (not code_evidence["ok"] or code_evidence["linked_requirement_ids"]!=["FR-IVTS-01"] or
+            code_evidence["semantic_alignment"]!="not-assessed"):
+        raise ValueError("Git-pinned code witness lost source binding or invented semantic proof")
     field_map=verify_field_mapping(openapi,mapping,evidence_ids=ids)
     if not field_map["ok"] or field_map["mapped_fixture"]!=mapping["expected_ui"] or field_map["live_api_calls"]!=0:
         raise ValueError("API field mapping lost OpenAPI, UI or source consistency")
@@ -142,7 +149,9 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
                                   "test_execution":"not-proven","preview_entries":58,
                                   "revision_diff":"observed"},
             "synthetic_fleet":{"d2_source":True,"reqwise_request":"dry-run",
-                               "contract_checked":True,"api_to_ui_field_count":field_map["field_count"],"bruno_request_count":4,
+                               "contract_checked":True,"api_to_ui_field_count":field_map["field_count"],
+                               "pinned_code_witnesses":code_evidence["verified_count"],
+                               "code_semantic_alignment":"not-assessed","bruno_request_count":4,
                                "real_fleet_or_figma_writes":False},
             "synthetic_auth":{"generated_browser_cases":7,"backend_requests":0,
                               "html_prototype":True,"next_source_matches":True,

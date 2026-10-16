@@ -65,9 +65,9 @@
   {
     "stage": "Requirements",
     "skill": "ba-code-to-srs",
-    "evidence": "method",
-    "deliverable": "Observed implemented behavior at pinned commit",
-    "remaining": "Runtime and stakeholder intent not inferred from code"
+    "evidence": "source-validated",
+    "deliverable": "Git-commit-pinned source code witnesses linked to BA requirement IDs",
+    "remaining": "Snippet provenance verified; behavior, deployment and semantic SRS alignment unverified"
   },
   {
     "stage": "Diagrams",

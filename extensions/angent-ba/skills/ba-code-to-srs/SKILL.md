@@ -42,3 +42,13 @@ Reject fabricated file paths, line numbers, production claims from mocked unit t
 ## ANGENT cooperation
 
 ANGENT Root/Reasoning owns interpretation and decisions; Authoring owns narrative quality; Execution handles authorized external effects; Quality verifies the outcome. Method selection is optional and context-dependent, never a forced workflow.
+
+## Executable pinned-code evidence verification
+
+The kit includes a **read-only** command that reads an exact Git commit blob and checks whether each declared code witness is present at the stated path and line range. The full 40-hex Git revision, requirement ID, source path and expected excerpt must all match. Optional SHA-256 detects stale snippets. It is a bounded evidence verifier, not automatic requirements inference.
+
+    python extensions/angent-ba/scripts/verify_code_witness.py extensions/angent-ba/examples/code-evidence/synthetic-code-witness.json --repo . --revision FULL_GIT_COMMIT_SHA --evidence-graph extensions/angent-ba/examples/rental-fleet-traceability.json
+
+The example is a synthetic access guard committed in ANGENT; it **is not a scan of a real IVTS firmware, ECU or cloud repository**. Existing BA source IDs are resolved against the same validated graph used by SRS, tests and Figma. Missing files, missing excerpts, wrong revision and escaping the repo path fail rather than becoming an ALIGNED claim.
+
+After a witness is verified, reason independently about input guards, business outcomes, error paths, feature flags, actual runtime and deploy. The script reports \`semantic_alignment=not-assessed\` and \`deployment_verified=false\` even when it finds the literal code. Use this witness in \`ba-doc-drift\` only as **part** of the comparison, not as the verdict itself.

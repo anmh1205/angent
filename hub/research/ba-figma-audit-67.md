@@ -22,7 +22,7 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 | `ba-prd-epic` | CAP feature capability and priority | method | Business authorization and cost basis unverified |
 | `ba-srs` | FR/NFR/BR/error matrix with stable IDs | source-validated | Parser and syntax do not prove requirements accurate |
 | `ba-reverse-doc` | Legacy source-linked inferred requirements | method | Requires original source and conflict reconciliation |
-| `ba-code-to-srs` | Observed implemented behavior at pinned commit | method | Runtime and stakeholder intent not inferred from code |
+| `ba-code-to-srs` | Code source snippets at a pinned Git commit with verified requirement IDs | source-validated | Pinned blob/excerpt verified; actual behavior, deployment and stakeholder intent unverified |
 
 ## Diagrams
 
@@ -151,3 +151,7 @@ The BA Markdown extractor excludes fenced code examples to avoid promoting tutor
 
 - `ba-api-map` now has a runnable OpenAPI → UI mapping checker for exact copy and enum fields, with explicit source graph validation and negative cases. Output is a source-aligned sample mapping, not a live frontend. See `tests/test_ba_api_field_mapping.py`.
 - `ba-figma` now supports two separately generated code candidates: Reqwise `figma_write` and the official Figma Plugin API. The latter is exercised with an API-shaped Node mock for creation, idempotency, conflict and rollback, but has no verified live canvas edit. See `tests/test_ba_figma_native.py`.
+
+### New pinned code evidence
+
+`extensions/angent-ba/scripts/verify_code_witness.py` now reads actual Git blobs using a full pinned SHA, checks allowed source paths, exact line ranges, required snippets, optional SHA-256 and BA requirement identity. Negative tests reject fabricated witnesses, old line locations, invalid revisions and traversal. No execution or semantic compliance is inferred. See `tests/test_ba_code_witness.py`.
