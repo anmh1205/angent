@@ -14,7 +14,8 @@ class MethodsSubstanceTests(unittest.TestCase):
         skills=list((BA/"skills").glob("ba-*/SKILL.md"))
         self.assertEqual(len(skills),55)
         content={p.parent.name[3:]:p.read_text(encoding="utf8") for p in skills}
-        self.assertEqual(set(content),ORIGINAL_BA | (set(content)-ORIGINAL_BA))
+        self.assertTrue(ORIGINAL_BA.issubset(content))
+        self.assertEqual(len(set(content)-ORIGINAL_BA),45)
         self.assertEqual(len(ORIGINAL_BA),10)
         for name,body in content.items():
             with self.subTest(skill=name):
