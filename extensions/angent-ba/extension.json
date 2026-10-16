@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "id": "angent-ba",
+  "name": "ANGENT Business Analysis",
+  "kind": "mapped",
+  "authority": "specialist",
+  "description": "Business analysis, traceable requirements, API contracts, process modeling, release handoff and impact review",
+  "source": {
+    "origin": "Independent implementation informed by public BA practices and ai4ba.com/ba-kit feature list",
+    "type": "original-implementation",
+    "license": "ANGENT repository license; no commercial BA-Kit files incorporated"
+  },
+  "skills": {
+    "directory": "skills",
+    "expose": "all",
+    "exclude": [],
+    "expected_source_count": 55
+  },
+  "roles": {
+    "directory": "agents",
+    "expected_count": 0
+  },
+  "runtime": {
+    "native": null,
+    "fallback": "portable",
+    "selection": "specialist-when-applicable",
+    "exclusive": false
+  },
+  "capabilities": [
+    {
+      "id": "ba.product.prd",
+      "entry": "ba-prd",
+      "when": "Produce a coherent product requirements document from validated opportunities"
+    },
+    {
+      "id": "ba.product.roadmap",
+      "entry": "ba-roadmap",
+      "when": "Prioritize a defensible sequence of outcomes and releases"
+    },
+    {
+      "id": "ba.product.discover",
+      "entry": "ba-discover",
+      "when": "Determine whether an idea solves a real business problem"
+    },
+    {
+      "id": "ba.requirements.brainstorm",
+      "entry": "ba-brainstorm",
+      "when": "Turn fuzzy requests into testable requirements through selective questions"
+    },
+    {
+      "id": "ba.requirements.urd",
+      "entry": "ba-urd",
+      "when": "Describe stakeholder needs without prematurely freezing implementation"
+    },
+    {
+      "id": "ba.requirements.brd",
+      "entry": "ba-brd",
+      "when": "Establish organizational rationale and business constraints"
+    },
+    {
+      "id": "ba.requirements.prd-epic",
+      "entry": "ba-prd-epic",
+      "when": "Detail one product capability for decision and release planning"
+    },
+    {
+      "id": "ba.requirements.srs",
+      "entry": "ba-srs",
+      "when": "Specify verifiable functional and non-functional requirements"
+    },
+    {
+      "id": "ba.requirements.reverse-doc",
+      "entry": "ba-reverse-doc",
+      "when": "Reconstruct a candidate specification from scattered documents"
+    },
+    {
+      "id": "ba.requirements.code-to-srs",
+      "entry": "ba-code-to-srs",
+      "when": "Infer implemented behavior without mistaking it for accepted requirements"
+    },
+    {
+      "id": "ba.diagram.sequence",
+      "entry": "ba-sequence",
+      "when": "Model ordered interactions among actors and components"
+    },
+    {
+      "id": "ba.diagram.activity",
+      "entry": "ba-activity",
+      "when": "Represent tasks and decision paths in a process"
+    },
+    {
+      "id": "ba.diagram.activity-swimlane",
+      "entry": "ba-activity-swimlane",
+      "when": "Allocate workflow responsibilities without ambiguous handoffs"
+    },
+    {
+      "id": "ba.diagram.bpmn",
+      "entry": "ba-bpmn",
+      "when": "Specify operational workflow in BPMN 2.0"
+    },
+    {
+      "id": "ba.diagram.state",
+      "entry": "ba-state",
+      "when": "Define lifecycle invariants for a business object"
+    },
+    {
+      "id": "ba.diagram.erd",
+      "entry": "ba-erd",
+      "when": "Describe logical data relationships independently of storage"
+    },
+    {
+      "id": "ba.diagram.d2-erd",
+      "entry": "ba-d2-erd",
+      "when": "Render a readable ERD while preserving data semantics"
+    },
+    {
+      "id": "ba.diagram.d2-activity",
+      "entry": "ba-d2-activity",
+      "when": "Create a D2 activity layout for long processes"
+    },
+    {
+      "id": "ba.diagram.d2-architect",
+      "entry": "ba-d2-architect",
+      "when": "Visualize systems and trust boundaries"
+    },
+    {
+      "id": "ba.diagram.dbdiagram",
+      "entry": "ba-dbdiagram",
+      "when": "Express logical schema in DBML and SQL-compatible terms"
+    },
+    {
+      "id": "ba.diagram.usecase-diagram",
+      "entry": "ba-usecase-diagram",
+      "when": "Show actors and system capabilities"
+    },
+    {
+      "id": "ba.backlog.usecase",
+      "entry": "ba-usecase",
+      "when": "Describe goal-completion with full alternate paths"
+    },
+    {
+      "id": "ba.backlog.userstory",
+      "entry": "ba-userstory",
+      "when": "Turn validated needs into independent backlog increments"
+    },
+    {
+      "id": "ba.backlog.ac",
+      "entry": "ba-ac",
+      "when": "Make acceptance behavior precise and testable"
+    },
+    {
+      "id": "ba.ui.user-flow",
+      "entry": "ba-user-flow",
+      "when": "Map a human journey across screens and channels"
+    },
+    {
+      "id": "ba.ui.wireframe-ascii",
+      "entry": "ba-wireframe-ascii",
+      "when": "Quickly represent layout and controls in plain text"
+    },
+    {
+      "id": "ba.ui.wireframe-html",
+      "entry": "ba-wireframe-html",
+      "when": "Render functional low-fidelity pages without inventing product policy"
+    },
+    {
+      "id": "ba.ui.prototype-html",
+      "entry": "ba-prototype-html",
+      "when": "Demonstrate bounded click-through behavior without real backend assumptions"
+    },
+    {
+      "id": "ba.ui.prototype-next",
+      "entry": "ba-prototype-next",
+      "when": "Provide a runnable Next.js prototype with realistic routes"
+    },
+    {
+      "id": "ba.ui.figma",
+      "entry": "ba-figma",
+      "when": "Translate validated screen specs into editable Figma nodes"
+    },
+    {
+      "id": "ba.api.api-assess",
+      "entry": "ba-api-assess",
+      "when": "Compare integration options against operating constraints"
+    },
+    {
+      "id": "ba.api.api-doc",
+      "entry": "ba-api-doc",
+      "when": "Translate third-party API documentation into tested interface understanding"
+    },
+    {
+      "id": "ba.api.api-design",
+      "entry": "ba-api-design",
+      "when": "Design resilient cross-system integration flows"
+    },
+    {
+      "id": "ba.api.api-map",
+      "entry": "ba-api-map",
+      "when": "Align field semantics across API, domain and UI"
+    },
+    {
+      "id": "ba.api.api-checklist",
+      "entry": "ba-api-checklist",
+      "when": "Review API integration risk before constructing tests"
+    },
+    {
+      "id": "ba.api.api-test",
+      "entry": "ba-api-test",
+      "when": "Generate executable API requests and verifiable assertions"
+    },
+    {
+      "id": "ba.api.api-readiness",
+      "entry": "ba-api-readiness",
+      "when": "Determine production integration release gates"
+    },
+    {
+      "id": "ba.testing.test-checklist",
+      "entry": "ba-test-checklist",
+      "when": "Map requirements to planned validation coverage"
+    },
+    {
+      "id": "ba.testing.test-cases",
+      "entry": "ba-test-cases",
+      "when": "Write reproducible test cases with observable assertions"
+    },
+    {
+      "id": "ba.testing.playwright-gen",
+      "entry": "ba-playwright-gen",
+      "when": "Generate browser automation for confirmed user journeys"
+    },
+    {
+      "id": "ba.assurance.gap",
+      "entry": "ba-gap",
+      "when": "Detect missing or untested aspects of a requirement set"
+    },
+    {
+      "id": "ba.assurance.doc-drift",
+      "entry": "ba-doc-drift",
+      "when": "Find divergence between declared requirements and implemented behavior"
+    },
+    {
+      "id": "ba.assurance.ask",
+      "entry": "ba-ask",
+      "when": "Explain current domain behavior using available project evidence"
+    },
+    {
+      "id": "ba.assurance.cr",
+      "entry": "ba-cr",
+      "when": "Manage impact of a proposed requirement change"
+    },
+    {
+      "id": "ba.assurance.dashboard",
+      "entry": "ba-dashboard",
+      "when": "Summarize verified project coverage and delivery risks"
+    },
+    {
+      "id": "ba.assurance.kg",
+      "entry": "ba-kg",
+      "when": "Maintain an explainable graph of artifact relationships"
+    },
+    {
+      "id": "ba.delivery.jira",
+      "entry": "ba-jira",
+      "when": "Reconcile approved backlog artifacts with Jira"
+    },
+    {
+      "id": "ba.delivery.confluence",
+      "entry": "ba-confluence",
+      "when": "Reconcile approved documents with Confluence"
+    },
+    {
+      "id": "ba.delivery.export",
+      "entry": "ba-export",
+      "when": "Package selected artifacts in target formats with fidelity"
+    },
+    {
+      "id": "ba.delivery.preview",
+      "entry": "ba-preview",
+      "when": "Offer a navigable view of a scoped artifact set"
+    },
+    {
+      "id": "ba.delivery.reverse-preview",
+      "entry": "ba-reverse-preview",
+      "when": "Review reverse-engineered documents with uncertainty visible"
+    },
+    {
+      "id": "ba.delivery.userguide",
+      "entry": "ba-userguide",
+      "when": "Write user-facing operational guidance grounded in shipped behavior"
+    },
+    {
+      "id": "ba.delivery.meet",
+      "entry": "ba-meet",
+      "when": "Convert real meeting material into decisions and assigned follow-ups"
+    },
+    {
+      "id": "ba.delivery.update-overview",
+      "entry": "ba-update-overview",
+      "when": "Safely refresh cross-project summary after approved changes"
+    },
+    {
+      "id": "ba.delivery.delegate",
+      "entry": "ba-delegate",
+      "when": "Bound specialist delegation to real tool and permission boundaries"
+    }
+  ]
+}
