@@ -37,6 +37,8 @@ Version 1.4.0 deepens whole-answer argumentation, coherent chat responses and de
 
 Behavioral case definitions and the reviewed-output comparator are under `evals/authoring/` and `scripts/evaluate_authoring.py`. Tests can validate schemas and comparator mechanics but cannot replace running actual baseline/candidate model outputs with human or evidence-backed review. The release identity and provider activation must also be verified separately.
 
+For current provider activation, use `scripts/verify_activation.py` with a complete live observation; see `docs/release-activation.md`. Source CI, an archive build and a provider-installed release are distinct proof levels.
+
 ## Installation and package identity
 
 The two supported plugin manifests are plugin.json and .codex-plugin/plugin.json. Their package identity and prompt must be consistent. Version strings are package metadata, not a task checkpoint or a substitute for checking the actual source/runtime.

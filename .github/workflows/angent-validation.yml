@@ -33,6 +33,11 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_authoring_eval.py' -v
           python3 scripts/evaluate_authoring.py
 
+      - name: Exercise release identity checks
+        run: |
+          python3 -m unittest discover -s tests -p 'test_activation_audit.py' -v
+          python3 scripts/verify_activation.py
+
       - name: Verify Engineer source catalog
         run: python3 extensions/angent-engineer/scripts/verify_port.py --json
 
