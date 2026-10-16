@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 from typing import Any
 
-ID_RE = re.compile(r"^[A-Z][A-Z0-9-]+$")
+ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9-]+$")
 
 
 def audit(data: Any, require_tests: bool = False) -> dict[str, Any]:
