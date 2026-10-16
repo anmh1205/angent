@@ -15,9 +15,13 @@ class BrunoGenerationTests(unittest.TestCase):
     def setUpClass(cls):
         cls.model=json.loads((BA/"examples/synthetic-fleet-api-tests.json").read_text(encoding="utf8"))
 
-    def test_actual_three_request_collection(self):
+    def test_actual_four_request_collection_with_traceability(self):
         generated=compile_collection(self.model)
-        self.assertEqual(len(generated),5)
+        self.assertEqual(len(generated),len(self.model["requests"])+3)
+        self.assertEqual(len(self.model["requests"]),4)
+        tracking=json.loads(generated["traceability.json"])
+        self.assertEqual(len(tracking["tests"]),4)
+        self.assertEqual(tracking["execution_status"],"not-run")
         self.assertEqual(json.loads(generated["bruno.json"])["type"],"collection")
         self.assertIn("baseUrl: http://127.0.0.1:18497",generated["environments/Mock.bru"])
         self.assertIn("url: {{baseUrl}}/vehicles/{{vehicleId}}/status?mode=ok",generated["requests/TC-FLEET-001.bru"])
