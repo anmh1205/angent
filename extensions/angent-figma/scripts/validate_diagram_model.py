@@ -19,10 +19,12 @@ FLOW_END = {
 # These are the portable adapter's supported kinds, not an assertion about
 # every possible shape in a proprietary Reqwise Pro runtime.
 NODE_KINDS = {
-    "activity": {"start", "initial", "end", "final", "task", "action", "decision"},
+    "activity": {"start", "initial", "end", "final", "task", "action", "decision",
+                 "fork", "join", "event", "external"},
     "userflow": {"start", "initial", "end", "final", "terminal", "external",
                  "screen", "task", "state", "action", "decision"},
-    "state": {"start", "initial", "end", "final", "state", "task", "decision", "choice"},
+    "state": {"start", "initial", "end", "final", "state", "task", "decision",
+              "choice", "fork", "join"},
     "sequence": {"actor", "external", "queue", "system", "db"},
     "sitemap": {"page", "section", "modal", "external"},
     "erd": {"entity"},
@@ -80,9 +82,15 @@ def audit(model: Any) -> dict[str, Any]:
                         if node.get("kind") in ("start", "initial"))
         ends = sorted(key for key, node in by_id.items()
                       if node.get("kind") in FLOW_END[kind])
+        # A handoff to an external party can legitimately terminate the team's
+        # activity without inventing an internal completion event.
+        external_exits = (sorted(key for key, node in by_id.items()
+                                 if node.get("kind") == "external" and not adj[key])
+                          if kind == "activity" else [])
+        terminals = sorted(set(ends + external_exits))
         if len(starts) != 1:
             errors.append(f"{kind}: expected exactly one start/initial node")
-        if not ends:
+        if not terminals:
             errors.append(f"{kind}: missing terminal outcome")
         for key in starts:
             if indeg[key]:
@@ -100,7 +108,7 @@ def audit(model: Any) -> dict[str, Any]:
         for key in sorted(by_id.keys() - reached):
             errors.append(f"{kind}: unreachable node {key}")
         for key in sorted(reached):
-            if key not in ends and not adj[key]:
+            if key not in terminals and not adj[key]:
                 errors.append(f"{kind}: dead end {key}")
         # Reachable retry cycles are legitimate only when they have a possible
         # route to a terminal. A connected, closed cycle must not pass merely
@@ -109,8 +117,8 @@ def audit(model: Any) -> dict[str, Any]:
         for src, targets in adj.items():
             for dst in targets:
                 reverse[dst].add(src)
-        can_finish = set(ends)
-        pending = deque(ends)
+        can_finish = set(terminals)
+        pending = deque(terminals)
         while pending:
             for previous in sorted(reverse[pending.popleft()]):
                 if previous not in can_finish:

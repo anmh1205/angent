@@ -76,6 +76,37 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         m["edges"][-1]["guard"] = "yes"
         self.assertIn("activity: decision authorize has duplicate branch conditions", audit(m)["errors"])
 
+    def test_official_reqwise_activity_fork_join_event_and_external_handoff(self):
+        m = {"type": "activity", "nodes": [
+            {"id": "start", "kind": "start", "label": "Begin"},
+            {"id": "fork", "kind": "fork", "label": "Parallel split"},
+            {"id": "work1", "kind": "action", "label": "Work 1"},
+            {"id": "work2", "kind": "event", "label": "Event received"},
+            {"id": "join", "kind": "join", "label": "Merge"},
+            {"id": "external", "kind": "external", "label": "External handoff"}],
+            "edges": [{"from": "start", "to": "fork"},
+                      {"from": "fork", "to": "work1"},
+                      {"from": "fork", "to": "work2"},
+                      {"from": "work1", "to": "join"},
+                      {"from": "work2", "to": "join"},
+                      {"from": "join", "to": "external"}]}
+        self.assertTrue(audit(m)["ok"], audit(m))
+        payload = compile_model(m)["arguments"]["spec"]
+        self.assertEqual([n["kind"] for n in payload["nodes"]][-4:],
+                         ["action", "event", "join", "external"])
+
+    def test_official_reqwise_state_fork_join_accepted(self):
+        m = {"type": "state",
+             "nodes": [{"id": "initial", "kind": "initial", "label": "Start"},
+                       {"id": "fork", "kind": "fork", "label": "Split"},
+                       {"id": "join", "kind": "join", "label": "Join"},
+                       {"id": "final", "kind": "final", "label": "Done"}],
+             "edges": [{"from": "initial", "to": "fork"},
+                       {"from": "fork", "to": "join"},
+                       {"from": "join", "to": "final"}]}
+        self.assertTrue(audit(m)["ok"], audit(m))
+        self.assertEqual(compile_model(m)["arguments"]["spec"]["states"][1]["kind"], "fork")
+
     def test_unknown_kind_is_not_forwarded_as_valid_reqwise_payload(self):
         m = deepcopy(self.activity)
         m["nodes"][1]["kind"] = "invented-step-kind"
