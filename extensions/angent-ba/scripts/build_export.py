@@ -89,8 +89,53 @@ def _pandoc(command:str,markdown:str,fmt:str,title:str)->bytes:
         return contents
 
 
-def export(root:Path,paths:list[str],title:str,fmt:str,pandoc:str="pandoc")->tuple[bytes,list[dict]]:
+
+def _chromium_pdf(document_html: bytes, chrome: str | None = None) -> bytes:
+    """Print sanitized Pandoc HTML with real isolated headless Chromium."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError as exc:
+        raise ValueError("Python Playwright is required for Chromium PDF export") from exc
+    with sync_playwright() as runtime:
+        options={"headless":True}
+        if chrome:
+            if not Path(chrome).is_file():
+                raise ValueError("Supplied Chromium executable is missing")
+            options["executable_path"]=chrome
+        try:
+            browser=runtime.chromium.launch(**options)
+        except Exception as exc:
+            raise ValueError("Actual Chromium PDF renderer unavailable: "+str(exc)[:350]) from exc
+        try:
+            page=browser.new_page(java_script_enabled=False)
+            blocked=[]
+            def block(route):
+                blocked.append(route.request.url)
+                route.abort()
+            page.route("http://**/*",block)
+            page.route("https://**/*",block)
+            page.set_content(document_html.decode("utf8"),wait_until="domcontentloaded")
+            if not page.locator("body").inner_text().strip():
+                raise ValueError("Chromium print document is blank")
+            pdf=page.pdf(format="A4",print_background=True,
+                         margin={"top":"18mm","bottom":"18mm",
+                                 "left":"18mm","right":"18mm"})
+            if blocked:
+                raise ValueError("Blocked unauthorized HTTP resources: "+str(len(blocked)))
+        finally:
+            browser.close()
+    if not pdf.startswith(b"%PDF-") or b"%%EOF" not in pdf[-1024:] or len(pdf)<1500:
+        raise ValueError("Chromium did not generate a valid PDF structure")
+    return pdf
+
+
+def export(root:Path,paths:list[str],title:str,fmt:str,pandoc:str="pandoc",
+           pdf_engine:str="pandoc",chrome:str|None=None)->tuple[bytes,list[dict]]:
     if fmt not in FORMATS:raise ValueError("Unsupported export format")
+    if pdf_engine not in ("pandoc","chromium"):
+        raise ValueError("Unsupported PDF engine")
+    if fmt!="pdf" and pdf_engine!="pandoc":
+        raise ValueError("PDF engine option is only valid for PDF output")
     markdown,manifest=gather(root,paths,title)
     if fmt=="md":
         payload=markdown.encode("utf8")
@@ -98,7 +143,10 @@ def export(root:Path,paths:list[str],title:str,fmt:str,pandoc:str="pandoc")->tup
         # Pandoc standalone metadata supplies the visible document title.
         # Drop the redundant Markdown H1 to avoid duplicate screen-reader headings.
         render_body=markdown.split("\n\n",1)[1]
-        payload=_pandoc(pandoc,render_body,fmt,title)
+        if fmt=="pdf" and pdf_engine=="chromium":
+            payload=_chromium_pdf(_pandoc(pandoc,render_body,"html",title),chrome)
+        else:
+            payload=_pandoc(pandoc,render_body,fmt,title)
     if len(payload)<100:
         raise ValueError("Generated output is unexpectedly empty")
     return payload,manifest
@@ -112,19 +160,25 @@ def main()->int:
     parser.add_argument("--format",required=True,choices=sorted(FORMATS))
     parser.add_argument("--title",required=True)
     parser.add_argument("--pandoc",default="pandoc")
+    parser.add_argument("--pdf-engine",choices=("pandoc","chromium"),default="pandoc")
+    parser.add_argument("--chrome",help="Local executable for Chromium PDF export only")
     args=parser.parse_args()
     try:
         if args.output.suffix.lower()!=FORMATS[args.format]:
             raise ValueError("Output suffix must match requested format")
         if args.output.exists():
             raise ValueError("Refusing to overwrite existing stakeholder export")
-        result,manifest=export(args.root,args.docs,args.title,args.format,args.pandoc)
+        if args.chrome and (args.format!="pdf" or args.pdf_engine!="chromium"):
+            raise ValueError("--chrome requires --format pdf --pdf-engine chromium")
+        result,manifest=export(args.root,args.docs,args.title,args.format,args.pandoc,
+                               pdf_engine=args.pdf_engine,chrome=args.chrome)
         args.output.parent.mkdir(parents=True,exist_ok=True)
         with args.output.open("xb") as stream:
             stream.write(result)
         report={"ok":True,"format":args.format,"output":str(args.output),
                 "source_docs":manifest,"bytes":len(result),"source_files_modified":0,
-                "external_provider_writes":0,"status":"actual-output-created"}
+                "external_provider_writes":0,"status":"actual-output-created",
+                "pdf_engine":args.pdf_engine if args.format=="pdf" else None}
     except (OSError,ValueError,TypeError,subprocess.TimeoutExpired) as exc:
         report={"ok":False,"error":str(exc),"status":"not-created"}
     print(json.dumps(report,ensure_ascii=False))
