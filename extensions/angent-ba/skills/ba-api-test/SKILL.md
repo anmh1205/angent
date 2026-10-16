@@ -1,28 +1,53 @@
 ---
 name: ba-api-test
-description: Generate executable API requests and verifiable assertions.
+description: Business analysis api-test specialist.
 ---
 
-# ba-api-test: Generate executable API requests and verifiable assertions
+# ANGENT BA: api-test
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-test/SKILL.md
 
-Use this method when the user needs **generate executable api requests and verifiable assertions**, not because a generic question merely mentions the subject. Required inputs to look for: confirmed API contract, test environment, sanitized fixtures. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Produce Bruno collection with environment placeholders; assert status, schema and side effects; run only if authorized endpoint available. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /api-test — Bruno collection + API test table (API chain [5])
 
-Produce **Collection and run evidence or explicit unexecuted state**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Expand each `CHK-` in the integration checklist into a Bruno request (`.bru`) + a row in the test table (request summary + expected response: status + the key field to assert). **Outputs**: `docs/{feature}/test/api/api-tests.md` (type `api-tests`) + `docs/{feature}/bruno/` (one collection per provider).
 
-- No network results invented; no live destructive requests without authorization.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Step [5]** (`api-integration.md`): needs `test/api/api-checklist.md`. Checklist missing → refuse + route `/api-checklist`.
+- **Back-fill the checklist's `TC` column** — each generated request links back to its `CHK-`.
+- **One collection per provider** — mirrors the `api-summary-{provider}.md` split; environment variables for base URL/auth, never hardcode secrets in `.bru`.
+- **`.bru` only for automatable rows** — `test_layer: own` rows that test only our code may stay as unit tests outside Bruno; `3rd`/`mixed` rows become Bruno requests hitting the sandbox.
+- **Expected = status + key field** — not the whole body; the one field that proves the call (e.g. `200 + response.claim_id`), plus the error-case expectations.
+- **No live production calls** — sandbox/test environment only; flag if the only environment is prod.
+- **Migration on rerun** — legacy test files still under `integration/` move to `test/api/` (naming-conventions line 60).
+- **Validate before done** — doc-validate (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/api-test <feature>          # expand every api-checklist CHK- with no TC yet
+```
+
+## Approach
+
+1. **Gate.** No api-checklist → refuse + route `/api-checklist`. Read it (every `CHK-`, its layer/direction, what it covers) + the summary (request shapes/auth).
+2. **Per `CHK-` → a request plan** — method/path, the env vars, the body, the expected status + key assertion field. `own`-only rows → note as unit-test, no `.bru`.
+3. **Fact-list** — per request: the endpoint, the assertion, the provider, the env.
+4. **Generate Bruno** — one collection per provider; one `.bru` per automatable row; env vars for base URL + auth (placeholders, never secrets).
+5. **Draft `api-tests.md`** — the table (CHK · title · `.bru` · method/path · expected status · key assertion · provider).
+6. **L1 plan preview** — request count by provider + the assertions + any `own`-row skipped-as-unit.
+9. **Output report** — requests generated + next (`/api-readiness`).
+
+## Gotchas
+
+- **Secrets never in `.bru`** — env var placeholders only; a committed token is a security incident.
+- **Sandbox ≠ prod behavior** — some providers' sandboxes differ from prod (rate limits, webhook delivery); note where you can't prove prod parity.
+- **Don't run against prod** — the skill generates requests; running them against prod from the doc is the user's explicit, careful choice.
+- **Assertion economy** — assert the one field that proves success; asserting the whole brittle body makes the test fail on every cosmetic provider change.

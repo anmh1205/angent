@@ -1,28 +1,53 @@
 ---
 name: ba-figma
-description: Translate validated screen specs into editable Figma nodes.
+description: Business analysis figma specialist.
 ---
 
-# ba-figma: Translate validated screen specs into editable Figma nodes
+# ANGENT BA: figma
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/figma/SKILL.md
 
-Use this method when the user needs **translate validated screen specs into editable figma nodes**, not because a generic question merely mentions the subject. Required inputs to look for: frame specs, design system, Figma MCP connection. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Check tool availability; define frames/components; create nodes only through authorized tool; read-back coordinates and edits. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /figma — Push wireframes to Figma frames
 
-Produce **Editable Figma frames or precise fallback spec if tool absent**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Create/update Figma frames from the feature's wireframes (ASCII content as the source of truth) via the Figma MCP, and record each frame's URL into the `Figma` column of `docs/{feature}/ascii-wireframe/{feature}-wireframe-index.md`. **No local output file** — Figma is the artifact; the index is the pointer.
 
-- Never claim Figma mutation without read-back from target document.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **External-write — hard gate** (`approval-gate.md` external-write class, same shape as `/sync-confluence`): preview every frame's contents + the target Figma file/page, get an explicit **Y** before any MCP write. No auto-approve.
+- **Figma MCP must be authenticated** — if the MCP is not connected/authenticated, STOP and tell the user how to connect it; do not fabricate URLs or fall back to a local file.
+- **Group B** (`feature-bootstrap.md`): needs wireframes — ASCII screens preferred (`ascii-wireframe/{flow-slug}.md`), else HTML wireframes; missing both → refuse + route `/wireframe-ascii`.
+- **One Figma frame per screen** — frame name = `[n] {screen-name}`; group frames by flow (a Figma section/page per flow when the tool supports it).
+- **Content parity** — the Figma frames mirror the wireframes (same controls, same `[n]`); the index's `Figma` column holds the frame URL per screen.
+- **No local file** (`naming-conventions.md` line 46) — only the index is edited (the `Figma` column).
+- **Idempotent** — re-run updates existing frames (URLs stable); new screens get new frames.
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/figma <feature>                  # all flows
+/figma <feature> --flow <slug>    # one flow
+```
+
+## Approach
+
+1. **Gate.** No wireframes → refuse + route `/wireframe-ascii`. Verify the Figma MCP is authenticated (probe a read-only call); if not → STOP with connect instructions.
+2. **Read the wireframes** for the target flow(s) — every screen `[n]`, its controls, the device width.
+3. **Draft the frame plan** — per screen: frame name `[n] {name}`, width (device), the controls to place, the target Figma file/page (from memory or ask once).
+4. **L1 preview (hard gate)** — list every frame + target + a note that this WRITES to Figma; get explicit **Y**.
+5. **On Y → MCP writes** — create/update each frame; collect the returned frame URLs.
+6. **Edit the index** — write each URL into the `Figma` column of its screen row; tick `updated`.
+8. **Output report** — frames pushed + the Figma file link + next (`/prototype-html` for a local clickable demo).
+
+## Gotchas
+
+- **Never invent a Figma URL** — if a write fails or returns nothing, leave the cell empty and report it; a fake URL breaks the index contract silently.
+- **Content parity, always** — the Figma frame is a render of the wireframe, not a redesign; if the wireframe changed, re-sync the frame.
+- **One source of screen truth** — the ASCII wireframe + its `[n]`; Figma frames follow those numbers, never the reverse.
+- **MCP availability varies** — in headless/CI contexts the Figma MCP may be absent; this skill is interactive-only by nature.

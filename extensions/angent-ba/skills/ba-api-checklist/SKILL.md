@@ -1,28 +1,53 @@
 ---
 name: ba-api-checklist
-description: Review API integration risk before constructing tests.
+description: Business analysis api-checklist specialist.
 ---
 
-# ba-api-checklist: Review API integration risk before constructing tests
+# ANGENT BA: api-checklist
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-checklist/SKILL.md
 
-Use this method when the user needs **review api integration risk before constructing tests**, not because a generic question merely mentions the subject. Required inputs to look for: integration design, endpoint docs, business scenarios. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Enumerate auth, schema, rate limit, timeout, retry, idempotency, duplicate and partial failure cases. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /api-checklist — Integration test outline (API chain [4])
 
-Produce **API verification checklist with risk and source IDs**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Derive the integration test outline from the design (orchestration/webhook/retry) + the map (field transforms) — `CHK-{NNN}` rows carrying `test_layer` (own/3rd/mixed) and `direction` (out/in) per `api-integration.md`. **Single output**: `docs/{feature}/test/api/api-checklist.md` (type `api-checklist`). Expanded by `/api-test` into Bruno requests.
 
-- No critical failure class silently omitted.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Step [4]** (`api-integration.md`): needs `api-design.md` (+ `api-map.md` if present). Design missing → refuse + route `/api-design`.
+- **Path-scoped `CHK-`** under `test/api/` (`test-conventions.md`) — no collision with the feature-wide `test/checklist/` (different folder).
+- **Two integration-specific columns** — `test_layer` (own/3rd/mixed) + `direction` (out/in) on every row, per `api-integration.md`.
+- **Webhook ⇄ reconciliation coverage** — every webhook row has a "happy" check AND a "missed-webhook → reconciliation" check (the pair the design mandated).
+- **Degraded-UX coverage** — the design's degraded paths get `test_layer: own` rows (we can test our fallback without the provider).
+- **Every row Covers a design/map decision** — a row with no source is fabrication.
+- **The `TC` column starts empty** — `/api-test` fills it.
+- **Validate before done** — doc-validate (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/api-checklist <feature>          # derive from design + map
+```
+
+## Approach
+
+1. **Gate.** No design → refuse + route `/api-design`. Read the design (orchestration/webhooks/retry/degraded) + the map (transforms to verify).
+2. **Derive candidates** — per endpoint: an `out` functional + an error (their error response); per webhook: happy `in` + reconciliation `mixed`; per degraded path: an `own` fallback; per transform: a boundary check.
+3. **Classify** — assign `test_layer` + `direction` per row.
+4. **Assign `CHK-` IDs** — scan the existing api-checklist for max (path-scoped, independent of the feature-wide checklist's max).
+5. **Draft** per the template — rows with test_layer/direction, `Covers` filled, `TC` empty.
+6. **L1 plan preview** — row count by layer + direction + the webhook⇄reconciliation pairs + degraded coverage.
+9. **Output report** — layer/direction breakdown + next (`/api-test`).
+
+## Gotchas
+
+- **Webhook reconciliation is the high-value row** — the "happy webhook" check almost always passes; the "missed webhook → reconciliation polls" check catches the data-loss bug. Don't drop it.
+- **`3rd` rows may be unautomatable** — testing their sandbox availability is real but flaky; flag those for manual/periodic, not the CI gate.
+- **Don't merge with the feature checklist** — different folder, different scope; `/gap` joins both via the CHK/TC spine.
+- **Degraded-UX is `own`-testable** — that's the point of testing it: our fallback works without the provider.

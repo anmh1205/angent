@@ -1,28 +1,67 @@
 ---
 name: ba-ac
-description: Make acceptance behavior precise and testable.
+description: Business analysis ac specialist.
 ---
 
-# ba-ac: Make acceptance behavior precise and testable
+# ANGENT BA: ac
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/ac/SKILL.md
 
-Use this method when the user needs **make acceptance behavior precise and testable**, not because a generic question merely mentions the subject. Required inputs to look for: user story, business rules, state constraints. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Define Given/When/Then for success, authorization denial, validation and failure; isolate assumptions; derive traceable scenario IDs. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /ac — Acceptance criteria (Given-When-Then, in-place)
 
-Produce **Acceptance criteria with condition/event/observable outcome**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Make every story verifiable — a complete Given-When-Then set per story covering the happy path, each linked `E-` error, and each `BR-` boundary, written INTO the story's `## Acceptance Criteria` section. **No new files** — this skill only edits `us-{NNN}.md`.
 
-- No AC contradicts FR or silently assumes an integration.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group B** (`feature-bootstrap.md`) — no `us-*.md` → **refuse + route to `/userstory`**.
+- **Pure edit skill — always L2** (`approval-gate.md`): every change is shown as a diff against the story file; there is no L1 create path.
+- **Mint `AC-{NNN}`** — 3-digit, scoped WITHIN each story file (`AC-001` in us-001 and `AC-002` in us-003 don't collide — path-scoped per `naming-conventions.md`), max+1 per story, existing ACs never renumbered.
+- **Coverage rule** — per story: ≥1 AC for the happy path, ≥1 per linked `E-` code, ≥1 per `BR-` boundary the story touches (test the edge: at/below/above the threshold). A story ending with <2 ACs must carry an OQ explaining why.
+- **Given-When-Then discipline** — Given = observable state, When = one action, Then = observable outcome. No "should", no UI pixel talk, no implementation ("the query returns…").
+- **Source-bound** — thresholds/values come from the spec (BR-/E- rows) or the interview; unknown boundary values become OQs in the story, never invented numbers.
+- **Validate before done** — doc-validate on the userstories dir (step 7).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/ac <feature>              # sweep every story, fill gaps
+/ac <feature> us-003       # one story only
+```
+
+## Approach
+
+1. **Gate.** No stories → refuse + route `/userstory`. Read the story index + target `us-*.md` files + `srs/{feature}-spec.md` (E- and BR- rows are the AC checklist).
+2. **Gap analysis per story** — existing ACs vs the coverage rule: which happy path, E- code, or BR- boundary has no criterion yet. Stories already complete → skip (report as such).
+3. **Interview only true gaps** (one batched round): boundary values the spec doesn't pin down, expected outcomes for ambiguous error paths. No-re-ask what spec/story already answer.
+4. **Draft ACs** — per gap, numbered `AC-{next}` within that story; boundary rules get the at/below/above triple where meaningful.
+5. **L2 diff preview** — per story: the exact `## Acceptance Criteria` section diff + a one-line coverage summary (happy ✓ · E-xxx ✓/✗ · BR-xxx ✓/✗).
+9. **Output report** — per-story coverage table + next (`/test-checklist`, wave 4).
+
+## AC shape reference (Claude composes it, do NOT hard-paste)
+
+```markdown
+- AC-003: Given a VALIDATED claim of exactly 50,000 USD, when tier routing runs, then it lands in the handler-tier queue (BR boundary: ≤ 50k).
+- AC-004: Given the approver also validated this claim, when they submit a decision, then the system blocks it and names the validator (E-atlas-re-001).
+```
+
+## L2 diff preview (per story)
+
+> **us-{NNN}** — coverage before: happy {✓/✗} · errors {n}/{m} · boundaries {n}/{m} → after: all ✓ ({K} ACs added).
+> ```diff
+> {the section diff}
+> ```
+> Apply? (Y / edit / skip)
+
+## Gotchas
+
+- **One When per AC** — "when the user logs in and approves and…" is a scenario, not a criterion; split it.
+- **Boundaries need three cases** — a "≤ 50k" rule is only pinned by at/below/above; one case leaves the edge ambiguous.
+- **AC ≠ test case** — no test data tables, no step-by-step clicks; that detail is `/test-cases`' job (wave 4).
+- **Respect story scope** — an AC that needs behavior from another story belongs there; note it, don't absorb it.

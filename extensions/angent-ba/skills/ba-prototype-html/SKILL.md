@@ -1,28 +1,53 @@
 ---
 name: ba-prototype-html
-description: Demonstrate bounded click-through behavior without real backend assumptions.
+description: Business analysis prototype-html specialist.
 ---
 
-# ba-prototype-html: Demonstrate bounded click-through behavior without real backend assumptions
+# ANGENT BA: prototype-html
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/prototype-html/SKILL.md
 
-Use this method when the user needs **demonstrate bounded click-through behavior without real backend assumptions**, not because a generic question merely mentions the subject. Required inputs to look for: screen flow, data fixtures, interaction rules. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Implement local in-memory state, error injection and navigation; label mocked operations; gather review decisions. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /prototype-html — Clickable multi-screen prototype
 
-Produce **Interactive HTML prototype with state reset and explicit mock limitations**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Produce ONE self-contained, clickable HTML prototype — `docs/{feature}/html-design/{feature}-prototype.html` — where every navigable control moves the user to its target screen (`#{slug}` anchors), covering all flows. Referenced back from `{feature}-wireframe-index.md` column `HTML prototype` as `{feature}-prototype.html#{slug}`.
 
-- No placeholder interaction presented as real backend.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group B** (`feature-bootstrap.md`): needs ASCII screens in `ascii-wireframe/{flow-slug}.md` (preferred) OR HTML wireframes — missing both → refuse + route to `/user-flow` + `/wireframe-ascii`.
+- **No L3** — HTML; review from the file (L1/L2).
+- **Navigation must actually work** — the defining feature: a button whose Description said "Nav → [4]" must jump to `#s4`. Broken/dead links are BLOCKING.
+- **Self-contained** — inline CSS + the minimal JS for screen switching (anchor + optional show/hide); no CDN, no build step, double-click to run.
+- **One screen = one state** (`ba-conventions.md` §8) — error/empty/loading states are their own screens or clearly toggled views, not a busy combo.
+- **Device frame** — inherit from `userflow.md`'s `primary_device` (no re-ask — it's settled); the prototype renders at that width.
+- **Idempotent** — re-run → L2 diff (regenerate from current wireframes).
+- **Template** — `@./resources/prototype.html`.
+- **Index update** — set the `HTML prototype` column in `{feature}-wireframe-index.md`.
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/prototype-html <feature>          # all flows → one clickable file
+```
+
+## Approach
+
+1. **Gate.** No ASCII screens AND no HTML wireframes → refuse + route `/user-flow` + `/wireframe-ascii`. Read the wireframes (content) + `userflow.md` (the navigation edges — what links to what).
+2. **Build the nav map** — every control with a `Nav →` in its Description becomes a working link to `#s{n}`; every error-path edge too.
+3. **Draft `{feature}-prototype.html`** — all screens as sections (`id="s{n}"`), inline CSS, the minimal JS to switch screens on click; device-width frame; B&W neutral (this is interaction, not visual design).
+4. **L1 plan preview** — flow/screen count + nav edges wired + any dead-end found (must be resolved or explicitly an exit).
+6. **Index update** — `{feature}-wireframe-index.md` column `HTML prototype` → `{feature}-prototype.html#{slug}` per screen.
+7. **Output report** — open path + nav coverage + dead-ends (none expected).
+
+## Gotchas
+
+- **A prototype with broken links is worse than no prototype** — it looks done but misleads; verify every edge before reporting done.
+- **Don't add visual polish here** — colors, real typography, images belong to the real frontend or `/figma`; the prototype proves *flow*, not *look*.
+- **State screens count** — if the spec has an error state for a form, it's a screen in the prototype, not a hidden assumption.
+- **Reuse wireframe content** — drifting from the ASCII/HTML wireframes here means three sources of truth; re-sync instead.
