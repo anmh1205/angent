@@ -1,50 +1,33 @@
-# Knowledge graph audit
+# Project artifact knowledge graph
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**Project and source revisions:**  
+**Included: URD, BRD, PRD, SRS, use cases/stories, AC, checklist, tests:**  
 
-## Evidence/decisions
+## Source-indexed nodes
 
-### 1. Node types and authoritative source
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+| ID | Kind: UN/BO/CAP/FR/BR/AC/CHK/TC | Title | File and line | Approval/evidence status |
 |---|---|---|---|---|
 | | | | | |
 
-### 2. typed edges with source witness
+## Declared relationships
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+| Child ID | Relationship | Parent ID | Exact source cell/line | Meaning and uncertainty |
 |---|---|---|---|---|
-| | | | | |
+| | depends_on / covers / verifies | | | |
 
-### 3. stable ID/version and relation semantics
+Never invent graph links from co-occurring words. External references without inspected definitions remain unresolved, not fake internal nodes.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## Full lifecycle metrics
 
-### 4. forward and reverse dependencies
+| Metric | Actual count | Source scope | IDs not covered |
+|---|---|---|---|
+| UN/BO/CAP indexed | | | |
+| FR traced via CAP→BO→UN | | | |
+| FR linked to downstream TC | | | |
+| FR with complete structural chain | | | |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## Verification
 
-### 5. coverage numerator/denominator
+Check duplicates, missing dependencies, cycles, source file revisions and invalid local paths. When running inside the ANGENT source tree, use extract_markdown_graph.py with optional --urd, --brd, --prd and mandatory --srs plus existing test files; validate output using validate_artifacts.py.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. missing/stale edges
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. proposed impact reviews
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+This graph proves structural reference integrity only. A linked test is not an executed test, and a source's approved status is not evidence of a deployed behavior.

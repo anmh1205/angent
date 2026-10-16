@@ -1,56 +1,31 @@
-# Reverse system SRS
+# Source-observed SRS reconstruction
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**Source:** repository / immutable SHA / target feature / configuration:
+**Purpose:** reconstruct current behavior for review, NOT approve a new rule.
 
-## Evidence/decisions
+## Inspection map
 
-### 1. System and commit scope
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+| Entry/role | Source file, symbol and line | Configuration/flag | Evidence status | Not inspected |
 |---|---|---|---|---|
-| | | | | |
+| API/command | | | observed/inferred/unknown | |
+| Domain and guards | | | | |
+| Persistence/event | | | | |
+| External integration | | | | |
 
-### 2. observed route/guard/data path
+## Candidate requirements
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+| Candidate FR/BR/E ID | Actor/trigger and observable outcome | Precondition | Postcondition/state mutation | Source witness at SHA | Test evidence | Status |
+|---|---|---|---|---|---|---|
+| FR-CAND-001 | | | | | | SOURCE-OBSERVED / UNVERIFIED |
 
-### 3. claim ID and symbol/real line
+Give each path its acceptance-relevant negative cases: unauthorized actor, validation failure, missing integration, duplicate request, concurrent updates and stale flags. Separate current implementation from approved target semantics.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## Contradictions and evidence gaps
 
-### 4. factual behavior and side effects
+| Source A | Source B or accepted SRS | Consequence | What must be decided or tested |
+|---|---|---|---|
+| | | | |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## Review result
 
-### 5. evidence class
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. proposed FR/BR
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. conflicting version
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 8. targeted runtime verification
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+Which code paths were really read? Which tests ran (exact command, environment and output)? Which decisions are still inferred? What was deliberately excluded? What is the precise diff against the existing SRS? Never overwrite an accepted SRS because code appears to implement a different rule.

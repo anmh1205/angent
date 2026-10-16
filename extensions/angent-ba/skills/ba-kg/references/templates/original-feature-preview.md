@@ -1,56 +1,29 @@
-# Feature HTML preview
+# Feature preview for stakeholder decisions
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**Feature, scope and accepted source revision:**  
+**Audience and decision expected:**  
+**Inspection date:**  
 
-## Evidence/decisions
+## Reader orientation
 
-### 1. Feature and reader scope
+Explain the current user problem and buyer/actor, the outcome this feature promises, included and excluded scope, and where to find the decisive evidence. This should be readable without knowing BA IDs.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+## Source-linked inventory
+
+| Business claim or screen | Accepted ID | Exact evidence file/page and revision | Navigation anchor | Confidence and exception |
 |---|---|---|---|---|
 | | | | | |
 
-### 2. artifact sources and revisions
+## Capability and exceptions
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+Summarize normal action, denied paths, error recovery, state ownership and key screens. Show links to approved FR/BR, actual diagrams and the screen index; do not substitute a diagram screenshot for source.
+
+## Verification summary
+
+| Requirement | Linked TC/CHK | Executed? | Real environment/proof | Uncovered risk |
 |---|---|---|---|---|
-| | | | | |
+| | | no/yes | | |
 
-### 3. outcome summary
+## Approval questions
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 4. requirement and rule anchors
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 5. diagrams/screens links
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. test status and open questions
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. keyboard/mobile read-back
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 8. broken-link review
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+List unresolved policy decisions with owner, impact and next check. Evidence links must resolve within authorized scope. HTML output should be escaped, CSP-restricted, keyboard-accessible, mobile-readable and opened in a real browser. A preview page is read-only and cannot certify production implementation.

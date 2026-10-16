@@ -1,56 +1,26 @@
-# Spec-to-code drift report
+# Accepted requirements versus inspected implementation
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**Accepted SRS revision:**  
+**Repository / pinned commit and environment:**  
+**Scope and actor:**  
 
-## Evidence/decisions
+## Line-level comparison
 
-### 1. Accepted SRS revision
+| Accepted FR/BR/E and exact predicate | Source code path/symbol/line | Implementation effect and state mutation | Observed test/runtime | Verdict | Business consequence |
+|---|---|---|---|---|---|
+| FR-… | | | | ALIGNED / DIVERGENT / NOT IMPLEMENTED / UNVERIFIABLE | |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+ALIGNED needs matching observable behavior. DIVERGENT needs a contradictory source witness. NOT IMPLEMENTED requires sufficient execution-path coverage. UNVERIFIABLE names unavailable provider, feature flag, private module or environment evidence. A missing search hit does not prove absence.
+
+## Exception and trust-boundary coverage
+
+| Scenario | Expected authorization/response | Observed source or runtime behavior | Test gap | Recommended next evidence |
 |---|---|---|---|---|
-| | | | | |
+| Allowed | | | | |
+| Forbidden | | | | |
+| Invalid/duplicate | | | | |
+| Downstream failure | | | | |
 
-### 2. inspected source commit
+## Decision record
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 3. FR/BR predicate
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 4. path/symbol/line witness
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 5. code-observed response
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. aligned/divergent/not implemented/unverifiable
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. runtime test gap
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 8. owner and risk
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+List each mismatch, severity and affected downstream docs/test cases. Decide whether to fix implementation, request stakeholder amendment, or inspect missing evidence first. Never automatically change requirements to match defective code. Differentiate implemented-at-SHA from deployed-in-environment.
