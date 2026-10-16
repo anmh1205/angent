@@ -9,7 +9,24 @@ from typing import Any
 
 TYPES = {"usecase", "userflow", "activity", "bpmn", "sequence", "state", "erd",
          "journey", "sitemap", "persona", "design-system", "demo"}
-FLOW = {"activity", "userflow", "state", "demo"}
+# Pro-only "demo" has no fixed graph/terminal semantics in the public OSS kit.
+FLOW = {"activity", "userflow", "state"}
+FLOW_END = {
+    "activity": {"end", "final"},
+    "userflow": {"end", "final", "terminal", "external"},
+    "state": {"end", "final"},
+}
+# These are the portable adapter's supported kinds, not an assertion about
+# every possible shape in a proprietary Reqwise Pro runtime.
+NODE_KINDS = {
+    "activity": {"start", "initial", "end", "final", "task", "action", "decision"},
+    "userflow": {"start", "initial", "end", "final", "terminal", "external",
+                 "screen", "task", "state", "action", "decision"},
+    "state": {"start", "initial", "end", "final", "state", "task", "decision", "choice"},
+    "sequence": {"actor", "external", "queue", "system", "db"},
+    "sitemap": {"page", "section", "modal", "external"},
+    "erd": {"entity"},
+}
 ACYCLIC = {"sitemap"}
 
 
@@ -38,6 +55,9 @@ def audit(model: Any) -> dict[str, Any]:
         by_id[key] = node
         if not isinstance(node.get("label"), str) or not node["label"].strip():
             errors.append(f"nodes[{i}]: empty label")
+        node_kind = node.get("kind")
+        if node_kind is not None and kind in NODE_KINDS and node_kind not in NODE_KINDS[kind]:
+            errors.append(f"nodes[{i}]: unsupported {kind} node kind {node_kind!r}")
     adj: dict[str, set[str]] = defaultdict(set)
     indeg = {key: 0 for key in by_id}
     for i, edge in enumerate(edges):
@@ -59,11 +79,17 @@ def audit(model: Any) -> dict[str, Any]:
         starts = sorted(key for key, node in by_id.items()
                         if node.get("kind") in ("start", "initial"))
         ends = sorted(key for key, node in by_id.items()
-                      if node.get("kind") in ("end", "final"))
+                      if node.get("kind") in FLOW_END[kind])
         if len(starts) != 1:
             errors.append(f"{kind}: expected exactly one start/initial node")
         if not ends:
-            errors.append(f"{kind}: missing end/final node")
+            errors.append(f"{kind}: missing terminal outcome")
+        for key in starts:
+            if indeg[key]:
+                errors.append(f"{kind}: initial node {key} has incoming edges")
+        for key in ends:
+            if adj[key]:
+                errors.append(f"{kind}: terminal node {key} has outgoing edges")
         reached = set(starts)
         q = deque(starts)
         while q:
@@ -76,14 +102,37 @@ def audit(model: Any) -> dict[str, Any]:
         for key in sorted(reached):
             if key not in ends and not adj[key]:
                 errors.append(f"{kind}: dead end {key}")
+        # Reachable retry cycles are legitimate only when they have a possible
+        # route to a terminal. A connected, closed cycle must not pass merely
+        # because a different branch reaches an end.
+        reverse: dict[str, set[str]] = defaultdict(set)
+        for src, targets in adj.items():
+            for dst in targets:
+                reverse[dst].add(src)
+        can_finish = set(ends)
+        pending = deque(ends)
+        while pending:
+            for previous in sorted(reverse[pending.popleft()]):
+                if previous not in can_finish:
+                    can_finish.add(previous)
+                    pending.append(previous)
+        for key in sorted(reached - can_finish):
+            errors.append(f"{kind}: no path from {key} to a terminal")
         for key, node in by_id.items():
             if node.get("kind") == "decision":
                 outgoing = [edge for edge in edges if isinstance(edge, dict) and edge.get("from") == key]
                 if len(outgoing) < 2:
                     errors.append(f"{kind}: decision {key} needs two or more branches")
-                if any(not str(e.get("guard", "")).strip() for e in outgoing):
-                    errors.append(f"{kind}: decision {key} has unlabeled guard")
+                conditions = [e.get("guard") or (e.get("label") if kind == "userflow" else None)
+                              for e in outgoing]
+                if any(not isinstance(value, str) or not value.strip() for value in conditions):
+                    errors.append(f"{kind}: decision {key} has an unlabeled branch")
+                elif len({value.strip() for value in conditions}) != len(conditions):
+                    errors.append(f"{kind}: decision {key} has duplicate branch conditions")
     if kind in ACYCLIC:
+        for key, degree in sorted(indeg.items()):
+            if degree > 1:
+                errors.append(f"sitemap: page {key} has multiple parents")
         roots = [k for k, deg in indeg.items() if deg == 0]
         if len(roots) != 1:
             errors.append("sitemap: expected one hierarchy root")
