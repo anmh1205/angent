@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 import re
 from typing import Any
+from urllib.parse import urlsplit
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 TEST_ID = re.compile(r"^TC-[A-Za-z0-9][A-Za-z0-9-]*$")
@@ -40,8 +41,20 @@ def validate(model: Any, evidence_ids: set[str] | None = None) -> dict[str, Any]
             errors.append(f"Invalid environment value for {key}")
         if isinstance(key,str) and SENSITIVE_KEY.search(key):
             errors.append(f"Secret-like environment key {key} cannot be written to a collection")
-    if not isinstance(environ.get("baseUrl"), str) or not environ["baseUrl"].startswith(("http://","https://")):
+    base_url=environ.get("baseUrl")
+    if not isinstance(base_url,str):
         errors.append("environment.baseUrl must be a declared HTTP(S) target")
+    else:
+        try:
+            parsed=urlsplit(base_url)
+            if (parsed.scheme not in ("http","https") or not parsed.hostname or
+                parsed.username is not None or parsed.password is not None or
+                parsed.query or parsed.fragment or any(ch.isspace() for ch in base_url)):
+                errors.append("environment.baseUrl must be a declared HTTP(S) target")
+            # Accessing .port validates malformed port syntax.
+            _=parsed.port
+        except ValueError:
+            errors.append("environment.baseUrl must be a declared HTTP(S) target")
     requests = model.get("requests")
     if not isinstance(requests, list) or not requests:
         return {"ok": False, "errors": errors + ["requests must be nonempty array"]}
@@ -105,6 +118,10 @@ def validate(model: Any, evidence_ids: set[str] | None = None) -> dict[str, Any]
                     errors.append(f"{testid}: invalid header name")
                 if not isinstance(value,str) or "\r" in value or "\n" in value or "{" in PLACEHOLDER.sub("",value) or "}" in PLACEHOLDER.sub("",value):
                     errors.append(f"{testid}: invalid header value")
+                if isinstance(value,str):
+                    undefined=sorted(set(PLACEHOLDER.findall(value))-set(environ))
+                    if undefined:
+                        errors.append(f"{testid}: undefined header variables: "+",".join(undefined))
                 if isinstance(key,str) and key.lower() in ("authorization","x-api-key"):
                     errors.append(f"{testid}: secrets must be supplied through runtime auth, not persisted headers")
         body = request.get("body_json")
@@ -112,6 +129,11 @@ def validate(model: Any, evidence_ids: set[str] | None = None) -> dict[str, Any]
             errors.append(f"{testid}: GET cannot have JSON body in this generator")
         if body is not None and not isinstance(body,(dict,list)):
             errors.append(f"{testid}: body_json must be an object or array")
+        elif body is not None:
+            try:
+                json.dumps(body,allow_nan=False)
+            except (ValueError,TypeError,OverflowError):
+                errors.append(f"{testid}: body_json must contain finite JSON values")
     return {"ok": not errors, "errors": sorted(set(errors)),
             "tests": len(seen), "network_requests_sent": 0}
 

@@ -53,6 +53,41 @@ class BrunoGeneratorTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     compile_collection(case)
 
+    def test_header_variables_must_resolve_before_collection_generation(self):
+        good=copy.deepcopy(self.fixture)
+        good["requests"][0]["headers"]={"X-Vehicle":"{{vehicleId}}"}
+        self.assertTrue(validate(good)["ok"],validate(good))
+        compiled=compile_collection(good)
+        self.assertIn("X-Vehicle: {{vehicleId}}",compiled["requests/TC-FLEET-001.bru"])
+        bad=copy.deepcopy(good)
+        bad["requests"][0]["headers"]={"X-Undefined":"{{unknownKey}}"}
+        result=validate(bad)
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("undefined header variables" in x for x in result["errors"]))
+        with self.assertRaisesRegex(ValueError,"undefined header variables"):
+            compile_collection(bad)
+
+    def test_base_url_rejects_malformed_hosts_and_credentials(self):
+        for invalid in ("http://","https://","https://:1234",
+                        "https://user:password@example.com", "https://example.com?q=a",
+                        "https://example.com#fragment", "https://example.com:bad"):
+            with self.subTest(baseUrl=invalid):
+                model=copy.deepcopy(self.fixture)
+                model["environment"]["baseUrl"]=invalid
+                self.assertFalse(validate(model)["ok"])
+        model=copy.deepcopy(self.fixture)
+        model["environment"]["baseUrl"]="https://example.test/api"
+        self.assertTrue(validate(model)["ok"],validate(model))
+
+    def test_nonfinite_json_body_cannot_generate_invalid_json(self):
+        model=copy.deepcopy(self.fixture)
+        model["requests"][3]["body_json"]["measurement"]=float("nan")
+        result=validate(model)
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("finite JSON values" in e for e in result["errors"]))
+        with self.assertRaisesRegex(ValueError,"finite JSON values"):
+            compile_collection(model)
+
     def test_deduplicate_and_reject_unsafe_body(self):
         a=copy.deepcopy(self.fixture)
         a["requests"][1]["id"]=a["requests"][0]["id"]
