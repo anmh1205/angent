@@ -8,17 +8,32 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import re
+import sys
 from typing import Any
 from validate_diagram_model import audit
 
 SUPPORTED = {"activity", "userflow", "state", "sequence", "erd", "sitemap"}
 VALID_RANKDIR = {"TB", "LR"}
+REF_RE = re.compile(r"^[A-Z][A-Z0-9-]{1,99}$")
 
 
-def compile_model(model: dict[str, Any], *, ready_to_write: bool = False) -> dict[str, Any]:
+def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
+                  evidence_ids: set[str] | None = None) -> dict[str, Any]:
     checked = audit(model)
     if not checked["ok"]:
         raise ValueError("Model failed structural check: " + "; ".join(checked["errors"]))
+    refs = model.get("source_refs", [])
+    if not isinstance(refs,list) or any(not isinstance(x,str) or not REF_RE.fullmatch(x) for x in refs):
+        raise ValueError("source_refs must be a list of stable artifact IDs")
+    if len(set(refs)) != len(refs):
+        raise ValueError("Duplicate source_refs")
+    if evidence_ids is not None:
+        if not refs:
+            raise ValueError("No source_refs supplied for evidence check")
+        for item in refs:
+            if item not in evidence_ids:
+                raise ValueError("Unresolved evidence reference: "+item)
     kind = model["type"]
     if kind not in SUPPORTED:
         raise ValueError(f"Reqwise OSS diagram adapter does not support type {kind!r}")
@@ -117,6 +132,8 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False) -> dic
                               **({"label": e["label"]} if e.get("label") else {})})
         spec["relations"] = relations
     return {"tool": "figma_diagram", "arguments": {"type": kind, "spec": spec},
+            "source_refs":refs,
+            "source_link_check":"ids-resolved-only" if evidence_ids is not None else "not-performed",
             "writes_performed": False, "requires_live_mcp": True,
             "dry_run": not ready_to_write, "upstream_model": "Reqwise Figma MCP MIT tool shape"}
 
@@ -125,10 +142,21 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("input", type=Path)
     p.add_argument("--emit-write-payload", action="store_true", help="Only generates a prospective payload; it NEVER writes to Figma")
+    p.add_argument("--evidence-graph",type=Path,help="Optional BA graph to verify source reference IDs")
     args = p.parse_args()
     try:
         model = json.loads(args.input.read_text(encoding="utf-8"))
-        result = compile_model(model, ready_to_write=args.emit_write_payload)
+        ids=None
+        if args.evidence_graph:
+            # Shared ANGENT artifact validator: this adapter does not invent a new truth store.
+            sys.path.insert(0,str(Path(__file__).resolve().parents[2]/"angent-ba/scripts"))
+            from validate_artifacts import audit
+            graph=json.loads(args.evidence_graph.read_text(encoding="utf8"))
+            outcome=audit(graph)
+            if not outcome["ok"]:
+                raise ValueError("Evidence graph invalid: "+"; ".join(outcome["errors"]))
+            ids={item["id"] for item in graph["artifacts"]}
+        result = compile_model(model, ready_to_write=args.emit_write_payload,evidence_ids=ids)
         print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
         return 0
     except (OSError, ValueError, TypeError) as exc:

@@ -15,6 +15,26 @@ class ReqwisePayloadTests(unittest.TestCase):
     def setUpClass(cls):
         cls.activity = json.loads((FIGMA / "examples/rental-fleet-activity.json").read_text())
 
+    def test_source_references_checked_only_when_graph_supplied(self):
+        graph_path=ROOT / "extensions/angent-ba/examples/rental-fleet-traceability.json"
+        data=json.loads(graph_path.read_text(encoding="utf8"))
+        ids={item["id"] for item in data["artifacts"]}
+        outcome=compile_model(self.activity,evidence_ids=ids)
+        self.assertEqual(outcome["source_link_check"],"ids-resolved-only")
+        self.assertEqual(outcome["source_refs"],["FR-IVTS-01"])
+        self.assertEqual(outcome["tool"],"figma_diagram")
+        self.assertFalse(outcome["writes_performed"])
+        bad=deepcopy(self.activity)
+        bad["source_refs"]=["FR-NONEXISTENT"]
+        with self.assertRaisesRegex(ValueError,"Unresolved evidence"):
+            compile_model(bad,evidence_ids=ids)
+        bad["source_refs"]=[]
+        with self.assertRaisesRegex(ValueError,"No source_refs"):
+            compile_model(bad,evidence_ids=ids)
+        bad["source_refs"]=["FR-IVTS-01","FR-IVTS-01"]
+        with self.assertRaisesRegex(ValueError,"Duplicate"):
+            compile_model(bad,evidence_ids=ids)
+
     def test_activity_dry_run_by_default(self):
         p = compile_model(self.activity)
         self.assertEqual(p["tool"], "figma_diagram")
