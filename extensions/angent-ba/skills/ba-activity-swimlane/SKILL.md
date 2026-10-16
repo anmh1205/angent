@@ -3,6 +3,9 @@ name: ba-activity-swimlane
 description: ANGENT BA specialist for activity-swimlane with source evidence, host authorization and real tool boundaries.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # Multi-actor activity/swimlane process diagrams
 **Source:** Maintained adaptation of the MIT Dev BA Kit by Edward Ngo (2026), https://github.com/nv-minh/dev-ba-kit/blob/main/skills/activity-swimlane/SKILL.md. ANGENT Root/Core retains final authority.
 

@@ -3,6 +3,9 @@ name: ba-api-test
 description: Build real Bruno API test collections from approved endpoint contracts, with explicit assertions and optional authorized sandbox/loopback execution.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # BA API tests — executable Bruno artifacts
 
 **Provenance.** Method adapted from the MIT Dev BA Kit api-test skill, copyright (c) 2026 Edward Ngo: https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-test/SKILL.md. ANGENT adds an independently written collection generator and optional local integration fixture. No paid AI4BA source code is included.

@@ -1,5 +1,8 @@
 # ANGENT Business Analysis — maintained specialist extension
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 **Scope:** 55 ANGENT BA skills, 48 structured artifact templates, 19 ANGENT-specific review probes, 21 MIT reference rule documents and 14 maintained Python helper scripts for extracting/validating Markdown evidence, building BPMN XML, change impact and HTML preview. The source material is **45 maintained adaptations of MIT [Dev BA Kit](https://github.com/nv-minh/dev-ba-kit)** and **10 independently authored specialist methods**. Forty templates are adapted from the same MIT project; eight are original. This is not a reproduction of proprietary AI4BA BA-Kit source, which was not available.
 
 ## What actually works

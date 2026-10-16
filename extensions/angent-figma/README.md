@@ -1,5 +1,8 @@
 # ANGENT Figma — diagram and canvas methods
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 **Scope:** 12 methods, six substantial adaptations of the MIT [Reqwise Figma MCP](https://github.com/hoangpm96/reqwise-figma-mcp) skills and six independently authored methods for use case, BPMN, journey, persona, design system and demo. Attribution and original MIT license: THIRD_PARTY_NOTICES.md.
 
 ## Runtime truth

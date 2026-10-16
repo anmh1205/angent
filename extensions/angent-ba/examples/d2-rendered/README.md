@@ -1,5 +1,8 @@
 # D2 rendered visual examples (synthetic)
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 These are actual outputs from the original ANGENT build_d2.py using official D2 v0.9.0 on Windows, with source fixtures in extensions/angent-ba/examples/d2-*.json. Each source and SVG passed the renderer and XML/label read-back; the resulting PNGs were visually inspected at the test host.
 
 - activity.d2 and activity.svg: guarded owner-permission flow, including swimlanes.
