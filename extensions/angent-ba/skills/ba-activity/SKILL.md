@@ -90,11 +90,10 @@ Want horizontal instead of the default top-bottom → say "draw horizontally". A
    - **Complete** → continue to step 10, the report adds a line "Coverage: {N}/{N} decisions, {M}/{M} lanes, no loose ends".
    - **Missing** (e.g. a lane is dropped, or a "no" branch leads nowhere) → add it to the just-written section, re-verify 9.5 then 9.6. Up to 2 self-fix attempts.
    - **Still missing after 2 attempts** → tell the user exactly which decision/lane/branch could not be represented, ask whether to skip or add more description. Do NOT silently report "done" when coverage is incomplete.
-9.7. **Diagram_Reviewer gate (ONLY when complexity thresholds are exceeded)** — spawn an agent via the Task tool, `subagent_type: diagram-reviewer`, passing: the just-written mermaid section + the step 4.5 fact-list, when any threshold is exceeded (measured by **total complexity**): **≥3 lanes** OR **≥5 decision points** OR **decision nesting ≥2 levels** OR a **loop/retry back-edge**. Below all these thresholds, the step 9.6 self-reconciliation (no agent) is enough — SKIP 9.7, go straight to step 10.
-   - **Task tool unavailable** (not provided by the runtime) → do NOT implicitly treat it as reviewed; the report states `reviewer skipped (Task unavailable)` so the user knows the complex diagram has not passed the gate.
-   - Receive findings (format `review-format.md` + a "Coverage checklist" section). If BLOCKING → add the missing lane/branch to the section, re-verify 9.5+9.6, then continue to step 10.
-   - Loop up to 2 rounds — if round 2 is still BLOCKING → report the outstanding findings to the user and let them decide before issuing the report.
-   - Verdict `approve`/only WARNING/SUGGESTION → continue straight to step 10.
+9.7. **Review according to complexity, without requiring a particular subagent interface.** Review all decisions, role/lane ownership, guarded branches, loop exits and source-linked outcomes. Larger flows (three or more lanes, five or more decisions, nested decisions or retries) warrant an explicit second review.
+   - ANGENT Quality can independently reconcile the produced model with the fact-list and inspected sources in the current working context. Use a second reviewer or delegated agent only when its interface is actually available and appropriate; never issue a fictitious `Task` call or assume a `diagram-reviewer`/`flow-reviewer` role exists.
+   - If no independent reviewer is available, complete the source-to-diagram self-review and report it accurately as `self-reviewed; independent review not performed`. Do not turn a tool limitation into a blanket refusal, and do not claim independent approval.
+   - For blocking gaps (missing branches, unreachable or orphan states/screens, reversed cardinality, incorrect guards), correct the affected diagram and revalidate syntax, structure and source coverage. Report unresolved gaps and evidence limits rather than silently publishing a success verdict.
 10. **Output report:**
     ```
     ✅ Activity diagram appended: docs/{feature}/srs/{feature}-flows.md → ## Flow: {title} (Activity)
@@ -103,7 +102,7 @@ Want horizontal instead of the default top-bottom → say "draw horizontally". A
     Open the file in IDE/Obsidian/GitHub preview to see the rendered diagram.
     Need changes? Call /activity "<change>" --feature {feature} again; I enter update mode automatically.
     ```
-    `{reviewed_note}` = ` | Reviewed by Diagram_Reviewer` if step 9.7 ran, else empty.
+    `{reviewed_note}` = ` | Independently reviewed (only when verified)` only when an actual separate review was completed, else empty.
 
 ## Mermaid syntax reference
 

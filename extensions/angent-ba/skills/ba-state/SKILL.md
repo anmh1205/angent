@@ -101,10 +101,10 @@ To change the default behavior, say so in words:
    - **Complete** → continue to step 10, add the line "Coverage: {N}/{N} states, {M}/{M} transitions".
    - **Missing** (e.g. a state does not appear, or a transition is missing its trigger) → add it to the section just written, re-verify 9.5 then 9.6. At most 2 self-fix attempts.
    - **Still missing after 2 attempts** → tell the user which state/transition could not be shown. Do NOT silently report "done" when coverage is incomplete.
-9.7. **Diagram_Reviewer gate (ONLY when over the complexity threshold)** — if the entity has **≥5 states**, OR **≥2 composite/nested states**, OR **≥3 invalid transitions**, OR **parallel/fork states**, spawn an agent via the Task tool, `subagent_type: diagram-reviewer`, passing: the state section just written (mermaid + the Invalid transitions table) + the step 2.5 fact-list (states, transitions, invalid). Measure by total complexity, not state count alone. Below every threshold → SKIP 9.7, go straight to step 10 (avoid overhead for simple state machines).
-   - **Task tool unavailable** (not provided by the runtime) → do NOT implicitly treat it as reviewed; the report states `reviewer skipped (Task unavailable)`.
-   - Any BLOCKING (a state in the fact-list with no node, an orphan state, a transition missing its trigger) → add it to the section just written, re-verify 9.5+9.6, then continue.
-   - Loop at most 2 rounds. Verdict `approve`/only WARNING/SUGGESTION → continue straight to step 10.
+9.7. **Review according to complexity, without requiring a particular subagent interface.** Review exact states, event triggers, guards, forbidden transitions, exit conditions, parallel transitions and missing/orphan nodes. Five or more states, composite states or parallel paths require extra scrutiny.
+   - ANGENT Quality can independently reconcile the produced model with the fact-list and inspected sources in the current working context. Use a second reviewer or delegated agent only when its interface is actually available and appropriate; never issue a fictitious `Task` call or assume a `diagram-reviewer`/`flow-reviewer` role exists.
+   - If no independent reviewer is available, complete the source-to-diagram self-review and report it accurately as `self-reviewed; independent review not performed`. Do not turn a tool limitation into a blanket refusal, and do not claim independent approval.
+   - For blocking gaps (missing branches, unreachable or orphan states/screens, reversed cardinality, incorrect guards), correct the affected diagram and revalidate syntax, structure and source coverage. Report unresolved gaps and evidence limits rather than silently publishing a success verdict.
 10. **Output report:**
     ```
     ✅ State diagram appended: docs/{feature}/srs/{feature}-states.md → ## State: {Entity}

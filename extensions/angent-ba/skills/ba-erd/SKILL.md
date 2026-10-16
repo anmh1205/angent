@@ -70,10 +70,10 @@ To use entity descriptions from another source instead of answering directly →
    - **Complete** → continue to step 9.7/10.
    - **Missing** → add it, re-verify 9.5 then 9.6. At most 2 self-fix attempts.
    - **Still missing after 2 attempts** → tell the user which entity/relationship could not be shown. Do NOT silently report "done" when coverage is incomplete.
-9.7. **Diagram_Reviewer gate (ONLY when over the complexity threshold)** — if the ERD has **≥6 entities**, OR **≥8 relationships**, OR a **many-to-many**, OR **self-reference**, OR an **inheritance limitation flagged**, spawn an agent via the Task tool, `subagent_type: diagram-reviewer`, passing: the erDiagram block just written + the entity/relationship facts from step 4. Below every threshold → SKIP 9.7, go straight to step 10.
-   - **Task tool unavailable** → the report states `reviewer skipped (Task unavailable)`.
-   - Any BLOCKING (missing entity/relationship, no PK, backwards cardinality) → fix the block just written, re-verify 9.5+9.6, then continue.
-   - Loop at most 2 rounds. Verdict `approve`/only WARNING/SUGGESTION → continue straight to step 10.
+9.7. **Review according to complexity, without requiring a particular subagent interface.** Review every entity, key, relationship ownership, optionality and the direction of each cardinality. Six or more entities, eight or more relationships, many-to-many, self-reference or inheritance require extra scrutiny.
+   - ANGENT Quality can independently reconcile the produced model with the fact-list and inspected sources in the current working context. Use a second reviewer or delegated agent only when its interface is actually available and appropriate; never issue a fictitious `Task` call or assume a `diagram-reviewer`/`flow-reviewer` role exists.
+   - If no independent reviewer is available, complete the source-to-diagram self-review and report it accurately as `self-reviewed; independent review not performed`. Do not turn a tool limitation into a blanket refusal, and do not claim independent approval.
+   - For blocking gaps (missing branches, unreachable or orphan states/screens, reversed cardinality, incorrect guards), correct the affected diagram and revalidate syntax, structure and source coverage. Report unresolved gaps and evidence limits rather than silently publishing a success verdict.
 10. **Output report:**
    ```
    ✅ ERD written: docs/{feature}/srs/{feature}-erd.md
