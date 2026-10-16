@@ -1,28 +1,53 @@
 ---
 name: ba-gap
-description: Detect missing or untested aspects of a requirement set.
+description: Business analysis gap specialist.
 ---
 
-# ba-gap: Detect missing or untested aspects of a requirement set
+# ANGENT BA: gap
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/gap/SKILL.md
 
-Use this method when the user needs **detect missing or untested aspects of a requirement set**, not because a generic question merely mentions the subject. Required inputs to look for: requirement graph, SRS, flows, stories, test cases. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Compare evidence across artifact types; identify missing actors, decisions, failures, coverage and NFR criteria. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /gap — Cross-doc traceability matrix + coverage report
 
-Produce **Gap register with impact, suggested clarification and evidence**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Walk the entire ID spine across the vault, compute coverage, and write one report: `docs/_shared/traceability.md` (type `traceability`) — the gaps, orphans, uncited error codes, and stale chains. Read-only analysis; the **only** write is that report (L1-gated per `approval-gate.md`'s named exception).
 
-- Absence in inspected sources is scoped, not universal claim.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group C** (`feature-bootstrap.md`): empty vault → friendly abort ("Start with `/brainstorm` or `/urd`"). `--feature <slug>` scopes the walk to one feature.
+- **Read-only on the docs it scans** — never edits URDs/SRSes/stories; it reports gaps, the owning skill fills them.
+- **Parse the 3 surfaces** (`traceability.md`): frontmatter `links:`, body wikilinks, and index tables (usecase-index, story-index, wireframe-index) — content files are zero-frontmatter, so the join goes via indexes + body.
+- **Emit exactly the coverage rules** in `traceability.md` §"Coverage rules": UN-without-BO, BO-without-CAP, CAP-without-FR, FR-without-UC/US, US-without-AC, US-without-≥2-AC, AC-without-CHK/TC, E-uncited, orphan-doc, stale-chain, CR-apply-order-gap.
+- **No fabrication** — every finding cites the concrete ID/path; never invent a "missing" ID that doesn't exist upstream (only report breaks in the *declared* chain).
+- **Idempotent** — re-run regenerates the report (L2 diff).
+- **Validate before done** — doc-validate on the report (step 7).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/gap                          # whole vault
+/gap --feature atlas-re       # one feature
+```
+
+## Approach
+
+1. **Scope.** Empty vault → friendly abort. `--feature` → that folder; else every `docs/{feature}/`.
+2. **Index the IDs** — scan each doc for its IDs (UN/BO/CAP/FR/NFR/BR/E/UC/US/AC/CHK/TC/CR) and its `links:` + body wikilinks + index-table rows. Build the graph.
+3. **Run the coverage rules** (`traceability.md`) — for each, collect the violations with their concrete IDs.
+4. **Stale check** — compare `links:` target `updated:` vs the doc's own (via `staleness.log` if present).
+5. **Draft `traceability.md`** — the spine diagram + a findings table per rule (ID + where + suggested owner skill) + an orphan-doc list + a CR-apply-order check.
+6. **L1 plan preview** — finding counts per rule + the worst gaps called out.
+9. **Output report** — the gap summary + the single highest-leverage fix per category.
+
+## Gotchas
+
+- **Coverage ≠ quality** — `/gap` proves the chain is *complete*, not that it's *correct*; correctness is `/doc-review`'s job.
+- **Don't chase 100%** — a deliberately deferred need (UN with no BO, phased out) is a finding, not a defect; the report lists it, the user decides.
+- **E-uncited is the sneaky one** — error codes defined in the SRS but referenced nowhere are the most common real gap; they're why this skill exists.
+- **The index tables are the cheap join** — prefer them over re-parsing every zero-frontmatter content file; body wikilinks are the fallback.

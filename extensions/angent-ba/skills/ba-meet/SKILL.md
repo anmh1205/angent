@@ -1,28 +1,53 @@
 ---
 name: ba-meet
-description: Convert real meeting material into decisions and assigned follow-ups.
+description: Business analysis meet specialist.
 ---
 
-# ba-meet: Convert real meeting material into decisions and assigned follow-ups
+# ANGENT BA: meet
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/meeting/SKILL.md
 
-Use this method when the user needs **convert real meeting material into decisions and assigned follow-ups**, not because a generic question merely mentions the subject. Required inputs to look for: authorized notes/transcript, attendees, dates and speakers. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Separate proposals from explicit decisions; capture action owner, due date if said, dissent and open questions. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /meeting — Meeting notes (structured)
 
-Produce **Meeting record with decisions, actions and source references**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Capture a meeting as structured notes — attendees, agenda, discussion, and three tables WITHIN the file: **Decisions**, **Blockers**, **Action items** (with owner + deadline). **Single output**: `docs/meetings/YYYY-MM-DD-{type}-{slug}.md` (type `meeting`). Statuses `captured → processed`.
 
-- Do not invent quotes, owners or deadlines.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group C** (`feature-bootstrap.md`): project-level; no feature needed.
+- **Tables WITHIN the file** (`naming-conventions.md` line 77) — decisions/blockers/actions live as tables inside the note, NOT in separate files. One note = one self-contained file.
+- **Two states** (`status-lifecycle.md`): `captured` (raw, just written) → `processed` (tables structured + action items have owners/deadlines). Default to `processed` when the skill runs from a transcription/notes; `captured` for a quick raw dump.
+- **Action items have owner + deadline** — an action with no owner is a wish, not an action; flag it.
+- **Link to docs** — a decision touching `FR-`/`CAP-`/a feature doc links it (wikilink), so `/gap`/`/dashboard` see the connection.
+- **Idempotent** — re-run on the same date+title → L2 diff (append new items).
+- **Validate before done** — doc-validate (step 7).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/meeting "Sprint 14 review" --type review
+/meeting "Claim approval kickoff" --type kickoff
+/meeting "Standup" --type standup
+```
+
+## Approach
+
+1. **Resolve title + type + slug** — from the arg; type defaults to `review` if ambiguous.
+2. **Gather** — from a transcript/notes the user pastes, or a short interview: attendees · agenda · the decisions · blockers · action items (owner + deadline each). No-re-ask.
+3. **Draft** per the template — attendees, agenda, discussion summary, then the three tables; link any doc-touching decision.
+4. **L1 plan preview** — decision/blocker/action counts + any ownerless action flagged.
+6. **Flag ownerless actions** in the report (so they get an owner before the meeting's value leaks).
+8. **Output report** — counts + ownerless actions + next (route an action to a doc via `/cr` if it's a scope change).
+
+## Gotchas
+
+- **Tables, not prose** — "we decided X" buried in discussion is lost; the Decisions table is the searchable record.
+- **Ownerless = flagged** — an action without an owner never happens; surface it rather than silently assigning a guess.
+- **Don't fork files** — one note holds everything; a "decisions.md" + "actions.md" split drifts the moment one updates.
+- **Link, don't duplicate** — a decision about `FR-atlas-re-006` links the spec; it doesn't restate the FR.

@@ -1,28 +1,55 @@
 ---
 name: ba-test-cases
-description: Write reproducible test cases with observable assertions.
+description: Business analysis test-cases specialist.
 ---
 
-# ba-test-cases: Write reproducible test cases with observable assertions
+# ANGENT BA: test-cases
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/test-cases/SKILL.md
 
-Use this method when the user needs **write reproducible test cases with observable assertions**, not because a generic question merely mentions the subject. Required inputs to look for: accepted checklist, preconditions, fixtures and environment. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Specify independent setup, actions, expected results, cleanup and negative cases; trace to requirement and AC. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /test-cases — Full test cases (steps/data/expected)
 
-Produce **Test case set with IDs, data, environment and automation suitability**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Expand each `CHK-` row into one or more `TC-{NNN}` test cases — numbered steps, concrete test data, and the expected observable outcome (+ error code/message where applicable). **Single output**: `docs/{feature}/test/testcases/{feature}-testcase-index.md` (type `test-cases-index`).
 
-- Do not equate one checklist item with a full test case mechanically.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group B** (`feature-bootstrap.md` canonical example): no `test/checklist/{feature}-checklist-index.md` → **refuse + route `/test-checklist`**. Expanding nothing = fabricating tests.
+- **Mint `TC-{NNN}`** (`test-conventions.md`) — 3-digit, path-scoped, max+1, never reused.
+- **One CHK → one or more TC** — a boundary `CHK-` expands to the at/below/above triple as separate `TC-` rows; an error `CHK-` to one `TC-` per `E-` code it covers. Every `TC-` links back via the `Expands CHK` column.
+- **Test data is sourced** — values come from the spec/AC (BR thresholds, E- messages); unknown values → ask or OQ, never invented.
+- **One action per step** — numbered steps, each a single click/enter/submit; no prose padding.
+- **Expected = observable** — the outcome a tester sees + the exact error wording/code where applicable.
+- **Fill the checklist's `TC` column** — after generating, write the `TC-` back into the checklist row (the reverse pointer `/gap` joins on).
+- **Validate before done** — doc-validate (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/test-cases <feature>                # expand every CHK- with no TC yet
+/test-cases <feature> --chk CHK-003  # one checklist row
+```
+
+## Approach
+
+1. **Gate.** No checklist → refuse + route `/test-checklist` (standard group-B message). Read the checklist (every `CHK-`, its `Covers`, layer) + the spec/AC for the source values (boundaries, error messages).
+2. **Expansion plan** — per uncovered `CHK-`: how many `TC-` (boundary → 3, error → 1 per E-, functional → 1); note the test data needed per case.
+3. **Fact-list** — per planned `TC-`: the steps, the data (sourced), the expected (+ E- code).
+4. **Ask data gaps** — any value the spec/AC doesn't pin (one batched round); "skip" → mark the case `data: TBD`.
+5. **Assign `TC-` IDs** — scan the existing testcase index for max.
+6. **Draft** per the template — rows with Title / Expands CHK / Steps / Test data / Expected / Status.
+7. **L1 plan preview** — TC count + per-CHK expansion breakdown + data-gaps flagged.
+10. **Output report** — TC generated + data-gaps + next (`/gap` to prove AC→CHK→TC coverage).
+
+## Gotchas
+
+- **No checklist = no test cases** — this is the canonical group-B refusal; don't soften it. Generating tests from FRs directly skips the outline and produces uneven coverage.
+- **Boundary triple is non-negotiable** — a ≤ 50k rule tested only at 40k leaves the edge ambiguous; the at/below/above cases are why `/test-cases` exists over a flat generator.
+- **Expected wording must match the spec** — the `E-` message in the test case is the exact string the user sees; paraphrasing it breaks the tester.
+- **Don't renumber** — a `TC-` retired by a changed requirement keeps its number; new cases take max+1.

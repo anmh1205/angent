@@ -1,28 +1,53 @@
 ---
 name: ba-dashboard
-description: Summarize verified project coverage and delivery risks.
+description: Business analysis dashboard specialist.
 ---
 
-# ba-dashboard: Summarize verified project coverage and delivery risks
+# ANGENT BA: dashboard
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/dashboard/SKILL.md
 
-Use this method when the user needs **summarize verified project coverage and delivery risks**, not because a generic question merely mentions the subject. Required inputs to look for: artifact indexes, owner status, provider issue data and dates. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Calculate explicit traceability statistics; show stale evidence, blockers and decisions; link every metric to denominator/source. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /dashboard — Vault status (one-file HTML)
 
-Produce **Status dashboard with FR→story→AC→test coverage and uncertainties**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Scan the vault and render one self-contained HTML status page — features and their doc statuses, staleness (from `staleness.log`), recent activity (from `activity.log`), and Open-Question debt (unresolved OQs across the chain) — plus regenerate `docs/feature-list.md` (the status-lifecycle `* → approved` automation). **Outputs**: `docs/_shared/dashboard.html` + `docs/feature-list.md`.
 
-- No invented progress %, remaining time or false green status.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group C** (`feature-bootstrap.md`): empty vault → write a placeholder dashboard ("nothing yet — start with `/brainstorm` or `/urd`").
+- **Read-only over sources** — scans docs; the ONLY writes are `dashboard.html` + `feature-list.md` (L1-gated; `approval-gate.md` notes dashboard is NOT exempt — it writes an HTML file).
+- **Self-contained HTML** — inline CSS, no CDN; the gallery skill's self-contained pattern.
+- **`dashboard.html` path** — `docs/_shared/dashboard.html` (a `_shared/` singleton like `traceability.md`).
+- **Feature-list regeneration** — `docs/feature-list.md` from each feature's docs' `status:` (the status-lifecycle `* → approved` transition triggers this; `/dashboard` does it on demand too).
+- **OQ debt** — count unresolved OQs per feature (parse the checkbox lists); a feature with 5 open OQs is visibly riskier.
+- **Idempotent** — re-run regenerates (L2 diff).
+- **Validate before done** — doc-validate doesn't cover `.html`/`feature-list.md` (excluded types); self-check the HTML is well-formed.
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/dashboard              # render + regenerate feature-list
+/dashboard --open       # render, then open in browser
+```
+
+## Approach
+
+1. **Scan the vault** — per feature: its docs + statuses + `updated:` dates; count OQs; recent activity from `activity.log`; staleness from `staleness.log` if present. Also read `docs/_shared/project-context.md` frontmatter (`source_watermark` + `staleness_budget_commits`) → compute commit drift (commits since the watermark vs the budget) for a project-context fresh/stale flag.
+2. **Aggregate** — feature statuses (how many approved/in-review/draft), OQ debt per feature, stale docs, last-activity per feature.
+3. **Render `dashboard.html`** — self-contained: a top-of-page **Project context: fresh / stale (N commits since scan)** callout (when a `/discover` profile exists) + a feature table (status pills, OQ count, last-updated, stale flag) + an activity feed (recent N events) + an OQ-debt callout. Light, no CDN.
+4. **Regenerate `docs/feature-list.md`** — one row per feature: slug + status + doc count + OQ count + updated.
+5. **L1 plan preview** — feature count + status mix + OQ debt + stale count + project-context fresh/stale flag.
+7. **Output report** — the dashboard path + the status mix + the riskiest feature (most OQs/stale) + next.
+
+## Gotchas
+
+- **Status, not coverage** — the dashboard answers "where are we?" (statuses, staleness, debt); `/gap` answers "what's missing in the chain?". Both, different jobs.
+- **OQ debt is the leading indicator** — a feature with growing OQ debt is drifting from its sources; surface it, don't hide the count.
+- **feature-list.md is auto-gen** — never hand-edit it; it's regenerated from the docs' statuses. (Excluded from the activity log like other auto-gen files.)
+- **Self-contained matters** — a dashboard that fetches a CDN breaks offline/on intranet; inline everything.

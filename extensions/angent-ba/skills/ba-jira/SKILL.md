@@ -1,28 +1,57 @@
 ---
 name: ba-jira
-description: Reconcile approved backlog artifacts with Jira.
+description: Business analysis jira specialist.
 ---
 
-# ba-jira: Reconcile approved backlog artifacts with Jira
+# ANGENT BA: jira
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/jira/SKILL.md
 
-Use this method when the user needs **reconcile approved backlog artifacts with jira**, not because a generic question merely mentions the subject. Required inputs to look for: authorized Jira project, issue mapping, approved story data. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Read live targets; map stable IDs to existing issues; prepare create/update diff; write only authorized fields; verify returned issues. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /jira — Push/sync user stories to Jira
 
-Produce **Jira sync report with changed IDs and unresolved conflicts**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Sync the feature's user stories ↔ Jira issues bidirectionally: push stories as issues (one `US-` → one issue), write the returned key into `{feature}-story-index.md`'s `jira-key` column, and pull issue status back into the index. Mapping state in `.claude/state/atlassian/sync-state.yaml` `mappings.jira`.
 
-- Idempotent; avoid duplicate issues and bulk surprise updates.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **External-write — hard HITL** (`atlassian-sync.md` §1): preview every issue + target project, explicit **Y** per write. `--dry-run` runs to the diff, writes nothing.
+- **Jira MCP must be authenticated** — not connected → STOP with connect instructions; never fabricate keys.
+- **Group B** (`feature-bootstrap.md`): needs `userstories/us-*.md` + the story index; missing → refuse + route `/userstory`.
+- **One issue per story** (`atlassian-sync.md` Jira-specific); the story-index `jira-key` column is the canonical pointer.
+- **Refuse `status: stale` stories** (`approval-gate.md` named hard gate) — route to `/userstory` to refresh first; a stale story pushed propagates outdated scope.
+- **Watermark by story hash** — re-push only changed stories (no full-backlog re-push every run).
+- **Bidirectional status map** — Jira statuses → our lifecycle (`draft`/`in-review`/`approved`/`shipped`); ambiguous mappings → ask, never guess.
+- **No local doc output** — only the story-index `jira-key`/`status` columns + sync-state are edited.
+- **Idempotent** — re-run updates existing issues (keys stable).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/jira <feature> --push              # push changed stories (default)
+/jira <feature> --pull              # pull issue status into the index
+/jira <feature> --push --dry-run    # preview, write nothing
+```
+
+## Approach
+
+1. **Gate.** No stories → refuse + route `/userstory`. Verify Jira MCP auth; probe project access.
+2. **Diff vs watermark** — read sync-state `mappings.jira`; compute changed stories (hash ≠ stored `source_hash`). Stale-status stories → BLOCKING, route to `/userstory`.
+3. **Push preview** — per changed story: the issue title/summary/desc (from the story), the target project, the expected key (new vs update). `--pull` instead → the issues whose status changed.
+4. **L1 hard-gate preview** — list every issue write + "this writes to Jira"; get explicit **Y** (or stop at `--dry-run`).
+5. **On Y → MCP writes** — create/update each issue; collect returned keys.
+6. **Edit the story index** — write keys into `jira-key` (push) or status from the pull map (pull); tick `updated`.
+7. **Update sync-state** — `mappings.jira` per story (key/url/last_synced/source_hash).
+9. **Output report** — pushed/pulled counts + any stale-refused + coverage (`jira-key` filled / total).
+
+## Gotchas
+
+- **Never invent a key** — a write that returns nothing leaves the cell empty + reported, not faked.
+- **Stale = hard stop** — it's the named gate for a reason; pushing a story whose FRs changed silently corrupts the backlog.
+- **Status map ambiguity** — Jira's "In Progress" could be our `draft` or `in-review`; ask once, record the mapping, don't guess per run.
+- **One issue per story** — don't bundle stories into an epic issue; the `jira-key` column is 1:1 (epics are a Jira-side grouping, not a story-side one).

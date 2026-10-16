@@ -1,28 +1,53 @@
 ---
 name: ba-test-checklist
-description: Map requirements to planned validation coverage.
+description: Business analysis test-checklist specialist.
 ---
 
-# ba-test-checklist: Map requirements to planned validation coverage
+# ANGENT BA: test-checklist
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/test-checklist/SKILL.md
 
-Use this method when the user needs **map requirements to planned validation coverage**, not because a generic question merely mentions the subject. Required inputs to look for: approved FR/BR/NFR, stories, risk and platform constraints. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Partition happy/negative/boundary/security/accessibility scenarios; annotate manual vs automated candidates. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /test-checklist — Test coverage outline
 
-Produce **Scenario checklist with source links, risk and priority**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Derive the test-coverage outline from `srs/{feature}-spec.md` (FR/BR/E), the stories' acceptance criteria (`AC-`), and the use cases' extensions — one `CHK-{NNN}` row per testable thing, classified by layer. **Single output**: `docs/{feature}/test/checklist/{feature}-checklist-index.md` (type `test-checklist-index`).
 
-- Every critical requirement has a meaningful verification path.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group B\*** (`feature-bootstrap.md`): `srs/{feature}-spec.md` missing → refuse + route `/srs`. AC files missing → soft warn (the checklist can derive from FRs/E-, but coverage of AC is the stronger path).
+- **Mint `CHK-{NNN}`** (`test-conventions.md`) — 3-digit, path-scoped, max+1, never reused.
+- **Every row covers something** — `Covers` cites the AC/FR/BR/E it verifies; a row with no source is a fabrication → drop it or send back to `/srs`.
+- **Layer classification** — functional / boundary / error / non-functional (the value of the checklist is the *categorized* outline, not a flat list).
+- **Boundary awareness** — a BR threshold (e.g. ≤ 50k) → one boundary `CHK-` that `/test-cases` will expand to the at/below/above triple.
+- **Error coverage** — every `E-` code → at least one `CHK-` (error layer).
+- **The `TC` column starts empty** — `/test-cases` fills it; this skill owns the outline, not the steps.
+- **Validate before done** — doc-validate (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/test-checklist <feature>          # derive from spec + AC + UC extensions
+```
+
+## Approach
+
+1. **Gate.** Spec missing → refuse + route `/srs`. Read the spec (FR/BR/E rows), the story ACs, and the UC extensions (failure branches → error-layer checks).
+2. **Derive candidates** — per FR: the happy-path check + any boundary (BR threshold) + any error (E- code); per AC: a check verifying it; per NFR: a non-functional check where measurable.
+3. **Fact-list** — every candidate + its source (FR/BR/E/AC) + its layer.
+4. **Assign `CHK-` IDs** — scan the existing checklist for max; classify each row's layer.
+5. **Draft** the checklist per the template — rows grouped by layer, `Covers` filled, `TC` empty, `Status: draft`.
+6. **L1 plan preview** — row count by layer + coverage map (which FRs/ACs/E- are covered, which aren't).
+9. **Output report** — layer breakdown + uncovered FR/E/AC (so the user knows the outline's edges) + next (`/test-cases`).
+
+## Gotchas
+
+- **Don't write steps here** — steps/data/expected are `/test-cases`' job; a checklist row is a one-line "what to test", not a procedure.
+- **Boundary = one row, not three** — the at/below/above split happens at the case level; the checklist just flags "test the 50k boundary".
+- **E- coverage is mandatory** — an error code with no CHK- is a documented error nobody tests; surface it in the report.
+- **AC is the richest source** — if stories have ACs, derive from them first (they're already Given-When-Then); FRs are the fallback.

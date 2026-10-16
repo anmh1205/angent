@@ -1,28 +1,51 @@
 ---
 name: ba-api-readiness
-description: Determine production integration release gates.
+description: Business analysis api-readiness specialist.
 ---
 
-# ba-api-readiness: Determine production integration release gates
+# ANGENT BA: api-readiness
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/api-readiness/SKILL.md
 
-Use this method when the user needs **determine production integration release gates**, not because a generic question merely mentions the subject. Required inputs to look for: run logs, monitoring, fallback, secrets, SLA and rollback. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Check authentication rotation, observability, chaos/failure tests, rate budgets and recovery; separate blocker from deferred enhancement. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /api-readiness — Go-live gate (API chain [6])
 
-Produce **Go/no-go readiness assessment with evidence and owner**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Produce the go-live gate for the integration — cutover sequence, feature flags (kill switch), monitoring + runbook, rollback, SLA/deprecation, and a go/no-go table that hard-refuses "go" if `/api-test` results are absent. **Single output**: `docs/{feature}/integration/api-readiness.md` (type `api-readiness`).
 
-- Production readiness requires actual runtime proof.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Step [6], the gate** (`api-integration.md`): reads the whole chain — summary, design, map, checklist, **tests**. `api-tests.md` missing → **hard-refuse "go"** (can't enable what you haven't proven works); still write the readiness doc with status `blocked`.
+- **Go/no-go is evidence-based** — the table's "go" requires: tests present + monitoring defined + rollback defined + flags named. A "go" with any of these absent is BLOCKING.
+- **Five mandatory concerns** — cutover (enablement sequence + who flips what), feature flags (kill switch name + owner + off-state = degraded UX), monitoring (alerts: error rate/latency/their-status-page + runbook link), rollback (disable sequence + partial-data back-out), SLA/deprecation (their SLA we depend on + sunset date + our deprecation notice).
+- **No fabrication** — flag names, alert thresholds, SLA figures cite the design/SRS/provider docs; unknowns → OQ or a `blocked` row.
+- **Degraded-UX is the flag's off-state** — the kill switch doesn't just turn the feature off, it routes to the degraded path the design specified.
+- **Validate before done** — doc-validate (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/api-readiness <feature>          # reads the whole chain, assesses go/no-go
+```
+
+## Approach
+
+1. **Gate.** Read the whole chain. `api-tests.md` absent → write readiness with go/no-go = **blocked (no test evidence)**; refuse to issue "go".
+2. **Interview gaps** (one batched round): the cutover sequence + who flips each step · the kill-switch flag name + owner · the monitoring alerts + thresholds + runbook · the rollback sequence · the provider SLA + any sunset.
+3. **Fact-list** — every gate item + its evidence/owner; the unknowns → `blocked` rows or OQs.
+4. **Draft** per the template — the five concerns + the go/no-go table (each gate item: ready/blocked + evidence).
+5. **L1 plan preview** — go/no-go verdict + the blocked items (if any) + the cutover summary.
+7. **Self-check** — a "go" requires every gate item `ready`; any `blocked` → verdict stays `no-go`.
+9. **Output report** — the verdict + the blocked items (the path to "go") + next (flip the flags on "go").
+
+## Gotchas
+
+- **"Go" is a verb with consequences** — a soft "looks ready" is not a go; the table forces each gate item to declare ready/blocked with evidence.
+- **Rollback must be real** — "disable the flag" is half a rollback; the other half is backing out data already written to our DB / sent to the provider.
+- **Their SLA is our dependency** — if the provider's SLA is worse than our NFR availability, that's a `blocked` row, not a hope.
+- **Sunset dates bite** — a provider EOL in the cutover window is a hard block; record the date.

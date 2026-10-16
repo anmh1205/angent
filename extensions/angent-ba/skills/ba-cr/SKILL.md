@@ -1,28 +1,57 @@
 ---
 name: ba-cr
-description: Manage impact of a proposed requirement change.
+description: Business analysis cr specialist.
 ---
 
-# ba-cr: Manage impact of a proposed requirement change
+# ANGENT BA: cr
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/cr/SKILL.md
 
-Use this method when the user needs **manage impact of a proposed requirement change**, not because a generic question merely mentions the subject. Required inputs to look for: change request, baseline revision, artifact dependency graph. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Identify changed invariants and dependents; propose scoped diff, risk and test impacts; request approval before consequential writes. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /cr — Change Request (record + impact + rollback + guided apply)
 
-Produce **Impact map, proposed patches, approvals and verification plan**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Record a scope change as a self-contained Change Request — `docs/cr/CR-{YYYYMMDD}-{NNN}.md` (type `change-request`) — carrying the Impact Matrix (affected IDs across the spine), the Detailed Impact, and the Rollback Plan. With `--apply`, walk the Apply order and edit each affected doc as an L2 diff.
 
-- Do not silently rewrite approved artifacts or expand authorization.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group C\*** (`feature-bootstrap.md`): project-level; consumes any doc. The CR file is **self-contained** — Impact Matrix + Detailed Impact + Rollback live INSIDE it (no separate `docs/impacts/` file, per `naming-conventions.md`).
+- **Mint `CR-{YYYYMMDD}-{NNN}`** — date-based, project-wide, max+1 for the day.
+- **Record first, apply second** — `/cr "<change>"` writes the CR record (L1); `--apply CR-...` executes the Apply order (per-doc L2 diffs). Never apply without a recorded CR.
+- **Impact Matrix cites real IDs** — every affected row names an existing FR/US/E-/…; `/gap` later flags a CR whose Impact names a nonexistent ID (drift).
+- **Rollback is mandatory** — every CR carries a rollback plan (revert the IDs, restore prior states); an apply without a rollback path is BLOCKING.
+- **Validate before done** — doc-validate on the CR file (step 7).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/cr "<change description>"            # record the CR (Impact + Rollback), no edits yet
+/cr --apply CR-20260801-001           # execute the Apply order (per-doc L2 diffs)
+```
+
+## Approach
+
+### Record mode (`/cr "<change>"`)
+1. **Understand the change** — interview (one batched round): what changes, why, which features/IDs are affected, is it reversible.
+2. **Build the Impact Matrix** — scan the vault for the affected IDs (FR/US/E-/screens…); each row: ID + doc + nature of impact (add/modify/remove) + the new value.
+3. **Draft the Apply order** — the sequence of per-doc edits (dependencies first; e.g. SRS before the stories that slice it).
+4. **Draft the Rollback Plan** — the reverse sequence + prior values to restore.
+5. **L1 plan preview** — affected-ID count + apply-order summary + rollback confidence.
+8. **Output report** — CR id + next (`--apply` when ready).
+
+### Apply mode (`--apply CR-...`)
+1. **Read the CR** — the Apply order + Impact Matrix.
+3. **Walk the Apply order** — per doc: show the L2 diff → on approval, Edit → set the activity log env → next. A step whose target doc changed since the CR was recorded → HARD STOP (re-assess impact).
+4. **Tick the CR's applied-status** per step; on completion stamp `applied: {date}`.
+5. **Output report** — steps applied + any that needed re-assessment.
+
+## Gotchas
+
+- **Apply ≠ record** — a recorded CR with no apply is a normal "logged but not done yet" state; don't auto-apply.
+- **Stale impact is the killer** — if a target doc changed after the CR was recorded, the Apply order's diffs are wrong; HARD STOP and re-assess rather than apply a stale diff.
+- **Rollback or don't ship** — an irreversible change with no rollback path must be called out at record time, not discovered at apply.

@@ -1,28 +1,54 @@
 ---
 name: ba-userguide
-description: Write user-facing operational guidance grounded in shipped behavior.
+description: Business analysis userguide specialist.
 ---
 
-# ba-userguide: Write user-facing operational guidance grounded in shipped behavior
+# ANGENT BA: userguide
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/userguide/SKILL.md
 
-Use this method when the user needs **write user-facing operational guidance grounded in shipped behavior**, not because a generic question merely mentions the subject. Required inputs to look for: verified UI, roles, supported operations, screenshots. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
 
-Explain task-based procedures, failure recovery, permissions and escalation; validate steps on actual target when possible. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /userguide — End-user manual
 
-Produce **User guide with screenshots, troubleshooting and version scope**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Produce an end-user manual: one externally-exposed entry `docs/userguide/{feature}-userguide.html` (or `userguide.html` for the whole product) + a same-name bundle folder (`index.md` metadata, `data.js` content, `pages/*.md` zero-frontmatter, `images/`). Light mode only. The entry is the only file the user opens.
 
-- No instructions for nonexistent buttons or unsupported features.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Group C** (`feature-bootstrap.md`): project-level or feature-scoped; an empty vault → friendly placeholder ("nothing to document yet").
+- **Phased, scan-project shape** — Phase 1: scan the vault (docs/wireframes) → outline the manual (sections + page list) → HARD STOP (confirm the outline). Phase 2: generate the bundle.
+- **Light mode ONLY** (`naming-conventions.md` line 82) — docs-style black/white + blue highlight; NO dark mode. End-users read printed/light screens.
+- **Compact structure (entry + bundle)** — only `*.html` visible at top level; everything else in the bundle folder of the same name. Don't use bare `preview.html`/`index.md` at top level.
+- **Pages are zero-frontmatter** (`naming-conventions.md`) — content only; metadata in the bundle's `index.md`.
+- **Self-contained entry** — no CDN; inline CSS + the `data.js` content; double-click to run.
+- **Source = the vault** — task guidance from the SRS/use cases/wireframes; screenshots from `images/` if provided. No fabricated steps.
+- **Resolve-oqs Phase E** — the userguide is a downstream doc; inherit unresolved OQs from the chain (`resolve-oqs.md` globs `skills/userguide/**`).
+- **Validate before done** — doc-validate on the bundle index (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/userguide                          # whole product
+/userguide --feature atlas-re       # one feature
+/userguide --lang vi                # force language
+```
+
+## Approach
+
+1. **Scope + scan** — whole product or `--feature`. Read the docs (SRS/use cases), wireframes (screen purposes → manual sections), URD personas (audience → altitude).
+2. **Outline (Phase 1)** — the manual's sections + the page list per section + which screens/screenshots each needs. **HARD STOP** — confirm before generating.
+3. **Generate (Phase 2)** — per confirmed page: task-oriented prose (how to do X, not how the system works), zero-frontmatter, image refs. Build `data.js` (content embedded) + the entry `.html` (light, self-contained, sidebar TOC).
+4. **L1 plan preview** (post-outline) — section/page count + audience altitude + screenshot gaps.
+7. **Output report** — entry path + page count + screenshot gaps.
+
+## Gotchas
+
+- **Task-oriented, not system-oriented** — "How to approve a claim", not "The approval service records a transition". End-users care about their job, not the architecture.
+- **Light mode is non-negotiable** — a dark manual printed on paper or read on a bright desk is hostile; don't "improve" it with dark mode.
+- **The entry is the contract** — `docs/userguide/` top level shows only `*.html`; the bundle keeps it tidy (and Obsidian/IDE quick-switcher sane).
+- **Don't skip the outline HARD STOP** — generating 20 pages from a guessed outline wastes a full run; confirm the shape first.
