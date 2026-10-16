@@ -24,7 +24,7 @@ The script validates this state model and outputs the actual Reqwise OSS `figma_
 
 When the Reqwise MCP and its companion Figma plugin **actually exist in the host**, consult `figma_status` and `figma_docs`, verify the selected file/page and permission, then only invoke an authorized `figma_diagram`. After execution, read back `figma_read` with `get_diagram_spec` and `layout_audit`, compare node/edge inventory and inspect a real image. Record tool errors and divergences, not just a success-looking response. If the MCP is unavailable, deliver the checked semantic payload labeled **not written to Figma**.
 
-**Additional state semantic acceptance:** Check that the model describes exactly one entity, initial/final transitions, forbidden transitions and event/guard conflicts. The existing synthetic state fixture cites FR-IVTS-02, which is NOT present in the compact BA evidence graph: report unresolved rather than fabricate a source.
+**Additional state semantic acceptance:** Check that the model describes exactly one entity, initial/final transitions, forbidden transitions and event/guard conflicts. The synthetic state fixture cites FR-IVTS-02, which now exists in the compact BA evidence graph but does not have a traceable test artifact. Resolve that ID when checking provenance; do not mistake existence for verified behavior or manufacture missing test evidence.
 
 **Upstream scope:** MIT Reqwise OSS implements this diagram type, but the source-local payload generator alone proves neither upstream server compatibility for every version nor canvas fidelity. Pro-only functionality cannot be substituted silently.
 
