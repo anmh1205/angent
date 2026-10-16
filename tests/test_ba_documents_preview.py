@@ -48,6 +48,12 @@ class TestDocuments(unittest.TestCase):
                     index=parent/index_name
                     index.write_text("---\ntype: "+index_type+"\nstatus: draft\n---\n"
                                      "# Feature index\n",encoding="utf8")
+                    if folder != "ascii-wireframe":
+                        self.assertFalse(inspect(body,root)["ok"],
+                                         "Missing index row must not authorize body")
+                        with index.open("a",encoding="utf8") as stream:
+                            stream.write("| ID | Document |\n| --- | --- |\n"
+                                         "| [entry]("+filename+") | Reviewed |\n")
                     result=inspect(body,root)
                     self.assertTrue(result["ok"],result)
                     self.assertTrue(any("Index-managed" in x for x in result["warnings"]))
@@ -56,6 +62,36 @@ class TestDocuments(unittest.TestCase):
             unrelated=root/"untracked.md"
             unrelated.write_text("# Untracked\n",encoding="utf8")
             self.assertFalse(inspect(unrelated,root)["ok"])
+
+    def test_index_membership_rejects_unreferenced_neighbor(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            folder=root/"usecases"
+            folder.mkdir()
+            (folder/"feature-usecase-index.md").write_text(
+                "---\\ntype: usecase-index\\n---\\n# Use cases\\n"
+                "| Slug | Status |\\n| --- | --- |\\n"
+                "| [uc-known](uc-known.md) | draft |\\n",encoding="utf8"
+            )
+            known=folder/"uc-known.md"
+            unknown=folder/"uc-unknown.md"
+            for item in (known,unknown):
+                item.write_text("# Actor goal\\n",encoding="utf8")
+            self.assertTrue(inspect(known,root)["ok"])
+            self.assertFalse(inspect(unknown,root)["ok"])
+
+    def test_updated_date_is_real_calendar_day_not_just_regex(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            path=root/"spec.md"
+            for bad_date in ("2026-02-30","2026-13-01","2026-00-00"):
+                path.write_text("---\\nstatus: draft\\nupdated: "+bad_date+
+                                "\\n---\\n# Title\\n",encoding="utf8")
+                report=inspect(path,root)
+                self.assertIn("invalid date format",report["errors"])
+            path.write_text("---\\nstatus: draft\\nupdated: 2026-02-28\\n---\\n# Title\\n",
+                            encoding="utf8")
+            self.assertTrue(inspect(path,root)["ok"])
 
     def test_invalid_content_and_bad_links(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -2,6 +2,7 @@
 """Read-only checker for completed BA Markdown documents."""
 import argparse
 import json
+from datetime import date
 from pathlib import Path
 import re
 
@@ -35,8 +36,26 @@ def indexed_body(path, root):
     end=data.find("\n---\n",4)
     if end < 0:
         return False
-    return any(re.fullmatch(r"type:\s*"+re.escape(contract[2])+r"\s*", line.strip())
-               for line in data[4:end].splitlines())
+    declared_type=any(re.fullmatch(r"type:\s*"+re.escape(contract[2])+r"\s*", line.strip())
+                      for line in data[4:end].splitlines())
+    if not declared_type:
+        return False
+    if path.parent.name == "ascii-wireframe":
+        # Source kit's screen index maps screens, not per-flow file names.
+        return True
+    # A random same-directory index must not authorize unrelated content
+    # files. Require a real Markdown link to this body in the index.
+    for line in data[end+5:].splitlines():
+        if not line.strip().startswith("|"):
+            continue
+        for match in LINK.finditer(line):
+            target=match.group(1).split("#", 1)[0]
+            if not target or "://" in target:
+                continue
+            candidate=(index_files[0].parent/target).resolve()
+            if candidate.is_relative_to(root.resolve()) and candidate == path.resolve():
+                return True
+    return False
 
 def inspect(path, root):
     errors, warnings = [], []
@@ -66,8 +85,11 @@ def inspect(path, root):
         errors.append("unclosed code fence")
     if front.get("status") and front["status"] not in VALID_STATES:
         errors.append("invalid status")
-    if front.get("updated") and not re.fullmatch(r"\d{4}-\d{2}-\d{2}",front["updated"]):
-        errors.append("invalid date format")
+    if front.get("updated"):
+        try:
+            date.fromisoformat(front["updated"])
+        except ValueError:
+            errors.append("invalid date format")
     ids=[]
     for line in content.splitlines():
         m=ID_ROW.search(line)
