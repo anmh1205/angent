@@ -16,22 +16,25 @@ from typing import Any
 
 from validate_artifacts import audit
 
-ID = re.compile(r"^(?:FR|NFR|BR|E|CHK|TC|US|UC)-[A-Za-z0-9][A-Za-z0-9-]*$")
+ID = re.compile(r"^(?:UN|BO|CAP|FR|NFR|BR|E|AC|CHK|TC|US|UC)-[A-Za-z0-9][A-Za-z0-9-]*$")
 LINKED_ID = re.compile(r"^\[([A-Za-z0-9-]+)\]\([^)]+\)$")
 REF = re.compile(r"\b(?:CAP|BO|UN|FR|NFR|BR|E|UC|US|AC|CHK|TC)-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\b")
-HEADERS = {"FR":("Requirement","Covers"),
+HEADERS = {"UN":("Need statement",),"BO":("Objective","Covers needs"),"CAP":("Capability","Covers"),"AC":("Criterion",),
+           "FR":("Requirement","Covers"),
            "NFR":("Requirement",),
            "BR":("Rule","Applies to"),
            "E":("Condition","Related FR"),
            "CHK":("What to test","Covers","TC"),
            "TC":("Title","Expands CHK"),
            "US":("Title","FR"),"UC":("Slug","Covers FR") }
-KIND = {"FR":"FR","NFR":"NFR","BR":"BR","E":"ERROR","CHK":"CHECKLIST","TC":"TEST",
+KIND = {"UN":"NEED","BO":"BUSINESS_OBJECTIVE","CAP":"CAPABILITY","AC":"ACCEPTANCE",
+        "FR":"FR","NFR":"NFR","BR":"BR","E":"ERROR","CHK":"CHECKLIST","TC":"TEST",
         "US":"STORY","UC":"USECASE"}
-LINK_CELLS = {"FR":["Covers"], "BR":["Applies to"], "E":["Related FR"],
+LINK_CELLS = {"UN":[],"BO":["Covers needs"],"CAP":["Covers"],"AC":["Covers","Related FR","FR","US"],
+              "FR":["Covers"], "BR":["Applies to"], "E":["Related FR"],
               "CHK":["Covers"], "TC":["Expands CHK"],
               "US":["FR"],"UC":["Covers FR"]}
-DISPLAY_CELLS = {"FR":"Requirement","NFR":"Requirement","BR":"Rule","E":"Condition",
+DISPLAY_CELLS = {"UN":"Need statement","BO":"Objective","CAP":"Capability","AC":"Criterion","FR":"Requirement","NFR":"Requirement","BR":"Rule","E":"Condition",
                  "CHK":"What to test","TC":"Title",
                  "US":"Title","UC":"Slug"}
 
@@ -115,6 +118,14 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
                 if not ID.fullmatch(item_id):
                     continue
                 kind=item_id.split("-",1)[0]
+                if role=="urd" and kind!="UN":
+                    continue
+                if role=="brd" and kind!="BO":
+                    continue
+                if role=="prd" and kind!="CAP":
+                    continue
+                if role=="criteria" and kind!="AC":
+                    continue
                 if role=="srs" and kind not in ("FR","NFR","BR","E"):
                     continue
                 if role=="checklist" and kind!="CHK":
@@ -178,6 +189,10 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
 def main() -> int:
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--srs",required=True,type=Path)
+    p.add_argument("--urd",type=Path,help="Optional accepted user-needs index with UN IDs")
+    p.add_argument("--brd",type=Path,help="Optional accepted business objectives index with BO IDs")
+    p.add_argument("--prd",type=Path,help="Optional accepted feature capability index with CAP IDs")
+    p.add_argument("--criteria",type=Path,help="Optional accepted AC table with Criterion column")
     p.add_argument("--checklist",type=Path)
     p.add_argument("--cases",type=Path)
     p.add_argument("--stories",type=Path,help="User story index table, when present")
