@@ -1,0 +1,28 @@
+# ANGENT BA D2 diagram: architecture
+# Source is independent and proposed; SVG requires a separately checked D2 CLI.
+direction: right
+g_b977b950c1ae31e5: "Cloud" {
+  shape: rectangle
+}
+g_a62394ba4acc97cd: "Vehicle" {
+  shape: rectangle
+}
+g_a62394ba4acc97cd.n_2b2961a431b23c90: "Vehicle tracker" {
+  shape: rectangle
+}
+g_b977b950c1ae31e5.n_487a0a9a39038de9: "Telemetry gateway" {
+  shape: rectangle
+}
+g_b977b950c1ae31e5.n_862417b9e7c3720b: "Event queue" {
+  shape: queue
+}
+g_b977b950c1ae31e5.n_7bdc25d1694ef984: "State store" {
+  shape: cylinder
+}
+n_d3ef7de562f9a4a3: "Rental operator" {
+  shape: person
+}
+g_a62394ba4acc97cd.n_2b2961a431b23c90 -> g_b977b950c1ae31e5.n_487a0a9a39038de9: "MQTT/TLS"
+g_b977b950c1ae31e5.n_487a0a9a39038de9 -> g_b977b950c1ae31e5.n_862417b9e7c3720b: "publish"
+g_b977b950c1ae31e5.n_862417b9e7c3720b -> g_b977b950c1ae31e5.n_7bdc25d1694ef984: "consume"
+g_b977b950c1ae31e5.n_7bdc25d1694ef984 -> n_d3ef7de562f9a4a3: "HTTPS/read"
