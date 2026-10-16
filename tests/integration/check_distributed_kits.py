@@ -75,11 +75,12 @@ def check(target:Path,level:str)->dict:
     if collection.get("contract_check")!="checked-subset":
         raise ValueError("Distributed API contract validation was not executed")
     lineage=run(target,"extensions/angent-ba/scripts/audit_lifecycle_handoffs.py",
-                [str(target/FLEET)])
+                [str(target/FLEET),"--source-root",str(target/"extensions/angent-ba")])
     fr_gate=next(row for row in lineage["stages"] if
                  row["stage"]=="functional_requirement_to_test")
     if (fr_gate["source_count"]!=2 or fr_gate["verified_links"]!=1 or
-            len(fr_gate["missing"])!=1 or lineage["writes_performed"]):
+            len(fr_gate["missing"])!=1 or lineage["writes_performed"] or
+            lineage["source_location_check"]!="local-files-checked"):
         raise ValueError("Distributed BA lifecycle audit lost honest FR-to-TC coverage")
     figma=run(target,"extensions/angent-figma/scripts/to_reqwise_payload.py",
               [str(target/FIGMA),"--evidence-graph",str(target/FLEET)])
