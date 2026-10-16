@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /usecase-diagram — Use Case Diagram (PlantUML native)
@@ -62,7 +62,7 @@ Actor list auto-detected; the user confirms/edits in the L1 prompt rather than v
 1. **Resolve feature** — `--feature` explicit if present; else auto-detect (single in-progress) or picker. Distinguish 2 cases (per `feature-bootstrap.md` group B):
    - **Feature does NOT exist OR is missing both `usecases/{feature}-usecase-index.md` and `srs/{feature}-spec.md`** (no actor/UC source) → **REFUSE explicitly + route**: "Cannot run `/usecase-diagram` for `{feature}` yet — missing use case + source SRS (need actors + use cases to draw). Existing features: {list}. Run `/usecase {feature}` (or `/srs {feature}`) first, then come back." Do NOT create the feature yourself.
    - **Has ≥1 source** (`{feature}-usecase-index.md` or `srs/{feature}-spec.md`, even if not yet approved) → proceed.
-2. **Validate existing** — `docs/{feature}/usecases/{feature}-usecase-diagram.puml` already exists → switch to update mode (L2 diff), tell the user it is updating.
+2. **Validate existing** — `docs/{feature}/usecases/{feature}-usecase-diagram.puml` already exists → switch to update mode (versioned diff), tell the user it is updating.
 3. **Auto-detect actors + use cases:**
    - Read the `docs/{feature}/usecases/{feature}-usecase-index.md` `## Use cases` table — pull slug + actor + title (UC files are zero-frontmatter, metadata lives in the index file).
    - Scan `docs/{feature}/{feature}-urd.md` Section 2 — extract user types as actors.
@@ -79,11 +79,11 @@ Actor list auto-detected; the user confirms/edits in the L1 prompt rather than v
    - **Only infer a relationship with evidence + rationale** (per Constraints). Cannot explain it → do NOT draw it, just actor `--` UC.
 6. **System boundary + package** — every UC inside one boundary named after the feature; split into packages only when there is a **real domain/subsystem** (NOT by a UC-count threshold). Present the proposed grouping for the user to confirm at L1.
 7. **Write the `.puml` source** (formula below) — actor `--` UC (undirected), include base→included, extend extending→base. The AI describes the structure, PlantUML handles layout.
-8. **L1 plan preview** — BA-friendly prose: "I'll draw a use case diagram for {feature} with N actors + M use cases (system boundary + {K} packages if there are domains) + J relationships with rationale. Apply? (Y / edit)".
+8. **scoped change preview** — BA-friendly prose: "I'll draw a use case diagram for {feature} with N actors + M use cases (system boundary + {K} packages if there are domains) + J relationships with rationale. Apply? (Y / edit)".
 9. **Write** `docs/{feature}/usecases/{feature}-usecase-diagram.puml` → run `render.sh` → produce `{feature}-usecase-diagram.svg`.
    - Compile fail (script exit != 0) → read the error, fix the source, re-render. At most 2 self-fix attempts before reporting to the user.
-10. **Write the image + tables into `{feature}-usecase-index.md`** (do NOT create a separate `.md` wrapper file) — the `## Diagram` section embeds `<img src="{feature}-usecase-diagram.svg" alt="Use case diagram: {feature}">` + a `## Actors` section (Actor/Type/Description/**Source**) + `## Relationships` (Type/From/To/**Rationale**). Create `{feature}-usecase-index.md` from `templates/usecase-index.md` if it does not exist. L2 diff if it does.
-11. **Update mode (`.puml` already exists)** → L2 diff for the `.puml`, re-render the `.svg`, update the sections in `{feature}-usecase-index.md`. Update `updated: {date}`.
+10. **Write the image + tables into `{feature}-usecase-index.md`** (do NOT create a separate `.md` wrapper file) — the `## Diagram` section embeds `<img src="{feature}-usecase-diagram.svg" alt="Use case diagram: {feature}">` + a `## Actors` section (Actor/Type/Description/**Source**) + `## Relationships` (Type/From/To/**Rationale**). Create `{feature}-usecase-index.md` from `templates/usecase-index.md` if it does not exist. versioned diff if it does.
+11. **Update mode (`.puml` already exists)** → versioned diff for the `.puml`, re-render the `.svg`, update the sections in `{feature}-usecase-index.md`. Update `updated: {date}`.
 12. **Activity log** — set the env note (`{N} actors, {M} use cases, {K} packages — {note}`) before Write — the hook appends to activity.log.
 13. **Output report:**
     ```

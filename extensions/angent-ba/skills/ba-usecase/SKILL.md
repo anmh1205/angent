@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /usecase — Fully-dressed use cases (Cockburn text)
@@ -26,7 +26,7 @@ Write actor-goal narratives the Cockburn way — Scope · Level · Primary Actor
 - **Extensions carry the E- codes** — every failure branch in downstream mode cites its `E-{feature}-NNN`; an extension with no error code and no OQ is a smell.
 - **`UC-{slug}`** — human-readable kebab slug, ≤30 chars; the index table is the single traceability surface (no separate traceability file — removed 2026-07-13).
 - **Index absorbs the diagram** — do not touch the `## Diagram/Actors/Relationships` sections owned by `/usecase-diagram`; update only the `## Use cases` table + `## CRUD matrix` rows this run owns.
-- **Validate before done** — doc-validate on both files (step 9).
+- **Validate before done** — BA Markdown validation on both files (step 9).
 
 ## Inputs
 
@@ -44,7 +44,7 @@ Write actor-goal narratives the Cockburn way — Scope · Level · Primary Actor
 4. **Fact-list** — per UC: every step + branch + its source (spec FR / interview); downstream mode maps each step to FRs and each extension to an E- code (or an OQ).
 5. **Draft `uc-{slug}.md`** — Cockburn sections, numbered MSS, extensions as `{step}{letter}` (e.g. `3a`, `5b`) each ending in a resolution or a guarantee reference; Related Requirements links FRs/BRs (downstream) or notes "pending /srs" (discovery).
 6. **Update the index** — append/refresh the `## Use cases` row (slug/level/status/actor/FR/screens/errors/OQ/priority/updated) + `## CRUD matrix` row against ERD entities if the ERD exists.
-7. **L1 plan preview** — UC list + per-UC step/extension counts + traceability fill level.
+7. **scoped change preview** — UC list + per-UC step/extension counts + traceability fill level.
 11. **Output report** — traceability status + next steps (`/srs` in discovery; `/userstory` in downstream; `/usecase-diagram` for the visual).
 
 ## Cockburn shape reference (Claude composes it, do NOT hard-paste)

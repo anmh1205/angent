@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /dbdiagram — Database schema (DBML, import dbdiagram.io)
@@ -40,14 +40,14 @@ Plus `dbdiagram/{feature}-dbdiagram-index.md` (metadata + table list).
 ## Constraints
 
 - **Fixed output** `docs/{feature}/dbdiagram/{feature}.dbml` + `.sql`. Do NOT write into `srs/`.
-- **`--feature` optional** — auto-detected from context; file already exists → auto-enters update mode (L2 diff), no flag needed. **Feature does not exist yet + a data-model description → auto-derive the slug + create the feature** (entry point, `feature-bootstrap.md` group A).
+- **`--feature` optional** — auto-detected from context; file already exists → auto-enters update mode (versioned diff), no flag needed. **Feature does not exist yet + a data-model description → auto-derive the slug + create the feature** (entry point, `feature-bootstrap.md` group A).
 - **AI writes the source DBML, does NOT write SQL by hand** — `dbml2sql` generates the SQL. Edit `.dbml` → regenerate `.sql`.
 - **Validation is MANDATORY**: `dbml2sql {feature}.dbml --postgres` must run successfully (exit 0) before reporting done. Fail = DBML syntax error → fix, up to 2 times.
 - **L1 approval** before Write — BA-friendly prose (the tables + relationships in business terms), do NOT dump the source DBML.
 - **No L3 iterate** — DBML does not render in chat; the user reviews via dbdiagram.io or `.sql`.
 - **Do NOT ask the user about DB types** ("varchar or text?") — the skill infers DB types from the business meaning the user describes. The user only says "email is a contact address", the skill assigns `varchar` itself.
 - **Per `diagram-selection.md`** — `/dbdiagram` when you need to hand off a schema to dev / export SQL / dbdocs. Embed inline for BA → `/erd`; polished standalone diagram → `/d2-erd`.
-- **Idempotent** — 1 feature = 1 `{feature}.dbml` file; run again → auto-enters update mode (L2 diff), does not refuse.
+- **Idempotent** — 1 feature = 1 `{feature}.dbml` file; run again → auto-enters update mode (versioned diff), does not refuse.
 
 ## Inputs
 
@@ -56,7 +56,7 @@ Plus `dbdiagram/{feature}-dbdiagram-index.md` (metadata + table list).
 /dbdiagram "<data model description>"    # feature does not exist → derive slug + interview entities/relationships + create (entry point)
 ```
 
-Feature already has `.dbml` → the skill recognizes it and enters update mode (L2 diff), nothing extra to type.
+Feature already has `.dbml` → the skill recognizes it and enters update mode (versioned diff), nothing extra to type.
 
 ## Flow runtime
 
@@ -81,7 +81,7 @@ User calls /dbdiagram --feature X   (or /dbdiagram "<data model description>")
    ▼
 3. Write the source .dbml (formula below)
    ▼
-4. L1 plan preview (prose: N tables, M relationships). User Y → continue
+4. scoped change preview (prose: N tables, M relationships). User Y → continue
    ▼
 5. Write {feature}.dbml → dbml2sql regenerates {feature}.sql (validation fails → fix, up to 2 times)
    ▼
@@ -158,5 +158,5 @@ dbml2sql docs/{feature}/dbdiagram/{feature}.dbml --postgres -o docs/{feature}/db
 - **Enum must be declared BEFORE use** — a `status order_status` column without an `Enum order_status {...}` → dbml2sql fails. You can declare the enum at the top or the bottom of the file, as long as it exists.
 - **The best source is srs/{feature}-erd.md** — if present, map 1-1 (each Mermaid entity → 1 DBML Table). DB types: upgrade from Mermaid's concise types to real DB types (`string id PK` → `id uuid [pk]`). Don't invent tables beyond the spec.
 - **Don't invent indexes** — only add indexes with a business rationale (unique to prevent duplicates, columns often filtered/sorted). Don't scatter indexes "just because".
-- **Update mode (feature already has .dbml)** → Read the old source, L2 diff, re-validate + regenerate .sql after the user says Y.
+- **Update mode (feature already has .dbml)** → Read the old source, versioned diff, re-validate + regenerate .sql after the user says Y.
 - **Don't over-use** — a small feature of 2-3 tables that just needs to show relationships → `/erd` is enough. `/dbdiagram` shines when you need a dev handoff, SQL export, or a schema with many enums/indexes.

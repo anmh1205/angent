@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /state — Per-entity State Diagram
@@ -42,7 +42,7 @@ Produce a Mermaid `stateDiagram-v2` for one entity of a feature, capturing: stat
 To change the default behavior, say so in words:
 - Use another source instead of the default brainstorm/spec → tag `@file` or paste the content.
 - Write in English → say "write in English".
-- A section for that entity already exists → call the skill again, it enters update mode (L2 diff).
+- A section for that entity already exists → call the skill again, it enters update mode (versioned diff).
 
 ## Approach
 
@@ -61,7 +61,7 @@ To change the default behavior, say so in words:
    The fact-list is used as the reconciliation checklist in step 9.6.
 3. **Validate state count** — <3 states, warn "a table may be enough; continue with the diagram?" Y/n.
 4. **Validate the target** `docs/{feature}/srs/{feature}-states.md`:
-   - Exists + entity matches → enter update mode (L2 diff for that section).
+   - Exists + entity matches → enter update mode (versioned diff for that section).
    - Exists, new entity → append a `## State: {Entity}` section.
    - Missing → create new with slim frontmatter (`type: srs-states`, `feature`, `updated`) + intro skeleton.
 5. **Generate mermaid stateDiagram-v2:**
@@ -69,7 +69,7 @@ To change the default behavior, say so in words:
    - `state --> next_state : trigger / condition`.
    - `final_state --> [*]` for a terminal if any.
    - Composite states (nested) only when needed — do NOT over-engineer.
-6. **L1 plan preview** — BA-friendly prose: "I'll append a state diagram for entity {entity} to docs/{feature}/srs/{feature}-states.md with N states + M transitions + K invalid. Apply? (Y / edit)".
+6. **scoped change preview** — BA-friendly prose: "I'll append a state diagram for entity {entity} to docs/{feature}/srs/{feature}-states.md with N states + M transitions + K invalid. Apply? (Y / edit)".
 7. **Write** — Read states.md, append the section. Each section format:
    ```markdown
    ## State: {Entity}
@@ -88,7 +88,7 @@ To change the default behavior, say so in words:
    | paid | pending | Paid does not go back to pending |
    ```
    > **Full-form IDs required** in the Related line — always `BR-{feature}-NNN`, NOT the short form `BR-001` (edge source for the KG; short forms cause phantom-features + lost traceability). **Related entity** written in CamelCase matching the ERD.
-8. **Called again with a matching entity** (automatic update mode) → L2 diff for that section.
+8. **Called again with a matching entity** (automatic update mode) → versioned diff for that section.
    - **Compile fail** → read the line/column error the script returns, fix the section just appended (do NOT touch other entities), re-verify. At most 2 self-fix attempts.
    - **Compile pass** → **Read the PNG** (`<scratchpad>/state-review/block-{n}.png` — the block of the entity just written) and self-review the business content (compile-check + coverage text do NOT catch visual errors):
      - [ ] Orphan state? Every state has an inbound edge (and outbound, except terminal) — no state left dangling unconnected.

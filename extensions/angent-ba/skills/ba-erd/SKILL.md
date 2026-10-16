@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /erd — Mermaid Entity-Relationship Diagram
@@ -24,7 +24,7 @@ Create a Mermaid `erDiagram` for a per-feature data model. **Single output**: `d
 - **NO L3 iteration** — Mermaid does not render in chat. Go straight from L1 plan → Write. The user reviews the rendered ERD from the file (IDE/Obsidian/GitHub) → to change it, call the skill again and say what needs to change.
 - **L1 approval** before Write.
 - **`--feature` optional** — auto-detect from context/the in-progress feature; only ask via picker when ambiguous. **Feature does not exist + arg is a data-model description → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.
-- **File already exists** → automatically switch to update mode (L2 diff), do not refuse.
+- **File already exists** → automatically switch to update mode (versioned diff), do not refuse.
 - **Auto-detect entities** from SRS Section 6 if present.
 - **Inheritance limitation** — Mermaid `erDiagram` does not fully support inheritance; note the limitation, suggest an FK workaround.
 
@@ -42,7 +42,7 @@ To use entity descriptions from another source instead of answering directly →
 
 1. **Resolve feature.** `--feature` explicit if present; else auto-detect (single in-progress) or prompt picker.
    - **Feature does not exist (entry point, per `feature-bootstrap.md` group A):** if the arg is a raw data-model description with no matching `docs/{feature}/` (e.g. `/erd "customers, orders, payment transactions"`) → `/erd` IS ALLOWED to bootstrap itself: derive the feature slug from the description (kebab-case, ASCII, ≤50 chars), confirm the slug at L1 (user can override), create `docs/{feature}/srs/` on Write. Do NOT force the user to run `/brainstorm` first.
-2. **Validate existing.** `erd.md` already exists → switch to update mode (L2 diff), tell the user it is updating.
+2. **Validate existing.** `erd.md` already exists → switch to update mode (versioned diff), tell the user it is updating.
 3. **Auto-detect upstream entities** — scan the `docs/{feature}/srs/{feature}-spec.md` Section 6 Data Entities bullet list. Present → use it, do not re-ask what is already known (no-re-ask).
 4. **Interview to EXACTLY the SCOPE the erd needs** (when no source exists — a new feature, or an old one missing spec.md, per `feature-bootstrap.md` group A step 3). Ask in one batched business-language pass, **do NOT ask about DB types** (varchar/int...) — only the business meaning of each attribute:
    1. List the main **entities** (1 line/entity: name + 1-sentence purpose).
@@ -57,7 +57,7 @@ To use entity descriptions from another source instead of answering directly →
    - Self-reference: `ENTITY ||--o{ ENTITY : "label"`.
 6. **L1 approval** plan table — show path + summarized entity/relationship count. **NO L3 iteration in chat** — Mermaid cannot render in chat; reviewing from the rendered file is more effective.
 7. **Write** from `templates/diagram-erd.md` (slim frontmatter `type: srs-erd`/`feature`/`updated`). Fill `mermaid_code`, `entity_descriptions`, `notes`.
-8. **Update mode (file already exists)** → L2 diff. Update `updated: {date}`.
+8. **Update mode (file already exists)** → versioned diff. Update `updated: {date}`.
    - **Compile fail** (usually an attribute missing its type token — see the "2-token" gotcha — or a relationship label missing quotes) → read the line/column error the script returns, fix the block just written, re-verify. At most 2 self-fix attempts.
    - **Compile pass** → **Read the PNG** (`<scratchpad>/erd-review/block-0.png`) and self-review the business content (compile-check does NOT catch content errors):
      - [ ] All entities present? No entity from the source/description is missing.

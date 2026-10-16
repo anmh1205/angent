@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /bpmn — BPMN 2.0 Process Diagram (OMG standard, 2-layer architecture)
@@ -66,7 +66,7 @@ UC/SRS/flows ──(AI reads + infers)──► {slug}.ir.json   (lanes / nodes 
 - **NO L3 iterate** — review from `{feature}-bpmn-editor.html`.
 - **Per `diagram-selection.md`** — `/bpmn` when you need the OMG standard + BPM tool import / drag-and-drop editor. Multi-role ordinary business description (no engine needed) → `/activity-swimlane` (true swimlanes, lighter). Compact flow needing inline embedding → `/activity` (Mermaid).
 - **1 process = 1 objective.** A process too large / 2 complex merged flows → split into 2 BPMNs (like email vs Google login), compact + a multi-process dropdown.
-- **Idempotent** — `bpmn/{feature}-bpmn-index.md` tracks processes; matching slug → enter update mode automatically (L2 diff for the IR), no refusal.
+- **Idempotent** — `bpmn/{feature}-bpmn-index.md` tracks processes; matching slug → enter update mode automatically (versioned diff for the IR), no refusal.
 - **`--feature` optional** — auto-detect from context/the feature in progress; only ask via picker when ambiguous. **Feature does not exist + arg is a process description → auto-derive slug + create feature** (entry point, see `feature-bootstrap.md` group A). Do NOT require going through `/brainstorm` first.
 
 ## Inputs
@@ -95,7 +95,7 @@ UC/SRS/flows ──(AI reads + infers)──► {slug}.ir.json   (lanes / nodes 
    - `nodes`: 1 `start` (UC Section a/c trigger) · a `task` for each step (verb+object, lane = who does it) · a `gateway` for each branch point (from Branches) · an `end` for each outcome (success + each error-path).
    - `flows`: connect nodes per Expected result + Branches; each gateway-outgoing has `name` = the branch condition.
    - **The AI assigns each node's lane** (who is responsible for that step); columns/coordinates are NOT needed — the engine handles them.
-5. **L1 plan preview** — BA-friendly prose:
+5. **scoped change preview** — BA-friendly prose:
    > I will create BPMN **{title}** in `docs/{feature}/bpmn/`:
    > - **{N} roles**: {list}
    > - **{M} steps** + **{K} branch points**: {1-line main branch}
@@ -107,7 +107,7 @@ UC/SRS/flows ──(AI reads + infers)──► {slug}.ir.json   (lanes / nodes 
    - Create `docs/{feature}/bpmn/` (contains only OUTPUT — no longer copy the engine into the feature).
    - Write `{slug}.ir.json` + `{slug}.src.json`.
    - Create/update `bpmn/{feature}-bpmn-index.md`.
-7. **Call again with a matching slug** (automatic update mode) → L2 diff for `{slug}.ir.json`, then rerun `... bpmn-build.ts --dir docs/{feature}/bpmn` (layout regenerates automatically).
+7. **Call again with a matching slug** (automatic update mode) → versioned diff for `{slug}.ir.json`, then rerun `... bpmn-build.ts --dir docs/{feature}/bpmn` (layout regenerates automatically).
 10. **Output report:**
     ```
     ✅ BPMN created: docs/{feature}/bpmn/{slug}.bpmn (OMG standard, swimlane)

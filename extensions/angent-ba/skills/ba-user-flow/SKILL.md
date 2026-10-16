@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /user-flow — Screen navigation map (the source of flow division)
@@ -29,7 +29,7 @@ Map the feature into **flows** (flow-slug + the screens each contains) and draw 
 - **Sources** — UC files (MSS steps → screens), spec FRs (what surfaces must exist), URD context; else interview. No fabricated screens: every screen traces to a step/FR/answer.
 - **Approval stamps state** — on user approval set `stage: approved`, `flow_approved_at: {date}`, `flow_hash` (sha of the flow list) — wireframe skills gate on these.
 - **Render-verify MANDATORY** — mermaid-verify after Write (step 9).
-- **Validate before done** — doc-validate (step 9.5).
+- **Validate before done** — BA Markdown validation (step 9.5).
 
 ## Inputs
 
@@ -46,7 +46,7 @@ Map the feature into **flows** (flow-slug + the screens each contains) and draw 
 3. **Fact-list** — screen candidates with sources · flow grouping proposal · every decision/error edge and its destination.
 4. **Draft** — frontmatter + one `## Flow: {flow-slug}` section per flow, each with its screen list (`[n] Name — one-line purpose`) and a Mermaid `flowchart TD` (screens as nodes `S1["[1] Claim queue"]`, decisions as diamonds, error paths labeled with E- codes where known).
 5. **Self-check** — no dead-ends; every screen reachable from an entry; numbering has no gaps/duplicates.
-6. **L1 plan preview** — flow list + screen count + device + edge coverage.
+6. **scoped change preview** — flow list + screen count + device + edge coverage.
 8. **On approval, stamp state** — `stage: approved` + `flow_approved_at` + `flow_hash`.
 9.5. **Flow_Reviewer gate (ONLY when over the complexity threshold)** — if the file has **≥3 flows**, OR **≥8 screens total**, OR **any single flow with >1 error/decision path**, spawn an agent via the Task tool, `subagent_type: flow-reviewer`, passing: the `## Flow:` section(s) just written + the step-3 fact-list (screen candidates with sources, decision/error edges + destinations). Measure by **total complexity** — screen count alone is not enough (a 4-screen straight line is simple; a 4-screen flow with 3 error branches is complex). Below every threshold, step 5's self-check (no agent) is enough — SKIP 9.5, go straight to step 10.
    - **Task tool unavailable** (not provided by the runtime) → do NOT implicitly treat it as reviewed; the report states `reviewer skipped (Task unavailable)` so the user knows a complex flow did not pass the gate.

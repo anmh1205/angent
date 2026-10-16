@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /userstory — INVEST user stories (backlog slices)
@@ -26,7 +26,7 @@ Slice the SRS's FRs into INVEST stories — As a / I want / So that + context + 
 - **INVEST discipline** — each story independently valuable and small enough for a sprint; an FR too big for one story → split by scenario/persona; several trivial FRs → one story may cover them (the index maps both ways).
 - **Every story links ≥1 FR** — a story with no FR source is invented scope → refuse or send back to `/srs`.
 - **AC section seeded, not padded** — 1-2 obvious Given-When-Then per story now; `/ac` is the dedicated pass for full criteria.
-- **Validate before done** — doc-validate on the userstories dir (step 9).
+- **Validate before done** — BA Markdown validation on the userstories dir (step 9).
 
 ## Inputs
 
@@ -42,7 +42,7 @@ Slice the SRS's FRs into INVEST stories — As a / I want / So that + context + 
 3. **Fact-list** — per story: FRs covered, persona source, screen refs (if wireframes exist), E- codes touched.
 4. **Draft `us-{NNN}.md`** per story — story sentence, context (why this slice), linked requirements (wikilinks to spec anchors), 1-2 seed ACs (`AC-001`, `AC-002` scoped per story), UI refs, error refs, dependencies (other US), OQs.
 5. **Update the index** — one row per story: ID/title/persona/FR/screens/priority(from FR)/status `draft`/jira-key `—`/updated.
-6. **L1 plan preview** — the slice plan (story list + FR coverage map + split/merge notes).
+6. **scoped change preview** — the slice plan (story list + FR coverage map + split/merge notes).
 8. **Coverage check** — every targeted FR now maps to ≥1 story; report any FR left uncovered (with reason) rather than silently skipping.
 11. **Output report** — coverage + next (`/ac` for full criteria; `/jira` in wave 6).
 

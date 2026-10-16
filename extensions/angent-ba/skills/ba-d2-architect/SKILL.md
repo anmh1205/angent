@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /d2-architect — System / Architecture Diagram (D2, nested container + ELK)
@@ -41,7 +41,7 @@ A skill for **devs acting as BAs** — draw at the **logical architecture** leve
 - **NO L3 iterate** — review from the .svg.
 - **Do NOT ask about/draw infra details** (port, replica, VPC) — see the "business level" section above.
 - **Per `diagram-selection.md`** — `/d2-architect` for the system picture; a multi-branch business flow → `/d2-activity`; a data model → `/d2-erd`.
-- **Idempotent** — 1 slug = 1 file; rerun → enter update mode automatically (L2 diff), no refusal.
+- **Idempotent** — 1 slug = 1 file; rerun → enter update mode automatically (versioned diff), no refusal.
 
 ## Inputs
 
@@ -51,7 +51,7 @@ A skill for **devs acting as BAs** — draw at the **logical architecture** leve
 /d2-architect "<description>" --feature <new-slug>  # feature doesn't exist → derive/use slug + interview + create (entry point)
 ```
 
-Slug already exists → the skill recognizes it and enters update mode (L2 diff), no extra typing needed.
+Slug already exists → the skill recognizes it and enters update mode (versioned diff), no extra typing needed.
 
 ## Flow runtime
 
@@ -80,7 +80,7 @@ User calls /d2-architect [--feature X | "<description>"]
    ▼
 3. Write the .d2 source (formula below) — nested containers
    ▼
-4. L1 plan preview (prose: K blocks, N services, M external services). User Y → continue
+4. scoped change preview (prose: K blocks, N services, M external services). User Y → continue
    ▼
 5. Write {slug}.d2 → render.sh → {slug}.svg (compile fail → fix, up to 2 times)
    ▼
@@ -152,4 +152,4 @@ Backend.Auth -> External.Google: OAuth callback
 - **Containers too deep** (nested >3 levels) → hard to read; merge some or split into 2 diagrams (e.g. 1 overview + 1 backend zoom).
 - **External services** always in a dashed-border wrapper + real name + a short purpose phrase (Google OAuth, not "IdP #1").
 - **Cross-feature** (whole-app architecture) → save under `docs/_shared/d2-architect/`, do NOT stuff into one feature folder.
-- **Update mode (slug exists)** → Read the old source, L2 diff, re-render after user Y.
+- **Update mode (slug exists)** → Read the old source, versioned diff, re-render after user Y.

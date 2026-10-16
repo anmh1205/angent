@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /d2-activity — Activity / Flowchart Diagram (D2, ELK layout)
@@ -44,7 +44,7 @@ D2 + ELK give: **orthogonal, channeled** edges, nodes **aligned in columns/rows*
 - **L1 approval** before Write — BA-friendly prose (see `ba-conventions.md` Section 5), described in business terms (steps / decision branches / roles), do NOT dump the D2 source.
 - **NO L3 iterate** — D2 does not render in chat; the user reviews from the .svg file (per `approval-gate.md` + the skip-L3-mermaid memory, applied to D2 too).
 - **Per `diagram-selection.md`** — `/d2-activity` when you need a pretty standalone activity. Need the OMG standard/Camunda import → `/bpmn`. Need inline auto-render embedding on GitHub → `/activity`.
-- **Idempotent** — `d2/{feature}-d2-index.md` tracks processes; matching slug → enter update mode automatically (L2 diff), no refusal.
+- **Idempotent** — `d2/{feature}-d2-index.md` tracks processes; matching slug → enter update mode automatically (versioned diff), no refusal.
 
 ## Inputs
 
@@ -54,7 +54,7 @@ D2 + ELK give: **orthogonal, channeled** edges, nodes **aligned in columns/rows*
 /d2-activity "<process description>"                           # feature doesn't exist → derive slug + interview + create (entry point)
 ```
 
-Matching existing slug → the skill recognizes it and enters update mode (L2 diff), no extra typing needed.
+Matching existing slug → the skill recognizes it and enters update mode (versioned diff), no extra typing needed.
 
 ## Flow runtime (how the skill runs)
 
@@ -89,7 +89,7 @@ User calls /d2-activity "<description>" --feature X
    ▼
 4. Write the .d2 source (formula below) — the AI only describes structure, NO coordinates
    ▼
-5. L1 plan preview (BA-friendly prose: N steps, M branches, K lanes). User Y → continue
+5. scoped change preview (BA-friendly prose: N steps, M branches, K lanes). User Y → continue
    ▼
 6. Write {slug}.d2 → run render.sh → produce {slug}.svg
    │  compile fail? → fix the source, re-render (up to 2 times), only then report
@@ -158,4 +158,4 @@ Support.approve -> User.u2: Approved
 - **Don't lock in lanes from the heuristic** — step 3.5 mandatorily asks the user to confirm the detected role list before generating, because inferring from the description easily misses actors hidden/implied in the text.
 - **Don't over-engineer** — a linear 3-4 step flow does not need a diagram; numbered steps suffice.
 - **Don't mix with /activity** — if the feature already has an activity in flows.md, /d2 still writes separately in d2/, does NOT delete/edit flows.md.
-- **Update mode (slug exists)** → Read the old .d2 source, L2 diff the changed part, re-render after user Y.
+- **Update mode (slug exists)** → Read the old .d2 source, versioned diff the changed part, re-render after user Y.

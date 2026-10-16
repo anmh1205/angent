@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /d2-erd — Entity-Relationship Diagram (D2, sql_table + ELK)
@@ -41,7 +41,7 @@ D2's `shape: sql_table` draws a bold header, aligned columns, and a clear right-
 - **NO L3 iterate** — review from the .svg.
 - **Do NOT ask about technical DB/column types** — the data model is at the business level (per `ba-conventions.md` IT-BA framing). A column = "a type of business information" (email, status, created date), NOT "varchar(255)".
 - **Per `diagram-selection.md`** — `/d2-erd` when you need a pretty standalone ERD; inline embedding → `/erd`.
-- **Idempotent** — 1 feature = 1 file `{feature}.d2`; rerun → enter update mode automatically (L2 diff), no refusal.
+- **Idempotent** — 1 feature = 1 file `{feature}.d2`; rerun → enter update mode automatically (versioned diff), no refusal.
 
 ## Inputs
 
@@ -50,7 +50,7 @@ D2's `shape: sql_table` draws a bold header, aligned columns, and a clear right-
 /d2-erd "<data model description>"        # feature doesn't exist → derive slug + interview entities/relationships + create (entry point)
 ```
 
-Feature already has a D2 ERD → the skill recognizes it and enters update mode (L2 diff), no extra typing needed.
+Feature already has a D2 ERD → the skill recognizes it and enters update mode (versioned diff), no extra typing needed.
 
 ## Flow runtime
 
@@ -77,7 +77,7 @@ User calls /d2-erd --feature X   (or /d2-erd "<data model description>")
    ▼
 3. Write the .d2 source (formula below)
    ▼
-4. L1 plan preview (prose: N entities, M relationships). User Y → continue
+4. scoped change preview (prose: N entities, M relationships). User Y → continue
    ▼
 5. Write {feature}.d2 → render.sh → {feature}.svg (compile fail → fix, up to 2 times)
    ▼
@@ -137,5 +137,5 @@ USER.id -> DECK.userId: owns
 - **ERD with >8 entities** → consider `direction: down` + group related entities close together by declaration order.
 - **Many-to-many relationships** → represent via a junction table as a separate entity, just like the real data model.
 - **Do NOT ask about DB details** — index, migration, column length are dev/DBA work, not a business ERD.
-- **Update mode (feature already has an ERD)** → Read the old source, L2 diff, re-render after user Y.
+- **Update mode (feature already has an ERD)** → Read the old source, versioned diff, re-render after user Y.
 - **Just-bootstrapped feature** — no special handling: the event always goes to activity.log via the hook, independent of spec.md.

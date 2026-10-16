@@ -9,7 +9,7 @@ Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://g
 
 ## Portability and authority
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions.
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
 
 
 # /ac — Acceptance criteria (Given-When-Then, in-place)
@@ -26,7 +26,7 @@ Make every story verifiable — a complete Given-When-Then set per story coverin
 - **Coverage rule** — per story: ≥1 AC for the happy path, ≥1 per linked `E-` code, ≥1 per `BR-` boundary the story touches (test the edge: at/below/above the threshold). A story ending with <2 ACs must carry an OQ explaining why.
 - **Given-When-Then discipline** — Given = observable state, When = one action, Then = observable outcome. No "should", no UI pixel talk, no implementation ("the query returns…").
 - **Source-bound** — thresholds/values come from the spec (BR-/E- rows) or the interview; unknown boundary values become OQs in the story, never invented numbers.
-- **Validate before done** — doc-validate on the userstories dir (step 7).
+- **Validate before done** — BA Markdown validation on the userstories dir (step 7).
 
 ## Inputs
 
@@ -41,7 +41,7 @@ Make every story verifiable — a complete Given-When-Then set per story coverin
 2. **Gap analysis per story** — existing ACs vs the coverage rule: which happy path, E- code, or BR- boundary has no criterion yet. Stories already complete → skip (report as such).
 3. **Interview only true gaps** (one batched round): boundary values the spec doesn't pin down, expected outcomes for ambiguous error paths. No-re-ask what spec/story already answer.
 4. **Draft ACs** — per gap, numbered `AC-{next}` within that story; boundary rules get the at/below/above triple where meaningful.
-5. **L2 diff preview** — per story: the exact `## Acceptance Criteria` section diff + a one-line coverage summary (happy ✓ · E-xxx ✓/✗ · BR-xxx ✓/✗).
+5. **proposed change diff** — per story: the exact `## Acceptance Criteria` section diff + a one-line coverage summary (happy ✓ · E-xxx ✓/✗ · BR-xxx ✓/✗).
 9. **Output report** — per-story coverage table + next (`/test-checklist`, wave 4).
 
 ## AC shape reference (Claude composes it, do NOT hard-paste)
@@ -51,7 +51,7 @@ Make every story verifiable — a complete Given-When-Then set per story coverin
 - AC-004: Given the approver also validated this claim, when they submit a decision, then the system blocks it and names the validator (E-atlas-re-001).
 ```
 
-## L2 diff preview (per story)
+## proposed change diff (per story)
 
 > **us-{NNN}** — coverage before: happy {✓/✗} · errors {n}/{m} · boundaries {n}/{m} → after: all ✓ ({K} ACs added).
 > ```diff
