@@ -1,12 +1,12 @@
 ---
 name: ak-ask
-description: Answer a technical or architecture question with expert analysis, explicit trade-offs and evidence proportional to the decision.
+description: Deliver an explicitly requested architecture advisory with bounded alternatives, trade-offs, YAGNI, and decision gates without implementing.
 metadata: {port: angent-fallback, mode: portable}
 ---
 
 # Ask — Portable Fallback
 
-Use for technical questions that require more than a factual lookup but do not necessarily require implementation.
+Use for a deliberate engineering/architecture **advisory consultation** comparing alternatives and critical design constraints. Ordinary explanations and technical Q&A belong to ANGENT Reasoning and Authoring.
 
 ## Workflow
 

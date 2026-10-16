@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "ANGENT cognitive layer and portable Engineer capabilities in one agent plugin.",
   "author": {
     "name": "An"
@@ -22,7 +22,7 @@
       "interface": {
         "displayName": "ANGENT",
         "shortDescription": "Cognitive layer for agents",
-        "longDescription": "ANGENT combines evidence-grounded reasoning, coherent chat, auditable reports, safe execution, continuity and 103 portable Engineer Skills.",
+        "longDescription": "ANGENT combines evidence-grounded cognition, coherent writing and 102 discoverable Engineer Skills, with all 103 Engineer source identities maintained.",
         "developerName": "An",
         "category": "Productivity",
         "defaultPrompt": [

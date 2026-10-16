@@ -16,7 +16,7 @@ import sys
 import tempfile
 import zipfile
 
-from package_unified import collect_entries, PackagingError, FIXED_TIMESTAMP
+from package_unified import collect_entries, PackagingError, FIXED_TIMESTAMP, EXPECTED_DISCOVERABLE, EXPECTED_ENGINEER, SUPPRESSED_PUBLIC_ENGINEER
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = ("local-agent", "gemini-web", "gemini-skills", "gemini-extension", "claude-code", "openai-plugin")
@@ -82,8 +82,8 @@ No hooks or ambient auto-activation are implied by installing Skills alone.
 
 Use this assembled plugin root (or its ZIP release) in the supported
 ChatGPT/Codex plugin installation flow. It has one `angent` identity,
-12 Core and 103 portable Engineer Skills in `skills/`, and 16 Engineer
-role contracts retained in `extensions/`.
+12 Core and 102 publicly discoverable Engineer Skills in `skills/`,
+with all 103 Engineer source Skills and 16 role contracts retained in `extensions/`.
 
 Installing the package and verifying live provider activation are separate
 steps. Use `scripts/verify_activation.py` with an actual observation
@@ -166,7 +166,7 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
         if target in files:
             raise PackagingError(f"Collision: {target}")
         files[target] = content
-    if len(skills) != 115 or len(roles) != 16:
+    if len(skills) != EXPECTED_DISCOVERABLE or len(roles) != 16 or SUPPRESSED_PUBLIC_ENGINEER & skills:
         raise PackagingError(f"Incomplete ANGENT catalog: {len(skills)} Skills, {len(roles)} roles")
     files[destination] = _read_template(repo, template)
     if package == "gemini-extension":
@@ -195,9 +195,11 @@ def _assemble_gemini_web(source: dict[str, bytes]) -> dict[str, bytes]:
     intro = """
 ## Gemini Apps Web: one imported Skill
 
-Gemini Apps imports one root ANGENT Skill. The 115 Core and Engineer Skill
-texts packaged under references/catalog are reference material, not 115
-independently discoverable Gemini Skills. Load selected sections according to
+Gemini Apps imports one root ANGENT Skill. Its Core and task-specialist
+reference texts under references/catalog are not independently discoverable.
+Generic explanation remains owned by ANGENT Authoring and Reasoning.
+The retired `ak-explain` identity remains only in the Engineer source
+catalog outside this browser package. Load selected sections according to
 the task using references/INDEX.md. Sixteen Engineer role definitions are
 reference instructions, not running subagents.
 
@@ -227,7 +229,8 @@ guarantee automatic application to every conversation.
     core = sorted(n for n in names if n.startswith("angent"))
     engineer = sorted(n for n in names if n.startswith("ak-"))
     roles = sorted(p for p in files if re.fullmatch(r"references/roles/[a-z0-9-]+\.md", p))
-    if len(core) != 12 or len(engineer) != 103 or len(roles) != 16:
+    if len(core) != 12 or len(engineer) != EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER) or len(roles) != 16:
+
         raise PackagingError(f"Gemini Web library incomplete: {len(core)} Core, {len(engineer)} Engineer, {len(roles)} roles")
     index = ["# ANGENT reference library", "",
              "This is ONE imported Skill. Listed files are supporting reference",
@@ -245,7 +248,7 @@ guarantee automatic application to every conversation.
         "In gemini.google.com open Customize > Skills > Upload, and select\n"
         "angent-gemini-web.zip directly. Review the new ANGENT Skill and click\n"
         "Create. The ZIP has a root SKILL.md and reference material in\n"
-        "references/. This does NOT load 115 separate Skills. To use ANGENT,\n"
+        "references/. This does NOT load separate Skills. To use ANGENT,\n"
         "select it from Gemini Apps Skills in a conversation. Do not upload\n"
         "angent-gemini-skills.zip; that is the Gemini CLI workspace package.\n"
         "Official guide: https://support.google.com/gemini/answer/17094296\n"
@@ -292,7 +295,9 @@ def build(repo: Path, package_root: Path, dist_root: Path, selected: tuple[str, 
             _write_directory(directory, files)
             zipname = f"angent-{package}.zip"
             digest = _zip(files, tmp / "dist" / zipname)
-            results[package] = {"files": len(files), "skills": 115, "roles": 16, "sha256": digest}
+            results[package] = {"files": len(files),
+                                "skills": 1 if package == "gemini-web" else EXPECTED_DISCOVERABLE,
+                                "engineer_source_skills": EXPECTED_ENGINEER, "roles": 16, "sha256": digest}
         package_root.mkdir(parents=True, exist_ok=True)
         dist_root.mkdir(parents=True, exist_ok=True)
         for package in selected:

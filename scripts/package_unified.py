@@ -2,7 +2,9 @@
 """Build one installable ANGENT plugin from Core and the Engineer source module.
 
 Only Git-tracked files are packaged. Engineer source remains unchanged, while
-its 103 public Skills are projected into the one discoverable root `skills/`.
+its public Engineer Skills are projected into one discoverable root `skills/`.
+Core-equivalent Skill identities are preserved as Engineer source but not exposed
+as independently discoverable ANGENT Skills.
 The nested Engineer plugin manifests are NOT emitted as installable plugins.
 """
 from __future__ import annotations
@@ -25,6 +27,10 @@ ENGINEER_CODEX_MANIFEST = ENGINEER_ROOT + ".codex-plugin/plugin.json"
 EXPECTED_CORE = 12
 EXPECTED_ENGINEER = 103
 EXPECTED_ROLES = 16
+# Only canonical Core owns generic explanation. Keep upstream AgentKit identity
+# under extensions/ but do not project it into the ANGENT Skill discovery root.
+SUPPRESSED_PUBLIC_ENGINEER = frozenset({"ak-explain"})
+EXPECTED_DISCOVERABLE = EXPECTED_CORE + EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER)
 FIXED_TIMESTAMP = (2020, 1, 1, 0, 0, 0)
 
 
@@ -77,15 +83,19 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
             raise PackagingError(f"Duplicate package path: {target}")
         entries[target] = data
         if path.startswith(ENGINEER_SKILLS):
-            projected = CORE_ROOT + path[len(ENGINEER_SKILLS):]
-            if projected in entries:
-                raise PackagingError(f"Skill projection collision: {projected}")
-            entries[projected] = data
+            skill_name = path[len(ENGINEER_SKILLS):].split("/", 1)[0]
+            if skill_name not in SUPPRESSED_PUBLIC_ENGINEER:
+                projected = CORE_ROOT + path[len(ENGINEER_SKILLS):]
+                if projected in entries:
+                    raise PackagingError(f"Skill projection collision: {projected}")
+                entries[projected] = data
             if re.fullmatch(r"extensions/angent-engineer/skills/[^/]+/SKILL\.md", path):
-                source_engineer.add(path.split("/")[3])
+                source_engineer.add(skill_name)
 
     if len(source_core) != EXPECTED_CORE or len(source_engineer) != EXPECTED_ENGINEER:
         raise PackagingError(f"Unexpected Skills: core={len(source_core)}, engineer={len(source_engineer)}")
+    if not SUPPRESSED_PUBLIC_ENGINEER <= source_engineer:
+        raise PackagingError("Suppressed Engineer Skill is missing from maintained source")
     if source_core & source_engineer:
         raise PackagingError(f"Core/Engineer Skill names overlap: {sorted(source_core & source_engineer)}")
     if ENGINEER_SOURCE_MANIFEST not in entries:
@@ -115,7 +125,9 @@ def verify_zip(path: Path) -> dict[str, object]:
         if len(names) != len(set(names)):
             raise PackagingError("Duplicate ZIP entry")
         discovered = [p for p in names if re.fullmatch(r"skills/[^/]+/SKILL\.md", p)]
-        if len(discovered) != EXPECTED_CORE + EXPECTED_ENGINEER:
+        if len(discovered) != EXPECTED_DISCOVERABLE or any(
+            f"skills/{name}/SKILL.md" in names for name in SUPPRESSED_PUBLIC_ENGINEER
+        ):
             raise PackagingError(f"Wrong discoverable Skill count: {len(discovered)}")
         if ENGINEER_PACKAGE_MANIFEST in names or ENGINEER_CODEX_MANIFEST in names:
             raise PackagingError("Two separately installable manifests found")
@@ -130,6 +142,7 @@ def verify_zip(path: Path) -> dict[str, object]:
             "plugin_name": json.loads(archive.read("plugin.json"))["name"],
             "core_skills": EXPECTED_CORE,
             "engineer_skills": EXPECTED_ENGINEER,
+            "discoverable_engineer_skills": EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER),
             "discoverable_skills": len(discovered),
             "engineer_roles": EXPECTED_ROLES,
             "zip_entries": len(names),

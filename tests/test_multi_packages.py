@@ -25,7 +25,9 @@ class MultiPackageTests(unittest.TestCase):
                 files = packs.assemble(ROOT, package, self.source)
                 prefix = packs.SKILL_PREFIX[package]
                 paths = [p for p in files if p.startswith(prefix) and p.endswith("/SKILL.md")]
-                self.assertEqual(len(paths), 115)
+                self.assertEqual(len(paths), 114)
+                self.assertNotIn(prefix + "ak-explain/SKILL.md", files)
+                self.assertIn("extensions/angent-engineer/skills/ak-explain/SKILL.md", files)
                 self.assertIn(prefix + "angent/SKILL.md", files)
                 self.assertIn(prefix + "ak-agentkit/SKILL.md", files)
                 self.assertEqual(files[prefix + "angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
@@ -55,8 +57,8 @@ class MultiPackageTests(unittest.TestCase):
         self.assertIn("bootstrap/CLAUDE.md", claude)
         self.assertNotIn("CLAUDE.md", claude)
         openai = packs.assemble(ROOT, "openai-plugin", self.source)
-        self.assertEqual(json.loads(openai["plugin.json"])["version"], "1.5.1")
-        self.assertEqual(json.loads(openai[".codex-plugin/plugin.json"])["version"], "1.5.1")
+        self.assertEqual(json.loads(openai["plugin.json"])["version"], json.loads(self.source["plugin.json"])["version"])
+        self.assertEqual(json.loads(openai[".codex-plugin/plugin.json"])["version"], json.loads(self.source["plugin.json"])["version"])
         self.assertEqual(openai["skills/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
 
     def test_negative_agent_frontmatter(self):
@@ -98,7 +100,9 @@ class MultiPackageTests(unittest.TestCase):
         self.assertIn("references/INDEX.md", files)
         self.assertEqual(files["references/catalog/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
         self.assertEqual(files["references/catalog/ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
-        self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), 115)
+        self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), 114)
+        self.assertNotIn("references/catalog/ak-explain/SKILL.md", files)
+        self.assertNotIn(b"ak-explain", files["references/INDEX.md"])
         self.assertEqual(len([p for p in files if p.startswith("references/roles/") and p.endswith(".md")]), 16)
         self.assertNotIn(".gemini/skills/angent/SKILL.md", files)
         self.assertNotIn("plugin.json", files)
@@ -108,7 +112,8 @@ class MultiPackageTests(unittest.TestCase):
     def test_legacy_openai_builder_still_works(self):
         with tempfile.TemporaryDirectory() as tmp:
             report = legacy.build(ROOT, Path(tmp) / "angent-chatgpt.zip")
-            self.assertEqual(report["discoverable_skills"], 115)
+            self.assertEqual(report["discoverable_skills"], 114)
+            self.assertEqual(report["engineer_skills"], 103)
             self.assertEqual(report["engineer_roles"], 16)
 
 
