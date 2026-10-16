@@ -24,7 +24,7 @@ class MultiPackageTests(unittest.TestCase):
             with self.subTest(package=package):
                 files = packs.assemble(ROOT, package, self.source)
                 prefix = packs.SKILL_PREFIX[package]
-                paths = [p for p in files if p.startswith(prefix) and p.endswith("/SKILL.md")]
+                paths = [p for p in files if p.startswith(prefix) and p.endswith("/SKILL.md") and p.count("/") == prefix.count("/") + 1]
                 expected = 1 if package == "openai-plugin" else 115
                 self.assertEqual(len(paths), expected)
                 self.assertNotIn(prefix + "ak-explain/SKILL.md", files)
@@ -107,6 +107,10 @@ class MultiPackageTests(unittest.TestCase):
                     if package == "openai-plugin":
                         if path == "skills/angent/SKILL.md":
                             self.assertTrue(files[path].startswith(data))
+                        elif path == "skills/angent/references/INDEX.md":
+                            self.assertIn(b"## Engineer specialist methods", files[path])
+                        elif path.startswith("skills/angent/"):
+                            self.assertEqual(files[path], data, path)
                         else:
                             relative = path[len("skills/"):]
                             self.assertEqual(files["skills/angent/references/catalog/" + relative], data, path)
