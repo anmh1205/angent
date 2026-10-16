@@ -1,56 +1,31 @@
-# Next.js prototype
+# Next.js prototype build and verification record
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**Existing app or new isolated sandbox:**  
+**Source screen / SRS / user-flow revision:**  
+**Framework version, router and component library:**  
 
-## Evidence/decisions
+## 1. Screen-to-route model
 
-### 1. Accepted screen and route map
+| Screen ID | Path | Source FR/AC | Permitted actor | Input state | Success and denied/error routes |
+|---|---|---|---|---|---|
+| | | | | | |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+## 2. Mock and real data boundaries
+
+| Operation | Input | Mock response / state transition | Persistence and reset method | Not implemented |
 |---|---|---|---|---|
 | | | | | |
 
-### 2. component and framework baseline
+Do not imply that client-side session storage is authentication, that a fake API response created a real resource, or that a page link enforces tenant authorization. Mark mock behavior visibly. Only install dependencies in an authorized workspace or disposable test sandbox.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## 3. Implementation and accessibility
 
-### 3. state transition matrix
+Record the actual route components, form labels, error announcements, focus handling, keyboard navigation, fixture reset, responsive widths and recovery transitions. Reuse the existing approved framework and design tokens where possible. Do not replace the user's existing Next app for convenience.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## 4. Build and browser evidence
 
-### 4. isolated fixture seed/reset
+| Exact command | Tool version/environment | Exit | Route/screens exercised | Viewport | Runtime error and outcome |
+|---|---|---|---|---|---|
+| | | | | | |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 5. simulated API boundaries
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. validation and exception screens
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. keyboard and responsive checks
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 8. build and browser result
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+Include source diff, actual generated paths, launch instructions and untested states. If no Next app has been built and opened in a real browser, mark the output design-only rather than claiming a runnable prototype.

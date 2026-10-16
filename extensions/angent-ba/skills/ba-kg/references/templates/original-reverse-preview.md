@@ -1,56 +1,29 @@
-# Reverse system confidence viewer
+# Reverse specification preview — provenance and uncertainty first
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**System / commit or archival release:**  
+**Sources inspected, versions and disclosure scope:**  
+**Reader and decision needed:**  
 
-## Evidence/decisions
+## Source claim register
 
-### 1. Legacy system/commit scope
+| Reconstructed claim | Evidence class | Exact source anchor | Conflict / counterexample | Verification action |
+|---|---|---|---|---|
+| | SOURCE-OBSERVED / INFERRED / UNVERIFIED / CONTRADICTORY / APPROVED-DECISION | | | |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+Never label inferred behavior approved because a code symbol looks plausible. Read-only source inspection is different from observed deployed runtime.
+
+## Feature narrative
+
+Explain actor goals, preconditions, actual guards, normal transition, negative/timeout paths, stored effects and external dependencies as reconstructed from evidence. Mark differences between old documents and code.
+
+## Navigable review
+
+The preview should link every claim to a source ID/file/line or stable document revision, show contradictions side by side, and keep unknowns visible. Build only from explicitly authorized evidence; HTML-escape imported code and do not execute captured scripts or emit external CDN calls.
+
+## Read-back and acceptance
+
+| Claimed behavior | Source URL/path | Confidence rationale | Reader can navigate source? | Next test |
 |---|---|---|---|---|
 | | | | | |
 
-### 2. source-observed claims
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 3. inferred candidate requirements
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 4. conflicting witnesses
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 5. unresolved and approval states
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. reader-friendly uncertainty
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. evidence path per claim
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 8. next tests
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+Check the actual exported HTML in a browser for source anchors, contrast, keyboard navigation, viewport overflow and redacted sensitive data. This preview documents hypotheses; it does not ratify the SRS or prove backend runtime.

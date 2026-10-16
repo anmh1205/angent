@@ -1,56 +1,25 @@
-# Playwright test plan
+# Source-derived browser test generation and execution
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**Accepted screen model, requirement revision and target:**  
+**Fixture namespace and test-only origin:**  
+**Browser, Playwright runtime and project test baseline:**  
 
-## Evidence/decisions
+## Source to test mapping
 
-### 1. Test-case ID and requirement
+| Case ID | FR/BR/AC source | Initial screen and path to reach it | User action/data | Expected UI/state | Negative result | Execution state |
+|---|---|---|---|---|---|---|
+| TC-PROT-… | | | | | | not-run |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+Record every navigation edge, required validation, role-specific denial, error, loading, empty and recovery state where specified. Every generated case needs a route to its precondition; source ID existence alone does not establish business meaning.
 
-### 2. browser/env scope
+## Locators and environment
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+Prefer roles, accessible names and deterministic test IDs, not fragile CSS positions. Block external requests in mock-only mode. Do not embed real passwords or tokens. Use browser-native validation when the model demands it. Playwright assertions must auto-wait for the expected text/focus/route rather than snapshot the DOM immediately.
 
-### 3. fixture and account isolation
+## Run evidence
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+| Command/version | Case count | Pass/fail/skip | Captured error | External calls | Negative mutation |
+|---|---|---|---|---|---|
+| | | | | | |
 
-### 4. role-based locator
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 5. action sequence
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. observable assertion
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. test trace and screenshots
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 8. cleanup and failures
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+For a bounded ANGENT HTML screen model, use build_playwright.py then the generated test_prototype.py against its local HTML prototype. Run check_generated_playwright.py as a smoke: it mutates one mock error and demands the original assertion fail. Do not claim production login or actual backend verification from this fixture.

@@ -1,50 +1,33 @@
-# Project overview reconciliation
+# Scoped project overview update
 
-**Artifact identity and baseline:** [feature, source provider, inspected revision]
+**Current accepted overview and revision:**  
+**Requested change / source baseline:**  
+**Target document/provider and last-observed version:**  
 
-## Evidence/decisions
+## 1. Actual change candidates
 
-### 1. Existing overview ETag/revision
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+| Stable source ID | Directly observed change | Source revision(s) | Affected overview heading | Why it matters |
 |---|---|---|---|---|
 | | | | | |
 
-### 2. approved changed artifact IDs
+The BA graph revision comparator can report added, removed, modified and downstream dependent artifact IDs. It is not proof that those changes were approved, implemented or deployed.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
+## 2. Safe before/after edit
+
+| Target heading | Current text/markup | Proposed replacement | Source justification | Retained unrelated sections |
 |---|---|---|---|---|
 | | | | | |
 
-### 3. affected sections and factual diffs
+Update the smallest coherent section. Preserve existing explanatory prose, anchors, tables, rich macros, formatting and human edits. Do not replace a complete handbook with generated bullet summaries merely to satisfy an update request.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## 3. Conflicts and approval
 
-### 4. explicitly unaffected sections
+List contradicting documents and source dates, missing decision owner, proposed-versus-approved rules, and concurrent provider changes. Never choose a source by timestamp alone.
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
+## 4. Provider mutation and read-back
 
-### 5. source-backed status/counts
+| Operation | User authorization | Latest provider version | Returned change | Verified content after write | Uncertainty |
+|---|---|---|---|---|---|
+| | | | | | |
 
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 6. preview and permission
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-
-### 7. provider read-back and rollback
-
-| Stable ID | Actual observation or accepted decision | Source and revision | Uncertainty | Verification |
-|---|---|---|---|---|
-| | | | | |
-## Reviewer questions
-
-What has been directly observed? Which business decision is still pending? Which requirement or diagram depends on this result? What actual test or provider read-back is still required? Do not populate with imagined values or treat this template as executed evidence.
+No provider or writer available means a reviewable diff with zero claimed writes. An updated overview must distinguish business-approved target behavior, code-observed behavior and real deployment state.
