@@ -83,10 +83,10 @@ class MarkdownTraceabilityTests(unittest.TestCase):
 
     def test_malformed_recognized_id_cannot_silently_reduce_coverage(self):
         document=(
-            "---\\ntype: srs\\nstatus: draft\\n---\\n"
-            "| ID | Requirement | Covers |\\n| --- | --- | --- |\\n"
-            "| FR-good-001 | First accepted requirement | CAP-demo-01 |\\n"
-            "| FR-bad-002? | This obligation cannot simply vanish | CAP-demo-01 |\\n"
+            "---\ntype: srs\nstatus: draft\n---\n"
+            "| ID | Requirement | Covers |\n| --- | --- | --- |\n"
+            "| FR-good-001 | First accepted requirement | CAP-demo-01 |\n"
+            "| FR-bad-002? | This obligation cannot simply vanish | CAP-demo-01 |\n"
         )
         with tempfile.TemporaryDirectory() as tmp:
             base=Path(tmp)
@@ -103,10 +103,10 @@ class MarkdownTraceabilityTests(unittest.TestCase):
 
     def test_unrelated_markdown_ids_are_not_misclassified_as_requirements(self):
         document=(
-            "---\\ntype: srs\\nstatus: draft\\n---\\n"
-            "| ID | Requirement | Covers |\\n| --- | --- | --- |\\n"
-            "| FR-good-001 | Real requirement | CAP-demo-01 |\\n"
-            "| NOTE-002 | An explanatory item, not a requirement | |\\n"
+            "---\ntype: srs\nstatus: draft\n---\n"
+            "| ID | Requirement | Covers |\n| --- | --- | --- |\n"
+            "| FR-good-001 | Real requirement | CAP-demo-01 |\n"
+            "| NOTE-002 | An explanatory item, not a requirement | |\n"
         )
         with tempfile.TemporaryDirectory() as tmp:
             base=Path(tmp)

@@ -69,14 +69,14 @@ class TestDocuments(unittest.TestCase):
             folder=root/"usecases"
             folder.mkdir()
             (folder/"feature-usecase-index.md").write_text(
-                "---\\ntype: usecase-index\\n---\\n# Use cases\\n"
-                "| Slug | Status |\\n| --- | --- |\\n"
-                "| [uc-known](uc-known.md) | draft |\\n",encoding="utf8"
+                "---\ntype: usecase-index\n---\n# Use cases\n"
+                "| Slug | Status |\n| --- | --- |\n"
+                "| [uc-known](uc-known.md) | draft |\n",encoding="utf8"
             )
             known=folder/"uc-known.md"
             unknown=folder/"uc-unknown.md"
             for item in (known,unknown):
-                item.write_text("# Actor goal\\n",encoding="utf8")
+                item.write_text("# Actor goal\n",encoding="utf8")
             self.assertTrue(inspect(known,root)["ok"])
             self.assertFalse(inspect(unknown,root)["ok"])
 
@@ -85,11 +85,11 @@ class TestDocuments(unittest.TestCase):
             root=Path(tmp)
             path=root/"spec.md"
             for bad_date in ("2026-02-30","2026-13-01","2026-00-00"):
-                path.write_text("---\\nstatus: draft\\nupdated: "+bad_date+
-                                "\\n---\\n# Title\\n",encoding="utf8")
+                path.write_text("---\nstatus: draft\nupdated: "+bad_date+
+                                "\n---\n# Title\n",encoding="utf8")
                 report=inspect(path,root)
                 self.assertIn("invalid date format",report["errors"])
-            path.write_text("---\\nstatus: draft\\nupdated: 2026-02-28\\n---\\n# Title\\n",
+            path.write_text("---\nstatus: draft\nupdated: 2026-02-28\n---\n# Title\n",
                             encoding="utf8")
             self.assertTrue(inspect(path,root)["ok"])
 

@@ -140,7 +140,7 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
                         "checklist":{"CHK"}, "cases":{"TC"},
                         "stories":{"US"}, "usecases":{"UC"}
                     }.get(role,set())
-                    prefix=re.match(r"^(UN|BO|CAP|FR|NFR|BR|E|AC|CHK|TC|US|UC)(?=[-:\\s]|$)",
+                    prefix=re.match(r"^(UN|BO|CAP|FR|NFR|BR|E|AC|CHK|TC|US|UC)(?=[-:\s]|$)",
                                     item_id,re.I)
                     if prefix and prefix.group(1).upper() in accepted:
                         raise ValueError(
