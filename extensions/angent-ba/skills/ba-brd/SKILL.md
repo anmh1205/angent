@@ -1,28 +1,55 @@
 ---
 name: ba-brd
-description: Establish organizational rationale and business constraints.
+description: Business analysis brd specialist.
 ---
 
-# ba-brd: Establish organizational rationale and business constraints
+# ANGENT BA: brd
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/brd/SKILL.md
 
-Use this method when the user needs **establish organizational rationale and business constraints**, not because a generic question merely mentions the subject. Required inputs to look for: sponsors, problem evidence, KPIs, policy, process, stakeholders. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodological guidance; do not assume the original Claude-specific scripts, hooks, subagents, slash commands, filesystem paths, and approval levels exist. ANGENT Root owns intent and routing, Execution owns all provider mutation and read-back, and Quality owns outcome verification. Never claim original tools ran if unavailable. Retain current project IDs and explicitly distinguish facts, assumptions and approvals.
 
-Define present/target business process; identify stakeholders and benefits; separate hard regulatory constraints from assumptions; assess options and risks. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /brd — Business Requirements Document
 
-Produce **BRD with business objectives, boundaries, policies, ROI assumptions and acceptance**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Make the business case — objectives with measurable success criteria that mint **`BO-{feature}-{NN}`** IDs covering the URD's `UN-` needs, plus business scope, business rules, cost-benefit, and risks. **Single output**: `docs/{feature}/{feature}-brd.md`.
 
-- ROI uses stated inputs; unresolved regulatory claims flagged.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **1 fixed output** — `docs/{feature}/{feature}-brd.md` (type `brd`, FULL frontmatter).
+- **Feature missing → group A** (`feature-bootstrap.md`): derive slug + interview + create. URD missing but feature exists → proceed with a soft note ("BO- rows will have empty Covers-needs until /urd runs") — the BRD can legitimately come first in some engagements.
+- **Section names are load-bearing** — Executive Summary · Business Objectives & Success Measures · Business Scope · Business Rules · Cost-Benefit · Risks. `resolve-oqs.md` §3.5.3's topic map scans these exact names for OQ cascade; do not rename.
+- **Mint `BO-` IDs** — `BO-{feature}-{NN}` (2-digit ok), max+1. Every objective row: measurable success measure + target + the `UN-` needs it covers.
+- **Money altitude, no fabricated figures** — cost/benefit estimates carry a `basis` column; no basis from the user → OQ, never an invented number (`ba-conventions.md` §3).
+- **Inherit OQs** — from the URD + brainstorms (`resolve-oqs.md` Phase E); mark origins.
+- **Idempotent** — re-run → L2 diff update.
+- **Validate before done** — doc-validate (step 9).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/brd <feature>              # reads {feature}-urd.md + brainstorms if present
+/brd <new-feature>          # group A: interview the business case + create
+```
+
+## Approach
+
+1. **Resolve feature.** Read `{feature}-urd.md` (needs to cover) + `brainstorms/*.md` (problem framing) if present.
+2. **Gather.** Gaps → one batched interview: why now (the business driver) · objectives + how each is measured · in/out of scope + dependencies · known business rules · cost/benefit items with their basis · risks.
+3. **Fact-list** — every objective/figure/rule + its origin; inherited OQs.
+4. **Assign IDs** — `BO-{feature}-{NN}`, covering `UN-` refs per row.
+5. **Draft** per the template — the six load-bearing sections + OQs.
+6. **L1 plan preview** — BO count + UN coverage + risk count + any uncovered UN- called out.
+7. **Write** — `links:` → the URD + brainstorm(s).
+11. **Output report** — coverage summary + next step (`/prd-epic {feature}`).
+
+## Gotchas
+
+- **A success measure is not a feature** — "increase self-service refunds to 80%" is a measure; "add a refund button" belongs in the PRD.
+- **Cost-benefit honesty** — a table full of confident numbers with no basis column filled is worse than OQs; stakeholders will hold the BRD to those numbers.
+- **Business Rules here are business-level** — policy ("refunds over $500 need manager approval"), not system behavior; system-level `BR-` IDs are minted later by `/srs`.
+- **Do not rename sections** — the OQ cascade greps them.

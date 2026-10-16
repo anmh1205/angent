@@ -1,28 +1,59 @@
 ---
 name: ba-srs
-description: Specify verifiable functional and non-functional requirements.
+description: Business analysis srs specialist.
 ---
 
-# ba-srs: Specify verifiable functional and non-functional requirements
+# ANGENT BA: srs
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/srs/SKILL.md
 
-Use this method when the user needs **specify verifiable functional and non-functional requirements**, not because a generic question merely mentions the subject. Required inputs to look for: approved need statements, workflows, existing interfaces and constraints. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodological guidance; do not assume the original Claude-specific scripts, hooks, subagents, slash commands, filesystem paths, and approval levels exist. ANGENT Root owns intent and routing, Execution owns all provider mutation and read-back, and Quality owns outcome verification. Never claim original tools ran if unavailable. Retain current project IDs and explicitly distinguish facts, assumptions and approvals.
 
-Assign stable FR/BR/NFR IDs; write observable responses, conditions and failure paths; define glossary, error matrix and traceability; mark unresolved assumptions. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /srs — Software Requirements Specification (orchestrator)
 
-Produce **SRS with FR, NFR, business rules, actors, environment, errors, acceptance and sources**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Specify EXACTLY what the system must do — Section 2 Functional Requirements (`FR-`), Section 3 NFRs (`NFR-`), Section 4 Business Rules (`BR-`), Section 5 Error Matrix (`E-`) — each testable and traced to a `CAP-`. **Single output**: `docs/{feature}/srs/{feature}-spec.md` (type `srs`, FULL frontmatter). After the spec, offer the diagram menu (`/sequence` `/state` `/erd` `/user-flow`…) — each menu item is its own skill run.
 
-- Statements individually testable; no hidden product decisions.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **1 fixed output** — `docs/{feature}/srs/{feature}-spec.md`. Diagrams do NOT embed here — they live in `srs/{feature}-flows.md` / `-states.md` / `-erd.md` via their own skills.
+- **Orchestrator special case** (`feature-bootstrap.md`): spec missing → group A for the spec itself (derive slug + interview Batch 1-2 + create `srs/`); the menu items stay group B (they need the just-written spec).
+- **Sub-agents return content, never write** (`approval-gate.md` §sub-agents) — every Write goes through this orchestrator's L1 gate.
+- **Testable phrasing** — every FR: "The system shall {observable behavior} when {condition}" (or equivalent); reject vague verbs (support/handle/manage) in favor of observable outcomes. Every FR row: Covers (CAP-) + Priority + Source.
+- **Mint 4 ID families** — `FR-/NFR-/BR-/E-{feature}-{NNN}`, 3-digit, max+1 each, never renumber.
+- **Error Matrix is first-class** — every FR with a failure mode gets an `E-` row (condition · system behavior · user sees · related FR). An SRS with 12 FRs and 1 error row is under-specified.
+- **PRD missing → soft note** (Covers column empty until `/prd-epic` runs); feature missing → group A.
+- **Inherit OQs** (`resolve-oqs.md` Phase E) — from PRD/BRD/URD chain; own OQs in the "Open Questions" section.
+- **Validate before done** — doc-validate (step 9).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/srs <feature>                  # full spec (create or update)
+/srs <feature> --section 5      # revisit one section (e.g. Error Matrix)
+/srs <new-feature>              # group A: interview Batch 1-2 + create
+```
+
+## Approach
+
+1. **Resolve feature + mode.** Read the chain: `{feature}-prd.md` (CAPs to cover) → `{feature}-brd.md` (business rules to formalize) → `{feature}-urd.md` (actors from personas). Existing spec → update mode.
+2. **Interview Batch 1 (frame):** actors + system boundary · the main scenarios per P0 capability. **Batch 2 (behavior):** per scenario — trigger, observable outcome, failure modes, business rules touched, data touched. No-re-ask what the chain already answers.
+3. **Fact-list** — every behavior/rule/error + origin (PRD/BRD/interview); each CAP → its FR candidates.
+4. **Assign IDs** — FR/NFR/BR/E per section, scanning the existing spec for max.
+5. **Draft** per the template — Overview + actors · Section 2 FRs (testable, Covers CAP-) · Section 3 NFRs (category + measure) · Section 4 BRs (formalized from BRD + interview) · Section 5 Error Matrix (linked to FRs) · data notes · diagram links · OQs.
+6. **L1 plan preview** — per-section counts + CAP coverage + uncovered CAPs called out. `--section` mode → preview only that section's diff.
+7. **Write** — `links:` → PRD (+ BRD/URD).
+11. **Diagram menu** — offer per `doc-selection.md`/`diagram-selection.md`: flows (`/sequence`, `/activity-swimlane`), lifecycle (`/state`), data (`/erd`, `/dbdiagram`), screens (`/user-flow`, wave 2). Each item runs as its own skill with this spec as source.
+12. **Output report.**
+
+## Gotchas
+
+- **"Support X" is not a requirement** — rewrite to the observable behavior ("shall return the refund status within 2s of the request").
+- **The Error Matrix is where specs earn their keep** — happy paths survive contact with users; error rows are what devs and testers actually need.
+- **NFRs need a measure** — "fast" is not an NFR; "p95 < 500ms at 100 rps" is.
+- **BR here is system-enforceable** — BRD-level policy became `BR-` rows only when the system enforces them.
+- **Do not embed diagrams** — link `srs/{feature}-flows.md` etc.; the merged-file convention keeps the spec reviewable.

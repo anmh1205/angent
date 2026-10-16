@@ -1,28 +1,56 @@
 ---
 name: ba-brainstorm
-description: Turn fuzzy requests into testable requirements through selective questions.
+description: Business analysis brainstorm specialist.
 ---
 
-# ba-brainstorm: Turn fuzzy requests into testable requirements through selective questions
+# ANGENT BA: brainstorm
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/brainstorm/SKILL.md
 
-Use this method when the user needs **turn fuzzy requests into testable requirements through selective questions**, not because a generic question merely mentions the subject. Required inputs to look for: initial request, stakeholder roles, existing product constraints. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodological guidance; do not assume the original Claude-specific scripts, hooks, subagents, slash commands, filesystem paths, and approval levels exist. ANGENT Root owns intent and routing, Execution owns all provider mutation and read-back, and Quality owns outcome verification. Never claim original tools ran if unavailable. Retain current project IDs and explicitly distinguish facts, assumptions and approvals.
 
-Identify decisions that change workflows or compliance; ask highest-value clarifying questions; retain alternatives; summarize agreed terms and open questions. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /brainstorm — Idea exploration (BA discovery doc)
 
-Produce **Decision log, problem statements, scope, prioritized needs and open questions**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Turn ONE raw idea into a structured brainstorm document — problem, affected users, idea sketch, success criteria, explorations, decisions, and explicit Open Questions. **Single output**: `docs/{feature}/brainstorms/{idea-slug}.md`. This doc is the root of the OQ cascade (`resolve-oqs.md`) — downstream `/urd` and `/brd` inherit its unresolved OQs.
 
-- Questions are not pseudo-decisions; record answer provenance.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **1 fixed output** — `docs/{feature}/brainstorms/{idea-slug}.md` (type `brainstorm`). One idea = one file; a second idea for the same feature = a second file.
+- **`--feature` optional** — auto-detect; **feature does not exist + an idea → derive slug + create** (entry point, `feature-bootstrap.md` group A — `/brainstorm` is THE comprehensive-interview skill, the one place a wide-ranging interview is its job).
+- **Facilitate, don't dictate** — offer elicitation angles (SCAMPER-style what-if, role-play "how would {persona} react", constraint-flip) one round at a time; the user's answers are the content. Never fill sections with invented business facts.
+- **L3 iterate allowed** — the doc is prose + ASCII sketches, it renders in chat; iterate on the sketch before L1 if the user engages.
+- **OQs are first-class** — anything the user can't answer becomes an `- [ ] OQ-n:` item, never a guess. The OQ section format must match `resolve-oqs.md` (checkbox list, `[ ]`/`[~]`/`[x]`).
+- **No-re-ask (`ba-conventions.md` §2)** — scan the idea seed + previous answers before each question round.
+- **Idempotent** — same idea-slug re-run → update mode (L2 diff).
+- **Validate before done** — run doc-validate (step 9); exit 1 = fix before reporting.
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/brainstorm "<idea>"                        # derive feature slug from the idea
+/brainstorm "<idea>" --feature <slug>       # explicit feature (existing or new)
+/brainstorm "<idea>" --feature payment      # second idea in an existing feature
+```
+
+## Approach
+
+1. **Resolve feature + idea slug.** Derive the feature slug from the idea's domain noun (group A); derive the idea-slug from the idea itself. Both confirmable at L1.
+2. **Interview — round 1 (the frame):** problem/opportunity · who is affected + their situation today · what success looks like. Batched, ≤5 questions.
+3. **Interview — round 2 (exploration):** pick 1-2 elicitation angles that fit the idea (what-if flips, persona role-play, "what breaks at 10× scale", constraint removal). Offer the menu; the user picks or skips.
+4. **Fact-list** — every answer + its origin (user round 1/2); unanswered items become OQ candidates.
+5. **Draft sections** per the template: problem, affected users (table), idea sketch (prose or ASCII), success, explorations, decisions (table with rationale), out-of-scope, Open Questions.
+6. **L1 plan preview** — feature + idea slug + section fill summary + OQ count.
+7. **Write** — create `docs/{feature}/brainstorms/` on first Write.
+10. **Output report** — OQ count called out + the next step in the chain (`/urd {feature}`).
+
+## Gotchas
+
+- **Don't interrogate** — two rounds max by default; the doc can grow on a later run. A brainstorm that takes an hour of questions kills the idea's momentum.
+- **Sketch ≠ spec** — the idea sketch stays at business altitude; "how would the API look" belongs to `/srs` or `/api-design` later.
+- **One idea per file** — a second idea mid-interview → offer to split into its own file.
+- **OQ format matters** — `resolve-oqs.md` parses the checkbox list; freeform prose OQs won't cascade.

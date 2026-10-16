@@ -1,28 +1,53 @@
 ---
 name: ba-prd
-description: Produce a coherent product requirements document from validated opportunities.
+description: Business analysis prd specialist.
 ---
 
-# ba-prd: Produce a coherent product requirements document from validated opportunities
+# ANGENT BA: prd
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/prd/SKILL.md
 
-Use this method when the user needs **produce a coherent product requirements document from validated opportunities**, not because a generic question merely mentions the subject. Required inputs to look for: users, business objective, scope boundary, constraints, existing decisions. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodological guidance; do not assume the original Claude-specific scripts, hooks, subagents, slash commands, filesystem paths, and approval levels exist. ANGENT Root owns intent and routing, Execution owns all provider mutation and read-back, and Quality owns outcome verification. Never claim original tools ran if unavailable. Retain current project IDs and explicitly distinguish facts, assumptions and approvals.
 
-Separate problem statement from proposed solution; rank goals and measurable outcomes; reconcile features with business rules and non-goals; tag unresolved decisions. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /prd — Product PRD (project-level singleton)
 
-Produce **PRD with objectives, personas, capabilities, scope, assumptions, NFR references and release criteria**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Define the WHOLE product once — pitch, problem, users, value, goals, themes, the **Feature Map** (the canonical feature list `/roadmap` prioritizes and feature slugs are born from), metrics, constraints, risks. **Single output**: `docs/_product/prd.md` (type `prd-product`, NO `feature` field — project-level).
 
-- Each capability traces to a user/business problem; no imagined market facts.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Singleton** — `docs/_product/prd.md`; a second run = update mode (L2 diff), never a second file.
+- **Group C** (`feature-bootstrap.md`) — runs BEFORE any feature exists; an empty vault is a valid starting state, no routing needed.
+- **Product altitude** — themes and the Feature Map, not capability detail. One line per feature in the Map; detail belongs to that feature's `/prd-epic`.
+- **The Feature Map is the contract** — slug (kebab-case, per `naming-conventions.md`) + theme + one-line purpose + status. `/roadmap` reads it one-way; feature folders adopt these slugs.
+- **Own OQs only** — Section 11; the product PRD is the product-level root, nothing cascades in (`resolve-oqs.md`). Cascade scans stay within this file.
+- **No fabricated market claims** — metrics targets and user segments need a stated basis or become OQs.
+- **Validate before done** — doc-validate (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/prd                # create (interview) or open update mode if it exists
+/prd --update       # explicit update mode (L2 diff per section)
+```
+
+## Approach
+
+1. **Mode.** `docs/_product/prd.md` exists → update (Read fully first, no-re-ask). Else → create.
+2. **Interview (one batched round):** the pitch in one sentence · the problem + who has it · segments + their core job · what makes this valuable · product goals · theme candidates · known features (seed the Map — include existing `docs/*/` folders) · metrics + basis · constraints/risks.
+3. **Fact-list** — every claim + origin.
+4. **Draft** per the template — Sections 1-11; Feature Map rows get valid slugs (existing folders keep theirs).
+5. **L1 plan preview** — theme + Feature Map summary.
+6. **Write** — no `feature:` in frontmatter; `links: []` or pointers to research docs.
+10. **Output report** — Feature Map + next steps (`/roadmap`, `/prd-epic {slug}`).
+
+## Gotchas
+
+- **"PRD for {feature}" → `/prd-epic`** — this skill only does the product singleton; redirect immediately, don't create a second product PRD.
+- **Feature Map slugs are forever** — folders get created from them; renaming later means moving `docs/{slug}/`. Spend the extra minute on slug quality.
+- **Metrics without a basis** — a target pulled from air becomes the team's OKR; make the basis explicit or file an OQ.
+- **Roadmap sync is one-way** — editing the Feature Map does not auto-update `roadmap.md`; re-run `/roadmap` (per `resolve-oqs.md`).

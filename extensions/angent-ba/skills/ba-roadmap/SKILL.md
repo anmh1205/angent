@@ -1,28 +1,53 @@
 ---
 name: ba-roadmap
-description: Prioritize a defensible sequence of outcomes and releases.
+description: Business analysis roadmap specialist.
 ---
 
-# ba-roadmap: Prioritize a defensible sequence of outcomes and releases
+# ANGENT BA: roadmap
 
-## Trigger and necessary evidence
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/roadmap/SKILL.md
 
-Use this method when the user needs **prioritize a defensible sequence of outcomes and releases**, not because a generic question merely mentions the subject. Required inputs to look for: approved PRD, dependencies, costs, risk, available capacity. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+## Portability and authority
 
-## Specialist method
+Use domain-specific steps below as methodological guidance; do not assume the original Claude-specific scripts, hooks, subagents, slash commands, filesystem paths, and approval levels exist. ANGENT Root owns intent and routing, Execution owns all provider mutation and read-back, and Quality owns outcome verification. Never claim original tools ran if unavailable. Retain current project IDs and explicitly distinguish facts, assumptions and approvals.
 
-Identify minimum viable outcomes; score value, confidence, effort and dependency; compare alternative sequences; mark gates and externally dependent work. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
 
-## Deliverable
+# /roadmap — Product roadmap (RICE-lite + plan + dependencies)
 
-Produce **Now/Next/Later roadmap with rationale, milestones, decision criteria and risks**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+## Goal
 
-## Acceptance checks
+Turn the Feature Map into a prioritized plan — RICE-lite scores per feature (Reach · Impact · Confidence · Effort), a Now/Next/Later or by-quarter plan, a dependency map, and a decisions log. **Single output**: `docs/_product/roadmap.md` (type `roadmap`, frontmatter has `format`).
 
-- No dates or estimates without supporting capacity and dependencies.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Constraints
 
-## ANGENT boundary
+- **Singleton** — `docs/_product/roadmap.md`; re-run = update mode (L2 diff). Frontmatter `format:` records the chosen shape.
+- **Group C** (`feature-bootstrap.md`) — no product PRD yet → friendly message: "No Feature Map yet — run `/prd` first, or list your features now and I'll score them" (a Map-less roadmap from a live list is valid).
+- **One-way read** — consumes `docs/_product/prd.md`'s Feature Map (+ each feature's `CAP-` priorities if PRDs exist). Never edits the PRD; PRD changes → re-run `/roadmap` to sync (`resolve-oqs.md`: no OQ cascade into this file).
+- **RICE-lite discipline** — Reach/Impact/Confidence on the agreed scale (1-5 or %), Effort in relative units; **every score's basis comes from the user or a doc** — no invented scores. Score = (R×I×C)/E, computed, shown per row.
+- **Now means committed** — "Now" items should have (or be about to get) a `/prd-epic`; flag "Now" features with no PRD.
+- **Dependencies are typed** — tech / data / team / vendor, per row.
+- **Validate before done** — doc-validate (step 8).
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## Inputs
+
+```
+/roadmap                              # default format: now-next-later
+/roadmap --format quarter             # by-quarter plan
+```
+
+## Approach
+
+1. **Load the Feature Map** from `docs/_product/prd.md` (or take a live list — group C fallback). Existing roadmap → update mode, Read fully first.
+2. **Score interview (one batched round per gap):** per feature — Reach basis · Impact on which product goal · Confidence + why · Effort relative to a named anchor feature. Skip rows the user already scored.
+3. **Fact-list** — every score + basis; sequencing constraints; dependency claims.
+4. **Compute + draft** per the template — RICE table sorted by score · the plan (Now/Next/Later or quarters; note where the plan order deviates from score order and why) · dependency map (typed) · decisions log (append-mode across runs).
+5. **L1 plan preview** — top-3 by score + any score-vs-plan deviations + "Now without PRD" flags.
+6. **Write.**
+9. **Output report** — the plan summary + suggested next (`/prd-epic` for un-specced "Now" items, `/timeline` for a visual).
+
+## Gotchas
+
+- **Score ≠ plan** — dependencies and strategy legitimately reorder; the deviation note is what makes the roadmap defensible.
+- **Effort needs an anchor** — "3" means nothing; "3× the size of {shipped-feature}" survives review.
+- **Don't cascade OQs here** — this file is derived; questions belong in the PRD/feature docs, and the fix is a re-run.
+- **Decisions log is append-only across runs** — it's the "why did we demote X in July" memory; never rewrite old rows.
