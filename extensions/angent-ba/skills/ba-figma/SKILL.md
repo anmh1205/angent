@@ -1,53 +1,34 @@
 ---
 name: ba-figma
-description: Business analysis figma specialist.
+description: Translate accepted screen wireframes into editable Figma frames through an actual authorized provider, with verified node-level read-back.
 ---
 
-# ANGENT BA: figma
+# Wireframe-to-Figma screen handoff
 
-Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/figma/SKILL.md
+**Origin:** Adapted from the MIT Dev BA Kit Figma wireframe workflow by Edward Ngo (https://github.com/nv-minh/dev-ba-kit/blob/main/skills/figma/SKILL.md), supplemented with Reqwise OSS's actual Figma MCP reference (https://github.com/hoangpm96/reqwise-figma-mcp/blob/main/docs/TOOLS.md). The commercial AI4BA/Reqwise Pro binaries were not available or copied.
 
-## Portability and authority
+## Domain boundary: screen delivery versus diagrams
 
-Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Use the real BA Markdown validator only for completed documents and report the result. For HTML/prototype/API use the actual browser, contract runner or test tool when authorized; generating source is not equivalent to successful execution. Other original Claude-only helper script names describe possible implementations, not installed ANGENT commands.
+\`ba-figma\` carries approved **screens and controls** from \`ba-wireframe-ascii\`, \`ba-wireframe-html\` or an accepted screen model into editable Figma frames. The six Reqwise OSS \`figma_diagram\` types (userflow, activity, state, sequence, ERD, sitemap) are **diagram models**, not a general \`wireframe → app screen\` compiler. Do not call \`figma_diagram\` to create a login form and then claim it faithfully implemented screen layouts. Use Figma provider-native frame and node operations only when live, permitted and documented.
 
+## Source-to-canvas mapping
 
-# /figma — Push wireframes to Figma frames
+1. Read accepted feature scope, screen inventory, selected variant, SRS/FR/AC, userflow and existing Figma design system. Preserve screen IDs/names, control labels, role/permission states and the intended device width. Do not assume an ASCII sketch is the best authoritative source when a later approved screen revision exists.
+2. Create a screen mapping inventory: source screen ID → Figma target file/page → existing frame node ID (when any), width, components, actions, error/empty/loading states, source revision and intended update type. The output is a proposed frame map, not yet a Figma change.
+3. Read the actual Figma file first through the connected provider: inspect file/page, existing frames, variables, text styles, component instances and library constraints. If the connected tool cannot read frames or write editable nodes, stop the **native edit** and provide the screen specification for a capable host rather than inventing links.
+4. Decide shape and component reuse before creation. Prefer existing design tokens, components and auto-layout settings where supported. Controls must preserve labels, statuses and keyboard/accessibility notes. The BA specialist does not override ANGENT Frontend's accepted visual direction.
+5. Compute per-screen change intent: create, reconcile existing node, leave unchanged, manual repair. Avoid regenerating duplicate frames on a repeated run. The source screen ID and exact Figma node ID together establish identity; title similarity alone does not.
+6. Before consequential writes, apply ANGENT Execution's current authorization and scope rules. For approved operations, use the **actual** Figma adapter that is available (the Reqwise \`figma_write\` sandbox or a different documented Figma provider). Never invent tool names or assume an available Figma connector supports every node-level action. Confirm Figma text font loading and provider-specific batching.
+7. Read back actual frame IDs, editable node types, texts and component references. Compare control inventory against source, check frame count, visibility and constraints; run a real layout/screenshot review if the host supports it. Record only returned, verified URLs. A frame created but missing half its controls has not passed.
+8. After read-back, update an existing authorized wireframe/index document with the actual Figma URL/node ID, without overwriting other links or creating a hidden synchronization database. If no existing index exists, supply links in the task result; do not invent a compulsory path.
+9. Report created/updated/skipped/failed frames, exact checked revision and any unsynchronized states. A dry-run manifest, exported PNG or a \`figma_diagram\` response is **not** equivalent to an editable screen.
 
-## Goal
+## When Figma is unavailable
 
-Create/update Figma frames from the feature's wireframes (ASCII content as the source of truth) via the Figma MCP, and record each frame's URL into the `Figma` column of `docs/{feature}/ascii-wireframe/{feature}-wireframe-index.md`. **No local output file** — Figma is the artifact; the index is the pointer.
+Prepare a precise screen-to-node mapping, list provider prerequisites and retain any approved HTML prototype. Do not fabricate URLs, claim a mock Figma session or automatically upload restricted screens to an external renderer.
 
-## Constraints
+## Test criteria
 
-- **External-write — hard gate** (`approval-gate.md` external-write class, same shape as `/sync-confluence`): preview every frame's contents + the target Figma file/page, get an explicit **Y** before any MCP write. No auto-approve.
-- **Figma MCP must be authenticated** — if the MCP is not connected/authenticated, STOP and tell the user how to connect it; do not fabricate URLs or fall back to a local file.
-- **Group B** (`feature-bootstrap.md`): needs wireframes — ASCII screens preferred (`ascii-wireframe/{flow-slug}.md`), else HTML wireframes; missing both → refuse + route `/wireframe-ascii`.
-- **One Figma frame per screen** — frame name = `[n] {screen-name}`; group frames by flow (a Figma section/page per flow when the tool supports it).
-- **Content parity** — the Figma frames mirror the wireframes (same controls, same `[n]`); the index's `Figma` column holds the frame URL per screen.
-- **No local file** (`naming-conventions.md` line 46) — only the index is edited (the `Figma` column).
-- **Idempotent** — re-run updates existing frames (URLs stable); new screens get new frames.
+For each screen: correct actor permission, one stable frame mapping, source-equivalent content/control count, interaction and error states, usable type sizes and contrast, no clipped content at target width, editable node read-back and preservation of unrelated existing frames. A successful write message alone is not enough.
 
-## Inputs
-
-```
-/figma <feature>                  # all flows
-/figma <feature> --flow <slug>    # one flow
-```
-
-## Approach
-
-1. **Gate.** No wireframes → refuse + route `/wireframe-ascii`. Verify the Figma MCP is authenticated (probe a read-only call); if not → STOP with connect instructions.
-2. **Read the wireframes** for the target flow(s) — every screen `[n]`, its controls, the device width.
-3. **Draft the frame plan** — per screen: frame name `[n] {name}`, width (device), the controls to place, the target Figma file/page (from memory or ask once).
-4. **L1 preview (hard gate)** — list every frame + target + a note that this WRITES to Figma; get explicit **Y**.
-5. **On Y → MCP writes** — create/update each frame; collect the returned frame URLs.
-6. **Edit the index** — write each URL into the `Figma` column of its screen row; tick `updated`.
-8. **Output report** — frames pushed + the Figma file link + next (`/prototype-html` for a local clickable demo).
-
-## Gotchas
-
-- **Never invent a Figma URL** — if a write fails or returns nothing, leave the cell empty and report it; a fake URL breaks the index contract silently.
-- **Content parity, always** — the Figma frame is a render of the wireframe, not a redesign; if the wireframe changed, re-sync the frame.
-- **One source of screen truth** — the ASCII wireframe + its `[n]`; Figma frames follow those numbers, never the reverse.
-- **MCP availability varies** — in headless/CI contexts the Figma MCP may be absent; this skill is interactive-only by nature.
+**ANGENT ownership:** Root chooses scope and retains user approval, BA owns requirement-to-screen semantics, Frontend owns visual design when needed, Figma specialist handles real diagram/model-specific construction, Execution controls external effects and Quality verifies.
