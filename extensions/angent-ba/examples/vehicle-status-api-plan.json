@@ -1,0 +1,27 @@
+{
+  "name": "Fleet vehicle authorization API",
+  "scenarios": [
+    {
+      "id": "AUTHZ001",
+      "name": "Vehicle status allowed",
+      "method": "GET",
+      "path": "/api/vehicles/{{vehicleId}}/status",
+      "expected_status": 200,
+      "auth": "bearer",
+      "body_checks": {
+        "status": "online"
+      }
+    },
+    {
+      "id": "AUTHZ002",
+      "name": "Vehicle status is denied without access",
+      "method": "GET",
+      "path": "/api/vehicles/{{vehicleId}}/status",
+      "expected_status": 403,
+      "auth": "none",
+      "body_checks": {
+        "code": "FORBIDDEN"
+      }
+    }
+  ]
+}
