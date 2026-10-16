@@ -25,7 +25,7 @@ import sys
 CASE_DATA = json.loads(CASE_JSON)
 def run(prototype, chrome=None):
     try:
-        from playwright.sync_api import sync_playwright
+        from playwright.sync_api import sync_playwright, expect
     except ImportError as exc:
         print(json.dumps({"ok":False,"executed":False,"error":"Install the Python playwright package and Chrome first"}))
         return 2
@@ -54,7 +54,7 @@ def run(prototype, chrome=None):
                 try:
                     page.goto(proto.as_uri())
                     for hop in case["path"]:
-                        assert page.locator('[data-screen-id="'+hop["screen"]+'"]').count()==1
+                        expect(page.locator('[data-screen-id="'+hop["screen"]+'"]')).to_have_count(1)
                         if hop["kind"]=="submit":
                             for field in hop["fields"]:
                                 input_el=page.get_by_label(field["label"],exact=True)
@@ -64,11 +64,11 @@ def run(prototype, chrome=None):
                                     input_el.fill(field["value"])
                             page.get_by_label("Mock response").select_option(hop["scenario"])
                         page.get_by_role("button",name=hop["label"],exact=True).click()
-                        assert page.locator('[data-screen-id="'+hop["target"]+'"]').count()==1
-                    assert page.locator('[data-screen-id="'+case["screen"]+'"]').count()==1
+                        expect(page.locator('[data-screen-id="'+hop["target"]+'"]')).to_have_count(1)
+                    expect(page.locator('[data-screen-id="'+case["screen"]+'"]')).to_have_count(1)
                     if case["kind"]=="navigate":
                         page.get_by_role("button",name=case["label"],exact=True).click()
-                        assert page.locator('[data-screen-id="'+case["target"]+'"]').count()==1
+                        expect(page.locator('[data-screen-id="'+case["target"]+'"]')).to_have_count(1)
                     else:
                         for field in case["fields"]:
                             input_el=page.get_by_label(field["label"],exact=True)
@@ -79,10 +79,10 @@ def run(prototype, chrome=None):
                         page.get_by_label("Mock response").select_option(case["scenario"])
                         page.get_by_role("button",name=case["label"],exact=True).click()
                         if case["result"]=="navigate":
-                            assert page.locator('[data-screen-id="'+case["target"]+'"]').count()==1
-                            assert page.locator("h2").evaluate("(el)=>document.activeElement===el")
+                            expect(page.locator('[data-screen-id="'+case["target"]+'"]')).to_have_count(1)
+                            expect(page.locator("h2")).to_be_focused()
                         else:
-                            assert page.get_by_role("alert").inner_text()==case["message"]
+                            expect(page.get_by_role("alert")).to_have_text(case["message"])
                     assert not errors,errors
                 except Exception as exc:
                     failures.append({"id":case["id"],"error":str(exc)[:600]})
