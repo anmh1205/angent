@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.1 — Gemini Apps Web Skill packaging
+
+- Added dedicated `gemini-web` target with a top-level `SKILL.md` for the Gemini Apps browser uploader.
+- The single imported Skill includes a navigable reference library of all 115 original ANGENT Core/Engineer Skill texts and 16 role definitions, with native relative references preserved within each source Skill folder.
+- Kept the Gemini CLI Skills and Extension layouts distinct; clarified that nested reference files are not separately activated Gemini Web Skills.
+- Included the new target in deterministic all-target ZIPs, CI and tagged GitHub Release publication, with size/content integrity checks.
+- Static validation does not establish actual Gemini Web import or live skill invocation.
+
+
 ## 1.5.0 — Portable multi-platform distributions
 
 - Added `platforms/` adapters and one deterministic `scripts/build_packages.py` for copy-ready local-agent, Gemini Skills, Gemini Extension, Claude Code and OpenAI Plugin packages.

@@ -1,4 +1,4 @@
-# ANGENT 1.5.0 — platform installation
+# ANGENT 1.5.x — platform installation
 
 ANGENT has one maintained Core (`skills/`) and one Engineer fallback source (`extensions/angent-engineer/`). `platforms/` contains host-specific bootstrap templates; `packages/` and `dist/` are generated, Git-ignored release outputs. Build from a Git checkout (or download the ready-made platform ZIPs and `SHA256SUMS` from the matching GitHub Release once published):
 
@@ -7,11 +7,29 @@ python3 scripts/build_packages.py --all
 python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
 ```
 
-All five bundles contain the same 115 discoverable Skills, including their `references/`, `scripts/` and portable Engineer support tree. Do not use the raw root `skills/` checkout alone as the full ANGENT distribution: it contains only the 12 Core Skills.
+The five CLI/plugin bundles contain the same 115 discoverable Skills, including their `references/`, `scripts/` and portable Engineer support tree. Do not use the raw root `skills/` checkout alone as the full ANGENT distribution: it contains only the 12 Core Skills.
 
 ## Local coding agents
 
 Copy the **contents** of `packages/local-agent/` into the target project root. The `AGENTS.md` activates the universal cognitive standard and `.agents/skills/` exposes the 115 Skills on clients that recognize that standard. For a project with an existing `AGENTS.md`, copy the `.agents/` and `extensions/` directories, then merge ANGENT's small `AGENTS.md` guidance into the existing file without overwriting its project rules. Clients that do not support `.agents/skills/` require their native adapter.
+
+## Gemini Apps Web (Gemini browser Skill upload)
+
+Download `angent-gemini-web.zip` from the GitHub Release. On
+`gemini.google.com`, open Customize > Skills > Upload and select that ZIP
+directly. The ZIP has exactly one top-level `SKILL.md`, plus a generated
+`references/INDEX.md`, the original 12 Core and 103 Engineer Skill texts,
+and 16 role definitions as *references*.
+
+Gemini Web imports **one Skill** from this package. The nested library does
+not become 115 separately discoverable Skills or 16 running subagents. You must
+select/use the uploaded ANGENT Skill in Gemini Apps. The browser does not gain
+filesystem persistence, native AgentKit, remote shell or external-action
+scripting merely by importing reference files. Keep the original CLI targets
+separate: `angent-gemini-skills.zip` contains a `.gemini/skills/` tree and
+**does not work as a Gemini Web Skill upload**.
+
+Reference: https://support.google.com/gemini/answer/17094296
 
 ## Gemini CLI workspace Skills
 
@@ -61,7 +79,7 @@ Use `packages/openai-plugin/` or `dist/angent-openai-plugin.zip`. The existing `
 - Do not blindly overlay bundles across an existing project. A project-specific `AGENTS.md`, `GEMINI.md` or `CLAUDE.md` must be preserved and merged.
 - Structural validation cannot prove platform-specific model behavior, actual provider activation, native AgentKit availability or live subagent delegation. Run targeted live checks on each runtime before asserting those outcomes.
 
-On each validated `main` push, the publish workflow creates a matching version tag and GitHub Release if that version has not already been tagged. The Release provides five platform-specific ZIPs, the compatible `angent-chatgpt.zip`, the single combined `angent-all-targets.zip`, and SHA256SUMS. The Actions artifact `angent-all-targets` includes the same outputs for inspection/download (30-day retention). Changes to `main` without a version bump do not replace a published tag. A personal ChatGPT plugin is not automatically updated when the GitHub Release changes; use its separately authorized plugin updater with `angent-openai-plugin.zip` and verify the installed version. Workspace GitHub marketplace sync is a different administration feature.
+On each validated `main` push, the publish workflow creates a matching version tag and GitHub Release if that version has not already been tagged. The Release provides six platform-specific ZIPs, the compatible `angent-chatgpt.zip`, the single combined `angent-all-targets.zip`, and SHA256SUMS. The Actions artifact `angent-all-targets` includes the same outputs for inspection/download (30-day retention). Changes to `main` without a version bump do not replace a published tag. A personal ChatGPT plugin is not automatically updated when the GitHub Release changes; use its separately authorized plugin updater with `angent-openai-plugin.zip` and verify the installed version. Workspace GitHub marketplace sync is a different administration feature.
 
 Tagged releases are published by `.github/workflows/publish-packages.yml`: the tag must exactly match the version in both OpenAI manifests, the full packaging checks run, and the workflow refuses to overwrite an existing release. Branch CI ZIP artifacts are short-lived candidates rather than a permanent distribution channel.
 
