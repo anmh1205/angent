@@ -1,75 +1,31 @@
-# MIT source reference — use under ANGENT authority
+# Jira and Confluence synchronization by live provider evidence
 
-Maintained reference from https://github.com/nv-minh/dev-ba-kit/blob/main/rules/atlassian-sync.md (Edward Ngo, 2026, MIT). Original Claude plugin roots, hooks, slash commands and agent roles are **not** native ANGENT runtime capabilities. ANGENT Hub routing and current host authority take precedence.
+**Provenance:** Adapted from MIT Dev BA Kit / rules/atlassian-sync.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit. Tool names and capabilities below must be discovered from the currently connected Atlassian provider, not assumed from a previous host.
 
-# Atlassian Sync — conventions for syncing docs to Confluence/Jira
+## Source, destination and identity
 
-> Shared rule for skills that write to Atlassian (`/sync-confluence`, `/confluence`, `/jira`). Goal: sync **safely, controlled, with drift detection**. Every such skill references this file in Constraints + References.
+For Jira, map a stable accepted US identifier to an actual issue key and project. For Confluence, use an exact page identifier plus site/space. Never infer authorization from a similar issue title or reuse a tenant ID from an example.
 
-## 1. HITL principle — external writes are irreversible
+Read current provider state first. Record issue/page version, source requirement revision, actor roles and intended changed fields. Confirm the user authorized the relevant write scope.
 
-- **ALWAYS preview + confirm (Y) before each write** to Confluence/Jira. NO auto-approve flag, NO "write then report".
-- Writing to Atlassian is a **side-effect outside the vault** — not rollback-able with git. A mistake → the version must be restored manually. Hence the gate is stricter than the internal L1.
-- `--preview`/dry-run: run up to the diff step then STOP, absolutely no writing.
+## Jira-specific controls
 
-## 2. Resolve cloudId dynamically (do NOT hardcode)
+Find existing issues before creating anything. Compare summary, AC, description, source requirement IDs, status and rights. Build create/update/no-op actions. On unknown write outcome, query for the stable source ID or key before retrying; blind retries can duplicate tickets.
 
-- Use `getAccessibleAtlassianResources` → pick the resource whose `url` matches the host of the user-provided link.
-- Multiple sites match → ask the user to choose. Do NOT hardcode site/cloudId/spaceId (unlike the old skill that hardcoded `macromill.atlassian.net`).
-- Parse `pageId` from the url: `/pages/(\d+)/`. `issueKey` from `/browse/([A-Z]+-\d+)`.
+After any mutation, read back exact key, project, fields and workflow state. “Done” is delivery workflow metadata, not stakeholder requirement approval or production acceptance. Do not fabricate issue links.
 
-## 3. Content format
+## Confluence-specific controls
 
-- **Read to analyze:** `contentFormat: "markdown"` (easier content matching).
-- **Read to preserve structure + write:** `contentFormat: "html"` (keeps the `<ac:structured-macro>` macro, panels, tables, status).
-- **Edit in-place:** change only the relevant section's content; keep the rest + all macros intact. Do NOT replace the whole page.
-- Always set a `versionMessage` describing the sync source (e.g. `sync from code HEAD~3..HEAD — 2026-07-25`).
+Read the page in a representation preserving its existing macros, tables and attachments. Compose a section-level diff while preserving unrelated human content. Use a provider-supported version precondition and content format; if only destructive whole-page overwrite is available, stop and provide a safe patch proposal.
 
-## 4. State: `.claude/state/atlassian/sync-state.yaml`
+After writing, retrieve the exact page again and confirm that the intended sections changed while macros, headings, links and permissions were preserved. A successful HTTP response alone is not a content-integrity check.
 
-Stores the mapping + watermark/hash to detect drift (1 entry/artifact). Minimal:
+## Provenance without shadow synchronization state
 
-```yaml
-mappings:
-  confluence:
-    "<pageId>":
-      url: "<page url>"
-      title: "<title>"
-      last_synced: "2026-07-25T10:00:00Z"
-      last_version: 12                 # Confluence version after the write
-      content_hash: "<sha of the html at sync time>"   # detect page changed outside the kit
-      source_watermark: "<git commit sha | conversation:<date>>"
-  jira:
-    "<US-NNN>":                         # the story whose story-index row holds the key
-      issue_key: "KAN-127"             # written back into the story-index jira-key column
-      url: "<issue url>"
-      last_synced: "2026-07-25T10:00:00Z"
-      source_hash: "<sha of the story at sync time>"
-```
+Store actual issue/page links in an existing authorized project story index or accepted documentation when useful. Provider versions and source Git revisions are sufficient for conflict checks during the task; no second database or mandatory local watermark ledger is needed.
 
-- **Conflict detection:** before writing, compare the artifact's current hash with the stored value. Different → the artifact changed outside the kit since the last sync → **warn**, let the user review the differences before overwriting.
-- **Watermark:** store the synced source commit/timestamp → next time only consider NEW changes (code mode: `git diff <watermark>..HEAD`).
-- The file lives under `.claude/state/` (not `docs/`) — machine state, not a business doc.
+## Failure examples
 
-### Jira-specific (`/jira`)
+Two stories with the same title may represent different vehicle roles. A changed Confluence page may have been edited by an author since the initial read. In both cases, resolve identity and revision instead of overwriting on a guess.
 
-- **One issue per story** (`US-{NNN}` → one Jira issue); the story-index `jira-key` column is the canonical pointer (so `/gap`/`/dashboard` can see coverage).
-- **Bidirectional key** — on push, write the returned `issue_key` into the story-index row; on pull, read issue status back into the index `status` column (mapped: Jira story statuses → our lifecycle `draft`/`in-review`/`approved`/`shipped`).
-- **Watermark by story hash** — re-push only stories whose `us-*.md` changed since `source_hash` (no re-pushing the whole backlog every run).
-- **Refuse `status: stale` stories** (`approval-gate.md` named hard-gate) — a stale story pushed to Jira propagates outdated scope; route to `/userstory` to refresh first.
-
-## 5. Audit (optional, does not touch the body)
-
-- Can use `createConfluenceFooterComment` to leave a mark "🔄 Synced by dev-ba-kit from {source} at {ISO}" — an audit trail that does not mutate the page content.
-- Do NOT use comments to hold the main content (content goes into the body via in-place update).
-- For Jira, prefer a `dev-ba-kit` label on synced issues (queryable) over a comment, unless the team convention differs.
-
-## 6. No-fabrication + in-scope
-
-- Only write what can be drawn from a real source (code diff / conversation). Do NOT infer logic without a source.
-- Touch only the sections related to the change; leave the rest of the page intact.
-- New content language follows `language.md`, but prefer keeping the page's existing language for consistency.
-
-## One-line summary
-
-> **Preview + Y before each write · resolve cloudId/pageId dynamically · read markdown/write html keeping macros · edit in-place · hash-watermark drift detection · no fabrication.**
+The BA specialist supplies requirement meaning and mapping; ANGENT Execution performs provider calls and authorized mutations; Quality validates the real provider read-back.

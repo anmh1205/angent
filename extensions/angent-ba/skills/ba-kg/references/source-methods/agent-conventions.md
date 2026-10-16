@@ -1,89 +1,25 @@
-# MIT source reference — use under ANGENT authority
+# Specialist review perspectives within ANGENT
 
-Maintained reference from https://github.com/nv-minh/dev-ba-kit/blob/main/rules/agent-conventions.md (Edward Ngo, 2026, MIT). Original Claude plugin roots, hooks, slash commands and agent roles are **not** native ANGENT runtime capabilities. ANGENT Hub routing and current host authority take precedence.
+**Provenance:** Adapted from MIT Dev BA Kit / rules/agent-conventions.md (Edward Ngo, 2026), https://github.com/nv-minh/dev-ba-kit. This is a review *method*, not a declaration of installed agents.
 
----
-paths:
-  - ".claude/agents/**"
----
+## Divide review by material questions
 
-# Agent Conventions
+A business analyst checks actor goals, rule sources, scope boundaries and exceptions. A product reviewer checks value, prioritization and decision owner. UX examines navigation, information architecture and loading/empty/error states. QA examines observable acceptance criteria, negative and boundary cases. An engineer examines feasibility, integration, data ownership and security. A change reviewer traces source revisions to affected artifacts.
 
-> Patterns for review agents in the vault. Every agent at `.claude/agents/<name>.md` follows these rules.
+ANGENT Root chooses only the perspectives that add value to the current decision. One person or one agent can apply several perspectives sequentially, so a runtime capable of spawning subagents is never mandatory.
 
-## Agent file structure
+## Inputs, outputs and source priority
 
-```yaml
----
-name: senior-ba
-description: 1-line summary of agent's expertise and when to use
-expertise: [completeness, edge-cases, requirement-clarity]
-review_targets: [srs, urd, brd, prd, srs-flows, srs-screen, brainstorm, user-story, use-case]
-output_format: structured-findings-v1
----
+Read the actual document/feature, its source revision, accepted decisions and linked requirements. Review each questionable claim against those sources before raising a finding. An uncited preference for a different writing style is not automatically a business defect.
 
-# {Persona name}
+For each finding report affected ID/section, source witness, impact, a specific correction or verifying question and confidence. Separate factual contradictions, unverified assumptions, missing coverage and design preferences; they require different actions.
 
-> {Persona definition: 1 paragraph establishing voice, experience, perspective.}
+## Independence, disagreement and action
 
-## Review approach
+If multiple real reviewers are available, their findings can be compared. Count distinct **evidence**, not votes. Two reviewers repeating the same unsupported assumption do not increase its credibility; a single source-backed privacy defect can be blocking.
 
-{Bullet list HOW agent reviews — scan first, mid, last.}
+Never claim an independent agent ran unless the host actually executed one. Never let a specialist reviewer assume Root authority, write external provider state or approve requirements. Execution follows user scope and tool permissions. Quality checks whether a proposed fix resolves the underlying evidence.
 
-## Severity rubric
+## Example
 
-{Definitions BLOCKING / WARNING / SUGGESTION specific to this agent's domain.}
-
-## Common findings
-
-{Typical issues agent flags — checklist style.}
-
-## What NOT to flag
-
-{Out-of-scope domains; explicit to prevent overlap with other agents.}
-
-## Output format
-
-Follow [review-format.md](./review-format.md) v1 strictly.
-
-## Reference materials
-
-When reviewing, agent reads:
-- Target doc (provided by orchestrator)
-- @.claude/rules/{relevant-rule}.md
-- @docs/{feature}/... (runtime resolved by /review skill — placeholder `{feature}` replaced by target's frontmatter feature value)
-```
-
-## Roles + review_targets
-
-| Role | `name` | Phase | Domain |
-|------|--------|-------|--------|
-| Senior BA | `senior-ba` | 4 | Completeness, edge cases, requirement clarity |
-| Product Owner | `po-reviewer` | 4 | Business value, scope creep, prioritization |
-| Product Manager | `pm-reviewer` | 4 | Cross-feature consistency, dependencies, timeline |
-| UI/UX | `uxui-reviewer` | 4 | Screen flows, states (loading/empty/error), consistency |
-| QA | `qa-reviewer` | 4 | AC testability, missing test cases, coverage |
-| Tech | `tech-reviewer` | 4 | Feasibility, performance, security implications |
-| Change Tracker | `change-tracker` | 6 | Impact analysis for /cr |
-| Gap Analyst | `gap-analyst` | 6 | Traceability, orphaned reqs, stale chain |
-
-## Path conventions (placeholder resolution)
-
-Agent reference materials use the `{feature}` path placeholder — resolved by the `/review` skill when spawning an agent:
-
-- `@docs/{feature}/{feature}-urd.md` → resolves to target doc's `feature` frontmatter value.
-- `@docs/_shared/...` → no resolution, project-level shared.
-
-Agent MUST NOT hardcode the feature slug (e.g. `@docs/payment/payment-urd.md`) — always use the placeholder.
-
-If the target has no `feature:` frontmatter, `/review` skips that reference or prompts the user to pick a feature context.
-
-## Guidelines
-
-- **One agent = one persona.** Don't merge senior-ba + qa — different thinking.
-- **Agents critique, don't write content.** Don't propose new sections; only propose edits to specific lines.
-- **Stay in-scope.** Senior BA doesn't flag tech feasibility — that's the tech-reviewer's job.
-- **No double-counting.** If a BLOCKING exists, don't repeat it as WARNING. Pick the highest severity.
-- **Findings atomic.** Each finding = 1 thing, 1 suggested fix. Split compound findings.
-- **Agent MUST NOT use the Edit tool directly.** The `/review` orchestrator applies the fixes the user accepts.
-- **Stale chain awareness** (Phase 6+): agents should check the target's `status: stale` and `docs/_shared/staleness.log` to flag cascades.
+A fleet access story may be syntactically complete yet fail QA review if it lacks a denied-user test. Business review checks who may view which vehicles; engineering review checks how tenant ownership is enforced; UX checks that the denial reveals no sensitive data. These are complementary questions, not three fictitious subagents.
