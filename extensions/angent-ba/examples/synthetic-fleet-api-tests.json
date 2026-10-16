@@ -14,7 +14,10 @@
       "expected_json": {
         "vehicleId": "demo-001",
         "state": "online"
-      }
+      },
+      "requirements": [
+        "FR-IVTS-01"
+      ]
     },
     {
       "id": "TC-FLEET-002",
@@ -24,7 +27,10 @@
       "expected_status": 403,
       "expected_json": {
         "error": "ACCESS_DENIED"
-      }
+      },
+      "requirements": [
+        "BR-IVTS-01"
+      ]
     },
     {
       "id": "TC-FLEET-003",
@@ -34,7 +40,10 @@
       "expected_status": 503,
       "expected_json": {
         "error": "TELEMETRY_UNAVAILABLE"
-      }
+      },
+      "requirements": [
+        "FR-IVTS-01"
+      ]
     },
     {
       "id": "TC-FLEET-004",
@@ -49,7 +58,8 @@
       "expected_json": {
         "vehicleId": "demo-001",
         "ack": "recorded"
-      }
+      },
+      "requirements": []
     }
   ]
 }

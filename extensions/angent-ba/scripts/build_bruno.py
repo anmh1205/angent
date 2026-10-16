@@ -13,6 +13,7 @@ from typing import Any
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 TEST_ID = re.compile(r"^TC-[A-Za-z0-9][A-Za-z0-9-]*$")
+REQUIREMENT_ID = re.compile(r"^(?:FR|BR|NFR|AC|CHK)-[A-Za-z0-9][A-Za-z0-9-]*$")
 NAME = re.compile(r"^[A-Za-z0-9 _.,:/()\-]{1,100}$")
 METHODS = {"GET", "POST", "PUT", "PATCH", "DELETE"}
 FIELD = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$")
@@ -21,7 +22,7 @@ FORBIDDEN_PROPERTY = {"__proto__", "constructor", "prototype"}
 PLACEHOLDER = re.compile(r"\{\{([A-Za-z_][A-Za-z0-9_]*)\}\}")
 
 
-def validate(model: Any) -> dict[str, Any]:
+def validate(model: Any, evidence_ids: set[str] | None = None) -> dict[str, Any]:
     errors: list[str] = []
     if not isinstance(model, dict):
         return {"ok": False, "errors": ["Root must be object"]}
@@ -50,6 +51,16 @@ def validate(model: Any) -> dict[str, Any]:
             errors.append(f"requests[{i}]: expected object")
             continue
         testid = request.get("id")
+        refs = request.get("requirements", [])
+        if not isinstance(refs, list) or not all(isinstance(v,str) and REQUIREMENT_ID.fullmatch(v) for v in refs):
+            errors.append(f"requests[{i}]: invalid requirement reference list")
+            refs = []
+        elif len(set(refs)) != len(refs):
+            errors.append(f"requests[{i}]: duplicate requirement references")
+        if evidence_ids is not None:
+            for requirement in refs:
+                if requirement not in evidence_ids:
+                    errors.append(f"requests[{i}]: unresolved evidence requirement {requirement}")
         method = request.get("method")
         path = request.get("path")
         if not isinstance(testid, str) or not TEST_ID.fullmatch(testid):
@@ -141,8 +152,8 @@ def render_request(request: dict, seq: int) -> str:
     return "\n".join(lines)
 
 
-def compile_collection(data: dict) -> dict[str,str]:
-    report=validate(data)
+def compile_collection(data: dict, evidence_ids: set[str] | None = None) -> dict[str,str]:
+    report=validate(data, evidence_ids=evidence_ids)
     if not report["ok"]:
         raise ValueError("; ".join(report["errors"]))
     files: dict[str,str] = {}
@@ -153,6 +164,15 @@ def compile_collection(data: dict) -> dict[str,str]:
         env.append("  "+key+": "+value)
     env.extend(["}",""])
     files["environments/Mock.bru"]="\n".join(env)
+    files["traceability.json"]=json.dumps({
+        "format":"angent-ba-api-test-traceability-v1",
+        "source_evidence_id_check":"performed" if evidence_ids is not None else "not-performed",
+        "execution_status":"not-run",
+        "tests":[{"id":request["id"],"requirements":request.get("requirements",[]),
+                  "source_link_state":("missing" if not request.get("requirements") else
+                                       "ids-resolved-only" if evidence_ids is not None else "not-checked")}
+                 for request in data["requests"]]
+    },ensure_ascii=False,indent=2)+"\n"
     for i, request in enumerate(data["requests"],1):
         files["requests/"+request["id"]+".bru"]=render_request(request,i)
     return files
@@ -162,10 +182,19 @@ def main() -> int:
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("model",type=Path)
     parser.add_argument("--output",required=True,type=Path)
+    parser.add_argument("--evidence-graph",type=Path,help="Optional already-inspected BA artifact graph for ID validation")
     args=parser.parse_args()
     try:
         data=json.loads(args.model.read_text(encoding="utf8"))
-        generated=compile_collection(data)
+        evidence_ids=None
+        if args.evidence_graph:
+            from validate_artifacts import audit
+            graph=json.loads(args.evidence_graph.read_text(encoding="utf8"))
+            check=audit(graph)
+            if not check["ok"]:
+                raise ValueError("Evidence graph invalid: "+"; ".join(check["errors"]))
+            evidence_ids={entry["id"] for entry in graph["artifacts"]}
+        generated=compile_collection(data,evidence_ids=evidence_ids)
         if args.output.exists() and any(args.output.iterdir()):
             raise ValueError("Output directory must be empty to avoid overwriting existing tests")
         for rel, content in generated.items():

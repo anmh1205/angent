@@ -17,8 +17,12 @@ class BrunoGeneratorTests(unittest.TestCase):
 
     def test_real_collection_and_assertions(self):
         files=compile_collection(self.fixture)
-        self.assertEqual(len(files),6)
+        self.assertEqual(len(files),7)
         self.assertIn("bruno.json",files)
+        manifest=json.loads(files["traceability.json"])
+        self.assertEqual(len(manifest["tests"]),4)
+        self.assertEqual(manifest["tests"][3]["source_link_state"],"missing")
+        self.assertEqual(manifest["source_evidence_id_check"],"not-performed")
         self.assertIn("environments/Mock.bru",files)
         self.assertEqual(json.loads(files["bruno.json"])["name"],"Synthetic Fleet Access Tests")
         self.assertIn("baseUrl: http://127.0.0.1:18497",files["environments/Mock.bru"])
@@ -74,6 +78,21 @@ class BrunoGeneratorTests(unittest.TestCase):
         self.assertIn("Content-Type: application/json",generated)
         self.assertIn('"vehicleId": "demo-001"',generated)
         self.assertIn("to.eql(201)",generated)
+
+    def test_requirement_graph_identity_not_semantic_approval(self):
+        from validate_artifacts import audit
+        graph=json.loads((BA/"examples/rental-fleet-traceability.json").read_text(encoding="utf8"))
+        self.assertTrue(audit(graph)["ok"])
+        ids={item["id"] for item in graph["artifacts"]}
+        files=compile_collection(self.fixture,evidence_ids=ids)
+        manifest=json.loads(files["traceability.json"])
+        self.assertEqual(manifest["source_evidence_id_check"],"performed")
+        self.assertEqual(manifest["tests"][0]["source_link_state"],"ids-resolved-only")
+        modified=copy.deepcopy(self.fixture)
+        modified["requests"][0]["requirements"]=["FR-MISSING-999"]
+        self.assertFalse(validate(modified,evidence_ids=ids)["ok"])
+        with self.assertRaisesRegex(ValueError,"unresolved evidence requirement"):
+            compile_collection(modified,evidence_ids=ids)
 
     def test_default_secrets_are_not_assumed(self):
         a=copy.deepcopy(self.fixture)
