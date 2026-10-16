@@ -43,7 +43,10 @@ def run(package:Path,script:str,args:list[str])->dict:
     except ValueError:
         raise ValueError("Executable did not return JSON: "+script+" "+
                          result.stdout[-500:]+result.stderr[-500:])
-    if result.returncode!=0 or data.get("ok") is not True:
+    # The public Reqwise candidate tool returns its MCP envelope, not an ok flag.
+    is_reqwise=(script.endswith("/to_reqwise_payload.py") and
+                data.get("tool")=="figma_diagram" and data.get("writes_performed") is False)
+    if result.returncode!=0 or (data.get("ok") is not True and not is_reqwise):
         raise ValueError("Distributed executable failed: "+script+" "+
                          str(data)[:850]+" stderr="+result.stderr[-350:])
     return data
