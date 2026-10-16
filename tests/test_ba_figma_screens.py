@@ -55,6 +55,31 @@ class EditableFigmaScreenTests(unittest.TestCase):
         self.assertNotIn("never-include-this-secret",out["figma-write.js"])
         self.assertNotIn("never-include-this-secret",out["figma-screen-plan.json"])
 
+    def test_evidence_linked_fleet_screen_and_honest_uncovered_fr(self):
+        from validate_artifacts import audit
+        from build_next_prototype import generate_files as next_files
+        from build_wireframe import render as html_preview
+        model=json.loads((BA/"examples/synthetic-fleet-screen-model.json").read_text(encoding="utf8"))
+        graph=json.loads((BA/"examples/rental-fleet-traceability.json").read_text(encoding="utf8"))
+        report=audit(graph,require_tests=False)
+        self.assertTrue(report["ok"],report)
+        self.assertEqual(report["coverage"]["uncovered"],["FR-IVTS-02"])
+        ids={item["id"] for item in graph["artifacts"]}
+        candidate=compile_screens(model,evidence_ids=ids)
+        self.assertEqual(candidate["source_link_check"],"ids-resolved-only")
+        self.assertEqual([x["source_id"] for x in candidate["screens"]],["fleet-status","diagnostics"])
+        self.assertEqual(sum(len(x["controls"]) for x in candidate["screens"]),5)
+        self.assertEqual(json.loads(next_files(model)["model.json"]),model)
+        self.assertIn("Connectivity state: simulated",html_preview(model,"static"))
+        invalid=copy.deepcopy(model)
+        invalid["screens"][0]["controls"][1]["requirements"]=["FR-NOT-IN-SOURCE"]
+        with self.assertRaisesRegex(ValueError,"Unresolved BA evidence"):
+            compile_screens(invalid,evidence_ids=ids)
+        duplicate=copy.deepcopy(model)
+        duplicate["screens"][0]["controls"][1]["requirements"]=["FR-IVTS-02","FR-IVTS-02"]
+        with self.assertRaisesRegex(ValueError,"Duplicate requirement"):
+            compile_screens(duplicate,evidence_ids=ids)
+
     def test_untrusted_control_label_remains_quoted(self):
         data=copy.deepcopy(self.model)
         data["screens"][0]["controls"][0]["label"]='"; console.log("INJECTED"); //'
