@@ -63,19 +63,19 @@ def _outside_fences(markdown):
     active=None
     opener=re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
     for raw_line in markdown.splitlines(keepends=True):
-        line=raw_line.rstrip("\\r\\n")
+        line=raw_line.rstrip("\r\n")
         candidate=opener.match(line)
         if active is not None:
             if (candidate and candidate.group(1)[0] == active[0]
                     and len(candidate.group(1)) >= active[1]
                     and not candidate.group(2).strip()):
                 active=None
-            output.append("\\n" if raw_line.endswith("\\n") else "")
+            output.append("\n" if raw_line.endswith("\n") else "")
             continue
         if candidate and (candidate.group(1)[0] == "~" or
                           "`" not in candidate.group(2)):
             active=(candidate.group(1)[0],len(candidate.group(1)))
-            output.append("\\n" if raw_line.endswith("\\n") else "")
+            output.append("\n" if raw_line.endswith("\n") else "")
         else:
             output.append(raw_line)
     return "".join(output), active is not None
