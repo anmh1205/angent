@@ -73,6 +73,7 @@ def _test_browser(url:str,chrome:Path|None)->dict:
                     if response is None:
                         raise AssertionError("No real Next.js HTTP response")
                     expect(page.locator('[data-screen-id="login"]')).to_have_count(1)
+                    expect(page.locator(".screen")).to_have_attribute("data-angent-hydrated","true")
                     expect(page.get_by_text("Simulation only.",exact=False)).to_be_visible()
                     page.get_by_role("button",name="Sign in",exact=True).click()
                     expect(page.get_by_label("Email address")).to_have_attribute("required","")

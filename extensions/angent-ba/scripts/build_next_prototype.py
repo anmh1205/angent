@@ -46,6 +46,12 @@ export default function ScreenPage() {
   const heading = useRef(null);
   const [scenario, setScenario] = useState(model.scenarios[0]);
   const [message, setMessage] = useState('');
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    // Disable client-only interactions before React has attached handlers.
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
     setMessage('');
@@ -54,6 +60,7 @@ export default function ScreenPage() {
 
   function navigate(target) {
     // Only use validated, predeclared screen IDs; never push arbitrary input.
+    if (!hydrated) return;
     if (Object.hasOwn(screens, target)) router.push('/' + encodeURIComponent(target));
   }
 
@@ -71,7 +78,7 @@ export default function ScreenPage() {
 
   function onSubmit(event) {
     event.preventDefault();
-    if (!submit || !event.currentTarget.reportValidity()) return;
+    if (!hydrated || !submit || !event.currentTarget.reportValidity()) return;
     const result = submit.outcomes[scenario];
     if (!result) return;
     if (result.type === 'error') {
@@ -93,15 +100,16 @@ export default function ScreenPage() {
         <p className="notice"><strong>Simulation only.</strong> No real credentials, backend request,
           authorization or account/session token is created. The review flag is client-controlled.
         </p>
-        <button type="button" onClick={reset}>Reset demo</button>
+        <button type="button" onClick={reset} disabled={!hydrated}>Reset demo</button>
       </header>
-      <section className="screen" data-screen-id={screen.id}>
+      <section className="screen" data-screen-id={screen.id}
+               data-angent-hydrated={hydrated ? "true" : "false"}>
         <h2 tabIndex={-1} ref={heading}>{screen.title}</h2>
         <p className="description">{screen.description}</p>
         {submit && (
           <div className="simulation">
             <label htmlFor="mock-scenario">Mock response</label>
-            <select id="mock-scenario" value={scenario}
+            <select id="mock-scenario" disabled={!hydrated} value={scenario}
                     onChange={event => setScenario(event.target.value)}>
               {model.scenarios.map(value => <option key={value} value={value}>{value}</option>)}
             </select>
@@ -114,21 +122,23 @@ export default function ScreenPage() {
               return <p key={control.id} className="note">{control.label}</p>;
             }
             if (control.type === 'button') {
-              return <button key={control.id} type="button"
+              return <button key={control.id} type="button" disabled={!hydrated}
                              onClick={() => navigate(control.action.target)}>{control.label}</button>;
             }
             if (control.type === 'submit') {
-              return <button key={control.id} type="submit">{control.label}</button>;
+              return <button key={control.id} type="submit" disabled={!hydrated}>{control.label}</button>;
             }
             if (control.type === 'checkbox') {
               return <div key={control.id} className="field">
                 <label htmlFor={fieldId}>{control.label}</label>
-                <input id={fieldId} type="checkbox" required={Boolean(control.required)} />
+                <input id={fieldId} type="checkbox" disabled={!hydrated}
+                       required={Boolean(control.required)} />
               </div>;
             }
             return <div key={control.id} className="field">
               <label htmlFor={fieldId}>{control.label}</label>
-              <input id={fieldId} type={control.type} required={Boolean(control.required)}
+              <input id={fieldId} type={control.type} disabled={!hydrated}
+                     required={Boolean(control.required)}
                      placeholder={control.placeholder || ''} autoComplete="off" />
               {control.requirements?.length > 0 &&
                 <p className="source">{control.requirements.join(', ')}</p>}
