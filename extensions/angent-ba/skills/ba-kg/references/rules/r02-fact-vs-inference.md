@@ -1,7 +1,19 @@
-# R02: Fact vs inference
+# R02: Facts, inferences and approval
 
-**Contract:** Observed implementation is not automatically approved policy.
+## Operational contract
 
-**Review probe:** Keep three distinct evidence states.
+Attach a provenance class to each material statement: documented stakeholder decision; directly observed source; tested runtime behavior; hypothesis; inferred relation; contradiction; or unresolved unknown.
 
-Attach decisive evidence or explicitly mark unknowns. Do not claim external changes or runtime checks without provider observations.
+## Checks before accepting an artifact
+
+Use action verbs that reflect certainty. A known API response from a tested mock is not a production guarantee. An inference from a database column is not an approved requirement.
+
+## Failure response
+
+Never convert a guessed actor, threshold, retry budget or consent policy into an accepted business rule merely to make the document look complete.
+
+## Grounded example
+
+A controller checking `ownerId` supports a code observation, not a claim that authorization is correct along every alternative device-status path.
+
+**Evidence boundary:** these checks govern specialist BA deliverables but do not independently authorize provider changes or claim a test ran. ANGENT Root and Execution retain task scope; Quality must inspect the specific output.
