@@ -131,7 +131,9 @@ def audit(model: Any) -> dict[str, Any]:
                 outgoing = [edge for edge in edges if isinstance(edge, dict) and edge.get("from") == key]
                 if len(outgoing) < 2:
                     errors.append(f"{kind}: decision {key} needs two or more branches")
-                conditions = [e.get("guard") or (e.get("label") if kind == "userflow" else None)
+                # Reqwise calls this "label" on activity/userflow edges and
+                # "guard" on state transitions; accept either representation.
+                conditions = [e.get("guard") or e.get("label")
                               for e in outgoing]
                 if any(not isinstance(value, str) or not value.strip() for value in conditions):
                     errors.append(f"{kind}: decision {key} has an unlabeled branch")

@@ -71,6 +71,15 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         self.assertTrue(report["ok"], report)
         self.assertEqual(compile_model(m)["arguments"]["type"], "userflow")
 
+    def test_reqwise_activity_decisions_support_labeled_edges(self):
+        m = deepcopy(self.activity)
+        for edge in m["edges"]:
+            if edge["from"] == "authorize":
+                edge["label"] = edge.pop("guard")
+        self.assertTrue(audit(m)["ok"], audit(m))
+        compiled = compile_model(m)
+        self.assertEqual(compiled["arguments"]["spec"]["edges"][1]["label"], "yes")
+
     def test_decision_guard_collision_is_rejected(self):
         m = deepcopy(self.activity)
         m["edges"][-1]["guard"] = "yes"
