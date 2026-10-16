@@ -10,6 +10,33 @@ from typing import Any
 
 ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9-]+$")
 
+# depends_on is BA evidence lineage, not a build/task execution dependency.
+# This convention prevents reverse justifications (for example FR being
+# "sourced" from a TC) while permitting intentionally partial source graphs.
+ALIASES = {"UN":"NEED","BO":"BUSINESS_OBJECTIVE","CAP":"CAPABILITY",
+           "UC":"USECASE","US":"STORY","AC":"ACCEPTANCE","CHK":"CHECKLIST",
+           "TC":"TEST","E":"ERROR"}
+UPSTREAM = {
+    "NEED":set(),
+    "BUSINESS_OBJECTIVE":{"NEED"},
+    "CAPABILITY":{"BUSINESS_OBJECTIVE","NEED","CAPABILITY"},
+    "FR":{"CAPABILITY","BUSINESS_OBJECTIVE","NEED","BR","FR"},
+    "NFR":{"CAPABILITY","BUSINESS_OBJECTIVE","NEED","FR","NFR"},
+    "BR":{"BUSINESS_OBJECTIVE","CAPABILITY","FR","BR"},
+    "ERROR":{"FR","BR","ERROR"},
+    "STORY":{"FR","CAPABILITY","BR","STORY"},
+    "USECASE":{"FR","CAPABILITY","BR","USECASE"},
+    "ACCEPTANCE":{"FR","BR","STORY","USECASE","ACCEPTANCE"},
+    "CHECKLIST":{"FR","NFR","BR","ERROR","STORY","USECASE","ACCEPTANCE","CHECKLIST"},
+    "TEST":{"CHECKLIST","ACCEPTANCE","FR","NFR","BR","ERROR","TEST"},
+}
+
+def canonical(kind: Any) -> str:
+    key=str(kind).upper()
+    return ALIASES.get(key,key)
+
+
+
 
 def audit(data: Any, require_tests: bool = False,
           source_root: Path | None = None) -> dict[str, Any]:
@@ -71,6 +98,13 @@ def audit(data: Any, require_tests: bool = False,
                 errors.append(f"{key}: missing dependency {target}")
             else:
                 reverse[target].add(key)
+                child_kind=canonical(obj.get("kind",""))
+                parent_kind=canonical(nodes[target].get("kind",""))
+                if child_kind in UPSTREAM and parent_kind in UPSTREAM and parent_kind not in UPSTREAM[child_kind]:
+                    errors.append(
+                        f"{key}: invalid BA evidence dependency type {child_kind} -> {parent_kind} ({target}); "
+                        "depends_on traces upstream evidence, not delivery/task order"
+                    )
         refs = obj.get("source_refs", [])
         if isinstance(refs, list):
             for ref in refs:
