@@ -195,44 +195,65 @@ not proof of native CLI, subagent, tool or filesystem capability.
 
 
 def verify_zip(path: Path) -> dict[str, object]:
+    """Validate actual packaged methods against the complete generated inventory."""
     with zipfile.ZipFile(path) as archive:
         if archive.testzip() is not None:
             raise PackagingError("Corrupt ZIP data")
         names = archive.namelist()
-        if len(names) != len(set(names)):
-            raise PackagingError("Duplicate ZIP entry")
-        discovered = [p for p in names if re.fullmatch(r"skills/[^/]+/SKILL\.md", p)]
+        present = set(names)
+        if len(names) != len(present):
+            raise PackagingError("Duplicate ZIP entries")
+        discovered = sorted(p for p in names if re.fullmatch(r"skills/[^/]+/SKILL\.md", p))
         if discovered != ["skills/angent/SKILL.md"]:
             raise PackagingError(f"OpenAI requires one ANGENT gateway, got {discovered}")
-        required_methods = (
-            "skills/angent/references/INDEX.md",
-            "skills/angent/references/catalog/ak-agentkit/SKILL.md",
-            "skills/angent/references/catalog/angent-reasoning/SKILL.md",
-            "skills/angent/references/catalog/angent-frontend-design/SKILL.md",
-        )
-        if any(path not in names for path in required_methods):
-            raise PackagingError("OpenAI internal methods incomplete")
-        if ENGINEER_PACKAGE_MANIFEST in names or ENGINEER_CODEX_MANIFEST in names:
-            raise PackagingError("Two separately installable manifests found")
-        if not all(x in names for x in CORE_FILES | {ENGINEER_SOURCE_MANIFEST}):
-            raise PackagingError("A required manifest or AGENTS.md is missing")
+        registry_path = "hub/registry.json"
+        if registry_path not in present:
+            raise PackagingError("Missing generated Hub registry")
+        registry = json.loads(archive.read(registry_path))
+        extensions = registry["extensions"]
+        published = {name for ext in extensions for name in ext["skills"]}
+        if len(published) != sum(len(ext["skills"]) for ext in extensions):
+            raise PackagingError("Overlapping public Skill identities")
+        if published != set(registry["published_skills"]):
+            raise PackagingError("Hub registry inventory mismatch")
+        required = {"skills/angent/references/INDEX.md",
+                    "skills/angent/references/hub/routing.md",
+                    "skills/angent/references/hub/registry.json",
+                    "skills/angent/references/catalog/angent-reasoning/SKILL.md",
+                    "plugin.json", ".codex-plugin/plugin.json", "AGENTS.md"}
+        for ext in extensions:
+            required.add(f"extensions/{ext['id']}/extension.json")
+            for skill in ext["skills"]:
+                required.add(f"skills/angent/references/catalog/{skill}/SKILL.md")
+                required.add(f"extensions/{ext['id']}/skills/{skill}/SKILL.md")
+            for role in ext["roles"]:
+                required.add(f"skills/angent/references/roles/{ext['id']}/{role}.md")
+        if not required <= present:
+            raise PackagingError(f"Missing packaged Hub methods: {sorted(required - present)[:10]}")
+        if any(re.fullmatch(r"extensions/[^/]+/plugin\.json", p) or
+               re.fullmatch(r"extensions/[^/]+/\.codex-plugin/plugin\.json", p)
+               for p in present):
+            raise PackagingError("Nested installable kit plugin manifests are forbidden")
         for name in discovered:
             contents = archive.read(name).decode("utf-8")
             expected = name.split("/")[1]
             if not re.search(r"^name:\s*" + re.escape(expected) + r"\s*$", contents, re.M):
                 raise PackagingError(f"Discovery/frontmatter mismatch: {name}")
+        engineer = next((e for e in extensions if e["id"] == "angent-engineer"), None)
+        frontend = next((e for e in extensions if e["id"] == "angent-frontend"), None)
         return {
             "plugin_name": json.loads(archive.read("plugin.json"))["name"],
             "core_skills": EXPECTED_CORE,
-            "engineer_skills": EXPECTED_ENGINEER,
+            "engineer_skills": engineer["source_skill_count"] if engineer else 0,
             "discoverable_engineer_skills": 0,
-            "internal_engineer_methods": EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER),
-            "internal_frontend_methods": len(FRONTEND_NAMES),
+            "internal_engineer_methods": len(engineer["skills"]) if engineer else 0,
+            "internal_frontend_methods": len(frontend["skills"]) if frontend else 0,
             "discoverable_skills": len(discovered),
-            "engineer_roles": EXPECTED_ROLES,
+            "engineer_roles": len(engineer["roles"]) if engineer else 0,
+            "internal_specialist_methods": len(published),
+            "extensions": [e["id"] for e in extensions],
+            "capability_count": len(registry["capabilities"]),
             "zip_entries": len(names),
-            "extensions": [e["id"] for e in json.loads(archive.read("hub/registry.json"))["extensions"]],
-            "capability_count": len(json.loads(archive.read("hub/registry.json"))["capabilities"]),
             "proof_level": "structural_only",
         }
 

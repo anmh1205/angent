@@ -46,8 +46,11 @@ jobs:
       - name: Verify single-plugin bundle and selector
         run: python3 -m unittest discover -s tests -p 'test_unified_package.py' -v
 
-      - name: Verify all five platform package projections
+      - name: Verify all platform package projections
         run: python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
+
+      - name: Verify Hub manifests, collisions and third-kit onboarding
+        run: python3 -m unittest discover -s tests -p 'test_hub_registry.py' -v
 
       - name: Build all platform distributions
         run: python3 scripts/build_packages.py --all

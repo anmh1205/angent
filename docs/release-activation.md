@@ -1,6 +1,6 @@
 # Provider release and activation evidence
 
-The two source manifests are package identity, not proof of the plugin installed in a ChatGPT, Codex or other host. The unified ANGENT distribution exposes 12 Core + 102 Engineer Skills, while keeping 103 portable Engineer source identities (including `ak-explain`); the separate Engineer fallback should not also be active for the same workflow.
+The two source manifests are package identity, not proof of the plugin installed in a ChatGPT, Codex or other host. The 2.0 OpenAI distribution exposes one ANGENT Root Skill. Core and Kit methods are nested references selected through Hub. The generated `hub/registry.json` enumerates every packaged specialist source; a separate native kit should not also perform the same mutually exclusive fallback workflow.
 
 Run source-only check:
 
@@ -18,8 +18,8 @@ After the provider has an installed release, collect a current observation from 
       "other_active_plugins": [],
       "sha256_by_path": {
         "skills/angent/SKILL.md": "...actual installed content SHA256...",
-        "skills/angent-authoring/SKILL.md": "...",
-        "skills/angent-quality/SKILL.md": "..."
+        "skills/angent/references/catalog/angent-authoring/SKILL.md": "...",
+        "skills/angent/references/hub/registry.json": "..."
       }
     }
 
@@ -27,7 +27,7 @@ Then:
 
     python3 scripts/verify_activation.py --observed /path/to/live-provider.json
 
-The helper checks manifest release version, exact discoverable skill set, duplicate active Engineer and three Core source fingerprints. A catalog/version match without content hashes is limited inventory evidence. A three-file content match **still does not attest the full archive or actual cognitive activation**: separately exercise representative skills in a live model/harness and confirm observed tool/output behavior. Source-only CI cannot set the provider receipt or claim deployment success.
+The helper checks manifest release version, exact discoverable Skill set, duplicate active Engineer and selected Core/Kit/Hub source fingerprints. A catalog/version match without content hashes is limited inventory evidence. A partial content match **still does not attest the full archive or actual cognitive activation**: separately exercise representative skills in a live model/harness and confirm observed tool/output behavior. Source-only CI cannot set the provider receipt or claim deployment success.
 
 A plugin merely present in the user's owned-plugin catalog is not necessarily loaded; populate other_active_plugins only when the host actually exposes or confirms concurrent activation. Do not treat a presumed installation as observed activity.
 

@@ -54,7 +54,7 @@ class UnifiedPackageTests(unittest.TestCase):
             self.assertEqual(z.read("skills/angent/references/catalog/angent-frontend-design/SKILL.md"),
                              z.read("extensions/angent-frontend/skills/angent-frontend-design/SKILL.md"))
             inner = [p for p in z.namelist() if p.startswith("skills/angent/references/catalog/") and p.endswith("/SKILL.md")]
-            self.assertEqual(len(inner), 114)
+            self.assertEqual(len(inner), self.report["core_skills"] - 1 + self.report["internal_specialist_methods"])
             self.assertNotIn(b"ak-explain", z.read("skills/angent/references/INDEX.md"))
 
     def test_reproducible_bytes(self):
