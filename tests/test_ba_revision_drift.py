@@ -28,13 +28,13 @@ class RevisionDiffTests(unittest.TestCase):
 
     def test_adding_and_removing_requirements(self):
         revised=copy.deepcopy(BASE)
-        revised["artifacts"].append({"id":"FR-IVTS-02","kind":"FR","title":"Show telemetry age",
+        revised["artifacts"].append({"id":"FR-IVTS-03","kind":"FR","title":"Show telemetry age",
                                      "status":"draft","depends_on":["BR-IVTS-01"],"source_refs":["SRC-01"]})
         added=compare(BASE,revised)
-        self.assertEqual(added["added"],["FR-IVTS-02"])
+        self.assertEqual(added["added"],["FR-IVTS-03"])
         removed=compare(revised,BASE)
-        self.assertEqual(removed["removed"],["FR-IVTS-02"])
-        self.assertEqual(removed["review_required"],["FR-IVTS-02"])
+        self.assertEqual(removed["removed"],["FR-IVTS-03"])
+        self.assertEqual(removed["review_required"],["FR-IVTS-03"])
 
     def test_source_revision_is_review_not_proof_of_changed_rule(self):
         revised=copy.deepcopy(BASE)

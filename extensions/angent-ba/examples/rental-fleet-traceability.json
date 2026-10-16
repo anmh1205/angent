@@ -11,7 +11,7 @@
       "id": "BR-IVTS-01",
       "kind": "BR",
       "title": "Only owner may view a vehicle",
-      "status": "approved",
+      "status": "proposed",
       "depends_on": [],
       "source_refs": [
         "SRC-01"
@@ -21,6 +21,18 @@
       "id": "FR-IVTS-01",
       "kind": "FR",
       "title": "Owner sees assigned vehicle status",
+      "status": "proposed",
+      "depends_on": [
+        "BR-IVTS-01"
+      ],
+      "source_refs": [
+        "SRC-01"
+      ]
+    },
+    {
+      "id": "FR-IVTS-02",
+      "kind": "FR",
+      "title": "Authorized owner sees vehicle connectivity state and transition status",
       "status": "proposed",
       "depends_on": [
         "BR-IVTS-01"
