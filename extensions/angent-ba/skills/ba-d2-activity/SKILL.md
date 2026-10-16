@@ -3,6 +3,9 @@ name: ba-d2-activity
 description: Source-traceable BA d2-activity D2 modeling using tested JSON-to-D2 and real SVG rendering when available.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 **Method origin:** maintained independent adaptation of the MIT Dev BA Kit /d2-activity skill, copyright 2026 Edward Ngo, https://github.com/nv-minh/dev-ba-kit/blob/main/skills/d2-activity/SKILL.md. Original ANGENT generator; no commercial AI4BA source included.
 
 # D2 Activity and swimlane process modeling

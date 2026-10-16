@@ -3,6 +3,9 @@ name: ba-export
 description: Export actual reviewed Markdown BA documents as provenance-linked MD, HTML and DOCX with optional real PDF engine.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # Stakeholder document export with real file verification
 
 **Source methodology:** Maintained adaptation of MIT Dev BA Kit (Edward Ngo), https://github.com/nv-minh/dev-ba-kit/blob/main/skills/export/SKILL.md. Portable exporter is an independent ANGENT implementation.

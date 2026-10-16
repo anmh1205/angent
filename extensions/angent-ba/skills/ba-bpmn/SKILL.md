@@ -3,6 +3,9 @@ name: ba-bpmn
 description: Build a business-process model in BPMN 2.0 with semantic review, independently verified XML interchange, and explicit layout/runtime limits.
 ---
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 # BA BPMN: requirements, semantics, XML interchange and diagram review
 
 ## Task contract

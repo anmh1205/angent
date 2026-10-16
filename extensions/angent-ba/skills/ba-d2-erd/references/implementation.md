@@ -1,5 +1,8 @@
 # Runnable D2 diagram adapter
 
+**Repository-only verification:** Any `tests/` command below requires the GitHub source checkout. Release ZIPs intentionally ship the supported `extensions/.../scripts/` executables, but not the development test suite. When using an installed package, run its bundled generator and verify actual output; check out the source only for the additional regression tests.
+
+
 The ANGENT BA D2 adapter converts **independent, source-reviewed JSON** into editable D2 scripts and optionally SVG via the actual D2 CLI. It implements a narrow, validated subset of three model families:
 - Activity: start/task/guarded decision/end with optional swimlanes; checks reachability, missing guards and terminal behavior.
 - ERD: entities with column types, PK/FK/unique constraints, foreign key endpoints and explicit cardinality labels.
