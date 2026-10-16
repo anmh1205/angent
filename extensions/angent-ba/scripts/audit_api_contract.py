@@ -25,6 +25,9 @@ def _resolve_local(document:dict, value:Any, seen:frozenset[str] = frozenset())-
         raise ValueError("Schema composition is unsupported; explicit review required")
     if "$ref" not in value:
         return value
+    siblings=set(value)-{"$ref","summary","description"}
+    if siblings:
+        raise ValueError("Unsupported $ref sibling constraints: "+", ".join(sorted(siblings)))
     ref=value["$ref"]
     if not isinstance(ref,str) or not ref.startswith("#/") or ref.startswith("#//"):
         raise ValueError("Only local #/ JSON-pointer references are supported")
@@ -97,17 +100,30 @@ def _match_scalar(value:Any,schema:dict,document:dict)->bool:
                 if prop=="minLength" and len(value)<limit:return False
                 if prop=="maxLength" and len(value)>limit:return False
     # Explicitly reject constraints not evaluated by this conservative subset.
-    unknown=set(schema)&{"pattern","format","multipleOf","not","if","then","else","dependentSchemas","contentEncoding","contentMediaType"}
+    unknown=set(schema)&{"pattern","format","multipleOf","not","if","then","else","dependentSchemas","contentEncoding","contentMediaType","contentSchema","nullable","$dynamicRef","$dynamicAnchor"}
     if unknown:
         raise ValueError("Unsupported scalar JSON Schema constraint: "+", ".join(sorted(unknown)))
     return True
 
 
+def _check_object_schema(schema:dict)->None:
+    if not isinstance(schema,dict):
+        raise ValueError("Expected JSON object schema")
+    unsupported=set(schema)&{
+        "allOf","oneOf","anyOf","not","if","then","else",
+        "unevaluatedProperties","patternProperties","propertyNames",
+        "minProperties","maxProperties","dependentRequired","dependentSchemas",
+        "contentSchema","$dynamicRef","$dynamicAnchor","nullable"
+    }
+    if unsupported:
+        raise ValueError("Unsupported object JSON Schema constraints: "+", ".join(sorted(unsupported)))
+    if schema.get("type")!="object":
+        raise ValueError("Expected supported object schema")
+
 def _schema_property(document:dict,schema:dict,path:list[str])->tuple[dict|None,str]:
     current=_resolve_local(document,schema)
     for key in path:
-        if current.get("type")!="object":
-            return None,"parent is not a resolved object"
+        _check_object_schema(current)
         props=current.get("properties")
         if not isinstance(props,dict) or key not in props:
             return None,"property "+key+" is not declared"
@@ -200,9 +216,12 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
             errors.append(ident+": "+str(exc))
             continue
         expected_fields=item.get("expected_json",{})
-        if expected_fields and (not isinstance(schema,dict) or schema.get("type")!="object"):
-            errors.append(ident+": expected JSON fields require a supported object response schema")
-            continue
+        if expected_fields:
+            try:
+                _check_object_schema(schema)
+            except ValueError as exc:
+                errors.append(ident+": "+str(exc))
+                continue
         for field,value in expected_fields.items():
             try:
                 property_schema,why=_schema_property(contract,schema,field.split("."))
@@ -228,10 +247,19 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
             except ValueError as exc:
                 errors.append(ident+": "+str(exc))
                 continue
-            if schema_in.get("type")!="object" or not isinstance(body,dict):
-                errors.append(ident+": only supported JSON object requestBody schemas are accepted")
+            try:
+                _check_object_schema(schema_in)
+            except ValueError as exc:
+                errors.append(ident+": "+str(exc))
+                continue
+            if not isinstance(body,dict):
+                errors.append(ident+": only JSON object request bodies supported")
             else:
-                for key in schema_in.get("required",[]):
+                required=schema_in.get("required",[])
+                if not isinstance(required,list) or any(not isinstance(x,str) for x in required):
+                    errors.append(ident+": required must be a list of property names")
+                    continue
+                for key in required:
                     if key not in body:errors.append(ident+": missing required body property "+str(key))
                 for key,value in body.items():
                     declared=(schema_in.get("properties") or {}).get(key)
