@@ -95,7 +95,10 @@ def export(root:Path,paths:list[str],title:str,fmt:str,pandoc:str="pandoc")->tup
     if fmt=="md":
         payload=markdown.encode("utf8")
     else:
-        payload=_pandoc(pandoc,markdown,fmt,title)
+        # Pandoc standalone metadata supplies the visible document title.
+        # Drop the redundant Markdown H1 to avoid duplicate screen-reader headings.
+        render_body=markdown.split("\n\n",1)[1]
+        payload=_pandoc(pandoc,render_body,fmt,title)
     if len(payload)<100:
         raise ValueError("Generated output is unexpectedly empty")
     return payload,manifest
