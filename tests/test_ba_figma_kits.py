@@ -28,8 +28,10 @@ class BAAndFigmaTests(unittest.TestCase):
 
     def test_graph_valid_and_coverage(self):
         result = audit_ba(self.ba, require_tests=True)
-        self.assertTrue(result["ok"], result)
+        self.assertFalse(result["ok"], result)
         self.assertEqual(result["coverage"]["traced_to_test"], 1)
+        self.assertEqual(result["coverage"]["uncovered"], ["FR-IVTS-02"])
+        self.assertIn("FR-IVTS-02: no traceable test artifact",result["errors"])
 
     def test_dangling_refs_and_cycle_are_errors(self):
         data = json.loads(json.dumps(self.ba))
@@ -42,7 +44,7 @@ class BAAndFigmaTests(unittest.TestCase):
     def test_real_change_impact_traces_reverse_dependencies(self):
         outcome = impact(self.ba, ["BR-IVTS-01"])
         self.assertTrue(outcome["ok"])
-        self.assertEqual(outcome["affected"], ["AC-IVTS-01","FR-IVTS-01","TC-IVTS-01"])
+        self.assertEqual(outcome["affected"], ["AC-IVTS-01","FR-IVTS-01","FR-IVTS-02","TC-IVTS-01"])
         self.assertEqual(outcome["impact_paths"]["TC-IVTS-01"], ["BR-IVTS-01","FR-IVTS-01","AC-IVTS-01","TC-IVTS-01"])
         self.assertFalse(outcome["writes_performed"])
 

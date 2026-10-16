@@ -62,9 +62,9 @@ class TestDocuments(unittest.TestCase):
         self.assertNotIn("<script>",document)
         self.assertIn("&lt;script&gt;",document)
         self.assertNotIn("href='javascript:",document)
-        self.assertIn("FR to test traceability: 1/1",document)
+        self.assertIn("FR to test traceability: 1/2",document)
         parser=Parser();parser.feed(document)
-        self.assertEqual(len(parser.ids),4)
+        self.assertEqual(len(parser.ids),5)
 
     def test_invalid_graph_is_rejected(self):
         with self.assertRaises(ValueError):

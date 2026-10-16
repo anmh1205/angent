@@ -5,7 +5,7 @@ description: Investigate product opportunity, competitors, customer need and go/
 
 # Product opportunity discovery and project discovery
 
-**Origins:** The public AI4BA BA-Kit describes \`/discover\` as investigating an uncertain idea, customer need, competitors and whether to pursue it (https://ai4ba.com/ba-kit). The MIT Dev BA Kit (Edward Ngo, https://github.com/nv-minh/dev-ba-kit/blob/main/skills/discover/SKILL.md) instead discovers an **existing repository**. ANGENT supports both with explicit mode selection; they must not be conflated.
+**Origins:** The public AI4BA BA-Kit describes `/discover` as investigating an uncertain idea, customer need, competitors and whether to pursue it (https://ai4ba.com/ba-kit). The MIT Dev BA Kit (Edward Ngo, https://github.com/nv-minh/dev-ba-kit/blob/main/skills/discover/SKILL.md) instead discovers an **existing repository**. ANGENT supports both with explicit mode selection; they must not be conflated.
 
 ## Select the question to answer
 
@@ -35,7 +35,7 @@ If no user/customer evidence exists, favor HOLD-UNTIL-EVIDENCE or a bounded disc
 1. Fix exact repo/branch/source revision, intended system scope and accepted project documentation. Read existing README, AGENTS.md, relevant requirements, decisions, issues, architecture and implementation evidence.
 2. Trace important actor jobs and accepted business rules through actual code paths (entrypoint, authorization, domain logic, persistence, async integration) only to the depth relevant to the task. Distinguish approved future behavior from implemented and deployed behavior.
 3. Mark every material finding as accepted decision, direct source observation, inference, runtime observation or unknown, with exact source path/version. Surface conflicting sources rather than choosing the newest file automatically.
-4. Produce a compact reuse-oriented project profile and list consequential unknowns. Only update existing project docs when authorized; do not impose a new \`docs/_shared\` tree or shadow memory service.
+4. Produce a compact reuse-oriented project profile and list consequential unknowns. Only update existing project docs when authorized; do not impose a new `docs/_shared` tree or shadow memory service.
 
 ## Worked decision framing
 
@@ -43,6 +43,6 @@ For a *hypothetical* GPS/CAN rental-fleet product, the buyer may be the fleet re
 
 ## Hand-off without forced workflow
 
-Opportunity evidence can inform \`ba-prd\`, \`ba-roadmap\`, \`ba-urd\`, \`ba-brd\` or a deliberate STOP. Do not manufacture UN, BO or CAP IDs from hypotheses or silently upgrade them to accepted requirements. Existing project findings feed \`ba-srs\` or \`ba-doc-drift\` where genuinely needed. ANGENT Root keeps strategic judgment, research authority, project continuity and final explanation; the specialist adds the domain method.
+Opportunity evidence can inform `ba-prd`, `ba-roadmap`, `ba-urd`, `ba-brd` or a deliberate STOP. Do not manufacture UN, BO or CAP IDs from hypotheses or silently upgrade them to accepted requirements. Existing project findings feed `ba-srs` or `ba-doc-drift` where genuinely needed. ANGENT Root keeps strategic judgment, research authority, project continuity and final explanation; the specialist adds the domain method.
 
 **Official conceptual sources:** IIBA Business Analysis Core Concept Model (https://www.iiba.org/knowledgehub/the-business-analysis-standard/2-understanding-business-analysis/2-2-a-model-for-effective-analysis-baccm/) and BABOK knowledge area overview (https://www.iiba.org/).

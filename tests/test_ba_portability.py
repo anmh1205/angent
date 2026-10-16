@@ -35,7 +35,9 @@ class KitPortabilityTests(unittest.TestCase):
         doc=self.load("ba-discover")
         self.assertNotIn("staleness is enforced at the loader",doc.lower())
         self.assertNotIn("write each answer back",doc.lower())
-        self.assertIn("actual available tools",doc.lower())
+        self.assertIn("existing-project mode",doc.lower())
+        self.assertIn("market and substitutes",doc.lower())
+        self.assertNotIn("must run context-load",doc.lower())
         self.assertIn("source",doc.lower())
 
     def test_production_tools_are_not_faked(self):
