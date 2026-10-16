@@ -1,0 +1,71 @@
+name: Publish ANGENT platform release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag matching plugin.json, for example v1.5.0
+        type: string
+        required: true
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout release source
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Match tag with source manifests
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          set -euo pipefail
+          expected="$(python3 -c 'import json; print("v" + json.load(open("plugin.json"))["version"])')"
+          second="$(python3 -c 'import json; print("v" + json.load(open(".codex-plugin/plugin.json"))["version"])')"
+          if [[ "$RELEASE_TAG" != "$expected" || "$RELEASE_TAG" != "$second" ]]; then
+            echo "Release tag and manifests disagree: $RELEASE_TAG != $expected / $second" >&2
+            exit 1
+          fi
+
+      - name: Validate source and platform packages
+        run: |
+          python3 scripts/validate_core.py
+          python3 extensions/angent-engineer/scripts/verify_port.py --json
+          python3 -m unittest discover -s tests -p 'test_unified_package.py' -v
+          python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
+
+      - name: Build copy-ready ZIP archives
+        run: |
+          python3 scripts/build_packages.py --all
+          python3 scripts/package_unified.py --output dist/angent-chatgpt.zip
+          cd dist
+          sha256sum angent-*.zip > SHA256SUMS
+
+      - name: Publish exact validated assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release already exists; refusing to overwrite published assets" >&2
+            exit 1
+          fi
+          gh release create "$RELEASE_TAG" dist/angent-*.zip dist/SHA256SUMS \
+            --verify-tag \
+            --title "ANGENT ${RELEASE_TAG#v}" \
+            --generate-notes

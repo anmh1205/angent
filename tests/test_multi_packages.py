@@ -81,6 +81,17 @@ class MultiPackageTests(unittest.TestCase):
                         self.assertEqual(len(z.namelist()), len(set(z.namelist())))
                         self.assertEqual(z.read("INSTALL.md"), (p / "packages" / name / "INSTALL.md").read_bytes())
 
+    def test_complete_skill_and_support_byte_fidelity(self):
+        source_skills = {p: data for p, data in self.source.items() if p.startswith("skills/")}
+        source_support = {p: data for p, data in self.source.items() if p.startswith("extensions/")}
+        for package in packs.PACKAGES:
+            with self.subTest(package=package):
+                files = packs.assemble(ROOT, package, self.source)
+                for path, data in source_skills.items():
+                    self.assertEqual(files[packs.SKILL_PREFIX[package] + path[len("skills/"):]], data, path)
+                for path, data in source_support.items():
+                    self.assertEqual(files[path], data, path)
+
     def test_legacy_openai_builder_still_works(self):
         with tempfile.TemporaryDirectory() as tmp:
             report = legacy.build(ROOT, Path(tmp) / "angent-chatgpt.zip")

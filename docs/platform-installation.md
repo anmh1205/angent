@@ -1,6 +1,6 @@
 # ANGENT 1.5.0 — platform installation
 
-ANGENT has one maintained Core (`skills/`) and one Engineer fallback source (`extensions/angent-engineer/`). `platforms/` contains host-specific bootstrap templates; `packages/` and `dist/` are generated, Git-ignored release outputs. Build from a Git checkout:
+ANGENT has one maintained Core (`skills/`) and one Engineer fallback source (`extensions/angent-engineer/`). `platforms/` contains host-specific bootstrap templates; `packages/` and `dist/` are generated, Git-ignored release outputs. Build from a Git checkout (or download the ready-made platform ZIPs and `SHA256SUMS` from the matching GitHub Release once published):
 
 ```bash
 python3 scripts/build_packages.py --all
@@ -60,5 +60,7 @@ Use `packages/openai-plugin/` or `dist/angent-openai-plugin.zip`. The existing `
 - Build reproducibility, manifest consistency, complete catalog, metadata projection and compatibility with the legacy OpenAI ZIP are checked by CI.
 - Do not blindly overlay bundles across an existing project. A project-specific `AGENTS.md`, `GEMINI.md` or `CLAUDE.md` must be preserved and merged.
 - Structural validation cannot prove platform-specific model behavior, actual provider activation, native AgentKit availability or live subagent delegation. Run targeted live checks on each runtime before asserting those outcomes.
+
+Tagged releases are published by `.github/workflows/publish-packages.yml`: the tag must exactly match the version in both OpenAI manifests, the full packaging checks run, and the workflow refuses to overwrite an existing release. Branch CI ZIP artifacts are short-lived candidates rather than a permanent distribution channel.
 
 Versions and provider release IDs are obtained from active manifests/providers, not pinned in runtime instructions.
