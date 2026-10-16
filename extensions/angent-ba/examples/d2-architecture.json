@@ -1,0 +1,58 @@
+{
+  "type": "architecture",
+  "title": "Synthetic fleet telemetry",
+  "direction": "right",
+  "nodes": [
+    {
+      "id": "car",
+      "kind": "device",
+      "label": "Vehicle tracker",
+      "group": "Vehicle"
+    },
+    {
+      "id": "ingress",
+      "kind": "service",
+      "label": "Telemetry gateway",
+      "group": "Cloud"
+    },
+    {
+      "id": "events",
+      "kind": "queue",
+      "label": "Event queue",
+      "group": "Cloud"
+    },
+    {
+      "id": "db",
+      "kind": "database",
+      "label": "State store",
+      "group": "Cloud"
+    },
+    {
+      "id": "ui",
+      "kind": "user",
+      "label": "Rental operator"
+    }
+  ],
+  "edges": [
+    {
+      "from": "car",
+      "to": "ingress",
+      "protocol": "MQTT/TLS"
+    },
+    {
+      "from": "ingress",
+      "to": "events",
+      "protocol": "publish"
+    },
+    {
+      "from": "events",
+      "to": "db",
+      "protocol": "consume"
+    },
+    {
+      "from": "db",
+      "to": "ui",
+      "protocol": "HTTPS/read"
+    }
+  ]
+}

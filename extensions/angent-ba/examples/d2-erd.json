@@ -1,0 +1,82 @@
+{
+  "type": "erd",
+  "title": "Rental fleet logical data",
+  "direction": "right",
+  "nodes": [
+    {
+      "id": "accounts",
+      "kind": "entity",
+      "label": "accounts",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "pk"
+        },
+        {
+          "name": "email",
+          "type": "varchar(255)",
+          "key": "unique"
+        }
+      ]
+    },
+    {
+      "id": "vehicles",
+      "kind": "entity",
+      "label": "vehicles",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "pk"
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "key": "fk"
+        },
+        {
+          "name": "vin",
+          "type": "varchar(17)"
+        }
+      ]
+    },
+    {
+      "id": "faults",
+      "kind": "entity",
+      "label": "faults",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "pk"
+        },
+        {
+          "name": "vehicle_id",
+          "type": "uuid",
+          "key": "fk"
+        },
+        {
+          "name": "dtc",
+          "type": "varchar(5)"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "accounts",
+      "to": "vehicles",
+      "fromField": "id",
+      "toField": "owner_id",
+      "cardinality": "1:N"
+    },
+    {
+      "from": "vehicles",
+      "to": "faults",
+      "fromField": "id",
+      "toField": "vehicle_id",
+      "cardinality": "1:N"
+    }
+  ]
+}
