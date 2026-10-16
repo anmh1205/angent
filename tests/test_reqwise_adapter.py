@@ -47,6 +47,19 @@ class ReqwisePayloadTests(unittest.TestCase):
         self.assertFalse(p["dry_run"])
         self.assertFalse(p["writes_performed"])
 
+    def test_invalid_lane_and_orientation_do_not_crash_adapter(self):
+        for invalid in ([], {}, 12, True):
+            with self.subTest(lane=invalid):
+                m=deepcopy(self.activity)
+                m["nodes"][0]["lane"]=invalid
+                with self.assertRaisesRegex(ValueError,"lane must be a nonempty string"):
+                    compile_model(m)
+            with self.subTest(rankdir=invalid):
+                m=deepcopy(self.activity)
+                m["metadata"]["rankdir"]=invalid
+                with self.assertRaisesRegex(ValueError,"rankdir"):
+                    compile_model(m)
+
     def test_swimlane_requires_owner_and_orientation(self):
         m = deepcopy(self.activity)
         for n in m["nodes"]:

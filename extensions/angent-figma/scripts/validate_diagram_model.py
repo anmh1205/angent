@@ -41,6 +41,8 @@ def audit(model: Any) -> dict[str, Any]:
     if not isinstance(kind, str) or kind not in TYPES:
         errors.append("Unsupported type")
         kind = "unknown"
+    if "metadata" in model and not isinstance(model["metadata"], dict):
+        errors.append("metadata must be an object")
     nodes, edges = model.get("nodes"), model.get("edges")
     if not isinstance(nodes, list) or not isinstance(edges, list):
         return {"ok": False, "errors": errors + ["nodes and edges must be arrays"], "warnings": warnings}
@@ -58,8 +60,13 @@ def audit(model: Any) -> dict[str, Any]:
         if not isinstance(node.get("label"), str) or not node["label"].strip():
             errors.append(f"nodes[{i}]: empty label")
         node_kind = node.get("kind")
-        if node_kind is not None and kind in NODE_KINDS and node_kind not in NODE_KINDS[kind]:
+        if node_kind is not None and (not isinstance(node_kind, str) or
+                                       (kind in NODE_KINDS and node_kind not in NODE_KINDS[kind])):
             errors.append(f"nodes[{i}]: unsupported {kind} node kind {node_kind!r}")
+        for text_field in ("lane", "screenId"):
+            if text_field in node and (not isinstance(node[text_field], str) or
+                                       not node[text_field].strip()):
+                errors.append(f"nodes[{i}]: {text_field} must be a nonempty string")
     adj: dict[str, set[str]] = defaultdict(set)
     indeg = {key: 0 for key in by_id}
     for i, edge in enumerate(edges):
@@ -86,9 +93,11 @@ def audit(model: Any) -> dict[str, Any]:
         errors.append("Diagram is empty")
     if kind in FLOW:
         starts = sorted(key for key, node in by_id.items()
-                        if node.get("kind") in ("start", "initial"))
+                        if isinstance(node.get("kind"), str) and
+                        node.get("kind") in ("start", "initial"))
         ends = sorted(key for key, node in by_id.items()
-                      if node.get("kind") in FLOW_END[kind])
+                      if isinstance(node.get("kind"), str) and
+                      node.get("kind") in FLOW_END[kind])
         # A handoff to an external party can legitimately terminate the team's
         # activity without inventing an internal completion event.
         external_exits = (sorted(key for key, node in by_id.items()

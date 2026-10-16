@@ -132,6 +132,26 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         self.assertTrue(audit(m)["ok"], audit(m))
         self.assertEqual(compile_model(m)["arguments"]["spec"]["states"][1]["kind"], "fork")
 
+    def test_invalid_nested_node_metadata_fail_as_validation_not_crash(self):
+        for kind, model in (("activity", self.activity), ("userflow", self.userflow),
+                            ("state", self.state), ("sitemap", self.sitemap)):
+            for broken in ({}, [], ["state"]):
+                with self.subTest(kind=kind, broken=broken):
+                    m=deepcopy(model)
+                    m["nodes"][0]["kind"]=broken
+                    report=audit(m)
+                    self.assertFalse(report["ok"])
+                    self.assertTrue(any("unsupported" in issue for issue in report["errors"]))
+                    with self.assertRaisesRegex(ValueError,"Model failed structural check"):
+                        compile_model(m)
+        for invalid in ([], "bad", 42):
+            with self.subTest(metadata=invalid):
+                m=deepcopy(self.activity)
+                m["metadata"]=invalid
+                self.assertFalse(audit(m)["ok"])
+                with self.assertRaisesRegex(ValueError, "metadata must be an object"):
+                    compile_model(m)
+
     def test_unknown_kind_is_not_forwarded_as_valid_reqwise_payload(self):
         m = deepcopy(self.activity)
         m["nodes"][1]["kind"] = "invented-step-kind"

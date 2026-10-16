@@ -39,17 +39,22 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
         raise ValueError(f"Reqwise OSS diagram adapter does not support type {kind!r}")
     nodes = model["nodes"]
     edges = model["edges"]
-    meta = model.get("metadata") if isinstance(model.get("metadata"), dict) else {}
+    meta = model.get("metadata", {})
+    if not isinstance(meta, dict):
+        raise ValueError("metadata must be an object")
     title = meta.get("title") or meta.get("artifact_id") or f"ANGENT {kind}"
     if not isinstance(title, str) or not title.strip():
         raise ValueError("Model title must be nonempty")
     options = {"dryRun": not ready_to_write, "verify": True, "checkFirst": True, "crossCheck": True}
     if "rankdir" in meta:
-        if meta["rankdir"] not in VALID_RANKDIR:
+        if not isinstance(meta["rankdir"], str) or meta["rankdir"] not in VALID_RANKDIR:
             raise ValueError("rankdir must be TB or LR")
         options["rankdir"] = meta["rankdir"]
     spec: dict[str, Any] = {"title": title.strip(), "options": options}
     if kind == "activity":
+        if any("lane" in n and
+               (not isinstance(n["lane"], str) or not n["lane"].strip()) for n in nodes):
+            raise ValueError("Activity lane must be a nonempty string owner ID")
         lanes = sorted({n["lane"] for n in nodes if n.get("lane")})
         if lanes:
             if any(not n.get("lane") for n in nodes):
