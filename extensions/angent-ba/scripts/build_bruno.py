@@ -152,10 +152,16 @@ def render_request(request: dict, seq: int) -> str:
     return "\n".join(lines)
 
 
-def compile_collection(data: dict, evidence_ids: set[str] | None = None) -> dict[str,str]:
+def compile_collection(data: dict, evidence_ids: set[str] | None = None,
+                       api_contract: dict | None = None) -> dict[str,str]:
     report=validate(data, evidence_ids=evidence_ids)
     if not report["ok"]:
         raise ValueError("; ".join(report["errors"]))
+    if api_contract is not None:
+        from audit_api_contract import audit_contract
+        check=audit_contract(api_contract,data)
+        if not check["ok"]:
+            raise ValueError("OpenAPI contract mismatch: "+"; ".join(check["errors"]))
     files: dict[str,str] = {}
     files["bruno.json"]=json.dumps({"version":"1","name":data["name"],"type":"collection",
                                      "ignore":["node_modules",".git"]},ensure_ascii=False,indent=2)+"\n"
@@ -183,6 +189,7 @@ def main() -> int:
     parser.add_argument("model",type=Path)
     parser.add_argument("--output",required=True,type=Path)
     parser.add_argument("--evidence-graph",type=Path,help="Optional already-inspected BA artifact graph for ID validation")
+    parser.add_argument("--openapi",type=Path,help="Optional OpenAPI 3.1 JSON contract; rejects unverified statuses/fields")
     args=parser.parse_args()
     try:
         data=json.loads(args.model.read_text(encoding="utf8"))
@@ -194,7 +201,8 @@ def main() -> int:
             if not check["ok"]:
                 raise ValueError("Evidence graph invalid: "+"; ".join(check["errors"]))
             evidence_ids={entry["id"] for entry in graph["artifacts"]}
-        generated=compile_collection(data,evidence_ids=evidence_ids)
+        contract=json.loads(args.openapi.read_text(encoding="utf8")) if args.openapi else None
+        generated=compile_collection(data,evidence_ids=evidence_ids,api_contract=contract)
         if args.output.exists() and any(args.output.iterdir()):
             raise ValueError("Output directory must be empty to avoid overwriting existing tests")
         for rel, content in generated.items():
@@ -206,6 +214,7 @@ def main() -> int:
         return 1
     print(json.dumps({"ok":True,"files":len(generated),"requests":len(data["requests"]),
                       "network_requests_sent":0,"execution_status":"not-run",
+                      "contract_check":"checked-subset" if args.openapi else "not-performed",
                       "output":str(args.output)}))
     return 0
 
