@@ -68,6 +68,7 @@ class MultiPackageTests(unittest.TestCase):
             "extensions/angent-ba/scripts/build_next_prototype.py",
             "extensions/angent-ba/scripts/build_figma_screens.py",
             "extensions/angent-ba/scripts/build_figma_native.py",
+            "extensions/angent-ba/scripts/audit_api_field_mapping.py",
             "extensions/angent-ba/templates/figma-native-plugin.js",
             "extensions/angent-ba/scripts/compare_artifact_revisions.py",
             "extensions/angent-ba/scripts/build_export.py",

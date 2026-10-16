@@ -51,3 +51,13 @@ Map every field end to end across three layers — the **provider payload** (the
 - **Derived fields need the formula** — "total = subtotal + tax" written as "derived" with no formula is useless; spell out the derivation.
 - **Skip honestly** — a webhook-only integration with no payload to persist has no map; say so and move to `/api-checklist`.
 - **Enums map, not rename** — their `status: 'A'|'I'` → our `active|inactive` is a transform row, not a data-model change.
+
+## Executable contract-to-UI mapping check
+
+The portable BA kit now implements \`extensions/angent-ba/scripts/audit_api_field_mapping.py\`. It takes a **real inspected OpenAPI 3.1 JSON source contract** and an explicit field mapping; it transforms a supplied sample response into a nested UI view model and checks that the output matches its reviewed fixture. A field cannot pass merely because its name looks similar to a UI label.
+
+    python extensions/angent-ba/scripts/audit_api_field_mapping.py extensions/angent-ba/examples/synthetic-fleet-api-map.json --openapi extensions/angent-ba/examples/synthetic-fleet-openapi.json --evidence-graph extensions/angent-ba/examples/rental-fleet-traceability.json
+
+Implemented transforms are deliberately bounded to \`copy\` and exact \`enum\` mapping; missing source/target fields, incompatible type, unmapped enum, unsafe destination names and mismatched UI examples fail. The result contains the tested field inventory, explicit requirement-ID matching and \`live_api_calls=0\`. It **does not** execute provider requests, inject code into the frontend or guarantee that a live component consumes the same view model.
+
+After this check, select \`ba-api-test\` for actual authorized sandbox request/response assertions, and \`ba-prototype-html\` or Frontend/Engineer for binding real application state. Preserve distinct evidence for each step.

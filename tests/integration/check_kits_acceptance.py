@@ -25,6 +25,8 @@ from validate_artifacts import audit
 from render_preview import render as render_preview
 from compare_artifact_revisions import compare
 from build_bruno import compile_collection
+from audit_api_field_mapping import perform as verify_field_mapping
+from build_figma_native import files as generate_figma_native
 from audit_api_contract import audit_contract
 from build_d2 import compile_source
 from to_reqwise_payload import compile_model
@@ -91,6 +93,10 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
     contract=audit_contract(openapi,api)
     if not contract["ok"]:
         raise ValueError("OpenAPI contract mismatch: "+str(contract["errors"]))
+    mapping=json.loads((BA/"examples/synthetic-fleet-api-map.json").read_text(encoding="utf8"))
+    field_map=verify_field_mapping(openapi,mapping,evidence_ids=ids)
+    if not field_map["ok"] or field_map["mapped_fixture"]!=mapping["expected_ui"] or field_map["live_api_calls"]!=0:
+        raise ValueError("API field mapping lost OpenAPI, UI or source consistency")
     bruno=compile_collection(api,api_contract=openapi,evidence_ids=ids)
     if len(bruno)!=7:
         raise ValueError("Unexpected Bruno output file count")
@@ -101,6 +107,10 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
     if "<script" not in render_wireframe(screen,"prototype"):
         raise ValueError("Prototype renderer unexpectedly lost script support")
     figma_screens=compile_screens(screen)
+    figma_native=generate_figma_native(screen)
+    if ("figma-native-plugin.js" not in figma_native or
+            "figma.createFrame()" not in figma_native["figma-native-plugin.js"]):
+        raise ValueError("Native Figma API candidate missing executable frame construction")
     next_files=generate_next(screen)
     next_model=json.loads(next_files["model.json"])
     if next_model!=screen:
@@ -132,11 +142,12 @@ def check(chrome:Path|None,bru:Path|None,d2:Path|None,require_runtime:bool)->dic
                                   "test_execution":"not-proven","preview_entries":58,
                                   "revision_diff":"observed"},
             "synthetic_fleet":{"d2_source":True,"reqwise_request":"dry-run",
-                               "contract_checked":True,"bruno_request_count":4,
+                               "contract_checked":True,"api_to_ui_field_count":field_map["field_count"],"bruno_request_count":4,
                                "real_fleet_or_figma_writes":False},
             "synthetic_auth":{"generated_browser_cases":7,"backend_requests":0,
                               "html_prototype":True,"next_source_matches":True,
                               "figma_candidate_screens":len(figma_screens["screens"]),
+                              "native_figma_candidate_compiled":True,
                               "figma_candidate_controls":sum(len(x["controls"]) for x in figma_screens["screens"]),
                               "figma_canvas_writes":False},
             "runtime":runtime,"limitations":"Two distinct example domains; no claim of semantic parity between Atlas, Fleet and Authentication",

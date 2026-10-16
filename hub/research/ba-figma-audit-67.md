@@ -66,7 +66,7 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 | `ba-api-assess` | Vendor or build choice with business tradeoffs | method | Live pricing/SLAs and providers need research |
 | `ba-api-doc` | Versioned source-linked API contract summary | method | Requires real inspected provider specification |
 | `ba-api-design` | Orchestration and webhook recovery plan | method | Live retries and idempotency not verified |
-| `ba-api-map` | Provider domain UI field mappings | method | Field transformations need schema and test evidence |
+| `ba-api-map` | Provider domain UI field mappings | source-validated | OpenAPI-based sample transformation tested; actual frontend bindings/live provider still unverified |
 | `ba-api-checklist` | Integration behavior coverage inventory | method | No real integration target configured |
 | `ba-api-test` | Bruno cases and status/body checks | runtime-mock | 4/4 mock CLI calls, not provider E2E |
 | `ba-api-readiness` | Go-live, rollback and deployment risks | method | Staging SLO and provider launch not tested |
@@ -146,3 +146,8 @@ This inventory compares the current extension source with public AI4BA BA-Kit, t
 The BA Markdown extractor excludes fenced code examples to avoid promoting tutorial requirements into actual source graph nodes; its negative test is in `tests/test_ba_markdown_traceability.py`.
 
 **Branch policy:** No merge into main. Individual open acceptance criteria must be resolved, constrained or explicitly disclosed before any release.
+
+### New cross-kit contracts
+
+- `ba-api-map` now has a runnable OpenAPI → UI mapping checker for exact copy and enum fields, with explicit source graph validation and negative cases. Output is a source-aligned sample mapping, not a live frontend. See `tests/test_ba_api_field_mapping.py`.
+- `ba-figma` now supports two separately generated code candidates: Reqwise `figma_write` and the official Figma Plugin API. The latter is exercised with an API-shaped Node mock for creation, idempotency, conflict and rollback, but has no verified live canvas edit. See `tests/test_ba_figma_native.py`.

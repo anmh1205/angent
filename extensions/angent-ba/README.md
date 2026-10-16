@@ -93,3 +93,7 @@ The all-skill evidence matrix is at ../../hub/research/ba-figma-audit-67.md (mac
 The full Atlas URD→BRD→PRD→SRS→TC structural chain now has a dedicated test, tests/test_ba_full_lifecycle.py: 8/8 FR trace back to UN through BO/CAP, but only 4/8 trace to a test artifact. A linked test is not a passing test. Full provenance and source file paths remain required.
 
 An actual bounded Reverse Preview is now generated through scripts/render_reverse_preview.py and tested in Chrome, with visible source classes, contradictions and safe links. Real stakeholder exports are produced through scripts/build_export.py; Markdown, HTML and DOCX have passed Pandoc/Chrome or OOXML checks. PDF output is conditional on an actual Pandoc PDF engine and has not yet been runtime-qualified.
+
+### Contracted API → UI field mapping
+
+The real read-only field evaluator at `extensions/angent-ba/scripts/audit_api_field_mapping.py` checks the declared OpenAPI response schema, mapping operations, target field types and expected nested UI JSON on a concrete sample. It rejects unsafe JS-oriented property names and any undeclared transforms. `tests/test_ba_api_field_mapping.py` verifies success and negative cases. Passing this tool does not prove live React/Vue UI bindings or real provider behavior.
