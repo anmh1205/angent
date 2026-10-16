@@ -105,6 +105,7 @@ class APIContractTests(unittest.TestCase):
             "bearerAuth":{"type":"http","scheme":"bearer"},
             "keyAuth":{"type":"apiKey","in":"header","name":"X-API-Key"}}}
         original["security"]=[{"bearerAuth":[]}]
+        original["paths"]["/vehicles/{vehicleId}/diagnostics/ack"]["post"]["security"]=[]
         self.assertFalse(audit_contract(original,self.model)["ok"])
         op["security"]=[{"bearerAuth":[]},{}]
         self.assertTrue(audit_contract(original,self.model)["ok"],audit_contract(original,self.model))
@@ -112,8 +113,8 @@ class APIContractTests(unittest.TestCase):
         request=copy.deepcopy(self.model)
         for test in request["requests"][:3]:
             test["auth"]="bearer"
-        # The fourth POST is still anonymous because its operation has no override.
-        request["requests"][3]["auth"]="bearer"
+        # The fourth POST explicitly overrides root authentication as anonymous.
+        request["requests"][3]["auth"]="none"
         self.assertTrue(audit_contract(original,request)["ok"],audit_contract(original,request))
         op["security"]=[{"bearerAuth":[],"keyAuth":[]}]
         self.assertFalse(audit_contract(original,request)["ok"])
