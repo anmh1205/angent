@@ -27,7 +27,7 @@ class BrunoGeneratorTests(unittest.TestCase):
             self.assertIn("tests {",body)
             self.assertIn("expect(res.getStatus()).to.eql("+str(req["expected_status"])+")",body)
             for field in req["expected_json"]:
-                self.assertIn('res.body["'+field+'"]',body)
+                self.assertIn('res.getBody()["'+field+'"]',body)
             self.assertNotIn("production",body.lower())
         self.assertIn("network_requests_sent",validate(self.fixture))
         self.assertEqual(validate(self.fixture)["network_requests_sent"],0)
@@ -41,6 +41,8 @@ class BrunoGeneratorTests(unittest.TestCase):
         a=copy.deepcopy(self.fixture);a["environment"]["baseUrl"]="http://localhost/\n}";cases.append(a)
         a=copy.deepcopy(self.fixture);a["requests"][0]["expected_json"]={"foo();":1};cases.append(a)
         a=copy.deepcopy(self.fixture);a["requests"][0]["expected_status"]=True;cases.append(a)
+        a=copy.deepcopy(self.fixture);a["environment"]["baseUrl"]=42;cases.append(a)
+        a=copy.deepcopy(self.fixture);a["requests"][0]["headers"]={"X-Demo":"}"};cases.append(a)
         for case in cases:
             with self.subTest(case=case["requests"][0]["path"]):
                 self.assertFalse(validate(case)["ok"])
@@ -78,9 +80,15 @@ class BrunoGeneratorTests(unittest.TestCase):
         a["requests"][0]["headers"]={"Authorization":"Bearer {{apiToken}}"}
         # A token variable is explicit, not inserted by the generator.
         self.assertNotIn("apiToken",a["environment"])
+        self.assertFalse(validate(a)["ok"])
+        with self.assertRaisesRegex(ValueError, "secrets must be supplied"):
+            compile_collection(a)
+        del a["requests"][0]["headers"]
+        a["requests"][0]["auth"]="bearer"
         generated=compile_collection(a)["requests/TC-FLEET-001.bru"]
-        self.assertIn("Bearer {{apiToken}}",generated)
-        self.assertNotIn("SECRET_",generated)
+        self.assertIn("auth:bearer {",generated)
+        self.assertIn("token: {{authToken}}",generated)
+        self.assertNotIn("apiToken",generated)
 
 if __name__=="__main__":
     unittest.main()

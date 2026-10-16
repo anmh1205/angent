@@ -39,7 +39,7 @@ def validate(model: Any) -> dict[str, Any]:
             errors.append(f"Invalid environment value for {key}")
         if isinstance(key,str) and SENSITIVE_KEY.search(key):
             errors.append(f"Secret-like environment key {key} cannot be written to a collection")
-    if "baseUrl" not in environ or not environ.get("baseUrl", "").startswith(("http://","https://")):
+    if not isinstance(environ.get("baseUrl"), str) or not environ["baseUrl"].startswith(("http://","https://")):
         errors.append("environment.baseUrl must be a declared HTTP(S) target")
     requests = model.get("requests")
     if not isinstance(requests, list) or not requests:
@@ -92,7 +92,7 @@ def validate(model: Any) -> dict[str, Any]:
             for key,value in headers.items():
                 if not isinstance(key,str) or not re.fullmatch(r"[A-Za-z0-9-]+",key):
                     errors.append(f"{testid}: invalid header name")
-                if not isinstance(value,str) or "\r" in value or "\n" in value or "{" in PLACEHOLDER.sub("",value):
+                if not isinstance(value,str) or "\r" in value or "\n" in value or "{" in PLACEHOLDER.sub("",value) or "}" in PLACEHOLDER.sub("",value):
                     errors.append(f"{testid}: invalid header value")
                 if isinstance(key,str) and key.lower() in ("authorization","x-api-key"):
                     errors.append(f"{testid}: secrets must be supplied through runtime auth, not persisted headers")
