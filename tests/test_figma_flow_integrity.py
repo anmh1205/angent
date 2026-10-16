@@ -83,6 +83,17 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unsupported activity node kind"):
             compile_model(m)
 
+    def test_deep_sitemap_validates_without_recursive_stack_overflow(self):
+        count = 1400
+        m = {"type": "sitemap",
+             "nodes": [{"id": f"page{i}", "kind": "page", "label": f"Page {i}"}
+                       for i in range(count)],
+             "edges": [{"from": f"page{i}", "to": f"page{i+1}"}
+                       for i in range(count - 1)]}
+        result = audit(m)
+        self.assertTrue(result["ok"], result["errors"])
+        self.assertEqual(len(compile_model(m)["arguments"]["spec"]["pages"]), count)
+
     def test_sitemap_rejects_multiple_containment_parents(self):
         m = deepcopy(self.sitemap)
         m["edges"].append({"from": "vehicles", "to": "alerts"})
