@@ -12,6 +12,23 @@ Maintained adaptation of the MIT Reqwise Figma MCP method, copyright and attribu
 ANGENT Root keeps reasoning and permission decisions. The original role/tool list and slash-command lifecycle are source examples, not evidence that the current host has the Reqwise MCP installed. Check figma_status, active file, target and permissions before invoking a native write; verify results by figma_read/get_diagram_spec and layout_audit. An unavailable native tool permits only a draft model; never claim a Figma write. Read the shared OSS diagram rules from ../figma-activity/references/oss-diagram-rules.md when useful. Keep the user's existing design system and BA business semantics.
 
 
+## ANGENT runnable adapter and evidence boundary
+
+The corresponding **real, local model fixture** is `extensions/angent-figma/examples/rental-fleet-userflow.json`. Derive any new model from inspected requirements before running this tool; the fixture is illustrative only.
+
+```sh
+python extensions/angent-figma/scripts/to_reqwise_payload.py extensions/angent-figma/examples/rental-fleet-userflow.json
+```
+
+The script validates this userflow model and outputs the actual Reqwise OSS `figma_diagram` candidate arguments, `dry_run=true` and `writes_performed=false`. For an approved project, pass `--evidence-graph PATH_TO_BA_GRAPH` to check cited requirement IDs **if every reference is defined in that graph**. If a source is missing, stop and report the gap; never remove or invent an ID to make the check pass. The printed JSON does not call MCP and never creates Figma nodes.
+
+When the Reqwise MCP and its companion Figma plugin **actually exist in the host**, consult `figma_status` and `figma_docs`, verify the selected file/page and permission, then only invoke an authorized `figma_diagram`. After execution, read back `figma_read` with `get_diagram_spec` and `layout_audit`, compare node/edge inventory and inspect a real image. Record tool errors and divergences, not just a success-looking response. If the MCP is unavailable, deliver the checked semantic payload labeled **not written to Figma**.
+
+**Additional userflow semantic acceptance:** Check screen IDs against actual accepted wireframe/screens, decision branches, denial/recovery routes and terminal outcomes. Reachability is necessary but does not prove usability.
+
+**Upstream scope:** MIT Reqwise OSS implements this diagram type, but the source-local payload generator alone proves neither upstream server compatibility for every version nor canvas fidelity. Pro-only functionality cannot be substituted silently.
+
+
 # /figma-userflow — What the user sees next
 
 findings loop, frame placement, verification. This file carries only what is specific to a
