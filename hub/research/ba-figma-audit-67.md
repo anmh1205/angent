@@ -168,4 +168,4 @@ The machine-readable sibling \`ba-figma-audit-67.json\` now associates each **pr
 
 A proof file existing is not evidence that the test was recently run. Runtime and live-provider results must additionally be obtained from an actual checked commit and execution log. Candidate Figma payload checks cannot be promoted to live canvas status.
 
-**Export validation update:** The Chromium+Playwright PDF path produced a real 7-page PDF from three synthetic source documents. PyPDF extracted 7,117 characters of text; unlike the optional TeX engine path, this does not require TeX. Source-only test: `tests/integration/check_ba_chromium_pdf.py`. This is not a production editorial signoff.
+**Export validation update:** The Chromium+Playwright PDF path produced a real 7-page PDF from three synthetic source documents. PyPDF extracted selectable Unicode text; unlike the optional TeX engine path, this does not require TeX. Source-only test: `tests/integration/check_ba_chromium_pdf.py`. This is not a production editorial signoff.
