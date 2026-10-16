@@ -53,3 +53,7 @@ When accepted URD, BRD and PRD documents exist, use the same source-backed graph
 The real Atlas regression verifies 6 UN, 4 BO, 6 CAP and 8 FR. **8/8 FR have explicit FR→CAP→BO→UN ancestry, but only 4/8 FR link downstream to a TC artifact.** Four source-to-test gaps remain visible; structural reference existence does not prove execution or business approval. Do not change test counts or fabricate CHK/TC artifacts to satisfy a release threshold.
 
 Some real projects have no complete URD/BRD/PRD sequence. In those cases, mark upstream coverage unknown/uninspected rather than insisting the user create redundant documents. ANGENT Root decides the appropriate evidence depth and which missing links genuinely matter.
+
+## Full lifecycle evidence auditor (distributed and optional)
+
+The portable command \`python extensions/angent-ba/scripts/audit_lifecycle_handoffs.py PROJECT_GRAPH.json\` inspects the **same graph** already produced by BA; there is no new truth store. It traces explicit UN→BO, BO→CAP, CAP→FR and verifiable requirement/rule/error/acceptance/checklist→TC relationships. Each finding includes the shortest witnessed path or an exact missing source ID. Entirely absent stages are labeled *not-inspected* rather than showing fictitious 0% compliance. Use it for \`ba-gap\`, \`ba-dashboard\` and change-impact scoping. Do not treat link presence as valid stakeholder intent or a passing test.

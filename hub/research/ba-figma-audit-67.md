@@ -155,3 +155,9 @@ The BA Markdown extractor excludes fenced code examples to avoid promoting tutor
 ### New pinned code evidence
 
 `extensions/angent-ba/scripts/verify_code_witness.py` now reads actual Git blobs using a full pinned SHA, checks allowed source paths, exact line ranges, required snippets, optional SHA-256 and BA requirement identity. Negative tests reject fabricated witnesses, old line locations, invalid revisions and traversal. No execution or semantic compliance is inferred. See `tests/test_ba_code_witness.py`.
+
+## Whole-lifecycle audit update
+
+A single read-only, **distributed** graph auditor now checks stage evidence for UN→BO, BO→CAP, CAP→FR, FR/NFR/BR/error/AC/checklist→TC. It emits actual witness paths and IDs for known handoff gaps, while deliberately marking absent corpus stages as **not-inspected** rather than incorrectly declaring 0% coverage or success. This is a shared verification instrument for \`ba-kg\`, \`ba-gap\` and \`ba-dashboard\` without adding state, agents or an alternative Hub. Tests: \`tests/test_ba_lifecycle_handoffs.py\` and packaged verification in \`tests/integration/check_distributed_kits.py\`.
+
+The Atlas corpus contains more test-case records than FRs traceable to a TC; the report keeps test artifact count and FR coverage distinct. None of this establishes business validation or any runtime test success. Additional live user, provider and Figma evidence remains required before claiming full kit parity.

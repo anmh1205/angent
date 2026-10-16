@@ -100,3 +100,11 @@ An actual bounded Reverse Preview is now generated through scripts/render_revers
 ### Contracted API → UI field mapping
 
 The real read-only field evaluator at `extensions/angent-ba/scripts/audit_api_field_mapping.py` checks the declared OpenAPI response schema, mapping operations, target field types and expected nested UI JSON on a concrete sample. It rejects unsafe JS-oriented property names and any undeclared transforms. `tests/test_ba_api_field_mapping.py` verifies success and negative cases. Passing this tool does not prove live React/Vue UI bindings or real provider behavior.
+
+## Lifecycle handoff evidence (read-only, distributed)
+
+The new \`extensions/angent-ba/scripts/audit_lifecycle_handoffs.py\` operates on the existing BA evidence graph and reports actual stage-by-stage links with shortest witness paths. It distinguishes genuine inspected gaps from absent/unchecked corpus stages and separates test-case existence from execution. Its optional \`--require-known-handoffs\` is an explicitly selected evidence completeness rule, **not** a mandatory fixed waterfall process.
+
+    python extensions/angent-ba/scripts/audit_lifecycle_handoffs.py extensions/angent-ba/examples/rental-fleet-traceability.json
+
+The same command is exercised from extracted release ZIPs by \`tests/integration/check_distributed_kits.py\`, not just from a developer source checkout. Atlas regression compares actual FR-to-TC links with an 11-test-case corpus, without reporting the 11 tests as 11 requirements covered. Project-specific approval and semantic truth still need source review.

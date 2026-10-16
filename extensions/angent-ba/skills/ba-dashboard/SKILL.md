@@ -66,3 +66,11 @@ The Atlas example has 58 source-linked BA artifact rows including six UN, four B
 ## Outcome
 
 Deliver the smallest understandable view that answers what is complete, what is only proposed, what is blocked, why it matters and what action is next. State source scope, timestamps/revisions, uncovered requirements and limits. ANGENT Root keeps continuity and final recommendations; BA supplies disciplined indicators; Execution owns authorized writes and provider read-back. There is no compulsory singleton \`docs/_shared/dashboard.html\` or auto-regeneration of \`feature-list.md\`.
+
+## Current source evidence—not a made-up green dashboard
+
+For a scoped existing graph, obtain current handoff metrics with:
+
+    python extensions/angent-ba/scripts/audit_lifecycle_handoffs.py PROJECT_GRAPH.json
+
+Display inspected stage counts and the actual numerator and denominator, explicitly label not-inspected stages, and keep approved/implemented/executed as separate signals. A linked test artifact is *not* a passing test. A provider status panel requires current Jira/build/deployment results, not derivation from document rows.

@@ -30,3 +30,13 @@ A gap audit identifies absent or weak relationships among stakeholder needs (UN)
 Give the inspected scope and source inventory, a stage-by-stage structural coverage summary, decisive risks, explicit broken chains with shortest proof path, and prioritized next actions. For the shipped Atlas worked example, eight FRs trace upstream through CAP/BO/UN, while only **four** reach a TC artifact. These are declared link counts, not passing test results. A missing TC link must not be silently recast as a release blocker if the FR was intentionally deferred.
 
 ANGENT Root decides whether to run this specialist; Quality compares the report to the actual user's goals. The method performs read-only analysis unless a specific target artifact is requested and authorized. It does not require \`docs/_shared/traceability.md\`, invented \`staleness.log\` files or a fixed Claude L1 gate.
+
+## One read-only handoff audit across inspected stages
+
+When the project already has an accepted artifact graph, run the **distributed** BA assurance command rather than manually inferring nine percentages:
+
+    python extensions/angent-ba/scripts/audit_lifecycle_handoffs.py PATH_TO_ACTUAL_GRAPH.json --output NEW_REVIEW_REPORT.json
+
+For a team that explicitly requires every *inspected* stage to have an evidence link, enable \`--require-known-handoffs\`. The optional strict flag returns nonzero only for gaps where both the source and target artifact kinds exist. If the corpus lacks an entire downstream source, the tool reports **not-inspected**, not passed and not definitively failed. Keep intentional deferrals, planned stories and incomplete stakeholder interviews outside any manufactured release verdict.
+
+The report gives source IDs, shortest witnessed paths, uncovered upstream IDs, unapproved/draft records and test cases with **no execution evidence**. Neither a traced TC nor an approved document status proves the test ran or the solution works. If stakeholders want a business-validation verdict, inspect their actual decisions and observed customer outcomes separately.
