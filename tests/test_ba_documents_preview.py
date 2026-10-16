@@ -93,6 +93,32 @@ class TestDocuments(unittest.TestCase):
                             encoding="utf8")
             self.assertTrue(inspect(path,root)["ok"])
 
+    def test_code_samples_are_not_treated_as_real_links_or_requirements(self):
+        source=(
+            "---\nstatus: draft\n---\n# Handbook\n"
+            "```md\n"
+            "{{example_variable}}\n"
+            "[Bad example](../nonexistent.md)\n"
+            "| FR-AUTH-001 | Example only |\n"
+            "```\n"
+            "~~~markdown\n"
+            "[Other example](missing.md)\n"
+            "~~~\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            target=root/"guide.md"
+            target.write_text(source,encoding="utf8")
+            report=inspect(target,root)
+            self.assertTrue(report["ok"],report)
+            self.assertEqual(report["table_ids"],[])
+            target.write_text(source+"~~~python\nprint('unfinished')\n",encoding="utf8")
+            result=inspect(target,root)
+            self.assertIn("unclosed code fence",result["errors"])
+            target.write_text(source+"[Actual missing](missing.md)\n",encoding="utf8")
+            result=inspect(target,root)
+            self.assertTrue(any("broken local reference" in x for x in result["errors"]))
+
     def test_invalid_content_and_bad_links(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

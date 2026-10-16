@@ -57,6 +57,30 @@ def indexed_body(path, root):
                 return True
     return False
 
+def _outside_fences(markdown):
+    """Ignore code examples while preserving actual Markdown line positions."""
+    output=[]
+    active=None
+    opener=re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+    for raw_line in markdown.splitlines(keepends=True):
+        line=raw_line.rstrip("\\r\\n")
+        candidate=opener.match(line)
+        if active is not None:
+            if (candidate and candidate.group(1)[0] == active[0]
+                    and len(candidate.group(1)) >= active[1]
+                    and not candidate.group(2).strip()):
+                active=None
+            output.append("\\n" if raw_line.endswith("\\n") else "")
+            continue
+        if candidate and (candidate.group(1)[0] == "~" or
+                          "`" not in candidate.group(2)):
+            active=(candidate.group(1)[0],len(candidate.group(1)))
+            output.append("\\n" if raw_line.endswith("\\n") else "")
+        else:
+            output.append(raw_line)
+    return "".join(output), active is not None
+
+
 def inspect(path, root):
     errors, warnings = [], []
     raw = path.read_text(encoding="utf-8").replace("\r\n", "\n")
@@ -79,9 +103,10 @@ def inspect(path, root):
                     front[k.strip()] = v.strip().strip('"')
     if not content.strip():
         errors.append("empty document")
-    if TEMPLATE.search(raw):
+    inspected,unclosed=_outside_fences(content)
+    if TEMPLATE.search(inspected):
         errors.append("unresolved template variables")
-    if raw.count(chr(96)*3)%2:
+    if unclosed:
         errors.append("unclosed code fence")
     if front.get("status") and front["status"] not in VALID_STATES:
         errors.append("invalid status")
@@ -91,12 +116,12 @@ def inspect(path, root):
         except ValueError:
             errors.append("invalid date format")
     ids=[]
-    for line in content.splitlines():
+    for line in inspected.splitlines():
         m=ID_ROW.search(line)
         if m:ids.append(m.group(1))
     for ident in set(ids):
         if ids.count(ident)>1:errors.append("duplicate table row ID: "+ident)
-    for value in LINK.findall(content)+WIKILINK.findall(content):
+    for value in LINK.findall(inspected)+WIKILINK.findall(inspected):
         if value.startswith(("http://","https://","mailto:","#")):continue
         if "://" in value or value.startswith(("javascript:","data:")):
             errors.append("unsafe link: "+value);continue
@@ -110,7 +135,7 @@ def inspect(path, root):
             errors.append("path traversal: "+value)
         elif not target.is_file():
             errors.append("broken local reference: "+value)
-    if not any(line.lstrip().startswith("# ") for line in content.splitlines()):
+    if not any(line.lstrip().startswith("# ") for line in inspected.splitlines()):
         warnings.append("no main heading")
     return {"path":str(path),"ok":not errors,"errors":sorted(set(errors)),"warnings":warnings,
             "table_ids":sorted(set(ids))}
