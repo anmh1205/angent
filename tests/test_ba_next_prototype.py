@@ -27,7 +27,7 @@ class NextBAPrototypeTests(unittest.TestCase):
         self.assertEqual(meta["execution_status"],"not-run")
         self.assertEqual(json.loads(generated["model.json"]),self.model)
         self.assertIn("next build",generated["package.json"])
-        self.assertIn("No real authentication",generated["README.md"])
+        self.assertIn("never a production login",generated["README.md"])
 
     def test_keyboard_route_focus_and_hydration_handshake(self):
         app=generate_files(self.model)["app/[screen]/page.jsx"]
