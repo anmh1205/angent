@@ -24,6 +24,14 @@ ANGENT already had the core decision/reader model, paragraph coherence, error/au
 
 Changes concentrate on conversation repair, distinction between visualization types, source-matched image retrieval and rendered figure acceptance. They are integrated with existing Authoring, Research, Format and Quality responsibilities, not an additional sequential pipeline. Short ChatGPT starter prompts are separate from the actual skill instructions.
 
+## Learning from ClaudeKit's task methods — target-aware transfer
+
+The useful transferable mechanisms are not ClaudeKit's command count or repository organization. [Problem-first brainstorming](https://github.com/claudekit/claudekit-engineer/blob/main/claude/skills/brainstorm/references/problem-first.md) challenges a proposed solution by reconstructing the need and falsifiable assumptions; [scenario exploration](https://github.com/claudekit/claudekit-engineer/blob/main/claude/skills/ck-scenario/SKILL.md) widens a consequential decision to plausible state, actor, failure and timing counter-cases; [code review](https://github.com/claudekit/claudekit-engineer/blob/main/claude/skills/ck-code-review/references/spec-compliance-review.md) checks fidelity to requested outcomes before assessing polish; and [writing style guidance](https://github.com/claudekit/claudekit-engineer/blob/main/claude/skills/copywriting/references/writing-styles.md) analyzes dimensions of expression rather than imposing one voice.
+
+ANGENT already has analogous abilities in Core Reasoning/Quality/Authoring and portable Engineer's Brainstorm, Predict and Scenario. The design opportunity is more accurate **selection, integration and transfer**: challenge unconfirmed means without overriding binding decisions; feed plausible disconfirming cases into a recommendation; test report relevance against the user's requested target; study strong prose for reader-state progression and paragraph dependency, not copywriting formulas. Keep specialist expansion conditional. ClaudeKit's hard gates, preset persona counts and specific tool commands are implementation choices, not universal mandates.
+
+A representative comparison should include both a solution-first proposal whose underlying problem matters and a committed implementation request where problem reframing must not hijack scope; a long source audit whose details distract from target improvements; a short direct-answer counter-case; and the same explanation transferred into a technical document. Assess warranted recommendations and preserved reader understanding, not merely number of citations, styles or diagrams.
+
 ## Evidence limit
 
 These are source-based design improvements. Structure tests, icon validation and textual review cannot establish that a live activated plugin has measurably better answers or Mermaid rendering. Claims of behavioral gain require comparable actual responses and destination-specific rendered figures on suitable positive and negative cases.
