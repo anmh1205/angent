@@ -10,10 +10,10 @@ Research references: [AI4BA BA-Kit](https://ai4ba.com/ba-kit), [Reqwise Pro](htt
 | 10 other BA specialist methods | Independent ANGENT procedures, informed by public requirements and domain standards | Detailed plans and several runnable helpers | Feature outputs and host interactions for each skill |
 | 48 templates | 40 MIT structures + 8 independent additions | Template files, not filled project evidence | Reviewer acceptance on generated artifacts |
 | Source business rules | 21 attributed MIT reference rules + 19 ANGENT BA review probes | Reference methodology / not second authority layer | Test realistic change and consistency disputes |
-| Traceability and CR impact | Original Python validator and graph traversal | Runs locally on evidence JSON | Wider real-source graph and malformed-data/adversarial test suite |
+| Traceability and CR impact | Original Markdown extractor, graph validator and reverse dependency traversal | Runs on actual MIT Atlas SRS/checklist/test corpus; 38 artifacts and 4/8 strictly traceable FR-to-TC | Add broader source formats and resolve external AC/US/CAP documents before expanded coverage claims |
 | Markdown validation | Original Python document scanner | Runs locally; structural checks | Real SRS/BRD/PRD examples and false-positive review |
 | Feature HTML preview | Original standard-library safe renderer | Runs locally on scoped graph | Visual/browser accessibility and richer semantic sections |
-| Six Figma OSS diagram kinds | Six MIT specialist methods + request compiler | Portable validated payload; can dry-run | Live Reqwise MCP / actual plugin canvas edit/read-back |
+| Six Figma OSS diagram kinds | Six MIT specialist methods + request compiler | Six examples passed Reqwise OSS 0.3.0 actual Zod validators at commit 4ee65b7; dry-run only | Live MCP plugin canvas edit/read-back and visual inspection |
 | Six additional Figma kinds | Original skills informed by OMG BPMN, Figma APIs and WCAG | Specialized methodology, not a full implementation | Native editability, render proof, interoperability and video where relevant |
 | Cross-host packages | ANGENT 2.0 Hub dynamic registry | Structural package build and local tests | Install smoke test in each real host and check root routing |
 
@@ -31,7 +31,7 @@ Every benchmark should produce an accepted source ledger, an artifact diff, exec
 ## Priority remaining work
 
 - Replace Claude-specific choreography in migrated methods with tested, host-native instructions where it remains operationally relevant; keep original author's attribution.
-- Bring across or independently implement validated BPMN XML/DI and D2/Mermaid/PlantUML rendering engines with actual binary/runner tests, not a declaration that syntax exists.
+- Extend the independently implemented **bounded** BPMN XML/DI compiler (now parsed without warnings by bpmn-moddle@9 and checked for geometry collisions) to supported advanced constructs via a real engine, and verify D2/Mermaid/PlantUML rendering and visual quality.
 - Generate and execute actual Bruno, Playwright, Next.js and HTML wireframe outputs from known requirements.
 - Create/read/update Figma artifacts in an authorized live environment; validate responsive/accessibility and source-to-canvas consistency.
 - Verify Jira/Confluence bidirectional synchronization with conflict handling, idempotency and audit read-back.

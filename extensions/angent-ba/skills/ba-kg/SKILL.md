@@ -35,3 +35,11 @@ Use the existing BA artifact exchange validator, change-impact script and exampl
 ## Ownership
 
 ANGENT Root/Core retains reasoning, stakeholder intent, source authority and final Quality. This method is a task-specific support skill and does not create a second runtime, memory system or autonomous scheduler.
+
+## Working directly from real SRS and QA files
+
+When the source consists of Markdown project documents rather than an already serialized graph, use the implemented extractor at extensions/angent-ba/scripts/extract_markdown_graph.py. Pass the actual SRS and optionally its linked checklist and test-case files with the project root; the tool parses only explicit ID/link columns and records which CAP/AC/US references could not be resolved within the inspected inputs.
+
+Follow with validate_artifacts.py, change_impact.py for a proposed BR/FR/AC change, and render_preview.py when a reviewer needs a safe HTML artifact index. Never mark a test as executed because the source file calls its status approved. A source document's own coverage summary is commentary to reconcile, not a substitute for a verified path through the inspected graph.
+
+The MIT Atlas example deliberately produces 4/8 strictly linked FR-to-test coverage when only its SRS, checklist and cases are loaded; extending the corpus and resolving AC/US references is a separate authorized analysis step. Neither incomplete input nor ambiguous implicit links should be converted into fake nodes.
