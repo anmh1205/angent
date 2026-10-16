@@ -43,6 +43,25 @@ class MockVehicleApi(BaseHTTPRequestHandler):
         self.send_header("Content-Length",str(len(payload)))
         self.end_headers()
         self.wfile.write(payload)
+    def do_POST(self):
+        try:
+            size=int(self.headers.get("Content-Length","0"))
+            body=json.loads(self.rfile.read(size))
+            if (self.path=="/vehicles/demo-001/diagnostics/ack"
+                    and body.get("code")=="P0100"
+                    and body.get("operator")=="synthetic-test"):
+                status,result=201,{"vehicleId":"demo-001","ack":"recorded"}
+            else:
+                status,result=422,{"error":"INVALID_DIAGNOSTIC_ACK"}
+        except (ValueError,TypeError,AttributeError):
+            status,result=400,{"error":"INVALID_JSON"}
+        payload=json.dumps(result).encode()
+        self.send_response(status)
+        self.send_header("Content-Type","application/json")
+        self.send_header("Content-Length",str(len(payload)))
+        self.end_headers()
+        self.wfile.write(payload)
+
     def log_message(self,*args):
         pass
 
