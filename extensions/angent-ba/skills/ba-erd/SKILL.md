@@ -22,7 +22,7 @@ Create a Mermaid `erDiagram` for a per-feature data model. **Single output**: `d
 
 - **1 fixed output** — `docs/{feature}/srs/{feature}-erd.md`. NO `--scope project` flag.
 - **NO L3 iteration** — Mermaid does not render in chat. Go straight from L1 plan → Write. The user reviews the rendered ERD from the file (IDE/Obsidian/GitHub) → to change it, call the skill again and say what needs to change.
-- **L1 approval** before Write.
+- Apply ANGENT's real authorization boundary before external writes; show a source-grounded entity/relationship summary when decisions remain unsettled.
 - **`--feature` optional** — auto-detect from context/the in-progress feature; only ask via picker when ambiguous. **Feature does not exist + arg is a data-model description → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.
 - **File already exists** → automatically switch to update mode (versioned diff), do not refuse.
 - **Auto-detect entities** from SRS Section 6 if present.
@@ -55,7 +55,7 @@ To use entity descriptions from another source instead of answering directly →
    - Attributes inside the `{}` block: `type name [PK|FK]`.
    - Relationships: `||--o{` (one-to-many), `||--||` (one-to-one), `}o--o{` (many-to-many).
    - Self-reference: `ENTITY ||--o{ ENTITY : "label"`.
-6. **L1 approval** plan table — show path + summarized entity/relationship count. **NO L3 iteration in chat** — Mermaid cannot render in chat; reviewing from the rendered file is more effective.
+6. Source-backed entity/relationship plan — show path + summarized entity/relationship count. **NO L3 iteration in chat** — Mermaid cannot render in chat; reviewing from the rendered file is more effective.
 7. **Write** from `templates/diagram-erd.md` (slim frontmatter `type: srs-erd`/`feature`/`updated`). Fill `mermaid_code`, `entity_descriptions`, `notes`.
 8. **Update mode (file already exists)** → versioned diff. Update `updated: {date}`.
    - **Compile fail** (usually an attribute missing its type token — see the "2-token" gotcha — or a relationship label missing quotes) → read the line/column error the script returns, fix the block just written, re-verify. At most 2 self-fix attempts.
