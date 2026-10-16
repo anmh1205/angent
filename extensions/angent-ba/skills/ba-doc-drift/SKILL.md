@@ -1,28 +1,44 @@
 ---
 name: ba-doc-drift
-description: Find divergence between declared requirements and implemented behavior.
+description: Specialized ANGENT business-analysis procedure for doc-drift.
 ---
 
-# ba-doc-drift: Find divergence between declared requirements and implemented behavior
+# Evidence-based drift audit between specification and implementation
 
-## Trigger and necessary evidence
+## Scope
 
-Use this method when the user needs **find divergence between declared requirements and implemented behavior**, not because a generic question merely mentions the subject. Required inputs to look for: versioned documentation and source/build/test artifacts. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+Detect mismatches between an accepted specification and a pinned code revision with four distinct verdicts: ALIGNED, DIVERGENT, NOT IMPLEMENTED, and UNVERIFIABLE. Treat documentation and code as two separate evidence sources. Do not treat a missing search hit as proof of missing implementation.
 
-## Specialist method
+## Examination
 
-Trace expected outcome to actual code path; report mismatch with file refs, reproduce path and uncertainty. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
+1. Resolve the actual accepted SRS version and target repository SHA, target service/branch and runtime. Read the feature's FR, BR, error matrix, API contract, linked AC and tests.
+2. Build an inspection map by business action: entrypoints, guards, domain services, data schemas, async consumers, frontend states, integration contracts and feature flags. Resolve dynamic routing and generated code.
+3. For each requirement, follow the live implementation path and extract source-linked behavior. Record a minimal witness: file/line or symbol, condition, resulting state and unexecuted alternatives. Corroborate with tests or controlled runtime probe when possible.
+4. Compare semantic predicates, not names. Check thresholds and units, timing, authorization, duplicate delivery, retry, error shape, external contracts and state persistence.
+5. When the code path is unavailable (private dependency, remote service, runtime config, flag unknown), mark UNVERIFIABLE and name precise missing evidence. Do not mark NOT IMPLEMENTED solely because static search failed.
+6. Cross-check testing: a passing mocked test does not establish real external integration. Treat skipped tests, disabled checks and fallback code explicitly.
+7. For every mismatch, propose one bounded fix owner: update implementation, amend spec by stakeholder decision, or gather more evidence. Changes need separate authorization.
+8. Produce a reviewable register ordered by consequence and traceability, including reproduction or next test.
 
-## Deliverable
+## Finding record
 
-Produce **Drift report: aligned, divergent, unimplemented and unverifiable items**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+```text
+FR-ID: FR-PAY-008
+Spec: duplicate capture request must return original transaction ID
+Code: services/payments/capture.ts:46-63 @ SHA
+Observed: idempotency key is generated per attempt
+Status: DIVERGENT (code inspection, not deployed runtime)
+Impact: duplicate charge risk under retry
+Next check: mock + sandbox payment retry test
+```
 
-## Acceptance checks
+The example is *illustrative* and does not cite an actual inspected repository file.
 
-- No false claim of implementation merely from similarly named code.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Gates
 
-## ANGENT boundary
+No invented code references, no unsupported production-deployed conclusions, no automatic spec rewrite, and no false test pass. Review uncovered requirements and report denominator/scope.
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+
+## ANGENT cooperation
+
+ANGENT Root/Reasoning owns interpretation and decisions; Authoring owns narrative quality; Execution handles authorized external effects; Quality verifies the outcome. Method selection is optional and context-dependent, never a forced workflow.

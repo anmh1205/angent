@@ -1,28 +1,45 @@
 ---
 name: ba-playwright-gen
-description: Generate browser automation for confirmed user journeys.
+description: Specialized ANGENT business-analysis procedure for playwright-gen.
 ---
 
-# ba-playwright-gen: Generate browser automation for confirmed user journeys
+# Derive robust Playwright tests from approved test cases
 
-## Trigger and necessary evidence
+## Preconditions
 
-Use this method when the user needs **generate browser automation for confirmed user journeys**, not because a generic question merely mentions the subject. Required inputs to look for: approved test cases, selectors, accessible app, environment. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+Read actual test-case IDs, acceptance criteria, app URL, test credentials provisioning, environment, data isolation and known accessibility selectors. Verify the repo already contains Playwright and identify its config. A proposed test cannot be labeled passing until executed against an actual target.
 
-## Specialist method
+## Conversion algorithm
 
-Prefer role/label locators; create isolated data and deterministic waits; assert visible behavior and cleanup; execute when environment permits. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
+1. Construct traceability table: TC ID, covered AC and FR, initial state, actors, fixtures, action sequence, assertions, cleanup, source revision.
+2. Convert every action to a single purposeful Playwright step. Prefer getByRole, getByLabel, getByPlaceholder only when labels are unique; use stable test IDs only if semantic locators cannot identify the element. Never rely on fragile CSS nth-child chains.
+3. Assert the state change that matters, not only navigation or HTTP status. Verify user-visible error text or state as accepted; for persisted actions check the authoritative backend only if a safe test API is available.
+4. Isolate accounts/tenants and fixtures; avoid global mutable state and hardcoded production credentials. Use project helpers to provision and cleanup test data, and make failure cleanup idempotent.
+5. Use Playwright auto-waiting assertions. Do not introduce sleep-based races. Handle deliberate virtual time or mocked network responses using Playwright fixtures and clear scenario naming.
+6. Test network-failure, duplicate-submit, access-denial, validation boundaries and cancellation for the actual business rule. For browser testing of real provider login flows, respect authorization and CAPTCHA boundaries; do not bypass authentication mechanisms.
+7. Run the focused test, inspect trace, screenshot and console/network diagnostics on failure; fix selectors or app defects according to evidence, not by weakening assertions.
+8. Report tested browser project, targeted spec, pass/fail/skip counts and unsatisfied environment prerequisites separately. Provide links to test artifacts.
 
-## Deliverable
+## Minimal idiom
 
-Produce **Playwright tests, setup instructions and observed run results**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+```ts
+import { test, expect } from '@playwright/test';
+test('TC-AUTH-014: shows an approved invalid-credentials outcome', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByLabel('Email').fill('test-user@example.test');
+  await page.getByLabel('Password').fill('incorrect-fixture-password');
+  await page.getByRole('button', { name: /sign in/i }).click();
+  await expect(page.getByRole('alert')).toContainText(/invalid credentials/i);
+});
+```
 
-## Acceptance checks
+This illustrates locator and assertion style, **not** a working test until fixture account, product labels and exact error contract are verified.
 
-- Unrun test scripts labeled unverified; no fabricated pass reports.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+## Failure modes to avoid
 
-## ANGENT boundary
+A generated code file is not a passed test; test IDs are not inferred from unrelated UI controls; no blanket retries hide real flakiness; browser text expectations are not invented. Preserve the host-approved app framework and test suite.
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+
+## ANGENT cooperation
+
+ANGENT Root/Reasoning owns interpretation and decisions; Authoring owns narrative quality; Execution handles authorized external effects; Quality verifies the outcome. Method selection is optional and context-dependent, never a forced workflow.

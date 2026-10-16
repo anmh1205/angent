@@ -1,28 +1,44 @@
 ---
 name: ba-code-to-srs
-description: Infer implemented behavior without mistaking it for accepted requirements.
+description: Specialized ANGENT business-analysis procedure for code-to-srs.
 ---
 
-# ba-code-to-srs: Infer implemented behavior without mistaking it for accepted requirements
+# Reverse engineering source code into a defensible SRS
 
-## Trigger and necessary evidence
+## Outcome and epistemic boundary
 
-Use this method when the user needs **infer implemented behavior without mistaking it for accepted requirements**, not because a generic question merely mentions the subject. Required inputs to look for: authorized repository commit, routes, schemas, tests, config and docs. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+Reconstruct **current observable behavior** from the checked-out source, not the author's presumed intentions. An implementation may be defective or incomplete; its behavior is not an approved business requirement. Deliver a source-indexed reconstruction, a candidate SRS and a discrepancy register, with explicit confidence categories: VERIFIED IN SOURCE, INFERRED, UNCONFIRMED, CONTRADICTORY.
 
-## Specialist method
+## Method
 
-Trace code paths and domain conditions; cite file and line or commit; distinguish executed behavior from intended policy; identify unimplemented/missing branches. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
+1. Fix a commit SHA and enumerate deployables, packages, API routes, databases, migrations, configs, queues, scheduled jobs, device/edge protocols, tests and feature flags. Limit analysis to the requested feature before traversing dependencies.
+2. Follow entrypoint to domain decision to persistence to outbound integration. Do not equate a route name or UI label with implemented behavior; inspect guards, early returns, error handling and data side effects.
+3. Record observations in an evidence ledger with stable claim ID, relative file path, function/symbol, real line range, commit, observed predicate and the exact consequence. When lines are unavailable, cite symbol and commit and mark line-level verification missing.
+4. Reconstruct actors, preconditions, trigger, ordered flow, states, authorization boundaries, business constraints, timeouts, retries, deduplication and error contracts. Classify each claim independently.
+5. Compare tests to implementation: tests are evidence of intended expectations, not proof of deployed behavior. Check whether test paths are skipped, mocked or detached from production wiring.
+6. Derive FR/NFR/BR candidates only after the behavior ledger. For every FR, add a reference to at least one source observation or explicit stakeholder decision. Include negative and recovery paths.
+7. Resolve contradictions through actual config precedence and call paths where possible. Otherwise maintain alternative observations in a conflict table; do not invent which version won.
+8. Separate validated implementation facts, unsupported policy guesses and a recommended future target specification. Ask for business approval before promoting an observation to the approved SRS.
+9. Conduct source read-back at the pinned commit and link each open question to the smallest useful next inspection or test.
 
-## Deliverable
+## Output contract
 
-Produce **Reverse SRS with observed behavior, evidence, inferred requirements, conflicts and confidence**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+- System boundary and deployment assumptions, including what was NOT inspected.
+- Source ledger: Claim | Revision | Path/symbol/line | Observed behavior | Confidence | Contradiction.
+- Functional specification FR, business rules BR, error matrix E, state transitions and data effects.
+- Confidence summary by claim, not one blanket document confidence.
+- Implementation vs desired-product differences with owner/decision status.
+- Reproduction or test plan for high-risk assumptions.
 
-## Acceptance checks
+## Worked micro-example
 
-- Every factual claim cites inspectable source; no invented line numbers.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+Observation: the vehicle-status handler reads a vehicle by ID before checking the requesting user's ownership. This supports an **investigation finding**, not a statement that ownership checks are intentionally optional. Document: 'FR candidate: status must only be visible to authorized user' (proposed). Confirm guard execution, service-level policy and test behavior before calling it implemented.
 
-## ANGENT boundary
+## Negative controls
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+Reject fabricated file paths, line numbers, production claims from mocked unit tests, imagined business policies and edits to source code under an audit-only request. Delegate implementation only after separately authorized change work.
+
+
+## ANGENT cooperation
+
+ANGENT Root/Reasoning owns interpretation and decisions; Authoring owns narrative quality; Execution handles authorized external effects; Quality verifies the outcome. Method selection is optional and context-dependent, never a forced workflow.

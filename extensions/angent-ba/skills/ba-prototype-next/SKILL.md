@@ -1,28 +1,34 @@
 ---
 name: ba-prototype-next
-description: Provide a runnable Next.js prototype with realistic routes.
+description: Specialized ANGENT business-analysis procedure for prototype-next.
 ---
 
-# ba-prototype-next: Provide a runnable Next.js prototype with realistic routes
+# Build a reviewable Next.js prototype from accepted BA flows
 
-## Trigger and necessary evidence
+## Distinction
 
-Use this method when the user needs **provide a runnable next.js prototype with realistic routes**, not because a generic question merely mentions the subject. Required inputs to look for: approved flows, routes, fixture data, UI states. Read existing accepted artifacts first; ask only for consequential absent decisions. If the inputs are incomplete, produce a bounded draft with explicit unresolved questions instead of fabricating agreements.
+A prototype demonstrates decisions and user paths; it is **not** proof that backend logic, data persistence, authentication or security is production-ready. Use an authorized existing Next.js repo if one exists, rather than installing a different stack or rewriting the project's agreed UI foundation.
 
-## Specialist method
+## Build procedure
 
-Implement typed route screens and clear mock adapters; validate install/build, navigation and critical branches; isolate secrets. For each decision, capture (a) observed or approved basis, (b) consequence for actors, data and failure conditions, and (c) the next verifiable action. Reuse project identifiers and cite the source revision of any requirement you derive. Verify whether this is a design proposal or observed live behavior before asserting it as fact.
+1. Read the accepted screen inventory, userflow, wireframe, SRS, error matrix and style constraints. Capture a screen-state matrix: route, user role, inputs, validation, loading, empty, success, error, denied and expired-session states.
+2. Inspect package.json, router type (App Router or Pages Router), TypeScript, components, tokens, styling, test tooling, images and lockfile. Respect the current project baseline; ask only if a consequential platform choice is unsettled.
+3. Define route contracts before styling. For each action record trigger, locally simulated state transition, data mutation (in-memory/mock), validation outcome and accessibility focus target. Mark real integrations as mocks visibly in the code and demo notes.
+4. Implement screen components by reusing existing primitives; avoid duplicating form validation rules across pages. Maintain explicit fixture lifecycle and a reset action so reviewers can reproduce scenarios.
+5. Implement all mapped alternate outcomes, including invalid input, authorization denial, stale session, network error, duplicate submit, interrupted flow and recovery; do not show a visual screen disconnected from any navigation.
+6. Verify keyboard labels, semantic forms, tab order, announcements, zoom and responsive widths. No fake submit success that silently accepts all inputs.
+7. Execute the existing install/build/typecheck/test commands if the host permits; inspect rendered routes in a browser at representative viewports. Record command, exit code, environment, scope and observed failure.
+8. Deliver the file diff, route map, state coverage table, screenshots or browser references where available, setup command and explicit unimplemented backend boundaries.
 
-## Deliverable
+## Core acceptance
 
-Produce **Next.js prototype plus setup, smoke results and mock boundary**. Put the decision or useful artifact first, then the needed context and source links. Use `../ba-kg/references/operating-model.md` for ID provenance, graph semantics and change boundaries. Applicable original templates are indexed at `../ba-kg/references/template-index.md`; use a template only where it clarifies the user's actual task.
+Every route in the flow loads, required transitions are reachable, fixture reset works, no unsupported data claim is shown, no browser errors occur in tested paths, and build/runtime status is reported from actual execution. If tooling is absent, produce a design specification rather than asserting a runnable prototype.
 
-## Acceptance checks
+## Example
 
-- Actual build/runtime evidence needed before claiming runnable.
-- Detect missing success, negative, edge, permission and recovery paths when applicable; label any unverified runtime effects clearly.
-- Review the result against current project evidence and unaffected approved decisions, not merely formatting or file existence.
+An email-login prototype must expose wrong-password, locked-account, session timeout and transient network error as distinct states where the accepted SRS distinguishes them. It must not invent a threshold or reveal whether an email exists if the policy forbids account enumeration.
 
-## ANGENT boundary
 
-ANGENT Core supplies general intent/context/reasoning/authoring; this Skill supplies only domain-specific discipline. Never invent stakeholder choices, interviews, production evidence, API responses, source lines or compliance conclusions. Treat source, inference and approved decisions separately; unresolved choices remain questions. Do not modify a provider, remote system or other files without checking ANGENT Execution permissions.
+## ANGENT cooperation
+
+ANGENT Root/Reasoning owns interpretation and decisions; Authoring owns narrative quality; Execution handles authorized external effects; Quality verifies the outcome. Method selection is optional and context-dependent, never a forced workflow.
