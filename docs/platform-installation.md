@@ -1,13 +1,13 @@
-# ANGENT 1.5.x — platform installation
+# ANGENT 1.6.x — platform installation
 
-ANGENT has one maintained Core (`skills/`) and one Engineer fallback source (`extensions/angent-engineer/`). `platforms/` contains host-specific bootstrap templates; `packages/` and `dist/` are generated, Git-ignored release outputs. Build from a Git checkout (or download the ready-made platform ZIPs and `SHA256SUMS` from the matching GitHub Release once published):
+ANGENT has one maintained Core (`skills/`), an Engineer fallback source (`extensions/angent-engineer/`) and a visual frontend extension (`extensions/angent-frontend/`). `platforms/` contains host-specific bootstrap templates; `packages/` and `dist/` are generated, Git-ignored release outputs. Build from a Git checkout (or download the ready-made platform ZIPs and `SHA256SUMS` from the matching GitHub Release once published):
 
 ```bash
 python3 scripts/build_packages.py --all
 python3 -m unittest discover -s tests -p 'test_multi_packages.py' -v
 ```
 
-The five CLI/plugin bundles contain the same 114 discoverable Skills (12 Core + 102 Engineer), including their `references/`, `scripts/` and portable Engineer support tree. Do not use the raw root `skills/` checkout alone as the full ANGENT distribution: it contains only the 12 Core Skills.
+Local agent, Gemini CLI and Claude Code bundles contain 115 discoverable Skills (12 Core + 102 Engineer + 1 ANGENT Frontend), including their references and portable support trees. The ChatGPT/OpenAI bundle differs deliberately: it exposes **only the ANGENT Root Skill**, with those other methods in its internal reference library. Do not use the raw root `skills/` checkout alone as the full ANGENT distribution: it contains only the 12 Core Skills.
 
 ## Local coding agents
 
@@ -18,11 +18,11 @@ Copy the **contents** of `packages/local-agent/` into the target project root. T
 Download `angent-gemini-web.zip` from the GitHub Release. On
 `gemini.google.com`, open Customize > Skills > Upload and select that ZIP
 directly. The ZIP has exactly one top-level `SKILL.md`, plus a generated
-`references/INDEX.md`, the 12 Core and 102 discoverable Engineer Skill texts,
+`references/INDEX.md`, the 12 Core, 102 Engineer and 1 Frontend Skill texts,
 and 16 role definitions as *references*.
 
 Gemini Web imports **one Skill** from this package. The nested library does
-not become 114 separately discoverable Skills or 16 running subagents. You must
+not become 115 separately discoverable Skills or 16 running subagents. You must
 select/use the uploaded ANGENT Skill in Gemini Apps. The browser does not gain
 filesystem persistence, native AgentKit, remote shell or external-action
 scripting merely by importing reference files. Keep the original CLI targets
@@ -67,7 +67,9 @@ Official reference: https://code.claude.com/docs/en/plugins
 
 ## ChatGPT and Codex
 
-Use `packages/openai-plugin/` or `dist/angent-openai-plugin.zip`. The existing `scripts/package_unified.py` continues to create the compatible `dist/angent-chatgpt.zip` artifact. Both manifests share the same version and single ANGENT identity, not a second Engineer plugin. The current running ChatGPT/Codex plugin remains separate from Git source; installation and actual skill activation must be verified in that provider.
+Use `packages/openai-plugin/` or `dist/angent-openai-plugin.zip`. The compatibility builder `scripts/package_unified.py` produces `dist/angent-chatgpt.zip` with the same **single public `skills/angent/SKILL.md`**. The other eleven Core specialists, 102 Engineer fallback methods and one Frontend art-direction method are stored under `skills/angent/references/catalog/`, not as directly discoverable `skills/ak-*/SKILL.md` entries.
+
+This package layout prevents ChatGPT from discovering bundled Engineer methods as independent plugin Skills. It does not force ChatGPT to select ANGENT in every conversation, and it does not suppress other installed plugins. Installing a new ZIP is separate from updating an already installed plugin; verify the actual provider catalog (exactly one public `skills/angent/SKILL.md`) with `scripts/verify_activation.py` and an actual provider observation.
 
 ## Package design and safety
 
