@@ -183,7 +183,9 @@ function render(id) {
   history.replaceState(null, "", "#" + encodeURIComponent(id));
   const section = mark("section", undefined, "screen");
   section.dataset.screenId = id;
-  section.append(mark("h2", screen.title));
+  const heading = mark("h2", screen.title);
+  heading.tabIndex = -1;
+  section.append(heading);
   if (screen.description) section.append(mark("p", screen.description, "note"));
   const form = document.createElement("form");
   form.noValidate = false;
@@ -234,6 +236,7 @@ function render(id) {
   }
   section.append(form, alert);
   app.replaceChildren(section);
+  heading.focus({preventScroll: true});
 }
 render(model.start);
 """
