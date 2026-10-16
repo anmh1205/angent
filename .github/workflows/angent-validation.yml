@@ -28,6 +28,11 @@ jobs:
       - name: Exercise continuity and memory runtime semantics
         run: python3 -m unittest discover -s tests -p 'test_runtime_state.py' -v
 
+      - name: Exercise authoring/report evaluation schema and comparator
+        run: |
+          python3 -m unittest discover -s tests -p 'test_authoring_eval.py' -v
+          python3 scripts/evaluate_authoring.py
+
       - name: Verify Engineer source catalog
         run: python3 extensions/angent-engineer/scripts/verify_port.py --json
 
