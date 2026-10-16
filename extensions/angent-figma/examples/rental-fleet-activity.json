@@ -1,0 +1,47 @@
+{
+  "type": "activity",
+  "nodes": [
+    {
+      "id": "start",
+      "kind": "start",
+      "label": "Request vehicle status"
+    },
+    {
+      "id": "authorize",
+      "kind": "decision",
+      "label": "Owner authorized?"
+    },
+    {
+      "id": "allowed",
+      "kind": "end",
+      "label": "Return authorized vehicle status"
+    },
+    {
+      "id": "denied",
+      "kind": "end",
+      "label": "Return access denied"
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "authorize"
+    },
+    {
+      "from": "authorize",
+      "to": "allowed",
+      "guard": "yes"
+    },
+    {
+      "from": "authorize",
+      "to": "denied",
+      "guard": "no"
+    }
+  ],
+  "source_refs": [
+    "FR-IVTS-01"
+  ],
+  "metadata": {
+    "status": "synthetic-example"
+  }
+}

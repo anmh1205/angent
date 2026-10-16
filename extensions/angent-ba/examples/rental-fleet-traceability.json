@@ -1,0 +1,57 @@
+{
+  "sources": [
+    {
+      "id": "SRC-01",
+      "uri": "examples/synthetic-requirement.md",
+      "revision": "synthetic-fixture"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "BR-IVTS-01",
+      "kind": "BR",
+      "title": "Only owner may view a vehicle",
+      "status": "approved",
+      "depends_on": [],
+      "source_refs": [
+        "SRC-01"
+      ]
+    },
+    {
+      "id": "FR-IVTS-01",
+      "kind": "FR",
+      "title": "Owner sees assigned vehicle status",
+      "status": "proposed",
+      "depends_on": [
+        "BR-IVTS-01"
+      ],
+      "source_refs": [
+        "SRC-01"
+      ]
+    },
+    {
+      "id": "AC-IVTS-01",
+      "kind": "AC",
+      "title": "Unauthorized users see no status",
+      "status": "proposed",
+      "depends_on": [
+        "FR-IVTS-01"
+      ],
+      "source_refs": [
+        "SRC-01"
+      ]
+    },
+    {
+      "id": "TC-IVTS-01",
+      "kind": "TEST",
+      "title": "Verify access denial on status endpoint",
+      "status": "draft",
+      "depends_on": [
+        "AC-IVTS-01"
+      ],
+      "source_refs": [
+        "SRC-01"
+      ]
+    }
+  ]
+}
