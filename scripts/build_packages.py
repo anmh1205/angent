@@ -242,6 +242,9 @@ filesystem persistence or host tools. Host activation requires actual proof.
         elif path.startswith("hub/"):
             files["references/" + path] = payload
     for ext in registry["extensions"]:
+        notice = f"extensions/{ext['id']}/THIRD_PARTY_NOTICES.md"
+        if notice in source:
+            files[f"references/licenses/{ext['id']}.md"] = source[notice]
         for name in ext["roles"]:
             path = f"extensions/{ext['id']}/agents/{name}.md"
             files[f"references/roles/{ext['id']}/{name}.md"] = source[path]
@@ -258,6 +261,8 @@ filesystem persistence or host tools. Host activation requires actual proof.
     for ext in registry["extensions"]:
         index += ["", f"## {ext['name']} ({ext['id']})", ""]
         index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in ext["skills"]]
+        if f"references/licenses/{ext['id']}.md" in files:
+            index += [f"- [Third-party notice](licenses/{ext['id']}.md)"]
         if ext["roles"]:
             index += ["", "### Role references (not live workers)", ""]
             index += [f"- [{n}](roles/{ext['id']}/{n}.md)" for n in ext["roles"]]

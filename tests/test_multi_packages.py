@@ -126,6 +126,10 @@ class MultiPackageTests(unittest.TestCase):
         files = packs.assemble(ROOT, "gemini-web", self.source)
         self.assertTrue(files["SKILL.md"].startswith(b"---\nname: angent\n"))
         self.assertIn("references/INDEX.md", files)
+        for ext in ("angent-ba", "angent-figma"):
+            notice = f"references/licenses/{ext}.md"
+            self.assertIn(notice, files)
+            self.assertIn(b"MIT License", files[notice])
         self.assertEqual(files["references/catalog/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
         self.assertEqual(files["references/catalog/ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
         self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), self.expected_skills)
