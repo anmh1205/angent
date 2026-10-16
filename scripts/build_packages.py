@@ -16,7 +16,7 @@ import sys
 import tempfile
 import zipfile
 
-from package_unified import collect_entries, PackagingError, FIXED_TIMESTAMP, EXPECTED_DISCOVERABLE, EXPECTED_ENGINEER, SUPPRESSED_PUBLIC_ENGINEER
+from package_unified import collect_entries, gateway_entries, PackagingError, FIXED_TIMESTAMP, EXPECTED_DISCOVERABLE, EXPECTED_OPENAI_DISCOVERABLE, EXPECTED_ENGINEER, FRONTEND_NAMES, SUPPRESSED_PUBLIC_ENGINEER
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = ("local-agent", "gemini-web", "gemini-skills", "gemini-extension", "claude-code", "openai-plugin")
@@ -81,9 +81,12 @@ No hooks or ambient auto-activation are implied by installing Skills alone.
     "openai-plugin": """# ANGENT — single OpenAI Agent Plugin
 
 Use this assembled plugin root (or its ZIP release) in the supported
-ChatGPT/Codex plugin installation flow. It has one `angent` identity,
-12 Core and 102 publicly discoverable Engineer Skills in `skills/`,
-with all 103 Engineer source Skills and 16 role contracts retained in `extensions/`.
+ChatGPT/Codex plugin installation flow. There is exactly ONE publicly
+discoverable Skill: `skills/angent/SKILL.md`. Core specialists, the
+portable Engineer fallback and ANGENT Frontend visual methods are included
+under `skills/angent/references/catalog/` for ANGENT to select. They are
+not independently discoverable plugin Skills. Extension source and Engineer
+role definitions remain available under `extensions/`.
 
 Installing the package and verifying live provider activation are separate
 steps. Use `scripts/verify_activation.py` with an actual observation
@@ -147,10 +150,11 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
     if primary["name"] != "angent" or version != secondary["version"]:
         raise PackagingError("OpenAI source manifests disagree")
     template, destination = TEMPLATES[package]
+    projection = gateway_entries(source) if package == "openai-plugin" else source
     files: dict[str, bytes] = {}
     skills: set[str] = set()
     roles: set[str] = set()
-    for path, content in source.items():
+    for path, content in projection.items():
         if path.startswith("skills/"):
             target = SKILL_PREFIX[package] + path[len("skills/"):]
             if re.fullmatch(r"skills/[^/]+/SKILL\.md", path):
@@ -166,8 +170,11 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
         if target in files:
             raise PackagingError(f"Collision: {target}")
         files[target] = content
-    if len(skills) != EXPECTED_DISCOVERABLE or len(roles) != 16 or SUPPRESSED_PUBLIC_ENGINEER & skills:
+    required = EXPECTED_OPENAI_DISCOVERABLE if package == "openai-plugin" else EXPECTED_DISCOVERABLE
+    if len(skills) != required or len(roles) != 16 or SUPPRESSED_PUBLIC_ENGINEER & skills:
         raise PackagingError(f"Incomplete ANGENT catalog: {len(skills)} Skills, {len(roles)} roles")
+    if package == "openai-plugin" and skills != {"angent"}:
+        raise PackagingError("OpenAI must expose only ANGENT gateway")
     files[destination] = _read_template(repo, template)
     if package == "gemini-extension":
         files["gemini-extension.json"] = _manifest(version, "gemini")
@@ -226,10 +233,11 @@ guarantee automatic application to every conversation.
                 files["references/" + path[len("skills/angent/references/"):]] = payload
         elif re.fullmatch(r"extensions/angent-engineer/agents/[a-z0-9-]+\.md", path):
             files["references/roles/" + PurePosixPath(path).name] = payload
-    core = sorted(n for n in names if n.startswith("angent"))
+    core = sorted(n for n in names if n.startswith("angent") and n not in FRONTEND_NAMES)
     engineer = sorted(n for n in names if n.startswith("ak-"))
+    frontend = sorted(names & FRONTEND_NAMES)
     roles = sorted(p for p in files if re.fullmatch(r"references/roles/[a-z0-9-]+\.md", p))
-    if len(core) != 12 or len(engineer) != EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER) or len(roles) != 16:
+    if len(core) != 12 or len(engineer) != EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER) or frontend != sorted(FRONTEND_NAMES) or len(roles) != 16:
 
         raise PackagingError(f"Gemini Web library incomplete: {len(core)} Core, {len(engineer)} Engineer, {len(roles)} roles")
     index = ["# ANGENT reference library", "",
@@ -237,6 +245,8 @@ guarantee automatic application to every conversation.
              "instructions, not independently activated Gemini Web Skills.", "",
              "## Core", ""]
     index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in core]
+    index += ["", "## Frontend visual direction", ""]
+    index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in frontend]
     index += ["", "## Engineer", ""]
     index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in engineer]
     index += ["", "## Roles", ""]
@@ -296,7 +306,7 @@ def build(repo: Path, package_root: Path, dist_root: Path, selected: tuple[str, 
             zipname = f"angent-{package}.zip"
             digest = _zip(files, tmp / "dist" / zipname)
             results[package] = {"files": len(files),
-                                "skills": 1 if package == "gemini-web" else EXPECTED_DISCOVERABLE,
+                                "skills": 1 if package in ("gemini-web", "openai-plugin") else EXPECTED_DISCOVERABLE,
                                 "engineer_source_skills": EXPECTED_ENGINEER, "roles": 16, "sha256": digest}
         package_root.mkdir(parents=True, exist_ok=True)
         dist_root.mkdir(parents=True, exist_ok=True)
