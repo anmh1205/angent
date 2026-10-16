@@ -87,6 +87,27 @@ class WireframeTests(unittest.TestCase):
         data["screens"][0]["controls"][0]["type"]=[]
         self.assertFalse(check_model(data)["ok"])
 
+    def test_input_semantics_reject_truthy_string_required_and_bad_placeholder(self):
+        for invalid in ("false", 1, None, []):
+            with self.subTest(required=invalid):
+                model=copy.deepcopy(self.model)
+                model["screens"][0]["controls"][0]["required"]=invalid
+                report=check_model(model)
+                self.assertFalse(report["ok"])
+                self.assertTrue(any("required must be boolean" in e for e in report["errors"]))
+                with self.assertRaisesRegex(ValueError,"required must be boolean"):
+                    render(model,"prototype")
+        for invalid in ({"hint":"enter email"}, 42, None):
+            with self.subTest(placeholder=invalid):
+                model=copy.deepcopy(self.model)
+                model["screens"][0]["controls"][0]["placeholder"]=invalid
+                report=check_model(model)
+                self.assertFalse(report["ok"])
+                self.assertTrue(any("placeholder must be text" in e for e in report["errors"]))
+        model=copy.deepcopy(self.model)
+        model["screens"][0]["description"]={"not":"a string"}
+        self.assertFalse(check_model(model)["ok"])
+
     def test_required_fields_and_requirement_ids_are_visible(self):
         static=render(self.model,"wireframe")
         self.assertIn("FR-AUTH-001",static)

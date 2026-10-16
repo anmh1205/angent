@@ -52,6 +52,8 @@ def check_model(data: Any) -> dict[str, Any]:
         by_id[sid] = screen
         if not isinstance(screen.get("title"), str) or not screen["title"].strip():
             errors.append(f"{sid}: title required")
+        if "description" in screen and not isinstance(screen["description"], str):
+            errors.append(f"{sid}: description must be text")
         controls = screen.get("controls")
         if not isinstance(controls, list) or not controls:
             errors.append(f"{sid}: controls must be nonempty array")
@@ -73,6 +75,13 @@ def check_model(data: Any) -> dict[str, Any]:
                 errors.append(f"{sid}.{cid}: unsupported control type")
             if not isinstance(control.get("label"), str) or not control["label"].strip():
                 errors.append(f"{sid}.{cid}: missing accessible label")
+            if "required" in control and not isinstance(control["required"], bool):
+                errors.append(f"{sid}.{cid}: required must be boolean")
+            if "placeholder" in control and (
+                not isinstance(control["placeholder"], str) or
+                kind not in (INPUTS - {"checkbox"})
+            ):
+                errors.append(f"{sid}.{cid}: placeholder must be text on an input")
             refs = control.get("requirements", [])
             if not isinstance(refs, list) or any(not isinstance(r, str) or not r for r in refs):
                 errors.append(f"{sid}.{cid}: requirements must be a string list")
