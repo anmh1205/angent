@@ -10,4 +10,4 @@ For actual Figma operations, follow mcp/SETUP.md; inspect figma_status for live 
 
 Pro-only capabilities are not in Reqwise's public MIT runtime. Their six ANGENT methods specify semantics, quality gates and authorized tooling options. They **do not** currently constitute a proprietary-equivalent Pro server, screen generator, component library, BPMN DI engine or video recorder. Do not report them as such. Art direction belongs to angent-frontend; UX and code specialization may come from Engineer; Root retains decisions and permission checks.
 
-See RESEARCH_AND_PARITY.md for the actual capability limits and verified source.
+See ../../hub/research/ba-figma-parity.md for the actual capability limits and verified source.

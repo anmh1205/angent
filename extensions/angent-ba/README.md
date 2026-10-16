@@ -18,4 +18,4 @@ A typical path is ba-brainstorm to ba-srs to ba-userstory/ba-ac to ba-test-check
 
 The imported methods preserve meaningful rules, examples and procedures but **do not automatically port the original Claude hooks, TypeScript validators, custom BPMN/D2/render engines or install scripts**. Those require deliberate dependencies, host adapter verification and end-to-end tests. Native Jira/Confluence/Figma writes, Bruno/Playwright execution and design rendering must not be claimed solely from the existence of skill instructions. A current source tree can guide a specialist; it is not itself proof of product or runtime quality.
 
-See RESEARCH_AND_PARITY.md for feature evidence, mapped source and remaining acceptance checks.
+See ../../hub/research/ba-figma-parity.md for feature evidence, mapped source and remaining acceptance checks.
