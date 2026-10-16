@@ -69,7 +69,7 @@ def check_model(data: Any) -> dict[str, Any]:
             if cid in seen:
                 errors.append(f"{sid}: duplicate control id {cid}")
             seen.add(cid)
-            if kind not in TYPES:
+            if not isinstance(kind, str) or kind not in TYPES:
                 errors.append(f"{sid}.{cid}: unsupported control type")
             if not isinstance(control.get("label"), str) or not control["label"].strip():
                 errors.append(f"{sid}.{cid}: missing accessible label")
@@ -98,7 +98,9 @@ def check_model(data: Any) -> dict[str, Any]:
         errors.append("start must identify a declared screen")
     graph: dict[str, set[str]] = {sid: set() for sid in by_id}
     for sid, screen in by_id.items():
-        for control in screen.get("controls", []):
+        if not isinstance(screen.get("controls"), list):
+            continue
+        for control in screen["controls"]:
             if not isinstance(control, dict):
                 continue
             targets = []
@@ -115,7 +117,7 @@ def check_model(data: Any) -> dict[str, Any]:
                     errors.append(f"{sid}.{control.get('id')}: unknown target {target!r}")
                 else:
                     graph[sid].add(target)
-    if start in graph:
+    if isinstance(start, str) and start in graph:
         queue = deque([start])
         visited = set()
         while queue:
