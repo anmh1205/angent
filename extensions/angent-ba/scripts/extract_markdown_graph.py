@@ -180,7 +180,7 @@ def collect(paths: dict[str,Path], root: Path) -> dict[str,Any]:
     counts=dict(sorted(Counter(x["kind"] for x in artifacts).items()))
     ancestry={item["id"]:set(item["depends_on"]) for item in artifacts}
     origins={item["id"]:item["kind"] for item in artifacts}
-    requirements=sorted(x for x in artifacts if x["kind"]=="FR",key=lambda x:x["id"])
+    requirements=sorted((x for x in artifacts if x["kind"]=="FR"),key=lambda x:x["id"])
     # Only a complete FR -> CAP -> BO -> UN ancestry chain counts.
     traced=[]
     for fr in requirements:
