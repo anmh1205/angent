@@ -108,7 +108,7 @@ class MultiPackageTests(unittest.TestCase):
                         if path == "skills/angent/SKILL.md":
                             self.assertTrue(files[path].startswith(data))
                         elif path == "skills/angent/references/INDEX.md":
-                            self.assertIn(b"## Engineer specialist methods", files[path])
+                            self.assertIn(b"## ANGENT Engineer", files[path])
                         elif path.startswith("skills/angent/"):
                             self.assertEqual(files[path], data, path)
                         else:
