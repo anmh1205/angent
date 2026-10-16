@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "angent",
-  "version": "1.6.0",
-  "description": "ANGENT Root routes Core cognition, Engineer methods and Frontend visual design through one discoverable ChatGPT Skill.",
+  "version": "2.0.0",
+  "description": "ANGENT 2.0 Core and capability Hub route extensible Kit Adapters through one root cognitive authority.",
   "author": {
     "name": "An"
   },
@@ -20,11 +20,11 @@
   "interface": {
     "displayName": "ANGENT",
     "shortDescription": "Cognitive layer for agents",
-    "longDescription": "ANGENT provides one ChatGPT entry for its Core reasoning, research, authoring, quality, portable Engineer methods and optional Frontend art direction.",
+    "longDescription": "ANGENT Core and Hub select validated specialist methods from extensible Kit Adapters under one cognitive authority.",
     "developerName": "An",
     "category": "Productivity",
     "defaultPrompt": [
-      "Use ANGENT as the root for reasoning and specialized methods; preserve intent, context, evidence and quality.",
+      "Use ANGENT Core first; select kit methods via Hub, preserving user intent, evidence, authority and quality.",
       "Answer early, explain decisive relationships and finish with a useful synthesis, without repetitive filler.",
       "For consequential work, verify effects, report uncertainty and preserve accepted strengths."
     ],

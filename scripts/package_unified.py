@@ -17,6 +17,10 @@ import subprocess
 import sys
 import zipfile
 
+# Also support importlib loading of this standalone builder in validation tests.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from hub_registry import build_registry, HubError
+
 CORE_ROOT = "skills/"
 ENGINEER_ROOT = "extensions/angent-engineer/"
 ENGINEER_SKILLS = ENGINEER_ROOT + "skills/"
@@ -63,88 +67,77 @@ def _safe_file(repo: Path, relative: str) -> bytes:
 
 
 def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, bytes]:
+    """Keep authoritative Core/kit source and derive public Skill projections."""
     paths = _tracked(repo) if tracked is None else tracked
     entries: dict[str, bytes] = {}
-    source_core: set[str] = set()
-    source_engineer: set[str] = set()
-    source_frontend: set[str] = set()
+    core_names: set[str] = set()
     for path in paths:
-        if path in CORE_FILES or path.startswith(("assets/", CORE_ROOT)):
+        if path in CORE_FILES or path.startswith(("assets/", CORE_ROOT, "hub/")):
+            if path == "hub/registry.json":
+                raise PackagingError("Registry must be generated, not committed")
             target = path
             if re.fullmatch(r"skills/[^/]+/SKILL\.md", path):
-                source_core.add(path.split("/")[1])
-        elif path.startswith(ENGINEER_ROOT):
-            if path == ENGINEER_CODEX_MANIFEST:
+                core_names.add(path.split("/")[1])
+        elif path.startswith("extensions/"):
+            if re.fullmatch(r"extensions/[^/]+/\.codex-plugin/plugin\.json", path):
                 continue
-            if path == ENGINEER_PACKAGE_MANIFEST:
-                target = ENGINEER_SOURCE_MANIFEST  # internal data, not a second plugin
+            if re.fullmatch(r"extensions/[^/]+/plugin\.json", path):
+                target = path.rsplit("/", 1)[0] + "/source-manifest.json"
             else:
                 target = path
-        elif path.startswith(FRONTEND_ROOT):
-            target = path
         else:
             continue
-
         data = _safe_file(repo, path)
         if target in entries:
             raise PackagingError(f"Duplicate package path: {target}")
         entries[target] = data
-        if path.startswith(ENGINEER_SKILLS):
-            skill_name = path[len(ENGINEER_SKILLS):].split("/", 1)[0]
-            if skill_name not in SUPPRESSED_PUBLIC_ENGINEER:
-                projected = CORE_ROOT + path[len(ENGINEER_SKILLS):]
-                if projected in entries:
-                    raise PackagingError(f"Skill projection collision: {projected}")
-                entries[projected] = data
-            if re.fullmatch(r"extensions/angent-engineer/skills/[^/]+/SKILL\.md", path):
-                source_engineer.add(skill_name)
-        if path.startswith(FRONTEND_SKILLS):
-            skill_name = path[len(FRONTEND_SKILLS):].split("/", 1)[0]
-            projected = CORE_ROOT + path[len(FRONTEND_SKILLS):]
-            if projected in entries:
-                raise PackagingError(f"Frontend projection collision: {projected}")
-            entries[projected] = data
-            if path.endswith("/SKILL.md") and path.count("/") == 4:
-                source_frontend.add(skill_name)
 
-    if len(source_core) != EXPECTED_CORE or len(source_engineer) != EXPECTED_ENGINEER:
-        raise PackagingError(f"Unexpected Skills: core={len(source_core)}, engineer={len(source_engineer)}")
-    if source_frontend != FRONTEND_NAMES or source_frontend & (source_core | source_engineer):
-        raise PackagingError(f"Frontend source mismatch: {sorted(source_frontend)}")
-    if not SUPPRESSED_PUBLIC_ENGINEER <= source_engineer:
-        raise PackagingError("Suppressed Engineer Skill is missing from maintained source")
-    if source_core & source_engineer:
-        raise PackagingError(f"Core/Engineer Skill names overlap: {sorted(source_core & source_engineer)}")
-    if ENGINEER_SOURCE_MANIFEST not in entries:
-        raise PackagingError("Missing internal Engineer catalog manifest")
-    for manifest in CORE_FILES:
-        if manifest not in entries:
-            raise PackagingError(f"Missing required plugin file: {manifest}")
-    root_manifest = json.loads(entries["plugin.json"])
-    codex_manifest = json.loads(entries[".codex-plugin/plugin.json"])
-    if root_manifest.get("name") != "angent" or codex_manifest.get("name") != "angent":
-        raise PackagingError("Unified plugin identity must be angent")
-    if root_manifest.get("version") != codex_manifest.get("version"):
-        raise PackagingError("Manifest version mismatch")
-    if ENGINEER_PACKAGE_MANIFEST in entries or ENGINEER_CODEX_MANIFEST in entries:
-        raise PackagingError("Nested installable manifests are forbidden")
-    role_files = [p for p in entries if re.fullmatch(r"extensions/angent-engineer/agents/[^/]+\.md", p) and not p.endswith("/README.md")]
-    if len(role_files) != EXPECTED_ROLES:
-        raise PackagingError(f"Expected {EXPECTED_ROLES} Engineer role files, got {len(role_files)}")
+    if len(core_names) != EXPECTED_CORE or "angent" not in core_names:
+        raise PackagingError(f"Unexpected Core skill catalog: {sorted(core_names)}")
+    if not CORE_FILES <= entries.keys():
+        raise PackagingError("Missing root plugin manifest or AGENTS.md")
+    try:
+        registry = build_registry(entries)
+    except HubError as exc:
+        raise PackagingError(str(exc)) from exc
+
+    # Project arbitrary validated Kit Skills; kit source and roles stay intact.
+    for ext in registry["extensions"]:
+        for skill in ext["skills"]:
+            source_prefix = f"extensions/{ext['id']}/skills/{skill}/"
+            for path, content in list(entries.items()):
+                if path.startswith(source_prefix):
+                    target = "skills/" + path[len(f"extensions/{ext['id']}/skills/"):]
+                    if target in entries:
+                        raise PackagingError(f"Skill collision: {target}")
+                    entries[target] = content
+    entries["hub/registry.json"] = (json.dumps(registry, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode()
+    try:
+        root = json.loads(entries["plugin.json"])
+        codex = json.loads(entries[".codex-plugin/plugin.json"])
+    except (ValueError, UnicodeError) as exc:
+        raise PackagingError("Invalid root manifest") from exc
+    if root.get("name") != "angent" or codex.get("name") != "angent" or root.get("version") != codex.get("version"):
+        raise PackagingError("One ANGENT plugin identity/version is required")
+    for ext in registry["extensions"]:
+        if f"extensions/{ext['id']}/plugin.json" in entries or f"extensions/{ext['id']}/.codex-plugin/plugin.json" in entries:
+            raise PackagingError("Nested installable kit manifest")
     return entries
 
 
 def gateway_entries(source: dict[str, bytes]) -> dict[str, bytes]:
-    """Package one public ANGENT entry with its subordinate reference library.
-
-    Plugin skill discovery scans immediate skills/ children, not reference
-    descendants. All specialist documents remain available inside Root.
-    """
+    """One OpenAI Root gateway, with all Core and kit methods as internal references."""
     root = "skills/angent/"
-    if root + "SKILL.md" not in source:
-        raise PackagingError("Missing ANGENT root Skill")
+    if root + "SKILL.md" not in source or "hub/registry.json" not in source:
+        raise PackagingError("Missing ANGENT Root or Hub registry")
+    registry = json.loads(source["hub/registry.json"])
+    extension_names = set(registry["published_skills"])
+    core_names = {p.split("/")[1] for p in source
+                  if re.fullmatch(r"skills/[^/]+/SKILL\.md", p)} - extension_names
+    if len(core_names) != EXPECTED_CORE or "angent" not in core_names:
+        raise PackagingError("Core/extension inventory mismatch")
     output: dict[str, bytes] = {}
-    names: set[str] = set()
+    names = set()
     for path, content in sorted(source.items()):
         if path.startswith("skills/") and not path.startswith(root):
             relative = path[len("skills/"):]
@@ -156,105 +149,110 @@ def gateway_entries(source: dict[str, bytes]) -> dict[str, bytes]:
         if target in output:
             raise PackagingError(f"Gateway collision: {target}")
         output[target] = content
+    if names != (core_names - {"angent"}) | extension_names:
+        raise PackagingError("Incomplete Hub gateway library")
 
-    core = sorted(n for n in names if n.startswith("angent-") and n not in FRONTEND_NAMES)
-    engineer = sorted(n for n in names if n.startswith("ak-"))
-    frontend = sorted(names & FRONTEND_NAMES)
-    if (len(core) != EXPECTED_CORE - 1
-            or len(engineer) != EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER)
-            or frontend != sorted(FRONTEND_NAMES)
-            or len(names) != EXPECTED_DISCOVERABLE - 1):
-        raise PackagingError(f"Incomplete gateway library: Core={len(core)} Engineer={len(engineer)} Frontend={frontend}")
+    suffix = """
+## ANGENT Hub gateway
 
-    gateway = """
-## ChatGPT ANGENT gateway
+This is the only discoverable Skill in the OpenAI plugin. First apply the
+full ANGENT cognitive baseline. When specialist work adds value, read
+`references/hub/routing.md` and `references/hub/registry.json`, then use
+the selected `references/catalog/<skill>/SKILL.md` as internal guidance.
+Kit Adapters translate expert methods but never control reasoning,
+authorization, final Quality or tool permissions.
 
-This is the sole discoverable Skill in the ANGENT OpenAI plugin. Apply the
-universal ANGENT cognitive standard first. Choose the relevant Core owner
-before considering a specialized method. Read references/INDEX.md only when
-another method materially helps; follow references/catalog/<name>/SKILL.md
-and its adjacent references as internal ANGENT instructions, not as a new
-independently activated Skill or a separate plugin.
-
-Core owns common reasoning, explanation, research and quality. For an
-engineering outcome, consult the internal ak-agentkit routing method if
-needed; native AgentKit is preferred only when really usable, and must not
-be mixed with its fallback. For original frontend visual direction use
-angent-frontend-design; for product workflows and systemic UI/UX audits
-use ak-ui-ux-pro-max. Match user intent, evidence and permissions throughout.
-
-Static package structure prevents direct discovery of bundled ak-* as
-ChatGPT plugin Skills. It cannot guarantee ANGENT will be selected on
-every chat turn or suppress independently installed external plugins.
+The static package does not suppress independently installed plugins
+or force ANGENT activation on every host turn. A bundled Skill or role is
+not proof of native CLI, subagent, tool or filesystem capability.
 """
-    output[root + "SKILL.md"] = source[root + "SKILL.md"] + gateway.encode("utf-8")
+    output[root + "SKILL.md"] = source[root + "SKILL.md"] + suffix.encode()
+    for p, data in sorted(source.items()):
+        if p.startswith("hub/"):
+            output[root + "references/" + p] = data
 
-    index = [
-        "# ANGENT internal methods", "",
-        "The only discoverable ChatGPT Skill is ANGENT. This is an internal",
-        "reference catalog consulted by ANGENT when a specialist adds value.", "",
-        "## Core responsibilities", "",
-    ]
-    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in core)
-    index += ["", "## Frontend visual design extension", ""]
-    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in frontend)
-    index += ["", "## Engineer specialist methods", "",
-              "Use the ak-agentkit routing reference when the choice is nontrivial.",
-              "Read only the required method; generic explanation stays in Core.", ""]
-    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in engineer)
-    index += ["", "## Engineer role references (not running agents)", ""]
-    for path, data in sorted(source.items()):
-        if (path.startswith("extensions/angent-engineer/agents/")
-                and path.endswith(".md") and path.count("/") == 3
-                and not path.endswith("/README.md")):
-            name = PurePosixPath(path).name
-            output[root + "references/roles/" + name] = data
-            index.append(f"- [{name}](roles/{name})")
-    output[root + "references/INDEX.md"] = ("\n".join(index) + "\n").encode("utf-8")
-
-    discovered = [p for p in output if p.startswith("skills/")
-                  and p.endswith("/SKILL.md") and p.count("/") == 2]
+    index = ["# ANGENT internal capability catalog", "",
+             "ANGENT Root selects optional methods; Core keeps final responsibility.",
+             "Start with [Hub routing](hub/routing.md) and [capability registry](hub/registry.json).",
+             "", "## Core", ""]
+    index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in sorted(core_names - {"angent"}))
+    for ext in registry["extensions"]:
+        index += ["", f"## {ext['name']} ({ext['id']})", "",
+                  "These are specialist methods, not independently activated agents.", ""]
+        index.extend(f"- [{n}](catalog/{n}/SKILL.md)" for n in ext["skills"])
+        if ext["roles"]:
+            index += ["", "### Optional role references (not running agents)", ""]
+            for role in ext["roles"]:
+                src = f"extensions/{ext['id']}/agents/{role}.md"
+                target = root + f"references/roles/{ext['id']}/{role}.md"
+                output[target] = source[src]
+                index.append(f"- [{role}](roles/{ext['id']}/{role}.md)")
+    output[root + "references/INDEX.md"] = ("\n".join(index) + "\n").encode()
+    discovered = [p for p in output if re.fullmatch(r"skills/[^/]+/SKILL\.md", p)]
     if discovered != [root + "SKILL.md"]:
-        raise PackagingError(f"Unexpected independently discoverable Skill: {discovered}")
+        raise PackagingError(f"Unexpected discoverable Skill: {discovered}")
     return output
 
 
 def verify_zip(path: Path) -> dict[str, object]:
+    """Validate actual packaged methods against the complete generated inventory."""
     with zipfile.ZipFile(path) as archive:
         if archive.testzip() is not None:
             raise PackagingError("Corrupt ZIP data")
         names = archive.namelist()
-        if len(names) != len(set(names)):
-            raise PackagingError("Duplicate ZIP entry")
-        discovered = [p for p in names if re.fullmatch(r"skills/[^/]+/SKILL\.md", p)]
+        present = set(names)
+        if len(names) != len(present):
+            raise PackagingError("Duplicate ZIP entries")
+        discovered = sorted(p for p in names if re.fullmatch(r"skills/[^/]+/SKILL\.md", p))
         if discovered != ["skills/angent/SKILL.md"]:
             raise PackagingError(f"OpenAI requires one ANGENT gateway, got {discovered}")
-        required_methods = (
-            "skills/angent/references/INDEX.md",
-            "skills/angent/references/catalog/ak-agentkit/SKILL.md",
-            "skills/angent/references/catalog/angent-reasoning/SKILL.md",
-            "skills/angent/references/catalog/angent-frontend-design/SKILL.md",
-        )
-        if any(path not in names for path in required_methods):
-            raise PackagingError("OpenAI internal methods incomplete")
-        if ENGINEER_PACKAGE_MANIFEST in names or ENGINEER_CODEX_MANIFEST in names:
-            raise PackagingError("Two separately installable manifests found")
-        if not all(x in names for x in CORE_FILES | {ENGINEER_SOURCE_MANIFEST}):
-            raise PackagingError("A required manifest or AGENTS.md is missing")
+        registry_path = "hub/registry.json"
+        if registry_path not in present:
+            raise PackagingError("Missing generated Hub registry")
+        registry = json.loads(archive.read(registry_path))
+        extensions = registry["extensions"]
+        published = {name for ext in extensions for name in ext["skills"]}
+        if len(published) != sum(len(ext["skills"]) for ext in extensions):
+            raise PackagingError("Overlapping public Skill identities")
+        if published != set(registry["published_skills"]):
+            raise PackagingError("Hub registry inventory mismatch")
+        required = {"skills/angent/references/INDEX.md",
+                    "skills/angent/references/hub/routing.md",
+                    "skills/angent/references/hub/registry.json",
+                    "skills/angent/references/catalog/angent-reasoning/SKILL.md",
+                    "plugin.json", ".codex-plugin/plugin.json", "AGENTS.md"}
+        for ext in extensions:
+            required.add(f"extensions/{ext['id']}/extension.json")
+            for skill in ext["skills"]:
+                required.add(f"skills/angent/references/catalog/{skill}/SKILL.md")
+                required.add(f"extensions/{ext['id']}/skills/{skill}/SKILL.md")
+            for role in ext["roles"]:
+                required.add(f"skills/angent/references/roles/{ext['id']}/{role}.md")
+        if not required <= present:
+            raise PackagingError(f"Missing packaged Hub methods: {sorted(required - present)[:10]}")
+        if any(re.fullmatch(r"extensions/[^/]+/plugin\.json", p) or
+               re.fullmatch(r"extensions/[^/]+/\.codex-plugin/plugin\.json", p)
+               for p in present):
+            raise PackagingError("Nested installable kit plugin manifests are forbidden")
         for name in discovered:
             contents = archive.read(name).decode("utf-8")
             expected = name.split("/")[1]
             if not re.search(r"^name:\s*" + re.escape(expected) + r"\s*$", contents, re.M):
                 raise PackagingError(f"Discovery/frontmatter mismatch: {name}")
+        engineer = next((e for e in extensions if e["id"] == "angent-engineer"), None)
+        frontend = next((e for e in extensions if e["id"] == "angent-frontend"), None)
         return {
             "plugin_name": json.loads(archive.read("plugin.json"))["name"],
             "core_skills": EXPECTED_CORE,
-            "engineer_skills": EXPECTED_ENGINEER,
+            "engineer_skills": engineer["source_skill_count"] if engineer else 0,
             "discoverable_engineer_skills": 0,
-            "internal_engineer_methods": EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER),
-            "internal_frontend_methods": len(FRONTEND_NAMES),
+            "internal_engineer_methods": len(engineer["skills"]) if engineer else 0,
+            "internal_frontend_methods": len(frontend["skills"]) if frontend else 0,
             "discoverable_skills": len(discovered),
-            "engineer_roles": EXPECTED_ROLES,
+            "engineer_roles": len(engineer["roles"]) if engineer else 0,
+            "internal_specialist_methods": len(published),
+            "extensions": [e["id"] for e in extensions],
+            "capability_count": len(registry["capabilities"]),
             "zip_entries": len(names),
             "proof_level": "structural_only",
         }

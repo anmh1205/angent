@@ -4,4 +4,4 @@ For every request, apply ANGENT's complete standard of intent, active constraint
 
 Use the ANGENT plugin's root `angent` Skill for substantive ANGENT work and load focused supporting Skills on demand. If a required Skill is not discoverable, report the limitation rather than pretending to have loaded it.
 
-Respect existing project CLAUDE.md instructions and all higher-priority boundaries. Prefer a currently usable native AgentKit Engineer implementation to portable `ak-*` fallback; do not mix both in one task. Never treat role definitions as evidence that subagent execution has occurred.
+Respect existing project CLAUDE.md and higher-priority boundaries. Choose specialist methods through ANGENT's `hub/registry.json` and `hub/routing.md`, not directly as peer supervisors. Engineer's native and fallback implementations are mutually exclusive for a task; a role definition does not establish live delegation.

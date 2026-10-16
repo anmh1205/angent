@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build isolated ANGENT v1.5 packages from one tracked Core/Engineer source.
+"""Build isolated ANGENT 2.0 packages from registered Core/Kit sources.
 
 Never edit generated package files: they are deterministic projections. The
 legacy scripts/package_unified.py remains the OpenAI compatibility builder.
@@ -16,7 +16,7 @@ import sys
 import tempfile
 import zipfile
 
-from package_unified import collect_entries, gateway_entries, PackagingError, FIXED_TIMESTAMP, EXPECTED_DISCOVERABLE, EXPECTED_OPENAI_DISCOVERABLE, EXPECTED_ENGINEER, FRONTEND_NAMES, SUPPRESSED_PUBLIC_ENGINEER
+from package_unified import collect_entries, gateway_entries, PackagingError, FIXED_TIMESTAMP, EXPECTED_CORE, EXPECTED_ENGINEER, SUPPRESSED_PUBLIC_ENGINEER
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = ("local-agent", "gemini-web", "gemini-skills", "gemini-extension", "claude-code", "openai-plugin")
@@ -82,8 +82,7 @@ No hooks or ambient auto-activation are implied by installing Skills alone.
 
 Use this assembled plugin root (or its ZIP release) in the supported
 ChatGPT/Codex plugin installation flow. There is exactly ONE publicly
-discoverable Skill: `skills/angent/SKILL.md`. Core specialists, the
-portable Engineer fallback and ANGENT Frontend visual methods are included
+discoverable Skill: `skills/angent/SKILL.md`. Core specialists and registered Kit Adapter methods are included
 under `skills/angent/references/catalog/` for ANGENT to select. They are
 not independently discoverable plugin Skills. Extension source and Engineer
 role definitions remain available under `extensions/`.
@@ -103,7 +102,7 @@ def _manifest(version: str, platform: str) -> bytes:
     if platform == "gemini":
         manifest = {
             "name": "angent", "version": version,
-            "description": "ANGENT cognitive layer with portable Engineer Skills",
+            "description": "ANGENT Core and extensible Kit Adapters through Hub",
             "contextFileName": "GEMINI.md",
         }
     else:
@@ -150,6 +149,7 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
     if primary["name"] != "angent" or version != secondary["version"]:
         raise PackagingError("OpenAI source manifests disagree")
     template, destination = TEMPLATES[package]
+    registry = json.loads(source["hub/registry.json"])
     projection = gateway_entries(source) if package == "openai-plugin" else source
     files: dict[str, bytes] = {}
     skills: set[str] = set()
@@ -160,9 +160,12 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
             if re.fullmatch(r"skills/[^/]+/SKILL\.md", path):
                 skills.add(path.split("/")[1])
         elif path.startswith("extensions/"):
-            target = path  # portable relative support and selector paths survive
-            if re.fullmatch(r"extensions/angent-engineer/agents/[^/]+\.md", path) and not path.endswith("/README.md"):
-                roles.add(PurePosixPath(path).stem)
+            target = path  # maintained Kit source and adapter contracts
+            for ext in registry["extensions"]:
+                if path in {f"extensions/{ext['id']}/agents/{name}.md" for name in ext["roles"]}:
+                    roles.add(ext["id"] + ":" + PurePosixPath(path).stem)
+        elif path.startswith("hub/"):
+            target = path  # generated registry plus Hub contracts
         elif package == "openai-plugin" and (path in ("plugin.json", ".codex-plugin/plugin.json") or path.startswith("assets/")):
             target = path
         else:
@@ -170,8 +173,9 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
         if target in files:
             raise PackagingError(f"Collision: {target}")
         files[target] = content
-    required = EXPECTED_OPENAI_DISCOVERABLE if package == "openai-plugin" else EXPECTED_DISCOVERABLE
-    if len(skills) != required or len(roles) != 16 or SUPPRESSED_PUBLIC_ENGINEER & skills:
+    required = 1 if package == "openai-plugin" else EXPECTED_CORE + len(registry["published_skills"])
+    expected_roles = sum(len(ext["roles"]) for ext in registry["extensions"])
+    if len(skills) != required or len(roles) != expected_roles or SUPPRESSED_PUBLIC_ENGINEER & skills:
         raise PackagingError(f"Incomplete ANGENT catalog: {len(skills)} Skills, {len(roles)} roles")
     if package == "openai-plugin" and skills != {"angent"}:
         raise PackagingError("OpenAI must expose only ANGENT gateway")
@@ -181,9 +185,21 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
     if package == "claude-code":
         files[".claude-plugin/plugin.json"] = _manifest(version, "claude")
     if package in ("gemini-extension", "claude-code"):
-        for name in sorted(roles):
-            path = f"extensions/angent-engineer/agents/{name}.md"
-            files[f"agents/{name}.md"] = _agent_projection(path, source[path])
+        for ext in registry["extensions"]:
+            for name in ext["roles"]:
+                path = f"extensions/{ext['id']}/agents/{name}.md"
+                # Preserve existing Engineer role names, namespace every later kit.
+                public_name = name if ext["id"] == "angent-engineer" else ext["id"] + "-" + name
+                target = f"agents/{public_name}.md"
+                if target in files:
+                    raise PackagingError(f"Role collision: {target}")
+                # Native metadata must match its projected filename.
+                projected = _agent_projection(path, source[path])
+                if public_name != name:
+                    projected = projected.replace(
+                        ("name: " + name + "\n").encode(),
+                        ("name: " + public_name + "\n").encode(), 1)
+                files[target] = projected
     if package == "openai-plugin":
         # No nested installable Engineer plugin. Keep original packaged source.
         assert "extensions/angent-engineer/plugin.json" not in files
@@ -194,32 +210,24 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
 
 
 def _assemble_gemini_web(source: dict[str, bytes]) -> dict[str, bytes]:
-    """Gemini Apps Web imports one root Skill, with reference texts inside it."""
+    """One browser Skill with a registry-guided, non-discoverable method library."""
+    registry = json.loads(source["hub/registry.json"])
     original = source["skills/angent/SKILL.md"].decode("utf-8")
     header = re.match(r"\A(---\n.*?\n---\n)", original, re.S)
     if header is None or re.search(r"^name:\s*angent\s*$", header.group(1), re.M) is None:
-        raise PackagingError("Gemini Web requires ANGENT metadata in the root SKILL.md")
+        raise PackagingError("Gemini Web requires ANGENT root metadata")
     intro = """
-## Gemini Apps Web: one imported Skill
+## Gemini Apps Web: ANGENT Hub
 
-Gemini Apps imports one root ANGENT Skill. Its Core and task-specialist
-reference texts under references/catalog are not independently discoverable.
-Generic explanation remains owned by ANGENT Authoring and Reasoning.
-The retired `ak-explain` identity remains only in the Engineer source
-catalog outside this browser package. Load selected sections according to
-the task using references/INDEX.md. Sixteen Engineer role definitions are
-reference instructions, not running subagents.
-
-Apply the complete ANGENT cognitive standard within the current conversation.
-Use only tools provided by Gemini in this session. Do not claim that local
-scripts, AgentKit CLI, durable files, delegation or network actions are
-available just because their documentation is packaged here. Gemini Apps
-does not support internet-dependent Skill scripts. The user must activate
-ANGENT through Gemini Apps Skills when relevant; uploading the ZIP does not
-guarantee automatic application to every conversation.
+This upload is one ANGENT Skill. First apply the full Core cognitive standard;
+when specialist methods add value, consult references/hub/routing.md,
+references/hub/registry.json and then the chosen reference method under
+references/catalog/. No nested method is independently discoverable.
+Neither roles nor bundled CLI/scripts imply running agents, native AgentKit,
+filesystem persistence or host tools. Host activation requires actual proof.
 
 """
-    files: dict[str, bytes] = {"SKILL.md": (header.group(1) + intro + original[header.end():]).encode("utf-8")}
+    files: dict[str, bytes] = {"SKILL.md": (header.group(1) + intro + original[header.end():]).encode()}
     names: set[str] = set()
     for path, payload in sorted(source.items()):
         if path.startswith("skills/"):
@@ -231,39 +239,36 @@ guarantee automatic application to every conversation.
                 names.add(relative.split("/")[0])
             if path.startswith("skills/angent/references/"):
                 files["references/" + path[len("skills/angent/references/"):]] = payload
-        elif re.fullmatch(r"extensions/angent-engineer/agents/[a-z0-9-]+\.md", path):
-            files["references/roles/" + PurePosixPath(path).name] = payload
-    core = sorted(n for n in names if n.startswith("angent") and n not in FRONTEND_NAMES)
-    engineer = sorted(n for n in names if n.startswith("ak-"))
-    frontend = sorted(names & FRONTEND_NAMES)
-    roles = sorted(p for p in files if re.fullmatch(r"references/roles/[a-z0-9-]+\.md", p))
-    if len(core) != 12 or len(engineer) != EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER) or frontend != sorted(FRONTEND_NAMES) or len(roles) != 16:
+        elif path.startswith("hub/"):
+            files["references/" + path] = payload
+    for ext in registry["extensions"]:
+        for name in ext["roles"]:
+            path = f"extensions/{ext['id']}/agents/{name}.md"
+            files[f"references/roles/{ext['id']}/{name}.md"] = source[path]
 
-        raise PackagingError(f"Gemini Web library incomplete: {len(core)} Core, {len(engineer)} Engineer, {len(roles)} roles")
-    index = ["# ANGENT reference library", "",
-             "This is ONE imported Skill. Listed files are supporting reference",
-             "instructions, not independently activated Gemini Web Skills.", "",
-             "## Core", ""]
+    ext_names = set(registry["published_skills"])
+    core = sorted(names - ext_names)
+    if len(core) != EXPECTED_CORE or set(names) != set(core) | ext_names:
+        raise PackagingError("Gemini Web capability catalogue mismatch")
+    index = ["# ANGENT Hub reference library", "",
+             "One imported Skill, all other methods are internal references.",
+             "Read [Hub routing](hub/routing.md) and [registry](hub/registry.json).",
+             "", "## Core", ""]
     index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in core]
-    index += ["", "## Frontend visual direction", ""]
-    index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in frontend]
-    index += ["", "## Engineer", ""]
-    index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in engineer]
-    index += ["", "## Roles", ""]
-    index += [f"- [{PurePosixPath(p).stem}]({p.removeprefix('references/')})" for p in roles]
-    index += ["", "Detailed references are beside the relevant skill files.", ""]
-    files["references/INDEX.md"] = "\n".join(index).encode("utf-8")
+    for ext in registry["extensions"]:
+        index += ["", f"## {ext['name']} ({ext['id']})", ""]
+        index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in ext["skills"]]
+        if ext["roles"]:
+            index += ["", "### Role references (not live workers)", ""]
+            index += [f"- [{n}](roles/{ext['id']}/{n}.md)" for n in ext["roles"]]
+    files["references/INDEX.md"] = ("\n".join(index) + "\n").encode()
     files["INSTALL.md"] = (
-        "# Gemini Web upload instructions\n\n"
-        "In gemini.google.com open Customize > Skills > Upload, and select\n"
-        "angent-gemini-web.zip directly. Review the new ANGENT Skill and click\n"
-        "Create. The ZIP has a root SKILL.md and reference material in\n"
-        "references/. This does NOT load separate Skills. To use ANGENT,\n"
-        "select it from Gemini Apps Skills in a conversation. Do not upload\n"
-        "angent-gemini-skills.zip; that is the Gemini CLI workspace package.\n"
-        "Official guide: https://support.google.com/gemini/answer/17094296\n"
-    ).encode("utf-8")
-    if sum(len(value) for value in files.values()) > 100_000_000:
+        "# Gemini Web upload\n\n"
+        "Upload angent-gemini-web.zip via Gemini Apps Skills. "
+        "Use only the ANGENT root Skill; consult its Hub registry for internal specialists. "
+        "No external tools, agent runtime or automatic invocation is implied by upload.\n"
+    ).encode()
+    if sum(len(x) for x in files.values()) > 100_000_000:
         raise PackagingError("Gemini Apps upload exceeds 100 MB")
     return files
 
@@ -305,9 +310,13 @@ def build(repo: Path, package_root: Path, dist_root: Path, selected: tuple[str, 
             _write_directory(directory, files)
             zipname = f"angent-{package}.zip"
             digest = _zip(files, tmp / "dist" / zipname)
+            reg = json.loads(source["hub/registry.json"])
             results[package] = {"files": len(files),
-                                "skills": 1 if package in ("gemini-web", "openai-plugin") else EXPECTED_DISCOVERABLE,
-                                "engineer_source_skills": EXPECTED_ENGINEER, "roles": 16, "sha256": digest}
+                                "skills": 1 if package in ("gemini-web", "openai-plugin") else EXPECTED_CORE + len(reg["published_skills"]),
+                                "extensions": [x["id"] for x in reg["extensions"]],
+                                "capabilities": len(reg["capabilities"]),
+                                "roles": sum(len(x["roles"]) for x in reg["extensions"]),
+                                "sha256": digest}
         package_root.mkdir(parents=True, exist_ok=True)
         dist_root.mkdir(parents=True, exist_ok=True)
         for package in selected:

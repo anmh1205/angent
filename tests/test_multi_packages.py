@@ -18,6 +18,9 @@ class MultiPackageTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.source = legacy.collect_entries(ROOT)
+        cls.registry = json.loads(cls.source['hub/registry.json'])
+        cls.expected_skills = 12 + len(cls.registry['published_skills'])
+        cls.expected_roles = sum(len(x['roles']) for x in cls.registry['extensions'])
 
     def test_five_complete_independent_packages(self):
         for package in (p for p in packs.PACKAGES if p != 'gemini-web'):
@@ -25,7 +28,7 @@ class MultiPackageTests(unittest.TestCase):
                 files = packs.assemble(ROOT, package, self.source)
                 prefix = packs.SKILL_PREFIX[package]
                 paths = [p for p in files if p.startswith(prefix) and p.endswith("/SKILL.md") and p.count("/") == prefix.count("/") + 1]
-                expected = 1 if package == "openai-plugin" else 115
+                expected = 1 if package == "openai-plugin" else self.expected_skills
                 self.assertEqual(len(paths), expected)
                 self.assertNotIn(prefix + "ak-explain/SKILL.md", files)
                 self.assertIn("extensions/angent-engineer/skills/ak-explain/SKILL.md", files)
@@ -49,7 +52,7 @@ class MultiPackageTests(unittest.TestCase):
                 self.assertIn("extensions/angent-engineer/scripts/select_engineer.py", files)
                 self.assertIn("INSTALL.md", files)
                 if package in ("gemini-extension", "claude-code"):
-                    self.assertEqual(len([p for p in files if p.startswith("agents/") and p.endswith(".md")]), 16)
+                    self.assertEqual(len([p for p in files if p.startswith("agents/") and p.endswith(".md")]), self.expected_roles)
                     self.assertIn(b"description: ", files["agents/code-reviewer.md"])
                     self.assertNotIn(b"memory_scope:", files["agents/code-reviewer.md"].split(b"---", 2)[1])
                 else:
@@ -108,7 +111,7 @@ class MultiPackageTests(unittest.TestCase):
                         if path == "skills/angent/SKILL.md":
                             self.assertTrue(files[path].startswith(data))
                         elif path == "skills/angent/references/INDEX.md":
-                            self.assertIn(b"## Engineer specialist methods", files[path])
+                            self.assertIn(b"## ANGENT Engineer", files[path])
                         elif path.startswith("skills/angent/"):
                             self.assertEqual(files[path], data, path)
                         else:
@@ -125,11 +128,11 @@ class MultiPackageTests(unittest.TestCase):
         self.assertIn("references/INDEX.md", files)
         self.assertEqual(files["references/catalog/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
         self.assertEqual(files["references/catalog/ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
-        self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), 115)
+        self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), self.expected_skills)
         self.assertIn("references/catalog/angent-frontend-design/SKILL.md", files)
         self.assertNotIn("references/catalog/ak-explain/SKILL.md", files)
         self.assertNotIn(b"ak-explain", files["references/INDEX.md"])
-        self.assertEqual(len([p for p in files if p.startswith("references/roles/") and p.endswith(".md")]), 16)
+        self.assertEqual(len([p for p in files if p.startswith("references/roles/") and p.endswith(".md")]), self.expected_roles)
         self.assertNotIn(".gemini/skills/angent/SKILL.md", files)
         self.assertNotIn("plugin.json", files)
         self.assertNotIn("gemini-extension.json", files)

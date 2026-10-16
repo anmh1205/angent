@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "angent-frontend",
+  "name": "ANGENT Frontend",
+  "kind": "direct",
+  "authority": "specialist",
+  "description": "Visual art direction for frontend composition, typography, imagery and rendered verification.",
+  "source": {
+    "origin": "https://github.com/claudekit/frontend-design-pro-demo",
+    "type": "original-adaptation",
+    "license": "Maintained ANGENT method; source inspiration attribution in README"
+  },
+  "skills": {
+    "directory": "skills",
+    "expose": "all",
+    "exclude": [],
+    "expected_source_count": 1
+  },
+  "roles": {
+    "directory": "agents",
+    "expected_count": 0
+  },
+  "runtime": {
+    "native": null,
+    "fallback": "portable",
+    "selection": "available",
+    "exclusive": false
+  },
+  "capabilities": [
+    {
+      "id": "frontend.visual-direction",
+      "entry": "angent-frontend-design",
+      "when": "Original frontend visual aesthetic and coherent art direction"
+    }
+  ]
+}
