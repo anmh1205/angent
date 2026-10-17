@@ -74,10 +74,14 @@ export default function ScreenPage() {
   }
 
   if (!screen) return <main><h1>Unknown prototype screen</h1><button onClick={reset}>Reset demo</button></main>;
-  const submit = screen.controls.find(c => c.type === 'submit');
+  const hasSubmit = screen.controls.some(c => c.type === 'submit');
 
   function onSubmit(event) {
     event.preventDefault();
+    // The clicked submitter determines the declared outcome. Selecting the
+    // first submit in a form would silently execute the wrong business path.
+    const submitId = event.nativeEvent.submitter?.getAttribute('data-submit-id');
+    const submit = screen.controls.find(c => c.type === 'submit' && c.id === submitId);
     if (!hydrated || !submit || !event.currentTarget.reportValidity()) return;
     const result = submit.outcomes[scenario];
     if (!result) return;
@@ -106,7 +110,7 @@ export default function ScreenPage() {
                data-angent-hydrated={hydrated ? "true" : "false"}>
         <h2 tabIndex={-1} ref={heading}>{screen.title}</h2>
         <p className="description">{screen.description}</p>
-        {submit && (
+        {hasSubmit && (
           <div className="simulation">
             <label htmlFor="mock-scenario">Mock response</label>
             <select id="mock-scenario" disabled={!hydrated} value={scenario}
@@ -126,7 +130,8 @@ export default function ScreenPage() {
                              onClick={() => navigate(control.action.target)}>{control.label}</button>;
             }
             if (control.type === 'submit') {
-              return <button key={control.id} type="submit" disabled={!hydrated}>{control.label}</button>;
+              return <button key={control.id} type="submit" data-submit-id={control.id}
+                             disabled={!hydrated}>{control.label}</button>;
             }
             if (control.type === 'checkbox') {
               return <div key={control.id} className="field">

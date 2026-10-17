@@ -38,6 +38,26 @@ class NextBAPrototypeTests(unittest.TestCase):
         self.assertIn("reportValidity()",app)
         self.assertIn('role="alert"',app)
 
+    def test_distinct_submit_buttons_preserve_distinct_scenario_contracts(self):
+        model=copy.deepcopy(self.model)
+        first=next(c for c in model["screens"][0]["controls"] if c["type"]=="submit")
+        other=copy.deepcopy(first)
+        other["id"]="sign-in-secondary"
+        other["label"]="Alternate path"
+        other["outcomes"]["success"]={"type":"navigate","target":"recovery"}
+        model["screens"][0]["controls"].append(other)
+        generated=generate_files(model)
+        app=generated["app/[screen]/page.jsx"]
+        model_data=json.loads(generated["model.json"])
+        controls=[c for c in model_data["screens"][0]["controls"] if c["type"]=="submit"]
+        self.assertEqual(len(controls),2)
+        self.assertNotEqual(controls[0]["outcomes"]["success"]["target"],
+                            controls[1]["outcomes"]["success"]["target"])
+        self.assertIn("event.nativeEvent.submitter",app)
+        self.assertIn("data-submit-id={control.id}",app)
+        self.assertIn("c.id === submitId",app)
+        self.assertNotIn("const submit = screen.controls.find(c => c.type === 'submit');",app)
+
     def test_script_does_not_interpolate_untrusted_model_into_js(self):
         model=copy.deepcopy(self.model)
         model["screens"][0]["title"]='</script><img onerror="alert(1)">'
