@@ -21,6 +21,22 @@ class KitPortabilityTests(unittest.TestCase):
                 self.assertRegex(text.lower(),r"privacy|external|remote")
         self.assertIn("build_d2.py",self.load("ba-activity-swimlane"))
 
+    def test_mermaid_skills_do_not_disable_existing_chat_renderers(self):
+        for name in ("ba-erd","ba-sequence","ba-state"):
+            with self.subTest(skill=name):
+                source=self.load(name)
+                self.assertNotRegex(source,r"(?i)Mermaid (?:cannot|does not) render in chat")
+                self.assertIn("Host-aware",source)
+                self.assertIn("render",source.lower())
+
+    def test_dbml_example_declares_all_referenced_tables(self):
+        source=self.load("ba-dbdiagram")
+        example=source.split("```dbml",1)[1].split("```",1)[0]
+        definitions=set(re.findall(r"(?m)^Table\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*\\{",example))
+        targets=set(re.findall(r"ref:\\s*[<>-]\\s*([A-Za-z_][A-Za-z0-9_]*)\\.",example))
+        self.assertTrue(definitions)
+        self.assertEqual(targets-definitions,set(),"Every DBML FK needs an actual table in the example")
+
     def test_provider_methods_do_not_persist_shadow_state(self):
         for name in ("ba-jira","ba-confluence"):
             with self.subTest(skill=name):
