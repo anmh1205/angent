@@ -123,6 +123,22 @@ jobs:
         run: |
           test -f "$RUNNER_TEMP/angent-ba-next-review/.next/BUILD_ID"
           python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"angent-ba-next-review"/"review-manifest.json"; m=json.loads(p.read_text()); assert m["simulation_only"] is True and m["execution_status"]=="not-run"'
+      - name: Configure isolated Python browser test environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright Chromium for real end-user checks
+        shell: bash
+        run: |
+          python3 -m pip install playwright==1.55.0
+          python3 -m playwright install --with-deps chromium
+      - name: Exercise actual Next server in mobile and desktop browser
+        shell: bash
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: |
+          python3 tests/integration/check_next_prototype_browser.py \
+            --project "$RUNNER_TEMP/angent-ba-next-review"
 
   reqwise-upstream-schema:
     name: Reqwise MIT six-shape upstream validator
