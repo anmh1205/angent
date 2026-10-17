@@ -92,6 +92,8 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_ba_*.py' -v
           python3 -m unittest discover -s tests -p 'test_figma_*.py' -v
           python3 -m unittest discover -s tests -p 'test_reqwise_*.py' -v
+          python3 -m unittest discover -s tests -p 'test_bpmn_*.py' -v
+          python3 -m unittest discover -s tests -p 'test_all_kit_evidence_inventory.py' -v
 
   ba-next-build:
     name: BA generated Next.js production build
