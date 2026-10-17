@@ -97,6 +97,68 @@ class ReqwisePayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"cardinality shorthand"):
             compile_model(wrong)
 
+    def test_six_oss_diagram_types_preserve_source_backed_annotations(self):
+        flow=json.loads((FIGMA/"examples/rental-fleet-userflow.json").read_text(encoding="utf8"))
+        flow["metadata"]["linkScreens"]=True
+        flow["nodes"][1].update({"detail":"Search and select a vehicle",
+                                 "slug":"vehicle-list","cls":"happy"})
+        out=compile_model(flow)["arguments"]["spec"]
+        self.assertTrue(out["options"]["linkScreens"])
+        self.assertEqual(out["nodes"][1]["slug"],"vehicle-list")
+        self.assertEqual(out["nodes"][1]["detail"],"Search and select a vehicle")
+        self.assertEqual(out["nodes"][1]["cls"],"happy")
+        activity=deepcopy(self.activity)
+        activity["nodes"][1].update({"detail":"Check access policy","cls":"decision"})
+        node=compile_model(activity)["arguments"]["spec"]["nodes"][1]
+        self.assertEqual(node["detail"],"Check access policy")
+        self.assertEqual(node["cls"],"decision")
+        state=json.loads((FIGMA/"examples/rental-fleet-state.json").read_text(encoding="utf8"))
+        state["nodes"][1].update({"entry":"initialize receiver",
+                                  "do":"read heartbeat","exit":"close connection"})
+        state["edges"][1].update({"action":"notify operator","kind":"return"})
+        compiled=compile_model(state)["arguments"]["spec"]
+        self.assertEqual(compiled["states"][1]["entry"],"initialize receiver")
+        self.assertEqual(compiled["transitions"][1]["action"],"notify operator")
+        self.assertEqual(compiled["transitions"][1]["kind"],"return")
+        seq=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
+        seq["nodes"][1]["detail"]="Authorization boundary"
+        seq["edges"][1]["note"]="Timeout must be handled separately"
+        compiled=compile_model(seq)["arguments"]["spec"]
+        self.assertEqual(compiled["participants"][1]["detail"],"Authorization boundary")
+        self.assertEqual(compiled["messages"][1]["note"],"Timeout must be handled separately")
+        site=json.loads((FIGMA/"examples/rental-fleet-sitemap.json").read_text(encoding="utf8"))
+        site["nodes"][1]["screenId"]=["fleet-overview","fleet-overview-empty"]
+        self.assertEqual(compile_model(site)["arguments"]["spec"]["pages"][1]["screenId"],
+                         ["fleet-overview","fleet-overview-empty"])
+        erd=json.loads((FIGMA/"examples/rental-fleet-erd.json").read_text(encoding="utf8"))
+        erd["nodes"][0].update({"detail":"Authoritative owner", "cls":"happy"})
+        entity=compile_model(erd)["arguments"]["spec"]["entities"][0]
+        self.assertEqual(entity["detail"],"Authoritative owner")
+        self.assertEqual(entity["cls"],"happy")
+
+    def test_diagram_annotations_reject_fake_provider_semantics(self):
+        model=json.loads((FIGMA/"examples/rental-fleet-userflow.json").read_text(encoding="utf8"))
+        for invalid in ("yes", 1, None):
+            with self.subTest(linkScreens=invalid):
+                bad=deepcopy(model)
+                bad["metadata"]["linkScreens"]=invalid
+                with self.assertRaisesRegex(ValueError,"linkScreens"):
+                    compile_model(bad)
+        for field,value in (("cls","unknown-theme"),("detail",[]),("slug",False)):
+            with self.subTest(field=field):
+                bad=deepcopy(model)
+                bad["nodes"][1][field]=value
+                with self.assertRaisesRegex(ValueError,"Model failed structural check"):
+                    compile_model(bad)
+        bad=deepcopy(model)
+        bad["edges"][2]["label"]="No"
+        with self.assertRaisesRegex(ValueError,"conflicting guard and label"):
+            compile_model(bad)
+        site=json.loads((FIGMA/"examples/rental-fleet-sitemap.json").read_text(encoding="utf8"))
+        site["nodes"][1]["screenId"]=["duplicate","duplicate"]
+        with self.assertRaisesRegex(ValueError,"invalid screenId"):
+            compile_model(site)
+
     def test_state_and_sequence_mapping(self):
         state = deepcopy(self.activity)
         state["type"] = "state"
