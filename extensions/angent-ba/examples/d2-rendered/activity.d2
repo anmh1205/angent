@@ -1,0 +1,25 @@
+# ANGENT BA D2 diagram: activity
+# Source is independent and proposed; SVG requires a separately checked D2 CLI.
+direction: right
+# Evidence IDs (existence only): BR-IVTS-01, FR-IVTS-01
+g_c8e5998f6a3955c2: "API" {
+  shape: rectangle
+}
+g_b977b950c1ae31e5: "Cloud" {
+  shape: rectangle
+}
+g_c8e5998f6a3955c2.n_cced28c6dc3f99c2: "Request status" {
+  shape: circle
+}
+g_c8e5998f6a3955c2.n_20f65c28671b4093: "Account owns vehicle?" {
+  shape: diamond
+}
+g_b977b950c1ae31e5.n_eabc01f12ec3e7cb: "Return status" {
+  shape: circle
+}
+g_b977b950c1ae31e5.n_62d6c2330036f64b: "Reject access" {
+  shape: circle
+}
+g_c8e5998f6a3955c2.n_cced28c6dc3f99c2 -> g_c8e5998f6a3955c2.n_20f65c28671b4093
+g_c8e5998f6a3955c2.n_20f65c28671b4093 -> g_b977b950c1ae31e5.n_eabc01f12ec3e7cb: "authorized"
+g_c8e5998f6a3955c2.n_20f65c28671b4093 -> g_b977b950c1ae31e5.n_62d6c2330036f64b: "not authorized"

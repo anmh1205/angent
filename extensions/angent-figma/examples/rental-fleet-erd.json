@@ -1,0 +1,66 @@
+{
+  "type": "erd",
+  "metadata": {
+    "title": "Fleet ownership and status entities",
+    "status": "synthetic-fixture"
+  },
+  "source_refs": [
+    "FR-IVTS-01"
+  ],
+  "nodes": [
+    {
+      "id": "owners",
+      "kind": "entity",
+      "label": "Owners",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "pk",
+          "required": true
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "vehicles",
+      "kind": "entity",
+      "label": "Vehicles",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "pk",
+          "required": true
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "key": "fk",
+          "required": true
+        },
+        {
+          "name": "current_status",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "owners",
+      "to": "vehicles",
+      "fromField": "id",
+      "toField": "owner_id",
+      "fromCard": "one",
+      "toCard": "zero-many",
+      "cardinality": "1:N",
+      "label": "owns"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "type": "activity",
+  "title": "Vehicle status ownership gate",
+  "direction": "right",
+  "nodes": [
+    {
+      "id": "start",
+      "kind": "start",
+      "label": "Request status",
+      "lane": "API"
+    },
+    {
+      "id": "check",
+      "kind": "decision",
+      "label": "Account owns vehicle?",
+      "lane": "API"
+    },
+    {
+      "id": "allowed",
+      "kind": "end",
+      "label": "Return status",
+      "lane": "Cloud"
+    },
+    {
+      "id": "denied",
+      "kind": "end",
+      "label": "Reject access",
+      "lane": "Cloud"
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "check"
+    },
+    {
+      "from": "check",
+      "to": "allowed",
+      "guard": "authorized"
+    },
+    {
+      "from": "check",
+      "to": "denied",
+      "guard": "not authorized"
+    }
+  ],
+  "source_refs": [
+    "FR-IVTS-01",
+    "BR-IVTS-01"
+  ]
+}

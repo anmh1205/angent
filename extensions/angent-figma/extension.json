@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "id": "angent-figma",
+  "name": "ANGENT Figma",
+  "kind": "bridged",
+  "authority": "specialist",
+  "description": "Domain diagram models, editable Figma construction, prototype and design system reviews through available runtime tools",
+  "source": {
+    "origin": "https://github.com/hoangpm96/reqwise-figma-mcp (MIT) and original ANGENT Figma work",
+    "type": "maintained-mit-adaptations-and-original",
+    "license": "MIT OSS specialist portions (THIRD_PARTY_NOTICES.md); Pro features independently specified, not implemented from proprietary source"
+  },
+  "skills": {
+    "directory": "skills",
+    "expose": "all",
+    "exclude": [],
+    "expected_source_count": 12
+  },
+  "roles": {
+    "directory": "agents",
+    "expected_count": 0
+  },
+  "runtime": {
+    "native": "available Figma MCP or Figma plugin capability",
+    "fallback": "portable",
+    "selection": "native-for-canvas-effects-only-when-live-and-authorized",
+    "exclusive": false
+  },
+  "capabilities": [
+    {
+      "id": "design.figma.usecase",
+      "entry": "figma-usecase",
+      "when": "Prepare source-linked UML use-case semantics; editable Figma canvas creation requires an actual authorized Pro/native Figma tool"
+    },
+    {
+      "id": "design.figma.userflow",
+      "entry": "figma-userflow",
+      "when": "Model navigable interaction across screens and errors"
+    },
+    {
+      "id": "design.figma.activity",
+      "entry": "figma-activity",
+      "when": "Diagram business activities with responsible owners"
+    },
+    {
+      "id": "design.figma.bpmn",
+      "entry": "figma-bpmn",
+      "when": "Prepare source-linked BPMN semantics; editable Figma BPMN rendering requires an actual authorized Pro/native Figma tool"
+    },
+    {
+      "id": "design.figma.sequence",
+      "entry": "figma-sequence",
+      "when": "Model synchronous and asynchronous cross-component messages"
+    },
+    {
+      "id": "design.figma.state",
+      "entry": "figma-state",
+      "when": "Define business object state transitions and guards"
+    },
+    {
+      "id": "design.figma.erd",
+      "entry": "figma-erd",
+      "when": "Visualize entities, keys and foreign-key relationships"
+    },
+    {
+      "id": "design.figma.journey",
+      "entry": "figma-journey",
+      "when": "Develop evidence-backed journey mapping; editable Figma journey creation requires an actual authorized Pro/native Figma tool"
+    },
+    {
+      "id": "design.figma.sitemap",
+      "entry": "figma-sitemap",
+      "when": "Show information architecture and navigational hierarchy"
+    },
+    {
+      "id": "design.figma.persona",
+      "entry": "figma-persona",
+      "when": "Document sourced personas without invention; editable Figma persona cards require an actual authorized Pro/native Figma tool"
+    },
+    {
+      "id": "design.figma.design-system",
+      "entry": "figma-design-system",
+      "when": "Specify reusable design foundations; native Figma variables/styles/components require an actual authorized provider"
+    },
+    {
+      "id": "design.figma.demo",
+      "entry": "figma-demo",
+      "when": "Plan a stakeholder prototype walkthrough; real Figma interactions and recording require an actually available native/Pro provider"
+    }
+  ]
+}

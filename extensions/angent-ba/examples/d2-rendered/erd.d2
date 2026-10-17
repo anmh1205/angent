@@ -1,0 +1,34 @@
+# ANGENT BA D2 diagram: erd
+# Source is independent and proposed; SVG requires a separately checked D2 CLI.
+direction: right
+n_bc62a3c14fec277e: "accounts" {
+  shape: sql_table
+  "id": "uuid" {
+    constraint: primary_key
+  }
+  "email": "varchar(255)" {
+    constraint: unique
+  }
+}
+n_c9b87872c13a05d3: "vehicles" {
+  shape: sql_table
+  "id": "uuid" {
+    constraint: primary_key
+  }
+  "owner_id": "uuid" {
+    constraint: foreign_key
+  }
+  "vin": "varchar(17)"
+}
+n_0903ec6ad6915b86: "faults" {
+  shape: sql_table
+  "id": "uuid" {
+    constraint: primary_key
+  }
+  "vehicle_id": "uuid" {
+    constraint: foreign_key
+  }
+  "dtc": "varchar(5)"
+}
+n_bc62a3c14fec277e."id" -> n_c9b87872c13a05d3."owner_id": "1:N"
+n_c9b87872c13a05d3."id" -> n_0903ec6ad6915b86."vehicle_id": "1:N"

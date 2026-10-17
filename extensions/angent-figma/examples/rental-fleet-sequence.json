@@ -1,0 +1,73 @@
+{
+  "type": "sequence",
+  "metadata": {
+    "title": "Fleet status authorization sequence",
+    "status": "synthetic-fixture"
+  },
+  "source_refs": [
+    "FR-IVTS-01",
+    "BR-IVTS-01"
+  ],
+  "nodes": [
+    {
+      "id": "operator",
+      "kind": "actor",
+      "label": "Fleet operator"
+    },
+    {
+      "id": "api",
+      "kind": "system",
+      "label": "Fleet API"
+    },
+    {
+      "id": "database",
+      "kind": "db",
+      "label": "Vehicle database"
+    }
+  ],
+  "edges": [
+    {
+      "from": "operator",
+      "to": "api",
+      "label": "GET /vehicles/{id}/status"
+    },
+    {
+      "from": "api",
+      "to": "database",
+      "label": "Check vehicle ownership"
+    },
+    {
+      "from": "database",
+      "to": "api",
+      "label": "Owner and vehicle status",
+      "kind": "return"
+    },
+    {
+      "from": "api",
+      "to": "operator",
+      "label": "200 vehicle status for authorized owner",
+      "kind": "return"
+    },
+    {
+      "from": "api",
+      "to": "operator",
+      "label": "403 denied for unauthorized viewer",
+      "kind": "return"
+    }
+  ],
+  "fragments": [
+    {
+      "kind": "alt",
+      "label": "Ownership check grants access",
+      "messages": [
+        "message-4"
+      ],
+      "else": {
+        "label": "Ownership check denies access",
+        "messages": [
+          "message-5"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "description": "Synthetic code witness for authorization requirement; inspect semantic logic independently",
+  "witnesses": [
+    {
+      "requirement_id": "FR-IVTS-01",
+      "path": "extensions/angent-ba/examples/code-evidence/fleet_access.py",
+      "line_start": 3,
+      "line_end": 5,
+      "expected_excerpt": "return bool(request_account) and request_account == registered_owner"
+    }
+  ]
+}

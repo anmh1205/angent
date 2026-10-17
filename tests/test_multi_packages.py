@@ -58,6 +58,38 @@ class MultiPackageTests(unittest.TestCase):
                 else:
                     self.assertFalse(any(p.startswith("agents/") for p in files))
 
+    def test_specialist_execution_scripts_are_physically_bundled(self):
+        scripts = (
+            "extensions/angent-ba/scripts/build_d2.py",
+            "extensions/angent-ba/scripts/build_bpmn.py",
+            "extensions/angent-ba/scripts/build_bruno.py",
+            "extensions/angent-ba/scripts/build_wireframe.py",
+            "extensions/angent-ba/scripts/build_playwright.py",
+            "extensions/angent-ba/scripts/build_next_prototype.py",
+            "extensions/angent-ba/scripts/build_figma_screens.py",
+            "extensions/angent-ba/scripts/build_figma_native.py",
+            "extensions/angent-ba/scripts/audit_api_field_mapping.py",
+            "extensions/angent-ba/scripts/verify_code_witness.py",
+            "extensions/angent-ba/templates/figma-native-plugin.js",
+            "extensions/angent-ba/scripts/compare_artifact_revisions.py",
+            "extensions/angent-ba/scripts/build_export.py",
+            "extensions/angent-ba/scripts/render_reverse_preview.py",
+            "extensions/angent-ba/scripts/audit_api_contract.py",
+            "extensions/angent-ba/scripts/validate_artifacts.py",
+            "extensions/angent-figma/scripts/to_reqwise_payload.py",
+        )
+        for name in ("local-agent", "claude-code", "gemini-extension", "gemini-skills", "openai-plugin"):
+            with self.subTest(package=name):
+                content=packs.assemble(ROOT,name,self.source)
+                for path in scripts:
+                    self.assertIn(path,content)
+                    self.assertEqual(content[path],self.source[path])
+        # Browser-only Gemini package has the reference library, not a
+        # filesystem/CLI runner: do not report native script execution there.
+        browser=packs.assemble(ROOT,"gemini-web",self.source)
+        for path in scripts:
+            self.assertNotIn(path,browser)
+
     def test_platform_bootstrap_and_manifests(self):
         local = packs.assemble(ROOT, "local-agent", self.source)
         self.assertIn("AGENTS.md", local)
@@ -126,6 +158,10 @@ class MultiPackageTests(unittest.TestCase):
         files = packs.assemble(ROOT, "gemini-web", self.source)
         self.assertTrue(files["SKILL.md"].startswith(b"---\nname: angent\n"))
         self.assertIn("references/INDEX.md", files)
+        for ext in ("angent-ba", "angent-figma"):
+            notice = f"references/licenses/{ext}.md"
+            self.assertIn(notice, files)
+            self.assertIn(b"MIT License", files[notice])
         self.assertEqual(files["references/catalog/angent/SKILL.md"], self.source["skills/angent/SKILL.md"])
         self.assertEqual(files["references/catalog/ak-agentkit/SKILL.md"], self.source["skills/ak-agentkit/SKILL.md"])
         self.assertEqual(len([p for p in files if p.startswith("references/catalog/") and p.endswith("/SKILL.md")]), self.expected_skills)

@@ -212,8 +212,8 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
 def _assemble_gemini_web(source: dict[str, bytes]) -> dict[str, bytes]:
     """One browser Skill with a registry-guided, non-discoverable method library."""
     registry = json.loads(source["hub/registry.json"])
-    original = source["skills/angent/SKILL.md"].decode("utf-8")
-    header = re.match(r"\A(---\n.*?\n---\n)", original, re.S)
+    original = source["skills/angent/SKILL.md"].decode("utf-8").replace("\r\n", "\n")
+    header = re.match(r"\A(---\r?\n.*?\r?\n---\r?\n)", original, re.S)
     if header is None or re.search(r"^name:\s*angent\s*$", header.group(1), re.M) is None:
         raise PackagingError("Gemini Web requires ANGENT root metadata")
     intro = """
@@ -242,6 +242,9 @@ filesystem persistence or host tools. Host activation requires actual proof.
         elif path.startswith("hub/"):
             files["references/" + path] = payload
     for ext in registry["extensions"]:
+        notice = f"extensions/{ext['id']}/THIRD_PARTY_NOTICES.md"
+        if notice in source:
+            files[f"references/licenses/{ext['id']}.md"] = source[notice]
         for name in ext["roles"]:
             path = f"extensions/{ext['id']}/agents/{name}.md"
             files[f"references/roles/{ext['id']}/{name}.md"] = source[path]
@@ -258,6 +261,8 @@ filesystem persistence or host tools. Host activation requires actual proof.
     for ext in registry["extensions"]:
         index += ["", f"## {ext['name']} ({ext['id']})", ""]
         index += [f"- [{n}](catalog/{n}/SKILL.md)" for n in ext["skills"]]
+        if f"references/licenses/{ext['id']}.md" in files:
+            index += [f"- [Third-party notice](licenses/{ext['id']}.md)"]
         if ext["roles"]:
             index += ["", "### Role references (not live workers)", ""]
             index += [f"- [{n}](roles/{ext['id']}/{n}.md)" for n in ext["roles"]]

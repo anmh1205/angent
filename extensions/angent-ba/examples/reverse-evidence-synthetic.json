@@ -1,0 +1,48 @@
+{
+  "sources": [
+    {
+      "id": "SRC-DOC",
+      "uri": "https://example.test/archived/system-spec",
+      "revision": "synthetic-v1"
+    },
+    {
+      "id": "SRC-CODE",
+      "uri": "https://example.test/repo/commit/abcdef",
+      "revision": "abcdef"
+    }
+  ],
+  "claims": [
+    {
+      "id": "RCL-001",
+      "statement": "Demo rejects status reads without owner authorization",
+      "confidence": "SOURCE-OBSERVED",
+      "source_refs": [
+        "SRC-CODE"
+      ],
+      "next_verification": "Inspect alternate access paths and run staging authorization tests",
+      "impact": "Possible data disclosure if policy is bypassed"
+    },
+    {
+      "id": "RCL-002",
+      "statement": "Demo might cache latest status during telemetry outages",
+      "confidence": "INFERRED",
+      "source_refs": [
+        "SRC-CODE"
+      ],
+      "next_verification": "Inspect persistence and timeout paths",
+      "impact": "May expose stale vehicle information"
+    },
+    {
+      "id": "RCL-003",
+      "statement": "Documentation and code disagree about access-denial status",
+      "confidence": "CONTRADICTORY",
+      "source_refs": [
+        "SRC-DOC",
+        "SRC-CODE"
+      ],
+      "conflicting_claim": "Archived document says 404, current code path emits 403",
+      "next_verification": "Ask product owner which disclosure policy is authoritative",
+      "impact": "Mismatched client error handling"
+    }
+  ]
+}

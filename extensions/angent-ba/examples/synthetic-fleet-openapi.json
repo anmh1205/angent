@@ -1,0 +1,134 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Synthetic vehicle status mock contract",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/vehicles/{vehicleId}/status": {
+      "get": {
+        "summary": "Synthetic fleet status outcomes",
+        "responses": {
+          "200": {
+            "description": "Available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vehicleId": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "online",
+                        "offline"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "vehicleId",
+                    "state"
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "const": "ACCESS_DENIED"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "const": "TELEMETRY_UNAVAILABLE"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/diagnostics/ack": {
+      "post": {
+        "summary": "Synthetic DTC acknowledgement",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "operator": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "operator"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Acknowledged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vehicleId": {
+                      "type": "string"
+                    },
+                    "ack": {
+                      "type": "string",
+                      "const": "recorded"
+                    }
+                  },
+                  "required": [
+                    "vehicleId",
+                    "ack"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-angent-mock-only": true
+}

@@ -1,0 +1,187 @@
+#!/usr/bin/env python3
+"""Export a reviewed, explicit set of BA Markdown documents to MD/HTML/DOCX/PDF.
+
+No implicit vault scan, no external image/font downloads, no fallback masquerading
+as an output of a different type. PDF may require separate TeX installation.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import html
+import json
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import tempfile
+from zipfile import ZipFile,is_zipfile
+
+PATHNAME=re.compile(r"^[A-Za-z0-9_./-]+\.md$")
+FORMATS={"md":".md","html":".html","docx":".docx","pdf":".pdf"}
+
+
+def gather(root:Path,paths:list[str],title:str)->tuple[str,list[dict]]:
+    root=root.resolve()
+    if not isinstance(title,str) or not title.strip() or len(title)>160 or "\n" in title:
+        raise ValueError("Invalid package title")
+    if not paths or len(paths)>80 or len(set(paths))!=len(paths):
+        raise ValueError("Provide 1–80 explicit, nonduplicated Markdown source files")
+    files=[]
+    total=0
+    for raw in paths:
+        if not isinstance(raw,str) or not PATHNAME.fullmatch(raw) or raw.startswith(("/", "./")):
+            raise ValueError("Invalid Markdown source path: "+str(raw))
+        target=(root/raw).resolve()
+        if not target.is_relative_to(root) or not target.is_file():
+            raise ValueError("Source does not exist or escapes root: "+raw)
+        body=target.read_text(encoding="utf8")
+        total+=len(body.encode("utf8"))
+        if total>3_000_000:
+            raise ValueError("Output source exceeds 3MB safety bound")
+        files.append({"path":raw,"sha256":hashlib.sha256(body.encode("utf8")).hexdigest(),
+                      "body":body.strip()})
+    lines=["# "+title.strip(),"","## Contents and source revisions",""]
+    for index,item in enumerate(files,1):
+        lines.append(f"{index}. {item['path']} (SHA-256 {item['sha256'][:16]})")
+    lines.extend(["","---",""])
+    for index,item in enumerate(files,1):
+        lines.extend([f"## Document {index}: {item['path']}","",item["body"],"","---",""])
+    manifest=[{"path":x["path"],"sha256":x["sha256"]} for x in files]
+    return "\n".join(lines),manifest
+
+
+def _pandoc(command:str,markdown:str,fmt:str,title:str)->bytes:
+    cli=shutil.which(command)
+    if cli is None:
+        raise ValueError("Pandoc not installed; cannot produce "+fmt.upper())
+    options=[cli,"--sandbox","--from=markdown-raw_html-raw_tex","--standalone",
+             "--metadata=title:"+title]
+    if fmt=="html":
+        args=options+["--to=html5"]
+        result=subprocess.run(args,input=markdown,text=True,capture_output=True,encoding="utf-8",errors="strict",timeout=120)
+        if result.returncode:
+            raise ValueError("Pandoc HTML failed: "+result.stderr[-1500:])
+        output=result.stdout
+        # No active resources or script execution in the stakeholder preview.
+        csp="default-src 'none'; style-src 'unsafe-inline'; img-src 'none'; font-src 'none'; form-action 'none'; base-uri 'none'"
+        meta='<meta http-equiv="Content-Security-Policy" content="'+html.escape(csp,quote=True)+'">'
+        if "</head>" not in output.lower():
+            raise ValueError("Pandoc output has no HTML head")
+        output=output.replace("</head>",meta+"</head>",1)
+        if re.search(r"<\s*script\b",output,re.I):
+            raise ValueError("HTML export contains script; refusing unsafe output")
+        return output.encode("utf8")
+    with tempfile.TemporaryDirectory() as tmp:
+        target=Path(tmp)/("package."+fmt)
+        args=options+["--to="+fmt,"--output="+str(target)]
+        result=subprocess.run(args,input=markdown,text=True,capture_output=True,encoding="utf-8",errors="strict",timeout=180)
+        if result.returncode or not target.is_file():
+            raise ValueError("Pandoc "+fmt.upper()+" failed; check engine: "+result.stderr[-1700:])
+        contents=target.read_bytes()
+        if fmt=="pdf" and not contents.startswith(b"%PDF"):
+            raise ValueError("Output is not a PDF")
+        if fmt=="docx":
+            if not is_zipfile(target):
+                raise ValueError("Output is not an OOXML Word archive")
+            with ZipFile(target) as archive:
+                if "word/document.xml" not in archive.namelist():
+                    raise ValueError("DOCX lacks document.xml")
+        return contents
+
+
+
+def _chromium_pdf(document_html: bytes, chrome: str | None = None) -> bytes:
+    """Print sanitized Pandoc HTML with real isolated headless Chromium."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError as exc:
+        raise ValueError("Python Playwright is required for Chromium PDF export") from exc
+    with sync_playwright() as runtime:
+        options={"headless":True}
+        if chrome:
+            if not Path(chrome).is_file():
+                raise ValueError("Supplied Chromium executable is missing")
+            options["executable_path"]=chrome
+        try:
+            browser=runtime.chromium.launch(**options)
+        except Exception as exc:
+            raise ValueError("Actual Chromium PDF renderer unavailable: "+str(exc)[:350]) from exc
+        try:
+            page=browser.new_page(java_script_enabled=False)
+            blocked=[]
+            def block(route):
+                blocked.append(route.request.url)
+                route.abort()
+            page.route("http://**/*",block)
+            page.route("https://**/*",block)
+            page.set_content(document_html.decode("utf8"),wait_until="domcontentloaded")
+            if not page.locator("body").inner_text().strip():
+                raise ValueError("Chromium print document is blank")
+            pdf=page.pdf(format="A4",print_background=True,
+                         margin={"top":"18mm","bottom":"18mm",
+                                 "left":"18mm","right":"18mm"})
+            if blocked:
+                raise ValueError("Blocked unauthorized HTTP resources: "+str(len(blocked)))
+        finally:
+            browser.close()
+    if not pdf.startswith(b"%PDF-") or b"%%EOF" not in pdf[-1024:] or len(pdf)<1500:
+        raise ValueError("Chromium did not generate a valid PDF structure")
+    return pdf
+
+
+def export(root:Path,paths:list[str],title:str,fmt:str,pandoc:str="pandoc",
+           pdf_engine:str="pandoc",chrome:str|None=None)->tuple[bytes,list[dict]]:
+    if fmt not in FORMATS:raise ValueError("Unsupported export format")
+    if pdf_engine not in ("pandoc","chromium"):
+        raise ValueError("Unsupported PDF engine")
+    if fmt!="pdf" and pdf_engine!="pandoc":
+        raise ValueError("PDF engine option is only valid for PDF output")
+    markdown,manifest=gather(root,paths,title)
+    if fmt=="md":
+        payload=markdown.encode("utf8")
+    else:
+        # Pandoc standalone metadata supplies the visible document title.
+        # Drop the redundant Markdown H1 to avoid duplicate screen-reader headings.
+        render_body=markdown.split("\n\n",1)[1]
+        if fmt=="pdf" and pdf_engine=="chromium":
+            payload=_chromium_pdf(_pandoc(pandoc,render_body,"html",title),chrome)
+        else:
+            payload=_pandoc(pandoc,render_body,fmt,title)
+    if len(payload)<100:
+        raise ValueError("Generated output is unexpectedly empty")
+    return payload,manifest
+
+
+def main()->int:
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("docs",nargs="+",help="Explicit source paths within --root")
+    parser.add_argument("--root",required=True,type=Path)
+    parser.add_argument("--output",required=True,type=Path)
+    parser.add_argument("--format",required=True,choices=sorted(FORMATS))
+    parser.add_argument("--title",required=True)
+    parser.add_argument("--pandoc",default="pandoc")
+    parser.add_argument("--pdf-engine",choices=("pandoc","chromium"),default="pandoc")
+    parser.add_argument("--chrome",help="Local executable for Chromium PDF export only")
+    args=parser.parse_args()
+    try:
+        if args.output.suffix.lower()!=FORMATS[args.format]:
+            raise ValueError("Output suffix must match requested format")
+        if args.output.exists():
+            raise ValueError("Refusing to overwrite existing stakeholder export")
+        if args.chrome and (args.format!="pdf" or args.pdf_engine!="chromium"):
+            raise ValueError("--chrome requires --format pdf --pdf-engine chromium")
+        result,manifest=export(args.root,args.docs,args.title,args.format,args.pandoc,
+                               pdf_engine=args.pdf_engine,chrome=args.chrome)
+        args.output.parent.mkdir(parents=True,exist_ok=True)
+        with args.output.open("xb") as stream:
+            stream.write(result)
+        report={"ok":True,"format":args.format,"output":str(args.output),
+                "source_docs":manifest,"bytes":len(result),"source_files_modified":0,
+                "external_provider_writes":0,"status":"actual-output-created",
+                "pdf_engine":args.pdf_engine if args.format=="pdf" else None}
+    except (OSError,ValueError,TypeError,subprocess.TimeoutExpired) as exc:
+        report={"ok":False,"error":str(exc),"status":"not-created"}
+    print(json.dumps(report,ensure_ascii=False))
+    return 0 if report["ok"] else 1
+if __name__=="__main__":
+    raise SystemExit(main())

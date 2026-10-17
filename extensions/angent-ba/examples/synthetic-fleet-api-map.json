@@ -1,0 +1,41 @@
+{
+  "name": "Synthetic fleet provider-to-UI contract",
+  "operation": {
+    "method": "GET",
+    "path": "/vehicles/{vehicleId}/status",
+    "expected_status": 200
+  },
+  "source_refs": [
+    "FR-IVTS-01"
+  ],
+  "sample_response": {
+    "vehicleId": "demo-001",
+    "state": "online"
+  },
+  "fields": [
+    {
+      "source": "vehicleId",
+      "target": "fleet.vehicleId",
+      "transform": "copy"
+    },
+    {
+      "source": "state",
+      "target": "fleet.connection",
+      "transform": "enum",
+      "cases": {
+        "online": "connected",
+        "offline": "disconnected"
+      }
+    }
+  ],
+  "ui_field_types": {
+    "fleet.vehicleId": "string",
+    "fleet.connection": "string"
+  },
+  "expected_ui": {
+    "fleet": {
+      "vehicleId": "demo-001",
+      "connection": "connected"
+    }
+  }
+}

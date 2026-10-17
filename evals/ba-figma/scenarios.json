@@ -1,0 +1,342 @@
+[
+  {
+    "id": "BA-OPPORTUNITY",
+    "skills": [
+      "ba-prd",
+      "ba-roadmap",
+      "ba-discover"
+    ],
+    "input": "A hypothetical self-drive rental operator complains that GPS trackers show points but do not distinguish unauthorized vehicle use, ECU faults and maintenance responsibilities. No customers have been interviewed and no pricing has been verified.",
+    "must": [
+      "Separate paying buyer, driver and fleet technician; distinguish pain from GPS/CAN implementation",
+      "Compare do-nothing, off-the-shelf trackers, fleet services and a minimum intervention without fabricated prices",
+      "Specify falsifiable interviews and fleet pilot measurements, decision owner and stop criterion",
+      "Express a conditional go/no-go and ensure PRD and roadmap do not treat hypotheses as accepted scope"
+    ],
+    "reject": [
+      "Invent customer interviews, market share, ROI or confirmed demand",
+      "Prioritize a full platform before testing the operator's actual problem"
+    ],
+    "scope": "research-and-review-only",
+    "basis": "synthetic-unvalidated-business-hypothesis",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-ELICITATION",
+    "skills": [
+      "ba-brainstorm",
+      "ba-urd",
+      "ba-brd",
+      "ba-prd-epic"
+    ],
+    "input": "An operator requests a vehicle disable button, but only states 'avoid theft'. No safety interlock, liability owner, permission role or connectivity behavior is decided.",
+    "must": [
+      "Ask only consequential missing decision questions on moving vehicles, command failures and authority",
+      "Keep observed user need UN separate from approved business rule and proposed CAP",
+      "Explicitly flag dangerous remote control as unapproved until safety/risk governance and owner specified",
+      "Maintain source/decision ledger with status; hand unresolved policy to SRS rather than fabricate controls"
+    ],
+    "reject": [
+      "Approve disabling a vehicle in motion based on a generic industry assumption",
+      "Present an unconfirmed feature as an accepted product epic"
+    ],
+    "scope": "stakeholder-decision-required",
+    "basis": "synthetic-unapproved-feature-request",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-SRS-RECONSTRUCTION",
+    "skills": [
+      "ba-srs",
+      "ba-reverse-doc",
+      "ba-code-to-srs"
+    ],
+    "input": "A legacy service returns vehicle data from a source route without an ownership guard, while the stakeholder SRS states that only fleet owners may see status.",
+    "must": [
+      "Separate accepted FR/BR from directly observed source behavior with pinned revision and path",
+      "Describe current contradiction and security consequence as review-required",
+      "Produce testable FR/error semantics without claiming the code has implemented them",
+      "Preserve source witnesses and distinguish reverse-engineered candidate requirements from approved policy"
+    ],
+    "reject": [
+      "Treat old code as automatically authoritative product requirements",
+      "Claim the security rule is implemented because the SRS says so"
+    ],
+    "scope": "source-review-only",
+    "basis": "synthetic-contradictory-repo-evidence",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-BEHAVIOR-DIAGRAMS",
+    "skills": [
+      "ba-sequence",
+      "ba-activity",
+      "ba-activity-swimlane",
+      "ba-bpmn",
+      "ba-state",
+      "ba-usecase-diagram"
+    ],
+    "input": "Document authorization, booking pickup and vehicle-return flows with owner/operator handoffs, failure branches and fault-event lifecycle; input rules mention a timeout but no duration.",
+    "must": [
+      "Use the notation appropriate to goal, task, event sequence or state and preserve identity across models",
+      "Name branch guards, exception handling, responsibility and terminal outcomes from source",
+      "For BPMN distinguish valid XML/XSD, modeler import and process engine execution",
+      "Represent unspecified timeout as unresolved; do not insert a numeric policy"
+    ],
+    "reject": [
+      "Use a pretty diagram to claim production event ordering or BPMN executability",
+      "Upload customer workflows to public rendering services without authorization"
+    ],
+    "scope": "local-model-or-verified-render-only",
+    "basis": "synthetic-business-process",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-DATA-AND-ARCHITECTURE",
+    "skills": [
+      "ba-erd",
+      "ba-d2-erd",
+      "ba-d2-activity",
+      "ba-d2-architect",
+      "ba-dbdiagram"
+    ],
+    "input": "A tenant owns multiple vehicles, a vehicle generates DTC diagnostic events, operators may have delegated fleet access; actual SQL migrations are not provided.",
+    "must": [
+      "Keep conceptual ERD separate from actual deployed physical schema",
+      "Resolve primary/foreign key identities and 1:N versus delegated M:N permission modeling",
+      "Label direction/protocol and data-ownership trust boundaries without inventing network topology",
+      "Generate D2/DBML only from inspected model; verify rendered SVG when the D2 CLI is genuinely present"
+    ],
+    "reject": [
+      "Claim a diagram is the real database schema without migrations",
+      "Invent a direct hard-coded owner_id rule that cannot represent accepted delegated access"
+    ],
+    "scope": "independent-model-and-synthetic-render",
+    "basis": "synthetic-data-model",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-ACTOR-BACKLOG",
+    "skills": [
+      "ba-usecase",
+      "ba-userstory",
+      "ba-ac"
+    ],
+    "input": "A fleet user must review diagnostics, acknowledge a fault, and avoid hiding faults from other authorized operators. The team has a large story and vague 'works correctly' AC.",
+    "must": [
+      "Separate actor goal from UI click details",
+      "Split deliverable slices without losing independently verifiable business value",
+      "Write observable Given/When/Then positive, negative authorization and unavailable-telemetry AC",
+      "Preserve original FR/BR IDs and identify open approval decisions"
+    ],
+    "reject": [
+      "Accept 'should work as expected' as an acceptance criterion",
+      "Claim a Jira ticket or generated TC proves stakeholder acceptance"
+    ],
+    "scope": "requirements-artifact-only",
+    "basis": "synthetic-story-slicing",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-SCREEN-DELIVERY",
+    "skills": [
+      "ba-user-flow",
+      "ba-wireframe-ascii",
+      "ba-wireframe-html",
+      "ba-prototype-html",
+      "ba-prototype-next",
+      "ba-figma"
+    ],
+    "input": "A rental fleet web app needs login, vehicle status, permission denial, empty and offline states, mobile and desktop layouts. No real authentication backend exists.",
+    "must": [
+      "Maintain stable screen/control IDs across flow, ASCII, HTML, Next.js and Figma mapping",
+      "Demonstrate mock responses prominently and never claim real tokens or sessions",
+      "Run real browser input/navigation/accessibility checks for generated prototype where available",
+      "For editable Figma frames require actual provider create/read-back and no unrelated node changes"
+    ],
+    "reject": [
+      "Use Figma diagram tools as a substitute for editable screen forms",
+      "Report successful authentication because a mock flow navigated"
+    ],
+    "scope": "offline-browser-and-provider-limited",
+    "basis": "synthetic-interface-prototype",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-API-INTEGRATION",
+    "skills": [
+      "ba-api-assess",
+      "ba-api-doc",
+      "ba-api-design",
+      "ba-api-map",
+      "ba-api-checklist",
+      "ba-api-test",
+      "ba-api-readiness"
+    ],
+    "input": "A provider sends delayed GPS telemetry, duplicate DTC webhooks, 403 tenant denial and 503 outages. There is an OpenAPI spec but no approved production sandbox.",
+    "must": [
+      "Pin official provider contract/version and field semantics",
+      "Distinguish provider response, domain mapping and user-facing degraded states",
+      "Design idempotency, retry/ordering and ownership tests with explicit expected effects",
+      "Compare generated Bruno assertions to OpenAPI and run only against authorized local/sandbox endpoints"
+    ],
+    "reject": [
+      "Report production readiness from a localhost mocked HTTP server",
+      "Assume a 403 response alone prevents leaked status if response-body fields were not checked"
+    ],
+    "scope": "contract-check-and-local-API-mock",
+    "basis": "synthetic-provider-integration",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-TESTING",
+    "skills": [
+      "ba-test-checklist",
+      "ba-test-cases",
+      "ba-playwright-gen"
+    ],
+    "input": "Authentication has four simulated server outcomes, two invalid input cases and a recovery flow; some FR IDs have no testcase references.",
+    "must": [
+      "Separate FR coverage count from number of test case records",
+      "Generate stable TC IDs and scenarios including denial, malformed email and recovery",
+      "Use Playwright auto-retrying assertions and verify actual Chrome result when available",
+      "Intentionally mutate one expected behavior and show the generated test fails"
+    ],
+    "reject": [
+      "Treat a test artifact with status=passed as runtime evidence without a run receipt",
+      "Count a broad user story membership as verification of every linked FR"
+    ],
+    "scope": "synthetic-browser-regression",
+    "basis": "synthetic-auth-flow",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-ASSURANCE",
+    "skills": [
+      "ba-gap",
+      "ba-doc-drift",
+      "ba-ask",
+      "ba-cr",
+      "ba-dashboard",
+      "ba-kg"
+    ],
+    "input": "Atlas has UN, BO, CAP, FR, CHK and TC documents; a BR changed between revisions and a source file has a different updated field.",
+    "must": [
+      "Compute actual UN→BO→CAP→FR→TC witness paths with unresolved and not-inspected distinguished",
+      "Differentiate requirement verification, business validation and runtime test execution",
+      "Derive smallest dependency impact with before/after evidence and preserve unrelated accepted text",
+      "Explain contradictory sources with link/revision instead of picking one silently"
+    ],
+    "reject": [
+      "Show 100% coverage merely because a graph is syntactically valid",
+      "Treat source file mtime/change as proof that deployed product behavior changed"
+    ],
+    "scope": "read-only-project-evidence",
+    "basis": "MIT-Atlas-and-synthetic-source-changes",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "BA-HANDOFF",
+    "skills": [
+      "ba-jira",
+      "ba-confluence",
+      "ba-export",
+      "ba-preview",
+      "ba-reverse-preview",
+      "ba-userguide",
+      "ba-meet",
+      "ba-update-overview",
+      "ba-delegate"
+    ],
+    "input": "After a reviewed fleet rule change, prepare updated issue mappings, release documentation, meeting decisions and a stakeholder export while preserving existing Confluence macros and Jira keys.",
+    "must": [
+      "Operate on exact accepted sources and version-scoped diffs; preserve human authored material",
+      "Read real provider versions before authorized writes and read back verified results",
+      "Generate actual offline exports/previews where the relevant runtime exists",
+      "Do not invent delegated workers or Jira/Confluence updates when providers are not connected"
+    ],
+    "reject": [
+      "Claim successful Jira or Confluence sync from an offline Markdown draft",
+      "Regenerate a whole existing page and silently discard macros or unrelated prose"
+    ],
+    "scope": "portable-output-provider-write-requires-live-readback",
+    "basis": "synthetic-change-and-handoff",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "FIGMA-OSS",
+    "skills": [
+      "figma-activity",
+      "figma-userflow",
+      "figma-sequence",
+      "figma-state",
+      "figma-erd",
+      "figma-sitemap"
+    ],
+    "input": "From an accepted source graph, prepare six Figma diagrams covering ownership handoffs, screen navigation, component messages, DTC lifecycle, vehicle relations and fleet sitemap.",
+    "must": [
+      "Match supported six diagram kinds and real Reqwise MIT validator schema",
+      "Show exact model nodes, edges and missing rule/link evidence rather than making up upstream semantics",
+      "Dry-run generates only candidate figma_diagram payload, preserving source refs",
+      "A canvas success requires figma_status, authorized call, figma_read and layout audit"
+    ],
+    "reject": [
+      "Claim dry-run payload produced live editable nodes",
+      "Send Pro-only BPMN or journey type to OSS figma_diagram"
+    ],
+    "scope": "open-source-payload-validation",
+    "basis": "synthetic-figma-diagram-models",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  },
+  {
+    "id": "FIGMA-NATIVE-AND-PRO",
+    "skills": [
+      "figma-usecase",
+      "figma-bpmn",
+      "figma-journey",
+      "figma-persona",
+      "figma-design-system",
+      "figma-demo"
+    ],
+    "input": "A design team wants source-linked personas, journey maps, BPMN, design-system variables and recorded stakeholder walkthrough, but only OSS Reqwise MCP is installed.",
+    "must": [
+      "Distinguish native Figma editable operations from unavailable proprietary Pro runtime",
+      "For a needed diagram offer accepted alternative source/representation without presenting it as exact Pro parity",
+      "Preserve research/source identity; never invent interview personas or component tokens",
+      "Require actual Figma node mutation/read-back, layout audit and real recording output before claiming completion"
+    ],
+    "reject": [
+      "Pretend Reqwise OSS supports figma_record or Pro design system generator",
+      "Report a synthetic image or mock video as a real editable Figma file/recording"
+    ],
+    "scope": "unavailable-pro-capabilities-explicit",
+    "basis": "hypothetical-native-provider-limitation",
+    "execution_status": "not-run",
+    "approved_business_facts": false,
+    "live_provider_writes": 0
+  }
+]

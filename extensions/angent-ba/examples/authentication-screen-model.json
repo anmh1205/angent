@@ -1,0 +1,128 @@
+{
+  "title": "Authentication — evidence-linked review",
+  "start": "login",
+  "scenarios": [
+    "success",
+    "invalid",
+    "locked",
+    "offline"
+  ],
+  "screens": [
+    {
+      "id": "login",
+      "title": "Sign in",
+      "description": "Review-only sign-in model. No real account checks.",
+      "controls": [
+        {
+          "id": "email",
+          "type": "email",
+          "label": "Email address",
+          "placeholder": "name@example.test",
+          "required": true,
+          "requirements": [
+            "FR-AUTH-001"
+          ]
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": "Password",
+          "required": true,
+          "requirements": [
+            "BR-AUTH-001"
+          ]
+        },
+        {
+          "id": "sign-in",
+          "type": "submit",
+          "label": "Sign in",
+          "requirements": [
+            "FR-AUTH-001",
+            "BR-AUTH-001"
+          ],
+          "outcomes": {
+            "success": {
+              "type": "navigate",
+              "target": "home"
+            },
+            "invalid": {
+              "type": "error",
+              "message": "Invalid credentials (mock)."
+            },
+            "locked": {
+              "type": "error",
+              "message": "Account temporarily locked (mock)."
+            },
+            "offline": {
+              "type": "error",
+              "message": "Network unavailable — try again (mock)."
+            }
+          }
+        },
+        {
+          "id": "forgot",
+          "type": "button",
+          "label": "Forgot password",
+          "action": {
+            "type": "navigate",
+            "target": "recovery"
+          },
+          "requirements": [
+            "FR-AUTH-002"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recovery",
+      "title": "Reset access",
+      "description": "This demonstration cannot send an email.",
+      "controls": [
+        {
+          "id": "email",
+          "type": "email",
+          "label": "Recovery email",
+          "required": true,
+          "requirements": [
+            "FR-AUTH-002"
+          ]
+        },
+        {
+          "id": "note",
+          "type": "note",
+          "label": "Recovery email would be sent by a real service; not implemented here."
+        },
+        {
+          "id": "back",
+          "type": "button",
+          "label": "Return to sign in",
+          "action": {
+            "type": "navigate",
+            "target": "login"
+          }
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "title": "Session review",
+      "description": "This screen represents a successful mock transition.",
+      "controls": [
+        {
+          "id": "note",
+          "type": "note",
+          "label": "Mock sign-in succeeded; no authentication token was issued."
+        },
+        {
+          "id": "exit",
+          "type": "button",
+          "label": "Return to sign in",
+          "action": {
+            "type": "navigate",
+            "target": "login"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+---
+name: ba-user-flow
+description: Business analysis user-flow specialist.
+---
+
+# ANGENT BA: user-flow
+
+Maintained adaptation from MIT Dev BA Kit (copyright 2026 Edward Ngo): https://github.com/nv-minh/dev-ba-kit/blob/main/skills/user-flow/SKILL.md
+
+## Portability and authority
+
+Use domain-specific steps below as methodology, not as authority or proof of tool execution. Original Claude-specific scripts, hooks, subagents, filesystem paths and approval levels are illustrative until verified in the current environment. ANGENT Root owns intent and routing; Execution owns writes and read-back; Quality verifies outcomes. Honor project naming and do not invent decisions. Run extensions/angent-ba/scripts/validate_documents.py only where its documented input is compatible; for Mermaid, D2, PlantUML or BPMN use an actual available compiler, renderer and semantic review. Treat references to original Claude-only engines as source architecture examples until those dependencies are installed and verified.
+
+
+# /user-flow — Screen navigation map (the source of flow division)
+
+## Goal
+
+Map the feature into **flows** (flow-slug + the screens each contains) and draw the navigation per flow — Mermaid `flowchart` with screens numbered `[n]`, covering happy, error, and edge paths. **Single output**: `docs/{feature}/srs/{feature}-userflow.md` (type `srs-userflow`). `ascii-wireframe/` and `html-wireframe/` (wave 3) read THIS file to know which screens each flow contains — no other source of flow division exists.
+
+## Constraints
+
+- **1 fixed output** — `docs/{feature}/srs/{feature}-userflow.md`. Slim frontmatter `type`/`feature`/`updated` + state fields `stage`/`flow_approved_at`/`flow_hash`/`primary_device` (`naming-conventions.md`).
+- **Group A, handles itself** (`feature-bootstrap.md`) — accepts a slug OR a free-form description; infer mode + clarify; new feature → derive slug + create.
+- **Device question FIRST** (`ba-conventions.md` §7) — mobile 375 / tablet 768 / desktop 1024 decides layout thinking; recorded as `primary_device`. Ask once, never re-ask.
+- **Screens are numbered `[n]` and named** — `[1] Claim queue`, `[2] Claim detail`… Numbers are stable across re-runs (new screens take the next number; removed screens retire theirs).
+- **Every decision/error path lands somewhere** — an edge must end on a screen, a terminal state, or an explicit exit; dead-ends are BLOCKING per the flow's own review.
+- **Flow division is deliberate** — group screens into flows by user intent (e.g. `approve-claim`, `review-history`), not by menu structure; 3-8 screens per flow; a 12-screen flow → split.
+- **Sources** — UC files (MSS steps → screens), spec FRs (what surfaces must exist), URD context; else interview. No fabricated screens: every screen traces to a step/FR/answer.
+- **Approval stamps state** — on user approval set `stage: approved`, `flow_approved_at: {date}`, `flow_hash` (sha of the flow list) — wireframe skills gate on these.
+- **Render-verify MANDATORY** — mermaid-verify after Write (step 9).
+- **Validate before done** — BA Markdown validation (step 9.5).
+
+## Inputs
+
+```
+/user-flow <feature>                       # derive flows from UC/spec
+/user-flow <feature> "<description>"       # explicit navigation description
+/user-flow <new-feature> "<description>"   # group A: create feature
+```
+
+## Approach
+
+1. **Resolve feature + read sources.** UCs (MSS steps + extensions → screen/edge candidates), spec (FRs → required surfaces, E- rows → error paths), URD (device hints).
+2. **Ask the device question** (if `primary_device` not already set) + clarify gaps: entry points · what the user sees first · where each error path lands.
+3. **Fact-list** — screen candidates with sources · flow grouping proposal · every decision/error edge and its destination.
+4. **Draft** — frontmatter + one `## Flow: {flow-slug}` section per flow, each with its screen list (`[n] Name — one-line purpose`) and a Mermaid `flowchart TD` (screens as nodes `S1["[1] Claim queue"]`, decisions as diamonds, error paths labeled with E- codes where known).
+5. **Self-check** — no dead-ends; every screen reachable from an entry; numbering has no gaps/duplicates.
+6. **scoped change preview** — flow list + screen count + device + edge coverage.
+8. **On approval, stamp state** — `stage: approved` + `flow_approved_at` + `flow_hash`.
+9.5. **Review according to complexity, without requiring a particular subagent interface.** Review source-backed screens, each entry/exit, denial/recovery paths, decision guards and mismatches between screen IDs and actual routes. Three flows, eight screens or multiple alternate paths require extra scrutiny.
+   - ANGENT Quality can independently reconcile the produced model with the fact-list and inspected sources in the current working context. Use a second reviewer or delegated agent only when its interface is actually available and appropriate; never issue a fictitious `Task` call or assume a `diagram-reviewer`/`flow-reviewer` role exists.
+   - If no independent reviewer is available, complete the source-to-diagram self-review and report it accurately as `self-reviewed; independent review not performed`. Do not turn a tool limitation into a blanket refusal, and do not claim independent approval.
+   - For blocking gaps (missing branches, unreachable or orphan states/screens, reversed cardinality, incorrect guards), correct the affected diagram and revalidate syntax, structure and source coverage. Report unresolved gaps and evidence limits rather than silently publishing a success verdict.
+10. **Output report** — flows + screens + next (wave 3 wireframes read this file).
+
+## Mermaid shape reference (Claude composes it, do NOT hard-paste)
+
+```mermaid
+flowchart TD
+    S1["[1] Claim queue"] --> S2["[2] Claim detail"]
+    S2 --> D1{Within my tier?}
+    D1 -->|yes| S3["[3] Decision panel"]
+    D1 -->|no| S1
+    S3 -->|approve| S4["[4] Confirmation"]
+    S3 -->|validator conflict E-atlas-re-001| S2
+```
+
+## Gotchas
+
+- **Navigation, not process** — lanes/roles belong to `/activity-swimlane`; this diagram is what the USER sees, screen to screen.
+- **Stable numbers are the contract** — wireframe files deep-link `id="s{n}"`; renumbering breaks them. Retire, don't reuse.
+- **Error paths deserve screens** — "show an error" is not a destination; decide whether it's a state of the same screen or its own screen.
+- **The hash is not decoration** — wave-3 skills compare `flow_hash` to detect a stale division; skipping the stamp breaks their gate.

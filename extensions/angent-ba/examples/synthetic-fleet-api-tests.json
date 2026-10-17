@@ -1,0 +1,65 @@
+{
+  "name": "Synthetic Fleet Access Tests",
+  "environment": {
+    "baseUrl": "http://127.0.0.1:18497",
+    "vehicleId": "demo-001"
+  },
+  "requests": [
+    {
+      "id": "TC-FLEET-001",
+      "name": "Authorized vehicle status",
+      "method": "GET",
+      "path": "/vehicles/{{vehicleId}}/status?mode=ok",
+      "expected_status": 200,
+      "expected_json": {
+        "vehicleId": "demo-001",
+        "state": "online"
+      },
+      "requirements": [
+        "FR-IVTS-01"
+      ]
+    },
+    {
+      "id": "TC-FLEET-002",
+      "name": "Unauthorized vehicle status",
+      "method": "GET",
+      "path": "/vehicles/{{vehicleId}}/status?mode=denied",
+      "expected_status": 403,
+      "expected_json": {
+        "error": "ACCESS_DENIED"
+      },
+      "requirements": [
+        "BR-IVTS-01"
+      ]
+    },
+    {
+      "id": "TC-FLEET-003",
+      "name": "Downstream telemetry unavailable",
+      "method": "GET",
+      "path": "/vehicles/{{vehicleId}}/status?mode=offline",
+      "expected_status": 503,
+      "expected_json": {
+        "error": "TELEMETRY_UNAVAILABLE"
+      },
+      "requirements": [
+        "FR-IVTS-01"
+      ]
+    },
+    {
+      "id": "TC-FLEET-004",
+      "name": "Acknowledge diagnostic trouble code",
+      "method": "POST",
+      "path": "/vehicles/{{vehicleId}}/diagnostics/ack",
+      "body_json": {
+        "code": "P0100",
+        "operator": "synthetic-test"
+      },
+      "expected_status": 201,
+      "expected_json": {
+        "vehicleId": "demo-001",
+        "ack": "recorded"
+      },
+      "requirements": []
+    }
+  ]
+}

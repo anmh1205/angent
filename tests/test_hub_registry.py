@@ -19,8 +19,8 @@ class HubRegistryTests(unittest.TestCase):
 
     def test_registered_kits_and_native_exclusivity(self):
         self.assertEqual([e["id"] for e in self.registry["extensions"]],
-                         ["angent-engineer", "angent-frontend"])
-        engineer = self.registry["extensions"][0]
+                         ["angent-ba", "angent-engineer", "angent-figma", "angent-frontend"])
+        engineer = next(e for e in self.registry["extensions"] if e["id"] == "angent-engineer")
         self.assertEqual(engineer["source_skill_count"], 103)
         self.assertEqual(len(engineer["skills"]), 102)
         self.assertNotIn("ak-explain", engineer["skills"])
