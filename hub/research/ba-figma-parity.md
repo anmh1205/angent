@@ -74,3 +74,65 @@ These are independent, evidence-scoped checks for **Atlas BA requirements, a syn
 ## Screen-to-Figma handoff built separately from diagram support
 
 The source-driven low-fidelity BA screen model can now be compiled to a candidate Reqwise figma_write scene-tree program by extensions/angent-ba/scripts/build_figma_screens.py. Tests compare every generated control label/name with the source and check JavaScript syntax in Node. This is a genuine editable-FRAME candidate, not another figma_diagram type. Native Figma creation, idempotent frame reconciliation, prototype interactions, token/component reuse and canvas/screenshot read-back remain unverified. No commercial Reqwise Pro capability is implied.
+
+## Source-by-source regression deepening (2026-10-17)
+
+This audit keeps **portable model validity**, **actual provider schema acceptance**,
+**real generated-app execution**, **domain correctness** and **Figma canvas
+mutations** as distinct claims.
+
+### Confirmed defects corrected
+
+- **Reqwise userflow control semantics:** a `return` edge was previously
+  converted into an ordinary edge. Explicit cancel/back/retry routing is now
+  preserved, and unsupported kinds cannot be silently converted into a
+  provider-accepted type.
+- **State and relational semantics:** `choice` branches now check guard
+  ambiguity; ERD validates the OSS cardinality enumeration and preserves the
+  identifying-relationship flag. A state machine with no final state is
+  permitted only when `metadata.continuous=true` is explicit, reachable
+  states have exits and the nontermination policy remains a surfaced review
+  warning.
+- **Provider-supported annotations:** previously dropped state entry/do/exit,
+  transition actions, message notes, diagram visual classes, userflow screen
+  links and sitemap screenId lists now survive the conversion to the pinned
+  MIT schema. Optional fields and conflicting guard/label combinations have
+  invalid-shape tests.
+- **Source document fidelity:** invalid requirement IDs are no longer ignored
+  when extracting Markdown tables; example code fences no longer count as
+  real requirements/links. Index-managed UC/story bodies must actually be
+  referenced from an adjacent valid index. Calendar dates are parsed.
+- **Prototype action identity:** the Next.js generator previously routed
+  every submit control through the first form submit. The generated app now
+  locates the actual clicked submitter and selects that control's declared
+  scenario-specific outcome.
+
+### Fresh independent acceptance signals
+
+- GitHub Actions
+  [run 39016056646](https://github.com/anmh1205/angent/actions/runs/39016056646)
+  passed source regression and an actual build of the generated isolated
+  Next.js application.
+- The same run fetched **Reqwise MIT 0.3.0 at exact commit
+  `4ee65b7a037578690cfcd4006257c4f25e458eea`** and passed all **six
+  original Zod schema validators** for dry-run activity, state, sequence,
+  ERD, userflow and sitemap payloads. This is a native upstream *request
+  contract* check; no provider/plugin session or canvas is claimed.
+- A browser-level Next.js integration job is separately checked through
+  `tests/integration/check_next_prototype_browser.py`, and must be judged
+  only by a successful CI execution including live-route/viewport evidence;
+  source-level assertions and a Next build do not independently establish it.
+
+### Remaining independent acceptance boundaries
+
+1. No real Reqwise MCP session plus authorized Figma file/page has yet
+   established node creation, linkScreens reactions, layout legibility,
+   rollback behavior or native read-back.
+2. Synthetic Atlas/Fleet/Authentication fixtures cannot prove the 67 methods
+   produce semantically correct, accepted documents on a customer's genuine
+   scope, or that optional providers and paid Pro-only features exist.
+3. Source-linked test artifacts cannot prove tests were run; code witness
+   hashes and validated graph edges cannot approve implementation behavior.
+4. Continue per-specialist acceptance with independently reviewed outputs
+   and negative examples, not counts of `SKILL.md`, placeholders or
+   structural validation alone.
