@@ -182,6 +182,47 @@ class ReqwisePayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"invalid screenId"):
             compile_model(site)
 
+    def test_sequence_fragments_preserve_business_alternatives_and_stable_ids(self):
+        original=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
+        result=compile_model(original)["arguments"]["spec"]
+        self.assertEqual(result["fragments"][0]["kind"],"alt")
+        self.assertEqual(result["fragments"][0]["else"]["messages"],["message-5"])
+        self.assertEqual(len(result["messages"]),5)
+        changed=deepcopy(original)
+        changed["edges"][3]["id"]="authorized-answer"
+        changed["edges"][4]["id"]="denied-answer"
+        changed["fragments"][0]["messages"]=["authorized-answer"]
+        changed["fragments"][0]["else"]["messages"]=["denied-answer"]
+        generated=compile_model(changed)["arguments"]["spec"]
+        self.assertEqual(generated["messages"][3]["id"],"authorized-answer")
+        self.assertEqual(generated["fragments"][0]["else"]["messages"],["denied-answer")
+
+    def test_sequence_rejects_missing_and_duplicated_fragment_messages(self):
+        original=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
+        mutants=[]
+        unknown=deepcopy(original)
+        unknown["fragments"][0]["messages"]=["unknown-message"]
+        mutants.append((unknown,"unknown messages"))
+        repeated=deepcopy(original)
+        repeated["fragments"][0]["messages"]=["message-4","message-4"]
+        mutants.append((repeated,"repeats a message"))
+        collision=deepcopy(original)
+        collision["edges"][3]["id"]="message-5"
+        mutants.append((collision,"duplicate message ID"))
+        invalid=deepcopy(original)
+        invalid["fragments"][0]["kind"]="tryexcept"
+        mutants.append((invalid,"unsupported fragment kind"))
+        ambiguous=deepcopy(original)
+        ambiguous["fragments"][0]["else"]["messages"]=["message-4"]
+        mutants.append((ambiguous,"both branches"))
+        no_array=deepcopy(original)
+        no_array["fragments"]={}
+        mutants.append((no_array,"fragments must be an array"))
+        for bad, message in mutants:
+            with self.subTest(message=message):
+                with self.assertRaisesRegex(ValueError,message):
+                    compile_model(bad)
+
     def test_state_and_sequence_mapping(self):
         state = deepcopy(self.activity)
         state["type"] = "state"

@@ -45,8 +45,29 @@
     {
       "from": "api",
       "to": "operator",
-      "label": "Authorized status or 403",
+      "label": "200 vehicle status for authorized owner",
       "kind": "return"
+    },
+    {
+      "from": "api",
+      "to": "operator",
+      "label": "403 denied for unauthorized viewer",
+      "kind": "return"
+    }
+  ],
+  "fragments": [
+    {
+      "kind": "alt",
+      "label": "Ownership check grants access",
+      "messages": [
+        "message-4"
+      ],
+      "else": {
+        "label": "Ownership check denies access",
+        "messages": [
+          "message-5"
+        ]
+      }
     }
   ]
 }

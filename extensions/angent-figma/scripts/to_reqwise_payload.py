@@ -109,10 +109,12 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
         spec["participants"] = [{"id": n["id"], "name": n["label"],
                                   "kind": pmap.get(n.get("kind"), "system"),
                                   **_fields(n, ("detail","cls"))} for n in nodes]
-        spec["messages"] = [{"id": f"message-{i+1}", "from": e["from"], "to": e["to"],
+        spec["messages"] = [{"id": e.get("id", f"message-{i+1}"), "from": e["from"], "to": e["to"],
                              "label": e["label"], "kind": e.get("kind", "sync"),
                              **_fields(e, ("note","cls"))}
                             for i, e in enumerate(edges)]
+        if "fragments" in model:
+            spec["fragments"] = model["fragments"]
     elif kind == "sitemap":
         roots = {n["id"] for n in nodes}
         parents: dict[str, str] = {}

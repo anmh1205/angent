@@ -248,10 +248,62 @@ def audit(model: Any) -> dict[str, Any]:
             if not edge.get("cardinality"):
                 warnings.append(f"erd: edges[{i}] missing cardinality")
     if kind == "sequence":
+        # Message IDs are positional only by default. Explicit stable IDs are
+        # supported for meaningful alt/opt/loop/par/break fragment references.
+        ids = set()
         for i, edge in enumerate(edges):
-            if isinstance(edge, dict) and edge.get("from") in by_id and edge.get("to") in by_id:
-                if not edge.get("label"):
-                    warnings.append(f"sequence: edges[{i}] has no message label")
+            if not isinstance(edge,dict):
+                continue
+            msgid = edge.get("id", f"message-{i+1}")
+            if (not isinstance(msgid,str) or not msgid.strip() or
+                any(ch.isspace() for ch in msgid)):
+                errors.append(f"sequence: edges[{i}] invalid message ID")
+                continue
+            if msgid in ids:
+                errors.append(f"sequence: duplicate message ID {msgid}")
+            ids.add(msgid)
+            if not edge.get("label"):
+                warnings.append(f"sequence: edges[{i}] has no message label")
+        fragments = model.get("fragments", [])
+        if not isinstance(fragments,list):
+            errors.append("sequence: fragments must be an array")
+        else:
+            for i, fragment in enumerate(fragments):
+                if not isinstance(fragment,dict):
+                    errors.append(f"sequence: fragments[{i}] must be an object")
+                    continue
+                fkind=fragment.get("kind")
+                if fkind not in ("alt","opt","loop","par","break"):
+                    errors.append(f"sequence: fragments[{i}] unsupported fragment kind")
+                if not isinstance(fragment.get("label"),str) or not fragment["label"].strip():
+                    errors.append(f"sequence: fragments[{i}] needs a meaningful label")
+                branches=[("messages",fragment.get("messages"))]
+                if "else" in fragment:
+                    alternate=fragment["else"]
+                    if fkind!="alt":
+                        errors.append(f"sequence: fragments[{i}] else is only meaningful for alt")
+                    if not isinstance(alternate,dict):
+                        errors.append(f"sequence: fragments[{i}] else must be an object")
+                    else:
+                        if "label" in alternate and (
+                            not isinstance(alternate["label"],str) or not alternate["label"].strip()
+                        ):
+                            errors.append(f"sequence: fragments[{i}] else label must be nonempty text")
+                        branches.append(("else.messages",alternate.get("messages")))
+                branch_refs=[]
+                for name, refs in branches:
+                    if (not isinstance(refs,list) or not refs or
+                        any(not isinstance(x,str) or not x.strip() for x in refs)):
+                        errors.append(f"sequence: fragments[{i}] {name} needs message IDs")
+                        continue
+                    if len(set(refs))!=len(refs):
+                        errors.append(f"sequence: fragments[{i}] {name} repeats a message")
+                    missing=sorted(set(refs)-ids)
+                    if missing:
+                        errors.append(f"sequence: fragments[{i}] {name} refers to unknown messages: "+", ".join(missing))
+                    branch_refs.extend(refs)
+                if len(branch_refs)!=len(set(branch_refs)):
+                    errors.append(f"sequence: fragments[{i}] message occurs in both branches")
     return {"ok": not errors, "errors": sorted(set(errors)), "warnings": sorted(set(warnings)),
             "type": kind, "node_count": len(nodes), "edge_count": len(edges),
             "rendered_or_written_to_figma": False}

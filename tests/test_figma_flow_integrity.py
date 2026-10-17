@@ -120,6 +120,15 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         self.assertEqual([n["kind"] for n in payload["nodes"]][-4:],
                          ["action", "event", "join", "external"])
 
+    def test_sequence_output_preserves_known_alternate_outcome(self):
+        model=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
+        result=audit(model)
+        self.assertTrue(result["ok"],result)
+        candidate=compile_model(model)
+        self.assertEqual(candidate["arguments"]["spec"]["fragments"][0]["messages"],["message-4"])
+        self.assertEqual(candidate["arguments"]["spec"]["fragments"][0]["else"]["messages"],["message-5"])
+        self.assertFalse(candidate["writes_performed"])
+
     def test_official_reqwise_state_fork_join_accepted(self):
         m = {"type": "state",
              "nodes": [{"id": "initial", "kind": "initial", "label": "Start"},
