@@ -22,7 +22,7 @@ NODE_KINDS = {
     "activity": {"start", "initial", "end", "final", "task", "action", "decision",
                  "fork", "join", "event", "external"},
     "userflow": {"start", "initial", "end", "final", "terminal", "external",
-                 "screen", "task", "state", "action", "decision"},
+                 "screen", "task", "state", "decision"},
     "state": {"start", "initial", "end", "final", "state", "task", "decision",
               "choice", "fork", "join"},
     "sequence": {"actor", "external", "queue", "system", "db"},

@@ -210,6 +210,15 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"unsupported sequence edge kind"):
             compile_model(seq)
 
+    def test_userflow_action_kind_never_passes_as_unsupported_provider_shape(self):
+        model=deepcopy(self.userflow)
+        model["nodes"][1]["kind"]="action"
+        checked=audit(model)
+        self.assertFalse(checked["ok"])
+        self.assertTrue(any("unsupported userflow node kind" in e for e in checked["errors"]))
+        with self.assertRaisesRegex(ValueError,"unsupported userflow node kind"):
+            compile_model(model)
+
     def test_unknown_kind_is_not_forwarded_as_valid_reqwise_payload(self):
         m = deepcopy(self.activity)
         m["nodes"][1]["kind"] = "invented-step-kind"
