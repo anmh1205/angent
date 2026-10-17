@@ -16,6 +16,11 @@ from validate_diagram_model import audit
 SUPPORTED = {"activity", "userflow", "state", "sequence", "erd", "sitemap"}
 VALID_RANKDIR = {"TB", "LR"}
 ERD_CARDINALITIES = {"one", "many", "zero-one", "zero-many", "one-many"}
+
+
+def _fields(value: dict[str, Any], names: tuple[str, ...]) -> dict[str, Any]:
+    """Copy only optional fields documented in the public MIT provider schema."""
+    return {name: value[name] for name in names if name in value}
 REF_RE = re.compile(r"^[A-Z][A-Z0-9-]{1,99}$")
 
 
@@ -51,6 +56,10 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
         if not isinstance(meta["rankdir"], str) or meta["rankdir"] not in VALID_RANKDIR:
             raise ValueError("rankdir must be TB or LR")
         options["rankdir"] = meta["rankdir"]
+    if "linkScreens" in meta:
+        if kind != "userflow" or not isinstance(meta["linkScreens"], bool):
+            raise ValueError("metadata.linkScreens must be a boolean for userflow")
+        options["linkScreens"] = meta["linkScreens"]
     spec: dict[str, Any] = {"title": title.strip(), "options": options}
     if kind == "activity":
         if any("lane" in n and
@@ -66,7 +75,8 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
         mapping = {"task": "action", "initial": "start", "final": "end"}
         spec["nodes"] = [{"id": n["id"], "label": n["label"],
                            "kind": mapping.get(n.get("kind"), n.get("kind", "action")),
-                           **({"lane": n["lane"]} if n.get("lane") else {})} for n in nodes]
+                           **({"lane": n["lane"]} if n.get("lane") else {}),
+                           **_fields(n, ("detail","cls"))} for n in nodes]
         spec["edges"] = [
             {"from": e["from"], "to": e["to"],
              **({"label": str(e.get("guard") or e.get("label"))} if e.get("guard") or e.get("label") else {}),
@@ -75,7 +85,7 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
     elif kind == "userflow":
         mapping = {"start": "state", "initial": "state", "end": "terminal", "final": "terminal", "task": "screen"}
         spec["nodes"] = [{"id": n["id"], "label": n["label"], "kind": mapping.get(n.get("kind"), n.get("kind","screen")),
-                           **({"screenId": n["screenId"]} if n.get("screenId") else {})} for n in nodes]
+                           **_fields(n, ("screenId","slug","detail","cls"))} for n in nodes]
         spec["edges"] = [{"from": e["from"], "to": e["to"],
                            **({"label": e.get("guard") or e.get("label")} if e.get("guard") or e.get("label") else {}),
                            **({"kind": e["kind"]} if "kind" in e else {})}
@@ -83,18 +93,22 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
     elif kind == "state":
         mapping = {"start": "initial", "end": "final", "decision": "choice", "task": "state"}
         spec["states"] = [{"id": n["id"], "label": n["label"],
-                            "kind": mapping.get(n.get("kind"), n.get("kind", "state"))} for n in nodes]
+                            "kind": mapping.get(n.get("kind"), n.get("kind", "state")),
+                             **_fields(n, ("entry","do","exit","detail","cls"))} for n in nodes]
         spec["transitions"] = [{"from": e["from"], "to": e["to"],
                                 **({"guard": str(e["guard"])} if e.get("guard") else {}),
-                                **({"event": str(e["label"])} if e.get("label") else {})} for e in edges]
+                                **({"event": e["label"]} if e.get("label") else {}),
+                                **_fields(e, ("action","kind","cls"))} for e in edges]
     elif kind == "sequence":
         if any(not e.get("label") for e in edges):
             raise ValueError("Every sequence message needs a meaningful label")
         pmap = {"db":"db","actor":"actor","external":"external","queue":"queue","system":"system"}
         spec["participants"] = [{"id": n["id"], "name": n["label"],
-                                  "kind": pmap.get(n.get("kind"), "system")} for n in nodes]
+                                  "kind": pmap.get(n.get("kind"), "system"),
+                                  **_fields(n, ("detail","cls"))} for n in nodes]
         spec["messages"] = [{"id": f"message-{i+1}", "from": e["from"], "to": e["to"],
-                             "label": e["label"], "kind": e.get("kind", "sync")}
+                             "label": e["label"], "kind": e.get("kind", "sync"),
+                             **_fields(e, ("note","cls"))}
                             for i, e in enumerate(edges)]
     elif kind == "sitemap":
         roots = {n["id"] for n in nodes}
@@ -107,7 +121,8 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
             raise ValueError("Sitemap needs exactly one root")
         spec["pages"] = [{"id": n["id"], "label": n["label"],
                           **({"parent": parents[n["id"]]} if n["id"] in parents else {}),
-                          "kind": n["kind"] if n.get("kind") in ("page","section","modal","external") else "page"} for n in nodes]
+                          "kind": n["kind"] if n.get("kind") in ("page","section","modal","external") else "page",
+                          **_fields(n, ("screenId","detail","cls"))} for n in nodes]
     elif kind == "erd":
         entities = []
         for n in nodes:
@@ -134,7 +149,8 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
             if not n.get("external", False) and not any(a.get("key") in ("pk","pfk") for a in attributes):
                 raise ValueError(f"ERD entity {n['id']} needs a primary key or external=true")
             entities.append({"id": n["id"], "name": n["label"], "attributes": attributes,
-                             **({"external": True} if n.get("external") else {})})
+                             **({"external": True} if n.get("external") else {}),
+                             **_fields(n, ("detail","cls"))})
         spec["entities"] = entities
         relations = []
         for e in edges:

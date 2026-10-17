@@ -30,6 +30,7 @@ NODE_KINDS = {
     "erd": {"entity"},
 }
 ACYCLIC = {"sitemap"}
+VISUAL_CLASSES = {"happy", "error", "edge", "plain", "decision"}
 
 
 def audit(model: Any) -> dict[str, Any]:
@@ -63,10 +64,22 @@ def audit(model: Any) -> dict[str, Any]:
         if node_kind is not None and (not isinstance(node_kind, str) or
                                        (kind in NODE_KINDS and node_kind not in NODE_KINDS[kind])):
             errors.append(f"nodes[{i}]: unsupported {kind} node kind {node_kind!r}")
-        for text_field in ("lane", "screenId"):
-            if text_field in node and (not isinstance(node[text_field], str) or
-                                       not node[text_field].strip()):
-                errors.append(f"nodes[{i}]: {text_field} must be a nonempty string")
+        for field in ("lane", "detail", "slug", "entry", "do", "exit"):
+            if field in node and (not isinstance(node[field], str) or not node[field].strip()):
+                errors.append(f"nodes[{i}]: {field} must be a nonempty string")
+        if "cls" in node and (not isinstance(node["cls"],str) or node["cls"] not in VISUAL_CLASSES):
+            errors.append(f"nodes[{i}]: unsupported visual class")
+        if "screenId" in node:
+            ref=node["screenId"]
+            if kind=="sitemap":
+                valid=(isinstance(ref,str) and bool(ref.strip())) or (
+                    isinstance(ref,list) and bool(ref) and
+                    all(isinstance(x,str) and bool(x.strip()) for x in ref) and
+                    len(set(ref))==len(ref))
+            else:
+                valid=isinstance(ref,str) and bool(ref.strip())
+            if not valid:
+                errors.append(f"nodes[{i}]: invalid screenId reference")
     adj: dict[str, set[str]] = defaultdict(set)
     indeg = {key: 0 for key in by_id}
     for i, edge in enumerate(edges):
@@ -76,11 +89,17 @@ def audit(model: Any) -> dict[str, Any]:
         a, b = edge.get("from"), edge.get("to")
         # Do not silently stringify booleans/objects/numbers into a seemingly
         # meaningful business guard, event or message on the Figma canvas.
-        for field in ("guard", "label"):
+        for field in ("guard", "label", "note", "action"):
             if field in edge and (
                 not isinstance(edge[field], str) or not edge[field].strip()
             ):
                 errors.append(f"edges[{i}]: {field} must be a nonempty string")
+        if "cls" in edge and (not isinstance(edge["cls"],str) or edge["cls"] not in VISUAL_CLASSES):
+            errors.append(f"edges[{i}]: unsupported visual class")
+        if (kind in ("activity","userflow") and "label" in edge and "guard" in edge
+            and isinstance(edge["label"],str) and isinstance(edge["guard"],str)
+            and edge["label"].strip()!=edge["guard"].strip()):
+            errors.append(f"edges[{i}]: conflicting guard and label; Reqwise has one edge label")
         if not isinstance(a, str) or not isinstance(b, str) or a not in by_id or b not in by_id:
             errors.append(f"edges[{i}]: unknown endpoint")
             continue
