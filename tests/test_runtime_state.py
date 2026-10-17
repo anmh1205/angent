@@ -34,6 +34,67 @@ def invoke(path, *args):
 
 
 class RuntimeStateTests(unittest.TestCase):
+    def test_frontier_recovery_with_gaps_and_malformed_records(self):
+        module = module_from(FRONTIER, "frontier_corruption")
+        with tempfile.TemporaryDirectory() as d:
+            work = Path(d)
+            revisions = work / "revisions"
+            revisions.mkdir()
+            def record(n, **changes):
+                return {"schema_version": 1, "work_key": "task", "revision": n,
+                        "frontier": {"lifecycle": "ACTIVE"}, **changes}
+            def write(n, value):
+                (revisions / f"{n:08d}.json").write_text(json.dumps(value), encoding="utf-8")
+            write(1, record(1))
+            write(3, record(3))
+            (work / "current.json").write_text(json.dumps(record(1)), encoding="utf-8")
+            self.assertIsNone(module.cached_latest(work, "task"))
+            self.assertEqual(module.load_latest(work, "task")["revision"], 3)
+            self.assertEqual(module.load_latest_discoverable(work)["revision"], 3)
+            bad_records = [[], None, 7, "scalar", {}, record(True),
+                           record(4, frontier={"lifecycle": []}),
+                           record(4, frontier={"repair_state": {}}),
+                           record(4, frontier={"active_obligations": "wrong"})]
+            for bad in bad_records:
+                with self.subTest(value=bad):
+                    write(4, bad)
+                    self.assertEqual(module.load_latest(work, "task")["revision"], 3)
+                    self.assertEqual(module.load_latest_discoverable(work)["revision"], 3)
+            # Invalid encoding and truncated JSON also leave the highest coherent record usable.
+            for payload in (b"\xff", b'{"revision":'):
+                (revisions / "00000004.json").write_bytes(payload)
+                self.assertEqual(module.load_latest(work, "task")["revision"], 3)
+            write(4, record(99))  # Filename/record identity cannot disagree.
+            self.assertEqual(module.load_latest(work, "task")["revision"], 3)
+            write(2, record(2, work_key="other"))
+            self.assertIsNone(module.load_latest_discoverable(work))
+            self.assertEqual(module.load_latest(work, "task")["revision"], 3)
+
+    def test_memory_list_is_paginated_metadata_and_get_is_lossless(self):
+        with tempfile.TemporaryDirectory() as d:
+            store = Path(d) / "memory.json"
+            args = ["--scope", "project", "--store", store]
+            body = "large relation and evidence\n" * 500
+            for rev, topic in enumerate(("a", "b", "c")):
+                code, result = invoke(MEMORY, *args, "put", "--topic", topic,
+                                      "--content", body, "--provenance", "fixture",
+                                      "--expected-revision", rev)
+                self.assertEqual(code, 0, result)
+            code, page = invoke(MEMORY, *args, "list", "--limit", 2)
+            self.assertEqual(code, 0, page)
+            self.assertEqual([x["topic"] for x in page["entries"]], ["a", "b"])
+            self.assertEqual(page["next_after"], "b")
+            self.assertLess(len(json.dumps(page)), 2000)
+            self.assertNotIn("content", page["entries"][0])
+            self.assertEqual(page["entries"][0]["provenance"], ["fixture"])
+            code, last = invoke(MEMORY, *args, "list", "--after", page["next_after"], "--limit", 2)
+            self.assertEqual([x["topic"] for x in last["entries"]], ["c"])
+            self.assertIsNone(last["next_after"])
+            code, exact = invoke(MEMORY, *args, "get", "--topic", "b")
+            self.assertEqual(exact["entry"]["content"], body)
+            code, empty = invoke(MEMORY, *args, "list", "--prefix", "missing", "--status", "active")
+            self.assertEqual(empty["entries"], [])
+
     def test_live_writer_cannot_be_stolen_due_to_old_mtime(self):
         for src, fun, lock_file in [
             (MEMORY, "store_lock", lambda p: p.with_name(p.name + ".writer.lock")),

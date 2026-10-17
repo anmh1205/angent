@@ -21,12 +21,14 @@ normal explanation must not be reported as an `ak-explain` invocation.
 ## Source versus runtime inventory
 
 The Engineer source remains complete: 103 Skills and 16 role contracts. The
-central suppression rule in `scripts/package_unified.py` prevents
-`ak-explain` source files being projected under runtime `skills/`; the
-source/support tree remains present for compatibility. Other packagers reuse
-that projected discovery tree. Five CLI/plugin packages expose 12 Core plus
-102 Engineer Skills. Gemini Web imports one root Skill and 114 supporting
-Skill texts, not 114 independently callable Skills.
+central suppression rule in `scripts/package_unified.py` keeps `ak-explain`
+source-only. The source/support tree remains present for compatibility.
+OpenAI exposes one Root with other Core and registered specialist methods
+under internal references. Gemini Web imports one Root and a reference
+library. Broad CLI profiles expose Core plus published Engineer and Frontend
+methods in their host-specific directories. Generated Hub registry/cards and
+`bindings.json` describe the actual artifact; source counts are not callable
+Skill counts or evidence of activation.
 
 If updating an already installed personal ChatGPT plugin, remove the old
 `skills/ak-explain/` paths explicitly: Plugin Creator preserves omitted

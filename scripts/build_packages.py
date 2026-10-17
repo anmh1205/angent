@@ -16,7 +16,7 @@ import sys
 import tempfile
 import zipfile
 
-from package_unified import collect_entries, gateway_entries, PackagingError, FIXED_TIMESTAMP, EXPECTED_CORE, EXPECTED_ENGINEER, SUPPRESSED_PUBLIC_ENGINEER
+from package_unified import collect_entries, gateway_entries, bindings, _safe_file, PackagingError, FIXED_TIMESTAMP, EXPECTED_CORE, EXPECTED_ENGINEER, SUPPRESSED_PUBLIC_ENGINEER
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = ("local-agent", "gemini-web", "gemini-skills", "gemini-extension", "claude-code", "openai-plugin")
@@ -95,7 +95,7 @@ rather than assuming source version equals installed version.
 
 
 def _read_template(repo: Path, name: str) -> bytes:
-    return (repo / name).read_bytes()
+    return _safe_file(repo, name)
 
 
 def _manifest(version: str, platform: str) -> bytes:
@@ -205,6 +205,8 @@ def assemble(repo: Path, package: str, source: dict[str, bytes] | None = None) -
         assert "extensions/angent-engineer/plugin.json" not in files
         assert "extensions/angent-engineer/source-manifest.json" in files
         assert "plugin.json" in files and ".codex-plugin/plugin.json" in files
+    else:
+        files["hub/bindings.json"] = bindings(registry, "hub", SKILL_PREFIX[package].rstrip("/"), "broad")
     files["INSTALL.md"] = DOCS[package].encode()
     return files
 
@@ -213,7 +215,7 @@ def _assemble_gemini_web(source: dict[str, bytes]) -> dict[str, bytes]:
     """One browser Skill with a registry-guided, non-discoverable method library."""
     registry = json.loads(source["hub/registry.json"])
     original = source["skills/angent/SKILL.md"].decode("utf-8")
-    header = re.match(r"\A(---\n.*?\n---\n)", original, re.S)
+    header = re.match(r"\A(---\r?\n.*?\r?\n---\r?\n)", original, re.S)
     if header is None or re.search(r"^name:\s*angent\s*$", header.group(1), re.M) is None:
         raise PackagingError("Gemini Web requires ANGENT root metadata")
     intro = """
@@ -245,6 +247,8 @@ filesystem persistence or host tools. Host activation requires actual proof.
         for name in ext["roles"]:
             path = f"extensions/{ext['id']}/agents/{name}.md"
             files[f"references/roles/{ext['id']}/{name}.md"] = source[path]
+    files["references/hub/bindings.json"] = bindings(
+        registry, "references/hub", "references/catalog", "gateway", "references/roles")
 
     ext_names = set(registry["published_skills"])
     core = sorted(names - ext_names)
@@ -292,6 +296,7 @@ def _zip(files: dict[str, bytes], path: Path) -> str:
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name, content in sorted(files.items()):
             entry = zipfile.ZipInfo(name, FIXED_TIMESTAMP)
+            entry.create_system = 3  # Match the canonical Unix permission bits below.
             entry.compress_type = zipfile.ZIP_DEFLATED
             entry.external_attr = 0o100644 << 16
             archive.writestr(entry, content, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)

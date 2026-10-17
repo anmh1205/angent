@@ -11,15 +11,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import posixpath
 from pathlib import Path, PurePosixPath
 import re
+import stat
 import subprocess
 import sys
 import zipfile
 
 # Also support importlib loading of this standalone builder in validation tests.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from hub_registry import build_registry, HubError
+from hub_registry import build_registry, method_entries, HubError
 
 CORE_ROOT = "skills/"
 ENGINEER_ROOT = "extensions/angent-engineer/"
@@ -40,6 +42,10 @@ SUPPRESSED_PUBLIC_ENGINEER = frozenset({"ak-explain"})
 EXPECTED_DISCOVERABLE = EXPECTED_CORE + EXPECTED_ENGINEER - len(SUPPRESSED_PUBLIC_ENGINEER) + len(FRONTEND_NAMES)
 EXPECTED_OPENAI_DISCOVERABLE = 1
 FIXED_TIMESTAMP = (2020, 1, 1, 0, 0, 0)
+# Package text has canonical LF bytes even in a CRLF working checkout. Binary
+# resources are copied byte-for-byte; local tracked edits remain build inputs.
+TEXT_SUFFIXES = frozenset({".md", ".json", ".py", ".yaml", ".yml", ".txt",
+                           ".sh", ".csv", ".toml", ".svg"})
 
 
 class PackagingError(ValueError):
@@ -58,12 +64,25 @@ def _tracked(repo: Path) -> list[str]:
 
 def _safe_file(repo: Path, relative: str) -> bytes:
     parts = PurePosixPath(relative)
-    if parts.is_absolute() or ".." in parts.parts or "\\" in relative:
+    if not parts.parts or parts.is_absolute() or ".." in parts.parts or "\\" in relative or ":" in relative:
         raise PackagingError(f"Unsafe tracked path: {relative}")
-    path = repo.joinpath(*parts.parts)
-    if path.is_symlink() or not path.is_file():
-        raise PackagingError(f"Unsupported tracked file/symlink: {relative}")
-    return path.read_bytes()
+    root = repo.resolve(strict=True)
+    path = root
+    for part in parts.parts:
+        path = path / part
+        info = path.lstat()
+        # Reject every symlink/reparse point, including Windows junction parents.
+        if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400):
+            raise PackagingError(f"Unsupported tracked file/symlink: {relative}")
+    if not path.is_file() or not path.resolve(strict=True).is_relative_to(root):
+        raise PackagingError(f"Tracked file escapes source checkout: {relative}")
+    payload = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        try:
+            payload = payload.decode("utf-8").replace("\r\n", "\n").encode("utf-8")
+        except UnicodeError as exc:
+            raise PackagingError(f"Package text must be UTF-8: {relative}") from exc
+    return payload
 
 
 def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, bytes]:
@@ -73,8 +92,8 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
     core_names: set[str] = set()
     for path in paths:
         if path in CORE_FILES or path.startswith(("assets/", CORE_ROOT, "hub/")):
-            if path == "hub/registry.json":
-                raise PackagingError("Registry must be generated, not committed")
+            if path in {"hub/registry.json", "hub/catalog.md", "hub/bindings.json"} or path.startswith("hub/methods/"):
+                raise PackagingError("Hub registry/cards/bindings must be generated, not committed")
             target = path
             if re.fullmatch(r"skills/[^/]+/SKILL\.md", path):
                 core_names.add(path.split("/")[1])
@@ -112,6 +131,8 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
                         raise PackagingError(f"Skill collision: {target}")
                     entries[target] = content
     entries["hub/registry.json"] = (json.dumps(registry, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode()
+    entries.update(method_entries(entries))
+    entries["hub/bindings.json"] = bindings(registry, "hub", "skills", "broad")
     try:
         root = json.loads(entries["plugin.json"])
         codex = json.loads(entries[".codex-plugin/plugin.json"])
@@ -123,6 +144,19 @@ def collect_entries(repo: Path, tracked: list[str] | None = None) -> dict[str, b
         if f"extensions/{ext['id']}/plugin.json" in entries or f"extensions/{ext['id']}/.codex-plugin/plugin.json" in entries:
             raise PackagingError("Nested installable kit manifest")
     return entries
+
+
+def bindings(registry: dict, hub_path: str, skill_path: str, profile: str,
+             role_prefix: str | None = None) -> bytes:
+    """Resolve method resources in the actual artifact, relative to this Hub copy."""
+    data = {"profile": profile, "methods": {
+        name: posixpath.relpath(f"{skill_path}/{name}/SKILL.md", hub_path)
+        for name in registry["published_skills"]}, "roles": {
+        f"{ext['id']}:{role}": posixpath.relpath(
+            f"{role_prefix}/{ext['id']}/{role}.md" if role_prefix else
+            f"extensions/{ext['id']}/agents/{role}.md", hub_path)
+        for ext in registry["extensions"] for role in ext["roles"]}}
+    return (json.dumps(data, indent=2, sort_keys=True) + "\n").encode()
 
 
 def gateway_entries(source: dict[str, bytes]) -> dict[str, bytes]:
@@ -157,7 +191,9 @@ def gateway_entries(source: dict[str, bytes]) -> dict[str, bytes]:
 
 This is the only discoverable Skill in the OpenAI plugin. First apply the
 full ANGENT cognitive baseline. When specialist work adds value, read
-`references/hub/routing.md` and `references/hub/registry.json`, then use
+`references/hub/routing.md` and search `references/hub/catalog.md` (or its
+read-only `discover.py` helper). Inspect the candidate's method card and
+`references/hub/bindings.json` before loading it, then use
 the selected `references/catalog/<skill>/SKILL.md` as internal guidance.
 Kit Adapters translate expert methods but never control reasoning,
 authorization, final Quality or tool permissions.
@@ -170,6 +206,9 @@ not proof of native CLI, subagent, tool or filesystem capability.
     for p, data in sorted(source.items()):
         if p.startswith("hub/"):
             output[root + "references/" + p] = data
+    output["hub/bindings.json"] = bindings(registry, "hub", root + "references/catalog", "gateway", root + "references/roles")
+    output[root + "references/hub/bindings.json"] = bindings(
+        registry, root + "references/hub", root + "references/catalog", "gateway", root + "references/roles")
 
     index = ["# ANGENT internal capability catalog", "",
              "ANGENT Root selects optional methods; Core keeps final responsibility.",
@@ -224,12 +263,23 @@ def verify_zip(path: Path) -> dict[str, object]:
         for ext in extensions:
             required.add(f"extensions/{ext['id']}/extension.json")
             for skill in ext["skills"]:
+                required.add(f"hub/methods/{skill}.json")
+                required.add(f"skills/angent/references/hub/methods/{skill}.json")
                 required.add(f"skills/angent/references/catalog/{skill}/SKILL.md")
                 required.add(f"extensions/{ext['id']}/skills/{skill}/SKILL.md")
             for role in ext["roles"]:
                 required.add(f"skills/angent/references/roles/{ext['id']}/{role}.md")
         if not required <= present:
             raise PackagingError(f"Missing packaged Hub methods: {sorted(required - present)[:10]}")
+        for hub_path in ("hub", "skills/angent/references/hub"):
+            binding = json.loads(archive.read(hub_path + "/bindings.json"))
+            if set(binding["methods"]) != published:
+                raise PackagingError("Incomplete method bindings")
+            for entry, relative in binding["methods"].items():
+                resolved = posixpath.normpath(hub_path + "/" + relative)
+                expected = f"skills/angent/references/catalog/{entry}/SKILL.md"
+                if resolved != expected or resolved not in present:
+                    raise PackagingError(f"Wrong gateway binding: {entry}")
         if any(re.fullmatch(r"extensions/[^/]+/plugin\.json", p) or
                re.fullmatch(r"extensions/[^/]+/\.codex-plugin/plugin\.json", p)
                for p in present):
@@ -265,6 +315,7 @@ def build(repo: Path, output: Path) -> dict[str, object]:
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name in sorted(entries):
             info = zipfile.ZipInfo(name, FIXED_TIMESTAMP)
+            info.create_system = 3  # Canonical Unix metadata, independent of the build host.
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             archive.writestr(info, entries[name], compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)

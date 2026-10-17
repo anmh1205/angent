@@ -37,6 +37,7 @@ class UnifiedPackageTests(unittest.TestCase):
         self.assertEqual(self.report["internal_frontend_methods"], 1)
         self.assertEqual(self.report["engineer_roles"], 16)
         with zipfile.ZipFile(self.first) as z:
+            self.assertTrue(all(i.create_system == 3 and i.external_attr >> 16 == 0o100644 for i in z.infolist()))
             self.assertNotIn("extensions/angent-engineer/plugin.json", z.namelist())
             self.assertNotIn("extensions/angent-engineer/.codex-plugin/plugin.json", z.namelist())
             self.assertIn("extensions/angent-engineer/source-manifest.json", z.namelist())

@@ -28,12 +28,16 @@ jobs:
       - name: Exercise continuity and memory runtime semantics
         run: python3 -m unittest discover -s tests -p 'test_runtime_state.py' -v
 
+      - name: Exercise source containment and newline portability
+        run: python3 -m unittest discover -s tests -p 'test_source_boundary.py' -v
+
       - name: Exercise authoring/report evaluation schema and comparator
         run: |
           python3 -m unittest discover -s tests -p 'test_authoring_eval.py' -v
           python3 scripts/evaluate_authoring.py
           python3 -m unittest discover -s tests -p 'test_core_eval.py' -v
           python3 scripts/evaluate_authoring.py --cases evals/core/cases.json
+          python3 scripts/evaluate_authoring.py --cases evals/upgrade/cases.json
 
       - name: Exercise release identity checks
         run: |
@@ -51,6 +55,9 @@ jobs:
 
       - name: Verify Hub manifests, collisions and third-kit onboarding
         run: python3 -m unittest discover -s tests -p 'test_hub_registry.py' -v
+
+      - name: Verify method discovery and resource bindings in every profile
+        run: python3 -m unittest discover -s tests -p 'test_hub_discovery.py' -v
 
       - name: Build all platform distributions
         run: python3 scripts/build_packages.py --all
@@ -79,3 +86,18 @@ jobs:
           path: dist/angent-chatgpt.zip
           if-no-files-found: error
           retention-days: 7
+
+  windows-boundaries:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Exercise Windows recovery, junction containment and package inputs
+        run: |
+          python -m unittest discover -s tests -p test_runtime_state.py -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m unittest discover -s tests -p test_source_boundary.py -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m unittest discover -s tests -p test_hub_discovery.py -v
+          exit $LASTEXITCODE

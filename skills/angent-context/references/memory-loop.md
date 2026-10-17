@@ -49,13 +49,13 @@ Retrieve only memories relevant to the current task/decision.
 
 For Learning scopes, retrieve by the mechanism's decision/failure class and applicability boundary rather than lexical similarity alone.
 
-Use topic prefixes/status to discover candidate entries before loading the full store. Prefer exact-topic lookup when the topic is known. Ignore superseded entries unless historical conflict matters.
+Use topic prefixes/status to discover candidate entries before loading bodies. The local `list` command returns metadata only, at most 50 entries by default (`--limit` 1–200); follow `next_after` with `--after` when more candidates matter. `get --topic` retrieves the exact full body. `read` deliberately exports the entire store and is not the default relevance lookup. Ignore superseded entries unless historical conflict matters. Cursors describe one observed revision; restart discovery after a concurrent revision change when complete coverage matters.
 
 Raw session logs, journals and archived chats may be searched when compact memory is insufficient; they are evidence, not default prompt context.
 
 ## Local file backend
 
-For local harnesses, scripts/memory_store.py provides a small optional persistence backend.
+For local harnesses, scripts/memory_store.py provides a small optional persistence backend. Use it only when current user/host policy authorizes that storage scope. An available script does not create permission to promote or persist a memory.
 
 Default locations:
 

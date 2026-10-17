@@ -57,6 +57,7 @@ class HubRegistryTests(unittest.TestCase):
 
         # The projection is declared data; no extra hardcoded gateway route.
         source["hub/registry.json"] = (json.dumps(registry) + "\n").encode()
+        source.update(hub_registry.method_entries(source))
         source["skills/example-test/SKILL.md"] = payload
         gateway = package_unified.gateway_entries(source)
         self.assertNotIn("skills/example-test/SKILL.md", gateway)

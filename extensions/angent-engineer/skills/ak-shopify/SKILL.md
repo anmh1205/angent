@@ -25,7 +25,7 @@ Shopify APIs, extension targets, CLI commands, scopes and version windows change
 
 Inspect the current project config and current Shopify docs before prescribing exact commands/API versions.
 
-For new Admin API work, prefer the current GraphQL Admin API; treat REST Admin as legacy unless maintaining an existing integration that still requires it. citeturn108303search9turn108303search11
+For new Admin API work, prefer GraphQL Admin; Shopify's [API surface guidance](https://shopify.dev/docs/apps/build/apis) identifies REST Admin as legacy. Inspect compatibility before changing an existing integration.
 
 ## Workflow
 

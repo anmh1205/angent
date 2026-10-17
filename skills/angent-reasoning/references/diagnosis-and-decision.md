@@ -16,6 +16,13 @@ For a vehicle telemetry delay: source timestamps show whether the device generat
 
 When evidence contradicts the current model, update affected dependencies and preserve unrelated accepted facts. If no decisive observation can be obtained, state the competing explanations and the safest reversible next action.
 
+For a concrete discriminator, suppose the same source packages on one machine
+but rejects root metadata on another. Two live explanations are missing metadata
+and a newline-sensitive parser. Compare exact header bytes, then parse the same
+input with only CRLF/LF changed. Failure only on CRLF supports the parser
+boundary; an unrelated clean build does not distinguish these causes. This
+probe cannot establish host activation or the correctness of every bundle.
+
 ## Choose solutions against needs and constraints
 
 Separate the stakeholder's problem and desired change from the suggested implementation. Ask which decision, burden or failure the solution should improve, and what evidence could show improvement. Consider a simpler nontechnical process or a limited pilot where it could meet the need better than an immediate full system.

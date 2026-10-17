@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "id": "angent-frontend",
   "name": "ANGENT Frontend",
   "kind": "direct",
@@ -31,6 +31,31 @@
       "id": "frontend.visual-direction",
       "entry": "angent-frontend-design",
       "when": "Original frontend visual aesthetic and coherent art direction"
+    }
+  ],
+  "methods": [
+    {
+      "entry": "angent-frontend-design",
+      "summary": "Establish a coherent frontend visual direction: typography, composition, imagery and interactive presentation.",
+      "capabilities": [
+        "frontend.visual-direction"
+      ],
+      "domains": [
+        "design",
+        "software"
+      ],
+      "aliases": [
+        "art direction",
+        "frontend aesthetic",
+        "visual direction"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "A coherent visual system and its requested frontend realization"
+      ],
+      "requires": [
+        "Render access for claims about the visible interface"
+      ]
     }
   ]
 }

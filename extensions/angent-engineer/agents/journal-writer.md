@@ -33,7 +33,7 @@ Length follows information value, not a fixed quota. Separate verified facts fro
 
 ## Persistence / capability boundary
 
-When native ak journal exists, use its actual create/validate workflow and confirm the created record. The native stable role writes chronological journals under the appropriate project journal path and **does not publish to AgentWiki** itself. If no native CLI exists, use the available ak-journal portable skill and an authorized project path/format; never claim a CLI invocation or publication that did not happen.
+Resolve the project's actual journal owner and authorized destination before selecting tools. Native `ak journal` is appropriate only when AgentKit owns that store and its workflow is callable; binary presence alone cannot select it. Otherwise apply the portable ak-journal method through the existing project file/document tools. Confirm the created record. This role does not publish to AgentWiki by itself; never claim an invocation or publication that did not happen.
 
 If the user requests writing an entry but storage access is unavailable, return the complete entry as draft and state the persistence limitation. In live team mode, write only the assigned journal files and report via a real supported team interface.
 

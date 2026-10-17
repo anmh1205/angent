@@ -71,7 +71,7 @@ Define:
 - background/foreground sync triggers;
 - user-visible sync/error state.
 
-Flutter's current architecture guidance likewise treats offline behavior as a design choice with multiple sync strategies rather than one mandatory pattern. citeturn852002search10
+Flutter's [offline-first guidance](https://docs.flutter.dev/app-architecture/design-patterns/offline-first) describes different read, write and synchronization approaches selected by application requirements.
 
 ## Performance and platform facts
 

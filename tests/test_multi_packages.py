@@ -84,6 +84,13 @@ class MultiPackageTests(unittest.TestCase):
         with self.assertRaises(legacy.PackagingError):
             packs._agent_projection("agents/foo.md", b"---\nname: another\ndescription: fine\n---\nBody")
 
+    def test_gemini_web_accepts_direct_crlf_metadata(self):
+        source = dict(self.source)
+        source["skills/angent/SKILL.md"] = source["skills/angent/SKILL.md"].replace(b"\n", b"\r\n")
+        files = packs.assemble(ROOT, "gemini-web", source)
+        self.assertIn(b"name: angent\r\n", files["SKILL.md"])
+        self.assertIn(b"## Gemini Apps Web: ANGENT Hub", files["SKILL.md"])
+
     def test_reproducible_and_copy_ready_outputs(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp)

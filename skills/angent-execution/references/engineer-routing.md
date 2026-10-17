@@ -17,7 +17,7 @@ AgentKit CLI version/doctor output can provide supporting health evidence, but c
 
 ## Fallback
 
-When native Engineer is absent, unusable, or its usability cannot be established, use the bundled `ak-*` Skills from ANGENT's discoverable `skills/` directory. Their maintained source remains at `extensions/angent-engineer/`, and the 16 portable role contracts are included as supporting files.
+When native Engineer cannot supply the selected method, inspect the bundled method's card and the packaged Hub's `bindings.json`. It resolves the actual method and role resources relative to that Hub directory. OpenAI and Gemini Web keep methods inside Root's internal reference library; broad CLI profiles expose their host-specific Skill directory. Do not guess a top-level `skills/ak-*/SKILL.md` path. Maintained source belongs to `extensions/angent-engineer/`; source availability is distinct from a callable host method.
 
 A single installed plugin does **not** guarantee the host hides fallback Skills when native Engineer is present. Route the task to one provider; avoid mixing native and fallback workflows. See `engineer-selection.md` for this limitation and the package boundary.
 
@@ -52,7 +52,7 @@ If a fallback Skill depended on AgentKit-specific runtime machinery:
 - preserve files-first plan semantics without requiring the CLI;
 - map active-work state into ANGENT Continuity;
 - use harness-native delegation when available;
-- degrade team/orchestrate to sequential execution when unavailable;
+- use Orchestrate's sequential graph when the requested result permits it; Team requires its actual live lifecycle, so reroute or report the gap instead of calling sequential simulation a Team;
 - use proactive Continuity capture instead of requiring hooks.
 
 Do not claim portability if removing a runtime dependency silently removes the workflow capability.

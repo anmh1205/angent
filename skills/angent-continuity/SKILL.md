@@ -52,7 +52,7 @@ Advance at meaningful work boundaries, including branch scheduling-state changes
 
 ## Persisted-state trust
 
-A coherent checkpoint is not automatically a trusted checkpoint.
+A coherent checkpoint is not automatically a trusted checkpoint. Recover the highest valid immutable revision even when a convenience pointer is stale or a partial restore left gaps; skip malformed records rather than letting one hide valid work. Structural coherence, storage authenticity, current source state and current action authority are separate checks. On recovery, preserve which evidence supports each of them.
 
 Continuity must preserve or recover enough storage provenance to know whether the record came from a trusted/application-controlled backend or an external/imported surface whose integrity/ownership still needs verification.
 

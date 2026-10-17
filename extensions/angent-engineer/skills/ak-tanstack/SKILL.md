@@ -22,7 +22,7 @@ Do not assume:
 - AI because the application has chat;
 - package APIs from the 2.19.0 snapshot are still current.
 
-TanStack AI was alpha in the pinned package snapshot but current official docs have advanced beyond that; use the installed/current package contract, not the old maturity label. citeturn852002search4turn852002search11
+Use the installed package contract and the [official AI overview](https://tanstack.com/ai/latest/docs/getting-started/overview); a maturity label from the pinned upstream snapshot cannot establish the installed release's suitability.
 
 ## Start / Router
 
@@ -34,7 +34,7 @@ Preserve:
 - server-only secrets and database/provider access;
 - middleware/auth/CSRF/origin behavior.
 
-Current Start docs describe server functions as same-origin RPC and distinguish them from public server routes; preserve that security boundary. citeturn852002search3turn852002search15
+The [Start server-functions guide](https://tanstack.com/start/latest/docs/framework/react/guide/server-functions) distinguishes same-origin application RPC from server routes intended for outside callers; inspect the configured origin/CSRF protection.
 
 ## Form
 
@@ -46,7 +46,7 @@ Preserve:
 - accessibility of errors/submission state;
 - installed schema-library compatibility.
 
-Validation behavior changes across versions; inspect current docs instead of pasting a package-era adapter pattern. citeturn852002search1turn852002search8
+Match validation timing and schema integration to the installed version using [Form and field validation](https://tanstack.com/form/latest/docs/framework/react/guides/validation), rather than copying a package-era adapter pattern.
 
 ## AI
 
@@ -58,7 +58,7 @@ Preserve:
 - persistence/sandbox/subagent/MCP behavior only when supported by the installed version;
 - provider/model selection as current runtime configuration.
 
-Do not keep the package-era “Alpha/not production-ready” label as current truth. citeturn852002search9turn852002search11
+Consult the [AI overview](https://tanstack.com/ai/latest/docs/getting-started/overview) and installed release before judging maturity; neither an old warning nor a marketing claim establishes this project's production readiness.
 
 ## Workflow
 
