@@ -89,7 +89,8 @@ def audit(model: Any) -> dict[str, Any]:
         adj[a].add(b)
         edge_types = ({"sync", "async", "return"} if kind == "sequence" else
                       {"forward", "return"} if kind in FLOW else None)
-        if edge_types is not None and "kind" in edge and edge["kind"] not in edge_types:
+        if (edge_types is not None and "kind" in edge and
+            (not isinstance(edge["kind"], str) or edge["kind"] not in edge_types)):
             errors.append(f"edges[{i}]: unsupported {kind} edge kind {edge['kind']!r}")
         if a == b and kind in ("activity", "sitemap"):
             warnings.append(f"{a}: self-loop needs explicit rationale")
