@@ -265,6 +265,10 @@ def audit(model: Any) -> dict[str, Any]:
             if not edge.get("label"):
                 warnings.append(f"sequence: edges[{i}] has no message label")
         fragments = model.get("fragments", [])
+        sequence_ids={edge.get("id",f"message-{i+1}"):i
+                      for i,edge in enumerate(edges)
+                      if isinstance(edge,dict) and
+                      isinstance(edge.get("id",f"message-{i+1}"),str)}
         if not isinstance(fragments,list):
             errors.append("sequence: fragments must be an array")
         else:
@@ -278,6 +282,8 @@ def audit(model: Any) -> dict[str, Any]:
                 if not isinstance(fragment.get("label"),str) or not fragment["label"].strip():
                     errors.append(f"sequence: fragments[{i}] needs a meaningful label")
                 branches=[("messages",fragment.get("messages"))]
+                if fkind=="alt" and "else" not in fragment:
+                    errors.append(f"sequence: fragments[{i}] alt needs an else branch")
                 if "else" in fragment:
                     alternate=fragment["else"]
                     if fkind!="alt":
@@ -302,8 +308,16 @@ def audit(model: Any) -> dict[str, Any]:
                     if missing:
                         errors.append(f"sequence: fragments[{i}] {name} refers to unknown messages: "+", ".join(missing))
                     branch_refs.extend(refs)
+                    if all(x in sequence_ids for x in refs):
+                        positions=[sequence_ids[x] for x in refs]
+                        if positions!=list(range(positions[0],positions[0]+len(positions))):
+                            errors.append(f"sequence: fragments[{i}] {name} must be contiguous in message time order")
                 if len(branch_refs)!=len(set(branch_refs)):
                     errors.append(f"sequence: fragments[{i}] message occurs in both branches")
+                elif branch_refs and all(x in sequence_ids for x in branch_refs):
+                    positions=[sequence_ids[x] for x in branch_refs]
+                    if positions!=list(range(positions[0],positions[0]+len(positions))):
+                        errors.append(f"sequence: fragments[{i}] branches must form one contiguous time range")
     return {"ok": not errors, "errors": sorted(set(errors)), "warnings": sorted(set(warnings)),
             "type": kind, "node_count": len(nodes), "edge_count": len(edges),
             "rendered_or_written_to_figma": False}

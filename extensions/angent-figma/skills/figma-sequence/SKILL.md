@@ -12,6 +12,29 @@ Maintained adaptation of the MIT Reqwise Figma MCP method, copyright and attribu
 ANGENT Root keeps reasoning and permission decisions. The original role/tool list and slash-command lifecycle are source examples, not evidence that the current host has the Reqwise MCP installed. Check figma_status, active file, target and permissions before invoking a native write; verify results by figma_read/get_diagram_spec and layout_audit. An unavailable native tool permits only a draft model; never claim a Figma write. Read the shared OSS diagram rules from ../figma-activity/references/oss-diagram-rules.md when useful. Keep the user's existing design system and BA business semantics.
 
 
+## Portable sequence fragments and evaluation
+
+For the portable `to_reqwise_payload.py` route, represent each ordered message as a
+model `edges[]` entry with a **stable explicit `id`** when other structures reference
+it. The compiler keeps message order intact and maps these edges to Reqwise OSS
+`messages[]`. Represent supported alternatives in `fragments[]` with `kind`
+(`alt`, `opt`, `loop`, `par`, `break`), a meaningful `label`, and references to
+actual message IDs. An `alt` has an `else` branch containing a separately labeled
+nonempty ordered message list; one-branch conditions use `opt`. The messages in
+each branch and the total fragment must be consecutive in time order. The
+compiler rejects unknown/duplicate message IDs and broken fragment extents
+instead of quietly flattening decisions into one timeline.
+
+Example: `{"kind":"alt","label":"Owner authorized","messages":["reply-ok"],"else":{"label":"Access denied","messages":["reply-denied"]}}`.
+Both `reply-ok` and `reply-denied` must be actual message IDs in `edges[]`.
+This encodes *alternative outcomes*, not two production calls made serially.
+
+The Reqwise `text` shorthand shown below is an upstream MCP capability. It
+is not currently parsed by the ANGENT **portable JSON adapter**. Do not pass a
+text string to the portable compiler and claim a native Figma frame; review
+the compiled payload and run the installed provider only with current
+permissions and verified read-back.
+
 ## ANGENT runnable adapter and evidence boundary
 
 The corresponding **real, local model fixture** is `extensions/angent-figma/examples/rental-fleet-sequence.json`. Derive any new model from inspected requirements before running this tool; the fixture is illustrative only.

@@ -197,6 +197,27 @@ class ReqwisePayloadTests(unittest.TestCase):
         self.assertEqual(generated["messages"][3]["id"],"authorized-answer")
         self.assertEqual(generated["fragments"][0]["else"]["messages"],["denied-answer")
 
+    def test_sequence_fragments_must_be_contiguous_and_alternatives_have_else(self):
+        original=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
+        missing_else=deepcopy(original)
+        missing_else["fragments"][0].pop("else")
+        with self.assertRaisesRegex(ValueError,"alt needs an else branch"):
+            compile_model(missing_else)
+        gap=deepcopy(original)
+        gap["fragments"][0]["messages"]=["message-2","message-4"]
+        gap["fragments"][0]["else"]["messages"]=["message-5"]
+        with self.assertRaisesRegex(ValueError,"contiguous"):
+            compile_model(gap)
+        misplaced=deepcopy(original)
+        misplaced["fragments"][0]["messages"]=["message-5"]
+        misplaced["fragments"][0]["else"]["messages"]=["message-4"]
+        with self.assertRaisesRegex(ValueError,"contiguous time range"):
+            compile_model(misplaced)
+        valid=deepcopy(original)
+        valid["fragments"]=[{"kind":"loop","label":"Poll latest status",
+                             "messages":["message-2","message-3"]}]
+        self.assertEqual(compile_model(valid)["arguments"]["spec"]["fragments"][0]["kind"],"loop")
+
     def test_sequence_rejects_missing_and_duplicated_fragment_messages(self):
         original=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
         mutants=[]
