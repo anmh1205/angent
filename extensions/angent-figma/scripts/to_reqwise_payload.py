@@ -15,6 +15,7 @@ from validate_diagram_model import audit
 
 SUPPORTED = {"activity", "userflow", "state", "sequence", "erd", "sitemap"}
 VALID_RANKDIR = {"TB", "LR"}
+ERD_CARDINALITIES = {"one", "many", "zero-one", "zero-many", "one-many"}
 REF_RE = re.compile(r"^[A-Z][A-Z0-9-]{1,99}$")
 
 
@@ -76,7 +77,8 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
         spec["nodes"] = [{"id": n["id"], "label": n["label"], "kind": mapping.get(n.get("kind"), n.get("kind","screen")),
                            **({"screenId": n["screenId"]} if n.get("screenId") else {})} for n in nodes]
         spec["edges"] = [{"from": e["from"], "to": e["to"],
-                           **({"label": str(e.get("guard") or e.get("label"))} if e.get("guard") or e.get("label") else {})}
+                           **({"label": e.get("guard") or e.get("label")} if e.get("guard") or e.get("label") else {}),
+                           **({"kind": e["kind"]} if "kind" in e else {})}
                           for e in edges]
     elif kind == "state":
         mapping = {"start": "initial", "end": "final", "decision": "choice", "task": "state"}
@@ -92,7 +94,7 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
         spec["participants"] = [{"id": n["id"], "name": n["label"],
                                   "kind": pmap.get(n.get("kind"), "system")} for n in nodes]
         spec["messages"] = [{"id": f"message-{i+1}", "from": e["from"], "to": e["to"],
-                             "label": e["label"], "kind": e.get("kind", "sync") if e.get("kind") in ("sync","async","return") else "sync"}
+                             "label": e["label"], "kind": e.get("kind", "sync")}
                             for i, e in enumerate(edges)]
     elif kind == "sitemap":
         roots = {n["id"] for n in nodes}
@@ -136,8 +138,17 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
         spec["entities"] = entities
         relations = []
         for e in edges:
-            if not e.get("fromField") or not e.get("toField"):
+            for field in ("fromCard", "toCard"):
+                if field in e and (not isinstance(e[field], str) or
+                                   e[field] not in ERD_CARDINALITIES):
+                    raise ValueError(f"ERD relationship {e['from']}->{e['to']} has invalid {field}")
+            if "identifying" in e and not isinstance(e["identifying"], bool):
+                raise ValueError(f"ERD relationship {e['from']}->{e['to']} identifying must be boolean")
+            if any(not isinstance(e.get(name), str) or not e[name].strip()
+                   for name in ("fromField", "toField")):
                 raise ValueError(f"ERD relationship {e['from']}->{e['to']} must name both columns")
+            if "cardinality" in e and ("fromCard" not in e or "toCard" not in e):
+                raise ValueError("ERD cardinality shorthand is not a Reqwise contract; specify fromCard and toCard")
             a = next(x for x in entities if x["id"] == e["from"])
             b = next(x for x in entities if x["id"] == e["to"])
             if e["fromField"] not in {x["name"] for x in a["attributes"]}:
@@ -148,7 +159,8 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
                               "fromField": e["fromField"], "toField": e["toField"],
                               **({"fromCard": e["fromCard"]} if e.get("fromCard") else {}),
                               **({"toCard": e["toCard"]} if e.get("toCard") else {}),
-                              **({"label": e["label"]} if e.get("label") else {})})
+                              **({"label": e["label"]} if e.get("label") else {}),
+                              **({"identifying": e["identifying"]} if "identifying" in e else {})})
         spec["relations"] = relations
     return {"tool": "figma_diagram", "arguments": {"type": kind, "spec": spec},
             "source_refs":refs,

@@ -87,6 +87,10 @@ def audit(model: Any) -> dict[str, Any]:
         if b not in adj[a]:
             indeg[b] += 1
         adj[a].add(b)
+        edge_types = ({"sync", "async", "return"} if kind == "sequence" else
+                      {"forward", "return"} if kind in FLOW else None)
+        if edge_types is not None and "kind" in edge and edge["kind"] not in edge_types:
+            errors.append(f"edges[{i}]: unsupported {kind} edge kind {edge['kind']!r}")
         if a == b and kind in ("activity", "sitemap"):
             warnings.append(f"{a}: self-loop needs explicit rationale")
     if not nodes:
@@ -143,18 +147,26 @@ def audit(model: Any) -> dict[str, Any]:
         for key in sorted(reached - can_finish):
             errors.append(f"{kind}: no path from {key} to a terminal")
         for key, node in by_id.items():
-            if node.get("kind") == "decision":
+            if node.get("kind") in ("decision", "choice"):
                 outgoing = [edge for edge in edges if isinstance(edge, dict) and edge.get("from") == key]
                 if len(outgoing) < 2:
                     errors.append(f"{kind}: decision {key} needs two or more branches")
-                # Reqwise calls this "label" on activity/userflow edges and
-                # "guard" on state transitions; accept either representation.
-                conditions = [e.get("guard") or e.get("label")
-                              for e in outgoing]
-                if any(not isinstance(value, str) or not value.strip() for value in conditions):
-                    errors.append(f"{kind}: decision {key} has an unlabeled branch")
-                elif len({value.strip() for value in conditions}) != len(conditions):
-                    errors.append(f"{kind}: decision {key} has duplicate branch conditions")
+                if kind == "state":
+                    # In a UML choice node, at most one outgoing transition
+                    # may be the implicit else branch. Events are not guards.
+                    conditions = [e.get("guard") for e in outgoing]
+                    missing = sum(not isinstance(x, str) or not x.strip() for x in conditions)
+                    if missing > 1:
+                        errors.append(f"{kind}: choice {key} has multiple unguarded branches")
+                    supplied = [x.strip() for x in conditions if isinstance(x, str) and x.strip()]
+                    if len(set(supplied)) != len(supplied):
+                        errors.append(f"{kind}: choice {key} has duplicate branch guards")
+                else:
+                    conditions = [e.get("guard") or e.get("label") for e in outgoing]
+                    if any(not isinstance(value, str) or not value.strip() for value in conditions):
+                        errors.append(f"{kind}: decision {key} has an unlabeled branch")
+                    elif len({value.strip() for value in conditions}) != len(conditions):
+                        errors.append(f"{kind}: decision {key} has duplicate branch conditions")
     if kind in ACYCLIC:
         for key, degree in sorted(indeg.items()):
             if degree > 1:

@@ -72,6 +72,31 @@ class ReqwisePayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "owner"):
             compile_model(m)
 
+    def test_userflow_return_is_not_silently_downgraded_to_normal_navigation(self):
+        model=json.loads((FIGMA/"examples/rental-fleet-userflow.json").read_text(encoding="utf8"))
+        # Re-entry to the same screen is an explicit retry, not a regular step.
+        model["edges"].append({"from":"vehicle_list","to":"vehicle_list",
+                               "label":"Refresh list","kind":"return"})
+        self.assertTrue(compile_model(model)["dry_run"])
+        edges=compile_model(model)["arguments"]["spec"]["edges"]
+        self.assertEqual(edges[-1]["kind"],"return")
+
+    def test_erd_rejects_invalid_cardinality_and_preserves_identifying(self):
+        model=json.loads((FIGMA/"examples/rental-fleet-erd.json").read_text(encoding="utf8"))
+        model["edges"][0]["identifying"]=True
+        out=compile_model(model)["arguments"]["spec"]["relations"][0]
+        self.assertTrue(out["identifying"])
+        for field,bad in (("fromCard","exactly-five"),("toCard",False),("identifying","true")):
+            with self.subTest(field=field):
+                wrong=deepcopy(model)
+                wrong["edges"][0][field]=bad
+                with self.assertRaisesRegex(ValueError,"invalid|boolean"):
+                    compile_model(wrong)
+        wrong=deepcopy(model)
+        del wrong["edges"][0]["toCard"]
+        with self.assertRaisesRegex(ValueError,"cardinality shorthand"):
+            compile_model(wrong)
+
     def test_state_and_sequence_mapping(self):
         state = deepcopy(self.activity)
         state["type"] = "state"

@@ -152,6 +152,40 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "metadata must be an object"):
                     compile_model(m)
 
+    def test_state_choice_requires_distinct_guards_and_one_optional_else(self):
+        m={"type":"state","nodes":[
+            {"id":"start","kind":"initial","label":"Start"},
+            {"id":"choice","kind":"choice","label":"Allowed?"},
+            {"id":"yes","kind":"final","label":"Accepted"},
+            {"id":"no","kind":"final","label":"Denied"},
+        ],"edges":[
+            {"from":"start","to":"choice"},
+            {"from":"choice","to":"yes","guard":"authorized"},
+            {"from":"choice","to":"no"}
+        ]}
+        self.assertTrue(audit(m)["ok"],audit(m))
+        self.assertEqual(compile_model(m)["arguments"]["spec"]["states"][1]["kind"],"choice")
+        m["edges"][1].pop("guard")
+        self.assertIn("state: choice choice has multiple unguarded branches",audit(m)["errors"])
+        m["edges"][1]["guard"]="authorized"
+        m["edges"][2]["guard"]="authorized"
+        self.assertIn("state: choice choice has duplicate branch guards",audit(m)["errors"])
+
+    def test_invalid_flow_and_sequence_edge_kinds_rejected(self):
+        for original in (self.activity,self.userflow,self.state):
+            model=deepcopy(original)
+            model["edges"][0]["kind"]="dashed-but-not-a-valid-provider-enum"
+            outcome=audit(model)
+            self.assertFalse(outcome["ok"])
+            self.assertTrue(any("unsupported" in e and "edge kind" in e for e in outcome["errors"]))
+            with self.assertRaisesRegex(ValueError,"unsupported"):
+                compile_model(model)
+        seq=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
+        seq["edges"][0]["kind"]="return-to-the-wrong-caller"
+        self.assertIn("unsupported sequence edge kind",str(audit(seq)["errors"]))
+        with self.assertRaisesRegex(ValueError,"unsupported sequence edge kind"):
+            compile_model(seq)
+
     def test_unknown_kind_is_not_forwarded_as_valid_reqwise_payload(self):
         m = deepcopy(self.activity)
         m["nodes"][1]["kind"] = "invented-step-kind"
