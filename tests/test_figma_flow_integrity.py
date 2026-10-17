@@ -171,6 +171,30 @@ class DiagramFlowIntegrityTests(unittest.TestCase):
         m["edges"][2]["guard"]="authorized"
         self.assertIn("state: choice choice has duplicate branch guards",audit(m)["errors"])
 
+    def test_explicitly_continuous_state_lifecycle_without_final_is_valid(self):
+        model={"type":"state","metadata":{"continuous":True},
+               "nodes":[{"id":"initial","kind":"initial","label":"Start"},
+                        {"id":"idle","kind":"state","label":"Idle"},
+                        {"id":"active","kind":"state","label":"Active"}],
+               "edges":[{"from":"initial","to":"idle"},
+                        {"from":"idle","to":"active","label":"Activate"},
+                        {"from":"active","to":"idle","label":"Deactivate"}]}
+        checked=audit(model)
+        self.assertTrue(checked["ok"],checked)
+        self.assertTrue(any("continuous lifecycle" in w for w in checked["warnings"]))
+        self.assertEqual(compile_model(model)["semantic_approval"],"not-established")
+        changed=deepcopy(model)
+        del changed["metadata"]["continuous"]
+        self.assertIn("state: missing terminal outcome",audit(changed)["errors"])
+        changed=deepcopy(model)
+        changed["edges"].pop()
+        self.assertFalse(audit(changed)["ok"])
+        self.assertTrue(any("dead end" in e for e in audit(changed)["errors"]))
+        changed=deepcopy(model)
+        changed["metadata"]["continuous"]="yes"
+        self.assertIn("metadata.continuous must be a boolean on state diagrams",
+                      audit(changed)["errors"])
+
     def test_invalid_flow_and_sequence_edge_kinds_rejected(self):
         for original in (self.activity,self.userflow,self.state):
             model=deepcopy(original)

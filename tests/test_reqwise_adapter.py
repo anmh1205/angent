@@ -35,6 +35,17 @@ class ReqwisePayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"Duplicate"):
             compile_model(bad,evidence_ids=ids)
 
+    def test_structural_payload_retains_warnings_and_does_not_claim_approval(self):
+        payload=compile_model(self.activity)
+        self.assertEqual(payload["semantic_approval"],"not-established")
+        self.assertTrue(isinstance(payload["model_warnings"],list))
+        erd=json.loads((FIGMA/"examples/rental-fleet-erd.json").read_text(encoding="utf8"))
+        erd["edges"][0].pop("cardinality",None)
+        erd["edges"][0].pop("fromCard")
+        erd["edges"][0].pop("toCard")
+        result=compile_model(erd)
+        self.assertTrue(any("cardinality" in warning for warning in result["model_warnings"]))
+
     def test_activity_dry_run_by_default(self):
         p = compile_model(self.activity)
         self.assertEqual(p["tool"], "figma_diagram")

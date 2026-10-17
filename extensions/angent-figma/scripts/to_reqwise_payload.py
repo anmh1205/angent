@@ -181,6 +181,8 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
     return {"tool": "figma_diagram", "arguments": {"type": kind, "spec": spec},
             "source_refs":refs,
             "source_link_check":"ids-resolved-only" if evidence_ids is not None else "not-performed",
+            "model_warnings":checked["warnings"],
+            "semantic_approval":"not-established",
             "writes_performed": False, "requires_live_mcp": True,
             "dry_run": not ready_to_write, "upstream_model": "Reqwise Figma MCP MIT tool shape"}
 

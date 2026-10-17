@@ -44,6 +44,9 @@ def audit(model: Any) -> dict[str, Any]:
         kind = "unknown"
     if "metadata" in model and not isinstance(model["metadata"], dict):
         errors.append("metadata must be an object")
+    meta=model.get("metadata") if isinstance(model.get("metadata"),dict) else {}
+    if "continuous" in meta and (kind != "state" or not isinstance(meta["continuous"],bool)):
+        errors.append("metadata.continuous must be a boolean on state diagrams")
     nodes, edges = model.get("nodes"), model.get("edges")
     if not isinstance(nodes, list) or not isinstance(edges, list):
         return {"ok": False, "errors": errors + ["nodes and edges must be arrays"], "warnings": warnings}
@@ -128,9 +131,14 @@ def audit(model: Any) -> dict[str, Any]:
                                  if node.get("kind") == "external" and not adj[key])
                           if kind == "activity" else [])
         terminals = sorted(set(ends + external_exits))
+        # A persistent session, switch or process may legitimately have no
+        # final state, but this must be a documented design decision.
+        continuous = kind == "state" and meta.get("continuous") is True and not terminals
+        if continuous:
+            warnings.append("state: explicitly continuous lifecycle without final; review termination policy")
         if len(starts) != 1:
             errors.append(f"{kind}: expected exactly one start/initial node")
-        if not terminals:
+        if not terminals and not continuous:
             errors.append(f"{kind}: missing terminal outcome")
         for key in starts:
             if indeg[key]:
@@ -164,8 +172,9 @@ def audit(model: Any) -> dict[str, Any]:
                 if previous not in can_finish:
                     can_finish.add(previous)
                     pending.append(previous)
-        for key in sorted(reached - can_finish):
-            errors.append(f"{kind}: no path from {key} to a terminal")
+        if not continuous:
+            for key in sorted(reached - can_finish):
+                errors.append(f"{kind}: no path from {key} to a terminal")
         for key, node in by_id.items():
             if node.get("kind") in ("decision", "choice"):
                 outgoing = [edge for edge in edges if isinstance(edge, dict) and edge.get("from") == key]
@@ -187,6 +196,17 @@ def audit(model: Any) -> dict[str, Any]:
                         errors.append(f"{kind}: decision {key} has an unlabeled branch")
                     elif len({value.strip() for value in conditions}) != len(conditions):
                         errors.append(f"{kind}: decision {key} has duplicate branch conditions")
+    if kind == "state":
+        for i,edge in enumerate(edges):
+            if not isinstance(edge,dict) or edge.get("from") not in by_id:
+                continue
+            origin=by_id[edge["from"]]
+            if (origin.get("kind") not in ("initial","start","choice","decision","fork","join")
+                and not edge.get("label") and not edge.get("guard")
+                and not origin.get("do")):
+                warnings.append(
+                    f"state: transitions[{i}] lacks event/guard and originating do activity; review trigger"
+                )
     if kind in ACYCLIC:
         for key, degree in sorted(indeg.items()):
             if degree > 1:
