@@ -97,6 +97,9 @@ def audit_ir(ir: Any) -> dict[str, Any]:
             errors.append(f"flows[{i}] must be an object")
             continue
         key = _id(flow.get("id"), f"flows[{i}].id", errors)
+        if "name" in flow and (not isinstance(flow["name"],str) or
+                               not flow["name"].strip()):
+            errors.append(f"flows[{i}]: name must be nonempty text")
         src, dest = flow.get("src"), flow.get("tgt")
         if not isinstance(src,str) or not isinstance(dest,str) or src not in nodes or dest not in nodes:
             errors.append(f"flows[{i}]: unknown source or target")

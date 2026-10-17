@@ -88,6 +88,17 @@ class BPMNCompilerTests(unittest.TestCase):
         ir["flows"][3]["tgt"]="NOT_HERE"
         self.assertTrue(any("unknown" in e for e in audit_ir(ir)["errors"]))
 
+    def test_bpmn_branch_names_cannot_be_fake_truthy_objects(self):
+        for invalid in (42, False, ["approved"], {"condition":"approved"}, ""):
+            ir=deepcopy(self.ir)
+            ir["flows"][3]["name"]=invalid
+            with self.subTest(name=invalid):
+                outcome=audit_ir(ir)
+                self.assertFalse(outcome["ok"])
+                self.assertTrue(any("name must be nonempty text" in e for e in outcome["errors"]))
+                with self.assertRaisesRegex(ValueError,"name must be nonempty text"):
+                    compile_bpmn(ir)
+
     def test_cycle_rejected_instead_of_mislaid(self):
         ir=deepcopy(self.ir)
         ir["flows"].append({"id":"Flow_back","src":"Task_close","tgt":"Task_validate"})
