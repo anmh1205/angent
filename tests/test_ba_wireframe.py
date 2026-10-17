@@ -112,7 +112,9 @@ class WireframeTests(unittest.TestCase):
         static=render(self.model,"wireframe")
         self.assertIn("FR-AUTH-001",static)
         self.assertIn("BR-AUTH-001",static)
-        self.assertIn('type=&#x27;email',static.replace('type=','type=')) if False else None
+        self.assertIn("<input type='email'",static)
+        self.assertIn("disabled></label>",static)
+        self.assertNotIn("<script",static)
         live=render(self.model,"prototype")
         self.assertIn('required = !!ctrl.required',live)
         self.assertIn('form.reportValidity()',live)
