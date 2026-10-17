@@ -31,8 +31,7 @@ When the Reqwise MCP and its companion Figma plugin **actually exist in the host
 
 # /figma-userflow — What the user sees next
 
-findings loop, frame placement, verification. This file carries only what is specific to a
-userflow.
+This specialist reconstructs the screen inventory and navigable paths from accepted evidence, identifies denial, cancellation and recovery gaps, and reviews the finished diagram before any authorized Figma delivery.
 
 The tool is `figma_diagram` with **`type: "userflow"`**. One thing is different from the
 other five kinds: the compact form here is **`mermaid`** (a `flowchart TD` source), not

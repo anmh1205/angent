@@ -24,6 +24,8 @@ The script validates this state model and outputs the actual Reqwise OSS `figma_
 
 When the Reqwise MCP and its companion Figma plugin **actually exist in the host**, consult `figma_status` and `figma_docs`, verify the selected file/page and permission, then only invoke an authorized `figma_diagram`. After execution, read back `figma_read` with `get_diagram_spec` and `layout_audit`, compare node/edge inventory and inspect a real image. Record tool errors and divergences, not just a success-looking response. If the MCP is unavailable, deliver the checked semantic payload labeled **not written to Figma**.
 
+For a genuinely never-ending lifecycle (a persistent session, switch, or service state), supply `metadata.continuous: true` in the portable model and explain why no `final` exists. The validator still rejects unreachable states and unintended dead ends, and returns a warning requiring a termination-policy review. Do not invent a `final` solely to satisfy the drawing tool; do not use this flag to conceal an unfinished status specification.
+
 **Additional state semantic acceptance:** Check that the model describes exactly one entity, initial/final transitions, forbidden transitions and event/guard conflicts. The synthetic state fixture cites FR-IVTS-02, which now exists in the compact BA evidence graph but does not have a traceable test artifact. Resolve that ID when checking provenance; do not mistake existence for verified behavior or manufacture missing test evidence.
 
 **Upstream scope:** MIT Reqwise OSS implements this diagram type, but the source-local payload generator alone proves neither upstream server compatibility for every version nor canvas fidelity. Pro-only functionality cannot be substituted silently.
@@ -31,8 +33,7 @@ When the Reqwise MCP and its companion Figma plugin **actually exist in the host
 
 # /figma-state — What a record is allowed to be
 
-findings loop, frame placement, verification. This file carries only what is specific to a
-state machine.
+This specialist develops the entity's legal-state contract, investigates missing transitions and contradictory guards, then checks the rendered model against the documented lifecycle. Canvas placement and verification follow the ANGENT execution boundary.
 
 ## Goal
 
