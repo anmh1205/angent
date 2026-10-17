@@ -228,3 +228,66 @@ that 67 skills have passed real model-behavior acceptance.**
 
 **Branch discipline:** Changes remain in `feat/ba-figma-kits` with Draft
 PR #65. Nothing in this report is a release approval or merge instruction.
+
+
+## Third-pass findings and bounded live Figma probe — 2026-10-17
+
+### Verified runtime and implementation changes
+
+- Bruno `expected_json` validation now rejects nonfinite Python numbers
+  (`NaN`, `Infinity`) before the request generator tries to serialize
+  them as strict JSON. A negative regression reproduces the former
+  validate-then-raise mismatch.
+- Reqwise diagram metadata `title` and `artifact_id` must be nonempty
+  strings if supplied. Invalid user input can no longer silently fall
+  back to a convincing synthetic `ANGENT <type>` title.
+- The Reqwise sequence adapter now preserves explicit message IDs and
+  typed `fragments[]` for `alt`, `opt`, `loop`, `par` and `break`.
+  The test corpus has separate authorized and denied fleet-status
+  responses; the alt branch references the intended message IDs.
+  Validation rejects unknown/duplicate messages, duplicate cross-branch
+  references, non-contiguous message blocks and missing alt else
+  branches. The deployed upstream request validator must still be
+  checked at the pinned revision; no Figma Reqwise diagram was actually
+  written by the adapter.
+- At branch `a0020605470619e19ec3500f12ded804b556b7aa`,
+  [GitHub Actions run 39025474218](https://github.com/anmh1205/angent/actions/runs/39025474218)
+  passed Core, BA/Figma regression, pinned upstream Reqwise validator and
+  generated Next.js production/browser tests. The earlier failing runs
+  in this sequence contained an erroneous Python test assertion that
+  was corrected, not a Figma canvas execution fault.
+
+### First isolated real Figma Plugin API probe
+
+- **Target (purpose-built, not an existing user design):**
+  [ANGENT BA-Figma isolated adapter acceptance](https://www.figma.com/design/zQRnq4uANZBdSGkHBxEAXo).
+- Live Figma provider returned file key `zQRnq4uANZBdSGkHBxEAXo`.
+  A hand-authored native Plugin API probe created frame ID `1:2`
+  (`ANGENT BA / login / Fleet operator access`) and four child TEXT
+  nodes `1:3`–`1:6` named `screen:title`, `label:email`,
+  `label:password` and `label:submit`. Their read-back values
+  matched the written labels; font load and bounded frame creation
+  succeeded. `get_screenshot` returned a 390×156 PNG render
+  for frame ID `1:2`.
+- **Proved:** Live Figma file access and the basic
+  `createFrame/createText/loadFontAsync/getNodeByIdAsync` native
+  creation/read-back path, plus screenshot availability on an isolated file.
+- **Not proved:** The generated `figma-native-plugin.js` itself was
+  *not* executed on this live file; no live mock-accurate identity
+  reconciliation, rollback, whole-screen layout quality, prototype
+  interactions, Reqwise `figma_diagram` provider session or live
+  Jira/Confluence sync was tested. Do not promote the BA `ba-figma`
+  capability to fully provider-verified from this probe.
+- **Source/runtime distinction:** The screenshot and returned node IDs
+  are live provider evidence, not output of ANGENT's unexecuted
+  generated script. Native Figma APIs and Reqwise's Figma sandbox
+  remain different contracts.
+
+### Expert evaluations still required
+
+All 13 tracked BA/Figma specialist scenarios remained marked `not-run`
+at this checkpoint. Their acceptance is behavioral: each needs an
+actual agent-produced output, independent grading against the documented
+`must` and `reject` criteria, and a traceable source or provider
+receipt when appropriate. Offline unit/regression pass counts cannot
+establish that outcome.
