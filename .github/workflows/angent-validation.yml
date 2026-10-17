@@ -123,3 +123,37 @@ jobs:
         run: |
           test -f "$RUNNER_TEMP/angent-ba-next-review/.next/BUILD_ID"
           python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"angent-ba-next-review"/"review-manifest.json"; m=json.loads(p.read_text()); assert m["simulation_only"] is True and m["execution_status"]=="not-run"'
+
+  reqwise-upstream-schema:
+    name: Reqwise MIT six-shape upstream validator
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout ANGENT branch
+        uses: actions/checkout@v7
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch exact licensed Reqwise OSS revision
+        shell: bash
+        run: |
+          git init "$RUNNER_TEMP/reqwise-upstream"
+          git -C "$RUNNER_TEMP/reqwise-upstream" remote add origin https://github.com/hoangpm96/reqwise-figma-mcp.git
+          git -C "$RUNNER_TEMP/reqwise-upstream" fetch --depth=1 origin 4ee65b7a037578690cfcd4006257c4f25e458eea
+          git -C "$RUNNER_TEMP/reqwise-upstream" checkout --detach FETCH_HEAD
+          test "$(git -C "$RUNNER_TEMP/reqwise-upstream" rev-parse HEAD)" = 4ee65b7a037578690cfcd4006257c4f25e458eea
+      - name: Install upstream contract dependencies without lifecycle scripts
+        shell: bash
+        working-directory: ${{ runner.temp }}/reqwise-upstream
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Export six dry-run request payloads
+        shell: bash
+        run: python3 tests/integration/export_reqwise_payloads.py "$RUNNER_TEMP/angent-reqwise-dry-run.json"
+      - name: Validate all six shapes through real MIT Zod contracts
+        shell: bash
+        run: |
+          npm exec --yes --package=tsx@4.20.6 -- tsx \
+            tests/integration/check_reqwise_schema.ts \
+            "$RUNNER_TEMP/angent-reqwise-dry-run.json" \
+            "$RUNNER_TEMP/reqwise-upstream"
