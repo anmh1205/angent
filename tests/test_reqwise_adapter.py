@@ -195,7 +195,7 @@ class ReqwisePayloadTests(unittest.TestCase):
         changed["fragments"][0]["else"]["messages"]=["denied-answer"]
         generated=compile_model(changed)["arguments"]["spec"]
         self.assertEqual(generated["messages"][3]["id"],"authorized-answer")
-        self.assertEqual(generated["fragments"][0]["else"]["messages"],["denied-answer")
+        self.assertEqual(generated["fragments"][0]["else"]["messages"],["denied-answer"])
 
     def test_sequence_fragments_must_be_contiguous_and_alternatives_have_else(self):
         original=json.loads((FIGMA/"examples/rental-fleet-sequence.json").read_text(encoding="utf8"))
