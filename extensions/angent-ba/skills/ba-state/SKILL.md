@@ -23,7 +23,7 @@ Produce a Mermaid `stateDiagram-v2` for one entity of a feature, capturing: stat
 - **1 fixed output** — `docs/{feature}/srs/{feature}-states.md`, append mode. NO `--uc`, `--append`, `--system-flow` flags.
 - **`--feature` optional** — auto-detect from context/the in-progress feature; only ask via picker when ambiguous. **Feature does not exist + arg indicates a new entity/feature → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.
 - Use ANGENT's current write authorization — show entity + state count + transition count.
-- **NO L3 iteration** — Mermaid does not render in chat. The user reviews from the rendered file; to change it, call the skill again and say what needs to change.
+- **Host-aware review** — Mermaid can render in some chat clients and other destinations. Review state labels, events, guards and forbidden transitions in an available chat preview or local renderer before consequential writes. If no renderer exists, report that limitation and provide source; never claim an image was inspected.
 - **Auto-detect states** from:
   - `docs/{feature}/brainstorms/*.md` Section 6.3 State Transitions table.
   - `docs/{feature}/srs/{feature}-spec.md` Section 4 Business Rules if they mention a state transition.

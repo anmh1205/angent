@@ -64,7 +64,7 @@ Feature already has `.dbml` → the skill recognizes it and enters update mode (
 
 ```
 User calls /dbdiagram --feature X   (or /dbdiagram "<data model description>")
-   │  dbml2sql not installed? → stop, instruct: npm install -g @dbml/cli
+- **dbml2sql not installed** → do not assert a compiled SQL artifact. For a DBML-source-only request, give a clearly uncompiled candidate and the command for later compilation; for requested validated SQL export, report the missing compiler without fabricating the result.
    │  ┌─ Feature matches no docs/{feature}/ (entry point, feature-bootstrap.md group A):
    │  │  arg is a data-model description → derive feature slug (kebab-case, ASCII, ≤50 chars),
    │  │  confirm slug at L1 (user can override), create docs/{feature}/dbdiagram/ on Write.
@@ -83,7 +83,7 @@ User calls /dbdiagram --feature X   (or /dbdiagram "<data model description>")
    ▼
 3. Write the source .dbml (formula below)
    ▼
-4. scoped change preview (prose: N tables, M relationships). User Y → continue
+4. Scope the proposed change (N tables, M relationships). Continue when the change is authorized; ask for approval only when the current user authorization does not cover a consequential write.
    ▼
 5. Write {feature}.dbml → dbml2sql regenerates {feature}.sql (validation fails → fix, up to 2 times)
    ▼
@@ -121,6 +121,13 @@ Enum card_recall {
   forgot
   fuzzy
   remembered
+}
+
+Table cards {
+  id uuid [pk]
+  deck_id uuid [ref: > decks.id]
+  prompt text [not null]
+  answer text [not null]
 }
 
 Table review_logs {

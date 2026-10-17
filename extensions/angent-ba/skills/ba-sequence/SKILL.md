@@ -21,7 +21,7 @@ Create a Mermaid `sequenceDiagram` block for one flow in one feature. **Single o
 ## Constraints
 
 - **1 fixed output** — `docs/{feature}/srs/{feature}-flows.md`, append mode. NO `--uc`, `--standalone`, `--system-flow` flags. Too many flows → the user splits manually.
-- **NO L3 iteration** — Mermaid cannot render in chat. Go straight from L1 plan → Write. The user reviews the rendered diagram from the file (IDE/Obsidian/GitHub) → to change it, call the skill again and say what needs to change (the skill enters update mode + versioned diff).
+- **Host-aware preview and validation** — Mermaid may render in chat, IDE or a local renderer. Use the available preview to verify participants, alt/opt/loop branches and chronology before a requested write. If no renderer exists, provide code and state the unverified visual status; do not force a file write to make a diagram reviewable.
 - Honor ANGENT's authorized write scope; preview disputed protocol/message semantics rather than forcing Claude-specific gates.
 - **`--feature` optional** — auto-detect if there is only 1 in-progress feature; only ask when ambiguous. **Feature does not exist + arg is a flow description → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.
 - **Auto-detect actors** from the description prose.

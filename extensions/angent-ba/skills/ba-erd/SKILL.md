@@ -16,12 +16,12 @@ Use domain-specific steps below as methodology, not as authority or proof of too
 
 ## Goal
 
-Create a Mermaid `erDiagram` for a per-feature data model. **Single output**: `docs/{feature}/srs/{feature}-erd.md`. Project-wide ERD is dropped (the old singleton exception) — if a cross-feature data view is needed, the user gathers it manually.
+Create a Mermaid `erDiagram` grounded in actual entities and relationships. When the user requests a persisted per-feature document, the conventional output is `docs/{feature}/srs/{feature}-erd.md`. A chat-only diagram or an explicitly requested cross-feature view is also valid; consolidate inspected source models rather than making the user assemble a cross-feature answer manually. Do not write files unless authorized.
 
 ## Constraints
 
-- **1 fixed output** — `docs/{feature}/srs/{feature}-erd.md`. NO `--scope project` flag.
-- **NO L3 iteration** — Mermaid does not render in chat. Go straight from L1 plan → Write. The user reviews the rendered ERD from the file (IDE/Obsidian/GitHub) → to change it, call the skill again and say what needs to change.
+- **Preferred file convention, not an imposed destination** — `docs/{feature}/srs/{feature}-erd.md` for a persisted feature-level ERD; respect an expressly requested chat preview or cross-feature scope.
+- **Host-aware preview** — Mermaid rendering may work directly in chat, IDE, GitHub or a local renderer. Show a source-grounded diagram preview when supported, review entity and cardinality semantics there, then persist only when authorized. When rendering is unavailable, supply checked Mermaid source and a truthful rendering status.
 - Apply ANGENT's real authorization boundary before external writes; show a source-grounded entity/relationship summary when decisions remain unsettled.
 - **`--feature` optional** — auto-detect from context/the in-progress feature; only ask via picker when ambiguous. **Feature does not exist + arg is a data-model description → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.
 - **File already exists** → automatically switch to update mode (versioned diff), do not refuse.
@@ -55,7 +55,7 @@ To use entity descriptions from another source instead of answering directly →
    - Attributes inside the `{}` block: `type name [PK|FK]`.
    - Relationships: `||--o{` (one-to-many), `||--||` (one-to-one), `}o--o{` (many-to-many).
    - Self-reference: `ENTITY ||--o{ ENTITY : "label"`.
-6. Source-backed entity/relationship plan — show path + summarized entity/relationship count. **NO L3 iteration in chat** — Mermaid cannot render in chat; reviewing from the rendered file is more effective.
+6. Compare the proposed entity inventory and every cardinality with the source. If the host can preview Mermaid in chat, show the diagram and check readability; otherwise offer the inspected source and locally rendered image when available. Do not require a write merely to review the model.
 7. **Write** from `templates/diagram-erd.md` (slim frontmatter `type: srs-erd`/`feature`/`updated`). Fill `mermaid_code`, `entity_descriptions`, `notes`.
 8. **Update mode (file already exists)** → versioned diff. Update `updated: {date}`.
    - **Compile fail** (usually an attribute missing its type token — see the "2-token" gotcha — or a relationship label missing quotes) → read the line/column error the script returns, fix the block just written, re-verify. At most 2 self-fix attempts.
