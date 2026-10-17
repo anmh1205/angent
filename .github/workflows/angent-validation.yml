@@ -94,6 +94,8 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_reqwise_*.py' -v
           python3 -m unittest discover -s tests -p 'test_bpmn_*.py' -v
           python3 -m unittest discover -s tests -p 'test_all_kit_evidence_inventory.py' -v
+      - name: Verify source-to-prototype multi-kit integration without provider writes
+        run: python3 tests/integration/check_kits_acceptance.py
 
   ba-next-build:
     name: BA generated Next.js production build
