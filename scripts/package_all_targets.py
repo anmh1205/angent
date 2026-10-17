@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Make one byte-reproducible all-target ZIP from six independently valid ZIPs."""
+"""Make one byte-reproducible all-target ZIP from independently valid ZIPs."""
 from __future__ import annotations
 
 import argparse
@@ -43,6 +43,7 @@ def build(directory: Path) -> dict[str, str]:
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
         for name, content in sorted(items.items()):
             entry = zipfile.ZipInfo(name, TIMESTAMP)
+            entry.create_system = 3
             entry.compress_type = zipfile.ZIP_DEFLATED
             entry.external_attr = 0o100644 << 16
             z.writestr(entry, content, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)

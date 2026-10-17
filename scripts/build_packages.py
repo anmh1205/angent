@@ -296,6 +296,7 @@ def _zip(files: dict[str, bytes], path: Path) -> str:
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name, content in sorted(files.items()):
             entry = zipfile.ZipInfo(name, FIXED_TIMESTAMP)
+            entry.create_system = 3  # Match the canonical Unix permission bits below.
             entry.compress_type = zipfile.ZIP_DEFLATED
             entry.external_attr = 0o100644 << 16
             archive.writestr(entry, content, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)

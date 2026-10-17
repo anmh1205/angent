@@ -315,6 +315,7 @@ def build(repo: Path, output: Path) -> dict[str, object]:
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name in sorted(entries):
             info = zipfile.ZipInfo(name, FIXED_TIMESTAMP)
+            info.create_system = 3  # Canonical Unix metadata, independent of the build host.
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             archive.writestr(info, entries[name], compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)

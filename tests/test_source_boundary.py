@@ -6,6 +6,8 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("source_boundary", ROOT / "scripts/package_unified.py")
@@ -13,9 +15,36 @@ package = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(package)
 sys.path.insert(0, str(ROOT / "scripts"))
 import build_packages
+import package_all_targets
 
 
 class SourceBoundaryTests(unittest.TestCase):
+    def test_archive_bytes_do_not_inherit_host_zip_metadata(self):
+        original = zipfile.ZipInfo
+        with tempfile.TemporaryDirectory() as d:
+            base = Path(d)
+            results = []
+            for host in (0, 3):
+                class HostZipInfo(original):
+                    def __init__(self, *args, **kwargs):
+                        super().__init__(*args, **kwargs)
+                        self.create_system = host
+                root = base / str(host)
+                root.mkdir()
+                with mock.patch.object(zipfile, "ZipInfo", HostZipInfo):
+                    build_packages._zip({"SKILL.md": b"portable\n"}, root / "target.zip")
+                    # Exercise the aggregate with identical independent inputs.
+                    for name in package_all_targets.FILES:
+                        (root / name).write_bytes((root / "target.zip").read_bytes())
+                    package_all_targets.build(root)
+                    results.append(((root / "target.zip").read_bytes(),
+                                    (root / package_all_targets.COMBINED).read_bytes()))
+            self.assertEqual(results[0], results[1])
+            with zipfile.ZipFile(base / "0/target.zip") as archive:
+                info = archive.getinfo("SKILL.md")
+                self.assertEqual(info.create_system, 3)
+                self.assertEqual(info.external_attr >> 16, 0o100644)
+
     def test_all_profiles_match_between_lf_and_crlf_checkouts(self):
         paths = package._tracked(ROOT)
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:

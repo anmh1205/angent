@@ -4,7 +4,7 @@
 
 - Add backward-compatible v2 method contracts, per-method cards, read-only bounded discovery and host-specific resource bindings. Declare 17 Engineer methods and Frontend; keep other contracts explicitly inspection-required.
 - Preserve one OpenAI Root, full maintained source and role inventory. Separate ordinary architecture advice from Advise's explicit interview and retain Team's live lifecycle boundary.
-- Make package text canonical UTF-8/LF, accept CRLF root metadata, and reject symlink/junction ancestors in source inputs. Preserve binary bytes and tracked local edits.
+- Make package text canonical UTF-8/LF, accept CRLF root metadata, fix ZIP creator metadata across hosts, and reject symlink/junction ancestors in source inputs. Preserve binary bytes and tracked local edits.
 - Recover coherent frontiers across revision gaps and malformed records; paginate memory metadata separately from full entry retrieval.
 - Clarify all Core owner boundaries, add concrete composition/diagnostic contrasts, replace orphan source markers with official links, and separate evaluation gains from remaining acceptance failures.
 - Add frozen behavioral inputs and structural/runtime regressions. These changes do not establish measured model-quality gains, host activation, provider installation or release acceptance.
