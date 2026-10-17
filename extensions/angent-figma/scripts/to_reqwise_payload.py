@@ -48,9 +48,12 @@ def compile_model(model: dict[str, Any], *, ready_to_write: bool = False,
     meta = model.get("metadata", {})
     if not isinstance(meta, dict):
         raise ValueError("metadata must be an object")
+    for text_field in ("title","artifact_id"):
+        if text_field in meta and (
+            not isinstance(meta[text_field],str) or not meta[text_field].strip()
+        ):
+            raise ValueError("metadata."+text_field+" must be nonempty text")
     title = meta.get("title") or meta.get("artifact_id") or f"ANGENT {kind}"
-    if not isinstance(title, str) or not title.strip():
-        raise ValueError("Model title must be nonempty")
     options = {"dryRun": not ready_to_write, "verify": True, "checkFirst": True, "crossCheck": True}
     if "rankdir" in meta:
         if not isinstance(meta["rankdir"], str) or meta["rankdir"] not in VALID_RANKDIR:

@@ -7,6 +7,7 @@ turn a fake environment or missing test execution into a passing test.
 from __future__ import annotations
 import argparse
 import json
+import math
 from pathlib import Path
 import re
 from typing import Any
@@ -107,6 +108,8 @@ def validate(model: Any, evidence_ids: set[str] | None = None) -> dict[str, Any]
                     errors.append(f"{testid}: invalid assertion field")
                 if not (value is None or isinstance(value,(str,int,float,bool))):
                     errors.append(f"{testid}: assertion values must be JSON scalars")
+                elif isinstance(value,float) and not math.isfinite(value):
+                    errors.append(f"{testid}: assertion values must be finite JSON scalars")
         if request.get("auth","none") not in ("none","bearer"):
             errors.append(f"{testid}: auth must be none or bearer")
         headers = request.get("headers",{})

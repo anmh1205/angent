@@ -46,6 +46,18 @@ class ReqwisePayloadTests(unittest.TestCase):
         result=compile_model(erd)
         self.assertTrue(any("cardinality" in warning for warning in result["model_warnings"]))
 
+    def test_invalid_metadata_title_must_not_be_silently_replaced(self):
+        for key in ("title","artifact_id"):
+            for bad in ([],{},0,False,""):
+                with self.subTest(key=key,bad=bad):
+                    model=deepcopy(self.activity)
+                    model["metadata"][key]=bad
+                    with self.assertRaisesRegex(ValueError,"metadata."+key):
+                        compile_model(model)
+        sample=deepcopy(self.activity)
+        sample["metadata"]["artifact_id"]="FR-IVTS-01"
+        self.assertEqual(compile_model(sample)["arguments"]["spec"]["title"],"FR-IVTS-01")
+
     def test_activity_dry_run_by_default(self):
         p = compile_model(self.activity)
         self.assertEqual(p["tool"], "figma_diagram")

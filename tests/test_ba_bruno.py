@@ -79,6 +79,17 @@ class BrunoGeneratorTests(unittest.TestCase):
         model["environment"]["baseUrl"]="https://example.test/api"
         self.assertTrue(validate(model)["ok"],validate(model))
 
+    def test_nonfinite_expected_json_cannot_validate_then_crash_during_generation(self):
+        for scalar in (float("nan"),float("inf"),float("-inf")):
+            with self.subTest(scalar=repr(scalar)):
+                model=copy.deepcopy(self.fixture)
+                model["requests"][0]["expected_json"]["state"]=scalar
+                checked=validate(model)
+                self.assertFalse(checked["ok"])
+                self.assertTrue(any("finite JSON scalars" in e for e in checked["errors"]))
+                with self.assertRaisesRegex(ValueError,"finite JSON scalars"):
+                    compile_collection(model)
+
     def test_nonfinite_json_body_cannot_generate_invalid_json(self):
         model=copy.deepcopy(self.fixture)
         model["requests"][3]["body_json"]["measurement"]=float("nan")
