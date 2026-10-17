@@ -32,8 +32,8 @@ class KitPortabilityTests(unittest.TestCase):
     def test_dbml_example_declares_all_referenced_tables(self):
         source=self.load("ba-dbdiagram")
         example=source.split("```dbml",1)[1].split("```",1)[0]
-        definitions=set(re.findall(r"(?m)^Table\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*\\{",example))
-        targets=set(re.findall(r"ref:\\s*[<>-]\\s*([A-Za-z_][A-Za-z0-9_]*)\\.",example))
+        definitions=set(re.findall(r"(?m)^Table\s+([A-Za-z_][A-Za-z0-9_]*)\s*\{",example))
+        targets=set(re.findall(r"ref:\s*[<>-]\s*([A-Za-z_][A-Za-z0-9_]*)\.",example))
         self.assertTrue(definitions)
         self.assertEqual(targets-definitions,set(),"Every DBML FK needs an actual table in the example")
 
