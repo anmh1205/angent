@@ -74,7 +74,11 @@ def audit(data: Any, require_tests: bool = False,
                 warnings.append(f"sources[{pos}]: external or in-document reference needs provider verification: {uri}")
             else:
                 root = source_root.resolve()
-                candidate = (root / uri).resolve()
+                # A fragment identifies a section of a local source file,
+                # not a literal character in its filesystem basename. File
+                # existence alone still does not verify the target heading.
+                physical=uri.split("#",1)[0]
+                candidate = (root / physical).resolve()
                 if not candidate.is_relative_to(root):
                     errors.append(f"sources[{pos}]: local evidence path escapes allowed root")
                 elif not candidate.is_file():

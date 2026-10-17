@@ -33,6 +33,20 @@ class LocalSourceEvidenceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             self.assertFalse(audit(self.graph,source_root=Path(root))["ok"])
 
+    def test_local_source_uri_fragment_checks_actual_file_not_fragment(self):
+        graph=json.loads(json.dumps(self.graph))
+        graph["sources"][0]["uri"]="examples/synthetic-requirement.md#fr-ivts-02"
+        report=audit(graph,source_root=BA)
+        self.assertTrue(report["ok"],report)
+        graph["sources"][0]["uri"]="examples/not-there.md#fr-ivts-02"
+        report=audit(graph,source_root=BA)
+        self.assertFalse(report["ok"])
+        self.assertTrue(any("source evidence file missing" in e for e in report["errors"]))
+        graph["sources"][0]["uri"]="../AGENTS.md#something"
+        report=audit(graph,source_root=BA)
+        self.assertFalse(report["ok"])
+        self.assertTrue(any("escapes allowed root" in e for e in report["errors"]))
+
     def test_external_links_are_not_treated_as_verified_local_files(self):
         alternate=json.loads(json.dumps(self.graph))
         alternate["sources"][0]["uri"]="https://iiba.org/example-requirement"
