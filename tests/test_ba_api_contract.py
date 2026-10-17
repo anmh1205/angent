@@ -70,6 +70,45 @@ class APIContractTests(unittest.TestCase):
         generated=compile_collection(self.model,api_contract=spec)
         self.assertIn("requests/TC-FLEET-004.bru",generated)
 
+    def test_malformed_nested_openapi_must_report_errors_not_crash(self):
+        base_path="/vehicles/{vehicleId}/status"
+        for path_item in ([], "broken", 42):
+            with self.subTest(path_item=path_item):
+                contract=copy.deepcopy(self.spec)
+                contract["paths"][base_path]=path_item
+                result=audit_contract(contract,self.model)
+                self.assertFalse(result["ok"])
+                self.assertTrue(any("path item must be an object" in e for e in result["errors"]))
+        for components in ([], "broken", 42):
+            with self.subTest(components=components):
+                contract=copy.deepcopy(self.spec)
+                contract["components"]=components
+                result=audit_contract(contract,self.model)
+                self.assertFalse(result["ok"])
+                self.assertTrue(any("components must be an object" in e for e in result["errors"]))
+        for content in ([], "broken", None):
+            with self.subTest(body_content=content):
+                contract=copy.deepcopy(self.spec)
+                req=contract["paths"]["/vehicles/{vehicleId}/diagnostics/ack"]["post"]["requestBody"]
+                req["content"]=content
+                result=audit_contract(contract,self.model)
+                self.assertFalse(result["ok"])
+                self.assertTrue(any("requestBody.content" in e for e in result["errors"]))
+
+    def test_malformed_enum_must_not_turn_into_character_membership(self):
+        contract=copy.deepcopy(self.spec)
+        schema=(contract["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]
+                ["content"]["application/json"]["schema"]["properties"]["state"])
+        for invalid in ("online", {}, [], 17):
+            with self.subTest(enum=invalid):
+                changed=copy.deepcopy(contract)
+                altered=(changed["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]
+                         ["content"]["application/json"]["schema"]["properties"]["state"])
+                altered["enum"]=invalid
+                report=audit_contract(changed,self.model)
+                self.assertFalse(report["ok"])
+                self.assertTrue(any("Invalid JSON Schema enum" in x for x in report["errors"]),report)
+
     def test_rejects_remote_recursive_and_composed_refs(self):
         a=copy.deepcopy(self.spec)
         response=a["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]

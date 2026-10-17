@@ -83,8 +83,12 @@ def _match_scalar(value:Any,schema:dict,document:dict)->bool:
         return a==b
     if "const" in schema and not json_equal(value,schema["const"]):
         return False
-    if "enum" in schema and not any(json_equal(value,x) for x in schema["enum"]):
-        return False
+    if "enum" in schema:
+        values=schema["enum"]
+        if not isinstance(values,list) or not values:
+            raise ValueError("Invalid JSON Schema enum: expected nonempty array")
+        if not any(json_equal(value,x) for x in values):
+            return False
     if actual in ("integer","number"):
         # JSON Schema: bool is not numeric, an integral float is an integer.
         for prop in ("minimum","maximum","exclusiveMinimum","exclusiveMaximum"):
@@ -182,7 +186,11 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
         ident=item["id"]
         route=item["path"].split("?",1)[0]
         route=URI_VARIABLE.sub(lambda m:"{"+m.group(1)+"}",route)
-        operation=(paths.get(route) or {}).get(item["method"].lower())
+        path_item=paths.get(route)
+        if path_item is not None and not isinstance(path_item,dict):
+            errors.append(ident+": OpenAPI path item must be an object")
+            continue
+        operation=(path_item or {}).get(item["method"].lower())
         if not isinstance(operation,dict):
             errors.append(ident+": "+item["method"]+" "+route+" is not declared")
             continue
@@ -193,7 +201,11 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
         # OpenAPI: OR between alternatives; AND between schemes in one entry.
         # [] or an empty alternative {} permits anonymous access.
         anonymous=not security or any(not option for option in security)
-        specs=contract.get("components",{}).get("securitySchemes",{})
+        components=contract.get("components",{})
+        if not isinstance(components,dict):
+            errors.append(ident+": components must be an object")
+            continue
+        specs=components.get("securitySchemes",{})
         if not isinstance(specs,dict):
             errors.append(ident+": invalid securitySchemes object")
             continue
@@ -248,7 +260,13 @@ def audit_contract(contract:Any,model:Any)->dict[str,Any]:
             errors.append(ident+": missing required JSON requestBody")
         if body is not None and isinstance(requestbody,dict):
             try:
-                schema_in=_resolve_local(contract,requestbody.get("content",{}).get("application/json",{}).get("schema"))
+                content=requestbody.get("content")
+                if not isinstance(content,dict):
+                    raise ValueError("requestBody.content must be an object")
+                application_json=content.get("application/json")
+                if not isinstance(application_json,dict):
+                    raise ValueError("requestBody needs an application/json media type")
+                schema_in=_resolve_local(contract,application_json.get("schema"))
             except ValueError as exc:
                 errors.append(ident+": "+str(exc))
                 continue
