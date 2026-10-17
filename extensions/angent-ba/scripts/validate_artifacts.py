@@ -16,6 +16,16 @@ ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9-]+$")
 ALIASES = {"UN":"NEED","BO":"BUSINESS_OBJECTIVE","CAP":"CAPABILITY",
            "UC":"USECASE","US":"STORY","AC":"ACCEPTANCE","CHK":"CHECKLIST",
            "TC":"TEST","E":"ERROR"}
+# Artifact prefixes are identity classes: a TEST masquerading as an FR
+# would otherwise disappear from coverage without an error. Domain-specific
+# prefixes (e.g. NOTE-...) remain intentionally extensible.
+IDENTITY_KIND = {
+    "UN":"NEED", "BO":"BUSINESS_OBJECTIVE", "CAP":"CAPABILITY",
+    "FR":"FR", "NFR":"NFR", "BR":"BR", "E":"ERROR",
+    "US":"STORY", "UC":"USECASE", "AC":"ACCEPTANCE",
+    "CHK":"CHECKLIST", "TC":"TEST"
+}
+
 UPSTREAM = {
     "NEED":set(),
     "BUSINESS_OBJECTIVE":{"NEED"},
@@ -53,6 +63,8 @@ def audit(data: Any, require_tests: bool = False,
         if not isinstance(src, dict) or not isinstance(src.get("id"), str) or not isinstance(src.get("uri"), str) or not src["uri"].strip():
             errors.append(f"sources[{pos}]: expected id and nonempty uri")
             continue
+        if not ID_RE.fullmatch(src["id"]):
+            errors.append(f"sources[{pos}]: invalid source identity")
         if src["id"] in source_ids:
             errors.append(f"sources[{pos}]: duplicate source ID {src['id']}")
         source_ids.add(src["id"])
@@ -79,6 +91,10 @@ def audit(data: Any, require_tests: bool = False,
             errors.append(f"artifacts[{pos}]: duplicate artifact ID {key}")
             continue
         nodes[key] = obj
+        prefix=key.split("-",1)[0].upper()
+        expected_kind=IDENTITY_KIND.get(prefix)
+        if expected_kind and canonical(obj.get("kind")) != expected_kind:
+            errors.append(f"{key}: ID prefix {prefix} must use artifact kind {expected_kind}")
         for field in ("kind", "title"):
             if not isinstance(obj.get(field), str) or not obj[field].strip():
                 errors.append(f"{key}: missing {field}")
@@ -142,7 +158,7 @@ def audit(data: Any, require_tests: bool = False,
             positions[nxt] = len(active)
             active.append(nxt)
             frames.append((nxt, iter(sorted(outgoing.get(nxt, [])))))
-    requirements = sorted(k for k, obj in nodes.items() if str(obj.get("kind", "")).upper() == "FR")
+    requirements = sorted(k for k, obj in nodes.items() if canonical(obj.get("kind", "")) == "FR")
     tested: list[str] = []
     for fr in requirements:
         queue = deque([fr])
@@ -150,7 +166,7 @@ def audit(data: Any, require_tests: bool = False,
         found = False
         while queue:
             key = queue.popleft()
-            if key != fr and str(nodes[key].get("kind", "")).upper() in ("TEST", "TC"):
+            if key != fr and canonical(nodes[key].get("kind", "")) == "TEST":
                 found = True
                 break
             for dep in sorted(reverse.get(key, set())):

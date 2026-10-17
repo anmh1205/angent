@@ -59,6 +59,22 @@ class TypedRequirementLineageTests(unittest.TestCase):
         self.assertEqual(outcome["coverage"]["traced_to_test"],1)
         self.assertIn("FR-IVTS-02",outcome["coverage"]["uncovered"])
 
+    def test_requirement_identity_type_mismatch_must_not_hide_coverage(self):
+        original=copy.deepcopy(self.fleet)
+        for ident,wrong in (("FR-IVTS-01","BR"),("TC-IVTS-01","FR"),
+                            ("AC-IVTS-01","TEST")):
+            with self.subTest(artifact=ident):
+                model=copy.deepcopy(original)
+                next(x for x in model["artifacts"] if x["id"]==ident)["kind"]=wrong
+                result=audit(model)
+                self.assertFalse(result["ok"])
+                self.assertTrue(any("ID prefix" in x for x in result["errors"]),result)
+        bad=copy.deepcopy(original)
+        bad["sources"][0]["id"]="SRC INVALID"
+        bad["artifacts"][0]["source_refs"]=["SRC INVALID"]
+        self.assertFalse(audit(bad)["ok"])
+        self.assertTrue(any("invalid source identity" in x for x in audit(bad)["errors"]))
+
     def test_custom_domain_kinds_do_not_break_existing_project_models(self):
         graph=copy.deepcopy(self.fleet)
         graph["artifacts"].append({"id":"NOTE-IVTS-01","kind":"DESIGN_NOTE",

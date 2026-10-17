@@ -124,6 +124,18 @@ class APIContractTests(unittest.TestCase):
             test["auth"]="none"
         self.assertTrue(audit_contract(original,request)["ok"],audit_contract(original,request))
 
+    def test_nonfinite_python_numbers_cannot_be_valid_json_schema_values(self):
+        from audit_api_contract import _match_scalar
+        for bad in (float("nan"),float("inf"),float("-inf")):
+            with self.subTest(value=repr(bad)):
+                self.assertFalse(_match_scalar(bad,{"type":"number"},self.spec))
+                spec=copy.deepcopy(self.spec)
+                model=copy.deepcopy(self.model)
+                op=spec["paths"]["/vehicles/{vehicleId}/status"]["get"]["responses"]["200"]
+                op["content"]["application/json"]["schema"]["properties"]["vehicleId"]={"type":"number"}
+                model["requests"][0]["expected_json"]["vehicleId"]=bad
+                self.assertFalse(audit_contract(spec,model)["ok"])
+
     def test_json_schema_nullable_and_value_boundaries(self):
         spec=copy.deepcopy(self.spec)
         ok_model=copy.deepcopy(self.model)

@@ -8,6 +8,7 @@ Unsupported oneOf/anyOf/allOf and remote references fail closed.
 from __future__ import annotations
 import argparse
 import json
+import math
 from pathlib import Path
 import re
 from typing import Any
@@ -64,6 +65,10 @@ def _match_scalar(value:Any,schema:dict,document:dict)->bool:
         for x in allowed):
         raise ValueError("Unsupported scalar JSON Schema type")
     actual=_kind(value)
+    # Python's permissive JSON parser can accept NaN / Infinity even though
+    # RFC 8259 and JSON Schema's number domain cannot represent them.
+    if actual=="number" and not math.isfinite(value):
+        return False
     matched=any(
         actual==option or (option=="number" and actual in ("integer","number")) or
         (option=="integer" and actual=="number" and float(value).is_integer())
