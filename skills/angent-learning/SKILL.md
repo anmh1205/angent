@@ -60,7 +60,7 @@ Context may activate applicable working-method mechanisms into the current colla
 
 ## Promote narrowly, but at the correct abstraction
 
-Promote the smallest mechanism that explains the recurring behavior, not the smallest quoted symptom.
+Promote the smallest mechanism that explains the recurring behavior, not the smallest quoted symptom. Promotion and storage must follow current user/host policy. Without permission to persist, use the supported lesson within the task; do not turn an existing backend into implicit write authority.
 
 Do not paste user wording, project names, isolated disliked phrases, or one-off examples into global instructions.
 
@@ -89,9 +89,7 @@ Persistent recurrence is evidence about the system that applies the lesson, not 
 
 For a recurrent complaint, link the observed episode to the earlier mechanism, the retrieval/activation evidence (or UNKNOWN), the owner/control point that could have prevented it, and the transfer behavior that would disconfirm the revised explanation. A stored rule is not behavioral evidence. On a later matching task, check whether the mechanism was activated *before* the decision, whether it changed the chosen action/composition/quality check, and whether the observed result preserved the accepted baseline. If the behavior recurs, reopen the incident as recurrence-after-promotion instead of recording a duplicate banned phrase.
 
-## Transfer at the control point
-
-Learning is useful when the relevant mechanism changes the next decision, not simply when a past correction is retrieved. For a matching task, Context should recover the smallest applicable mechanism and its boundary before the action/composition choice. Later observations can show whether the mechanism actually influenced the decision and whether the protected successful behavior survived. A missing trace is UNKNOWN, not evidence of activation. Include an unlike-domain counter-case when claiming a general improvement, so a successful repair does not become a universal ritual.
+For a claimed general improvement, include an unlike-domain counter-case: a lesson that prevents an outline replacing a mechanism must still allow a real checklist of independent safety checks. The applicability condition controls transfer; success on the original complaint alone does not establish it.
 
 ## Retrieval and retirement
 

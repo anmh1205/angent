@@ -37,6 +37,12 @@ A well-formed paragraph does not guarantee that the report's overall conclusion 
 
 For chat, evaluate accessibility of the answer, continuity of the underlying mechanism and a genuine conclusion without rewarding verbosity. For long-form reports and teaching materials, inspect early, middle and late units and the destination render when relevant. Identify concrete missing or misleading relations rather than grading a fixed heading formula. Use `references/report-evaluation.md` for claim-to-decision checks.
 
+## Choose an oracle that can reject a plausible wrong result
+
+Before relying on a green check, identify a plausible wrong result that would also pass it. If a package inventory passes while a resource points to the wrong method, add a resource-identity check; if a report contains every topic but cannot justify its recommendation, check the deciding relation. Select an observation that separates those cases. Do not expand a routine task into a universal test matrix.
+
+Relative improvement and absolute acceptance are separate judgments. A candidate may remove two defects and retain another required failure; record the gain and residual defect while keeping dependent acceptance failed. If the evaluator or environment cannot distinguish the cause, preserve that attribution limit instead of assigning a product failure by default.
+
 ## Calibrate changes, not arbitrary counts
 
 For a change to a widely used skill, method or multi-unit writing approach, compare representative failure, accepted-success and counter-cases where feasible. Inspect observable outputs/trajectories and protected properties, not heading counts, forbidden words, source counts or a self-reported score. One successful test demonstrates possibility, not whole-system reliability.

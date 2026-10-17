@@ -22,10 +22,12 @@ class EvaluationError(ValueError):
 
 def load_cases(path: Path) -> dict[str, dict[str, Any]]:
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("schema_version") != 1 or not isinstance(data.get("cases"), list):
+    if not isinstance(data, dict) or data.get("schema_version") != 1 or not isinstance(data.get("cases"), list):
         raise EvaluationError("invalid case catalog schema")
     cases: dict[str, dict[str, Any]] = {}
     for case in data["cases"]:
+        if not isinstance(case, dict):
+            raise EvaluationError("case must be an object")
         cid = case.get("id")
         criteria = case.get("criteria")
         if not isinstance(cid, str) or not cid or cid in cases:
@@ -64,11 +66,13 @@ def reviewed_trial(case: dict[str, Any], name: str, result: Any) -> dict[str, st
 
 
 def compare(cases: dict[str, dict[str, Any]], data: dict[str, Any]) -> dict[str, Any]:
-    if data.get("schema_version") != 1 or not isinstance(data.get("trials"), list):
+    if not isinstance(data, dict) or data.get("schema_version") != 1 or not isinstance(data.get("trials"), list):
         raise EvaluationError("invalid trial schema")
-    results: list[dict[str, str]] = []
+    results: list[dict[str, Any]] = []
     seen: set[str] = set()
     for trial in data["trials"]:
+        if not isinstance(trial, dict):
+            raise EvaluationError("trial must be an object")
         cid = trial.get("case_id")
         if cid not in cases or cid in seen:
             raise EvaluationError(f"unknown/duplicate case id: {cid}")
@@ -96,22 +100,35 @@ def compare(cases: dict[str, dict[str, Any]], data: dict[str, Any]) -> dict[str,
                 outcome = "UNRESOLVED_DEFECT"
             else:
                 outcome = "NO_CHANGE"
-        results.append({"case_id": cid, "outcome": outcome})
+        comparable = all(identity) and baseline["identity"] != candidate["identity"]
+        residual = [k for k in after if after[k] == "FAIL"]
+        acceptance = ("NOT_YET_VERIFIED" if not comparable else
+                      "FAIL" if residual else
+                      "NOT_YET_VERIFIED" if "UNKNOWN" in after.values() else "PASS")
+        results.append({"case_id": cid, "outcome": outcome,
+                        "candidate_acceptance": acceptance,
+                        "residual_defects": residual,
+                        "improved_criteria": [k for k in before if before[k] == "FAIL" and after[k] == "PASS"] if comparable else [],
+                        "regressed_criteria": [k for k in before if before[k] == "PASS" and after[k] == "FAIL"] if comparable else []})
     observed = {r["outcome"] for r in results}
     if not results or len(seen) < len(cases) or any(x in observed for x in ("INCOMPARABLE", "UNVERIFIED")):
         verdict = "NOT_YET_VERIFIED"
     elif "REGRESSION" in observed or "MIXED" in observed:
         verdict = "REGRESSION_OR_MIXED"
-    elif "UNRESOLVED_DEFECT" in observed:
+    elif any(r["candidate_acceptance"] == "FAIL" for r in results):
         verdict = "UNRESOLVED_DEFECT"
     elif "IMPROVEMENT" in observed:
         verdict = "OBSERVED_IMPROVEMENT_WITH_REVIEW"
     else:
         verdict = "NO_OBSERVED_GAIN"
+    acceptance = ("FAIL" if any(r["candidate_acceptance"] == "FAIL" for r in results) else
+                  "NOT_YET_VERIFIED" if len(seen) < len(cases) or not results or
+                  any(r["candidate_acceptance"] != "PASS" for r in results) else "PASS")
     return {
         "catalog_cases": len(cases),
         "reviewed_cases": len(results),
         "verdict": verdict,
+        "candidate_acceptance": acceptance,
         "evidence_level": "external_reviewed_outputs" if results else "catalog_only",
         "cases": results,
     }

@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "id": "angent-engineer",
   "name": "ANGENT Engineer",
   "kind": "mapped",
@@ -51,8 +51,8 @@
     },
     {
       "id": "software.architecture",
-      "entry": "ak-advise",
-      "when": "Deliberate specialist design consultation"
+      "entry": "ak-ask",
+      "when": "Direct architecture advisory comparing project-grounded alternatives; no interview workflow implied"
     },
     {
       "id": "product.ux",
@@ -68,6 +68,391 @@
       "id": "software.orchestration",
       "entry": "ak-orchestrate",
       "when": "Independent work units with real delegation or isolation"
+    }
+  ],
+  "methods": [
+    {
+      "entry": "ak-ask",
+      "summary": "Compare architecture alternatives and recommend a bounded direction without implementing.",
+      "capabilities": [
+        "software.architecture"
+      ],
+      "domains": [
+        "software",
+        "analysis"
+      ],
+      "aliases": [
+        "architecture advice",
+        "tư vấn kiến trúc"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Recommendation, alternatives, trade-offs and decision gates"
+      ],
+      "requires": [
+        "Project evidence when the decision depends on the repository"
+      ]
+    },
+    {
+      "entry": "ak-advise",
+      "summary": "Explicit Advise interview: ask focused questions, confirm reframing, then recommend; no implementation.",
+      "capabilities": [
+        "software.architecture",
+        "requirements.reframing"
+      ],
+      "domains": [
+        "software",
+        "analysis"
+      ],
+      "aliases": [
+        "Advise",
+        "guided interview",
+        "phỏng vấn"
+      ],
+      "invocation": "explicit",
+      "outputs": [
+        "User-confirmed requirements and a pressure-tested recommendation"
+      ],
+      "requires": [
+        "User explicitly requested the Advise/interview workflow",
+        "Interactive answers and explicit reframing confirmation"
+      ]
+    },
+    {
+      "entry": "ak-brainstorm",
+      "summary": "Compare materially different solution approaches before committing to a plan.",
+      "capabilities": [
+        "software.architecture",
+        "solution.exploration"
+      ],
+      "domains": [
+        "software",
+        "analysis"
+      ],
+      "aliases": [
+        "alternatives",
+        "brainstorm"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Viable alternatives, deciding constraints and supported direction"
+      ],
+      "requires": []
+    },
+    {
+      "entry": "ak-code-review",
+      "summary": "Review a bounded code change using concrete failure paths and regression evidence.",
+      "capabilities": [
+        "code.review"
+      ],
+      "domains": [
+        "software",
+        "quality"
+      ],
+      "aliases": [
+        "review diff",
+        "audit code"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Actionable findings with locations, impact and verification limits"
+      ],
+      "requires": [
+        "Readable code and the requested comparison/scope"
+      ]
+    },
+    {
+      "entry": "ak-debug",
+      "summary": "Trace a concrete failure across boundaries and test discriminating causes before repair.",
+      "capabilities": [
+        "code.debug"
+      ],
+      "domains": [
+        "software",
+        "diagnosis"
+      ],
+      "aliases": [
+        "debug",
+        "root cause",
+        "lỗi"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Supported cause or bounded alternatives and a verified repair when authorized"
+      ],
+      "requires": [
+        "Failure evidence and access to the relevant implementation/runtime"
+      ]
+    },
+    {
+      "entry": "ak-test",
+      "summary": "Design and run meaningful tests, distinguish product failures from environment failures.",
+      "capabilities": [
+        "software.test"
+      ],
+      "domains": [
+        "software",
+        "quality"
+      ],
+      "aliases": [
+        "testing",
+        "regression"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Executed checks, results, defects and untested boundaries"
+      ],
+      "requires": [
+        "Actual test runtime to claim executed results"
+      ]
+    },
+    {
+      "entry": "ak-cook",
+      "summary": "Implement the authorized source change, preserving accepted behavior and checking the endpoint.",
+      "capabilities": [
+        "software.implementation"
+      ],
+      "domains": [
+        "software"
+      ],
+      "aliases": [
+        "implement",
+        "code change",
+        "sửa mã"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Source changes and evidence appropriate to the requested endpoint"
+      ],
+      "requires": [
+        "Authorized write access to the intended source"
+      ]
+    },
+    {
+      "entry": "ak-ui-ux-pro-max",
+      "summary": "Diagnose user journeys, information architecture, accessibility and systemic product UX.",
+      "capabilities": [
+        "product.ux"
+      ],
+      "domains": [
+        "product",
+        "design"
+      ],
+      "aliases": [
+        "UX audit",
+        "user journey",
+        "accessibility"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Product UX assessment and evidence-based design decisions"
+      ],
+      "requires": []
+    },
+    {
+      "entry": "ak-deploy",
+      "summary": "Perform an authorized deployment with real environment checks and post-deploy verification.",
+      "capabilities": [
+        "software.deployment"
+      ],
+      "domains": [
+        "software",
+        "operations"
+      ],
+      "aliases": [
+        "deployment",
+        "rollout"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Deployment evidence and runtime verification or a concrete blocker"
+      ],
+      "requires": [
+        "Actual deployment tools, target access and deployment authority"
+      ]
+    },
+    {
+      "entry": "ak-orchestrate",
+      "summary": "Coordinate dependency-aware work with real workers or execute the graph sequentially when result semantics permit.",
+      "capabilities": [
+        "software.orchestration"
+      ],
+      "domains": [
+        "software",
+        "coordination"
+      ],
+      "aliases": [
+        "orchestrate",
+        "independent jobs"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Integrated result with job evidence and recovery/capture boundaries"
+      ],
+      "requires": [
+        "Authorized delegation and actual worker runtime for claimed worker execution"
+      ]
+    },
+    {
+      "entry": "ak-team",
+      "summary": "Run persistent teammate sessions with shared work, messaging, join, shutdown and cleanup.",
+      "capabilities": [
+        "software.orchestration",
+        "collaboration.live-team"
+      ],
+      "domains": [
+        "software",
+        "coordination"
+      ],
+      "aliases": [
+        "live team",
+        "persistent teammates"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "A coordinated live-team result and completed lifecycle cleanup"
+      ],
+      "requires": [
+        "Authorized delegation",
+        "Live session creation, shared state, messaging, joining, shutdown and cleanup"
+      ]
+    },
+    {
+      "entry": "ak-diagram",
+      "summary": "Choose diagram semantics from the relationship being explained, then use a suitable renderer.",
+      "capabilities": [
+        "diagram.modeling"
+      ],
+      "domains": [
+        "software",
+        "visualization"
+      ],
+      "aliases": [
+        "sequence",
+        "ERD",
+        "diagram",
+        "sơ đồ"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "A model and diagram in the requested representation"
+      ],
+      "requires": [
+        "Requested renderer/editor support to claim rendered or editable output"
+      ]
+    },
+    {
+      "entry": "ak-mermaidjs-v11",
+      "summary": "Express flow, sequence, state or entity relationships in Mermaid and validate the intended render.",
+      "capabilities": [
+        "diagram.modeling",
+        "diagram.mermaid"
+      ],
+      "domains": [
+        "software",
+        "visualization"
+      ],
+      "aliases": [
+        "Mermaid",
+        "sequence",
+        "ERD"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Mermaid source and a rendered diagram only when actually rendered"
+      ],
+      "requires": [
+        "A compatible renderer for render acceptance"
+      ]
+    },
+    {
+      "entry": "ak-excalidraw",
+      "summary": "Build an editable Excalidraw diagram with explicit objects, layout and readable relationships.",
+      "capabilities": [
+        "diagram.modeling",
+        "diagram.excalidraw"
+      ],
+      "domains": [
+        "software",
+        "visualization"
+      ],
+      "aliases": [
+        "editable drawing",
+        "Excalidraw"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Editable Excalidraw artifact with layout validation"
+      ],
+      "requires": [
+        "Excalidraw artifact support; rendering access for visual acceptance"
+      ]
+    },
+    {
+      "entry": "ak-tech-graph",
+      "summary": "Produce an SVG technical graph with validated relationships and visual layout.",
+      "capabilities": [
+        "diagram.modeling",
+        "diagram.technical-svg"
+      ],
+      "domains": [
+        "software",
+        "visualization"
+      ],
+      "aliases": [
+        "technical graph",
+        "SVG"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "SVG graph and appropriate structural/visual checks"
+      ],
+      "requires": [
+        "Actual render inspection for visual acceptance"
+      ]
+    },
+    {
+      "entry": "ak-design",
+      "summary": "Develop brand direction and authentic visual assets for a specified deliverable.",
+      "capabilities": [
+        "brand.design"
+      ],
+      "domains": [
+        "design"
+      ],
+      "aliases": [
+        "brand",
+        "asset design"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Brand/design direction and the authorized visual deliverable"
+      ],
+      "requires": [
+        "Actual asset/source access for authenticity claims"
+      ]
+    },
+    {
+      "entry": "ak-frontend-design",
+      "summary": "Translate an accepted UI direction into frontend code while preserving references and responsive states.",
+      "capabilities": [
+        "frontend.implementation"
+      ],
+      "domains": [
+        "software",
+        "design"
+      ],
+      "aliases": [
+        "frontend implementation",
+        "UI code"
+      ],
+      "invocation": "automatic",
+      "outputs": [
+        "Frontend source and responsive/state checks"
+      ],
+      "requires": [
+        "Source access for implementation and render access for visual claims"
+      ]
     }
   ]
 }

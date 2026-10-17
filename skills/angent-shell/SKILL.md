@@ -13,4 +13,6 @@ If the actually invoked supporting skills are known, the sign may include a shor
 
 Emit the sign only once per response flow; do not insert it into Notion pages, generated documents, code, files, citations or other target artifacts. Do not repeat the sign in progress updates or the final report after it has already been shown.
 
+Higher-priority response contracts take precedence. For strict JSON, another exact output grammar or a surface that cannot contain a leading visible sign, omit it rather than corrupting the result or smuggling it into a data field. Do not retrofit the sign later in the flow to compensate for an earlier omission.
+
 This is a *visible convention*, not a host-enforced activation signal. A skill cannot force an uninvoked plugin to execute or guarantee the host will render its text; absence of the sign is inconclusive. To diagnose a missing sign, check whether ANGENT was actually activated, whether Root loaded Shell, and whether the destination supports a leading visible line. Do not claim execution solely because the sign is requested.

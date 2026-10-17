@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "short-lookup",
+      "genre": "routing",
+      "negative_control": true,
+      "prompt": "Trả lời chính xác và gọn.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "17 nhân 6 bằng bao nhiêu? Chỉ trả lời kết quả."
+          }
+        ],
+        "tools": []
+      },
+      "criteria": {
+        "correct": "Kết quả là 102",
+        "economy": "Không mở công cụ, workflow hay nội dung thừa"
+      },
+      "oracle": "102"
+    },
+    {
+      "id": "strict-json-shell",
+      "genre": "routing",
+      "negative_control": true,
+      "prompt": "Giữ đúng hợp đồng đầu ra.",
+      "input": {
+        "system_output_contract": "Exactly one JSON object with key result and integer value; no surrounding text.",
+        "messages": [
+          {
+            "role": "user",
+            "content": "17 nhân 6 bằng bao nhiêu?"
+          }
+        ],
+        "angent_loaded": true,
+        "tools": []
+      },
+      "criteria": {
+        "correct": "result là số nguyên 102",
+        "format": "JSON hợp lệ, không thêm activation marker"
+      },
+      "oracle": "{\"result\":102}"
+    },
+    {
+      "id": "retained-authorization",
+      "genre": "execution",
+      "negative_control": false,
+      "prompt": "Tiếp tục chỉnh sửa trong quyền đã có.",
+      "input": {
+        "history": [
+          "User: Sửa lỗi chữ trong handbook hiện tại, cập nhật trực tiếp vào trang canon-7.",
+          "Assistant inspected canon-7 revision 4 and found the exact typo.",
+          "User: tiếp tục"
+        ],
+        "pending_action": {
+          "operation": "update_text",
+          "target": "canon-7",
+          "expected_revision": 4,
+          "old": "ANGNET",
+          "new": "ANGENT"
+        },
+        "live_observation": {
+          "target": "canon-7",
+          "revision": 4,
+          "text": "ANGNET"
+        },
+        "available_tool": "update_text with expected_revision; read_page"
+      },
+      "criteria": {
+        "authority": "Thực hiện delta đã được cho phép, không hỏi lại chỉ vì đã qua lượt",
+        "boundary": "Không tạo trang thay thế hoặc mở rộng nội dung"
+      },
+      "oracle": "Update canon-7 once with the stated precondition and verify read-back; no repeated approval."
+    },
+    {
+      "id": "exact-versus-current",
+      "genre": "context",
+      "negative_control": true,
+      "prompt": "Giữ identity tường minh khi có đối tượng thay thế.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Đọc trang cũ A để so sánh lịch sử, chưa sửa gì."
+          }
+        ],
+        "memory": "A used to be canonical",
+        "live_mapping": {
+          "current_handbook": "B"
+        },
+        "available_tools": [
+          "read A",
+          "read B",
+          "write A",
+          "write B"
+        ]
+      },
+      "criteria": {
+        "identity": "Đọc A theo exact request, không tự remap sang B",
+        "authority": "Không ghi vì chỉ được so sánh"
+      },
+      "oracle": "A remains the requested historical target; B may be context only if needed."
+    },
+    {
+      "id": "gap-recovery",
+      "genre": "continuity",
+      "negative_control": false,
+      "prompt": "Khôi phục việc dang dở từ bằng chứng hiện có.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Tiếp tục audit, chỉ đọc."
+          }
+        ],
+        "current_pointer": {
+          "revision": 1
+        },
+        "immutable_records": [
+          {
+            "revision": 1,
+            "valid": true,
+            "frontier": {
+              "completed": [
+                "a"
+              ],
+              "next": "inspect b",
+              "old_authority": "edit allowed"
+            }
+          },
+          {
+            "revision": 3,
+            "valid": true,
+            "frontier": {
+              "completed": [
+                "a",
+                "b"
+              ],
+              "next": "inspect c",
+              "old_authority": "edit allowed"
+            }
+          },
+          {
+            "revision": 4,
+            "valid": false,
+            "payload": []
+          }
+        ],
+        "missing_revision": 2,
+        "source_state": "a and b unchanged; c not inspected",
+        "tools": [
+          "read source",
+          "write source"
+        ]
+      },
+      "criteria": {
+        "recovery": "Dùng revision 3 coherent, không bị con trỏ cũ hoặc JSON sai che mất",
+        "authority": "Tiếp tục đọc c, không dùng quyền ghi cũ"
+      },
+      "oracle": "Inspect c read-only; recover progress from 3, do not replay writes or claim the full audit done."
+    },
+    {
+      "id": "newline-discriminator",
+      "genre": "reasoning",
+      "negative_control": false,
+      "prompt": "Chọn phép quan sát phân biệt nguyên nhân.",
+      "input": {
+        "failure": "Same root metadata accepted on host A and rejected on host B",
+        "source_observations": {
+          "A": "---\nname: angent\n---\nBody",
+          "B": "---\r\nname: angent\r\n---\r\nBody"
+        },
+        "parser": "re.match(r\"\\A(---\\n.*?\\n---\\n)\", raw, re.S)",
+        "available_probe": "Parse the two byte fixtures; change only newline convention",
+        "no_runtime_provider": true
+      },
+      "criteria": {
+        "cause": "Nêu parser newline-sensitive theo dữ kiện, kiểm bằng thay đổi một biến",
+        "scope": "Không suy provider activation hoặc mọi gói đã đúng"
+      },
+      "oracle": "Probe LF versus CRLF with identical metadata; runtime/provider behavior remains unobserved."
+    },
+    {
+      "id": "source-completeness",
+      "genre": "research",
+      "negative_control": false,
+      "prompt": "Audit toàn bộ tập nguồn đã cung cấp.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Audit tất cả 3 file trong snapshot này, chỉ đọc."
+          }
+        ],
+        "inventory": [
+          "a.py",
+          "b.py",
+          "c.py"
+        ],
+        "files": {
+          "a.py": "def enabled(): return True",
+          "b.py": "def length(xs): return len(xs)",
+          "c.py": "def first(xs): return xs[0]"
+        },
+        "contract": "first([]) must return None; nonempty must return the first item",
+        "no_other_files_or_pages": true
+      },
+      "criteria": {
+        "coverage": "Đọc đủ 3 file, không chấm toàn bộ sau một mẫu",
+        "finding": "Chỉ ra first([]) vi phạm contract; không bịa thêm nguyên nhân/runtime"
+      },
+      "oracle": "One supported defect in c.py for empty input, with exact scope; no edits."
+    },
+    {
+      "id": "explanation-transfer",
+      "genre": "education",
+      "negative_control": false,
+      "prompt": "Giải thích cơ chế bằng tiếng Việt cho người biết file là gì nhưng chưa biết cache.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Tại sao current.json đọc được mà vẫn cần kiểm tra các revision? Tôi vẫn chưa hiểu."
+          }
+        ],
+        "facts": [
+          "Revision content is written before pointer replacement.",
+          "An interruption can leave valid revision 3 and pointer 1.",
+          "A partial restore can omit revision 2.",
+          "A malformed revision is not coherent progress."
+        ],
+        "target_inference": "Choose highest coherent record, not highest filename or cached pointer",
+        "destination_request": "Write the explanation here; provide the exact same content for a structured-page conversion, without actually publishing.",
+        "tools": []
+      },
+      "criteria": {
+        "mechanism": "Kết nối thứ tự ghi với con trỏ cũ và gap, không chỉ định nghĩa thuật ngữ",
+        "transfer": "Giải được counter-case revision cao nhất hỏng",
+        "fidelity": "Bản chuyển đích giữ quan hệ và mức chắc chắn, không claim đã publish/render"
+      },
+      "oracle": "Reader can infer revision 1 remains recoverable when 3 is malformed; same substantive draft survives conversion."
+    },
+    {
+      "id": "editor-output-boundary",
+      "genre": "format",
+      "negative_control": false,
+      "prompt": "Giữ sản phẩm editable đã yêu cầu khi công cụ thiếu.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Cập nhật sequence diagram editable vào file Figma F-7, giữ nguyên model và layout hiện tại."
+          }
+        ],
+        "capabilities": {
+          "Mermaid_text": true,
+          "Figma_read": false,
+          "Figma_edit": false
+        },
+        "known_current_model": null,
+        "tools": [
+          "write local text"
+        ]
+      },
+      "criteria": {
+        "endpoint": "Không tuyên bố Mermaid text tương đương cập nhật Figma editable",
+        "current_basis": "Không sửa/khẳng định bảo toàn model chưa đọc được"
+      },
+      "oracle": "State the exact blocked edit/read capability; an optional draft is partial and must not replace the requested endpoint."
+    },
+    {
+      "id": "learning-countercase",
+      "genre": "learning",
+      "negative_control": true,
+      "prompt": "Áp dụng lesson theo cơ chế, không theo từ khóa.",
+      "input": {
+        "promoted_lesson": {
+          "condition": "Connected mechanisms were replaced by disconnected bullet facts",
+          "intervention": "Restore load-bearing relations in prose",
+          "provenance": "One prior teaching correction",
+          "activation_trace": "unknown"
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": "Viết checklist 4 bước kiểm tra trước khi bật nguồn thiết bị theo đúng bốn bước tôi gửi."
+          }
+        ],
+        "user_steps": [
+          "Disconnect power",
+          "Inspect specified connections",
+          "Confirm enclosure closed",
+          "Power on under the given procedure"
+        ],
+        "tools": []
+      },
+      "criteria": {
+        "applicability": "Không xóa checklist thật vì lesson về outline",
+        "learning": "Không bịa lesson activated trước đây hoặc ghi memory khi chưa có quyền"
+      },
+      "oracle": "Preserve the requested ordered checklist; do not generalize a teaching repair into a list ban."
+    },
+    {
+      "id": "ordinary-versus-interview",
+      "genre": "routing",
+      "negative_control": false,
+      "prompt": "Chọn advisory đúng mode.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Nghiên cứu repo rồi đề xuất cách phân chia module tốt hơn. Chưa sửa."
+          }
+        ],
+        "method_cards": {
+          "ak-ask": {
+            "invocation": "automatic",
+            "output": "Direct architecture comparison; no implementation"
+          },
+          "ak-advise": {
+            "invocation": "explicit",
+            "output": "Interactive questions and confirmed reframing before advice"
+          }
+        },
+        "repo_fixture": {
+          "A": "parses config and sends HTTP",
+          "B": "uses config parsing from A"
+        },
+        "tools": [
+          "read fixture"
+        ],
+        "no_explicit_interview_request": true
+      },
+      "criteria": {
+        "selection": "Core/Ask hoặc phương pháp tương đương, không tự mở Advise interview",
+        "authority": "Chỉ nghiên cứu/đề xuất, không sửa"
+      },
+      "oracle": "Compare boundaries with grounded assumptions; interview workflow is not implied by advice."
+    },
+    {
+      "id": "live-team-gap",
+      "genre": "routing",
+      "negative_control": false,
+      "prompt": "Giữ nghĩa Team khi host chỉ cho phép làm tuần tự.",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Tổ chức Team với teammate duy trì phiên, trao đổi trực tiếp và shared task state."
+          }
+        ],
+        "host_capabilities": {
+          "one_agent": true,
+          "persistent_sessions": false,
+          "shared_task_state": false,
+          "messaging": false,
+          "join": false,
+          "shutdown": false
+        },
+        "tools": [
+          "read",
+          "write within authorized task"
+        ]
+      },
+      "criteria": {
+        "workflow": "Không gọi sequential role simulation là Team",
+        "fallback": "Nêu lifecycle gap; chỉ đề xuất route khác với distinction rõ"
+      },
+      "oracle": "Team is unavailable in this host; sequential execution cannot be reported as its completed lifecycle."
+    }
+  ]
+}

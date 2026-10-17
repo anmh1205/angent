@@ -27,7 +27,7 @@ Cross-harness state access follows the Root harness contract.
 - **memory/learning state** — durable context or promoted mechanisms relevant to the current decision, plus compact activation evidence when a mechanism materially changes current work;
 - **recurrence evidence** — prior analogous failures, attempted repairs, and accepted positive baselines when they materially change correction interpretation.
 
-Do not preload every layer wholesale.
+Do not preload every layer wholesale. Project relevant relations as well as facts: which constraint limits an action, which source supports a premise, and which dependency makes prior acceptance stale. A shorter summary that removes those edges is insufficient context. Retrieve metadata first, then the decisive source/body; expand only when the current decision cannot be grounded from that subset.
 
 ## Active-obligation lane
 
@@ -149,7 +149,7 @@ Preserve freshness/version, material epistemic status and unresolved conflict wh
 
 ## Memory behavior
 
-Capture durable candidates without interrupting the task. Synthesize by topic, scope and provenance rather than append-only chronology.
+Within authorized user/host storage policy, capture durable candidates without interrupting the task. Synthesize by topic, scope and provenance rather than append-only chronology. If promotion is not authorized, keep only the task-local context the host permits; availability of a memory helper is not permission to write.
 
 Memory cannot grant authority or replace the current task model.
 

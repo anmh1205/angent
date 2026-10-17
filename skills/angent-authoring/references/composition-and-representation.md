@@ -68,6 +68,47 @@ For multi-layer mechanisms, preserve one stable object/event/value when possible
 
 Referential continuity often teaches better than catalogues of unrelated examples.
 
+## Work from the missing inference
+
+Suppose a reader knows that a program saves numbered revisions but believes
+`current.json` must always identify the newest one. The missing relation is
+between authoritative revision records and the replaceable shortcut. A
+definition of each filename will not repair it. Follow one interruption across
+the two writes, then distinguish coherent content from a fresh pointer.
+
+A Vietnamese explanation can make that relation usable directly:
+
+> Chương trình lưu nội dung revision 3 trước rồi mới cập nhật `current.json`.
+> Nếu bị ngắt giữa hai lần ghi, revision 3 đã tồn tại nhưng con trỏ vẫn chỉ
+> revision 1. Vì vậy, đọc được con trỏ không chứng minh nó mới nhất. Khi phục
+> hồi, chương trình phải kiểm tra các revision hợp lệ và chọn số lớn nhất.
+> Nếu bản khôi phục bị thiếu revision 2, chỉ kiểm tra “có revision kế tiếp hay
+> không” vẫn có thể bỏ sót revision 3.
+
+The trace earns the general rule: a cached locator and its underlying records
+can disagree, so freshness needs an independent condition. A nearby transfer
+probe asks which revision is recoverable if revision 3 is malformed and revision
+1 is valid. The answer is 1, not blindly the highest filename. This example is
+an illustration, not evidence that any reader or model passed a trial.
+
+If the question instead asks only what a pointer does, a short exact definition
+may suffice. If it asks for the implementation's behavior, inspect that code;
+the explanatory example cannot establish runtime facts. A table is useful when
+comparing restore states on the same axes; a diagram is optional when the
+temporal gap is already clear in prose.
+
+For an audit report, the same subject has a different job: establish the
+observed stale-pointer fixture, the promised recovery invariant, why checking
+only N+1 misses a gap, the supported consequence and the regression probe.
+Keep normal sequential crash recovery distinct from partial-restore behavior.
+Do not copy the teaching paragraph as a finding without that evidence boundary.
+
+For a curriculum, first establish immutable records and pointers at the precision
+needed for this inference; revisit concurrency only when the next unit actually
+depends on it. Record that deferred dependency rather than treating a previewed
+term as mastered. When a premise changes, revisit dependent units and examples,
+preserving unrelated accepted material.
+
 ## Representation fit
 
 Use:

@@ -75,7 +75,7 @@ Classify a source by what it can establish, not by generic prestige:
 - community experience;
 - illustrative only.
 
-Authority is claim-specific.
+Authority is claim-specific. A normative rule establishes what should hold; source code establishes an implementation under its version/configuration; a trace establishes observed execution under its conditions. None substitutes for the other two. For experimental claims retain the population/sample, measurement, comparison and plausible confounds needed to support transfer; an association alone does not establish its mechanism.
 
 A citation/source pointer is not proof by presence alone. Preserve whether support is direct, derived through an explicit inference, merely contextual, or absent when the distinction is material.
 

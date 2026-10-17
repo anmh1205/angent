@@ -10,7 +10,7 @@ If the user names a Skill, use it when available; otherwise name the capability 
 - Code analysis: scout for bounded search, GKG for indexed go-to-definition/usages, Graphify for a persistent queryable relation graph, Repomix for a context snapshot.
 - Browser testing: web-testing or agent-browser depending on requested actual browser effect; privileged profile work: chrome-profile with its explicit authorization.
 - Document/diagram work: docs for owned project documentation; Mermaid v11 for Markdown-native graph syntax; Tech Graph for precise publish-ready SVG/PNG; preview for rendered viewing/presentation.
-- Implementation vs decisions: advise for user-interview reframing; brainstorm for options; plan for implementation phases; cook for authorized code execution; test for tests; security/security-scan for their distinct review scopes.
+- Implementation vs decisions: advise for explicitly requested interview reframing; ask for direct architecture advisory; brainstorm for options; plan for implementation phases; cook for authorized code execution; test for tests; security for the current security-review modes. `security-scan` is a retired route, not a separate available Skill.
 - Project tracking: project-management; multi-plan view: plans-kanban; Git history effects: git/worktree/ship with explicit distinct authority.
 
 This is a semantic hint list, not an assertion that each corresponding Skill is currently installed/usable. Runtime discovery and project instructions take priority.

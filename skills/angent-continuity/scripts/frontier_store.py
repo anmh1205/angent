@@ -128,31 +128,33 @@ def revision_files(work_dir: Path) -> list[Path]:
 def read_revision(path: Path) -> dict[str, Any] | None:
     try:
         record = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
+    except (OSError, UnicodeError, json.JSONDecodeError):
         return None
-    if record.get("schema_version") != SCHEMA_VERSION:
+    if not isinstance(record, dict) or type(record.get("schema_version")) is not int or record["schema_version"] != SCHEMA_VERSION:
         return None
     if not isinstance(record.get("work_key"), str) or not record["work_key"]:
         return None
     revision = record.get("revision")
-    if not isinstance(revision, int) or revision < 1:
+    if type(revision) is not int or revision < 1 or path.name != f"{revision:08d}.json":
         return None
-    if not isinstance(record.get("frontier"), dict):
+    if validate_frontier(record.get("frontier")) is not None:
         return None
     return record
 
 
 def cached_latest(work_dir: Path, work_key: str | None = None) -> dict[str, Any] | None:
-    """Fast path with crash-safe fallback if the convenience pointer is stale.
+    """Use a coherent pointer only when no higher revision filename exists.
 
-    Revisions are written sequentially before current.json. An interrupted
-    pointer refresh therefore leaves revision N+1 on disk. Its existence
-    forces a full recovery scan; no uncommitted revision is hidden.
+    Inspect filenames rather than just N+1: partial restores may leave gaps.
+    A higher candidate forces recovery, where malformed records are skipped.
+    This cache does not establish authenticity or current task authorization.
     """
     try:
         pointer = json.loads((work_dir / "current.json").read_text(encoding="utf-8"))
+        if not isinstance(pointer, dict) or pointer.get("schema_version") != SCHEMA_VERSION:
+            return None
         revision = pointer["revision"]
-        if not isinstance(revision, int) or revision < 1:
+        if type(revision) is not int or revision < 1:
             return None
         key = pointer["work_key"]
         if not isinstance(key, str) or (work_key is not None and key != work_key):
@@ -160,7 +162,7 @@ def cached_latest(work_dir: Path, work_key: str | None = None) -> dict[str, Any]
         record = read_revision(work_dir / "revisions" / f"{revision:08d}.json")
         if record is None or record["revision"] != revision or record["work_key"] != key:
             return None
-        if (work_dir / "revisions" / f"{revision + 1:08d}.json").exists():
+        if any(p.stem.isdigit() and int(p.stem) > revision for p in revision_files(work_dir)):
             return None
         return record
     except (OSError, ValueError, KeyError, TypeError):
@@ -182,9 +184,7 @@ def load_latest(work_dir: Path, work_key: str) -> dict[str, Any] | None:
 
 
 def load_latest_discoverable(work_dir: Path) -> dict[str, Any] | None:
-    cached = cached_latest(work_dir)
-    if cached is not None:
-        return cached
+    # Discovery must also detect mixed work keys, including lower revisions.
     by_key: dict[str, dict[str, Any]] = {}
     for path in revision_files(work_dir):
         record = read_revision(path)
@@ -216,11 +216,11 @@ def validate_frontier(frontier: Any) -> str | None:
         return "frontier_must_be_json_object"
 
     lifecycle = frontier.get("lifecycle")
-    if lifecycle is not None and lifecycle not in VALID_LIFECYCLES:
+    if lifecycle is not None and (not isinstance(lifecycle, str) or lifecycle not in VALID_LIFECYCLES):
         return "invalid_lifecycle"
 
     repair_state = frontier.get("repair_state")
-    if repair_state is not None and repair_state not in VALID_REPAIR_STATES:
+    if repair_state is not None and (not isinstance(repair_state, str) or repair_state not in VALID_REPAIR_STATES):
         return "invalid_repair_state"
 
     for field in ("active_obligations", "verified_completed", "stale_or_recheck"):

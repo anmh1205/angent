@@ -53,3 +53,10 @@ Then run:
 Reviewer verdicts are PASS/FAIL/UNKNOWN for each case criterion. The comparator rejects duplicate case IDs, missing reviews and non-comparable host/model/input. A single favorable case is not a full-catalog win. The tool records review inputs; it does not grade prose or verify evidence strings automatically. For consequential claims, use independent/partly blinded human review, meaningful user understanding tests and negative controls, then publish only conclusions justified by the observed sample.
 
 Keep private transcripts, provider identifiers and task runtime state out of Git. Preserve only reusable sanitized cases and scripts in source.
+
+The comparator reports relative change per case and `candidate_acceptance`
+separately. A gain can coexist with `residual_defects`; any required remaining
+failure prevents candidate acceptance. Partial coverage, unknown candidate ratings and
+incomparable trials cannot produce a full acceptance. Evidence strings are
+reviewer assertions, not automatically verified artifacts. For frozen initial
+inputs for the first Hub/Core upgrade, see `../upgrade/README.md`.

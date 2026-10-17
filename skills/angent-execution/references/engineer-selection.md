@@ -1,31 +1,45 @@
-# Engineer source selection — one ANGENT plugin
+# Engineer selection and resource resolution
 
-ANGENT publishes **one** installable plugin with both Core and the portable 103-Skill Engineer catalog. Engineer remains a separate **source-maintenance module** at `extensions/angent-engineer/`. The deterministic package builder `scripts/package_unified.py` projects those Skills into the same top-level `skills/` root as Core, preserves original Engineer source/support files for relative references, and omits the nested installable plugin manifests.
+ANGENT has one installable plugin identity. Engineer is maintained under
+`extensions/angent-engineer/`; its nested manifest becomes source metadata in
+the package. The native product and bundled port are alternative providers.
+Hub routing owns selection policy; this reference explains Engineer-specific
+observations and the resource boundary.
 
-There is one user-facing plugin identity, `angent`, one plugin version and one package. The internal `extensions/angent-engineer/source-manifest.json` in the distribution is only catalog metadata for read-only selector validation; it is not a second plugin.
+## Select a method, then establish its provider
 
-## Native-first capability selection
+Native is usable only when the current harness can discover/invoke the needed
+method and its load-bearing runtime facilities. A binary, cached catalogue,
+doctor result or success with a different method cannot establish that fact.
+The read-only selector reports kit health and a harness-supplied usability
+observation; its structural result cannot certify every method.
 
-The two **capability providers** remain:
-1. officially usable AgentKit Engineer in the active harness;
-2. portable Engineer Skills bundled with ANGENT.
+Use one provider for the bounded work. If it fails mid-operation, reconcile any
+uncertain effects before switching. Re-evaluate method/output equivalence: a
+portable recommendation is not a deployed change, and sequential work is not
+Team's persistent-session lifecycle. Keep native and fallback workflow
+assumptions separate even when their task labels match.
 
-Determine native usability from **current harness discovery/invocation evidence**, never from `ak` binary presence, a cache, a version number or old memory. Let `native_usable = yes | no | unknown`.
+## Resolve from the installed artifact
 
-- **yes:** select native Engineer for the engineering task and do not mix in fallback workflows.
-- **no or unknown:** use the corresponding `ak-*` Skills already bundled in ANGENT.
-- **missing or invalid fallback:** do not pretend support exists; the selector reports BLOCKED when fallback is required.
+Find the Hub belonging to the active ANGENT origin. Its `bindings.json` maps
+method entries and qualified role identities to resource paths **relative to
+that Hub directory**. Search bounded metadata with `discover.py` when Python
+and filesystem access exist; otherwise inspect `catalog.md`, then the selected
+`methods/<entry>.json` card and binding. The global catalogue remains available
+when a domain guess misses. Inspect source before using an `inspect-required`
+contract; an empty requirement list in such a card means unknown, not no needs.
 
-This is **routing**, not an install/uninstall operation. One plugin remains installed in every case. The read-only `extensions/angent-engineer/scripts/select_engineer.py` still checks the exact 103 Skills, 16 role identities, ledger and catalog fingerprint in source and in the assembled plugin. Its report is structural evidence, not proof every provider or skill works in each harness.
+OpenAI exposes one Root and internal methods; Gemini Web has one imported Root;
+broad CLI profiles project Skills into the destination host's directory. A raw
+source checkout is a maintenance layout, not proof of the installed layout.
+Do not use internal references to bypass a host/user-denied skill or action.
 
-## Static discovery limitation
+## Roles and activation
 
-Agent Plugins v1 discovers the top-level `skills/` tree statically. It cannot conditionally hide the fallback catalog when a separate native AgentKit installation is also visible. Thus **packaging unity does not mean runtime catalog exclusivity**. Root/Execution must choose one provider per task and reject hybrid workflows; any host that offers conditional skill filtering may additionally hide the unselected catalog. Never claim the single ZIP guarantees collision-free co-installation with native Engineer on every client.
-
-The bundled `ak-*` identities avoid replacing ANGENT Core Skills. A deliberate comparison may inspect both sources, but production task execution must not mix their helper assumptions and generations.
-
-## Role and harness boundary
-
-The 16 files in `extensions/angent-engineer/agents/` are portable role contracts, not 16 automatically spawned agents. A harness may project them into supported native agents, one-shot delegation or sequential reasoning. No generic broker or separate AgentKit CLI requirement is introduced.
-
-Source installation from a raw repository checkout is **not** equivalent to installing the assembled plugin: the canonical consumer artifact is `dist/angent-chatgpt.zip`. To test installed behavior, inspect that artifact and the active host's actual discovery state.
+The 16 role files are supporting contracts. Reading one creates no worker,
+memory backend, messaging channel or process. Project a role only through an
+actually available, authorized host mechanism; ordinary single-agent reasoning
+needs no role instance. Native/fallback routing does not hide unrelated static
+catalogues or guarantee Root activation. Provider discovery and actual execution
+need separate observations.

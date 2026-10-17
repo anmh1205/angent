@@ -7,7 +7,7 @@ metadata: {port: angent-fallback, mode: adapted, baseline: "AgentKit Engineer 2.
 
 # Advise — Portable Fallback
 
-Advise is intentionally an **interview-driven advisory workflow**. Use it when the user explicitly asks for advice, a second opinion, requirement reframing, or a pressure-test.
+Advise is intentionally an **interview-driven advisory workflow**. Select it when the user explicitly invokes Advise or requests guided questioning/reframing. An ordinary request for advice, a second opinion or a repository-grounded recommendation does not by itself opt into this interview.
 
 Do not auto-select Advise merely because a task has uncertainty. Use Ask/Brainstorm/Reasoning for ordinary direct assistance.
 

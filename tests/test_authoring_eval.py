@@ -69,6 +69,36 @@ class AuthoringEvaluationTests(unittest.TestCase):
         with self.assertRaises(module.EvaluationError):
             module.compare(self.cases, {"schema_version": 1, "trials": [row, row]})
 
+    def test_gain_does_not_hide_a_remaining_required_defect(self):
+        row = self.trial(before=["FAIL", "FAIL"], after=["PASS", "FAIL"])
+        result = module.compare({self.case["id"]: self.case}, {"schema_version": 1, "trials": [row]})
+        case = result["cases"][0]
+        self.assertEqual(case["outcome"], "IMPROVEMENT")
+        self.assertEqual(case["candidate_acceptance"], "FAIL")
+        self.assertEqual(len(case["improved_criteria"]), 1)
+        self.assertEqual(len(case["residual_defects"]), 1)
+        self.assertEqual(result["verdict"], "UNRESOLVED_DEFECT")
+        self.assertEqual(result["candidate_acceptance"], "FAIL")
+
+    def test_missing_and_incomparable_reviews_cannot_accept(self):
+        empty = module.compare(self.cases, {"schema_version": 1, "trials": []})
+        self.assertEqual(empty["candidate_acceptance"], "NOT_YET_VERIFIED")
+        row = self.trial()
+        row["candidate"]["input_ref"] = "different-context"
+        result = module.compare({self.case["id"]: self.case}, {"schema_version": 1, "trials": [row]})
+        self.assertEqual(result["candidate_acceptance"], "NOT_YET_VERIFIED")
+
+    def test_invalid_json_shapes_are_rejected(self):
+        for value in ([], None, 7, {"schema_version": 1, "trials": [None]}):
+            with self.subTest(value=value), self.assertRaises(module.EvaluationError):
+                module.compare(self.cases, value)
+
+    def test_candidate_acceptance_and_unknown_comparison_are_distinct(self):
+        row = self.trial(before=["UNKNOWN", "PASS"], after=["PASS", "PASS"])
+        result = module.compare({self.case["id"]: self.case}, {"schema_version": 1, "trials": [row]})
+        self.assertEqual(result["verdict"], "NOT_YET_VERIFIED")
+        self.assertEqual(result["candidate_acceptance"], "PASS")
+
 
 if __name__ == "__main__":
     unittest.main()

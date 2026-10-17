@@ -90,7 +90,7 @@ The UI/UX Pro Max and Design Skills already inventoried visual dimensions, but n
 
 ## Remaining runtime acceptance
 
-The 25 `VERIFIED_DEGRADED` skills are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.
+The `VERIFIED_DEGRADED` identities in the live ledger are intentionally not considered fully equivalent. The most consequential missing surfaces include authenticated browser/profile operations and live team/AgentKit hooks; provider-bound image/video/audio and Stitch/HeyGen services; Graphify/GKG/Repomix indexing and query backends; SVG/Excalidraw/Preview/Remotion/Three.js rendering, searchable example/prompt corpora, and native viewer/dashboard/server utilities. See each identity's manifest row and skill-specific capability boundary.
 
 A valid future operational acceptance run should select **the actual harness**, verify one source (native or fallback) is active, execute a representative happy path and failure/authorization case for the specific capability, inspect the real artifact/side effect and record observed versions and provider identities. Repeat only where stochastic reliability or cross-platform claims make repetitions necessary. For a degraded skill, either prove a complete host-native replacement or keep the degraded label. A successful Markdown/CI parse must never promote a runtime claim.
 

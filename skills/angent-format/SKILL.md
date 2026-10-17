@@ -50,6 +50,6 @@ Verify:
 - missing/duplicated blocks;
 - destination artifacts or overflow.
 
-A successful write proves transport, not visible fidelity. For structured pages (including Notion), inspect the actual published heading nesting, readable code/diagram blocks, ordered lists and links. If the destination only displays a Mermaid source fence rather than a figure, report that explicitly rather than claiming a rendered diagram. Never repair absent technical depth by manipulating blocks: return the problem to Authoring.
+A successful write proves transport. Structural read-back proves recovered structure/text; a parser check proves accepted syntax; visual inspection proves the observed render; interaction checks establish only the behavior exercised. Report the strongest layer observed without promoting one into another. For structured pages (including Notion), inspect published hierarchy, code language, ordered procedures and links. Mermaid source is not a rendered figure, and a rendered figure is not an editable model in a requested editor. Return content loss to Authoring rather than manipulating blocks to disguise it.
 
 Return representation/render defects to Format. Return content/meaning defects to Authoring. Return provider/effect ambiguity to Execution.

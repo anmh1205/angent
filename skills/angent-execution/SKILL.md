@@ -48,14 +48,14 @@ If the selected effect depends on a candidate/solution transition whose required
 
 For a consequential effect, revalidate authority after the concrete tool operation, resolved target and material arguments are known. If the current canonical role→identity mapping changed after Context resolved it, re-enter Context/Reasoning and the mutation-freshness boundary before acting. If they differ materially from the Reasoning-selected action, current authority changed, or another branch/provider change invalidated a precondition, return to Contract/Reasoning before invocation.
 
-Capability, tool availability, a prior plan/approval, and an operation handle are not effect authority.
+Capability, tool availability, a plan and an operation handle cannot create effect authority. Earlier user approval remains sufficient when its scope still covers the concrete action; check that fit rather than asking again by default.
 
 ## Choose the route
 
 Prefer the smallest sufficient route that preserves correctness and observability.
 
 For engineering specialist work:
-1. use native AgentKit Engineer when installed and usable;
+1. use native AgentKit Engineer when the needed method is proven callable in the active host;
 2. otherwise use the canonical fallback port;
 3. do not silently mix generations;
 4. otherwise fall back to direct harness tools/single-agent work when the required capability does not depend on Engineer.

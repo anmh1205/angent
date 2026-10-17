@@ -4,7 +4,7 @@
 
 Use current Shopify APIs appropriate to where code runs.
 
-New app development should use current GraphQL Admin APIs for store administration; REST Admin is legacy. citeturn108303search9turn108303search11
+Use GraphQL Admin for new store-administration work; [Shopify API guidance](https://shopify.dev/docs/apps/build/apis) identifies REST Admin as legacy.
 
 Preserve:
 - exact API version;
@@ -28,10 +28,10 @@ Theme source and publication state are separate concerns.
 
 Prefer development/unpublished theme targets for iteration.
 
-Inspect current Shopify permissions and API/CLI restrictions before creating, modifying or publishing themes; current platform permissions can constrain write operations. citeturn108303search8
+Inspect current permissions before theme writes. For example, [themeFilesUpsert](https://shopify.dev/docs/api/admin-graphql/latest/mutations/themeFilesUpsert) documents the scopes and eligibility required by that operation; do not generalize one operation's access to every theme effect.
 
 ## Webhooks
 
 Use events/webhooks instead of polling when the platform supports the required event.
 
-Webhook subscriptions are app-scoped and versioned; validate authenticity and process deliveries idempotently. citeturn108303search7turn108303search12
+Subscriptions have configuration and API-version boundaries described by [Shopify Webhooks](https://shopify.dev/docs/api/webhooks/latest). [Verify deliveries](https://shopify.dev/docs/apps/build/webhooks/verify-deliveries) explains authentication and duplicate handling; keep processing idempotent.
