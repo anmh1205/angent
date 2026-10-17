@@ -51,14 +51,20 @@ def validate(data:Any)->dict[str,Any]:
         if not isinstance(claim.get("statement"),str) or not claim["statement"].strip():
             errors.append(f"{cid}: missing concrete claim")
         refs=claim.get("source_refs")
-        if not isinstance(refs,list) or not all(isinstance(x,str) and x in sourceids for x in refs):
-            errors.append(f"{cid}: unresolved source references")
+        if (not isinstance(refs,list) or not refs or
+            not all(isinstance(x,str) and x in sourceids for x in refs)):
+            errors.append(f"{cid}: absent or unresolved source references")
             refs=[]
+        elif len(set(refs))!=len(refs):
+            errors.append(f"{cid}: duplicate source reference")
         if claim.get("confidence")=="CONTRADICTORY" and len(set(refs))<2:
             errors.append(f"{cid}: contradiction requires two distinct source witnesses")
         if claim.get("confidence")=="APPROVED-DECISION":
-            if not claim.get("decision_id") or claim.get("approval_source") not in refs:
-                errors.append(f"{cid}: approval needs decision ID and cited approval source")
+            did=claim.get("decision_id")
+            if (not isinstance(did,str) or not ID.fullmatch(did) or
+                not isinstance(claim.get("approval_source"),str) or
+                claim["approval_source"] not in refs):
+                errors.append(f"{cid}: approval needs stable decision ID and cited approval source")
         if claim.get("confidence")!="APPROVED-DECISION":
             if not isinstance(claim.get("next_verification"),str) or not claim["next_verification"].strip():
                 errors.append(f"{cid}: unresolved claim requires a verification action")
@@ -68,7 +74,8 @@ def validate(data:Any)->dict[str,Any]:
     return {"ok":not errors,"errors":sorted(set(errors)),
             "claim_count":len(ids),"source_count":len(sourceids),
             "confidence_breakdown":{level:sum(isinstance(x,dict) and x.get("confidence")==level for x in claims)
-                                    for level in LEVELS}}
+                                    for level in LEVELS},
+            "approval_source_checked":"citation-ID-only; stakeholder authority not independently verified"}
 
 def e(value:Any)->str:
     return html.escape(str(value),quote=True)

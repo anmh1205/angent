@@ -25,7 +25,7 @@ class ReversePreviewTests(unittest.TestCase):
         self.assertEqual(page.count("<article "),3)
         self.assertIn("SOURCE-OBSERVED",page)
         self.assertIn("CONTRADICTORY",page)
-        self.assertIn("no automatic",page.lower()) if False else None
+        self.assertIn("none automatically promoted to accepted requirements",page.lower())
         self.assertNotIn("<script",page)
 
     def test_rejects_fabricated_approval_and_weak_contradiction(self):
@@ -40,6 +40,32 @@ class ReversePreviewTests(unittest.TestCase):
         a=deepcopy(self.model)
         a["claims"][1]["source_refs"]=["NOT-FOUND"]
         self.assertFalse(validate(a)["ok"])
+
+    def test_observed_claim_without_real_source_is_not_represented_as_observed(self):
+        for refs in ([],["SRC-CODE","SRC-CODE"],["UNKNOWN"]):
+            with self.subTest(refs=refs):
+                a=deepcopy(self.model)
+                a["claims"][0]["source_refs"]=refs
+                result=validate(a)
+                self.assertFalse(result["ok"])
+                self.assertTrue(any("source" in e for e in result["errors"]))
+                with self.assertRaisesRegex(ValueError,"source"):
+                    render(a)
+
+    def test_unverified_claimed_approval_needs_bounded_decision_id(self):
+        a=deepcopy(self.model)
+        a["claims"][0]["confidence"]="APPROVED-DECISION"
+        a["claims"][0]["approval_source"]="SRC-CODE"
+        for did in ([],{"text":"accepted"},"", "not a stable identifier"):
+            with self.subTest(decision_id=did):
+                a["claims"][0]["decision_id"]=did
+                result=validate(a)
+                self.assertFalse(result["ok"])
+                self.assertTrue(any("stable decision ID" in e for e in result["errors"]))
+        a["claims"][0]["decision_id"]="DEC-001"
+        result=validate(a)
+        self.assertTrue(result["ok"],result)
+        self.assertIn("not independently verified",result["approval_source_checked"])
 
     def test_html_injection_and_unsafe_urls_remain_literal(self):
         a=deepcopy(self.model)
