@@ -92,3 +92,34 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_ba_*.py' -v
           python3 -m unittest discover -s tests -p 'test_figma_*.py' -v
           python3 -m unittest discover -s tests -p 'test_reqwise_*.py' -v
+
+  ba-next-build:
+    name: BA generated Next.js production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v7
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate real isolated review app from BA evidence fixture
+        shell: bash
+        run: |
+          python3 extensions/angent-ba/scripts/build_next_prototype.py \
+            extensions/angent-ba/examples/authentication-screen-model.json \
+            --output "$RUNNER_TEMP/angent-ba-next-review"
+      - name: Install pinned runtime packages and compile Next.js
+        shell: bash
+        working-directory: ${{ runner.temp }}/angent-ba-next-review
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+      - name: Check build artifact and honest mock scope
+        shell: bash
+        run: |
+          test -f "$RUNNER_TEMP/angent-ba-next-review/.next/BUILD_ID"
+          python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"angent-ba-next-review"/"review-manifest.json"; m=json.loads(p.read_text()); assert m["simulation_only"] is True and m["execution_status"]=="not-run"'
