@@ -157,3 +157,74 @@ mutations** as distinct claims.
 These changes narrow concrete false-valid model cases without claiming
 complete BPMN process semantics, actual downstream SQL constraints or
 customer-reviewed Figma diagrams.
+
+
+## Second detailed file-by-file audit — 17 October 2026
+
+This pass re-read all 67 specialist `SKILL.md` files, 48 BA templates,
+19 independent BA review rules and 42 BA/Figma example files. It also
+revisited the 20 BA Python scripts, two Figma Python scripts, Hub manifests
+and routing, source-level tests, upstream Reqwise request schemas, and
+existing integration evidence. **Reading and static checks are not claims
+that 67 skills have passed real model-behavior acceptance.**
+
+### Corrected root causes and negative controls
+
+| Layer | False-valid or broken behavior found | Change and check |
+|---|---|---|
+| Artifact lineage | An `FR-*` ID could be labeled `TEST` and disappear from counted FR coverage; source identities accepted embedded whitespace | Require recognized ID prefix and canonical artifact kind to agree, preserving explicit custom `NOTE-*` kinds; validate source identifiers; mutation tests in `test_ba_typed_lineage.py` |
+| OpenAPI fixture checker | A Python nonfinite float could pass a numeric JSON Schema type; malformed path items, components, request-body content or enum containers could crash the checker or treat a string enum as characters | Validate finite numeric values and structural schema contracts with informative errors; mutation tests in `test_ba_api_contract.py` |
+| Local evidence | A legitimate `spec.md#section` URI was checked as a literal filesystem basename, falsely reporting the source missing | Remove fragments only from file-existence checks; retain root-containment and missing-path rejection in `test_ba_local_source_evidence.py` |
+| Mermaid specialist workflow | ERD, State and Sequence skills asserted that Mermaid cannot render in chat; some also forced a fixed file destination and unnecessary post-write review | Select native host preview where available, preserve source-first verification, choose an authorized output destination and do not claim a nonexistent render; regression in `test_ba_portability.py` |
+| DBML sample | The source example used `cards.id` without declaring `cards`; file-review flow assumed original-host approval rituals | Add the missing table and check that all example FK targets are declared; compiler availability is still a separate requirement and no SQL migration is asserted |
+| Reverse specification | `SOURCE-OBSERVED` claim could list no source; duplicate refs and malformed approval ID were accepted; a prior HTML assertion was unreachable code | Require distinct real source IDs, bounded approval decision IDs, and explicitly state that source citation does not independently verify stakeholder authority; tests in `test_ba_reverse_preview.py` |
+| Static screen reviewer | Existing unit test contained a conditional expression that prevented an assertion from running | Assert actual HTML email-input semantics, disabled static controls and no executable `script` in the wireframe; regression in `test_ba_wireframe.py` |
+| Integration coverage | The complete multi-kit acceptance script existed but was not called by the continuous PR validation pipeline | Add `tests/integration/check_kits_acceptance.py` to the BA/Figma job; leave provider-native and semantic evaluation separate |
+
+### What the green pipeline now actually proves
+
+- Source-level BA/Figma, core distribution and interface tests run under
+  GitHub Actions. Native Reqwise MIT 0.3.0 schema checks fetch pinned
+  `4ee65b7a037578690cfcd4006257c4f25e458eea`, validating six
+  dry-run requests without creating a Figma object.
+- The Next.js sample is installed and production-built, then an actual
+  Chromium process verifies it at mobile and desktop viewports, with
+  invalid, locked, offline and success behaviors and no external HTTP
+  requests. This is a synthetic Authentication demo, not fleet production
+  or customer account security.
+- Source-to-prototype integration now verifies the Atlas evidence graph,
+  Fleet API fixtures, read-only code witness, D2 source, Bruno requests,
+  Figma candidate models, and browser/Next source generation in one
+  execution. All integrations are limited to supplied synthetic/open
+  sample corpora.
+- 67 skills are covered by **13 planned expert/agent behavior scenarios**.
+  As checked this pass, all 13 have `execution_status: not-run`.
+  A successful unit test does not permit promotion of those scenarios
+  to passed, or reclassification of provider-blocked skills.
+
+### Further findings and priorities
+
+1. **P0 — Provider-native read-back.** No authorized real Figma canvas
+   session has demonstrated screen frames, text/fonts, component variants,
+   prototype actions, live Reqwise diagram layout or rollback. A mock
+   idempotency test and six upstream schema accepts do not replace that.
+   The commercial Reqwise Pro-only six methods have no proven Pro runtime.
+2. **P0 — Specialist semantic trials.** Each of the 13 scenario groups
+   needs actual agent output, independent review of required and forbidden
+   behaviors, verified source identities and an honest revision trail.
+   Target unclear user requirements, contradictory business rules,
+   denial/retry state flows, partial API contracts and missing evidence.
+3. **P1 — Real Jira/Confluence acceptance.** Test bounded user-authorized
+   read/write/read-back in a suitable test space, preserving existing
+   macros/content and detecting provider version conflicts. Method
+   instructions alone cannot establish provider behavior.
+4. **P1 — Host portability.** Test the packaged ANGENT root + specialist
+   routing in representative hosts, rather than inferring invocation
+   from a manifest or requiring uninstalled Claude-only tools.
+5. **P2 — Visual/editorial quality.** Review real Mermaid/D2/DBML output,
+   image collection choices and the finished BA documents as a reader;
+   source links and valid schemas establish neither communication quality
+   nor business correctness.
+
+**Branch discipline:** Changes remain in `feat/ba-figma-kits` with Draft
+PR #65. Nothing in this report is a release approval or merge instruction.
