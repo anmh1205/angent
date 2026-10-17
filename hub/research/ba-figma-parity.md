@@ -136,3 +136,24 @@ mutations** as distinct claims.
 4. Continue per-specialist acceptance with independently reviewed outputs
    and negative examples, not counts of `SKILL.md`, placeholders or
    structural validation alone.
+
+
+### Browser and bounded-renderer follow-through
+
+- [Run 39016100037](https://github.com/anmh1205/angent/actions/runs/39016100037)
+  verified the **actual started production Next.js server** using Chromium
+  at **390×844** and **1366×850**. It checked authentication-mock validation,
+  invalid/locked/offline/success variants, home/recovery/reset routes, focus,
+  hydration, no horizontal overflow, zero page errors and **zero external
+  HTTP requests**. It does not test production authorization.
+- The BA D2 ERD validator rejects nonboolean `external` flags. Previously,
+  a truthy string such as `"false"` could exempt an entity from the
+  primary-key rule. This is also regression-tested against a valid
+  explicitly external entity.
+- The bounded BPMN XML compiler now rejects nonstring or blank
+  `sequenceFlow.name` rather than accepting a converted object as a
+  gateway guard and failing during XML serialization.
+
+These changes narrow concrete false-valid model cases without claiming
+complete BPMN process semantics, actual downstream SQL constraints or
+customer-reviewed Figma diagrams.
