@@ -16,11 +16,11 @@ Use domain-specific steps below as methodological guidance; do not assume the or
 
 ## Goal
 
-Create a Mermaid `sequenceDiagram` block for one flow in one feature. **Single output**: append a section to `docs/{feature}/srs/{feature}-flows.md`. UC files do NOT receive diagrams (a UC is a business black-box).
+Create a Mermaid `sequenceDiagram` from the actual message exchange, success/error paths and participant boundaries. If a persisted per-feature deliverable is authorized, append to `docs/{feature}/srs/{feature}-flows.md`. Chat-only and explicitly requested cross-feature diagrams are also supported; use inspected evidence instead of forcing a feature-file workflow.
 
 ## Constraints
 
-- **1 fixed output** — `docs/{feature}/srs/{feature}-flows.md`, append mode. NO `--uc`, `--standalone`, `--system-flow` flags. Too many flows → the user splits manually.
+- **Default persistent destination** — `docs/{feature}/srs/{feature}-flows.md` when that is the user's requested artifact. For larger processes split or group flows by meaningful domain and reader goal rather than asking the user to reorganize them manually.
 - **Host-aware preview and validation** — Mermaid may render in chat, IDE or a local renderer. Use the available preview to verify participants, alt/opt/loop branches and chronology before a requested write. If no renderer exists, provide code and state the unverified visual status; do not force a file write to make a diagram reviewable.
 - Honor ANGENT's authorized write scope; preview disputed protocol/message semantics rather than forcing Claude-specific gates.
 - **`--feature` optional** — auto-detect if there is only 1 in-progress feature; only ask when ambiguous. **Feature does not exist + arg is a flow description → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.

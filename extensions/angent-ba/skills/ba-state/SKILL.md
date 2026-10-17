@@ -16,11 +16,11 @@ Use domain-specific steps below as methodology, not as authority or proof of too
 
 ## Goal
 
-Produce a Mermaid `stateDiagram-v2` for one entity of a feature, capturing: states + transitions + triggers + invalid transitions. **Single output**: append a section to `docs/{feature}/srs/{feature}-states.md` (1 file merging all entities, each entity in its own `## State: <Entity>` section).
+Produce a Mermaid `stateDiagram-v2` for one entity or feature, capturing the observed states, transitions, triggers, guards and forbidden transitions. For an authorized persisted deliverable, the conventional location is `docs/{feature}/srs/{feature}-states.md`, with per-entity sections. For a chat or review-only request, present the diagram without forcing any filesystem write.
 
 ## Constraints
 
-- **1 fixed output** — `docs/{feature}/srs/{feature}-states.md`, append mode. NO `--uc`, `--append`, `--system-flow` flags.
+- **Default persistent destination** — `docs/{feature}/srs/{feature}-states.md` when writing a feature-specific document. Follow the user's actual requested destination and do not create a file just to show a diagram.
 - **`--feature` optional** — auto-detect from context/the in-progress feature; only ask via picker when ambiguous. **Feature does not exist + arg indicates a new entity/feature → derive the slug and create the feature yourself** (entry point, see `feature-bootstrap.md` group A). Do NOT force `/brainstorm` first.
 - Use ANGENT's current write authorization — show entity + state count + transition count.
 - **Host-aware review** — Mermaid can render in some chat clients and other destinations. Review state labels, events, guards and forbidden transitions in an available chat preview or local renderer before consequential writes. If no renderer exists, report that limitation and provide source; never claim an image was inspected.
