@@ -91,6 +91,8 @@ def validate(model: Any, evidence_ids: set[str] | None = None) -> dict[str, Any]
         if kind == "architecture" and (not isinstance(item.get("kind"), str) or item.get("kind") not in ARCH_KINDS):
             errors.append(f"{key}: unsupported architecture kind")
         if kind == "erd":
+            if "external" in item and not isinstance(item["external"], bool):
+                errors.append(f"{key}: ERD external must be boolean")
             if item.get("kind") != "entity":
                 errors.append(f"{key}: ERD node must be an entity")
             attrs = item.get("attributes")

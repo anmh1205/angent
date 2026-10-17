@@ -60,6 +60,24 @@ class D2BuildTests(unittest.TestCase):
         a["nodes"][0]["attributes"][0]["type"]="uuid\\nstyle.fill: red"
         self.assertFalse(validate(a)["ok"])
 
+    def test_erd_external_flag_never_bypasses_primary_key_check(self):
+        for invalid in ("false", "true", 1, None, {"external":"yes"}):
+            model=deepcopy(self.examples["erd"])
+            model["nodes"][0]["external"]=invalid
+            with self.subTest(external=invalid):
+                report=validate(model)
+                self.assertFalse(report["ok"])
+                self.assertTrue(any("external must be boolean" in e for e in report["errors"]))
+                with self.assertRaisesRegex(ValueError,"external must be boolean"):
+                    compile_source(model)
+        # External ownership can bypass only the local PK requirement, never
+        # the obligation to declare the entity and its fields.
+        model=deepcopy(self.examples["erd"])
+        model["nodes"][0]["external"]=True
+        model["nodes"][0]["attributes"][0].pop("key",None)
+        report=validate(model)
+        self.assertTrue(report["ok"],report)
+
     def test_graph_input_injection_is_quoted_and_not_executed(self):
         a=deepcopy(self.examples["activity"])
         a["nodes"][0]["label"]='</script>\\nfoo -> unauthorized: injected'
